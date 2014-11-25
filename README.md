@@ -1,6 +1,6 @@
-![BEAT☆MUSIC☆SEQUENCE](docs/images/title.svg)<br>
-![(also known as BE☆MU☆SE, BEMUSE, and B☆M☆S)](docs/images/aliases.svg)
+![BEAT☆MUSIC☆SEQUENCE](https://cdn.rawgit.com/spacetme/bemuse/master/docs/images/title.svg)<br>
+![(also known as BE☆MU☆SE, BEMUSE, and B☆M☆S)](https://cdn.rawgit.com/spacetme/bemuse/master/docs/images/aliases.svg)
 =================================================
 
-![web-based music game of the future](docs/images/tagline.svg)
+![web-based music game of the future](https://cdn.rawgit.com/spacetme/bemuse/master/docs/images/tagline.svg)
 
