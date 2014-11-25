@@ -1,0 +1,37 @@
+{
+  "jspm": {
+    "name": "bms",
+    "directories": {
+      "baseURL": "public",
+      "lib": "public/app"
+    },
+    "dependencies": {
+      "lodash": "^2.4.1",
+      "npm:co": "^4.0.0"
+    }
+  },
+  "name": "bemuse",
+  "version": "0.0.0",
+  "description": "BEAT☆MUSIC☆SEQUENCE, a web-based music game of the future",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "harp server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/spacetme/bemuse.git"
+  },
+  "keywords": [
+    "bms"
+  ],
+  "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
+  "license": "AGPLv3",
+  "bugs": {
+    "url": "https://github.com/spacetme/bemuse/issues"
+  },
+  "homepage": "https://github.com/spacetme/bemuse",
+  "devDependencies": {
+    "harp": "^0.14.0"
+  }
+}

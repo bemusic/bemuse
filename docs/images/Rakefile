@@ -1,0 +1,8 @@
+require 'shellwords'
+
+svg = FileList['*.svg.jade'].ext('')
+task :svg => svg
+
+rule ".svg" => -> f { "#{f}.jade" } do |t|
+  system "jade < #{t.source} > #{t.name}"
+end
