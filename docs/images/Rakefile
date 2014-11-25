@@ -1,8 +1,11 @@
 require 'shellwords'
 
-svg = FileList['*.svg.jade'].ext('')
+svg = FileList['**/*.svg.jade'].ext('')
+
 task :svg => svg
+task :default => [ :svg ]
 
 rule ".svg" => -> f { "#{f}.jade" } do |t|
+  puts "jade: #{t.source} => #{t.name}"
   system "jade < #{t.source} > #{t.name}"
 end
