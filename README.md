@@ -4,3 +4,5 @@
 ![web-based music game of the future](https://cdn.rawgit.com/spacetme/bemuse/b03a47b/docs/images/README/tagline.svg)
 -------------------------------------------------------------------------------
 
+* [__Project Plan__](https://workflowy.com/s/ZM4dIDZWRR)
+* Development starts 2015
