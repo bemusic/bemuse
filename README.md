@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/bemuse-game/bemuse.png?label=ready&title=Ready)](https://waffle.io/bemuse-game/bemuse)
 <h1 align="center">BEAT☆MUSIC☆SEQUENCE</h1>
 
 <p align="center">(also known as BE☆MU☆SE, BEMUSE, and B☆M☆S)</p>
