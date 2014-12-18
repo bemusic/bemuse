@@ -8,5 +8,15 @@
   <a href="https://waffle.io/bemuse-game/bemuse"><img src="http://img.shields.io/badge/wow%20much-waffle-green.svg?style=flat" alt="Waffles"></a>
 </p>
 
-* [__Project Plan__](https://workflowy.com/s/ZM4dIDZWRR)
-* Development starts 2015
+---
+
+__This project uses [README-Driven Development][RDD]__, and we are in the planning stage. Therefore, what you read below, as of the time of writing, doesn't exist yet. Also check out the [__Project Plan__][Plan]. The actual development starts in 2015. This file will also evolve over time as development progresses.
+
+Should you have any question about the project plan, now is a good time to raise an issue.
+
+[RDD]: http://tom.preston-werner.com/2010/08/23/readme-driven-development.html
+[Plan]: (https://workflowy.com/s/ZM4dIDZWRR)
+
+---
+
+
