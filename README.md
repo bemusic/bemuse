@@ -19,4 +19,58 @@ Should you have any question about the project plan, now is a good time to raise
 
 ---
 
+Free and open-source web-based BMS simulator, built with the future's web technology.
+Play on your computer or on your iPad.
 
+## Features
+
+* Online play
+	* comes with some [default selection of songs](https://github.com/bemusic/music).
+	* people can host song collections on their own servers too.
+* Offline play
+	* downloaded simfiles can be played later offline.
+	* can also play simfiles on your computer.
+* BMS simfile support:
+	* 7-keys + Scratch
+	* 7-keys
+	* 14-keys
+	* However, they must be converted into "level" files first.
+* Game modes:
+	* Single player mode
+	* Two player mode — two players play on the same machine.
+* Online start time synchronization — play together with friends.
+* Fully supports keysounds.
+* Supports `#LNTYPE 1` and `#LNOBJ`.
+* Play on PC (using keyboard or gamepad) or on iPad.
+
+
+### Bemuse file
+
+BMS files need to be converted into `.bemuse` file format. It is a simple file format to hold BMS files and keysound files together. A custom format is created to be easily consumed by web applications, both on desktop and mobile devices.
+
+* All sound samples are converted into `.mp3`
+  * Since it is the only format supported by major browsers!
+
+
+#### File format draft
+
+* 10 bytes magic string "BEMUSEPACK"
+* 4 bytes - metadata size N
+* N bytes - metadata in JSON format
+	* song metadata
+	  * title
+	  * artist
+	  * genre
+	  * BPM
+	  * readme
+	* list of all files
+		* File name
+		* File size
+		* File offset (relative to payload start)
+	* dependencies
+	  * list of relative path to extra `.bemuse` file to load. (*1)
+* The payload
+	* just a stream of bytes created from multiple files concatenated so that it can be sliced easily.
+
+
+(*1): There isn't a simple way to perform partial download of large files. One approach is to split the `.bemuse` file into several parts. Therefore, if the download fails, we don't have to re-download the whole thing.
