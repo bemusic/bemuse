@@ -1,0 +1,25 @@
+{
+  "name": "bms-js",
+  "version": "0.1.0",
+  "description": "BMS Parser for JavaScript",
+  "main": "bms.js",
+  "scripts": {
+    "test": "cucumber-js features/bms-spec/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bemusic/bms-js.git"
+  },
+  "keywords": [
+    "BMS"
+  ],
+  "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bemusic/bms-js/issues"
+  },
+  "homepage": "https://github.com/bemusic/bms-js",
+  "devDependencies": {
+    "cucumber": "^0.4.5"
+  }
+}
