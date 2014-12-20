@@ -13,5 +13,9 @@ boot.innerHTML = template()
 boot.querySelector('.js-progress-bar').classList.add('is-indeterminate')
 
 document.body.appendChild(boot)
-require.ensure(['../app'], (require) => require('../app'))
+if (location.search.indexOf('mode=test') > -1) {
+  require.ensure(['../test'], (require) => require('../test'))
+} else {
+  require.ensure(['../app'], (require) => require('../app'))
+}
 
