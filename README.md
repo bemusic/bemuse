@@ -49,20 +49,21 @@ Play on your computer or on your iPad.
 
 ### Project Structure
 
-To make the game load as fast as possible, the app is split into 2 parts:
+To make the game load as fast as possible, the app is split into multiple parts:
 
-- __boot__: A special module to load the game.
-- __game__: The game itself.
-
+- __boot__: A special module to display loading bar and loads the application.
+  Dependencies should be minimized.
+- __app__: The game itself.
+- __test__: The test code.
 
 The directory structure:
 
 - __www__: These files will be hosted online
-  - __boot__: The built boot loader.
-  - __build__: The built game (not included in Git).
+  - __build__: The built bundles (not included in Git).
   - __src__: The source code for the game and the boot loader.
     - __boot__: The source code for the boot loader.
     - __app__: The source code for the game.
+    - __test__: The test code for the game.
 
 
 ### Prerequisites
@@ -83,7 +84,7 @@ The directory structure:
 ### Development Server
 
 ```bash
-npm run server
+npm start
 ```
 
 
@@ -94,8 +95,12 @@ npm run build
 ```
 
 
+### Deploying
 
-### Bemuse file
+TODO
+
+
+### Bemuse File
 
 BMS files need to be converted into `.bemuse` file format. It is a simple file format to hold BMS files and keysound files together. A custom format is created to be easily consumed by web applications, both on desktop and mobile devices.
 
