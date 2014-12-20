@@ -34,7 +34,7 @@ Play on your computer or on your iPad.
 	* 7-keys + Scratch
 	* 7-keys
 	* 14-keys
-	* However, they must be converted into "level" files first.
+	* However, they must be converted into ".bemuse" files first.
 * Game modes:
 	* Single player mode
 	* Two player mode — two players play on the same machine.
@@ -42,6 +42,57 @@ Play on your computer or on your iPad.
 * Fully supports keysounds.
 * Supports `#LNTYPE 1` and `#LNOBJ`.
 * Play on PC (using keyboard or gamepad) or on iPad.
+
+
+## Development
+
+
+### Project Structure
+
+To make the game load as fast as possible, the app is split into 2 parts:
+
+- __boot__: A special module to load the game.
+- __game__: The game itself.
+
+
+The directory structure:
+
+- __www__: These files will be hosted online
+  - __boot__: The built boot loader.
+  - __build__: The built game (not included in Git).
+  - __src__: The source code for the game and the boot loader.
+    - __boot__: The source code for the boot loader.
+    - __app__: The source code for the game.
+
+
+### Prerequisites
+
+- Node.js
+- Git
+
+
+### Setup
+
+1. Clone the Git repository.
+2. ```bash
+   npm install
+   ```
+   to install dependencies.
+
+
+### Development Server
+
+```bash
+npm run server
+```
+
+
+### Building
+
+```bash
+npm run build
+```
+
 
 
 ### Bemuse file

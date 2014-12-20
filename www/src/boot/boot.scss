@@ -1,0 +1,62 @@
+
+.bemuse-boot {
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+
+  &--title {
+    color: #8b8685;
+  }
+
+  &--text {
+    letter-spacing: 0.5ex;
+    &:not(:first-child) {
+      margin-left: 0.5ex;
+    }
+  }
+
+  &--star {
+    display: inline-block;
+  }
+
+  &--progress {
+    width: 100px;
+    margin: 10px auto 3px;
+    padding: 1px;
+    border: 1px solid #8b8685;
+  }
+
+  &--progress-bar {
+    $a: rgba(#8b8685, 0.7);
+    $b: rgba(#8b8685, 0);
+    width: 100%;
+    background: #8b8685;
+    height: 5px;
+    &.is-indeterminate {
+      background: linear-gradient(to bottom right,
+        $a 0%, $a 25%,
+        $b 25%, $b 50%,
+        $a 50%, $a 75%,
+        $b 75%, $b 100%);
+      background-size: 7px 7px;
+      animation: 1s bemuse-boot--indeterminate linear infinite;
+    }
+  }
+
+  &--description {
+    font-size: 10px;
+    color: #8b8685;
+    text-transform: uppercase;
+    letter-spacing: 1.5ex;
+    padding-left: 1.5ex;
+  }
+
+}
+
+@keyframes bemuse-boot--indeterminate {
+  from { background-position: 0 0; }
+  to { background-position: 7px 0; }
+}

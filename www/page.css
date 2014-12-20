@@ -1,0 +1,10 @@
+
+html, body {
+  margin: 0; padding: 0;
+}
+
+body {
+  background: black;
+  color: #e9e8e7;
+  font: 14px Verdana, sans-serif;
+}

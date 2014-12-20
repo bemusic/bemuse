@@ -1,22 +1,12 @@
 {
-  "jspm": {
-    "name": "bms",
-    "directories": {
-      "baseURL": "public",
-      "lib": "public/app"
-    },
-    "dependencies": {
-      "lodash": "^2.4.1",
-      "npm:co": "^4.0.0"
-    }
-  },
   "name": "bemuse",
   "version": "0.0.0",
   "description": "BEAT☆MUSIC☆SEQUENCE, a web-based music game of the future",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "harp server"
+    "start": "webpack-dev-server -d --progress --colors",
+    "build": "webpack -p --progress --colors"
   },
   "repository": {
     "type": "git",
@@ -32,6 +22,18 @@
   },
   "homepage": "https://github.com/spacetme/bemuse",
   "devDependencies": {
-    "harp": "^0.14.0"
+    "6to5": "^1.15.0",
+    "6to5-loader": "^0.2.4",
+    "autoprefixer-loader": "^1.0.0",
+    "css-loader": "^0.9.0",
+    "jade": "^1.8.2",
+    "jade-loader": "^0.7.0",
+    "sass-loader": "^0.3.1",
+    "style-loader": "^0.8.2",
+    "webpack": "^1.4.13",
+    "webpack-dev-server": "^1.6.6"
+  },
+  "dependencies": {
+    "jquery": "^2.1.3"
   }
 }
