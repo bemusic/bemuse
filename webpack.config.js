@@ -27,7 +27,7 @@ module.exports = {
       this.plugin('done', function(stats) {
         var hash = stats.hash
         var url = 'build/' + stats.toJson().assetsByChunkName['boot'][0]
-        require('fs').writeFileSync(path.join(__dirname, 'www', 'boot.js'),
+        require('fs').writeFileSync(path.join(__dirname, 'www', 'build', 'main.js'),
           'document.write("<script src=\\"' + url + '\\"><\\/script>")');
       })
     }
