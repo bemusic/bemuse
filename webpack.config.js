@@ -6,6 +6,7 @@ module.exports = {
   entry: {
     boot: './src/boot'
   },
+  devtool: 'source-map',
   output: {
     path: path.join(__dirname, 'www', 'build'),
     publicPath: '/build/',
