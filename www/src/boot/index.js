@@ -5,11 +5,17 @@
 // we minimize the amount of dependencies.
 //
 
-import './boot'
+import * as boot from './boot'
+
+function load(loader) {
+  loader(function(mdl) {
+    boot.disappear()
+  })
+}
 
 if (location.search.indexOf('mode=test') > -1) {
-  require.ensure(['../test'], (require) => require('../test'))
+  load(require('bundle?lazy!../test'))
 } else {
-  require.ensure(['../app'], (require) => require('../app'))
+  load(require('bundle?lazy!../app'))
 }
 

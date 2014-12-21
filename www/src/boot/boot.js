@@ -9,3 +9,7 @@ boot.querySelector('.js-progress-bar').classList.add('is-indeterminate')
 
 document.body.appendChild(boot)
 
+export function disappear() {
+  boot.style.display = 'none'
+}
+

@@ -87,6 +87,9 @@ The directory structure:
 npm start
 ```
 
+- To run the application, go to `http://localhost:8080/`.
+- To run unit tests, go to `http://localhost:8080/?mode=test`.
+
 
 ### Building
 
