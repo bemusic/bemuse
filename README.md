@@ -6,6 +6,9 @@
 
 <p align="center">
   <a href="https://waffle.io/bemusic/bemuse"><img src="http://img.shields.io/badge/wow%20much-waffle-green.svg?style=flat" alt="Waffles"></a>
+  <a href="https://travis-ci.org/bemusic/bemuse"><img src="https://img.shields.io/travis/bemusic/bemuse.svg?style=flat" alt="Travis CI"></a>
+  <a href="https://codeclimate.com/github/bemusic/bemuse"><img src="https://img.shields.io/codeclimate/github/bemusic/bemuse.svg?style=flat" alt="Code Climate"></a>
+  <a href="https://codeclimate.com/github/bemusic/bemuse"><img src="https://img.shields.io/codeclimate/coverage/github/bemusic/bemuse.svg?style=flat" alt="Code Climate (Coverage)"></a>
 </p>
 
 ---
