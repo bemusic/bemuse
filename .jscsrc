@@ -8,5 +8,10 @@
     "escape": true,
     "mark": "'"
   },
-  "disallowSpacesInAnonymousFunctionExpression": null
+  "disallowSpacesInAnonymousFunctionExpression": null,
+  "requireTrailingComma": {
+    "ignoreSingleLine": true,
+    "ignoreSingleValue": true
+  },
+  "requireCurlyBraces": null
 }
