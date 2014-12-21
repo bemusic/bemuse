@@ -13,7 +13,8 @@ module.exports = {
   },
   devServer: {
     contentBase: './www',
-    publicPath: '/build/'
+    publicPath: '/build/',
+    stats: { colors: true },
   },
   module: {
     loaders: [
@@ -30,7 +31,7 @@ module.exports = {
     function() {
       this.plugin('done', function(stats) {
         var hash = stats.hash
-        var url = 'build/' + stats.toJson().assetsByChunkName['boot'][0]
+        var url = 'build/' + stats.toJson().assetsByChunkName.boot[0]
         require('fs').writeFileSync(path.join(__dirname, 'www', 'build', 'main.js'),
           'document.write("<script src=\\"' + url + '\\"><\\/script>")');
       })

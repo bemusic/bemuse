@@ -31,7 +31,7 @@ var htmlReporter = new jasmine.HtmlReporter({
   createTextNode() {
     return document.createTextNode.apply(document, arguments)
   },
-  timer: new jasmine.Timer()
+  timer: new jasmine.Timer(),
 })
 
 // Use QueryString for options.

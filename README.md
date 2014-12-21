@@ -79,12 +79,16 @@ The directory structure:
    npm install
    ```
    to install dependencies.
+3. ```bash
+   npm install -g gulp
+   ```
+   to install Gulp command-line tool.
 
 
 ### Development Server
 
 ```bash
-npm start
+gulp server
 ```
 
 - To run the application, go to `http://localhost:8080/`.
@@ -94,13 +98,12 @@ npm start
 ### Building
 
 ```bash
-npm run build
+gulp build
 ```
 
 
 ### Deploying
 
-TODO
 
 
 ### Bemuse File
