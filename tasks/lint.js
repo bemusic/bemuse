@@ -36,14 +36,16 @@ function collectFiles(src) {
 }
 
 gulp.task('lint:jscs', function() {
-
   let checker = new Checker({ esnext: true })
   checker.getConfiguration().registerDefaultRules()
   checker.configure(configFile.load())
-
   return collectFiles(gulp.src(paths.scripts))
     .then(files    => files.map(file => checker.checkFile(file.path)))
     .then(promises => Promise.all(promises))
-    .then(result   => ConsoleReporter(result))
-
+    .then(function(result) {
+      ConsoleReporter(result)
+      if (result.some(fileErrors => !fileErrors.isEmpty())) {
+        throw new gutil.PluginError('jscs', 'Coding style error!')
+      }
+    })
 })
