@@ -130,9 +130,13 @@ BMS files need to be converted into `.bemuse` file format. It is a simple file f
 		* File size
 		* File offset (relative to payload start)
 	* dependencies
-	  * list of relative path to extra `.bemuse` file to load. (*1)
+	  * list of relative path to extra `.bemuse` file to load. [^1]
 * The payload
 	* just a stream of bytes created from multiple files concatenated so that it can be sliced easily.
 
+[^1]: There isn't a simple way to perform partial download of large files. One approach is to split the `.bemuse` file into several parts. Therefore, if the download fails, we don't have to re-download the whole thing.
 
-(*1): There isn't a simple way to perform partial download of large files. One approach is to split the `.bemuse` file into several parts. Therefore, if the download fails, we don't have to re-download the whole thing.
+
+## License
+
+[LICENSE](AGPLv3), for now.
