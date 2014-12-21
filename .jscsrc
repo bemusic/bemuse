@@ -1,0 +1,12 @@
+{
+  "preset": "google",
+  "esnext": true,
+  "disallowSpacesInsideObjectBrackets": null,
+  "disallowMultipleLineBreaks": null,
+  "disallowSemicolons": true,
+  "validateQuoteMarks": {
+    "escape": true,
+    "mark": "'"
+  },
+  "disallowSpacesInAnonymousFunctionExpression": null
+}

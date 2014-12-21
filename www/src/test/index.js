@@ -19,20 +19,29 @@ import 'jasmine/jasmine.css'
 jasmineRequire.html(jasmine)
 var htmlReporter = new jasmine.HtmlReporter({
   env: env,
-  onRaiseExceptionsClick: function() { queryString.setParam("catch", !env.catchingExceptions()); },
-  getContainer: function() { return document.body; },
-  createElement: function() { return document.createElement.apply(document, arguments); },
-  createTextNode: function() { return document.createTextNode.apply(document, arguments); },
+  onRaiseExceptionsClick() {
+    queryString.setParam('catch', !env.catchingExceptions())
+  },
+  getContainer() {
+    return document.body
+  },
+  createElement() {
+    return document.createElement.apply(document, arguments)
+  },
+  createTextNode() {
+    return document.createTextNode.apply(document, arguments)
+  },
   timer: new jasmine.Timer()
 })
 
 // Use QueryString for options.
 //
 var queryString = new jasmine.QueryString({
-  getWindowLocation: function() { return window.location; }
+  getWindowLocation() { return window.location }
 })
-var catchingExceptions = queryString.getParam("catch");
-env.catchExceptions(typeof catchingExceptions === "undefined" ? true : catchingExceptions);
+var catchingExceptions = queryString.getParam('catch')
+env.catchExceptions(
+  catchingExceptions === 'undefined' ?  true : catchingExceptions)
 
 // Add those reporters!
 //
@@ -40,11 +49,13 @@ env.addReporter(jasmineInterface.jsApiReporter)
 env.addReporter(htmlReporter)
 
 var specFilter = new jasmine.HtmlSpecFilter({
-  filterString: function() { return queryString.getParam("spec") }
+  filterString() {
+    return queryString.getParam('spec')
+  }
 })
 
 env.specFilter = function(spec) {
-  return specFilter.matches(spec.getFullName());
+  return specFilter.matches(spec.getFullName())
 }
 
 // Allow timing functions to be overridden.

@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "jscs": "./node_modules/.bin/jscs www/src/**/*.js",
+    "jshint": "./node_modules/.bin/jshint www/src/**/*.js",
     "start": "webpack-dev-server -d --progress --colors",
     "build": "webpack -p --progress --colors"
   },
@@ -34,7 +36,7 @@
     "jade": "^1.8.2",
     "jade-loader": "^0.7.0",
     "jasmine": "^2.1.1",
-    "jscs": "^1.8.1",
+    "jscs": "https://github.com/jscs-dev/node-jscs/tarball/9aae17edb06606af1396461e7746c38be436dfad",
     "jshint": "^2.5.11",
     "sass-loader": "^0.3.1",
     "style-loader": "^0.8.2",
@@ -43,6 +45,7 @@
     "webpack-dev-server": "^1.6.6"
   },
   "dependencies": {
+    "co": "^4.0.2",
     "jquery": "^2.1.3"
   }
 }

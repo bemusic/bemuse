@@ -1,6 +1,6 @@
 
-import "./boot.scss"
-import * as template from "./boot.jade"
+import './boot.scss'
+import * as template from './boot.jade'
 
 var boot = document.createElement('div')
 boot.id = 'boot'

@@ -8,10 +8,10 @@ function wait() {
   return new Promise(resolve => setTimeout(resolve, 3000))
 }
 
-async function lol() {
-  await wait()
+let lol = co.wrap(function* lol() {
+  yield wait()
   $('body').append('AWESOME')
-}
+})
 
 lol()
 
