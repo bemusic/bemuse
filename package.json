@@ -4,7 +4,7 @@
   "description": "BEAT☆MUSIC☆SEQUENCE, a web-based music game of the future",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "gulp test",
     "lint": "gulp lint",
     "start": "gulp server",
     "build": "gulp build"
