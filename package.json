@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "jscs": "./node_modules/.bin/jscs www/src/**/*.js",
-    "jshint": "./node_modules/.bin/jshint www/src/**/*.js",
-    "start": "webpack-dev-server -d --progress --colors",
-    "build": "webpack -p --progress --colors"
+    "lint": "gulp lint",
+    "start": "gulp server",
+    "build": "gulp build"
   },
   "repository": {
     "type": "git",
