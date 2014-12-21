@@ -24,6 +24,7 @@ gulp.task('lint:jshint', function() {
   return gulp.src(paths.scripts)
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
+    .pipe(jshint.reporter('fail'))
 })
 
 function collectFiles(src) {
