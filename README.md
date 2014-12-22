@@ -13,6 +13,8 @@
 
 ---
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/bemusic/bemuse?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 __This project uses [README-Driven Development][RDD]__, and we are in the planning stage. Therefore, what you read below, as of the time of writing, doesn't exist yet. Also check out the [__Project Plan__][Plan]. The actual development starts in 2015. This file will also evolve over time as development progresses.
 
 Should you have any question about the project plan, now is a good time to raise an issue.
