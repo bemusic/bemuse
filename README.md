@@ -74,6 +74,7 @@ The directory structure:
 
 - Node.js
 - Git
+- Text Editor with `.editorconfig` Support
 
 
 ### Setup
