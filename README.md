@@ -79,13 +79,17 @@ The directory structure:
 ### Setup
 
 1. Clone the Git repository.
+
 2. ```bash
    npm install
    ```
+
    to install dependencies.
+
 3. ```bash
    npm install -g gulp
    ```
+
    to install Gulp command-line tool.
 
 
