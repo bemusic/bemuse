@@ -29,19 +29,19 @@ Play on your computer or on your iPad.
 ## Features
 
 * Online play
-	* comes with some [default selection of songs](https://github.com/bemusic/music).
-	* people can host song collections on their own servers too.
+  * comes with some [default selection of songs](https://github.com/bemusic/music).
+  * people can host song collections on their own servers too.
 * Offline play
-	* downloaded simfiles can be played later offline.
-	* can also play simfiles on your computer.
+  * downloaded simfiles can be played later offline.
+  * can also play simfiles on your computer.
 * BMS simfile support:
-	* 7-keys + Scratch
-	* 7-keys
-	* 14-keys
-	* However, they must be converted into ".bemuse" files first.
+  * 7-keys + Scratch
+  * 7-keys
+  * 14-keys
+  * However, they must be converted into ".bemuse" files first.
 * Game modes:
-	* Single player mode
-	* Two player mode — two players play on the same machine.
+  * Single player mode
+  * Two player mode — two players play on the same machine.
 * Online start time synchronization — play together with friends.
 * Fully supports keysounds.
 * Supports `#LNTYPE 1` and `#LNOBJ`.
@@ -123,24 +123,24 @@ BMS files need to be converted into `.bemuse` file format. It is a simple file f
 * 10 bytes magic string "BEMUSEPACK"
 * 4 bytes - metadata size N
 * N bytes - metadata in JSON format
-	* song metadata
-	  * title
-	  * artist
-	  * genre
-	  * BPM
-	  * readme
-	* list of all files
-		* File name
-		* File size
-		* File offset (relative to payload start)
-	* dependencies
-	  * list of objects
+  * song metadata
+    * title
+    * artist
+    * genre
+    * BPM
+    * readme
+  * list of all files
+    * File name
+    * File size
+    * File offset (relative to payload start)
+  * dependencies
+    * list of objects
       * url: relative path to extra `.bemuse` file to load. [^1]
       * type: list of resource types such as "bms", "keysound", "bga"
         * for efficiently loading needed resources
         * for example, dependencies without "bga" type will not be loaded when "bga" feature is turned off (or not implemented :trollface:)
 * The payload
-	* just a stream of bytes created from multiple files concatenated so that it can be sliced easily.
+  * just a stream of bytes created from multiple files concatenated so that it can be sliced easily.
 
 [^1]: There isn't a simple way to perform partial download of large files. One approach is to split the `.bemuse` file into several parts. Therefore, if the download fails, we don't have to re-download the whole thing.
 
