@@ -1,6 +1,6 @@
 
 import { join, dirname } from 'path'
 
-export let path = join.bind(null, dirname(__dirname))
+export let path = (...segments) => join(dirname(__dirname), ...segments)
 export default path
 
