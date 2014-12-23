@@ -134,7 +134,11 @@ BMS files need to be converted into `.bemuse` file format. It is a simple file f
 		* File size
 		* File offset (relative to payload start)
 	* dependencies
-	  * list of relative path to extra `.bemuse` file to load. [^1]
+	  * list of objects
+      * url: relative path to extra `.bemuse` file to load. [^1]
+      * type: list of resource types such as "bms", "keysound", "bga"
+        * for efficiently loading needed resources
+        * for example, dependencies without "bga" type will not be loaded when "bga" feature is turned off (or not implemented :trollface:)
 * The payload
 	* just a stream of bytes created from multiple files concatenated so that it can be sliced easily.
 
