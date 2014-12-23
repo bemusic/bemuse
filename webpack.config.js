@@ -8,8 +8,8 @@ module.exports = {
   },
   devtool: 'source-map',
   output: {
-    path: path.join(__dirname, 'build'),
-    publicPath: '/build/',
+    path: path.join(__dirname, 'dist', 'build'),
+    publicPath: 'build/',
     filename: '[name].js'
   },
   devServer: {

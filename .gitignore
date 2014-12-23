@@ -1,5 +1,4 @@
-/www/build/**/*.js
-/www/build/**/*.map
+/dist/
 
 # created by git-ignore
 # Logs
