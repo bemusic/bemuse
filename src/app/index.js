@@ -1,6 +1,8 @@
 
-import $ from 'jquery'
 import '6to5/polyfill'
+
+import $ from 'jquery'
+import co from 'co'
 
 console.log(x => x + 1)
 

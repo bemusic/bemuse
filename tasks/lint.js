@@ -4,6 +4,7 @@ import gutil            from 'gulp-util'
 import through2         from 'through2'
 import { readFileSync } from 'fs'
 import { resolve }      from 'path'
+import path             from '../config/path'
 
 import jshint           from 'gulp-jshint'
 
@@ -13,8 +14,9 @@ import ConsoleReporter  from 'jscs/lib/reporters/console'
 
 let paths = {
   scripts: [
-    __dirname + '/../www/src/**/*.js',
-    __dirname + '/../tasks/**/*.js',
+    path('src', '**', '*.js'),
+    path('tasks', '**', '*.js'),
+    path('config', '**', '*.js'),
   ]
 }
 

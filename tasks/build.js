@@ -4,7 +4,7 @@ import gutil   from 'gulp-util'
 import webpack from 'webpack'
 import config  from '../webpack.config'
 
-gulp.task('build', function(callback) {
+gulp.task('build', ['dist'], function(callback) {
   webpack(config, function(err, stats) {
     if (err) throw new gutil.PluginError('webpack', err)
     gutil.log('[webpack]', stats.toString({ colors: true }))
