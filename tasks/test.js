@@ -6,6 +6,7 @@ import launcher   from 'browser-launcher'
 import co         from 'co'
 import promisify  from 'es6-promisify'
 import gutil      from 'gulp-util'
+import fs         from 'fs'
 
 import path             from '../config/path'
 import testMiddleware   from './support/test-middleware'
@@ -67,6 +68,18 @@ export function test() {
             console.log(expectation.stack)
           }
         }
+      }
+
+      if (result.coverage) {
+        if (!fs.existsSync(path('coverage'))) {
+          fs.mkdirSync(path('coverage'))
+        }
+        fs.writeFileSync(
+          path('coverage', 'coverage.json'),
+          JSON.stringify(result.coverage),
+          'utf8'
+        )
+        log('coverage report written')
       }
 
       if (fail) throw new gutil.PluginError('test', 'Testing failed!')
