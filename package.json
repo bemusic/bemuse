@@ -7,7 +7,8 @@
     "test": "gulp test",
     "lint": "gulp lint",
     "start": "gulp server",
-    "build": "gulp build"
+    "build": "gulp build",
+    "travis": "gulp travis"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,8 @@
     "6to5": "^1.15.0",
     "6to5-loader": "^0.2.4",
     "autoprefixer-loader": "^1.0.0",
+    "body-parser": "^1.10.0",
+    "browser-launcher": "^1.0.0",
     "bundle-loader": "^0.5.2",
     "connect": "^3.3.3",
     "css-loader": "^0.9.0",
@@ -52,6 +55,7 @@
   },
   "dependencies": {
     "co": "^4.0.2",
+    "es6-promisify": "^1.1.1",
     "jquery": "^2.1.3"
   }
 }

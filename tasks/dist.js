@@ -1,10 +1,7 @@
 
 import gulp    from 'gulp'
-import gutil   from 'gulp-util'
-import webpack from 'webpack'
 import merge   from 'merge-stream'
 
-import config  from '../webpack.config'
 import routes  from '../config/routes'
 import path    from '../config/path'
 
