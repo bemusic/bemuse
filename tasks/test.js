@@ -20,12 +20,12 @@ export function test() {
 
     let promises = {
       server: startTestServer(),
-      launch: startBrowserLauncher()
+      launch: startBrowserLauncher(),
     }
 
     let launch = yield promises.launch
     log('browser launcher initiated')
-    
+
     let server = yield promises.server
     log('server initialized')
 
@@ -54,13 +54,14 @@ export function test() {
         let passed = spec.passedExpectations.length
         let failed = spec.failedExpectations.length
         let total = passed + failed
+        let stats = `[${passed}/${total}]`
         if (spec.status == 'passed') {
-          console.log('\033[1;32m[OK]\033[m', spec.fullName, ` [${passed}/${total}]`)
+          console.log('\033[1;32m[OK]\033[m', spec.fullName, stats)
         } else if (spec.status == 'pending') {
-          console.log('\033[1;33m[PEND]\033[m', spec.fullName, ` [${passed}/${total}]`)
+          console.log('\033[1;33m[PEND]\033[m', spec.fullName, stats)
         } else {
           fail = true
-          console.log('\033[1;31m[FAIL]\033[m', spec.fullName, ` [${passed}/${total}]`)
+          console.log('\033[1;31m[FAIL]\033[m', spec.fullName, stats)
           for (let expectation of spec.failedExpectations) {
             console.log('\033[1;31m' + expectation.message + '\033[m')
             console.log(expectation.stack)
@@ -81,7 +82,7 @@ export function test() {
 function startTestServer(callback) {
 
   return new Promise(function(resolve, reject) {
-    
+
     let app = express()
     let server = http.createServer(app)
 
