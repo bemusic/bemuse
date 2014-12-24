@@ -1,6 +1,6 @@
 <h1 align="center">BEAT☆MUSIC☆SEQUENCE</h1>
 
-<p align="center">(also known as BE☆MU☆SE, BEMUSE, and B☆M☆S)</p>
+<p align="center">(a.k.a. BE☆MU☆SE)</p>
 
 <h3 align="center"><em>web-based music game of the future</em></h3>
 
