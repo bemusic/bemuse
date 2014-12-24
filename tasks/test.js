@@ -6,6 +6,8 @@ import launcher   from 'browser-launcher'
 import co         from 'co'
 import promisify  from 'es6-promisify'
 import gutil      from 'gulp-util'
+import fs         from 'fs'
+import { exec }   from 'child_process'
 
 import path             from '../config/path'
 import testMiddleware   from './support/test-middleware'
@@ -69,6 +71,21 @@ export function test() {
         }
       }
 
+      if (result.coverage) {
+        if (!fs.existsSync(path('coverage'))) {
+          fs.mkdirSync(path('coverage'))
+        }
+        fs.writeFileSync(
+          path('coverage', 'coverage.json'),
+          JSON.stringify(result.coverage),
+          'utf8'
+        )
+        log('coverage data written')
+
+        yield generateIstanbulReport()
+        log('lcov report written')
+      }
+
       if (fail) throw new gutil.PluginError('test', 'Testing failed!')
 
     } finally {
@@ -107,3 +124,6 @@ function startBrowserLauncher() {
   return promisify(launcher)()
 }
 
+function generateIstanbulReport() {
+  return promisify(exec)('istanbul report')
+}
