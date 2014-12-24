@@ -1,6 +1,12 @@
 
 var path = require('path')
 
+let postLoaders = []
+
+if (process.env.COV == 'true') {
+  postLoaders.push({ test: /\/src\/.*\.js$/, loader: 'istanbul-instrumenter' })
+}
+
 module.exports = {
   context: path.join(__dirname, 'src'),
   entry: {
@@ -24,8 +30,6 @@ module.exports = {
       { test: /\.css$/, loader: 'style!css!autoprefixer?browsers=last 2 version' },
       { test: /\.jade/, loader: 'jade' },
     ],
-    postLoaders: [
-      { test: /\/src\/.*\.js$/, loader: 'istanbul-instrumenter' },
-    ],
+    postLoaders,
   },
 }
