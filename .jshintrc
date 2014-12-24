@@ -1,4 +1,16 @@
 {
   "asi": true,
-  "esnext": true
+  "esnext": true,
+  "eqeqeq": true,
+  "camelcase": true,
+  "funcscope": true,
+  "immed": true,
+  "latedef": "nofunc",
+  "noarg": true,
+  "singleGroups": true,
+  "unused": true,
+
+  "browser": true,
+  "devel": true,
+  "node": true
 }

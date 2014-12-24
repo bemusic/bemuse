@@ -8,7 +8,7 @@
 import * as boot from './boot'
 
 function load(loader) {
-  loader(function(mdl) {
+  loader(function(/* module */) {
     boot.disappear()
   })
 }

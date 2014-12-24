@@ -55,9 +55,9 @@ export function test() {
         let failed = spec.failedExpectations.length
         let total = passed + failed
         let stats = `[${passed}/${total}]`
-        if (spec.status == 'passed') {
+        if (spec.status === 'passed') {
           console.log('\033[1;32m[OK]\033[m', spec.fullName, stats)
-        } else if (spec.status == 'pending') {
+        } else if (spec.status === 'pending') {
           console.log('\033[1;33m[PEND]\033[m', spec.fullName, stats)
         } else {
           fail = true
@@ -79,14 +79,14 @@ export function test() {
 
 }
 
-function startTestServer(callback) {
+function startTestServer() {
 
   return new Promise(function(resolve, reject) {
 
     let app = express()
     let server = http.createServer(app)
 
-    server.testResult = new Promise(function(resolve, reject) {
+    server.testResult = new Promise(function(resolve) {
       app.use('/api/test', testMiddleware(function(result) {
         resolve(result)
       }))

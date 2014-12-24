@@ -25,4 +25,6 @@ gulp.task('server', function(callback) {
     gutil.log('[webpack-dev-server]', 'http://localhost:8080/')
   })
 
+  void callback
+
 })

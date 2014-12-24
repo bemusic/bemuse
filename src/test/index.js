@@ -12,6 +12,12 @@ var env = jasmine.getEnv()
 var jasmineInterface = jasmineRequire.interface(jasmine, env)
 Object.assign(window, jasmineInterface)
 
+// Import the query string parser.
+//
+var queryString = new jasmine.QueryString({
+  getWindowLocation() { return window.location }
+})
+
 // Report as pretty HTML
 //
 import 'jasmine/jasmine-html'
@@ -34,11 +40,8 @@ var htmlReporter = new jasmine.HtmlReporter({
   timer: new jasmine.Timer(),
 })
 
-// Use QueryString for options.
+// Catch exceptions based on queryString
 //
-var queryString = new jasmine.QueryString({
-  getWindowLocation() { return window.location }
-})
 var catchingExceptions = queryString.getParam('catch')
 env.catchExceptions(
   typeof catchingExceptions === 'undefined' ?  true : catchingExceptions)

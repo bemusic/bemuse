@@ -1,9 +1,6 @@
 
 import gulp             from 'gulp'
 import gutil            from 'gulp-util'
-import through2         from 'through2'
-import { readFileSync } from 'fs'
-import { resolve }      from 'path'
 import path             from '../config/path'
 
 import jshint           from 'gulp-jshint'
@@ -34,7 +31,7 @@ function collectFiles(src) {
     var files = []
     src.on('data',  item => files.push(item))
     src.on('end',     () => resolve(files))
-    src.on('error'   , e => reject(error))
+    src.on('error',    e => reject(e))
   })
 }
 
