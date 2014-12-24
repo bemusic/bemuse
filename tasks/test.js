@@ -7,6 +7,7 @@ import co         from 'co'
 import promisify  from 'es6-promisify'
 import gutil      from 'gulp-util'
 import fs         from 'fs'
+import { exec }   from 'child_process'
 
 import path             from '../config/path'
 import testMiddleware   from './support/test-middleware'
@@ -79,7 +80,10 @@ export function test() {
           JSON.stringify(result.coverage),
           'utf8'
         )
-        log('coverage report written')
+        log('coverage data written')
+
+        yield generateIstanbulReport()
+        log('lcov report written')
       }
 
       if (fail) throw new gutil.PluginError('test', 'Testing failed!')
@@ -120,3 +124,6 @@ function startBrowserLauncher() {
   return promisify(launcher)()
 }
 
+function generateIstanbulReport() {
+  return promisify(exec)('istanbul report')
+}
