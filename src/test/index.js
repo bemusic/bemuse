@@ -41,12 +41,25 @@ var queryString = new jasmine.QueryString({
 })
 var catchingExceptions = queryString.getParam('catch')
 env.catchExceptions(
-  catchingExceptions === 'undefined' ?  true : catchingExceptions)
+  typeof catchingExceptions === 'undefined' ?  true : catchingExceptions)
 
 // Add those reporters!
 //
 env.addReporter(jasmineInterface.jsApiReporter)
 env.addReporter(htmlReporter)
+env.addReporter({
+  jasmineDone() {
+    setTimeout(function() {
+      let specs = jsApiReporter.specs()
+      let coverage = window.__coverage__ || null
+      let json = JSON.stringify({ specs, coverage })
+      let xh = new XMLHttpRequest()
+      xh.open('POST', '/api/test', true)
+      xh.setRequestHeader('Content-Type', 'application/json')
+      xh.send(json)
+    })
+  }
+})
 
 var specFilter = new jasmine.HtmlSpecFilter({
   filterString() {
