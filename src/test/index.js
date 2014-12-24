@@ -12,7 +12,13 @@ var env = jasmine.getEnv()
 var jasmineInterface = jasmineRequire.interface(jasmine, env)
 Object.assign(window, jasmineInterface)
 
-// Import the query string parser.
+// Import the HTML reporter and QueryString library
+//
+import 'jasmine/jasmine-html'
+import 'jasmine/jasmine.css'
+jasmineRequire.html(jasmine)
+
+// Import the query string parser
 //
 var queryString = new jasmine.QueryString({
   getWindowLocation() { return window.location }
@@ -20,9 +26,6 @@ var queryString = new jasmine.QueryString({
 
 // Report as pretty HTML
 //
-import 'jasmine/jasmine-html'
-import 'jasmine/jasmine.css'
-jasmineRequire.html(jasmine)
 var htmlReporter = new jasmine.HtmlReporter({
   env: env,
   onRaiseExceptionsClick() {
