@@ -7,7 +7,6 @@
   "immed": true,
   "latedef": "nofunc",
   "noarg": true,
-  "singleGroups": true,
   "unused": true,
 
   "browser": true,

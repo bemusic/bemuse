@@ -3,7 +3,7 @@ var path = require('path')
 
 let postLoaders = []
 
-if (process.env.COV == 'true') {
+if (process.env.COV === 'true') {
   postLoaders.push({ test: /\/src\/.*\.js$/, loader: 'istanbul-instrumenter' })
 }
 
@@ -16,7 +16,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist', 'build'),
     publicPath: 'build/',
-    filename: '[name].js'
+    filename: '[name].js',
   },
   devServer: {
     contentBase: false,
@@ -25,10 +25,23 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\/src\/.*\.js$/, loader: '6to5?modules=commonInterop&experimental=true'},
-      { test: /\.scss$/, loader: 'style!css!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded' },
-      { test: /\.css$/, loader: 'style!css!autoprefixer?browsers=last 2 version' },
-      { test: /\.jade/, loader: 'jade' },
+      {
+        test: /\/src\/.*\.js$/,
+        loader: '6to5?modules=commonInterop&experimental=true',
+      },
+      {
+        test: /\.scss$/,
+        loader: 'style!css!autoprefixer?browsers=last 2 version' +
+                '!sass?outputStyle=expanded',
+      },
+      {
+        test: /\.css$/,
+        loader: 'style!css!autoprefixer?browsers=last 2 version',
+      },
+      {
+        test: /\.jade/,
+        loader: 'jade',
+      },
     ],
     postLoaders,
   },

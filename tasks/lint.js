@@ -14,6 +14,7 @@ let paths = {
     path('src', '**', '*.js'),
     path('tasks', '**', '*.js'),
     path('config', '**', '*.js'),
+    path('webpack.config.js'),
   ]
 }
 
