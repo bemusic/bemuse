@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+PRE_COMMIT_HOOK=.git/hooks/pre-commit
+
+echo '#!/bin/sh -e' > $PRE_COMMIT_HOOK
+echo 'npm run pre-commit' >> $PRE_COMMIT_HOOK
+chmod +x $PRE_COMMIT_HOOK
+
+echo 'pre-commit hook installed!'

@@ -88,16 +88,15 @@ The directory structure:
    to install dependencies.
 
 3. ```bash
-   npm install -g gulp
+   bin/setup
    ```
 
-   to install Gulp command-line tool.
-
+   to setup pre-commit hooks and other setup stuff.
 
 ### Development Server
 
 ```bash
-gulp server
+npm start
 ```
 
 - To run the application, go to `http://localhost:8080/`.
@@ -107,11 +106,16 @@ gulp server
 ### Building
 
 ```bash
-gulp build
+npm run build
 ```
 
 
-### Deploying
+
+### Running Tests
+
+```bash
+npm test
+```
 
 
 
