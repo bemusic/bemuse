@@ -1,8 +1,6 @@
 language: node_js
 env:
   global:
-    - COV=true
-
     # CODECLIMATE_REPO_TOKEN
     - secure: "vWu/FG20Uc1JgcUmzH467bZ82BKLuRU0wfKnA6f4CGfOIHsiAL62MDA3KRqfsRpsss9JTyERQ2zm7iLEVXu4dOcKody9AsrZRWtC+wvuKBoAllUt6jZnNOgs7Hjac50TI68E0p4Hrz+0xqV+YlppU5I34mGlZ2EhmSTnZ0zdIgw="
 node_js:
@@ -11,8 +9,8 @@ before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 script:
-  - npm run build
-  - npm run travis
+  - COV=true npm run build
+  - COV=true npm run travis
 after_success:
   - 'cat coverage/lcov.info | ./node_modules/.bin/codeclimate'
 notifications:
