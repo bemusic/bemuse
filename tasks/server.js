@@ -4,7 +4,7 @@ import gutil            from 'gulp-util'
 import webpack          from 'webpack'
 import WebpackDevServer from 'webpack-dev-server'
 import express          from 'express'
-import config           from '../webpack.config'
+import config           from '../config/webpack'
 import routes           from '../config/routes'
 import testMiddleware   from './support/test-middleware'
 

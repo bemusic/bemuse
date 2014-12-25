@@ -1,20 +1,15 @@
 
-var path = require('path')
+import path     from './path'
+import NODE_ENV from 'node-env'
 
-let postLoaders = []
-
-if (process.env.COV === 'true') {
-  postLoaders.push({ test: /\/src\/.*\.js$/, loader: 'istanbul-instrumenter' })
-}
-
-module.exports = {
-  context: path.join(__dirname, 'src'),
+let config = {
+  context: path('src'),
   entry: {
     boot: './boot'
   },
   devtool: 'source-map',
   output: {
-    path: path.join(__dirname, 'dist', 'build'),
+    path: path('dist', 'build'),
     publicPath: 'build/',
     filename: '[name].js',
   },
@@ -43,6 +38,16 @@ module.exports = {
         loader: 'jade',
       },
     ],
-    postLoaders,
+    postLoaders: [],
   },
 }
+
+if (NODE_ENV === 'test') {
+  config.module.postLoaders.push({
+    test: /\/src\/.*\.js$/,
+    loader: 'istanbul-instrumenter',
+  })
+}
+
+export default config
+
