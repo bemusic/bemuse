@@ -1,6 +1,7 @@
 
 import path     from './path'
 import NODE_ENV from 'node-env'
+import webpack  from 'webpack'
 
 let config = {
   context: path('src'),
@@ -40,6 +41,7 @@ let config = {
     ],
     postLoaders: [],
   },
+  plugins: [],
 }
 
 if (NODE_ENV === 'test') {
@@ -47,6 +49,13 @@ if (NODE_ENV === 'test') {
     test: /\/src\/.*\.js$/,
     loader: 'istanbul-instrumenter',
   })
+}
+
+if (NODE_ENV === 'production') {
+  config.plugins.push(
+    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.OccurenceOrderPlugin()
+  )
 }
 
 export default config
