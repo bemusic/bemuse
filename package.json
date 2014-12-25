@@ -49,6 +49,7 @@
     "jshint-stylish": "^1.0.0",
     "merge-stream": "^0.1.6",
     "node-env": "^0.1.6",
+    "node-notifier": "^4.0.3",
     "sass-loader": "^0.3.1",
     "style-loader": "^0.8.2",
     "through2": "^0.6.3",
