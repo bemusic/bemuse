@@ -1,13 +1,8 @@
 
-import path from './path'
+import path     from './path'
+import NODE_ENV from 'node-env'
 
-let postLoaders = []
-
-if (process.env.COV === 'true') {
-  postLoaders.push({ test: /\/src\/.*\.js$/, loader: 'istanbul-instrumenter' })
-}
-
-module.exports = {
+let config = {
   context: path('src'),
   entry: {
     boot: './boot'
@@ -43,6 +38,16 @@ module.exports = {
         loader: 'jade',
       },
     ],
-    postLoaders,
+    postLoaders: [],
   },
 }
+
+if (NODE_ENV === 'test') {
+  config.module.postLoaders.push({
+    test: /\/src\/.*\.js$/,
+    loader: 'istanbul-instrumenter',
+  })
+}
+
+export default config
+
