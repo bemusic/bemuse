@@ -1,5 +1,5 @@
 
-var path = require('path')
+import path from './path'
 
 let postLoaders = []
 
@@ -8,13 +8,13 @@ if (process.env.COV === 'true') {
 }
 
 module.exports = {
-  context: path.join(__dirname, 'src'),
+  context: path('src'),
   entry: {
     boot: './boot'
   },
   devtool: 'source-map',
   output: {
-    path: path.join(__dirname, 'dist', 'build'),
+    path: path('dist', 'build'),
     publicPath: 'build/',
     filename: '[name].js',
   },
