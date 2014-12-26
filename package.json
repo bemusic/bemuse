@@ -17,6 +17,11 @@
   },
   "homepage": "https://github.com/bemusic/pack",
   "dependencies": {
-    "gulp": "^3.8.10"
+    "6to5": "^1.15.0",
+    "co": "^4.0.2",
+    "commander": "^2.5.1",
+    "es6-promisify": "^1.1.1",
+    "gulp": "^3.8.10",
+    "gulp-util": "^3.0.1"
   }
 }
