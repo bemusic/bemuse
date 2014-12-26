@@ -44,7 +44,7 @@
     "jade": "^1.8.2",
     "jade-loader": "^0.7.0",
     "jasmine": "^2.1.1",
-    "jscs": "https://github.com/jscs-dev/node-jscs/tarball/9aae17edb06606af1396461e7746c38be436dfad",
+    "jscs": "^1.9.0",
     "jshint": "^2.5.11",
     "jshint-stylish": "^1.0.0",
     "merge-stream": "^0.1.6",
