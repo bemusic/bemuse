@@ -47,7 +47,7 @@ gulp.task('server', function(callback) {
     server.use('/' + route.dest.join('/'), express.static(route.src))
   }
 
-  server.listen(8080, 'localhost', function(err) {
+  server.listen(8080, '0.0.0.0', function(err) {
     if (err) throw new gutil.PluginError('webpack-dev-server', err)
     gutil.log('[webpack-dev-server]', 'http://localhost:8080/')
   })

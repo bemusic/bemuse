@@ -7,15 +7,16 @@
 
 import * as boot from './boot'
 
-function load(loader) {
-  loader(function(/* module */) {
+function load(loader, name) {
+  loader(function(require) {
+    require(name)
     boot.disappear()
   })
 }
 
 if (location.search.indexOf('mode=test') > -1) {
-  load(require('bundle?lazy!../test'))
+  require.ensure(['../test'], require => require('../test'))
 } else {
-  load(require('bundle?lazy!../app'))
+  require.ensure(['../app'], require => require('../app'))
 }
 
