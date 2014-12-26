@@ -26,7 +26,7 @@ File Format Specification
     * list of objects
       * url: relative path to extra `.bemuse` file to load. [^1]
       * size: to be able to display progress
-      * type: list of resource types such as "bms", "keysound", "bga"
+      * type: list of resource types such as "bms", "sound", "bga"
         * for efficiently loading needed resources
         * for example, dependencies without "bga" type will not be loaded when "bga" feature is turned off (or not implemented :trollface:)
 * The payload

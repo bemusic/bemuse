@@ -45,10 +45,10 @@ function packIntoBemuse(dir, out) {
       src('*.{bms,bme,bml,pms}')
         .pipe(tagType('bms')),
       src('*.mp3')
-        .pipe(tagType('keysound')),
+        .pipe(tagType('sound')),
       src('*.{wav,ogg}', { read: false })
         .pipe(convertAudio())
-        .pipe(tagType('keysound'))
+        .pipe(tagType('sound'))
     )
 
     let stream = merge(files)
