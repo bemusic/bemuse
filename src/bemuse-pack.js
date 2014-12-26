@@ -1,7 +1,8 @@
 
-import bytes      from 'bytes'
-import gutil      from 'gulp-util'
-import fs         from 'fs'
+import bytes        from 'bytes'
+import gutil        from 'gulp-util'
+import fs           from 'fs'
+import { basename } from 'path'
 
 export default class BemusePack {
   constructor(out, options={ }) {
@@ -64,7 +65,7 @@ export default class BemusePack {
     return Promise.all(this._dependencies.map(dependency => {
       return dependency.write().then(size => {
         this.metadata.dependencies.push({
-          path: dependency.filename,
+          path: basename(dependency.filename),
           size: size,
           types: dependency.getTypes()
         })
