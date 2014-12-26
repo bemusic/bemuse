@@ -9,6 +9,7 @@
   <a href="https://travis-ci.org/bemusic/bemuse"><img src="https://img.shields.io/travis/bemusic/bemuse.svg?style=flat" alt="Travis CI"></a>
   <a href="https://codeclimate.com/github/bemusic/bemuse"><img src="https://img.shields.io/codeclimate/github/bemusic/bemuse.svg?style=flat" alt="Code Climate"></a>
   <a href="https://codeclimate.com/github/bemusic/bemuse"><img src="https://img.shields.io/codeclimate/coverage/github/bemusic/bemuse.svg?style=flat" alt="Code Climate (Coverage)"></a>
+  <a href="http://bemusic.viewdocs.io/bemuse"><img src="https://img.shields.io/badge/view-docs-brightgreen.svg?style=flat" alt="View Docs"></a>
   <a href="https://gitter.im/bemusic/bemuse"><img src="https://img.shields.io/badge/gitter-join%20chat-green.svg?style=flat" alt="Gitter"></a>
 </p>
 
