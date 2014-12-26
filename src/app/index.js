@@ -3,7 +3,6 @@ import '6to5/polyfill'
 
 import $ from 'jquery'
 import co from 'co'
-import d2b from 'data-uri-to-blob'
 
 var storage = (function() {
 
@@ -85,20 +84,20 @@ var storage = (function() {
     return new Promise(function(resolve, reject) {
       var reader = new FileReader()
       reader.onload = function() {
-        resolve({ url: reader.result })
+        resolve({ buffer: reader.result, type: blob.type })
       }
       reader.onerror = function() {
         reject(new Error('Unable to convert blob to object!'))
       }
-      reader.readAsDataURL(blob)
+      reader.readAsArrayBuffer(blob)
     })
   }
 
   function objectToBlob(object) {
     if (object instanceof Blob) {
       return object
-    } else {
-      return d2b(object.url)
+    } else if (object.buffer) {
+      return new Blob([object.buffer], { type: object.type })
     }
   }
 
