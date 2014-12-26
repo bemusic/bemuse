@@ -10,7 +10,7 @@ File Format Specification
 -------------------------
 
 * 10 bytes magic string "BEMUSEPACK"
-* 4 bytes - metadata size N
+* 4 bytes - metadata size N (UInt32LE)
 * N bytes - metadata in JSON format
   * song metadata
     * title
@@ -25,6 +25,7 @@ File Format Specification
   * dependencies
     * list of objects
       * url: relative path to extra `.bemuse` file to load. [^1]
+      * size: to be able to display progress
       * type: list of resource types such as "bms", "keysound", "bga"
         * for efficiently loading needed resources
         * for example, dependencies without "bga" type will not be loaded when "bga" feature is turned off (or not implemented :trollface:)
