@@ -1,13 +1,10 @@
 
-import gulp     from 'gulp'
-import { test } from './test'
+import gulp    from 'gulp'
+import { run } from './support/test-runner'
 
 gulp.task('travis', function() {
-
   process.env.BROWSER = 'firefox'
-
-  return test()
-  .then(
+  return run().then(
     () => {
       setTimeout(() => process.exit(), 1000)
     },
@@ -16,5 +13,4 @@ gulp.task('travis', function() {
       throw e
     }
   )
-
 })
