@@ -14,10 +14,10 @@ var storage = (function() {
 
   function connect() {
     return new Promise(function(resolve, reject) {
-      var request = indexedDB.open("cachier", 1)
+      var request = indexedDB.open('cachier', 1)
       request.onupgradeneeded = function(event) {
         var db = event.target.result
-        var store = db.createObjectStore("cachier", { keyPath: '_id' })
+        var store = db.createObjectStore('cachier', { keyPath: '_id' })
         store.transaction.oncomplete = function() {
           resolve(db)
         }
@@ -25,7 +25,7 @@ var storage = (function() {
           reject(new Error('Cannot upgrade database!'))
         }
       }
-      request.onerror = function(event) {
+      request.onerror = function() {
         reject(new Error('Cannot request database!'))
       }
       request.onsuccess = function(event) {
@@ -62,11 +62,11 @@ var storage = (function() {
           var result = request.result
           return {
             blob: objectToBlob(result.blob),
-            metadata: result.metadata
+            metadata: result.metadata,
           }
         })
       })
-    }
+    },
   }
 
   function trap(request) {
@@ -111,7 +111,7 @@ button('Download and save mp3', function() {
     alert('BLOB LOADED')
     storage.save('bass.mp3', xhr.response)
     .then(function() {
-      alert("OK!")
+      alert('OK!')
     }, function(e) {
       alert(e)
     })

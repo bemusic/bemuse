@@ -7,16 +7,14 @@
 
 import * as boot from './boot'
 
-function load(loader, name) {
-  loader(function(require) {
-    require(name)
-    boot.disappear()
-  })
+function loaded(module) {
+  boot.disappear()
+  void module
 }
 
 if (location.search.indexOf('mode=test') > -1) {
-  require.ensure(['../test'], require => require('../test'))
+  require.ensure(['../test'], require => loaded(require('../test')))
 } else {
-  require.ensure(['../app'], require => require('../app'))
+  require.ensure(['../app'], require => loaded(require('../app')))
 }
 
