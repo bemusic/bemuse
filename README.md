@@ -20,7 +20,7 @@ __This project uses [README-Driven Development][RDD]__, and we are in the planni
 Should you have any question about the project plan, now is a good time to raise an issue.
 
 [RDD]: http://tom.preston-werner.com/2010/08/23/readme-driven-development.html
-[Plan]: (https://workflowy.com/s/ZM4dIDZWRR)
+[Plan]: https://workflowy.com/s/ZM4dIDZWRR
 
 ---
 
@@ -132,6 +132,9 @@ BMS package can be converted into `.bemuse` file using [__bemusepack__][bemusepa
 
 [bemusepack]: https://github.com/bemusic/pack
 
+
+
 ## License
 
-[LICENSE](AGPLv3), for now.
+[AGPLv3](LICENSE), for now.
+After the project matures, it may be released into a more permissive license.
