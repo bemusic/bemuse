@@ -5,16 +5,18 @@
 // we minimize the amount of dependencies.
 //
 
-import * as boot from './boot'
+import * as boot        from './boot'
+import loadModule       from 'val!./loader.js'
+import * as querystring from 'querystring'
 
-function loaded(module) {
-  boot.disappear()
-  void module
-}
+let data = querystring.parse(location.search.replace(/^\?/, ''))
+let mode = data.mode || 'app'
 
-if (location.search.indexOf('mode=test') > -1) {
-  require.ensure(['../test'], require => loaded(require('../test')))
+if (loadModule[mode]) {
+  loadModule[mode](function() {
+    boot.disappear()
+  })
 } else {
-  require.ensure(['../app'], require => loaded(require('../app')))
+  console.error('Invalid mode:', mode)
 }
 
