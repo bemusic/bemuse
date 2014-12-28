@@ -11,14 +11,12 @@ function jscs() {
   checker.configure(configFile.load())
   return through2.obj(function(file, _encoding, callback) {
     void _encoding
-    checker.checkFile(file.path)
+    Promise.resolve(checker.checkFile(file.path))
     .then(function(result) {
       file.jscs = result
-      callback(null, file)
+      return file
     })
-    .catch(function(e) {
-      callback(e)
-    })
+    .nodify(callback)
   })
 }
 
