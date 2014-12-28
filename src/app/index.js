@@ -1,5 +1,5 @@
 
-import '6to5/polyfill'
+import '../polyfill'
 
 import $ from 'jquery'
 import co from 'co'

@@ -1,6 +1,5 @@
 
 import co         from 'co'
-import promisify  from 'es6-promisify'
 import gutil      from 'gulp-util'
 import fs         from 'fs'
 import { exec }   from 'child_process'
@@ -88,5 +87,5 @@ export function run() {
 }
 
 function generateIstanbulReport() {
-  return promisify(exec)('istanbul report')
+  return Promise.promisify(exec)('istanbul report')
 }

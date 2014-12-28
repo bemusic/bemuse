@@ -1,7 +1,7 @@
 
 // This file boots up Jasmine
 //
-import '6to5/polyfill'
+import '../polyfill'
 import 'jasmine/jasmine.js'
 
 var jasmineRequire = window.jasmineRequire = getJasmineRequireObj()
