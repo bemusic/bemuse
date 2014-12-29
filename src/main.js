@@ -43,7 +43,7 @@ function packIntoBemuse(dir, out) {
         .pipe(tagType('bms')),
       src('*.mp3')
         .pipe(tagType('snd')),
-      src('0*.{wav,ogg}', { read: false })
+      src('*.{wav,ogg}', { read: false })
         .pipe(convertAudio())
         .pipe(tagType('snd'))
     )

@@ -1,8 +1,10 @@
 
-import gutil          from 'gulp-util'
-import { basename }   from 'path'
-import MIME           from 'mime'
-import { createHash } from 'crypto'
+import gutil                 from 'gulp-util'
+import { basename }          from 'path'
+import MIME                  from 'mime'
+import { createHash }        from 'crypto'
+import { createWriteStream } from 'fs'
+import bytes                 from 'bytes'
 
 import Payload      from './payload'
 
@@ -10,11 +12,10 @@ const MAX_PACKAGE_SIZE = 1474560
 
 class Ref {
   constructor(number, path) {
+    this.number  = number
     this.payload = new Payload()
     this.number  = number
-    if (path) {
-      this.path  = path
-    }
+    this.path    = path
   }
   add(buffer) {
     return this.payload.add(buffer)
@@ -24,10 +25,26 @@ class Ref {
       size: this.payload.size,
       hash: this.payload.hash,
     }
-    if (this.path) {
+    if (this.number > 0) {
       out.path = basename(this.path)
     }
     return out
+  }
+  write(metadataBuffer) {
+    let file = createWriteStream(this.path)
+    let size = new Buffer(4)
+    size.writeUInt32LE(metadataBuffer.length, 0)
+
+    file.write(new Buffer('BEMUSEPACK'))
+    file.write(size)
+    file.write(metadataBuffer)
+    for (let buffer of this.payload.buffers) {
+      file.write(buffer)
+    }
+
+    return Promise.promisify(file.end.bind(file))()
+      .tap(() => gutil.log(`[BemusePack ${this.path}]`,
+                    `payload: ${bytes(this.payload.size)}`))
   }
 }
 
@@ -35,7 +52,7 @@ export default class BemusePacker {
   constructor(out) {
     this._out    = out
     this._files  = [ ]
-    this._refs   = [new Ref(0, null)]
+    this._refs   = [new Ref(0, out + '.bemuse')]
     this._refMap = { }
   }
   add(file) {
@@ -54,11 +71,15 @@ export default class BemusePacker {
     this.log(entry.refs, '<<', entry.name)
   }
   write() {
-    return new Promise((resolve, reject) => {
-      console.log(this._generateMetadata())
-      resolve()
-      void reject
+    let metadata = this._generateMetadata()
+    let promises = this._refs.map(ref => {
+      if (ref.number === 0) {
+        return ref.write(new Buffer(JSON.stringify(metadata)))
+      } else {
+        return ref.write(new Buffer(0))
+      }
     })
+    return Promise.all(promises)
   }
   log(...args) {
     gutil.log('[BemusePacker]', ...args)
