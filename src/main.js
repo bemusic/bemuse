@@ -8,13 +8,10 @@ import fs         from 'fs'
 import merge      from 'merge-stream'
 import map        from 'map-stream'
 import through2   from 'through2'
-import endpoint   from 'endpoint'
-import Throat     from 'throat'
-import { cpus }   from 'os'
-import { spawn }  from 'child_process'
 import { join }   from 'path'
 
-import BemusePack from './bemuse-pack'
+import { convertAudio } from './audio'
+import BemusePacker     from './bemuse-packer'
 
 program
 .version(require('../package.json').version)
@@ -46,13 +43,13 @@ function packIntoBemuse(dir, out) {
         .pipe(tagType('bms')),
       src('*.mp3')
         .pipe(tagType('snd')),
-      src('*.{wav,ogg}', { read: false })
+      src('0*.{wav,ogg}', { read: false })
         .pipe(convertAudio())
         .pipe(tagType('snd'))
     )
 
     let stream = merge(files)
-      .pipe(bemusePack(out))
+      .pipe(bemusePacker(out))
 
     yield waitStream(stream)
     
@@ -73,37 +70,8 @@ function waitStream(stream) {
   })
 }
 
-function convertAudio() {
-  let throat = new Throat(cpus().length || 1)
-  return map(function(file, callback) {
-    let path = file.path
-    let oldName = file.relative
-    file.path = file.path.replace(/\.\w+$/, '.mp3')
-    let log = gutil.log.bind(gutil, '[convertAudio]',
-                oldName, '->', file.relative)
-    throat(() => new Promise(function(resolve, reject) {
-      let sox = spawn('sox', [path, '-t', 'mp3', '-'])
-      sox.stdin.end()
-      sox.stderr.on('data', x => process.stderr.write(x))
-      sox.stdout.pipe(endpoint(function(err, buffer) {
-        if (err) {
-          log('ERROR!')
-          return reject(err)
-        }
-        log('OK')
-        file.contents = buffer
-        resolve(file)
-      }))
-    }))
-    .then(
-      result => callback(null, result),
-      error => callback(error)
-    )
-  })
-}
-
-function bemusePack(out) {
-  let result = new BemusePack(out)
+function bemusePacker(out) {
+  let result = new BemusePacker(out)
   return through2.obj(
     function(file, _encoding, callback) {
       void _encoding
