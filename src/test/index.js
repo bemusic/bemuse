@@ -66,6 +66,17 @@ env.addReporter({
     })
   }
 })
+env.addReporter({
+  specDone: function(result) {
+    result.failedExpectations.forEach(function(expectation) {
+      console.log('%cFailed Spec: %c%s',
+        'color: black; font: 16px sans-serif',
+        'color: black; font: bold 16px sans-serif',
+        result.fullName)
+      console.error(expectation.stack)
+    })
+  }
+})
 
 var specFilter = new jasmine.HtmlSpecFilter({
   filterString() {
