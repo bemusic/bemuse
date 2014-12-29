@@ -8,6 +8,7 @@ import fs         from 'fs'
 import promisify  from 'es6-promisify'
 import merge      from 'merge-stream'
 import map        from 'map-stream'
+import through2   from 'through2'
 import endpoint   from 'endpoint'
 import Throat     from 'throat'
 import { cpus }   from 'os'
@@ -16,8 +17,6 @@ import { join }   from 'path'
 
 import BemusePack from './bemuse-pack'
 
-let bail = error => setTimeout(() => { throw error })
-
 program
 .version(require('../package.json').version)
 .usage('[options] <directory> <output.bemuse>')
@@ -25,7 +24,8 @@ program
 
 if (program.args.length === 2) {
   packIntoBemuse(program.args[0], program.args[1].replace(/\.bemuse$/i, ''))
-  .then(() => gutil.log('converted successfully'), bail)
+  .then(() => gutil.log('converted successfully'))
+  .done()
 } else {
   console.error('Error: 2 arguments expected')
   program.outputHelp()
@@ -105,11 +105,14 @@ function convertAudio() {
 
 function bemusePack(out) {
   let result = new BemusePack(out)
-  return map(function(file, callback) {
-    result.add(file)
-    callback()
-  })
-  .on('end', function() {
-    result.write().catch(bail)
-  })
+  return through2.obj(
+    function(file, _encoding, callback) {
+      void _encoding
+      result.add(file)
+      callback()
+    },
+    function(callback) {
+      result.write().nodify(callback)
+    }
+  )
 }

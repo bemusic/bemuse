@@ -32,6 +32,7 @@
     "through2": "^0.6.3"
   },
   "devDependencies": {
+    "jasmine": "^2.1.1",
     "jscs": "^1.9.0",
     "jshint": "^2.5.11"
   }
