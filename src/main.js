@@ -1,4 +1,5 @@
 
+import 'prfun'
 import gulp       from 'gulp'
 import gutil      from 'gulp-util'
 import program    from 'commander'
@@ -37,9 +38,9 @@ function packIntoBemuse(dir, out) {
     if (!stat.isDirectory()) throw new Error('Not a directory: ' + dir)
 
     let path = (...components) => join(dir, ...components)
-    let src = (pattern, options={ }) =>
+    let src = (pattern, options) =>
                 gulp.src(path(pattern),
-                  Object.assign({ nocase: true, base: dir }, options))
+                  Object.assign({ nocase: true, base: dir }, options || { }))
 
     let files = merge(
       src('*.{bms,bme,bml,pms}')

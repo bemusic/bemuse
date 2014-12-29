@@ -9,30 +9,47 @@ A custom format is created to be easily consumed by web applications, both on de
 File Format Specification
 -------------------------
 
-* 10 bytes magic string "BEMUSEPACK"
-* 4 bytes - metadata size N (UInt32LE)
-* N bytes - metadata in JSON format
-  * song metadata
-    * title
-    * artist
-    * genre
-    * BPM
-    * readme
-  * list of all files
-    * File name
-    * File size
-    * File offset (relative to payload start)
-  * dependencies
-    * list of objects
-      * url: relative path to extra `.bemuse` file to load. [^1]
-      * size: to be able to display progress
-      * type: list of resource types such as "bms", "sound", "bga"
-        * for efficiently loading needed resources
-        * for example, dependencies without "bga" type will not be loaded when "bga" feature is turned off (or not implemented :trollface:)
-* The payload
-  * just a stream of bytes created from multiple files concatenated so that it can be sliced easily.
+A `.bemuse` file contains
 
-[^1]: There isn't a simple way to perform partial download of large files. One approach is to split the `.bemuse` file into several parts. Therefore, if the download fails, we don't have to re-download the whole thing.
+- an arbitrary metadata
+- an opaque payload
+
+Usually, the metadata describes what's inside the payload.
 
 
+### File Format
+
+- 10 bytes magic string `BEMUSEPACK`
+- 4 bytes Uint32LE — metadata size N (may be 0 if no metadata)
+- N bytes — metadata
+- the rest of the file — payload
+
+
+### Metadata
+
+An entry file should have a metadata of more than 0 bytes.
+It should be a valid JSON.
+It describe all files both internal and external.
+External packages should have metadata of 0 bytes.
+
+```js
+{
+  version: 2,
+  song: { title, artist, genre, ... },
+  refs: [
+    { size, hash }, // the first ref (0) describes its own payload
+    { path, size, hash }, // ref 1's payload metadata
+    ...
+  ],
+  files: [
+    {
+      name, type, size, hash,
+      refs: [
+        [ ref, start, end ], // start, end relative to payload
+        ...
+      ]
+    }
+  ]
+}
+```
 
