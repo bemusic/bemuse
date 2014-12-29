@@ -22,7 +22,6 @@
     "co": "^4.0.2",
     "commander": "^2.5.1",
     "endpoint": "^0.4.2",
-    "es6-promisify": "^1.1.1",
     "gulp": "^3.8.10",
     "gulp-util": "^3.0.1",
     "map-stream": "0.0.5",

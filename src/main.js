@@ -5,7 +5,6 @@ import gutil      from 'gulp-util'
 import program    from 'commander'
 import co         from 'co'
 import fs         from 'fs'
-import promisify  from 'es6-promisify'
 import merge      from 'merge-stream'
 import map        from 'map-stream'
 import through2   from 'through2'
@@ -34,7 +33,7 @@ if (program.args.length === 2) {
 function packIntoBemuse(dir, out) {
   return co(function*() {
 
-    let stat = yield promisify(fs.stat)(dir)
+    let stat = yield Promise.promisify(fs.stat)(dir)
     if (!stat.isDirectory()) throw new Error('Not a directory: ' + dir)
 
     let path = (...components) => join(dir, ...components)
