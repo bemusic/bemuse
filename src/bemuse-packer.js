@@ -86,7 +86,7 @@ export default class BemusePacker {
   }
   _makeContentRefs(buffer, assetType) {
     let ref = this._refMap[assetType]
-    if (!ref || ref.size >= MAX_PACKAGE_SIZE) {
+    if (!ref || ref.payload.size >= MAX_PACKAGE_SIZE) {
       ref = this._refMap[assetType] = this._createRef(assetType)
     }
     return [
