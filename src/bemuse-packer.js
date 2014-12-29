@@ -8,6 +8,10 @@ import bytes                 from 'bytes'
 
 import Payload      from './payload'
 
+MIME.define({
+  'application/vnd.be-music-source': ['bms', 'bme', 'bml', 'pms']
+})
+
 const MAX_PACKAGE_SIZE = 1474560
 
 class Ref {
