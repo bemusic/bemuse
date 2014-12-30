@@ -47,7 +47,7 @@ let config = {
 if (NODE_ENV === 'test' || process.env.COV === 'true') {
   config.module.postLoaders.push({
     test: /\/src\/.*\.js$/,
-    exclude: /\/src\/test\/.*\.js/,
+    exclude: /\/src\/test\/.*\.js$|\/src\/boot\/loader\.js$/,
     loader: 'istanbul-instrumenter',
   })
 }
