@@ -1,6 +1,14 @@
 
 import { Cachier } from '../../cachier'
 
+function shouldReject(promise) {
+  return Promise.resolve(promise)
+  .then(
+    () => { throw new Error('should not be success') },
+    () => 'ok, error is thrown'
+  )
+}
+
 describe('Cachier', function() {
 
   let cachier
@@ -19,11 +27,23 @@ describe('Cachier', function() {
   afterEach(retry(2)(() =>
     cachier.destroyDatabase()))
 
+  describe('.connection', () => {
+    it('should be a promise which fullfill with the db connection', () => {
+      return cachier.connection.then(function(db) {
+        expect(db.constructor + '').toMatch(/DBDatabase/)
+      })
+    })
+  })
+
   describe('#save', () => {
     it('stores a blob', () => {
       let blob = new Blob(['hello'])
       return cachier.save('wow', blob)
         .then(result => expect(result).toBeTruthy())
+    })
+    it('rejects when key is invalid', () => {
+      let blob = new Blob(['hello'])
+      return shouldReject(cachier.save(undefined, blob))
     })
   })
 
@@ -58,16 +78,30 @@ describe('Cachier', function() {
 
     describe('#delete', function() {
       it('should remove the blob', () => {
-        return cachier.delete('wow3')
-          .then(() => cachier.load('wow3')
-            .then(
-              () => { throw new Error('should not be success') },
-              () => 'ok, error is thrown'
-            )
-          )
+        return shouldReject(cachier.delete('wow3')
+          .then(() => cachier.load('wow3')))
       })
     })
 
+  })
+
+  describe('#destroyDatabase', function() {
+    it('may be called twice', () => {
+      return cachier.destroyDatabase()
+    })
+  })
+
+  describe('without blob support in IndexedDB', () => {
+    it('still works', () => {
+      let blob = new Blob(['hello'], { type: 'text/plain' })
+      cachier._NO_BLOB = true
+      return cachier.save('wow4', blob)
+        .then(() => cachier.load('wow4'))
+        .then(function({ blob }) {
+          expect(blob.size).toBe(5)
+          expect(blob.type).toBe('text/plain')
+        })
+    })
   })
 
 })

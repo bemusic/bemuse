@@ -105,6 +105,20 @@ npm start
 - To run unit tests, go to `http://localhost:8080/webpack-dev-server/?mode=test`.
 
 
+### Development Server with Code Coverage
+
+```bash
+COV=true npm start
+```
+
+This runs the server in coverage mode.
+Running the unit tests makes the server write a coverage report to `coverage`
+directory. 
+
+You can view the coverage report at `http://localhost:8080/coverage/`.
+
+
+
 ### Building
 
 ```bash
