@@ -7,9 +7,12 @@ import notifier         from 'node-notifier'
 
 import config           from '../../../config/webpack'
 import routes           from '../../../config/routes'
+import path             from '../../../config/path'
 
-import testMiddleware   from '../test-middleware'
-import testStat         from '../test-middleware/stat'
+import * as CoverageReport  from '../coverage-report'
+
+import testMiddleware       from '../test-middleware'
+import testStat             from '../test-middleware/stat'
 
 export function start() {
 
@@ -33,12 +36,17 @@ export function start() {
       }
     }
     notifier.notify(notification)
+
+    if (result.coverage) {
+      CoverageReport.generate(result.coverage)
+    }
   }))
 
   for (let route of routes) {
-    console.log(route)
     server.use('/' + route.dest.join('/'), express.static(route.src))
   }
+
+  server.use('/coverage', express.static(path('coverage', 'lcov-report')))
 
   server.listen(8080, '0.0.0.0', function(err) {
     if (err) throw new gutil.PluginError('webpack-dev-server', err)

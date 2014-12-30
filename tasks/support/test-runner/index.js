@@ -1,12 +1,10 @@
 
 import co         from 'co'
 import gutil      from 'gulp-util'
-import fs         from 'fs'
-import { exec }   from 'child_process'
 
-import path                 from '../../../config/path'
 import * as TestServer      from './server'
 import * as BrowserLauncher from './browser'
+import * as CoverageReport  from '../coverage-report'
 
 let log = gutil.log.bind(gutil, '[test-runner]')
 
@@ -58,18 +56,7 @@ export function run() {
       }
 
       if (result.coverage) {
-        if (!fs.existsSync(path('coverage'))) {
-          fs.mkdirSync(path('coverage'))
-        }
-        fs.writeFileSync(
-          path('coverage', 'coverage.json'),
-          JSON.stringify(result.coverage),
-          'utf8'
-        )
-        log('coverage data written')
-
-        yield generateIstanbulReport()
-        log('lcov report written')
+        CoverageReport.generate(result.coverage)
       }
 
       if (fail) throw new gutil.PluginError('test', 'Testing failed!')
@@ -82,6 +69,3 @@ export function run() {
 
 }
 
-function generateIstanbulReport() {
-  return Promise.promisify(exec)('istanbul report')
-}
