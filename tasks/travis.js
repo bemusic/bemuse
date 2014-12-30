@@ -1,6 +1,6 @@
 
-import gulp    from 'gulp'
-import { run } from './support/test-runner'
+import gulp             from 'gulp'
+import { run }          from './support/test-runner'
 
 gulp.task('travis', function() {
   process.env.BROWSER = 'firefox'
@@ -14,3 +14,4 @@ gulp.task('travis', function() {
     }
   )
 })
+
