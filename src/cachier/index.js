@@ -66,11 +66,24 @@ export function Cachier(databaseName) {
         })
       })
     },
-    destroy() {
-      console.log('destroy REQ')
-      let request = indexedDB.deleteDatabase(databaseName)
-      request.onerror = function() { console.log('destroy ERR') }
-      request.onsuccess = function() { console.log('destroy SUC') }
+    delete(key) {
+      return connection.then(function(db) {
+        var request = db.transaction('cachier', 'readwrite')
+              .objectStore('cachier')
+              .delete(key)
+        return trap(request)
+      })
+    },
+    destroyDatabase() {
+      if (!connection) return Promise.resolve()
+      return connection.then(function(db) {
+        db.close()
+      }).then(function() {
+        let request = indexedDB.deleteDatabase(databaseName)
+        return trap(request)
+      }).tap(function() {
+        connection = null
+      })
     },
   }
 
@@ -78,6 +91,10 @@ export function Cachier(databaseName) {
     return new Promise(function(resolve, reject) {
       request.onerror = function() {
         reject(new Error('IndexedDB Error: ' + request.error))
+      }
+      request.onblocked = function() {
+        console.log(request)
+        reject(new Error('IndexedDB Blocked: ' + request))
       }
       request.onsuccess = function(event) {
         resolve(event)
