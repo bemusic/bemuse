@@ -4,6 +4,7 @@
   "description": "BEAT☆MUSIC☆SEQUENCE, a web-based music game of the future",
   "main": "index.js",
   "scripts": {
+    "code-review": "gulp code-review",
     "test": "gulp test",
     "lint": "gulp lint",
     "start": "gulp server",

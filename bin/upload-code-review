@@ -1,0 +1,14 @@
+#!/bin/bash -e
+
+if [ -e code-review-result.txt -a "$TRAVIS_PULL_REQUEST" ]
+then
+  URL=https://bemuseaki.herokuapp.com/submit-review
+  curl "$URL" \
+    --data-urlencode "repo=$TRAVIS_REPO_SLUG" \
+    --data-urlencode "pull=$TRAVIS_PULL_REQUEST" \
+    --data-urlencode "commit=$TRAVIS_COMMIT" \
+    --data-urlencode "build=$TRAVIS_BUILD_NUMBER" \
+    --data-urlencode "job=$TRAVIS_JOB_NUMBER" \
+    --data-urlencode "text@code-review-result.txt"
+fi
+
