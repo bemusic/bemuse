@@ -23,7 +23,7 @@ let config = {
     loaders: [
       {
         test: /\/src\/.*\.js$/,
-        loader: '6to5?modules=commonInterop&experimental=true',
+        loader: '6to5?modules=common&experimental=true',
       },
       {
         test: /\.scss$/,
