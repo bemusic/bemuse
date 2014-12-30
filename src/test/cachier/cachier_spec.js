@@ -6,10 +6,18 @@ describe('Cachier', function() {
   let cachier
   let databaseNumber = 0
 
+  let retry = count => fn => () => {
+    let run = n => {
+      let promise = Promise.resolve().then(fn)
+      return n >= count ? promise : promise.catch(() => run(n + 1))
+    }
+    return run(1)
+  }
+
   beforeEach(() =>
     cachier = new Cachier(`test.${new Date().getTime()}.${++databaseNumber}`))
-  afterEach(() =>
-    cachier.destroyDatabase())
+  afterEach(retry(2)(() =>
+    cachier.destroyDatabase()))
 
   describe('#save', () => {
     it('stores a blob', () => {
@@ -23,7 +31,7 @@ describe('Cachier', function() {
 
     beforeEach(() => {
       let blob = new Blob(['hello'])
-      return cachier.save('wow2', blob, { name: 'example1' })
+      return cachier.save('wow2', blob, { name: 'example1' }).delay(10)
     })
 
     describe('#load', function() {
