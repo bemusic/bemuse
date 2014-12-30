@@ -9,6 +9,8 @@ before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 script:
+  - NODE_ENV=test npm run code-review
+  - NODE_ENV=test bin/upload-code-review
   - NODE_ENV=test npm run build
   - NODE_ENV=test npm run travis
 after_success:
