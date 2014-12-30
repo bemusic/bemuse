@@ -91,10 +91,6 @@ function formatReviewMessage() {
   )
 }
 
-function badFunction() {
-  1 == 1;
-}
-
 function reviewJSHint(result, problems) {
   if (result.success) return
   for (let entry of result.results) {
