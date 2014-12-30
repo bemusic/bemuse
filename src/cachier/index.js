@@ -36,9 +36,12 @@ function Cachier(databaseName) {
   }
 
   return {
+    connection: connection,
     save(key, blob, metadata) {
+      let NO_BLOB = !!this._NO_BLOB // for testing purpose
       return connection.then(function(db) {
         return Promise.resolve().then(function tryBlob() {
+          if (NO_BLOB) throw new Error('Requested non-Blob storing mode')
           var request = db.transaction('cachier', 'readwrite')
                 .objectStore('cachier')
                 .put({ _id: key, blob: blob, metadata: metadata })
