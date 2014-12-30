@@ -7,6 +7,7 @@ import jscs             from './support/jscs'
 import through2         from 'through2'
 import { relative }     from 'path'
 import R                from 'ramda'
+import fs               from 'fs'
 
 gulp.task('code-review', function() {
   gulp.src(javascripts)
@@ -29,23 +30,70 @@ function codeReview() {
 }
 
 function formatReviewMessage() {
-  return through2.obj(function(file, enc, cb) {
-    if (!file.problems) return cb(null, file)
-    let lines = []
-    lines.push('* __' + relative(path(), file.path) + '__')
-    for (var problem of R.sortBy(R.prop('line'))(file.problems)) {
-      lines.push([
-        '    * ',
-        `line ${problem.line}`,
-        ': ',
-        `${problem.message} (${problem.code})`,
-      ].join(''))
+  let linkTo = path => (text, extra) => {
+    if (!process.env.TRAVIS_REPO_SLUG) return text
+    let url = [
+      'https://github.com',
+      process.env.TRAVIS_REPO_SLUG,
+      'blob',
+      process.env.TRAVIS_COMMIT,
+      path,
+    ].join('/') + extra
+    return `[${text}](${url})`
+  }
+  let problems = []
+  return through2.obj(
+    function(file, enc, cb) {
+      if (!file.problems) return cb()
+      let lines = []
+      let filePath = relative(path(), file.path)
+      let link = linkTo(filePath)
+      lines.push('* ' + link(`__${filePath}__`, ''))
+      for (var problem of R.sortBy(R.prop('line'))(file.problems)) {
+        lines.push([
+          '    * ',
+          link(`line ${problem.line}`, `#L${problem.line}`),
+          `, col ${problem.col}`,
+          ': ',
+          `${problem.message} (${problem.code})`,
+        ].join(''))
+      }
+      problems.push(...lines)
+      cb()
+    },
+    function(cb) {
+      if (problems.length === 0) return cb()
+      let text = [
+        'Hello! Thank you for sending us patches!',
+        '',
+        'I am an automated bot to lint pull requests ' +
+          'to detect potential errors ' +
+          'and check for consistent coding style, ' +
+          'and I found some problems with your code submission ' +
+          'in the commit ' + process.env.TRAVIS_COMMIT + ':',
+        '',
+      ]
+      text.push(...problems)
+      text.push(
+        '',
+        'Please fix these problems, rebase your commits, ' +
+          'then leave a comment here ' +
+          'so that a human can further review your patch.',
+        '',
+        'As an additional step to prevent future lint errors, ' +
+          'please run `npm lint` before committing. ' +
+          '[A Git pre-commit hook is available.][hook]',
+        '',
+        '[hook]: https://github.com/bemusic/bemuse#setup'
+      )
+      fs.writeFileSync('code-review-result.txt', text.join('\n'))
     }
-    console.log(lines.join('\n'))
-    cb()
-  })
+  )
 }
 
+// function badFunction() {
+//   1 == 1;
+// }
 
 function reviewJSHint(result, problems) {
   if (result.success) return
