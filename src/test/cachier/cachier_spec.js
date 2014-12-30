@@ -30,7 +30,7 @@ describe('Cachier', function() {
   describe('.connection', () => {
     it('should be a promise which fullfill with the db connection', () => {
       return cachier.connection.then(function(db) {
-        expect(db.constructor.name).toMatch(/DBDatabase/)
+        expect(db.constructor + '').toMatch(/DBDatabase/)
       })
     })
   })
