@@ -1,7 +1,8 @@
 
 export default new Cachier()
+export { Cachier }
 
-export function Cachier(databaseName) {
+function Cachier(databaseName) {
 
   var indexedDB = window.indexedDB || window.webkitIndexedDB ||
                   window.mozIndexedDB || window.OIndexedDB ||
@@ -124,4 +125,5 @@ export function Cachier(databaseName) {
   }
 
 }
+
 
