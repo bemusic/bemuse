@@ -11,6 +11,7 @@ import through2   from 'through2'
 import { join }   from 'path'
 
 import { convertAudio } from './audio'
+import { Progress }     from './gulp-progress'
 import BemusePacker     from './bemuse-packer'
 
 program
@@ -33,10 +34,12 @@ function packIntoBemuse(dir, out) {
     let stat = yield Promise.promisify(fs.stat)(dir)
     if (!stat.isDirectory()) throw new Error('Not a directory: ' + dir)
 
+    let progress = new Progress()
     let path = (...components) => join(dir, ...components)
     let src = (pattern, options) =>
                 gulp.src(path(pattern),
                   Object.assign({ nocase: true, base: dir }, options || { }))
+                    .pipe(progress.in())
 
     let files = merge(
       src('*.{bms,bme,bml,pms}')
@@ -50,6 +53,7 @@ function packIntoBemuse(dir, out) {
 
     let stream = merge(files)
       .pipe(bemusePacker(out))
+      .pipe(progress.out())
 
     yield waitStream(stream)
     
@@ -72,14 +76,11 @@ function waitStream(stream) {
 
 function bemusePacker(out) {
   let result = new BemusePacker(out)
-  return through2.obj(
-    function(file, _encoding, callback) {
-      void _encoding
+  return through2.obj()
+    .on('data', function(file) {
       result.add(file)
-      callback()
-    },
-    function(callback) {
-      result.write().nodify(callback)
-    }
-  )
+    })
+    .on('end', function() {
+      result.write().done()
+    })
 }

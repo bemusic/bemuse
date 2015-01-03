@@ -23,7 +23,7 @@ export function convertAudio() {
           log('ERROR!')
           return reject(err)
         }
-        log('OK')
+        // log('OK')
         file.contents = buffer
         resolve(file)
       }))

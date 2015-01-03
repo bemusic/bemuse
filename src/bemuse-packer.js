@@ -72,7 +72,7 @@ export default class BemusePacker {
       refs: this._makeContentRefs(file.contents, file.assetType)
     }
     this._files.push(entry)
-    this.log(entry.refs, '<<', entry.name)
+    // this.log(entry.refs, '<<', entry.name)
   }
   write() {
     let metadata = this._generateMetadata()
