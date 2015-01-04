@@ -65,7 +65,7 @@ function packIntoBemuse(dir, out, metadata) {
     )
 
     let stream = merge(files)
-      .pipe(bemusePacker(out))
+      .pipe(bemusePacker(out, metadata))
       .pipe(progress.out())
 
     yield waitStream(stream)
@@ -95,13 +95,13 @@ function waitStream(stream) {
   })
 }
 
-function bemusePacker(out) {
+function bemusePacker(out, metadata) {
   let result = new BemusePacker(out)
   return through2.obj()
     .on('data', function(file) {
       result.add(file)
     })
     .on('end', function() {
-      result.write().done()
+      result.write(metadata).done()
     })
 }
