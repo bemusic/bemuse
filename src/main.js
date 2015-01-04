@@ -17,9 +17,9 @@ import BemusePacker     from './bemuse-packer'
 program
 .version(require('../package.json').version)
 .usage('[options] <directory> <output.bemuse>')
-.option('-t, --title',  'Override song title')
-.option('-a, --artist', 'Override song artist')
-.option('-g, --genre',  'Override song genre')
+.option('-t, --title  <string>',  'Override song title')
+.option('-a, --artist <string>',  'Override song artist')
+.option('-g, --genre  <string>',  'Override song genre')
 .parse(process.argv)
 
 if (program.args.length === 2) {
