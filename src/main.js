@@ -17,10 +17,17 @@ import BemusePacker     from './bemuse-packer'
 program
 .version(require('../package.json').version)
 .usage('[options] <directory> <output.bemuse>')
+.option('-t, --title',  'Override song title')
+.option('-a, --artist', 'Override song artist')
+.option('-g, --genre',  'Override song genre')
 .parse(process.argv)
 
 if (program.args.length === 2) {
-  packIntoBemuse(program.args[0], program.args[1].replace(/\.bemuse$/i, ''))
+  packIntoBemuse(
+    program.args[0],
+    program.args[1].replace(/\.bemuse$/i, ''),
+    parseProgramMetadata()
+  )
   .then(() => gutil.log('converted successfully'))
   .done()
 } else {
@@ -28,7 +35,7 @@ if (program.args.length === 2) {
   program.outputHelp()
 }
 
-function packIntoBemuse(dir, out) {
+function packIntoBemuse(dir, out, metadata) {
   return co(function*() {
 
     let stat = yield Promise.promisify(fs.stat)(dir)
@@ -40,6 +47,12 @@ function packIntoBemuse(dir, out) {
                 gulp.src(path(pattern),
                   Object.assign({ nocase: true, base: dir }, options || { }))
                     .pipe(progress.in())
+
+    let log = gutil.log.bind(gutil, '[bemusepack]')
+    log('SONG INFORMATION')
+    log('  Title:    ' + metadata.title)
+    log('  Artist:   ' + metadata.artist)
+    log('  Genre:    ' + metadata.genre)
 
     let files = merge(
       src('*.{bms,bme,bml,pms}')
@@ -58,6 +71,14 @@ function packIntoBemuse(dir, out) {
     yield waitStream(stream)
     
   })
+}
+
+function parseProgramMetadata() {
+  return {
+    title:  '' + program.title,
+    artist: '' + program.artist,
+    genre:  '' + program.genre,
+  }
 }
 
 function tagType(type) {
