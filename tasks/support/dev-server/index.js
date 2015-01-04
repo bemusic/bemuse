@@ -46,6 +46,7 @@ export function start() {
     server.use('/' + route.dest.join('/'), express.static(route.src))
   }
 
+  server.use('/music', express.static(path('..', 'music')))
   server.use('/coverage', express.static(path('coverage', 'lcov-report')))
 
   server.listen(8080, '0.0.0.0', function(err) {
