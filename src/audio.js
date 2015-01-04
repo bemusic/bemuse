@@ -23,10 +23,16 @@ export function convertAudio() {
           log('ERROR!')
           return reject(err)
         }
-        // log('OK')
         file.contents = buffer
-        resolve(file)
       }))
+      sox.on('close', function(code) {
+        if (code === 0) {
+          resolve(file)
+        } else {
+          log('Unable to convert audio file -- SoX exited ' + code)
+          reject(new Error('SoX process exited: ' + code))
+        }
+      })
     }))
     .then(
       result => callback(null, result),

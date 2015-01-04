@@ -74,8 +74,8 @@ export default class BemusePacker {
     this._files.push(entry)
     // this.log(entry.refs, '<<', entry.name)
   }
-  write() {
-    let metadata = this._generateMetadata()
+  write(songMetadata) {
+    let metadata = this._generateMetadata(songMetadata)
     let promises = this._refs.map(ref => {
       if (ref.number === 0) {
         return ref.write(new Buffer(JSON.stringify(metadata)))
@@ -103,10 +103,10 @@ export default class BemusePacker {
     this._refs.push(ref)
     return ref
   }
-  _generateMetadata() {
+  _generateMetadata(songMetadata) {
     let files = this._files
     let refs  = this._refs.map(ref => ref.toJSON())
-    return { version: 2, refs, files }
+    return { version: 2, refs, files, song: songMetadata }
   }
 }
 
