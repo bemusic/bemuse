@@ -1,0 +1,18 @@
+{
+  "preset": "google",
+  "esnext": true,
+  "disallowSpacesInsideObjectBrackets": null,
+  "disallowMultipleLineBreaks": null,
+  "disallowSpacesInsideParentheses": null,
+  "disallowSemicolons": true,
+  "validateQuoteMarks": {
+    "escape": true,
+    "mark": "'"
+  },
+  "disallowSpacesInAnonymousFunctionExpression": null,
+  "requireTrailingComma": {
+    "ignoreSingleLine": true,
+    "ignoreSingleValue": true
+  },
+  "requireCurlyBraces": null
+}
