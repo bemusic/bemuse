@@ -70,7 +70,7 @@ function Cachier(databaseName) {
         })
       })
     },
-    delete(key) {
+    delete: function(key) {
       return connection.then(function(db) {
         var request = db.transaction('cachier', 'readwrite')
               .objectStore('cachier')
