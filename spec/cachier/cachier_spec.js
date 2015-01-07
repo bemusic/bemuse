@@ -1,5 +1,5 @@
 
-import { Cachier } from '../../cachier'
+import { Cachier } from '../../src/cachier'
 
 function shouldReject(promise) {
   return Promise.resolve(promise)

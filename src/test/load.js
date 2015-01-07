@@ -7,7 +7,7 @@
 //
 
 var glob = require('glob')
-var list = glob.sync('./**/*_spec.js', { cwd: __dirname })
+var list = glob.sync('../../spec/**/*_spec.js', { cwd: __dirname })
 
 module.exports = list.map(function(filename) {
   return 'require(' + JSON.stringify(filename) + ');\n'

@@ -6,6 +6,7 @@ import path from './path'
 
 export let javascripts = [
   path('src', '**', '*.js'),
+  path('spec', '**', '*.js'),
   path('tasks', '**', '*.js'),
   path('config', '**', '*.js'),
 ]
