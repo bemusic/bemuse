@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "code-review": "gulp code-review",
-    "test": "gulp test",
+    "test": "COV=true gulp build && gulp test",
     "lint": "gulp lint",
     "start": "gulp server",
     "build": "gulp build",

@@ -96,6 +96,7 @@ describe('Cachier', function() {
       let blob = new Blob(['hello'], { type: 'text/plain' })
       cachier._NO_BLOB = true
       return cachier.save('wow4', blob)
+        .delay(10)
         .then(() => cachier.load('wow4'))
         .then(function({ blob }) {
           expect(blob.size).toBe(5)
