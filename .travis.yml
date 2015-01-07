@@ -5,6 +5,8 @@ env:
     - secure: "qg57AlPHJd1YeBt+k8Dei2MEQU2m6BIBXrIVqUxKt2I7ECw4bUGsKJulU7Rh0MzAi/5JA1kEmdZdyaiWMRnv/scyb+oL1JpcWuo8O6GAiOIr3nyQVL8nL3wdXIqLkhhVv9s7K8MwHJ8glYfGmhCdZTqnlOcAnXyO00XxwGMaWaE="
 node_js:
   - "0.10"
+before_script:
+  - 'git clone https://github.com/bemusic/bms-spec.git ../bms-spec'
 after_success:
   - 'cat coverage/lcov.info | ./node_modules/.bin/codeclimate'
 notifications:
