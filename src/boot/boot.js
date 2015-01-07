@@ -1,6 +1,6 @@
 
 import './boot.scss'
-import * as template from './boot.jade'
+import template from './boot.jade'
 import version from 'val!./version.js'
 
 var boot = document.createElement('div')
