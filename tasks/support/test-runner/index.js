@@ -33,7 +33,7 @@ export function run() {
       let fail = false
 
       try {
-        result = yield server.testResult
+        result = yield server.testResult.timeout(10000)
       } finally {
         log('result collected')
         server.close()
