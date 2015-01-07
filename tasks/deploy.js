@@ -7,6 +7,7 @@ gulp.task('deploy', function () {
   return gulp.src('dist/**/*')
     .pipe(deploy({
       cacheDir: path.resolve(__dirname, '../../www'),
+      remote: 'www',
       branch: 'master',
     }))
 })
