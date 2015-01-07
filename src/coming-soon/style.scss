@@ -7,6 +7,13 @@
   animation: 4s coming-soon--fade;
   text-align: center;
 
+  p {
+    margin: 0;
+    padding: 0;
+    font: 3vw Helvetica Neue, Helvetica, sans-serif;
+    color: #8b8685;
+  }
+
   h1 {
     margin: 0;
     padding: 0;
@@ -14,7 +21,7 @@
   }
 
   ul {
-    margin: 24px 0 0;
+    margin: 48px 0 0;
     padding: 0;
     list-style: none;
   }

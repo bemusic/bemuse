@@ -16,8 +16,9 @@ let mode = data.mode || 'comingSoon'
 
 /* istanbul ignore else - we can check that by functional tests */
 if (loadModule[mode]) {
-  loadModule[mode](function() {
-    boot.disappear()
+  loadModule[mode](function(loadedModule) {
+    boot.hide()
+    loadedModule.main()
   })
 } else {
   console.error('Invalid mode:', mode)

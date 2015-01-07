@@ -5,6 +5,7 @@ import version from 'val!./version.js'
 
 var boot = document.createElement('div')
 boot.id = 'boot'
+boot.className = 'bemuse-boot'
 boot.innerHTML = template()
 boot.querySelector('.js-progress-bar').classList.add('is-indeterminate')
 boot.querySelector('.js-version').appendChild(
@@ -12,7 +13,7 @@ boot.querySelector('.js-version').appendChild(
 
 document.body.appendChild(boot)
 
-export function disappear() {
+export function hide() {
   boot.style.display = 'none'
 }
 
