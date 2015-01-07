@@ -5,6 +5,7 @@
 var modules = {
       app: '../app',
       test: '../test',
+      comingSoon: '../coming-soon',
     }
 
 var code = 'module.exports = {'

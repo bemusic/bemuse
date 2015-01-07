@@ -1,0 +1,40 @@
+
+.coming-soon {
+
+  position: fixed;
+  top: 50%; left: 50%; width: 100%;
+  transform: translate(-50%,-50%);
+  animation: 4s coming-soon--fade;
+  text-align: center;
+
+  h1 {
+    margin: 0;
+    padding: 0;
+    font: bold 8vw Helvetica Neue, Helvetica, sans-serif;
+  }
+
+  ul {
+    margin: 24px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: inline-block;
+    margin: 0 5px;
+  }
+
+  a {
+    display: inline-block;
+    color: #8b8685;
+    text-decoration: none;
+    border: 1px solid #656463;
+    padding: 4px 6px;
+  }
+
+}
+
+@keyframes coming-soon--fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

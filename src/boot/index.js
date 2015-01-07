@@ -12,7 +12,7 @@ import * as querystring from 'querystring'
 let data = querystring.parse(location.search.replace(/^\?/, ''))
 
 /* istanbul ignore next */
-let mode = data.mode || 'app'
+let mode = data.mode || 'comingSoon'
 
 /* istanbul ignore else - we can check that by functional tests */
 if (loadModule[mode]) {
