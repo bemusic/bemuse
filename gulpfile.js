@@ -8,23 +8,25 @@ var files = {
   sources: ['spec/**/*_sources.js'],
 }
 
-function test() {
+function mochaTest() {
   global.expect = require('chai').expect
   return gulp.src(files.specs, { read: false })
     .pipe(mocha({reporter: 'nyan'}))
 }
 
-gulp.task('test', function() {
-  return test()
+gulp.task('test', ['test:mocha:cov'])
+
+gulp.task('test:mocha', function() {
+  return mochaTest()
 })
 
-gulp.task('test-cov', function(callback) {
+gulp.task('test:mocha:cov', function(callback) {
   global.expect = require('chai').expect
   gulp.src(files.sources)
     .pipe(istanbul())
     .pipe(istanbul.hookRequire())
     .on('finish', function() {
-      test()
+      mochaTest()
         .pipe(istanbul.writeReports())
         .on('end', callback)
     })
