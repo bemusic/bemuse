@@ -1,12 +1,33 @@
 
 var gulp = require('gulp')
 var mocha = require('gulp-mocha')
+var cucumber = require('gulp-cucumber')
 var istanbul = require('gulp-istanbul')
 
 var files = {
   specs: ['spec/**/*_spec.js'],
   sources: ['spec/**/*_sources.js'],
+  features: require('./features').map(function(file) {
+              return 'features/bms-spec/' + file
+            }),
 }
+
+gulp.task('test', function(callback) {
+  return cover(mochaThenCucumberTest, callback)
+})
+
+gulp.task('test:cov', function(callback) {
+  process.env.COV = 'true'
+  return cover(mochaThenCucumberTest, callback)
+})
+
+gulp.task('test:cucumber', function(callback) {
+  return cover(cucumberTest, callback)
+})
+
+gulp.task('test:mocha', function(callback) {
+  return cover(mochaTest, callback)
+})
 
 function cover(fn, callback) {
   if (process.env.COV === 'true') {
@@ -29,19 +50,26 @@ function cover(fn, callback) {
 
 function mochaTest(callback) {
   global.expect = require('chai').expect
-  return gulp.src(files.specs, { read: false })
+  gulp.src(files.specs, { read: false })
     .pipe(mocha({reporter: 'nyan'}))
     .on('end', callback)
     .on('error', callback)
 }
 
-gulp.task('test', ['test:mocha', 'test:cucumber'])
+function cucumberTest(callback) {
+  gulp.src(files.features, { read: false })
+    .pipe(cucumber({
+      steps: 'features/step_definitions/*.js',
+    }))
+    // XXX: gulp-cucumber doesn't wait for tests to finish!
+    .on('end', callback)
+    .on('error', callback)
+}
 
-gulp.task('test:cucumber', function() {
-  console.log('TODO: Cucumber Test')
-})
-
-gulp.task('test:mocha', function(callback) {
-  return cover(mochaTest, callback)
-})
+function mochaThenCucumberTest(callback) {
+  mochaTest(function(error) {
+    if (error) return callback(error)
+    cucumberTest(callback)
+  })
+}
 
