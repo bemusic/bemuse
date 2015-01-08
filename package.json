@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/bemusic/bms-js",
   "devDependencies": {
+    "bluebird": "^2.6.2",
     "chai": "^1.10.0",
     "codeclimate-test-reporter": "0.0.4",
     "gulp": "^3.8.10",
