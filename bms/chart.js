@@ -4,10 +4,11 @@ module.exports = BMSChart
 function BMSChart() {
   this.headers = new BMSHeaders()
   this.objects = new BMSObjects()
+  this.timeSignatures = new BMSTimeSignatures()
 }
 
 BMSChart.prototype.measureToBeat = function(measure, fraction) {
-  return (measure + fraction) * 4
+  return this.timeSignatures.measureToBeat(measure, fraction)
 }
 
 
@@ -45,4 +46,27 @@ BMSObjects.prototype.add = function(object) {
 
 BMSObjects.prototype.all = function() {
   return this._objects
+}
+
+
+function BMSTimeSignatures() {
+  this._values = { }
+}
+
+BMSTimeSignatures.prototype.set = function(measure, value) {
+  this._values[measure] = value
+}
+
+BMSTimeSignatures.prototype.get = function(measure) {
+  return this._values[measure] || 1
+}
+
+BMSTimeSignatures.prototype.getBeats = function(measure) {
+  return this.get(measure) * 4
+}
+
+BMSTimeSignatures.prototype.measureToBeat = function(measure, fraction) {
+  var sum = 0
+  for (var i = 0; i < measure; i ++) sum += this.getBeats(i)
+  return sum + this.getBeats(measure) * fraction
 }

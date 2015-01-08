@@ -17,6 +17,10 @@ exports.compile = function(text) {
     void lineNumber
     if (text.charAt(0) !== '#') return
     match(text)
+    .when(/^#(\d\d\d)02:(\S*)$/, function(m) {
+      result.channelSentences += 1
+      chart.timeSignatures.set(+m[1], +m[2])
+    })
     .when(/^#(\d\d\d)(\S\S):(\S*)$/, function(m) {
       result.channelSentences += 1
       handleChannelSentence(+m[1], m[2], m[3], lineNumber)

@@ -33,10 +33,18 @@ module.exports = function() {
     expect(this._chart.objects.all().length).to.equal(+n)
   })
 
-  Then(/^object (\S+) should be on channel (\S+) at beat (\d+)$/, function (value, channel, beat, callback) {
+  Then(/^object (\S+) should be on channel (\S+) at beat (\d+)$/, function (value, channel, beat) {
     var chart = this._chart
     expect(chart.objects.all().some(function(object) {
       return object.value === value && object.channel === channel &&
+             chart.measureToBeat(object.measure, object.fraction) === +beat
+    })).to.be.ok()
+  })
+
+  Then(/^object (\S+) should be at beat ([\d\.]+)$/, function (value, beat) {
+    var chart = this._chart
+    expect(chart.objects.all().some(function(object) {
+      return object.value === value &&
              chart.measureToBeat(object.measure, object.fraction) === +beat
     })).to.be.ok()
   })

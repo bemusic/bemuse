@@ -5,5 +5,6 @@ module.exports = [
   'basic/01-Sentences.feature',
   'basic/02-Header.feature',
   'basic/03-Objects.feature',
+  'basic/04-Time-Signature.feature',
 
 ]
