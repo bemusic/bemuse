@@ -10,25 +10,29 @@ exports.compile = function(text) {
     channelSentences: 0,
     malformedSentences: 0,
     chart: chart,
+    warnings: []
   }
 
   eachLine(text, function(text, lineNumber) {
     void lineNumber
     if (text.charAt(0) !== '#') return
     match(text)
-    .when(/^#(\d\d\d)(\S\S):(\S+)$/, function(m) {
+    .when(/^#(\d\d\d)(\S\S):(\S*)$/, function(m) {
       result.channelSentences += 1
-      handleChannelSentence(+m[1], m[2], m[3])
+      handleChannelSentence(+m[1], m[2], m[3], lineNumber)
     })
     .when(/^#(\w+)(?:\s+(\S.*))?$/, function(m) {
       result.headerSentences += 1
       chart.headers.set(m[1], m[2])
     })
+    .else(function() {
+      warn(lineNumber, 'Invalid command')
+    })
   })
 
   return result
 
-  function handleChannelSentence(measure, channel, string) {
+  function handleChannelSentence(measure, channel, string, lineNumber) {
     var items = Math.floor(string.length / 2)
     if (items === 0) return
     for (var i = 0; i < items; i ++) {
@@ -40,8 +44,16 @@ exports.compile = function(text) {
         fraction: fraction,
         value: value,
         channel: channel,
+        lineNumber: lineNumber,
       })
     }
+  }
+
+  function warn(lineNumber, message) {
+    result.warnings.push({
+      lineNumber: lineNumber,
+      message: message,
+    })
   }
 
 }

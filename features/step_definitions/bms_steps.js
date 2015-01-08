@@ -17,11 +17,11 @@ module.exports = function() {
     this._chart = this._compileResult.chart
   })
 
-  Then(/^there should be (\d+) header sentences$/, function (n) {
+  Then(/^there should be (\d+) header sentences?$/, function (n) {
     expect(this._compileResult.headerSentences).to.equal(+n)
   })
 
-  Then(/^there should be (\d+) channel sentence$/, function (n) {
+  Then(/^there should be (\d+) channel sentences?$/, function (n) {
     expect(this._compileResult.channelSentences).to.equal(+n)
   })
 
@@ -39,10 +39,6 @@ module.exports = function() {
       return object.value === value && object.channel === channel &&
              chart.measureToBeat(object.measure, object.fraction) === +beat
     })).to.be.ok()
-  })
-
-  Then(/^there should be (\d+) object at beat (\d+)$/, function (arg1, arg2) {
-    return PENDING
   })
 
 }
