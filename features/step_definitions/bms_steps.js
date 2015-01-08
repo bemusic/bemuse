@@ -29,8 +29,16 @@ module.exports = function() {
     expect(this._chart.headers.get(name)).to.equal(value)
   })
 
-  Then(/^there should be (\d+) objects$/, function (arg1) {
-    return PENDING
+  Then(/^there should be (\d+) objects$/, function (n) {
+    expect(this._chart.objects.all().length).to.equal(+n)
+  })
+
+  Then(/^object (\S+) should be on channel (\S+) at beat (\d+)$/, function (value, channel, beat, callback) {
+    var chart = this._chart
+    expect(chart.objects.all().some(function(object) {
+      return object.value === value && object.channel === channel &&
+             chart.measureToBeat(object.measure, object.fraction) === +beat
+    })).to.be.ok()
   })
 
   Then(/^there should be (\d+) object at beat (\d+)$/, function (arg1, arg2) {

@@ -3,10 +3,13 @@ var gulp = require('gulp')
 var mocha = require('gulp-mocha')
 var cucumber = require('gulp-cucumber')
 var istanbul = require('gulp-istanbul')
+var chain = require('stack-chain')
+
+require('hide-stack-frames-from')('cucumber', 'bluebird')
 
 var files = {
   specs: ['spec/**/*_spec.js'],
-  sources: ['spec/**/*_sources.js'],
+  sources: ['*.js', 'bms/*.js'],
   features: require('./features').map(function(file) {
               return 'features/bms-spec/' + file
             }),
@@ -17,7 +20,7 @@ gulp.task('test', function(callback) {
 })
 
 gulp.task('test:cov', function(callback) {
-  process.env.COV = 'true'
+  process.env.ENABLE_COVERAGE = 'true'
   return cover(mochaThenCucumberTest, callback)
 })
 
@@ -30,12 +33,14 @@ gulp.task('test:mocha', function(callback) {
 })
 
 function cover(fn, callback) {
-  if (process.env.COV === 'true') {
+  if (process.env.COV === 'true' || process.env.ENABLE_COVERAGE === 'true') {
     gulp.src(files.sources)
       .pipe(istanbul())
       .pipe(istanbul.hookRequire())
       .on('finish', function() {
+        console.log('TESTING BEGIN')
         fn(function(error) {
+          console.log('TESTING DONE')
           if (error) return callback(error)
           istanbul.writeReports()
             .once('end', callback)

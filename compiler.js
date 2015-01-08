@@ -1,5 +1,5 @@
 
-var BMSChart = require('./bms-chart')
+var BMSChart = require('./bms/chart')
 
 exports.compile = function(text) {
 
@@ -16,8 +16,9 @@ exports.compile = function(text) {
     void lineNumber
     if (text.charAt(0) !== '#') return
     match(text)
-    .when(/^#(\d\d\d)(\S\S):(\S+)$/, function() {
+    .when(/^#(\d\d\d)(\S\S):(\S+)$/, function(m) {
       result.channelSentences += 1
+      handleChannelSentence(+m[1], m[2], m[3])
     })
     .when(/^#(\w+)(?:\s+(\S.*))?$/, function(m) {
       result.headerSentences += 1
@@ -26,6 +27,22 @@ exports.compile = function(text) {
   })
 
   return result
+
+  function handleChannelSentence(measure, channel, string) {
+    var items = Math.floor(string.length / 2)
+    if (items === 0) return
+    for (var i = 0; i < items; i ++) {
+      var value = string.substr(i * 2, 2)
+      var fraction = i / items
+      if (value === '00') continue
+      chart.objects.add({
+        measure: measure, 
+        fraction: fraction,
+        value: value,
+        channel: channel,
+      })
+    }
+  }
 
 }
 
