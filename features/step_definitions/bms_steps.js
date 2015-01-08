@@ -16,12 +16,12 @@ module.exports = function() {
     this._compileResult = Compiler.compile(this._text)
   })
 
-  Then(/^there should be (\d+) header sentences$/, function (arg1) {
-    return PENDING
+  Then(/^there should be (\d+) header sentences$/, function (n) {
+    expect(this._compileResult.headerSentences).to.equal(+n)
   })
 
-  Then(/^there should be (\d+) channel sentence$/, function (arg1) {
-    return PENDING
+  Then(/^there should be (\d+) channel sentence$/, function (n) {
+    expect(this._compileResult.channelSentences).to.equal(+n)
   })
 
   Then(/^the header "([^"]*)" should have value "([^"]*)"$/, function (arg1, arg2) {
