@@ -9,7 +9,12 @@ require('hide-stack-frames-from')('cucumber', 'bluebird')
 
 var files = {
   specs: ['spec/**/*_spec.js'],
-  sources: ['*.js', 'bms/*.js'],
+  sources: [
+    '*.js',
+    'bms/*.js',
+    'reader/*.js',
+    'compiler/*.js',
+  ],
   features: require('./features').map(function(file) {
               return 'features/bms-spec/' + file
             }),

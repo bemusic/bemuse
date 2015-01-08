@@ -1,5 +1,5 @@
 
-var BMSChart = require('./bms/chart')
+var BMSChart = require('../bms/chart')
 
 exports.compile = function(text) {
 
