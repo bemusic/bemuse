@@ -1,14 +1,6 @@
 
 import { Cachier } from '../../src/cachier'
 
-function shouldReject(promise) {
-  return Promise.resolve(promise)
-  .then(
-    () => { throw new Error('should not be success') },
-    () => 'ok, error is thrown'
-  )
-}
-
 describe('Cachier', function() {
 
   let cachier
@@ -30,7 +22,7 @@ describe('Cachier', function() {
   describe('.connection', () => {
     it('should be a promise which fullfill with the db connection', () => {
       return cachier.connection.then(function(db) {
-        expect(db.constructor + '').toMatch(/DBDatabase/)
+        expect(db.constructor + '').to.match(/DBDatabase/)
       })
     })
   })
@@ -38,12 +30,11 @@ describe('Cachier', function() {
   describe('#save', () => {
     it('stores a blob', () => {
       let blob = new Blob(['hello'])
-      return cachier.save('wow', blob)
-        .then(result => expect(result).toBeTruthy())
+      return expect(cachier.save('wow', blob)).to.eventually.be.ok
     })
     it('rejects when key is invalid', () => {
       let blob = new Blob(['hello'])
-      return shouldReject(cachier.save(undefined, blob))
+      return expect(cachier.save(undefined, blob)).to.be.rejected
     })
   })
 
@@ -57,8 +48,8 @@ describe('Cachier', function() {
     describe('#load', function() {
       it('should return the blob value', () => {
         return cachier.load('wow2').then(function({ blob, metadata }) {
-          expect(blob.size).toBe(5)
-          expect(metadata).toEqual({ name: 'example1' })
+          expect(blob.size).to.equal(5)
+          expect(metadata).to.deep.equal({ name: 'example1' })
         })
       })
     })
@@ -70,16 +61,16 @@ describe('Cachier', function() {
           .delay(10) // chrome needs this delay
           .then(() => cachier.load('wow2'))
           .then(function({ blob, metadata }) {
-            expect(blob.size).toBe(6)
-            expect(metadata).toBe(undefined)
+            expect(blob.size).to.equal(6)
+            expect(metadata).to.equal(undefined)
           })
       })
     })
 
     describe('#delete', function() {
       it('should remove the blob', () => {
-        return shouldReject(cachier.delete('wow3')
-          .then(() => cachier.load('wow3')))
+        return cachier.delete('wow3')
+          .then(() => expect(cachier.load('wow3')).to.be.rejected)
       })
     })
 
@@ -99,8 +90,8 @@ describe('Cachier', function() {
         .delay(10)
         .then(() => cachier.load('wow4'))
         .then(function({ blob }) {
-          expect(blob.size).toBe(5)
-          expect(blob.type).toBe('text/plain')
+          expect(blob.size).to.equal(5)
+          expect(blob.type).to.equal('text/plain')
         })
     })
   })

@@ -5,7 +5,9 @@ import '../polyfill'
 import 'script!mocha/mocha.js'
 import 'style!mocha/mocha.css'
 import 'style!./support/mocha-overrides.css'
-import 'expectations'
+
+import chai           from 'chai'
+import chaiAsPromised from 'chai-as-promised'
 
 export function main() {
   setupMocha()
@@ -18,6 +20,8 @@ function setupMocha() {
   mochaElement.id = 'mocha'
   document.body.appendChild(mochaElement)
   mocha.setup('bdd')
+  chai.use(chaiAsPromised)
+  global.expect = chai.expect
 }
 
 function loadSpecs() {

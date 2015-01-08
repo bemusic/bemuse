@@ -2,7 +2,7 @@
 describe('The specs', function() {
 
   it('runs', function() {
-    expect({ runs: true }.runs).toBe(true)
+    expect({ runs: true }.runs).to.equal(true)
   })
 
 })
