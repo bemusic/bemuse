@@ -14,6 +14,7 @@ module.exports = function() {
   Given(/^a BMS file as follows$/, function (string) {
     this._text = string
     this._compileResult = Compiler.compile(this._text)
+    this._chart = this._compileResult.chart
   })
 
   Then(/^there should be (\d+) header sentences$/, function (n) {
@@ -24,8 +25,8 @@ module.exports = function() {
     expect(this._compileResult.channelSentences).to.equal(+n)
   })
 
-  Then(/^the header "([^"]*)" should have value "([^"]*)"$/, function (arg1, arg2) {
-    return PENDING
+  Then(/^the header "([^"]*)" should have value "([^"]*)"$/, function (name, value) {
+    expect(this._chart.headers.get(name)).to.equal(value)
   })
 
   Then(/^there should be (\d+) objects$/, function (arg1) {
