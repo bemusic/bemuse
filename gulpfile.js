@@ -59,9 +59,8 @@ function mochaTest(callback) {
 function cucumberTest(callback) {
   gulp.src(files.features, { read: false })
     .pipe(cucumber({
-      steps: 'features/step_definitions/*.js',
+      steps: 'features/step_definitions/**/*_steps.js',
     }))
-    // XXX: gulp-cucumber doesn't wait for tests to finish!
     .on('end', callback)
     .on('error', callback)
 }

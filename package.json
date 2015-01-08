@@ -23,7 +23,7 @@
     "chai": "^1.10.0",
     "codeclimate-test-reporter": "0.0.4",
     "gulp": "^3.8.10",
-    "gulp-cucumber": "0.0.6",
+    "gulp-cucumber": "git://github.com/dtinth/gulp-cucumber",
     "gulp-istanbul": "^0.5.0",
     "gulp-mocha": "^2.0.0"
   },
