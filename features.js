@@ -6,5 +6,6 @@ module.exports = [
   'basic/02-Header.feature',
   'basic/03-Objects.feature',
   'basic/04-Time-Signature.feature',
+  'basic/05-BPM.feature',
 
 ]

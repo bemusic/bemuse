@@ -1,5 +1,6 @@
 
 var Compiler = require('../../compiler')
+var Timing = require('../../timing')
 var expect = require('chai').expect
 var Promise = require('bluebird')
 
@@ -15,6 +16,14 @@ module.exports = function() {
     this._text = string
     this._compileResult = Compiler.compile(this._text)
     this._chart = this._compileResult.chart
+    this._timing = Timing.fromBMSChart(this._chart)
+    this._getObject = function(value) {
+      var matching = this._chart.objects.all().filter(function(object) {
+        return object.value === value
+      })
+      expect(matching.length).to.equal(1, 'getObject(' + value + ')')
+      return matching[0]
+    }
   })
 
   Then(/^there should be (\d+) header sentences?$/, function (n) {
@@ -34,19 +43,23 @@ module.exports = function() {
   })
 
   Then(/^object (\S+) should be on channel (\S+) at beat (\d+)$/, function (value, channel, beat) {
-    var chart = this._chart
-    expect(chart.objects.all().some(function(object) {
-      return object.value === value && object.channel === channel &&
-             chart.measureToBeat(object.measure, object.fraction) === +beat
-    })).to.be.ok()
+    var object      = this._getObject(value)
+    var objectBeat  = this._chart.measureToBeat(object.measure, object.fraction)
+    expect(object.channel).to.equal(channel)
+    expect(objectBeat).to.equal(+beat)
   })
 
   Then(/^object (\S+) should be at beat ([\d\.]+)$/, function (value, beat) {
-    var chart = this._chart
-    expect(chart.objects.all().some(function(object) {
-      return object.value === value &&
-             chart.measureToBeat(object.measure, object.fraction) === +beat
-    })).to.be.ok()
+    var object      = this._getObject(value)
+    var objectBeat  = this._chart.measureToBeat(object.measure, object.fraction)
+    expect(objectBeat).to.equal(+beat)
+  })
+
+  Then(/^object (\S+) should be at ([\d\.]+) seconds?$/, function (value, seconds) {
+    var object        = this._getObject(value)
+    var objectBeat    = this._chart.measureToBeat(object.measure, object.fraction)
+    var objectSeconds = this._timing.beatToSeconds(objectBeat)
+    expect(objectSeconds).to.equal(+seconds)
   })
 
 }
