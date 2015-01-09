@@ -2,7 +2,13 @@
 // The Timing module converts between beats and seconds.
 // They are created from a notechart.
 
+var BPM  = require('./bpm')
+var Stop = require('./stop')
+
 module.exports = Timing
+
+Timing.BPM  = BPM
+Timing.Stop = Stop
 
 function Timing(initialBPM, segments) {
   var state = new TimingState(0, 0, initialBPM)
@@ -59,19 +65,6 @@ Timing.fromBMSChart = function(chart) {
     }
   })
   return new Timing(+chart.headers.get('bpm') || 60, segments)
-}
-
-function BPM(beat, bpm) {
-  this.beat  = beat
-  this.bpm   = bpm
-  this.order = 1
-}
-
-function Stop(beat, stopBeats, stopSeconds) {
-  this.beat = beat
-  this.stopBeats   = stopBeats
-  this.stopSeconds = stopSeconds
-  this.order       = 2
 }
 
 function TimingState(beat, seconds, bpm) {
