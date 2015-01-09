@@ -59,7 +59,7 @@ module.exports = function() {
     var object        = this._getObject(value)
     var objectBeat    = this._chart.measureToBeat(object.measure, object.fraction)
     var objectSeconds = this._timing.beatToSeconds(objectBeat)
-    expect(objectSeconds).to.equal(+seconds)
+    expect(objectSeconds).to.be.closeTo(+seconds, 1e-3)
   })
 
 }
