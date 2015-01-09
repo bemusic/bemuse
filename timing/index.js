@@ -8,7 +8,9 @@ function Timing(initialBPM, segments) {
   var state = new TimingState(0, 0, initialBPM)
   var graph = [state]
   segments = segments.slice()
-  segments.sort(function(a, b) { return a.beat - b.beat })
+  segments.sort(function(a, b) {
+    return a.beat - b.beat || a.order - b.order
+  })
   segments.forEach(function(segment) {
     var deltaBeat     = segment.beat - state.beat
     var deltaSeconds  = deltaBeat * 60 / state.bpm
@@ -16,6 +18,13 @@ function Timing(initialBPM, segments) {
     var seconds       = state.seconds + deltaSeconds
     if (segment instanceof BPM) {
       state = new TimingState(beat, seconds, segment.bpm)
+      graph.push(state)
+    } else if (segment instanceof Stop) {
+      var bpm = state.bpm
+      var stop = segment.stopBeats * 60 / bpm + segment.stopSeconds
+      state = new TimingState(beat, seconds, 0)
+      graph.push(state)
+      state = new TimingState(beat, seconds + stop, bpm)
       graph.push(state)
     } else {
       throw new Error("Unrecognized segment object!")
@@ -44,14 +53,25 @@ Timing.fromBMSChart = function(chart) {
     } else if (object.channel === '08') {
       bpm = chart.headers.get('bpm' + object.value)
       segments.push(new BPM(beat, bpm))
+    } else if (object.channel === '09') {
+      var stopBeats = chart.headers.get('stop' + object.value) / 48
+      segments.push(new Stop(beat, stopBeats, 0))
     }
   })
   return new Timing(+chart.headers.get('bpm') || 60, segments)
 }
 
 function BPM(beat, bpm) {
+  this.beat  = beat
+  this.bpm   = bpm
+  this.order = 1
+}
+
+function Stop(beat, stopBeats, stopSeconds) {
   this.beat = beat
-  this.bpm = bpm
+  this.stopBeats   = stopBeats
+  this.stopSeconds = stopSeconds
+  this.order       = 2
 }
 
 function TimingState(beat, seconds, bpm) {
