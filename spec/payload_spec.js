@@ -14,13 +14,13 @@ describe('Payload', function() {
       payload.add(new Buffer(', '))
     })
 
-    it('should have size of 7', () => expect(payload.size).toBe(7))
+    it('should have size of 7', () => expect(payload.size).to.equal(7))
 
     it('should have correct hash', () =>
-      expect(payload.hash).toBe('52b02aa91ac578dc41ea70335db3507cb5b799d5'))
+      expect(payload.hash).to.equal('52b02aa91ac578dc41ea70335db3507cb5b799d5'))
 
     it('should return slicing for new buffers', () =>
-      expect(payload.add(new Buffer('world!'))).toEqual([7, 13]))
+      expect(payload.add(new Buffer('world!'))).to.deep.equal([7, 13]))
 
   })
 
