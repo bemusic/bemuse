@@ -29,7 +29,7 @@ BMS will be parsed in three stages:
         - Implicit/multiplex subtitles taken into account here.
     - `Timing` allows conversion from beat to seconds.
         - BPM, BPM changes, STOP objects, and STP commands taken into account here.
-    - `Position` allows conversion from beat to in-game position.
+    - `Positioning` allows conversion from beat to in-game position.
         - SPEED and SCROLL commands (BEMUSE's BMS extensions) taken into account here.
     - `Notes` parses the notechart, resulting in in-game notes.
         - Channel mapping is taken into consideration here.
