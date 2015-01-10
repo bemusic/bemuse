@@ -1,7 +1,9 @@
 
-var Compiler = require('../../compiler')
-var Timing = require('../../timing')
-var Notes = require('../../notes')
+var bms = require('../..')
+var Compiler = bms.Compiler
+var Timing   = bms.Timing
+var Notes    = bms.Notes
+
 var expect = require('chai').expect
 var Promise = require('bluebird')
 

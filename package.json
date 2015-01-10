@@ -1,8 +1,8 @@
 {
-  "name": "bms-js",
+  "name": "bms",
   "version": "0.1.0",
   "description": "BMS Parser for JavaScript",
-  "main": "bms.js",
+  "main": "index.js",
   "scripts": {
     "test": "gulp test:cov"
   },
