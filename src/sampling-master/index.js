@@ -20,13 +20,31 @@ export class SamplingMaster {
     this._instances = null
   }
 
-  sample(arrayBuffer) {
-    return this._decodeAudio(arrayBuffer)
+  sample(blobOrArrayBuffer) {
+    return this._coerceToArrayBuffer(blobOrArrayBuffer)
+    .then(arrayBuffer => this._decodeAudio(arrayBuffer))
     .then(audioBuffer => {
       if (this._destroyed) throw new Error('SamplingMaster already destroyed!')
       var sample = new Sample(this, audioBuffer)
       this._samples.push(sample)
     })
+  }
+
+  _coerceToArrayBuffer(blobOrArrayBuffer) {
+    if (blobOrArrayBuffer instanceof ArrayBuffer) {
+      return Promise.resolve(blobOrArrayBuffer)
+    } else {
+      return new Promise(function(resolve, reject) {
+        let reader = new FileReader()
+        reader.onload = function() {
+          resolve(reader.result)
+        }
+        reader.onerror = function() {
+          reject(new Error('Unable to read from Blob'))
+        }
+        reader.readAsArrayBuffer(blobOrArrayBuffer)
+      })
+    }
   }
 
   _decodeAudio(arrayBuffer) {
