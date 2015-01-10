@@ -1,6 +1,7 @@
 
 var Compiler = require('../../compiler')
 var Timing = require('../../timing')
+var Notes = require('../../notes')
 var expect = require('chai').expect
 var Promise = require('bluebird')
 
@@ -17,11 +18,19 @@ module.exports = function() {
     this._compileResult = Compiler.compile(this._text)
     this._chart = this._compileResult.chart
     this._timing = Timing.fromBMSChart(this._chart)
+    this._notes = Notes.fromBMSChart(this._chart)
     this._getObject = function(value) {
       var matching = this._chart.objects.all().filter(function(object) {
         return object.value === value
       })
       expect(matching).to.have.length(1, 'getObject(' + value + ')')
+      return matching[0]
+    }
+    this._getNote = function(value) {
+      var matching = this._notes.all().filter(function(object) {
+        return object.keysound === value
+      })
+      expect(matching).to.have.length(1, 'getNote(' + value + ')')
       return matching[0]
     }
   })
@@ -60,6 +69,16 @@ module.exports = function() {
     var objectBeat    = this._chart.measureToBeat(object.measure, object.fraction)
     var objectSeconds = this._timing.beatToSeconds(objectBeat)
     expect(objectSeconds).to.be.closeTo(+seconds, 1e-3)
+  })
+
+  Then(/^there should be (\d+) playable notes?$/, function (n, seconds) {
+    expect(this._notes.count()).to.equal(+n)
+  })
+
+  Then(/^object (\S+) should be a long note from beat ([\d\.]+) to ([\d\.]+)$/, function (value, a, b, seconds) {
+    var note = this._getNote(value)
+    expect(note.beat).to.equal(+a)
+    expect(note.endBeat).to.equal(+b)
   })
 
 }

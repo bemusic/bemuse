@@ -44,7 +44,21 @@ BMSObjects.prototype.add = function(object) {
  * @return {BMSObject[]}
  */
 BMSObjects.prototype.all = function() {
-  return this._objects
+  return this._objects.slice()
+}
+
+/**
+ * Returns a sorted list of all objects.
+ *
+ * @method all
+ * @return {BMSObject[]}
+ */
+BMSObjects.prototype.allSorted = function() {
+  var list = this.all()
+  list.sort(function(a, b) {
+    return (a.measure + a.fraction) - (b.measure + b.fraction)
+  })
+  return list
 }
 
 
