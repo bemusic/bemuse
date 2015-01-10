@@ -89,7 +89,7 @@ function sugar(world, defineFunction) {
       var callback = arguments[arguments.length - 1]
       Promise.try(f, [].slice.call(arguments), world).then(
         function(result) {
-          if (result == PENDING) {
+          if (result === PENDING) {
             callback.pending()
           } else {
             callback()
