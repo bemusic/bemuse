@@ -36,3 +36,7 @@ BMS will be parsed in three stages:
         - Normal notes and long notes taken into account here.
         - Also emits list of notes to autoplay.
 
+Other Utility Classes
+---------------------
+
+- `Speedcore` allows calculation of position and velocity over a linear graph.
