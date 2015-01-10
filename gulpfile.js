@@ -3,7 +3,7 @@ var gulp = require('gulp')
 var mocha = require('gulp-mocha')
 var cucumber = require('gulp-cucumber')
 var istanbul = require('gulp-istanbul')
-var chain = require('stack-chain')
+var fs = require('fs')
 
 require('hide-stack-frames-from')('cucumber', 'bluebird')
 
@@ -17,9 +17,20 @@ var files = {
     'speedcore/*.js',
     'timing/*.js',
   ],
-  features: require('./features').map(function(file) {
-              return 'features/bms-spec/' + file
-            }),
+  get features() {
+    var home = process.env.BMSPEC_HOME
+    if (home === undefined) {
+      console.error('WARNING! BMSPEC_HOME is not set. BMSpec test suites will not be run!')
+      return []
+    }
+    return require('./features').map(function(file) {
+      var filePath = home + '/features/' + file
+      if (!fs.existsSync(filePath)) {
+        console.error('WARNING! ' + filePath + ' does not exist.')
+      }
+      return filePath
+    })
+  }
 }
 
 gulp.task('test', function(callback) {
