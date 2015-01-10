@@ -7,7 +7,7 @@
 
 var BMSHeaders = require('./headers')
 var BMSObjects = require('./objects')
-var BMSTimeSignatures = require('./time-signatures')
+var TimeSignatures = require('../time-signatures')
 
 module.exports = BMSChart
 
@@ -20,7 +20,7 @@ module.exports = BMSChart
 function BMSChart() {
   this.headers = new BMSHeaders()
   this.objects = new BMSObjects()
-  this.timeSignatures = new BMSTimeSignatures()
+  this.timeSignatures = new TimeSignatures()
 }
 
 /**
