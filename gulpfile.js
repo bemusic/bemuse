@@ -14,6 +14,8 @@ var files = {
     'bms/*.js',
     'reader/*.js',
     'compiler/*.js',
+    'speedcore/*.js',
+    'timing/*.js',
   ],
   features: require('./features').map(function(file) {
               return 'features/bms-spec/' + file
