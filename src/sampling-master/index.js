@@ -1,4 +1,8 @@
 
+import readBlob from '../read-blob'
+
+export default SamplingMaster
+
 export class SamplingMaster {
 
   constructor(audioContext) {
@@ -34,16 +38,7 @@ export class SamplingMaster {
     if (blobOrArrayBuffer instanceof ArrayBuffer) {
       return Promise.resolve(blobOrArrayBuffer)
     } else {
-      return new Promise(function(resolve, reject) {
-        let reader = new FileReader()
-        reader.onload = function() {
-          resolve(reader.result)
-        }
-        reader.onerror = function() {
-          reject(new Error('Unable to read from Blob'))
-        }
-        reader.readAsArrayBuffer(blobOrArrayBuffer)
-      })
+      return readBlob(blobOrArrayBuffer).as('arraybuffer')
     }
   }
 
