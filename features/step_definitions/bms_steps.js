@@ -21,7 +21,7 @@ module.exports = function() {
       var matching = this._chart.objects.all().filter(function(object) {
         return object.value === value
       })
-      expect(matching.length).to.equal(1, 'getObject(' + value + ')')
+      expect(matching).to.have.length(1, 'getObject(' + value + ')')
       return matching[0]
     }
   })
@@ -39,7 +39,7 @@ module.exports = function() {
   })
 
   Then(/^there should be (\d+) objects$/, function (n) {
-    expect(this._chart.objects.all().length).to.equal(+n)
+    expect(this._chart.objects.all()).to.have.length(+n)
   })
 
   Then(/^object (\S+) should be on channel (\S+) at beat (\d+)$/, function (value, channel, beat) {
