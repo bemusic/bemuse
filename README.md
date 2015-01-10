@@ -30,7 +30,7 @@ BMS will be parsed in three stages:
     - `Timing` allows conversion from beat to seconds.
         - BPM, BPM changes, STOP objects, and STP commands taken into account here.
     - `Positioning` allows conversion from beat to in-game position.
-        - SPEED and SCROLL commands (BEMUSE's BMS extensions) taken into account here.
+        - [SPEED and SCROLL commands (BEMUSE's BMS extensions)](http://bemusic.viewdocs.io/bemuse/BMS_EXTENSION.md) taken into account here.
     - `Notes` parses the notechart, resulting in in-game notes.
         - Channel mapping is taken into consideration here.
         - Normal notes and long notes taken into account here.
