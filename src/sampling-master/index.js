@@ -1,8 +1,6 @@
 
 import readBlob from '../read-blob'
 
-export default SamplingMaster
-
 export class SamplingMaster {
 
   constructor(audioContext) {
@@ -31,6 +29,7 @@ export class SamplingMaster {
       if (this._destroyed) throw new Error('SamplingMaster already destroyed!')
       var sample = new Sample(this, audioBuffer)
       this._samples.push(sample)
+      return sample
     })
   }
 
@@ -43,7 +42,7 @@ export class SamplingMaster {
   }
 
   _decodeAudio(arrayBuffer) {
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
       this.audioContext.decodeAudioData(arrayBuffer,
         function decodeAudioDataSuccess(audioBuffer) {
           resolve(audioBuffer)
@@ -92,11 +91,11 @@ class PlayInstance {
     source.buffer = buffer
     let gain = context.createGain()
     source.connect(gain)
-    gain.connect(context.desination)
+    gain.connect(context.destination)
     this._source = source
     this._gain = gain
-    source.play(0)
-    this.setTimeout(() => this.stop(), buffer.duration * 1000)
+    source.start(0)
+    setTimeout(() => this.stop(), buffer.duration * 1000)
     samplingMaster._startPlaying(this)
   }
 
@@ -115,4 +114,6 @@ class PlayInstance {
   }
 
 }
+
+export default SamplingMaster
 
