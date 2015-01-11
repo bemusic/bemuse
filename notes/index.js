@@ -49,13 +49,17 @@ BMSNoteBuilder.prototype.build = function() {
 }
 
 BMSNoteBuilder.prototype._handle = function(object) {
-  switch (object.channel.charAt(0)) {
-  case '1': case '2':
+  if (object.channel === '01') {
     this._handleNormalNote(object)
-    break
-  case '5': case '6':
-    this._handleLongNote(object)
-    break
+  } else {
+    switch (object.channel.charAt(0)) {
+    case '1': case '2':
+      this._handleNormalNote(object)
+      break
+    case '5': case '6':
+      this._handleLongNote(object)
+      break
+    }
   }
 }
 
