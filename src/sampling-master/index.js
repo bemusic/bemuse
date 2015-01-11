@@ -9,6 +9,17 @@ export class SamplingMaster {
     this._instances = new Set()
   }
 
+  /**
+   * Connects a dummy node to the audio, thereby unmuting the audio system on
+   * iOS devices.
+   */
+  unmute() {
+    let ctx = this._audioContext
+    let gain = ctx.createGain()
+    gain.connect(ctx.destination)
+    gain.disconnect()
+  }
+
   get audioContext() {
     return this._audioContext
   }
@@ -55,12 +66,11 @@ export class SamplingMaster {
   }
 
   _startPlaying(instance) {
-    this._instances.push(instance)
+    this._instances.add(instance)
   }
 
-  _stopPlaying(instance) {
-    var index = this._instances.indexOf(instance)
-    if (index > -1) this._instances.splice(index, 1)
+  _stoppedPlaying(instance) {
+    this._instances.delete(instance)
   }
 
 }
@@ -86,6 +96,7 @@ class Sample {
 class PlayInstance {
 
   constructor(samplingMaster, buffer) {
+    this._master = samplingMaster
     let context = samplingMaster.audioContext
     let source = context.createBufferSource()
     source.buffer = buffer
@@ -96,7 +107,7 @@ class PlayInstance {
     this._gain = gain
     source.start(0)
     setTimeout(() => this.stop(), buffer.duration * 1000)
-    samplingMaster._startPlaying(this)
+    this._master._startPlaying(this)
   }
 
   stop() {
@@ -106,7 +117,8 @@ class PlayInstance {
     this._gain.disconnect()
     this._source = null
     this._gain = null
-    samplingMaster._stoppedPlaying(this)
+    this._master._stoppedPlaying(this)
+    if (this.onstop) this.onstop()
   }
 
   destroy() {
