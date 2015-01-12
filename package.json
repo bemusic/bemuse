@@ -66,6 +66,7 @@
   },
   "dependencies": {
     "audio-context": "^0.1.0",
+    "bms": "^0.2.0",
     "co": "^4.0.2",
     "gulp-gh-pages": "^0.4.0",
     "jquery": "^2.1.3",
