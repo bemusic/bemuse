@@ -63,6 +63,7 @@ function go(loader, element) {
     var samples = yield loadSamples(notes, chart)
     log('Click to play!')
     $(element).on('click', function() {
+      $(element).remove()
       var num = 0
       master.unmute()
       for (let note of notes.all()) {
