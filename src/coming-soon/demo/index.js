@@ -11,34 +11,99 @@ import Compiler from 'bms/compiler'
 import Timing from 'bms/timing'
 import Notes from 'bms/notes'
 
+import template from './template.jade'
+import './style.scss'
+
 export function main(element) {
+
+  $(element).text('Technical Demo!').on('click', handler)
+
   function handler() {
-    alert('Please drag a BMS file along with ALL samples into this page!')
+    ui()
+    $(element).off('click', handler)
+    $(element).hide()
     return false
   }
-  $(element).text('Technical Demo').on('click', handler)
-  $('body')
-  .on('dragover', () => false)
-  .on('drop', e => {
-    $(element).off('click', handler)
-    let dndLoader = new DndLoader(e.originalEvent.dataTransfer.files)
-    go(dndLoader, element)
-    return false
-  })
+
+  function ui() {
+    var el = $(template()).appendTo('body')
+    el.find('.js-play').hide()
+    el
+    .on('dragover', () => false)
+    .on('drop', e => {
+      let dndLoader = new DndLoader(e.originalEvent)
+      go(dndLoader, el)
+      return false
+    })
+  }
+
 }
 
 class DndLoader {
-  constructor(files) {
-    this._files = [].slice.call(files)
-    console.log(this._files)
+  constructor(event) {
+    this._files = this._getFiles(event)
+  }
+  _getFiles(event) {
+    let out = []
+    let promises = []
+    for (let item of Array.from(event.dataTransfer.items)) {
+      promises.push(this._readItem(item, out))
+    }
+    return Promise.all(promises).then(() => out)
+  }
+  _readItem(item, out) {
+    return new Promise((resolve, reject) => {
+      let entry = item.webkitGetAsEntry && item.webkitGetAsEntry()
+      if (entry) {
+        resolve(this._readEntry(entry, out))
+      } else {
+        let file = item.getAsFile && item.getAsFile()
+        if (file) {
+          out.push(file)
+          resolve()
+        }
+      }
+      reject(new Error('unsupported API'))
+    })
+  }
+  _readEntry(entry, out) {
+    if (entry.isFile) {
+      return this._readFile(entry, out)
+    } else if (entry.isDirectory) {
+      return this._readDirectory(entry, out)
+    }
+  }
+  _readFile(entry, out) {
+    return new Promise((resolve, reject) => {
+      entry.file(file => { out.push(file); resolve() }, reject)
+    })
+  }
+  _readDirectory(entry, out) {
+    let entries = []
+    return new Promise((resolve, reject) => {
+      let reader = entry.createReader()
+      let read = () => reader.readEntries(results => {
+        console.log(results.length)
+        if (results.length === 0) {
+          resolve()
+        } else {
+          entries.push(...Array.from(results))
+          read()
+        }
+      }, reject)
+      read()
+    }).then(() =>
+      Promise.map(entries, entry => this._readEntry(entry, out)))
   }
   file(name) {
-    for (let file of this._files) {
-      if (file.name.toLowerCase() === name.toLowerCase()) {
-        return Promise.resolve(file)
+    return this._files.then(function(files) {
+      for (let file of files) {
+        if (file.name.toLowerCase() === name.toLowerCase()) {
+          return file
+        }
       }
-    }
-    return Promise.reject(new Error('unable to find ' + name))
+      throw new Error('unable to find ' + name)
+    })
   }
   get fileList() {
     return Promise.resolve(this._files.map(f => f.name))
@@ -47,12 +112,15 @@ class DndLoader {
 
 function go(loader, element) {
 
-  let master = new SamplingMaster(ctx)
+  let master    = new SamplingMaster(ctx)
+  let $log      = element.find('.js-log')
+  let $play     = element.find('.js-play').hide()
+  let $sampler  = element.find('.js-sampler')
 
   co(function*() {
     log('Loading file list')
     let list = yield loader.fileList
-    let bmsFile = list.filter(f => f.match(/\.bm.$/i))[0]
+    let bmsFile = list.filter(f => f.match(/\.(?:bms|bme|bml|pms)$/i))[0]
     log('Loading ' + bmsFile)
     let bms = yield loader.file(bmsFile)
     let text = yield readBlob(bms).as('text')
@@ -61,10 +129,9 @@ function go(loader, element) {
     var notes = Notes.fromBMSChart(chart)
     log('Loading samples')
     var samples = yield loadSamples(notes, chart)
-    log('Click to play!')
-    $(element).on('click', function() {
-      $(element).remove()
-      var num = 0
+    log('Click the button to play!')
+    yield waitForPlay()
+    ;(function() {
       master.unmute()
       for (let note of notes.all()) {
         setTimeout(() => {
@@ -73,28 +140,32 @@ function go(loader, element) {
             console.log('warn: unknown sample ' + note.keysound)
             return
           }
-          let span = document.createElement('span')
-          let c = num++
-          span.style.fontSize = '1vw'
-          span.style.textAlign = 'center'
-          span.style.display = 'block'
-          span.style.position = 'absolute'
-          span.style.left = (c % 40) * 2.5 + '%'
-          span.style.top = (~~(c / 40) % 10) * 3 + 'ex'
-          span.innerHTML = '[' + note.keysound + '] '
-          document.body.appendChild(span)
+          let span = $('<span style="font-size:14px"></span>')
+                .text('[' + note.keysound + '] ')
+                .appendTo($sampler)
           let instance = sample.play()
+          $sampler[0].scrollTop = $sampler[0].scrollHeight
           instance.onstop = function() {
-            document.body.removeChild(span)
+            span.css('visibility', 'hidden')
           }
         }, timing.beatToSeconds(note.beat) * 1000)
       }
       return false
-    })
+    })()
   }).done()
 
+  function waitForPlay() {
+    return new Promise(function(resolve) {
+      $play.show()
+      $play.on('click', () => {
+        resolve()
+        $play.hide()
+      })
+    })
+  }
+
   function log(t) {
-    element.textContent = t
+    $log.text(t)
   }
 
   function loadSamples(notes, chart) {

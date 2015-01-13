@@ -1,0 +1,56 @@
+
+.jukebox {
+
+  &--overlay {
+    position: fixed;
+    top: 0;right: 0;bottom: 0;left: 0;
+    background: rgba(#8b8685, 0.5);
+  }
+
+  &--inner {
+    position: absolute;
+    top: 50%; left: 50%; transform: translate(-50%,-50%);
+    border: 2px solid #8b8685;
+    background: #252423;
+    padding: 12px;
+  }
+
+  &--sampler {
+    background: #090807;
+    padding: 9px;
+    border: 1px solid #8b8685;
+    margin-top: 10px;
+    height: 192px;
+    width: 40em;
+    overflow: auto;
+  }
+
+  h1 {
+    margin: 0 0 20px;
+    font: 30px Helvetica Neue, Helvetica, sans-serif;
+  }
+
+  p {
+    margin: 10px 0 0;
+  }
+
+  & &--status {
+    color: #8b8685;
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+
+  button {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    background: #090807;
+    color: #7f3;
+    cursor: pointer;
+    border: 1px solid #8b8685;
+    padding: 8px;
+    font: bold 15px verdana, sans-serif;
+    margin-top: 18px;
+  }
+
+}
