@@ -1,4 +1,5 @@
 
+var match = require('../util/match')
 var BMSChart = require('../bms/chart')
 
 exports.compile = function(text) {
@@ -68,24 +69,5 @@ function eachLine(text, callback) {
       .forEach(function(line, index) {
     callback(line, index + 1)
   })
-}
-
-function match(text) {
-  var matched = false
-  return {
-    when: function(pattern, callback) {
-      if (matched) return this
-      var match = text.match(pattern)
-      if (match) {
-        matched = true
-        callback(match)
-      }
-      return this
-    },
-    else: function(callback) {
-      if (matched) return this
-      callback()
-    }
-  }
 }
 
