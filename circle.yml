@@ -1,0 +1,6 @@
+notify:
+  webhooks:
+    - url: https://webhooks.gitter.im/e/ba1b37fc12942c2430c9
+test:
+  override:
+    - npm test
