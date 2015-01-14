@@ -15,10 +15,16 @@ module.exports = function() {
 
   this.World = World
 
-  this.World.plugins = []
+  World.plugins = []
 
-  this.World.plug = function(plugin) {
+  World.plug = function(plugin) {
     this.plugins.push(plugin)
+  }
+
+  World.prop = function(name, getter) {
+    this.plug(function() {
+      this.prop(name, getter)
+    })
   }
 
 }
