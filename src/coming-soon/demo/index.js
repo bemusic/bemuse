@@ -140,13 +140,13 @@ function go(loader, element) {
             console.log('warn: unknown sample ' + note.keysound)
             return
           }
-          let span = $('<span style="font-size:14px"></span>')
+          let span = $('<span></span>')
                 .text('[' + note.keysound + '] ')
                 .appendTo($sampler)
           let instance = sample.play()
           $sampler[0].scrollTop = $sampler[0].scrollHeight
           instance.onstop = function() {
-            span.css('visibility', 'hidden')
+            span.addClass('is-off')
           }
         }, timing.beatToSeconds(note.beat) * 1000)
       }

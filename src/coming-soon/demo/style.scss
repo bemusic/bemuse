@@ -23,6 +23,15 @@
     height: 192px;
     width: 40em;
     overflow: auto;
+    span {
+      font-size: 12px;
+      opacity: 1;
+      transition: 0.5s opacity;
+    }
+    span.is-off {
+      color: #8b8685;
+      opacity: 0;
+    }
   }
 
   h1 {
