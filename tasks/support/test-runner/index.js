@@ -42,14 +42,14 @@ export function run() {
 
       for (let spec of result.specs) {
         if (spec.status === 'passed') {
-          console.log('\033[1;32m[OK]\033[m', spec.fullName)
+          console.log('\x1b[1;32m[OK]\x1b[m', spec.fullName)
         } else if (spec.status === 'pending') {
-          console.log('\033[1;33m[PEND]\033[m', spec.fullName)
+          console.log('\x1b[1;33m[PEND]\x1b[m', spec.fullName)
         } else {
           fail = true
-          console.log('\033[1;31m[FAIL]\033[m', spec.fullName)
+          console.log('\x1b[1;31m[FAIL]\x1b[m', spec.fullName)
           for (let expectation of spec.failedExpectations) {
-            console.log('\033[1;31m' + expectation.message + '\033[m')
+            console.log('\x1b[1;31m' + expectation.message + '\x1b[m')
             console.log(expectation.stack)
           }
         }
