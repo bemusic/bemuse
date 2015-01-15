@@ -9,4 +9,6 @@ deployment:
     branch: ci-war
     commands:
       - git remote add www git@github.com:bemusic/bemusic.github.io.git
+      - git config --global user.email "aki@spacet.me"
+      - git config --global user.name "aki running on CircleCI"
       - npm run deploy
