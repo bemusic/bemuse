@@ -42,6 +42,7 @@
     "express": "^4.10.6",
     "glob": "^4.3.2",
     "gulp": "^3.8.10",
+    "gulp-gh-pages": "git://github.com/dtinth/gulp-gh-pages",
     "gulp-jshint": "^1.9.0",
     "gulp-util": "^3.0.1",
     "istanbul": "^0.3.5",

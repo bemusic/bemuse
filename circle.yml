@@ -4,3 +4,8 @@ notify:
 test:
   override:
     - npm test
+deployment:
+  production:
+    branch: ci-war
+    commands:
+      - npm run deploy
