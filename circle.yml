@@ -8,4 +8,5 @@ deployment:
   production:
     branch: ci-war
     commands:
+      - git remote add www git@github.com:bemusic/bemusic.github.io.git
       - npm run deploy
