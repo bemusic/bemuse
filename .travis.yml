@@ -11,8 +11,7 @@ before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 script:
-  - npm run code-review
-  - bin/upload-code-review
+  - npm run ci:code-review
   - npm test
 after_success:
   - 'cat coverage/lcov.info | ./node_modules/.bin/codeclimate'
