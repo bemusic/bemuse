@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+npm version "$@"
+git push --follow-tags
+

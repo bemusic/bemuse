@@ -12,4 +12,4 @@ deployment:
       - git remote add www https://akibot:$GH_TOKEN@github.com/bemusic/bemusic.github.io.git
       - git config --global user.email "aki@spacet.me"
       - git config --global user.name "Aki running on CircleCI"
-      - npm run deploy
+      - git log --format=%B -n 1 | grep '^v\d\+\.\d\+\.\d\+$' && npm run deploy
