@@ -1,14 +1,39 @@
 #!/bin/bash -e
 
-if [ -e code-review-result.txt -a "$TRAVIS_PULL_REQUEST" ]
-then
+if [ "$TRAVIS_REPO_SLUG" ]; then
+  REPO_SLUG="$TRAVIS_REPO_SLUG"
+elif [ "$CIRCLE_PROJECT_USERNAME" ]; then
+  REPO_SLUG="$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
+fi
+
+if [ "$TRAVIS_PULL_REQUEST" ]; then
+  PULL_REQUEST="$TRAVIS_PULL_REQUEST"
+elif [ "$CI_PULL_REQUEST" ]; then
+  PULL_REQUEST=`echo "$CI_PULL_REQUEST" | ruby -ne 'puts $_[/\d+/]'`
+fi
+
+if [ "$TRAVIS_COMMIT" ]; then
+  COMMIT_SHA1="$TRAVIS_COMMIT"
+elif [ "$CIRCLE_SHA1" ]; then
+  COMMIT_SHA1="$CIRCLE_SHA1"
+fi
+
+if [ "$TRAVIS_BUILD_NUMBER" ]; then
+  BUILD_NUMBER="$TRAVIS_BUILD_NUMBER"
+elif [ "$CIRCLE_BUILD_NUM" ]; then
+  BUILD_NUMBER="$CIRCLE_BUILD_NUM"
+fi
+
+if [ -e code-review-result.txt -a "$TRAVIS_PULL_REQUEST" ]; then
+  echo "Sending code-review-result"
   URL=https://bemuseaki.herokuapp.com/submit-review
   curl "$URL" \
-    --data-urlencode "repo=$TRAVIS_REPO_SLUG" \
-    --data-urlencode "pull=$TRAVIS_PULL_REQUEST" \
-    --data-urlencode "commit=$TRAVIS_COMMIT" \
-    --data-urlencode "build=$TRAVIS_BUILD_NUMBER" \
-    --data-urlencode "job=$TRAVIS_JOB_NUMBER" \
+    --data-urlencode "repo=$REPO_SLUG" \
+    --data-urlencode "pull=$PULL_REQUEST" \
+    --data-urlencode "commit=$COMMIT" \
+    --data-urlencode "build=$BUILD_NUMBER" \
     --data-urlencode "text@code-review-result.txt"
+else
+  echo "No code review result generated"
 fi
 

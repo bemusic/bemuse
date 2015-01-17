@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "code-review": "gulp code-review",
+    "ci:code-review": "npm run code-review; ./bin/upload-code-review",
     "test": "COV=true gulp build && gulp test",
     "deploy": "NODE_ENV=production gulp build && gulp deploy",
     "lint": "gulp lint",
@@ -42,6 +43,7 @@
     "express": "^4.10.6",
     "glob": "^4.3.2",
     "gulp": "^3.8.10",
+    "gulp-gh-pages": "git://github.com/dtinth/gulp-gh-pages",
     "gulp-jshint": "^1.9.0",
     "gulp-util": "^3.0.1",
     "istanbul": "^0.3.5",
@@ -68,9 +70,7 @@
     "audio-context": "^0.1.0",
     "bms": "^0.2.0",
     "co": "^4.0.2",
-    "gulp-gh-pages": "^0.4.0",
     "jquery": "^2.1.3",
-    "localforage": "^1.2.0",
     "prfun": "^1.0.2",
     "ramda": "^0.8.0"
   }

@@ -1,0 +1,15 @@
+notify:
+  webhooks:
+    - url: https://webhooks.gitter.im/e/ba1b37fc12942c2430c9
+test:
+  override:
+    - npm test
+deployment:
+  production:
+    branch: master
+    owner: bemusic
+    commands:
+      - git remote add www https://akibot:$GH_TOKEN@github.com/bemusic/bemusic.github.io.git
+      - git config --global user.email "aki@spacet.me"
+      - git config --global user.name "Aki running on CircleCI"
+      - npm run deploy

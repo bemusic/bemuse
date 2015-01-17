@@ -9,14 +9,15 @@ describe('Cachier', function() {
   let retry = count => fn => () => {
     let run = n => {
       let promise = Promise.resolve().then(fn)
-      return n >= count ? promise : promise.catch(() => run(n + 1))
+      return n >= count ? promise : promise.catch(() =>
+        Promise.delay(100).then(() => run(n + 1)))
     }
     return run(1)
   }
 
   beforeEach(() =>
     cachier = new Cachier(`test.${new Date().getTime()}.${++databaseNumber}`))
-  afterEach(retry(2)(() =>
+  afterEach(retry(3)(() =>
     cachier.destroyDatabase()))
 
   describe('.connection', () => {
