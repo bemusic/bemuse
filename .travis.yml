@@ -24,4 +24,5 @@ deploy:
     secure: CGyFmjC+CFqSayW7bUqim+JrBO6ozb+E2jXAPz3+IBJdK9x694gKllZEMiETDpqE4bMVE9d1ghNvZgsl14SyePjeviblRpqRa3/V4GbrGbZ+tKZUwvhy++7LaC3SnAhiFlDzHasook7sup4q7f7GA5Iboxfe9Nb7zrXurYkA8Ds=
   on:
     tags: true
+    all_branches: true
     repo: bemusic/bms-js
