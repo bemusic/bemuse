@@ -6,7 +6,8 @@ test:
     - npm test
 deployment:
   production:
-    branch: ci-war
+    branch: master
+    owner: bemusic
     commands:
       - git remote add www https://akibot:$GH_TOKEN@github.com/bemusic/bemusic.github.io.git
       - git config --global user.email "aki@spacet.me"
