@@ -83,6 +83,10 @@ function cucumberTest(callback) {
   gulp.src(files.features, { read: false })
     .pipe(cucumber({
       steps: 'features/step_definitions/**/*_steps.js',
+      support: [
+        'features/support/world.js',
+        'features/support/*.js',
+      ],
     }))
     .on('end', callback)
     .on('error', callback)

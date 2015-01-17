@@ -10,6 +10,7 @@ module.exports = BMSHeaders
  */
 function BMSHeaders() {
   this._data = { }
+  this._dataAll = { }
 }
 
 /**
@@ -24,6 +25,17 @@ BMSHeaders.prototype.get = function(name) {
 }
 
 /**
+ * Retrieves all headers (when header is specified multiple times).
+ *
+ * @method get
+ * @param  {String} name The header name (case-insensitive)
+ * @return {String[]} The values of specified header
+ */
+BMSHeaders.prototype.getAll = function(name) {
+  return this._dataAll[name.toLowerCase()]
+}
+
+/**
  * Sets the header.
  *
  * @method set
@@ -31,6 +43,8 @@ BMSHeaders.prototype.get = function(name) {
  * @param  {String} value The value to set
  */
 BMSHeaders.prototype.set = function(name, value) {
-  this._data[name.toLowerCase()] = value
+  var key = name.toLowerCase()
+  this._data[key] = value
+  ;(this._dataAll[key] || (this._dataAll[key] = [])).push(value)
 }
 

@@ -8,6 +8,8 @@ module.exports = [
   'basic/04-Time-Signature.feature',
   'basic/05-BPM.feature',
   'basic/06-STOP.feature',
-  'bml/LNTYPE1.feature',
+  'basic/07-Basic-Info.feature',
+  'bml/*.feature',
+  'song-info/*.feature',
 
 ]
