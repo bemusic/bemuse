@@ -8,7 +8,7 @@ gulp.task('test', function() {
 
 gulp.task('test:exit', function() {
   return run().then(
-    function() { process.exit(0) },
-    function() { process.exit(1) }
+    ()  => { process.exit(0) },
+    (e) => { setTimeout(() => process.exit(1)); throw e }
   )
 })
