@@ -18,6 +18,7 @@
   "homepage": "https://github.com/bemusic/pack",
   "dependencies": {
     "6to5": "^1.15.0",
+    "bms": "^0.2.0",
     "bytes": "^1.0.0",
     "co": "^4.0.2",
     "commander": "^2.5.1",

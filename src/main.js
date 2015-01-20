@@ -9,6 +9,7 @@ import merge      from 'merge-stream'
 import map        from 'map-stream'
 import through2   from 'through2'
 import { join }   from 'path'
+import Reader     from 'bms/reader'
 
 import { convertAudio } from './audio'
 import { Progress }     from './gulp-progress'
@@ -56,7 +57,8 @@ function packIntoBemuse(dir, out, metadata) {
 
     let files = merge(
       src('*.{bms,bme,bml,pms}')
-        .pipe(tagType('bms')),
+        .pipe(tagType('bms'))
+        .pipe(utf8ify()),
       src('*.mp3')
         .pipe(tagType('snd')),
       src('*.{wav,ogg}', { read: false })
@@ -104,4 +106,12 @@ function bemusePacker(out, metadata) {
     .on('end', function() {
       result.write(metadata).done()
     })
+}
+
+function utf8ify() {
+  return through2.obj(function(file, enc, cb) {
+    file.contents = new Buffer(Reader.read(file.contents))
+    cb(null, file)
+    void enc
+  })
 }
