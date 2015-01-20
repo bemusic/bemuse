@@ -22,11 +22,11 @@ let config = {
   module: {
     loaders: [
       {
-        test: /\/src\/.*\.js$/,
+        test: /[\\\/]src[\\\/].*\.js$/,
         loader: '6to5?modules=common&experimental=true',
       },
       {
-        test: /\/spec\/.*\.js$/,
+        test: /[\\\/]spec[\\\/].*\.js$/,
         loader: '6to5?modules=common&experimental=true',
       },
       {
@@ -64,4 +64,3 @@ if (NODE_ENV === 'production') {
 }
 
 export default config
-
