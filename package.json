@@ -6,7 +6,7 @@
   "scripts": {
     "code-review": "gulp code-review",
     "ci:code-review": "npm run code-review; ./bin/upload-code-review",
-    "test": "COV=true gulp build && gulp test",
+    "test": "bash -c \"COV=true gulp build && gulp test:exit\"",
     "deploy": "NODE_ENV=production gulp build && gulp deploy",
     "lint": "gulp lint",
     "start": "gulp server",
