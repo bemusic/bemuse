@@ -69,7 +69,7 @@
   "dependencies": {
     "audio-context": "^0.1.0",
     "bms": "^0.2.0",
-    "co": "^4.0.2",
+    "co": "~4.1.0",
     "jquery": "^2.1.3",
     "prfun": "^1.0.2",
     "ramda": "^0.8.0"
