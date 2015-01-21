@@ -1,8 +1,8 @@
-<h1 align="center">BEAT☆MUSIC☆SEQUENCE</h1>
+<h1 align="center">Bemuse</h1>
 
-<p align="center">(a.k.a. BE☆MU☆SE)</p>
+<h3 align="center">~BEAT☆MUSIC☆SEQUENCE~</h3>
 
-<h3 align="center"><em>web-based music game of the future</em></h3>
+<h3 align="center"><em>web-based BMS simulator of the future</em></h3>
 
 <p align="center">
   <a href="https://waffle.io/bemusic/bemuse"><img src="http://img.shields.io/badge/wow%20much-waffle-green.svg?style=flat" alt="Waffles"></a>
