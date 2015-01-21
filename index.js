@@ -1,5 +1,5 @@
 
-exports.Reader = require('./notes')
+exports.Reader = require('./reader')
 exports.Compiler = require('./compiler')
 
 exports.BMSChart = require('./bms/chart')
