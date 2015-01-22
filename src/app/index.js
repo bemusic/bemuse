@@ -1,11 +1,12 @@
 
 import '../polyfill'
-
-import PIXI from 'pixi.js'
-import $    from 'jquery'
+import { load as loadTheme } from '../scintillator'
 
 export function main() {
-
+  loadTheme('/themes/default/theme.xml')
+  .then(x => console.log(x))
+  .done()
+/*
   var stage = new PIXI.Stage(0x66FF99)
   var width = 1280
   var height = 720
@@ -42,6 +43,7 @@ export function main() {
   $(window).on('resize', resize)
   resize()
   frame()
+*/
 
 }
 
