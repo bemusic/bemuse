@@ -15,7 +15,7 @@ export function main() {
   view.style.display = 'block'
   view.style.margin = '0 auto'
 
-  var url = '/themes/default/NoteHint/Active/Scratch.png'
+  var url = '/skins/default/NoteHint/Active/Scratch.png'
   var sprite = PIXI.Sprite.fromImage(url)
   stage.addChild(sprite)
   sprite.x = 300
