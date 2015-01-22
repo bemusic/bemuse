@@ -11,7 +11,7 @@ export function main() {
   require.ensure(['./demo'], function(require) {
     var button = div.querySelector('.coming-soon--demo')
     require('./demo').main(button)
-  })
+  }, 'comingSoonDemo')
 
   document.body.appendChild(div)
 

@@ -15,7 +15,7 @@ code += Object.keys(modules).map(function(key) {
   return JSON.stringify(key) + ': function(callback) {' +
     'require.ensure(' + JSON.stringify([path]) + ', function(require) {' +
       'callback(require(' + JSON.stringify(path) + '))' +
-    '})' +
+    '}, ' + JSON.stringify(key + 'Mode') + ')' +
   '}'
 }).join(',\n')
 
