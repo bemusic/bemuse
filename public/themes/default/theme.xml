@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<theme>
+  <image src="NotePanel/Left.png"></image>
+  <image src="InfoPanel/Background.png"></image>
+  <sprite image="InfoPanel/Background.png" y="616"></sprite>
+</theme>
