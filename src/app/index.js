@@ -16,7 +16,7 @@ export function main() {
   view.style.display = 'block'
   view.style.margin = '0 auto'
 
-  var url = '/themes/default/NoteHint/Active/Scratch.png'
+  var url = '/skins/default/NoteHint/Active/Scratch.png'
   var sprite = PIXI.Sprite.fromImage(url)
   stage.addChild(sprite)
   sprite.x = 300
@@ -30,8 +30,8 @@ export function main() {
       window.innerHeight / height,
       1
     )
-    view.width = Math.round(width * scale)
-    view.height = Math.round(height * scale)
+    view.style.width = Math.round(width * scale) + 'px'
+    view.style.height = Math.round(height * scale) + 'px'
   }
 
   function frame() {
