@@ -29,8 +29,8 @@ export function main() {
       window.innerHeight / height,
       1
     )
-    view.width = Math.round(width * scale)
-    view.height = Math.round(height * scale)
+    view.style.width = Math.round(width * scale) + 'px'
+    view.style.height = Math.round(height * scale) + 'px'
   }
 
   function frame() {
