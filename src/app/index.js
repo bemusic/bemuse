@@ -3,7 +3,7 @@ import '../polyfill'
 import { load as loadTheme } from '../scintillator'
 
 export function main() {
-  loadTheme('/themes/default/theme.xml')
+  loadTheme('/skins/default/skin.xml')
   .then(x => console.log(x))
   .done()
 /*
