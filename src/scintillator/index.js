@@ -19,6 +19,7 @@ export class Scintillator {
     this._resources = resources
   }
   compile(options={}) {
+    let $xml = this._$xml
     new Compiler({ $xml }).compile()
     void options
   }
