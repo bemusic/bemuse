@@ -1,11 +1,12 @@
 
 import '../polyfill'
 import { load as loadTheme } from '../scintillator'
+import co from 'co'
 
 export function main() {
-  loadTheme('/skins/default/skin.xml')
-  .then(skin => {
-    skin.compile({})
+  co(function*() {
+    let theme = yield loadTheme('/skins/default/skin.xml')
+    console.log(theme)
   })
   .done()
 /*

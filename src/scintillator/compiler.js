@@ -4,11 +4,13 @@ import $ from 'jquery'
 import Debug from 'debug/browser'
 let debug = Debug('scintillator:compiler')
 
+import { SkinRootNode, SpriteNode, GroupNode, ObjectNode } from './nodes'
+
 /**
  * A Compiler compiles the $xml theme file into SkinNode.
  */
 class Compiler {
-  constructor({ $xml }) {
+  constructor($xml) {
     this._$xml = $xml
     this._NODE_MAPPING = {
       'sprite': SpriteNode,
@@ -17,7 +19,7 @@ class Compiler {
     }
   }
   compile() {
-    return this._compile(RootNode, this._$xml)
+    return this._compile(SkinRootNode, this._$xml)
   }
   _compile(Node, $element) {
     debug('compiling', $element[0])
@@ -35,41 +37,6 @@ class Compiler {
     if (!Node) return
     container.addChild(this._compile(Node, $child))
   }
-}
-
-class SkinNode {
-  static fromXML($element) {
-    let ThisClass = this
-    let node = new ThisClass()
-    void $element
-    return node
-  }
-}
-
-class SpriteNode extends SkinNode {
-}
-
-class ContainerNode extends SkinNode {
-  constructor() {
-    this.children = []
-  }
-  addChild(node) {
-    this.children.push(node)
-  }
-  static fromXML($element, compile) {
-    let node = super($element, compile)
-    compile($element, node)
-    return node
-  }
-}
-
-class RootNode extends ContainerNode {
-}
-
-class GroupNode extends ContainerNode {
-}
-
-class ObjectNode extends ContainerNode {
 }
 
 export default Compiler
