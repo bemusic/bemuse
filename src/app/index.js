@@ -4,7 +4,9 @@ import { load as loadTheme } from '../scintillator'
 
 export function main() {
   loadTheme('/skins/default/skin.xml')
-  .then(x => console.log(x))
+  .then(skin => {
+    skin.compile({})
+  })
   .done()
 /*
   var stage = new PIXI.Stage(0x66FF99)

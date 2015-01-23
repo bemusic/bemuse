@@ -7,15 +7,20 @@ import url from 'url'
 import promiseForPixi from './import-pixi'
 
 import Resources from './resources'
+import Compiler from './compiler'
 
 /**
  * A Scintillator is Bemuse's graphics display engine based on PIXI.js.
  */
 export class Scintillator {
   constructor({ PIXI, $xml, resources }) {
-    this.PIXI = PIXI
-    this.$xml = $xml
-    this.resources = resources
+    this._PIXI = PIXI
+    this._$xml = $xml
+    this._resources = resources
+  }
+  compile(options={}) {
+    new Compiler({ $xml }).compile()
+    void options
   }
 }
 

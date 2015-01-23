@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<theme>
+<skin width="1280" height="720">
   <image src="NotePanel/Left.png"></image>
   <image src="InfoPanel/Background.png"></image>
-  <sprite image="InfoPanel/Background.png" y="616"></sprite>
-</theme>
+  <sprite image="InfoPanel/Background.png" y="616">
+    <animation>
+      <keyframe t="0" y="720"></keyframe>
+      <keyframe t="0.3" y="616"></keyframe>
+    </animation>
+  </sprite>
+  <group x="123" y="345">
+    <sprite image="NoteHint/Active/Note.png" x="123" y="123"></sprite>
+    <sprite image="NoteHint/Active/Scratch.png" x="234" y="123"></sprite>
+  </group>
+  <object type="note_1">
+    <sprite image="Note/DX.png" y="-1"></sprite>
+  </object>
+</skin>

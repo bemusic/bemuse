@@ -1,5 +1,5 @@
 doctype xml
-theme
+skin(width='1280' height='720')
 
   image(src='NotePanel/Left.png')
   image(src='InfoPanel/Background.png')
@@ -8,3 +8,10 @@ theme
     animation
       keyframe(t='0' y='720')
       keyframe(t='0.3' y='616')
+
+  group(x='123' y='345')
+    sprite(image='NoteHint/Active/Note.png' x='123' y='123')
+    sprite(image='NoteHint/Active/Scratch.png' x='234' y='123')
+
+  object(type='note_1')
+    sprite(image='Note/DX.png' y='-1')
