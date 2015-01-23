@@ -10,7 +10,7 @@ export class SkinRootNode extends ContainerNode {
   instantiate(instance) {
     let stage = new instance.PIXI.Stage(0x090807)
     this.instantiateChildren(instance, stage)
-    return stage
+    instance.stage = stage
   }
 }
 

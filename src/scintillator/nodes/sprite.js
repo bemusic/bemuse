@@ -12,7 +12,7 @@ export class SpriteNode extends SkinNode {
     let texture = instance.PIXI.Texture.fromFrame(this.url)
     let sprite  = new instance.PIXI.Sprite(texture)
     instance.instantiate(this.display, sprite)
-    return sprite
+    instance.object = sprite
   }
 }
 

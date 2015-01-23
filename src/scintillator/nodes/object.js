@@ -4,7 +4,7 @@ import ContainerNode      from './lib/container'
 export class ObjectNode extends ContainerNode {
   instantiate(instance) {
     let container = new instance.PIXI.DisplayObjectContainer()
-    return container
+    instance.object = container
   }
 }
 

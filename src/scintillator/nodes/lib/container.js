@@ -7,8 +7,8 @@ export class ContainerNode extends SkinNode {
   }
   instantiateChildren(instance, displayObject) {
     for (let child of this.children) {
-      let childDisplayObject = instance.instantiate(child)
-      displayObject.addChild(childDisplayObject)
+      let childInstance = instance.instantiate(child)
+      displayObject.addChild(childInstance.object)
     }
   }
 }

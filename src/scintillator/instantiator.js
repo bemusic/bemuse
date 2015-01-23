@@ -32,7 +32,8 @@ class Instantiator {
   instantiate(node, ...args) {
     let SkinNodeInstance = this._SkinNodeInstance
     let instance = new SkinNodeInstance(this)
-    return node.instantiate(instance, ...args)
+    node.instantiate(instance, ...args)
+    return instance
   }
 }
 

@@ -11,7 +11,7 @@ export class GroupNode extends ContainerNode {
     let container = new instance.PIXI.DisplayObjectContainer()
     this.instantiateChildren(instance, container)
     instance.instantiate(this.display, container)
-    return container
+    instance.object = container
   }
 }
 
