@@ -2,6 +2,8 @@
 <skin width="1280" height="720">
   <image src="NotePanel/Left.png"></image>
   <image src="InfoPanel/Background.png"></image>
+  <image src="NoteHint/Active/Note.png"></image>
+  <image src="NoteHint/Active/Scratch.png"></image>
   <sprite image="InfoPanel/Background.png" y="616">
     <animation>
       <keyframe t="0" y="720"></keyframe>

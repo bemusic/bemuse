@@ -12,6 +12,10 @@ export class Resources {
   add(src, url) {
     this._map[src] = url
   }
+  get(src) {
+    if (!(src in this._map)) throw new Error('Not registered: ' + src)
+    return this._map[src]
+  }
   get urls() {
     return R.values(this._map)
   }

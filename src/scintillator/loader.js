@@ -28,6 +28,8 @@ export function load(xmlPath) {
     debug('compiling')
     let skin = new Compiler($xml).compile()
 
+    skin.resources = resources
+
     return skin
 
   })
