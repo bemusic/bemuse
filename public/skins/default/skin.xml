@@ -3,11 +3,13 @@
   <image src="NotePanel/Left.png"></image>
   <image src="InfoPanel/Background.png"></image>
   <image src="NoteArea/Background/DXL.png"></image>
+  <image src="NoteArea/Flash.png"></image>
   <!-- note panel-->
   <group>
     <sprite image="NotePanel/Left.png" x="0" y="0"></sprite>
     <group x="34" y="0">
       <sprite image="NoteArea/Background/DXL.png" x="0" y="0"></sprite>
+      <sprite image="NoteArea/Flash.png" x="1" y="476" blend="screen"></sprite>
     </group>
   </group>
   <!-- info panel-->

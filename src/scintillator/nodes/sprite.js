@@ -9,7 +9,8 @@ export class SpriteNode extends SkinNode {
     this.display  = DisplayObjectNode.compile(compiler, $el)
   }
   instantiate(instance) {
-    let sprite = instance.PIXI.Sprite.fromImage(this.url)
+    let texture = instance.PIXI.Texture.fromFrame(this.url)
+    let sprite  = new instance.PIXI.Sprite(texture)
     instance.instantiate(this.display, sprite)
     return sprite
   }
