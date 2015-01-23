@@ -26,9 +26,7 @@ export function load(xmlPath) {
     yield loadResources(resources).with(PIXI)
 
     debug('compiling')
-    let skin = new Compiler($xml).compile()
-
-    skin.resources = resources
+    let skin = new Compiler({ resources }).compile($xml)
 
     return skin
 

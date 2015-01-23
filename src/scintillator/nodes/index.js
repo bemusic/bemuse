@@ -1,106 +1,71 @@
 
-import Debug from 'debug/browser'
-let debug = Debug('scintillator:nodes')
+import SkinNode from './base'
 
-export class SkinNode {
-  static fromXML($element) {
-    let ThisClass = this
-    let node = new ThisClass()
-    void $element
-    return node
+class DisplayObjectNode extends SkinNode {
+  compile(compiler, $el) {
+    this.x = +$el.attr('x') || 0
+    this.y = +$el.attr('y') || 0
   }
-}
-
-class DisplayObjectNodeMixin {
-  static fromXML($element, node) {
-    node.x = new Expression($element.attr('x') || '0')
-    node.y = new Expression($element.attr('y') || '0')
-  }
-  static instantiate(env, node, displayObject) {
-    env.bind(node.x, x => displayObject.x = x)
-    env.bind(node.y, y => displayObject.y = y)
-  }
-}
-
-class Expression {
-  constructor(source) {
-    this.source = source
-  }
-  evaluate() {
-    return +this.source
+  instantiate(instance, sprite) {
+    sprite.x = this.x
+    sprite.y = this.y
   }
 }
 
 export class SpriteNode extends SkinNode {
-  instantiate(env) {
-    let url = env.resources.get(this.image)
-    debug('instantiate sprite', url)
-    let sprite = env.PIXI.Sprite.fromImage(url)
-    DisplayObjectNodeMixin.instantiate(env, this, sprite)
-    return sprite
+  compile(compiler, $el) {
+    super(compiler, $el)
+    this.url      = compiler.resources.get($el.attr('image'))
+    this.display  = DisplayObjectNode.compile(compiler, $el)
   }
-  static fromXML($element, compile) {
-    let node = super($element, compile)
-    node.image = $element.attr('image')
-    DisplayObjectNodeMixin.fromXML($element, node)
-    return node
+  instantiate(instance) {
+    let sprite = instance.PIXI.Sprite.fromImage(this.url)
+    instance.instantiate(this.display, sprite)
+    return sprite
   }
 }
 
 export class ContainerNode extends SkinNode {
-  constructor() {
-    this.children = []
+  compile(compiler, $el) {
+    this.children = compiler.compileChildren($el)
   }
-  addChild(node) {
-    this.children.push(node)
-  }
-  instantiateChildren(env, object) {
+  instantiateChildren(instance, displayObject) {
     for (let child of this.children) {
-      debug('instantiateChildren', child)
-      let result = child.instantiate(env)
-      debug('instantiateChildren result', result)
-      object.addChild(result)
-      debug('instantiateChildren done', child)
+      let childDisplayObject = instance.instantiate(child)
+      displayObject.addChild(childDisplayObject)
     }
-  }
-  static fromXML($element, compile) {
-    let node = super($element, compile)
-    compile($element, node)
-    return node
   }
 }
 
 export class SkinRootNode extends ContainerNode {
-  instantiate(env) {
-    let stage = new env.PIXI.Stage(0x090807)
-    this.instantiateChildren(env, stage)
-    return stage
+  compile(compiler, $el) {
+    super(compiler, $el)
+    this.width  = +$el.attr('width')
+    this.height = +$el.attr('height')
   }
-  static fromXML($element, compile) {
-    let node = super($element, compile)
-    node.width  = +$element.attr('width')
-    node.height = +$element.attr('height')
-    return node
+  instantiate(instance) {
+    let stage = new instance.PIXI.Stage(0x090807)
+    this.instantiateChildren(instance, stage)
+    return stage
   }
 }
 
 export class GroupNode extends ContainerNode {
-  instantiate(env) {
-    let container = new env.PIXI.DisplayObjectContainer()
-    DisplayObjectNodeMixin.instantiate(env, this, container)
-    this.instantiateChildren(env, container)
-    return container
+  compile(compiler, $el) {
+    super(compiler, $el)
+    this.display = DisplayObjectNode.compile(compiler, $el)
   }
-  static fromXML($element, compile) {
-    let node = super($element, compile)
-    DisplayObjectNodeMixin.fromXML($element, node)
-    return node
+  instantiate(instance) {
+    let container = new instance.PIXI.DisplayObjectContainer()
+    this.instantiateChildren(instance, container)
+    instance.instantiate(this.display, container)
+    return container
   }
 }
 
 export class ObjectNode extends ContainerNode {
-  instantiate(env) {
-    let container = new env.PIXI.DisplayObjectContainer()
+  instantiate(instance) {
+    let container = new instance.PIXI.DisplayObjectContainer()
     return container
   }
 }
