@@ -11,20 +11,38 @@ export class SkinNode {
   }
 }
 
+class DisplayObjectNodeMixin {
+  static fromXML($element, node) {
+    node.x = new Expression($element.attr('x') || '0')
+    node.y = new Expression($element.attr('y') || '0')
+  }
+  static instantiate(env, node, displayObject) {
+    env.bind(node.x, x => displayObject.x = x)
+    env.bind(node.y, y => displayObject.y = y)
+  }
+}
+
+class Expression {
+  constructor(source) {
+    this.source = source
+  }
+  evaluate() {
+    return +this.source
+  }
+}
+
 export class SpriteNode extends SkinNode {
   instantiate(env) {
     let url = env.resources.get(this.image)
     debug('instantiate sprite', url)
     let sprite = env.PIXI.Sprite.fromImage(url)
-    sprite.x = this.x || 0
-    sprite.y = this.y || 0
+    DisplayObjectNodeMixin.instantiate(env, this, sprite)
     return sprite
   }
   static fromXML($element, compile) {
     let node = super($element, compile)
     node.image = $element.attr('image')
-    node.x = +$element.attr('x')
-    node.y = +$element.attr('y')
+    DisplayObjectNodeMixin.fromXML($element, node)
     return node
   }
 }
@@ -69,8 +87,14 @@ export class SkinRootNode extends ContainerNode {
 export class GroupNode extends ContainerNode {
   instantiate(env) {
     let container = new env.PIXI.DisplayObjectContainer()
+    DisplayObjectNodeMixin.instantiate(env, this, container)
     this.instantiateChildren(env, container)
     return container
+  }
+  static fromXML($element, compile) {
+    let node = super($element, compile)
+    DisplayObjectNodeMixin.fromXML($element, node)
+    return node
   }
 }
 

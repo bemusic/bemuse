@@ -7,11 +7,23 @@ export function instantiate(skin, options) {
     let PIXI        = yield promiseForPixi
     let resources   = skin.resources
     let instance    = new SkinInstance()
-    let environment = { PIXI, options, resources, instance }
+    let environment = new Environment({ PIXI, options, resources, instance })
     instance.stage  = skin.instantiate(environment)
     return instance
   })
 }
 
+class Environment {
+  constructor(props) {
+    Object.assign(this, props)
+  }
+  bind(...args) {
+    return this.instance.bind(...args)
+  }
+}
+
 class SkinInstance {
+  bind(expression, action) {
+    action(expression.evaluate())
+  }
 }
