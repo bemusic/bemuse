@@ -23,11 +23,11 @@ let config = {
     loaders: [
       {
         test: /[\\\/]src[\\\/].*\.js$/,
-        loader: '6to5?modules=common&experimental=true&optional=selfContained',
+        loader: '6to5?modules=common&experimental=true',
       },
       {
         test: /[\\\/]spec[\\\/].*\.js$/,
-        loader: '6to5?modules=common&experimental=true&optional=selfContained',
+        loader: '6to5?modules=common&experimental=true',
       },
       {
         test: /\.pegjs/,
