@@ -4,8 +4,8 @@ let debug = Debug('scintillator:loader')
 
 import $ from 'jquery'
 import url from 'url'
-import promiseForPixi from './pixi'
 import co from 'co'
+import PIXI from 'pixi.js'
 
 import Resources from './resources'
 import Compiler from './compiler'
@@ -14,7 +14,7 @@ export function load(xmlPath) {
   return co(function*() {
 
     debug('load XML from %s', xmlPath)
-    let [$xml, PIXI] = yield Promise.all([loadXml(xmlPath), promiseForPixi])
+    let $xml = yield loadXml(xmlPath)
 
     debug('loading resources')
     let resources = new Resources()
@@ -23,7 +23,7 @@ export function load(xmlPath) {
       let imageUrl = url.resolve(xmlPath, src)
       resources.add(src, imageUrl)
     }
-    yield loadResources(resources).with(PIXI)
+    yield loadResources(resources)
 
     debug('compiling')
     let skin = new Compiler({ resources }).compile($xml)
@@ -39,17 +39,13 @@ function loadXml(url) {
 }
 
 function loadResources(resources) {
-  return {
-    with: function(PIXI) {
-      debug('loading resources')
-      return new Promise(function(resolve) {
-        let loader = new PIXI.AssetLoader(resources.urls)
-        loader.on('onComplete', function() {
-          debug('resources finished loading')
-          resolve()
-        })
-        loader.load()
-      })
-    }
-  }
+  debug('loading resources')
+  return new Promise(function(resolve) {
+    let loader = new PIXI.AssetLoader(resources.urls)
+    loader.on('onComplete', function() {
+      debug('resources finished loading')
+      resolve()
+    })
+    loader.load()
+  })
 }

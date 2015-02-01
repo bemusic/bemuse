@@ -1,5 +1,4 @@
 
-import promiseForPixi from './pixi'
 import co from 'co'
 
 class Display {

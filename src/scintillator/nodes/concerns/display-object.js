@@ -1,4 +1,6 @@
 
+import PIXI     from 'pixi.js'
+
 import SkinNode from '../lib/base'
 import Instance from '../lib/instance'
 
@@ -12,13 +14,13 @@ export class DisplayObject extends SkinNode {
     return new Instance(context, self => {
       object.x = this.x
       object.y = this.y
-      object.blendMode = parseBlendMode(context.PIXI, this.blendMode)
+      object.blendMode = parseBlendMode(this.blendMode)
       void self
     })
   }
 }
 
-function parseBlendMode(PIXI, text) {
+function parseBlendMode(text) {
   if (text === 'normal') return PIXI.blendModes.NORMAL
   if (text === 'screen') return PIXI.blendModes.SCREEN
   throw new Error('Invalid blend mode: ' + text)

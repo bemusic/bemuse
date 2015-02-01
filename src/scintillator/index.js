@@ -1,8 +1,6 @@
 
-import { load }                     from './loader'
-import { instantiate }              from './instantiator'
-import { create as createDisplay }  from './display'
-import { render }                   from './render'
+import { load }    from './loader'
+import { Context } from './context'
 
-export { load, instantiate, createDisplay, render }
+export { load, Context }
 

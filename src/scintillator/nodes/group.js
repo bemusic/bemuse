@@ -1,4 +1,6 @@
 
+import PIXI           from 'pixi.js'
+
 import SkinNode       from './lib/base'
 import Instance       from './lib/instance'
 
@@ -11,7 +13,7 @@ export class GroupNode extends SkinNode {
   }
   instantiate(context, container) {
     return new Instance(context, self => {
-      let object = new context.PIXI.DisplayObjectContainer()
+      let object = new PIXI.DisplayObjectContainer()
       self.child(this.display, object)
       self.children(this.children, object)
       container.addChild(object)

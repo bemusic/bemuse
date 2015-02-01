@@ -1,4 +1,6 @@
 
+import PIXI           from 'pixi.js'
+
 import SkinNode       from './lib/base'
 import Instance       from './lib/instance'
 
@@ -11,8 +13,8 @@ export class SpriteNode extends SkinNode {
   }
   instantiate(context, container) {
     return new Instance(context, self => {
-      let texture = context.PIXI.Texture.fromFrame(this.url)
-      let sprite  = new context.PIXI.Sprite(texture)
+      let texture = PIXI.Texture.fromFrame(this.url)
+      let sprite  = new PIXI.Sprite(texture)
       self.child(this.display, sprite)
       container.addChild(sprite)
       self.onDestroy(() => { container.removeChild(sprite) })

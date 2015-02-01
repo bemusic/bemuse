@@ -1,4 +1,6 @@
 
+import PIXI      from 'pixi.js'
+
 import SkinNode  from './lib/base'
 import Instance  from './lib/instance'
 
@@ -10,7 +12,7 @@ export class SkinRootNode extends SkinNode {
   }
   instantiate(context) {
     return new Instance(context, self => {
-      let stage = new context.PIXI.Stage(0x090807)
+      let stage = new PIXI.Stage(0x090807)
       self.children(this.children, stage)
       context.stage = stage
     })
