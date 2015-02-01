@@ -41,6 +41,7 @@ function loadXml(url) {
 function loadResources(resources) {
   log('loading resources')
   return new Promise(function(resolve) {
+    if (resources.urls.length === 0) return resolve()
     let loader = new PIXI.AssetLoader(resources.urls)
     loader.on('onComplete', function() {
       log('resources finished loading')
