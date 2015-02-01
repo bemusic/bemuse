@@ -13,6 +13,9 @@ describe('Scintillator', function() {
       expect(skin.width).to.equal(123)
       expect(skin.height).to.equal(456)
     }))
+    it('should reject if invalid', function() {
+      return expect(Scintillator.load(fixture('invalid.xml'))).to.be.rejected
+    })
   })
 
   describe('Expressions', function() {
@@ -24,13 +27,16 @@ describe('Scintillator', function() {
       expect(stage.children[0].x).to.equal(3)
       expect(stage.children[0].y).to.equal(7)
     }))
-    xit('should support variables', co.wrap(function*() {
+    it('should support variables', co.wrap(function*() {
       let skin = yield Scintillator.load(fixture('expr_variables.xml'))
       let context = new Scintillator.Context(skin)
-      context.render({ a: 4, b: 3 })
       let stage = context.stage
+      context.render({ a: 4, b: 3 })
       expect(stage.children[0].x).to.equal(7)
       expect(stage.children[0].y).to.equal(12)
+      context.render({ a: 10, b: 20 })
+      expect(stage.children[0].x).to.equal(30)
+      expect(stage.children[0].y).to.equal(200)
     }))
   })
 

@@ -15,9 +15,7 @@ export function Expression(text) {
   let f = createFunction(code)
   return function(data) {
     return f(function(key) {
-      void data
-      void key
-      return Math.random()
+      return data[key]
     })
   }
 }
