@@ -1,16 +1,19 @@
 
-import ContainerNode      from './lib/container'
+import SkinNode  from './lib/base'
+import Instance  from './lib/instance'
 
-export class SkinRootNode extends ContainerNode {
+export class SkinRootNode extends SkinNode {
   compile(compiler, $el) {
-    super(compiler, $el)
-    this.width  = +$el.attr('width')
-    this.height = +$el.attr('height')
+    this.children = compiler.compileChildren($el)
+    this.width    = +$el.attr('width')
+    this.height   = +$el.attr('height')
   }
-  instantiate(instance) {
-    let stage = new instance.PIXI.Stage(0x090807)
-    this.instantiateChildren(instance, stage)
-    instance.stage = stage
+  instantiate(context) {
+    return new Instance(context, self => {
+      let stage = new context.PIXI.Stage(0x090807)
+      self.children(this.children, stage)
+      context.stage = stage
+    })
   }
 }
 

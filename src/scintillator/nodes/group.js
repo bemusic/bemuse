@@ -1,17 +1,22 @@
 
-import ContainerNode      from './lib/container'
-import DisplayObjectNode  from './lib/display-object'
+import SkinNode       from './lib/base'
+import Instance       from './lib/instance'
 
-export class GroupNode extends ContainerNode {
+import DisplayObject  from './concerns/display-object'
+
+export class GroupNode extends SkinNode {
   compile(compiler, $el) {
-    super(compiler, $el)
-    this.display = DisplayObjectNode.compile(compiler, $el)
+    this.children = compiler.compileChildren($el)
+    this.display  = DisplayObject.compile(compiler, $el)
   }
-  instantiate(instance) {
-    let container = new instance.PIXI.DisplayObjectContainer()
-    this.instantiateChildren(instance, container)
-    instance.instantiate(this.display, container)
-    instance.object = container
+  instantiate(context, container) {
+    return new Instance(context, self => {
+      let object = new context.PIXI.DisplayObjectContainer()
+      self.child(this.display, object)
+      self.children(this.children, object)
+      container.addChild(object)
+      self.onDestroy(() => { container.removeChild(object) })
+    })
   }
 }
 
