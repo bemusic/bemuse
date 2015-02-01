@@ -7,6 +7,7 @@
   "funcscope": true,
   "immed": true,
   "latedef": false,
+  "sub": true,
   "noarg": true,
   "unused": true,
 

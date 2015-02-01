@@ -11,14 +11,30 @@
     <group x="34" y="0">
       <sprite image="NoteArea/Background/DXL.png" x="0" y="0"></sprite>
       <sprite image="NoteArea/Flash.png" x="1" y="476" blend="screen"></sprite>
-      <sprite image="Note/DX.png" frame="61x12+0+0" x="1" y="100"></sprite>
-      <sprite image="Note/DX.png" frame="34x12+62+0" x="63" y="100"></sprite>
-      <sprite image="Note/DX.png" frame="26x12+97+0" x="98" y="100"></sprite>
-      <sprite image="Note/DX.png" frame="34x12+62+0" x="125" y="100"></sprite>
-      <sprite image="Note/DX.png" frame="26x12+97+0" x="160" y="100"></sprite>
-      <sprite image="Note/DX.png" frame="34x12+62+0" x="187" y="100"></sprite>
-      <sprite image="Note/DX.png" frame="26x12+97+0" x="222" y="100"></sprite>
-      <sprite image="Note/DX.png" frame="34x12+62+0" x="249" y="100"></sprite>
+      <object key="note_sc">
+        <sprite image="Note/DX.png" frame="61x12+0+0" x="1" y="y"></sprite>
+      </object>
+      <object key="note_1">
+        <sprite image="Note/DX.png" frame="34x12+62+0" x="63" y="y"></sprite>
+      </object>
+      <object key="note_2">
+        <sprite image="Note/DX.png" frame="26x12+97+0" x="98" y="y"></sprite>
+      </object>
+      <object key="note_3">
+        <sprite image="Note/DX.png" frame="34x12+62+0" x="125" y="y"></sprite>
+      </object>
+      <object key="note_4">
+        <sprite image="Note/DX.png" frame="26x12+97+0" x="160" y="y"></sprite>
+      </object>
+      <object key="note_5">
+        <sprite image="Note/DX.png" frame="34x12+62+0" x="187" y="y"></sprite>
+      </object>
+      <object key="note_6">
+        <sprite image="Note/DX.png" frame="26x12+97+0" x="222" y="y"></sprite>
+      </object>
+      <object key="note_7">
+        <sprite image="Note/DX.png" frame="34x12+62+0" x="249" y="y"></sprite>
+      </object>
     </group>
   </group>
   <!-- info panel-->

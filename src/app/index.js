@@ -9,7 +9,29 @@ export function main() {
     console.log(Scintillator)
     let skin      = yield Scintillator.load('/skins/default/skin.xml')
     let context   = new Scintillator.Context(skin)
-    let draw = () => { context.render({ lol: 50 }) }
+
+    let data = { }
+
+    data['note_sc'] = [ { key: 1, y: 10 }, { key: 2, y: 160 } ]
+    data['note_1']  = [ { key: 1, y: 20 }, { key: 2, y: 150 } ]
+    data['note_2']  = [ { key: 1, y: 30 }, { key: 2, y: 140 } ]
+    data['note_3']  = [ { key: 1, y: 40 }, { key: 2, y: 130 } ]
+    data['note_4']  = [ { key: 1, y: 50 }, { key: 2, y: 120 } ]
+    data['note_5']  = [ { key: 1, y: 60 }, { key: 2, y: 110 } ]
+    data['note_6']  = [ { key: 1, y: 70 }, { key: 2, y: 90 } ]
+    data['note_7']  = [ { key: 1, y: 80 } ]
+
+    data['longnote_sc'] = [ { key: 1, y: 210, height: 0 } ]
+    data['longnote_1']  = [ { key: 1, y: 220, height: 10 } ]
+    data['longnote_2']  = [ { key: 1, y: 230, height: 20 } ]
+    data['longnote_3']  = [ { key: 1, y: 240, height: 40 } ]
+    data['longnote_4']  = [ { key: 1, y: 250, height: 60 } ]
+    data['longnote_5']  = [ { key: 1, y: 260, height: 80 } ]
+    data['longnote_6']  = [ { key: 1, y: 270, height: 70 } ]
+    data['longnote_7']  = [ { key: 1, y: 280, height: 60 } ]
+
+
+    let draw = () => { context.render(data) }
     draw()
     requestAnimationFrame(function f() {
       draw()

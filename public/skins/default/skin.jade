@@ -13,15 +13,18 @@ skin(width='1280' height='720')
     group(x='34' y='0')
       sprite(image='NoteArea/Background/DXL.png' x='0' y='0')
       sprite(image='NoteArea/Flash.png' x='1' y='476' blend='screen')
-      - var noteTypes = { }
+      - var styles = []
+      - styles.push({ x: 0,  width: 61 }) // scratch
+      - styles.push({ x: 62, width: 34 }) // white
+      - styles.push({ x: 97, width: 26 }) // blue
+      - var styleMap = [0, 1, 2, 1, 2, 1, 2, 1]
+      - var channels = ['sc', '1', '2', '3', '4', '5', '6', '7']
       - var x = 1
-      - noteTypes.scratch = { x: 0,  width: 61 }
-      - noteTypes.white   = { x: 62, width: 34 }
-      - noteTypes.blue    = { x: 97, width: 26 }
-      each type in ['scratch', 'white', 'blue', 'white', 'blue', 'white', 'blue', 'white']
-        - var cur = noteTypes[type]
-        sprite(image='Note/DX.png' frame=(cur.width + 'x12+' + cur.x + '+0') x=x y='100')
-        - x = x + noteTypes[type].width + 1
+      each ch, i in channels
+        - var cur = styles[styleMap[i]]
+        object(key='note_' + ch)
+          sprite(image='Note/DX.png' frame=(cur.width + 'x12+' + cur.x + '+0') x=x y='y')
+        - x = x + cur.width + 1
 
   // info panel
   sprite(image='InfoPanel/Background.png' y='616')
