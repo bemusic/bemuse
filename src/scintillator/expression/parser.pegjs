@@ -5,7 +5,7 @@
     return " " + operator + " " + operand
   }
   function combine(first, rest) {
-    return first + rest.map(operate)
+    return first + rest.map(operate).join('')
   }
 }
 
@@ -18,12 +18,13 @@ add
     }
 
 mul
-  = first:val rest:(_ ("*" / "/") _ val)* {
+  = first:val rest:(_ ("*" / "/" / "%") _ val)* {
       return combine(first, rest);
     }
 
 val
   = "(" _ expr:expr _ ")" { return "(" + expr + ")"; }
+  / "!" val:val { return "!" + val }
   / number
   / identifier
 

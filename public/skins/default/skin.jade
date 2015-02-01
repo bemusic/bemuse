@@ -12,7 +12,8 @@ skin(width='1280' height='720')
     sprite(image='NotePanel/Left.png' x='0' y='0')
     group(x='34' y='0')
       sprite(image='NoteArea/Background/DXL.png' x='0' y='0')
-      sprite(image='NoteArea/Flash.png' x='1' y='476' blend='screen')
+      sprite(image='NoteArea/Flash.png' x='1' y='476' blend='screen'
+              alpha='1 - (time % 300) / 300')
       - var styles = []
       - styles.push({ x: 0,  width: 61 }) // scratch
       - styles.push({ x: 62, width: 34 }) // white
@@ -23,7 +24,23 @@ skin(width='1280' height='720')
       each ch, i in channels
         - var cur = styles[styleMap[i]]
         object(key='note_' + ch)
-          sprite(image='Note/DX.png' frame=(cur.width + 'x12+' + cur.x + '+0') x=x y='y')
+          sprite(image='Note/DX.png' frame=(cur.width + 'x12+' + cur.x + '+0')
+                  x=(x) y='y')
+        object(key='longnote_' + ch)
+          sprite(image='Note/DX.png' frame=(cur.width + 'x64+' + cur.x + '+22')
+                  x=(x) y='y+4' width=(cur.width) height='height'
+                  visible='!active')
+          sprite(image='Note/DX.png' frame=(cur.width + 'x8+' + cur.x + '+104')
+                  x=(x) y='y+height+4' visible='!active')
+          sprite(image='Note/DX.png' frame=(cur.width + 'x8+' + cur.x + '+12')
+                  x=(x) y='y' visible='!active')
+          sprite(image='Note/DX.png' frame=(cur.width + 'x64+' + cur.x + '+122')
+                  x=(x) y='y+4' width=(cur.width) height='height'
+                  visible='active')
+          sprite(image='Note/DX.png' frame=(cur.width + 'x8+' + cur.x + '+204')
+                  x=(x) y='y+height+4' visible='active')
+          sprite(image='Note/DX.png' frame=(cur.width + 'x8+' + cur.x + '+112')
+                  x=(x) y='y' visible='active')
         - x = x + cur.width + 1
 
   // info panel

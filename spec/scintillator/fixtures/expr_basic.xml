@@ -1,4 +1,4 @@
 <skin width="123" height="456">
   <image src="test.png" />
-  <sprite image="test.png" x="1+2" y="3+4" />
+  <sprite image="test.png" x="1+2+3" y="3+4" />
 </skin>

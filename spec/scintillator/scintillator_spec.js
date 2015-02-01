@@ -24,7 +24,7 @@ describe('Scintillator', function() {
       let context = new Scintillator.Context(skin)
       context.render({})
       let stage = context.stage
-      expect(stage.children[0].x).to.equal(3)
+      expect(stage.children[0].x).to.equal(6)
       expect(stage.children[0].y).to.equal(7)
     }))
     it('should support variables', co.wrap(function*() {

@@ -14,13 +14,18 @@ export class SpriteNode extends SkinNode {
   }
   instantiate(context, container) {
     return new Instance(context, self => {
-      let base    = PIXI.BaseTexture.fromImage(this.url)
-      let texture = new PIXI.Texture(base, this.frame)
-      let sprite  = new PIXI.Sprite(texture)
+      let sprite  = new PIXI.Sprite(this.getTexture())
       self.child(this.display, sprite)
       container.addChild(sprite)
       self.onDestroy(() => { container.removeChild(sprite) })
     })
+  }
+  getTexture() {
+    if (this._texture) return this._texture
+    let base    = PIXI.BaseTexture.fromImage(this.url)
+    let texture = new PIXI.Texture(base, this.frame)
+    this._texture = texture
+    return texture
   }
 }
 

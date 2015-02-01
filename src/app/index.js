@@ -21,7 +21,7 @@ export function main() {
     data['note_6']  = [ { key: 1, y: 70 }, { key: 2, y: 90 } ]
     data['note_7']  = [ { key: 1, y: 80 } ]
 
-    data['longnote_sc'] = [ { key: 1, y: 210, height: 0 } ]
+    data['longnote_sc'] = [ { key: 1, y: 210, height: 0  } ]
     data['longnote_1']  = [ { key: 1, y: 220, height: 10 } ]
     data['longnote_2']  = [ { key: 1, y: 230, height: 20 } ]
     data['longnote_3']  = [ { key: 1, y: 240, height: 40 } ]
@@ -30,8 +30,18 @@ export function main() {
     data['longnote_6']  = [ { key: 1, y: 270, height: 70 } ]
     data['longnote_7']  = [ { key: 1, y: 280, height: 60 } ]
 
+    for (let i of ['longnote_sc', 'longnote_1', 'longnote_2', 'longnote_3',
+                    'longnote_4', 'longnote_5', 'longnote_6', 'longnote_7', ]) {
+      let y = data[i][0].y + data[i][0].height + 50
+      let height = 450 - y
+      data[i].push({ key: 2, y, height, active: true })
+    }
 
-    let draw = () => { context.render(data) }
+
+    let draw = () => {
+      data.time = new Date().getTime()
+      context.render(data)
+    }
     draw()
     requestAnimationFrame(function f() {
       draw()
