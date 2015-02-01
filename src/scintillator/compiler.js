@@ -1,10 +1,19 @@
 
+import debug from 'debug/browser'
+let log = debug('scintillator:compiler')
+
 import $ from 'jquery'
 
-import Debug from 'debug/browser'
-let debug = Debug('scintillator:compiler')
+import SkinRootNode from './nodes/skin-root'
+import SpriteNode   from './nodes/sprite'
+import GroupNode    from './nodes/group'
 
-import { SkinRootNode, SpriteNode, GroupNode, ObjectNode } from './nodes'
+let NODES = {
+  'skin':   SkinRootNode,
+  'sprite': SpriteNode,
+  'group':  GroupNode,
+}
+
 
 /**
  * A Compiler compiles the $xml theme file into SkinNode.
@@ -15,7 +24,7 @@ class Compiler {
   }
   compile($el) {
     let nodeName = $el[0].nodeName
-    debug('compiling', $el[0])
+    log('compiling', $el[0])
     let Node = Compiler.getNodeClass(nodeName)
     if (!Node) throw new Error('Invalid node name: ' + nodeName)
     return Node.compile(this, $el)
@@ -30,22 +39,10 @@ class Compiler {
     return output
   }
 
-  static register(object) {
-    Object.assign(this._registry, object)
-  }
   static getNodeClass(nodeName) {
-    return this._registry[nodeName]
+    return NODES[nodeName]
   }
 }
-
-Compiler._registry = { }
-
-Compiler.register({
-  'skin':   SkinRootNode,
-  'sprite': SpriteNode,
-  'object': ObjectNode,
-  'group':  GroupNode,
-})
 
 export default Compiler
 

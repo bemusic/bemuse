@@ -12,6 +12,9 @@ export function Instance(context, callback) {
         childNode.instantiate(context, ...args)
       }
     },
+    bind(...pipeline) {
+      destroyCallback.push(context.bind(...pipeline))
+    },
     onDestroy(f) {
       destroyCallback.push(f)
     },
