@@ -2,10 +2,12 @@
   "asi": true,
   "esnext": true,
   "eqeqeq": true,
+  "evil": true,
   "camelcase": true,
   "funcscope": true,
   "immed": true,
   "latedef": false,
+  "sub": true,
   "noarg": true,
   "unused": true,
 

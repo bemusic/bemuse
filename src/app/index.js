@@ -1,27 +1,68 @@
 
 import '../polyfill'
-
-import PIXI from 'pixi.js'
-import $    from 'jquery'
+import * as Scintillator from '../scintillator'
+import co from 'co'
+import $ from 'jquery'
 
 export function main() {
+  co(function*() {
+    console.log(Scintillator)
+    let skin      = yield Scintillator.load('/skins/default/skin.xml')
+    let context   = new Scintillator.Context(skin)
 
-  var stage = new PIXI.Stage(0x66FF99)
-  var width = 1280
-  var height = 720
-  var renderer = new PIXI.autoDetectRenderer(width, height)
-  var view = renderer.view
+    let data = { }
+
+    data['note_sc'] = [ { key: 1, y: 10 }, { key: 2, y: 160 } ]
+    data['note_1']  = [ { key: 1, y: 20 }, { key: 2, y: 150 } ]
+    data['note_2']  = [ { key: 1, y: 30 }, { key: 2, y: 140 } ]
+    data['note_3']  = [ { key: 1, y: 40 }, { key: 2, y: 130 } ]
+    data['note_4']  = [ { key: 1, y: 50 }, { key: 2, y: 120 } ]
+    data['note_5']  = [ { key: 1, y: 60 }, { key: 2, y: 110 } ]
+    data['note_6']  = [ { key: 1, y: 70 }, { key: 2, y: 90 } ]
+    data['note_7']  = [ { key: 1, y: 80 } ]
+
+    data['longnote_sc'] = [ { key: 1, y: 210, height: 0  } ]
+    data['longnote_1']  = [ { key: 1, y: 220, height: 10 } ]
+    data['longnote_2']  = [ { key: 1, y: 230, height: 20 } ]
+    data['longnote_3']  = [ { key: 1, y: 240, height: 40 } ]
+    data['longnote_4']  = [ { key: 1, y: 250, height: 60 } ]
+    data['longnote_5']  = [ { key: 1, y: 260, height: 80 } ]
+    data['longnote_6']  = [ { key: 1, y: 270, height: 70 } ]
+    data['longnote_7']  = [ { key: 1, y: 280, height: 60 } ]
+
+    for (let i of ['longnote_sc', 'longnote_1', 'longnote_2', 'longnote_3',
+                    'longnote_4', 'longnote_5', 'longnote_6', 'longnote_7', ]) {
+      let y = data[i][0].y + data[i][0].height + 50
+      let height = 450 - y
+      data[i].push({ key: 2, y, height, active: true })
+    }
+
+
+    let draw = () => {
+      data.time = new Date().getTime()
+      context.render(data)
+    }
+    draw()
+    requestAnimationFrame(function f() {
+      draw()
+      requestAnimationFrame(f)
+    })
+    showCanvas(context.view)
+  })
+  .done()
+
+}
+
+function showCanvas(view) {
+
+  var { width, height } = view
 
   view.style.display = 'block'
   view.style.margin = '0 auto'
 
-  var url = '/skins/default/NoteHint/Active/Scratch.png'
-  var sprite = PIXI.Sprite.fromImage(url)
-  stage.addChild(sprite)
-  sprite.x = 300
-  sprite.y = 300
-
-  document.body.appendChild(renderer.view)
+  document.body.appendChild(view)
+  resize()
+  $(window).on('resize', resize)
 
   function resize() {
     var scale = Math.min(
@@ -33,15 +74,4 @@ export function main() {
     view.style.height = Math.round(height * scale) + 'px'
   }
 
-  function frame() {
-    sprite.rotation += 0.1
-    renderer.render(stage)
-    requestAnimationFrame(frame)
-  }
-
-  $(window).on('resize', resize)
-  resize()
-  frame()
-
 }
-

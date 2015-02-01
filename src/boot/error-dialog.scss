@@ -1,0 +1,40 @@
+
+.error-dialog {
+
+  background: #533;
+  color: #edd;
+
+  border: 2px solid #b77;
+  position: fixed;
+
+  z-index: 99999;
+
+  top: 10px;
+  left: 10px;
+  padding: 10px;
+  max-width: 640px;
+
+  h1, p {
+    margin: 0;
+    font-size: 1em;
+    line-height: 1.3;
+  }
+
+  h1 {
+    color: #fcc;
+  }
+
+  pre {
+    margin: 1em 0 0;
+    font-family: Menlo, Consolas, monospace;
+    font-size: 0.8em;
+    line-height: 1.3;
+    opacity: 0.7;
+  }
+
+  p.error-dialog--where {
+    font-size: 0.8em;
+    color: #faa;
+  }
+
+}

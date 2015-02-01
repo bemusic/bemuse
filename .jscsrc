@@ -2,6 +2,7 @@
   "preset": "google",
   "esnext": true,
   "disallowSpacesInsideObjectBrackets": null,
+  "disallowSpacesInsideArrayBrackets": null,
   "disallowMultipleLineBreaks": null,
   "disallowSpacesInsideParentheses": null,
   "disallowSemicolons": true,

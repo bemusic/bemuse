@@ -1,0 +1,4 @@
+<skin width="123" height="456">
+  <image src="test.png" />
+  <sprite image="test.png" blend="trololo" />
+</skin>
