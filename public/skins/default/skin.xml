@@ -4,12 +4,21 @@
   <image src="InfoPanel/Background.png"></image>
   <image src="NoteArea/Background/DXL.png"></image>
   <image src="NoteArea/Flash.png"></image>
+  <image src="Note/DX.png"></image>
   <!-- note panel-->
   <group>
     <sprite image="NotePanel/Left.png" x="0" y="0"></sprite>
     <group x="34" y="0">
       <sprite image="NoteArea/Background/DXL.png" x="0" y="0"></sprite>
       <sprite image="NoteArea/Flash.png" x="1" y="476" blend="screen"></sprite>
+      <sprite image="Note/DX.png" frame="61x12+0+0" x="1" y="100"></sprite>
+      <sprite image="Note/DX.png" frame="34x12+62+0" x="63" y="100"></sprite>
+      <sprite image="Note/DX.png" frame="26x12+97+0" x="98" y="100"></sprite>
+      <sprite image="Note/DX.png" frame="34x12+62+0" x="125" y="100"></sprite>
+      <sprite image="Note/DX.png" frame="26x12+97+0" x="160" y="100"></sprite>
+      <sprite image="Note/DX.png" frame="34x12+62+0" x="187" y="100"></sprite>
+      <sprite image="Note/DX.png" frame="26x12+97+0" x="222" y="100"></sprite>
+      <sprite image="Note/DX.png" frame="34x12+62+0" x="249" y="100"></sprite>
     </group>
   </group>
   <!-- info panel-->

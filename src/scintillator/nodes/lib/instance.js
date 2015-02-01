@@ -2,31 +2,42 @@
 export function Instance(context, callback) {
 
   let destroyCallback = []
+  let dataCallback = []
 
-  callback({
+  let helper = {
     child(childNode, ...args) {
-      childNode.instantiate(context, ...args)
+      let instance = childNode.instantiate(context, ...args)
+      destroyCallback.push(() => { instance.destroy() })
+      dataCallback.push((data) => { instance.push(data) })
     },
     children(array, ...args) {
       for (let childNode of array) {
-        childNode.instantiate(context, ...args)
+        helper.child(childNode, ...args)
       }
     },
     bind(...pipeline) {
-      destroyCallback.push(context.bind(...pipeline))
+      dataCallback.push(function(value) {
+        for (let f of pipeline) value = f(value)
+      })
     },
     onDestroy(f) {
       destroyCallback.push(f)
     },
-  })
+  }
 
+  callback(helper)
   callback = null
 
   return {
     destroy() {
       for (let f of destroyCallback) f()
       destroyCallback = null
-    }
+      dataCallback = null
+    },
+    push(data) {
+      if (dataCallback.length === 0) return
+      for (let f of dataCallback) f(data)
+    },
   }
 
 }

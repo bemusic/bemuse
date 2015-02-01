@@ -35,7 +35,7 @@ frac          = "." [0-9]+
 int           = "0" / ([1-9] [0-9]*)
 
 identifier
-  = [a-zA-Z]+[a-zA-Z0-9]+ { return "get(" + JSON.stringify(text()) + ")" }
+  = [a-zA-Z]+[a-zA-Z0-9]* { return "get(" + JSON.stringify(text()) + ")" }
 
 _ "whitespace"
   = [ \t\n\r]*

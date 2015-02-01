@@ -9,6 +9,12 @@ export function main() {
     console.log(Scintillator)
     let skin      = yield Scintillator.load('/skins/default/skin.xml')
     let context   = new Scintillator.Context(skin)
+    let draw = () => { context.render({ lol: 50 }) }
+    draw()
+    requestAnimationFrame(function f() {
+      draw()
+      requestAnimationFrame(f)
+    })
     showCanvas(context.view)
   })
   .done()

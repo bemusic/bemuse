@@ -8,8 +8,14 @@
 import * as boot        from './boot'
 import loadModule       from 'val!./loader.js'
 import * as querystring from 'querystring'
+import * as ErrorDialog from './error-dialog'
 
 let data = querystring.parse(location.search.replace(/^\?/, ''))
+
+/* istanbul ignore next */
+window.onerror = function(message, url, line, col, e) {
+  ErrorDialog.show(message, url, line, col, e)
+}
 
 /* istanbul ignore next */
 let mode = data.mode || 'comingSoon'

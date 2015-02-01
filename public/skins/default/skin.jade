@@ -5,6 +5,7 @@ skin(width='1280' height='720')
   image(src='InfoPanel/Background.png')
   image(src='NoteArea/Background/DXL.png')
   image(src='NoteArea/Flash.png')
+  image(src='Note/DX.png')
 
   // note panel
   group
@@ -12,6 +13,15 @@ skin(width='1280' height='720')
     group(x='34' y='0')
       sprite(image='NoteArea/Background/DXL.png' x='0' y='0')
       sprite(image='NoteArea/Flash.png' x='1' y='476' blend='screen')
+      - var noteTypes = { }
+      - var x = 1
+      - noteTypes.scratch = { x: 0,  width: 61 }
+      - noteTypes.white   = { x: 62, width: 34 }
+      - noteTypes.blue    = { x: 97, width: 26 }
+      each type in ['scratch', 'white', 'blue', 'white', 'blue', 'white', 'blue', 'white']
+        - var cur = noteTypes[type]
+        sprite(image='Note/DX.png' frame=(cur.width + 'x12+' + cur.x + '+0') x=x y='100')
+        - x = x + noteTypes[type].width + 1
 
   // info panel
   sprite(image='InfoPanel/Background.png' y='616')
