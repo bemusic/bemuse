@@ -14,7 +14,7 @@ export class DisplayObject extends SkinNode {
     if ($el.attr('width'))   this.width   = new Expression($el.attr('width'))
     if ($el.attr('height'))  this.height  = new Expression($el.attr('height'))
     if ($el.attr('visible')) this.visible = new Expression($el.attr('visible'))
-    this.blendMode = $el.attr('blend') || 'normal'
+    this.blendMode = parseBlendMode($el.attr('blend') || 'normal')
   }
   instantiate(context, object) {
     return new Instance(context, self => {
@@ -24,7 +24,7 @@ export class DisplayObject extends SkinNode {
       if (this.width)   self.bind(this.width,   w => object.width   = w)
       if (this.height)  self.bind(this.height,  h => object.height  = h)
       if (this.visible) self.bind(this.visible, v => object.visible = v)
-      object.blendMode = parseBlendMode(this.blendMode)
+      object.blendMode = this.blendMode
     })
   }
 }

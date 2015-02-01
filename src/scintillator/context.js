@@ -12,6 +12,10 @@ export class Context {
     this._instance.push(data)
     this._renderer.render(this.stage)
   }
+  destroy() {
+    this._instance.destroy()
+    this._instance = null
+  }
 }
 
 export default Context

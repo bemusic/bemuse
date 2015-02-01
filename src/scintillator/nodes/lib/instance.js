@@ -16,7 +16,7 @@ export function Instance(context, callback) {
       }
     },
     bind(...pipeline) {
-      dataCallback.push(function(value) {
+      helper.onData(function(value) {
         for (let f of pipeline) value = f(value)
       })
     },

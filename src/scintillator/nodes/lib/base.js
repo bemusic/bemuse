@@ -3,6 +3,9 @@
  * A SkinNode is an internal representation of a Skin.
  *
  * Node.compile     :: (compiler, $xml) -> Node
+ *
+ * To implement:
+ *
  * Node#compile     :: (compiler, $xml) -> undefined (side-effect)
  * Node#instantiate :: (instantiator)   -> PIXI.DisplayObject
  */
@@ -11,13 +14,6 @@ export class SkinNode {
     let node = new this()
     node.compile(compiler, $el)
     return node
-  }
-  compile(compiler, $el) {
-    void compiler
-    void $el
-  }
-  instantiate(instance) {
-    void instance
   }
 }
 
