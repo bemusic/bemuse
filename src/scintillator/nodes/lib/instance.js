@@ -20,6 +20,9 @@ export function Instance(context, callback) {
         for (let f of pipeline) value = f(value)
       })
     },
+    onData(f) {
+      dataCallback.push(f)
+    },
     onDestroy(f) {
       destroyCallback.push(f)
     },

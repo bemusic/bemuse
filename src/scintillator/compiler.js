@@ -7,11 +7,13 @@ import $ from 'jquery'
 import SkinRootNode from './nodes/skin-root'
 import SpriteNode   from './nodes/sprite'
 import GroupNode    from './nodes/group'
+import ObjectNode   from './nodes/object'
 
 let NODES = {
   'skin':   SkinRootNode,
   'sprite': SpriteNode,
   'group':  GroupNode,
+  'object': ObjectNode,
 }
 
 

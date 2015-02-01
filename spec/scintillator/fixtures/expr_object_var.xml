@@ -1,0 +1,7 @@
+<skin width="123" height="456">
+  <image src="test.png" />
+  <object key="notes">
+    <sprite image="test.png" x="10" y="y" />
+  </object>
+</skin>
+

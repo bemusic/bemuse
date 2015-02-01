@@ -40,5 +40,33 @@ describe('Scintillator', function() {
     }))
   })
 
+  describe('ObjectNode', function() {
+    it('should display children', co.wrap(function*() {
+      let skin = yield Scintillator.load(fixture('expr_object.xml'))
+      let context = new Scintillator.Context(skin)
+      let stage = context.stage
+      context.render({ notes: [] })
+      expect(stage.children[0].children).to.have.length(0)
+      context.render({ notes: [{ key: 'a', y: 20 }] })
+      expect(stage.children[0].children).to.have.length(2)
+      context.render({ notes: [{ key: 'a', y: 20 }, { key: 'b', y: 10 }] })
+      expect(stage.children[0].children).to.have.length(4)
+      context.render({ notes: [{ key: 'b', y: 10 }] })
+      expect(stage.children[0].children).to.have.length(2)
+    }))
+    it('should let children get value from item', co.wrap(function*() {
+      let skin = yield Scintillator.load(fixture('expr_object_var.xml'))
+      let context = new Scintillator.Context(skin)
+      let stage = context.stage
+      context.render({ notes: [] })
+      context.render({ notes: [{ key: 'a', y: 20 }] })
+      expect(stage.children[0].children[0].y).to.equal(20)
+      context.render({ notes: [{ key: 'a', y: 20 }, { key: 'b', y: 10 }] })
+      expect(stage.children[0].children[0].y).to.equal(20)
+      context.render({ notes: [{ key: 'b', y: 10 }] })
+      expect(stage.children[0].children[0].y).to.equal(10)
+    }))
+  })
+
 })
 
