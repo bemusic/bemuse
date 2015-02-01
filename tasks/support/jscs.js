@@ -1,7 +1,7 @@
 
 import Checker          from 'jscs'
 import gutil            from 'gulp-util'
-import * as configFile  from 'jscs/lib/cli-config'
+import configFile       from 'jscs/lib/cli-config'
 import ConsoleReporter  from 'jscs/lib/reporters/console'
 import through2         from 'through2'
 

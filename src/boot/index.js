@@ -5,9 +5,11 @@
 // we minimize the amount of dependencies.
 //
 
-import * as boot        from './boot'
+import querystring      from 'querystring'
+
 import loadModule       from 'val!./loader.js'
-import * as querystring from 'querystring'
+
+import * as boot        from './boot'
 import * as ErrorDialog from './error-dialog'
 
 let data = querystring.parse(location.search.replace(/^\?/, ''))
