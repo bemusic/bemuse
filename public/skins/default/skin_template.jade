@@ -40,8 +40,9 @@ skin(width='1280' height='720')
       sprite(image='NoteArea/Background/DXL.png' x='0' y='0')
       sprite(image='NoteArea/Flash.png' x='1' y='476' blend='screen'
               alpha='1 - (time % 400) / 400')
-      group(x='1' y='(time / 2 % 1500) - 500')
-        +notes(mode.iidx_l)
+      group(x='1' mask='283x550+1+0')
+        group(y='(time / 2 % 1500) - 500')
+          +notes(mode.iidx_l)
 
   // info panel
   sprite(image='InfoPanel/Background.png' y='616')

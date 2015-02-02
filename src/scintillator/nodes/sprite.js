@@ -3,6 +3,7 @@ import PIXI           from 'pixi.js'
 
 import SkinNode       from './lib/base'
 import Instance       from './lib/instance'
+import { parseFrame } from './lib/utils'
 
 import DisplayObject  from './concerns/display-object'
 
@@ -27,12 +28,6 @@ export class SpriteNode extends SkinNode {
     this._texture = texture
     return texture
   }
-}
-
-function parseFrame(text) {
-  let m = text.match(/^(\d+)x(\d+)\+(\d+)\+(\d+)$/)
-  if (!m) return null
-  return new PIXI.Rectangle(+m[3], +m[4], +m[1], +m[2])
 }
 
 export default SpriteNode
