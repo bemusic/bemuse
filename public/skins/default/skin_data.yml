@@ -1,0 +1,15 @@
+styles:
+  scratch:  { x:  0, width: 61 }
+  white:    { x: 62, width: 34 }
+  blue:     { x: 97, width: 26 }
+
+mode:
+  iidx_l:
+    - { style: 'scratch', channel: 'sc' }
+    - { style: 'white',   channel: '1' }
+    - { style: 'blue',    channel: '2' }
+    - { style: 'white',   channel: '3' }
+    - { style: 'blue',    channel: '4' }
+    - { style: 'white',   channel: '5' }
+    - { style: 'blue',    channel: '6' }
+    - { style: 'white',   channel: '7' }
