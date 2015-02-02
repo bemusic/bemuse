@@ -9,6 +9,7 @@ node_js:
 before_script:
   - 'git clone https://github.com/bemusic/bms-spec.git $BMSPEC_HOME'
 after_success:
+  - 'cat coverage/lcov.info | ./node_modules/.bin/coveralls'
   - 'cat coverage/lcov.info | ./node_modules/.bin/codeclimate'
 notifications:
   webhooks:
