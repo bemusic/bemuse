@@ -13,6 +13,7 @@ let config = {
     path: path('dist', 'build'),
     publicPath: 'build/',
     filename: '[name].js',
+    chunkFilename: '[name]-[chunkhash].js',
   },
   devServer: {
     contentBase: false,
