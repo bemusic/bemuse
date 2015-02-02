@@ -1,0 +1,39 @@
+
+var Timing = require('../timing')
+
+describe('Timing', function() {
+
+  function case1() {
+    return new Timing(120, [
+      { type: 'bpm', beat: 3, bpm: 90 },
+      { type: 'stop', beat: 4, stopBeats: 1 },
+      { type: 'bpm', beat: 4, bpm: 180 },
+    ])
+  }
+
+  it('should convert beats to seconds', function() {
+    var t = case1()
+    expect(t.beatToSeconds(0)).to.be.closeTo(0,     1e-2)
+    expect(t.beatToSeconds(1)).to.be.closeTo(0.5,   1e-2)
+    expect(t.beatToSeconds(2)).to.be.closeTo(1,     1e-2)
+    expect(t.beatToSeconds(3)).to.be.closeTo(1.5,   1e-2)
+    expect(t.beatToSeconds(4)).to.be.closeTo(2.167, 1e-2)
+    expect(t.beatToSeconds(5)).to.be.closeTo(2.833, 1e-2)
+  })
+
+  it('should convert seconds to beat', function() {
+    var t = case1()
+    expect(t.secondsToBeat(0.000)).to.be.closeTo(0, 1e-2)
+    expect(t.secondsToBeat(0.500)).to.be.closeTo(1, 1e-2)
+    expect(t.secondsToBeat(1.000)).to.be.closeTo(2, 1e-2)
+    expect(t.secondsToBeat(1.500)).to.be.closeTo(3, 1e-2)
+    expect(t.secondsToBeat(2.167)).to.be.closeTo(4, 1e-2)
+    expect(t.secondsToBeat(2.200)).to.be.closeTo(4, 1e-2)
+    expect(t.secondsToBeat(2.300)).to.be.closeTo(4, 1e-2)
+    expect(t.secondsToBeat(2.400)).to.be.closeTo(4, 1e-2)
+    expect(t.secondsToBeat(2.500)).to.be.closeTo(4, 1e-2)
+    expect(t.secondsToBeat(2.833)).to.be.closeTo(5, 1e-2)
+  })
+
+})
+

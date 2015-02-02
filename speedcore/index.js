@@ -27,6 +27,15 @@ Speedcore.prototype.t = function(x) {
   }
 }
 
+Speedcore.prototype.x = function(t) {
+  for (var i = 0; i < this._segments.length; i ++) {
+    if (i + 1 >= this._segments.length || t <= this._segments[i + 1].t) {
+      var segment = this._segments[i]
+      return segment.x + (t - segment.t) * segment.dx
+    }
+  }
+}
+
 /**
  * @class Segment
  */
