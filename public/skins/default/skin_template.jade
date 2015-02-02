@@ -1,0 +1,47 @@
+doctype xml
+skin(width='1280' height='720')
+
+  image(src='NotePanel/Left.png')
+  image(src='InfoPanel/Background.png')
+  image(src='NoteArea/Background/DXL.png')
+  image(src='NoteArea/Flash.png')
+  image(src='Note/DX.png')
+
+  // mixins
+  mixin notes(columns)
+    - var x = 0
+    each column in columns
+      - var cur = styles[column.style]
+      - var ch  = column.channel
+      object(key='note_' + ch)
+        sprite(image='Note/DX.png' frame=(cur.width + 'x12+' + cur.x + '+0')
+                x=(x) y='y')
+      object(key='longnote_' + ch)
+        sprite(image='Note/DX.png' frame=(cur.width + 'x64+' + cur.x + '+22')
+                x=(x) y='y+4' width=(cur.width) height='height'
+                visible='!active')
+        sprite(image='Note/DX.png' frame=(cur.width + 'x8+' + cur.x + '+104')
+                x=(x) y='y+height+4' visible='!active')
+        sprite(image='Note/DX.png' frame=(cur.width + 'x8+' + cur.x + '+12')
+                x=(x) y='y' visible='!active')
+        sprite(image='Note/DX.png' frame=(cur.width + 'x64+' + cur.x + '+122')
+                x=(x) y='y+4' width=(cur.width) height='height'
+                visible='active')
+        sprite(image='Note/DX.png' frame=(cur.width + 'x8+' + cur.x + '+204')
+                x=(x) y='y+height+4' visible='active')
+        sprite(image='Note/DX.png' frame=(cur.width + 'x8+' + cur.x + '+112')
+                x=(x) y='y' visible='active')
+      - x = x + cur.width + 1
+
+  // note panel
+  group
+    sprite(image='NotePanel/Left.png' x='0' y='0')
+    group(x='34' y='0')
+      sprite(image='NoteArea/Background/DXL.png' x='0' y='0')
+      sprite(image='NoteArea/Flash.png' x='1' y='476' blend='screen'
+              alpha='1 - (time % 400) / 400')
+      group(x='1' y='(time / 2 % 1500) - 500')
+        +notes(mode.iidx_l)
+
+  // info panel
+  sprite(image='InfoPanel/Background.png' y='616')
