@@ -116,5 +116,16 @@ describe('Scintillator', function() {
     }))
   })
 
+  describe('GroupNode', function() {
+    it('should allow masking', co.wrap(function*() {
+      let skin = yield Scintillator.load(fixture('group_mask.xml'))
+      let context = new Scintillator.Context(skin)
+      let stage = context.stage
+      let mask = stage.children[1].mask
+      expect(mask).not.to.equal(null)
+      context.destroy()
+    }))
+  })
+
 })
 
