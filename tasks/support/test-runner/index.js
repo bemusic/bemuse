@@ -56,7 +56,7 @@ export function run() {
       }
 
       if (result.coverage) {
-        CoverageReport.generate(result.coverage)
+        yield CoverageReport.generate(result.coverage)
       }
 
       if (fail) throw new gutil.PluginError('test', 'Testing failed!')
