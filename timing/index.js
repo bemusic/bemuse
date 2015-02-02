@@ -44,6 +44,10 @@ Timing.prototype.beatToSeconds = function(beat) {
   return this._speedcore.t(beat)
 }
 
+Timing.prototype.secondsToBeat = function(seconds) {
+  return this._speedcore.x(seconds)
+}
+
 Timing.fromBMSChart = function(chart) {
   var actions = []
   chart.objects.all().forEach(function(object) {
