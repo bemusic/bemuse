@@ -1,10 +1,10 @@
 <skin width="123" height="456">
-  <group>
+  <group y="t*2">
     <animation>
       <keyframe t="0" x="10" />
       <keyframe t="1" x="20" />
     </animation>
-    <animation on="exit">
+    <animation on="exitEvent">
       <keyframe t="0" x="50" />
       <keyframe t="1" x="70" />
     </animation>

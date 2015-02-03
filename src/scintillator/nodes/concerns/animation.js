@@ -4,13 +4,18 @@ import $        from 'jquery'
 import keytime  from 'keytime'
 
 let createKeytime = R.evolve({ data: keytime })
+let getEvents = R.pipe(R.prop('data'), R.map(R.prop('name')))
 
 export class Animation {
   constructor(animations) {
+    this._properties  = new Set(R.chain(getEvents, animations))
     this._animations  = R.map(createKeytime, animations)
     this._events      = R.uniq(R.map(R.prop('on'), animations))
   }
   prop(name, fallback) {
+    if (!this._properties.has(name)) {
+      return fallback
+    }
     return data => {
       let values = this._getAnimation(data)
       if (values.hasOwnProperty(name)) {
@@ -21,8 +26,12 @@ export class Animation {
     }
   }
   _getAnimation(data) {
-    let t = data.t
-    return this._animations[0].data.values(t)
+    let event       = R.maxBy(e => data[e] || 0,
+                        this._events.filter(e => e === '' || e in data))
+    let t           = data.t - (data[event] || 0)
+    let animations  = this._animations.filter(a => a.on === event)
+    let values      = animations.map(a => a.data.values(t))
+    return Object.assign({}, ...values)
   }
   static compile(compiler, $el) {
     let animationElements = Array.from($el.children('animation'))

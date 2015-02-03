@@ -38,6 +38,22 @@ describe('Scintillator::Animation', function() {
     })
   })
 
+  describe('#_properties', function() {
+    it('should return a set of properties', function() {
+      let anim = Animation.compile(null, $xml(`<group>
+        <animation>
+          <keyframe t="0" x="10" />
+          <keyframe t="1" x="20" />
+        </animation>
+        <animation>
+          <keyframe t="0" y="10" />
+          <keyframe t="1" y="20" />
+        </animation>
+      </group>`))
+      expect(Array.from(anim._properties)).to.deep.equal(['x', 'y'])
+    })
+  })
+
   describe('#_events', function() {
     it('list distinct events', function() {
       let anim = Animation.compile(null, $xml(`<group>
