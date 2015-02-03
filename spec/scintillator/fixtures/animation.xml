@@ -1,0 +1,12 @@
+<skin width="123" height="456">
+  <group>
+    <animation>
+      <keyframe t="0" x="10" />
+      <keyframe t="1" x="20" />
+    </animation>
+    <animation on="exit">
+      <keyframe t="0" x="50" />
+      <keyframe t="1" x="70" />
+    </animation>
+  </group>
+</skin>

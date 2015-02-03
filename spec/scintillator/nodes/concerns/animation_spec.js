@@ -1,5 +1,5 @@
 
-import { _parse, _attrs }
+import { _compile, _attrs, Animation }
   from '../../../../src/scintillator/nodes/concerns/animation'
 import $ from 'jquery'
 
@@ -14,24 +14,39 @@ describe('Scintillator::Animation', function() {
     })
   })
 
-  describe('_parse', function() {
+  describe('_compile', function() {
     it('compiles animation into keyframes', function() {
       let xml = $xml(`<animation>
         <keyframe t="0" x="10" y="30" />
         <keyframe t="2" x="20" />
         <keyframe t="5" x="15" y="20" />
       </animation>`)
-      expect(_parse(xml)).to.deep.equal([
-        { name: 'x', keyframes: [
-            { time: 0, value: 10, ease: 'linear' },
-            { time: 2, value: 20, ease: 'linear' },
-            { time: 5, value: 15, ease: 'linear' },
-          ], },
-        { name: 'y', keyframes: [
-            { time: 0, value: 30, ease: 'linear' },
-            { time: 5, value: 20, ease: 'linear' },
-          ], },
-      ])
+      expect(_compile(xml)).to.deep.equal({
+        on: '',
+        data: [
+          { name: 'x', keyframes: [
+              { time: 0, value: 10, ease: 'linear' },
+              { time: 2, value: 20, ease: 'linear' },
+              { time: 5, value: 15, ease: 'linear' },
+            ], },
+          { name: 'y', keyframes: [
+              { time: 0, value: 30, ease: 'linear' },
+              { time: 5, value: 20, ease: 'linear' },
+            ], },
+        ],
+      })
+    })
+  })
+
+  describe('#_events', function() {
+    it('list distinct events', function() {
+      let anim = Animation.compile(null, $xml(`<group>
+        <animation />
+        <animation />
+        <animation on="exit" />
+        <animation on="exit" />
+      </group>`))
+      expect(anim._events).to.deep.equal(['', 'exit'])
     })
   })
 

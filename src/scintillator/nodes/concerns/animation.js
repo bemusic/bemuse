@@ -1,10 +1,37 @@
 
-import R from 'ramda'
+import R        from 'ramda'
+import $        from 'jquery'
+import keytime  from 'keytime'
+
+let createKeytime = R.evolve({ data: keytime })
 
 export class Animation {
+  constructor(animations) {
+    this._animations  = R.map(createKeytime, animations)
+    this._events      = R.uniq(R.map(R.prop('on'), animations))
+  }
+  prop(name, fallback) {
+    return data => {
+      let values = this._getAnimation(data)
+      if (values.hasOwnProperty(name)) {
+        return values[name]
+      } else {
+        return fallback(data)
+      }
+    }
+  }
+  _getAnimation(data) {
+    let t = data.t
+    return this._animations[0].data.values(t)
+  }
+  static compile(compiler, $el) {
+    let animationElements = Array.from($el.children('animation'))
+    let animations = R.map(el => _compile($(el)), animationElements)
+    return new Animation(animations)
+  }
 }
 
-export function _parse($el) {
+export function _compile($el) {
   let keyframes = R.map(_attrs, Array.from($el.children('keyframe')))
   let attrs = { }
   for (let keyframe of keyframes) {
@@ -18,7 +45,10 @@ export function _parse($el) {
       attr.keyframes.push({ time, value, ease })
     }
   }
-  return R.values(attrs)
+  return {
+    on:   $el.attr('on') || '',
+    data: R.values(attrs),
+  }
 }
 
 function _createKeyframes(name) {

@@ -127,5 +127,16 @@ describe('Scintillator', function() {
     }))
   })
 
+  describe('AnimationNode', function() {
+    it('should allow animations', co.wrap(function*() {
+      let skin = yield Scintillator.load(fixture('animation.xml'))
+      let context = new Scintillator.Context(skin)
+      let group = context.stage.children[0]
+      context.render({ t: 0 })
+      expect(group.x).to.equal(10)
+      context.destroy()
+    }))
+  })
+
 })
 
