@@ -1,5 +1,6 @@
 #!/bin/bash -e
 
+git pull --ff-only
 npm version "$@"
 git push --follow-tags
 
