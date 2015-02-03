@@ -16,8 +16,10 @@ export function Instance(context, callback) {
       }
     },
     bind(...pipeline) {
+      let sideEffect = onChange(pipeline.pop())
       helper.onData(function(value) {
         for (let f of pipeline) value = f(value)
+        sideEffect(value)
       })
     },
     onData(f) {
@@ -43,6 +45,16 @@ export function Instance(context, callback) {
     },
   }
 
+}
+
+function onChange(f) {
+  let value
+  return function receiveNewValue(v) {
+    if (value !== v) {
+      value = v
+      f(v)
+    }
+  }
 }
 
 export default Instance

@@ -8,12 +8,16 @@
   <!-- mixins-->
   <!-- note panel-->
   <group>
+    <animation>
+      <keyframe t="0.25" x="-361"></keyframe>
+      <keyframe t="0.6" x="0" ease="quadOut"></keyframe>
+    </animation>
     <sprite image="NotePanel/Left.png" x="0" y="0"></sprite>
     <group x="34" y="0">
       <sprite image="NoteArea/Background/DXL.png" x="0" y="0"></sprite>
-      <sprite image="NoteArea/Flash.png" x="1" y="476" blend="screen" alpha="1 - (time % 400) / 400"></sprite>
+      <sprite image="NoteArea/Flash.png" x="1" y="476" blend="screen" alpha="1 - (t % 0.4) / 0.4"></sprite>
       <group x="1" mask="283x550+1+0">
-        <group y="(time / 2 % 1500) - 500">
+        <group y="(t * 500 % 1500) - 500">
             <object key="note_sc">
               <sprite image="Note/DX.png" frame="61x12+0+0" x="0" y="y"></sprite>
             </object>
@@ -107,5 +111,10 @@
     </group>
   </group>
   <!-- info panel-->
-  <sprite image="InfoPanel/Background.png" y="616"></sprite>
+  <sprite image="InfoPanel/Background.png" y="616">
+    <animation>
+      <keyframe t="0" y="720"></keyframe>
+      <keyframe t="0.3" y="616" ease="quadOut"></keyframe>
+    </animation>
+  </sprite>
 </skin>

@@ -37,9 +37,9 @@ export function main() {
       data[i].push({ key: 2, y, height, active: true })
     }
 
-
+    let started = new Date().getTime()
     let draw = () => {
-      data.time = new Date().getTime()
+      data.t = (new Date().getTime() - started) / 1000
       context.render(data)
     }
     draw()
