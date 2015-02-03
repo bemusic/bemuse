@@ -21,14 +21,18 @@ export function main() {
     data['note_6']  = [ { key: 1, y: 70 }, { key: 2, y: 90 } ]
     data['note_7']  = [ { key: 1, y: 80 } ]
 
-    data['longnote_sc'] = [ { key: 1, y: 210, height: 0  } ]
-    data['longnote_1']  = [ { key: 1, y: 220, height: 10 } ]
-    data['longnote_2']  = [ { key: 1, y: 230, height: 20 } ]
-    data['longnote_3']  = [ { key: 1, y: 240, height: 40 } ]
-    data['longnote_4']  = [ { key: 1, y: 250, height: 60 } ]
-    data['longnote_5']  = [ { key: 1, y: 260, height: 80 } ]
-    data['longnote_6']  = [ { key: 1, y: 270, height: 70 } ]
-    data['longnote_7']  = [ { key: 1, y: 280, height: 60 } ]
+    data['longnote_sc'] = [ { key: 1, active: false, y: 210, height: 0  },
+                            { key: 3, active: true,  y: 40,  height: 100,
+                              missed: true, }, ]
+    data['longnote_1']  = [ { key: 1, active: false, y: 220, height: 10 } ]
+    data['longnote_2']  = [ { key: 1, active: false, y: 230, height: 20 } ]
+    data['longnote_3']  = [ { key: 1, active: false, y: 240, height: 40,
+                              missed: true, } ]
+    data['longnote_4']  = [ { key: 1, active: false, y: 250, height: 60 } ]
+    data['longnote_5']  = [ { key: 1, active: false, y: 260, height: 80 } ]
+    data['longnote_6']  = [ { key: 1, active: false, y: 270, height: 70,
+                              missed: true, } ]
+    data['longnote_7']  = [ { key: 1, active: false, y: 280, height: 60 } ]
 
     for (let i of ['longnote_sc', 'longnote_1', 'longnote_2', 'longnote_3',
                     'longnote_4', 'longnote_5', 'longnote_6', 'longnote_7', ]) {

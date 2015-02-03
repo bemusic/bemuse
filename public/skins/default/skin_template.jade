@@ -8,6 +8,23 @@ skin(width='1280' height='720')
   image(src='Note/DX.png')
 
   // mixins
+  mixin longnote(x, cur, add, visible)
+    // body
+    sprite(image='Note/DX.png'
+            frame=(cur.width + 'x64+' + cur.x + '+' + (22 + add))
+            x=(x) y='y+4' width=(cur.width) height='height'
+            visible=visible)
+    // tail
+    sprite(image='Note/DX.png'
+            frame=(cur.width + 'x8+' + cur.x + '+' + (104 + add))
+            x=(x) y='y+height+4'
+            visible=visible)
+    // head
+    sprite(image='Note/DX.png'
+            frame=(cur.width + 'x8+' + cur.x + '+' + (12 + add))
+            x=(x) y='y'
+            visible=visible)
+
   mixin notes(columns)
     - var x = 0
     each column in columns
@@ -17,20 +34,9 @@ skin(width='1280' height='720')
         sprite(image='Note/DX.png' frame=(cur.width + 'x12+' + cur.x + '+0')
                 x=(x) y='y')
       object(key='longnote_' + ch)
-        sprite(image='Note/DX.png' frame=(cur.width + 'x64+' + cur.x + '+22')
-                x=(x) y='y+4' width=(cur.width) height='height'
-                visible='!active')
-        sprite(image='Note/DX.png' frame=(cur.width + 'x8+' + cur.x + '+104')
-                x=(x) y='y+height+4' visible='!active')
-        sprite(image='Note/DX.png' frame=(cur.width + 'x8+' + cur.x + '+12')
-                x=(x) y='y' visible='!active')
-        sprite(image='Note/DX.png' frame=(cur.width + 'x64+' + cur.x + '+122')
-                x=(x) y='y+4' width=(cur.width) height='height'
-                visible='active')
-        sprite(image='Note/DX.png' frame=(cur.width + 'x8+' + cur.x + '+204')
-                x=(x) y='y+height+4' visible='active')
-        sprite(image='Note/DX.png' frame=(cur.width + 'x8+' + cur.x + '+112')
-                x=(x) y='y' visible='active')
+        +longnote(x, cur, 0, '!active && !missed')
+        +longnote(x, cur, 100, '!!active && !missed')
+        +longnote(x, cur, 200, '!!missed')
       - x = x + cur.width + 1
 
   // note panel

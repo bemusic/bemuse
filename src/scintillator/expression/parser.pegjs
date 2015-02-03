@@ -10,7 +10,17 @@
 }
 
 expr
-  = add
+  = logical_or
+
+logical_or
+  = first:logical_and rest:(_ ("||") _ logical_and)* {
+      return combine(first, rest);
+    }
+
+logical_and
+  = first:add rest:(_ ("&&") _ add)* {
+      return combine(first, rest);
+    }
 
 add
   = first:mul rest:(_ ("+" / "-") _ mul)* {

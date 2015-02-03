@@ -22,89 +22,185 @@
               <sprite image="Note/DX.png" frame="61x12+0+0" x="0" y="y"></sprite>
             </object>
             <object key="longnote_sc">
-              <sprite image="Note/DX.png" frame="61x64+0+22" x="0" y="y+4" width="61" height="height" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="61x8+0+104" x="0" y="y+height+4" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="61x8+0+12" x="0" y="y" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="61x64+0+122" x="0" y="y+4" width="61" height="height" visible="active"></sprite>
-              <sprite image="Note/DX.png" frame="61x8+0+204" x="0" y="y+height+4" visible="active"></sprite>
-              <sprite image="Note/DX.png" frame="61x8+0+112" x="0" y="y" visible="active"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="61x64+0+22" x="0" y="y+4" width="61" height="height" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="61x8+0+104" x="0" y="y+height+4" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="61x8+0+12" x="0" y="y" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="61x64+0+122" x="0" y="y+4" width="61" height="height" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="61x8+0+204" x="0" y="y+height+4" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="61x8+0+112" x="0" y="y" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="61x64+0+222" x="0" y="y+4" width="61" height="height" visible="!!missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="61x8+0+304" x="0" y="y+height+4" visible="!!missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="61x8+0+212" x="0" y="y" visible="!!missed"></sprite>
             </object>
             <object key="note_1">
               <sprite image="Note/DX.png" frame="34x12+62+0" x="62" y="y"></sprite>
             </object>
             <object key="longnote_1">
-              <sprite image="Note/DX.png" frame="34x64+62+22" x="62" y="y+4" width="34" height="height" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="34x8+62+104" x="62" y="y+height+4" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="34x8+62+12" x="62" y="y" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="34x64+62+122" x="62" y="y+4" width="34" height="height" visible="active"></sprite>
-              <sprite image="Note/DX.png" frame="34x8+62+204" x="62" y="y+height+4" visible="active"></sprite>
-              <sprite image="Note/DX.png" frame="34x8+62+112" x="62" y="y" visible="active"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="34x64+62+22" x="62" y="y+4" width="34" height="height" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="34x8+62+104" x="62" y="y+height+4" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="34x8+62+12" x="62" y="y" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="34x64+62+122" x="62" y="y+4" width="34" height="height" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="34x8+62+204" x="62" y="y+height+4" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="34x8+62+112" x="62" y="y" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="34x64+62+222" x="62" y="y+4" width="34" height="height" visible="!!missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="34x8+62+304" x="62" y="y+height+4" visible="!!missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="34x8+62+212" x="62" y="y" visible="!!missed"></sprite>
             </object>
             <object key="note_2">
               <sprite image="Note/DX.png" frame="26x12+97+0" x="97" y="y"></sprite>
             </object>
             <object key="longnote_2">
-              <sprite image="Note/DX.png" frame="26x64+97+22" x="97" y="y+4" width="26" height="height" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="26x8+97+104" x="97" y="y+height+4" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="26x8+97+12" x="97" y="y" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="26x64+97+122" x="97" y="y+4" width="26" height="height" visible="active"></sprite>
-              <sprite image="Note/DX.png" frame="26x8+97+204" x="97" y="y+height+4" visible="active"></sprite>
-              <sprite image="Note/DX.png" frame="26x8+97+112" x="97" y="y" visible="active"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="26x64+97+22" x="97" y="y+4" width="26" height="height" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="26x8+97+104" x="97" y="y+height+4" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="26x8+97+12" x="97" y="y" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="26x64+97+122" x="97" y="y+4" width="26" height="height" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="26x8+97+204" x="97" y="y+height+4" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="26x8+97+112" x="97" y="y" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="26x64+97+222" x="97" y="y+4" width="26" height="height" visible="!!missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="26x8+97+304" x="97" y="y+height+4" visible="!!missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="26x8+97+212" x="97" y="y" visible="!!missed"></sprite>
             </object>
             <object key="note_3">
               <sprite image="Note/DX.png" frame="34x12+62+0" x="124" y="y"></sprite>
             </object>
             <object key="longnote_3">
-              <sprite image="Note/DX.png" frame="34x64+62+22" x="124" y="y+4" width="34" height="height" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="34x8+62+104" x="124" y="y+height+4" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="34x8+62+12" x="124" y="y" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="34x64+62+122" x="124" y="y+4" width="34" height="height" visible="active"></sprite>
-              <sprite image="Note/DX.png" frame="34x8+62+204" x="124" y="y+height+4" visible="active"></sprite>
-              <sprite image="Note/DX.png" frame="34x8+62+112" x="124" y="y" visible="active"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="34x64+62+22" x="124" y="y+4" width="34" height="height" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="34x8+62+104" x="124" y="y+height+4" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="34x8+62+12" x="124" y="y" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="34x64+62+122" x="124" y="y+4" width="34" height="height" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="34x8+62+204" x="124" y="y+height+4" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="34x8+62+112" x="124" y="y" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="34x64+62+222" x="124" y="y+4" width="34" height="height" visible="!!missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="34x8+62+304" x="124" y="y+height+4" visible="!!missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="34x8+62+212" x="124" y="y" visible="!!missed"></sprite>
             </object>
             <object key="note_4">
               <sprite image="Note/DX.png" frame="26x12+97+0" x="159" y="y"></sprite>
             </object>
             <object key="longnote_4">
-              <sprite image="Note/DX.png" frame="26x64+97+22" x="159" y="y+4" width="26" height="height" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="26x8+97+104" x="159" y="y+height+4" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="26x8+97+12" x="159" y="y" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="26x64+97+122" x="159" y="y+4" width="26" height="height" visible="active"></sprite>
-              <sprite image="Note/DX.png" frame="26x8+97+204" x="159" y="y+height+4" visible="active"></sprite>
-              <sprite image="Note/DX.png" frame="26x8+97+112" x="159" y="y" visible="active"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="26x64+97+22" x="159" y="y+4" width="26" height="height" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="26x8+97+104" x="159" y="y+height+4" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="26x8+97+12" x="159" y="y" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="26x64+97+122" x="159" y="y+4" width="26" height="height" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="26x8+97+204" x="159" y="y+height+4" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="26x8+97+112" x="159" y="y" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="26x64+97+222" x="159" y="y+4" width="26" height="height" visible="!!missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="26x8+97+304" x="159" y="y+height+4" visible="!!missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="26x8+97+212" x="159" y="y" visible="!!missed"></sprite>
             </object>
             <object key="note_5">
               <sprite image="Note/DX.png" frame="34x12+62+0" x="186" y="y"></sprite>
             </object>
             <object key="longnote_5">
-              <sprite image="Note/DX.png" frame="34x64+62+22" x="186" y="y+4" width="34" height="height" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="34x8+62+104" x="186" y="y+height+4" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="34x8+62+12" x="186" y="y" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="34x64+62+122" x="186" y="y+4" width="34" height="height" visible="active"></sprite>
-              <sprite image="Note/DX.png" frame="34x8+62+204" x="186" y="y+height+4" visible="active"></sprite>
-              <sprite image="Note/DX.png" frame="34x8+62+112" x="186" y="y" visible="active"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="34x64+62+22" x="186" y="y+4" width="34" height="height" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="34x8+62+104" x="186" y="y+height+4" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="34x8+62+12" x="186" y="y" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="34x64+62+122" x="186" y="y+4" width="34" height="height" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="34x8+62+204" x="186" y="y+height+4" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="34x8+62+112" x="186" y="y" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="34x64+62+222" x="186" y="y+4" width="34" height="height" visible="!!missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="34x8+62+304" x="186" y="y+height+4" visible="!!missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="34x8+62+212" x="186" y="y" visible="!!missed"></sprite>
             </object>
             <object key="note_6">
               <sprite image="Note/DX.png" frame="26x12+97+0" x="221" y="y"></sprite>
             </object>
             <object key="longnote_6">
-              <sprite image="Note/DX.png" frame="26x64+97+22" x="221" y="y+4" width="26" height="height" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="26x8+97+104" x="221" y="y+height+4" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="26x8+97+12" x="221" y="y" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="26x64+97+122" x="221" y="y+4" width="26" height="height" visible="active"></sprite>
-              <sprite image="Note/DX.png" frame="26x8+97+204" x="221" y="y+height+4" visible="active"></sprite>
-              <sprite image="Note/DX.png" frame="26x8+97+112" x="221" y="y" visible="active"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="26x64+97+22" x="221" y="y+4" width="26" height="height" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="26x8+97+104" x="221" y="y+height+4" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="26x8+97+12" x="221" y="y" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="26x64+97+122" x="221" y="y+4" width="26" height="height" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="26x8+97+204" x="221" y="y+height+4" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="26x8+97+112" x="221" y="y" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="26x64+97+222" x="221" y="y+4" width="26" height="height" visible="!!missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="26x8+97+304" x="221" y="y+height+4" visible="!!missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="26x8+97+212" x="221" y="y" visible="!!missed"></sprite>
             </object>
             <object key="note_7">
               <sprite image="Note/DX.png" frame="34x12+62+0" x="248" y="y"></sprite>
             </object>
             <object key="longnote_7">
-              <sprite image="Note/DX.png" frame="34x64+62+22" x="248" y="y+4" width="34" height="height" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="34x8+62+104" x="248" y="y+height+4" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="34x8+62+12" x="248" y="y" visible="!active"></sprite>
-              <sprite image="Note/DX.png" frame="34x64+62+122" x="248" y="y+4" width="34" height="height" visible="active"></sprite>
-              <sprite image="Note/DX.png" frame="34x8+62+204" x="248" y="y+height+4" visible="active"></sprite>
-              <sprite image="Note/DX.png" frame="34x8+62+112" x="248" y="y" visible="active"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="34x64+62+22" x="248" y="y+4" width="34" height="height" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="34x8+62+104" x="248" y="y+height+4" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="34x8+62+12" x="248" y="y" visible="!active &amp;&amp; !missed"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="34x64+62+122" x="248" y="y+4" width="34" height="height" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="34x8+62+204" x="248" y="y+height+4" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="34x8+62+112" x="248" y="y" visible="!!active &amp;&amp; !missed"></sprite>
+                <!-- body-->
+                <sprite image="Note/DX.png" frame="34x64+62+222" x="248" y="y+4" width="34" height="height" visible="!!missed"></sprite>
+                <!-- tail-->
+                <sprite image="Note/DX.png" frame="34x8+62+304" x="248" y="y+height+4" visible="!!missed"></sprite>
+                <!-- head-->
+                <sprite image="Note/DX.png" frame="34x8+62+212" x="248" y="y" visible="!!missed"></sprite>
             </object>
         </group>
       </group>
