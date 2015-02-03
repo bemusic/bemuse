@@ -5,8 +5,8 @@
       <keyframe t="1" x="20" />
     </animation>
     <animation on="exitEvent">
-      <keyframe t="0" x="50" />
-      <keyframe t="1" x="70" />
+      <keyframe t="0" x="50" y="0" />
+      <keyframe t="1" x="70" y="100" />
     </animation>
   </group>
 </skin>

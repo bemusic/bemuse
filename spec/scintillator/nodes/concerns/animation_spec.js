@@ -36,6 +36,12 @@ describe('Scintillator::Animation', function() {
         ],
       })
     })
+    it('throws when there is no time', function() {
+      let xml = $xml(`<animation>
+        <keyframe />
+      </animation>`)
+      expect(() => _compile(xml)).to.throw(Error)
+    })
   })
 
   describe('#_properties', function() {
