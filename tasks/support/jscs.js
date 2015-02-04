@@ -16,7 +16,7 @@ function jscs() {
       file.jscs = result
       return file
     })
-    .nodify(callback)
+    .nodeify(callback)
   })
 }
 
