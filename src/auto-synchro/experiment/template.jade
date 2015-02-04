@@ -1,0 +1,27 @@
+
+.experiment
+  h1 An Experiment on Audio+Input Latency Calibration for Rhythm Action Games
+  h2 1. Please answer the questionaire and click the button
+  p What kind of audio device you are using?
+  select(v-model='device')
+    option(selected) Built-in Speaker
+    option Earphone
+    option External Speaker
+  p When you are ready...
+  div(v-show='showStart')
+    button(v-on='click:start') Start the Music
+  div(v-show='showLoading')
+    button(disabled) Loading Music (~700kb)
+  div(v-show='showStarted')
+    button(disabled) Playing Music
+  h2 2. Press space bar (mobile phone: tap the screen) when you hear the "kick drum"
+  div(v-show='showCollect')
+    p {{numSamples}} samples recorded.
+    p We need 56 to 84 samples.
+  div(v-show='showSending')
+    h2 3. Sending results to server
+  div(v-show='showThank')
+    h2 4. Finished! Thank you!
+    p This song will loop forever.
+
+  

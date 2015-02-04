@@ -6,6 +6,7 @@ var modules = {
       app: '../app',
       test: '../test',
       comingSoon: '../coming-soon',
+      sync: '../auto-synchro',
     }
 
 var code = 'module.exports = {'

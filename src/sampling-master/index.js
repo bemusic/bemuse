@@ -82,8 +82,8 @@ class Sample {
     this._buffer = audioBuffer
   }
 
-  play() {
-    return new PlayInstance(this._master, this._buffer)
+  play(delay, node) {
+    return new PlayInstance(this._master, this._buffer, delay, node)
   }
 
   destroy() {
@@ -95,17 +95,17 @@ class Sample {
 
 class PlayInstance {
 
-  constructor(samplingMaster, buffer) {
+  constructor(samplingMaster, buffer, delay, node) {
     this._master = samplingMaster
     let context = samplingMaster.audioContext
     let source = context.createBufferSource()
     source.buffer = buffer
     let gain = context.createGain()
     source.connect(gain)
-    gain.connect(context.destination)
+    gain.connect(node || context.destination)
     this._source = source
     this._gain = gain
-    source.start(0)
+    source.start(delay === 0 ? 0 : Math.max(0, context.currentTime + delay))
     setTimeout(() => this.stop(), buffer.duration * 1000)
     this._master._startPlaying(this)
   }

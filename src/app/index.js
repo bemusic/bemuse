@@ -6,7 +6,6 @@ import $ from 'jquery'
 
 export function main() {
   co(function*() {
-    console.log(Scintillator)
     let skin      = yield Scintillator.load('/skins/default/skin.xml')
     let context   = new Scintillator.Context(skin)
 
