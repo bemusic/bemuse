@@ -1,124 +1,77 @@
 
-import download       from '../download'
-import co             from 'co'
-import once           from 'once'
-import SamplingMaster from '../sampling-master'
-import context        from 'audio-context'
-import R              from 'ramda'
+import '../polyfill'
+import * as Music from './music'
+import Vue from 'vue'
+import template from './experiment/template.jade'
+import './experiment/style.scss'
+import $ from 'jquery'
 
-/**
- * Checks whether an audio format is supported.
- */
-let canPlay = (() => {
-  let dummyAudioTag = document.createElement('audio')
-  return (type) => dummyAudioTag.canPlayType(type) === 'probably'
-})()
+export function main() {
 
-/**
- * The audio format to use (.ogg or .m4a)
- */
-let audioExt =  once(() =>
-                  canPlay('audio/ogg; codecs="vorbis"') ? '.ogg' : '.m4a')
+  let el = $('<div></div>').appendTo('body')
 
-/**
- * Loads the files and create a music instance.
- */
-export function load() {
-  return co(function*() {
-    let master  = new SamplingMaster(context)
-    let sample  =
-          name => download(`/sounds/sync/${name}${audioExt()}`)
-            .as('arraybuffer')
-            .then(buf => master.sample(buf))
-    let samples = R.fromPairs(
-          yield Promise.all(
-            ['bgm', 'intro', 'kick', 'snare'].map(
-              name => sample(name).then(sample => [name, sample]))))
-    return music(master, samples)
-  })
-}
-
-/**
- * Takes the sample and sequences a music
- */
-function music(master, samples) {
-  return function play() {
-
-    let BPM = 148
-    let time = new AudioTime(context, -1)
-
-    let filter = context.createBiquadFilter()
-    filter.type = 'lowpass'
-    filter.frequency.value = 0
-    filter.Q.value = 10
-    filter.connect(context.destination)
-
-    let state = { part2: null }
-
-    let sequence = beatSequencer(BPM, (beat, delay) => {
-      if (beat % 8 !== 7) {
-        samples.kick.play(delay)
-      }
-      if (state.part2 !== null) {
-        beat -= state.part2.begin
-        if (beat % 128 === 0) {
-          samples.bgm.play(delay)
-        }
-      } else {
-        if (beat % 32 === 0) {
-          samples.intro.play(delay, filter)
-        }
-        if (beat % 32 === 31) {
-          if (state.ok === true) {
-            samples.snare.play(delay)
-            state.part2 = { begin: beat + 1}
-          }
-        }
-      }
+  function send(device, data) {
+    return new Promise((resolve) => {
+      $.getScript('//www.parsecdn.com/js/parse-1.3.4.min.js', () => {
+        Parse.initialize('JPhEf2EisJuKiuSOD50p6De7ZW7iwKVPakcbMo0h',
+                          'jd0W1cM8Kpn5jTBUp8emJJSimjfYmpP5o0tSpH71')
+        let SurveyResult = Parse.Object.extend('SurveyResult')
+        resolve(new SurveyResult().save({
+          agent: navigator.userAgent,
+          device: device,
+          samples: data,
+        }))
+      })
     })
+  }
 
-    setInterval(() => sequence(time.t), 33)
-
-    return {
-      ok() {
-        state.ok = true
-      },
-      progress(p) {
-        filter.frequency.value = 20000 * p * p * p
-      },
-      getSample() {
-        let nearestBeat = Math.round(time.t * BPM / 60)
-        let nearestBeatTime = nearestBeat * 60 / BPM
-        return nearestBeatTime - time.t
-      },
+  let data = {
+        showLoading: true,
+        showStart: false,
+        showSending: false,
+        showStarted: false,
+        showThank: false,
+        numSamples: 0,
+        showCollect: true,
+      }
+  let play
+  let music = Music.load().then(music => {
+    let bound = 56
+    let samples = []
+    data.showLoading = false
+    data.showStart = true
+    play = () => {
+      data.showStart = false
+      data.showStarted = true
+      let remote = music({
+        a() {
+          data.showCollect = false
+          data.showSending = true
+          send(data.device, samples).then(() => {
+            data.showThank = true
+          }, () => { alert('Oops cannot send!') })
+        }
+      })
+      window.addEventListener('keydown', e => {
+        if (e.which !== 32) return
+        e.preventDefault()
+        samples.push(remote.getSample())
+        remote.progress(Math.min(1, samples.length / bound))
+        if (samples.length >= bound) remote.ok()
+        data.numSamples = samples.length
+      })
     }
+  })
 
-  }
+  new Vue({
+    el: el[0],
+    template: template(),
+    data: data,
+    methods: {
+      start() {
+        play()
+      }
+    },
+  })
+
 }
-
-function beatSequencer(bpm, f) {
-  let beat = -1
-  return (time) => {
-    let nowBeat = Math.floor((time + 0.1) * bpm / 60)
-    while (beat < nowBeat) {
-      beat += 1
-      let beatTime = beat * 60 / bpm
-      f(beat, beatTime - time)
-    }
-  }
-}
-
-class AudioTime {
-  constructor(context, leadTime) {
-    this._context = context
-    this._start = context.currentTime
-    this._startTime = leadTime
-  }
-  get t() {
-    return context.currentTime - this._start + this._startTime
-  }
-}
-
-
-
-

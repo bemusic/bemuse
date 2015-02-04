@@ -1,0 +1,27 @@
+
+.experiment {
+  padding: 0 20px;
+  margin: 0 auto;
+  max-width: 720px;
+  h1 {
+    color: #8b8685;
+    font: bold 40px Helvetica, sans-serif;
+  }
+  button {
+    background: #666;
+    border: 3px outset #777;
+    font: bold 30px Verdana, sans-serif;
+    color: #fff;
+    padding: 15px;
+    &:disabled {
+      opacity: 0.4;
+    }
+  }
+  select {
+    background: #666;
+    border: 3px inset #777;
+    font: bold 20px Verdana, sans-serif;
+    color: #fff;
+    padding: 10px;
+  }
+}
