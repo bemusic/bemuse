@@ -20,8 +20,12 @@
     p We need 56 to 84 samples.
   div(v-show='showSending')
     h2 3. Sending results to server
-  div(v-show='showThank')
+  div.experiment--result(v-show='showThank')
     h2 4. Finished! Thank you!
+    p
+      b Your computer's audio+input latency is {{latency}} ms
+    p More results will be published later
+    p Thank you!
     p This song will loop forever.
 
   

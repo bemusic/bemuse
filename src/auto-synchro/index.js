@@ -33,9 +33,23 @@ export function main() {
         showThank: false,
         numSamples: 0,
         showCollect: true,
+        latency: 0,
       }
 
   let play
+
+  function getLatency(samples) {
+    let data = samples.map(([a, b]) => b)
+    data.sort((a, b) => a - b)
+    let count = 0
+    let sum = 0
+    let start = Math.floor(data.length * 1 / 7)
+    for (let i = start; i < data.length * 6 / 7; i ++) {
+      count += 1
+      sum += data[i]
+    }
+    return Math.round(sum / count * 1000)
+  }
 
   Music.load().then(music => {
     let bound = 56
@@ -49,6 +63,7 @@ export function main() {
         a() {
           data.showCollect = false
           data.showSending = true
+          data.latency = getLatency(samples)
           send(data.device, samples).then(() => {
             data.showThank = true
           }, () => { alert('Oops cannot send!') })

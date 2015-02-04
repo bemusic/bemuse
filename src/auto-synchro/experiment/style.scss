@@ -24,4 +24,10 @@
     color: #fff;
     padding: 10px;
   }
+  &--result {
+    position: fixed;
+    top: 10px; right: 10px; bottom: 10px; left: 10px;
+    background: #444;
+    border: 3px solid #555;
+  }
 }
