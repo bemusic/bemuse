@@ -34,8 +34,10 @@ export function main() {
         numSamples: 0,
         showCollect: true,
       }
+
   let play
-  let music = Music.load().then(music => {
+
+  Music.load().then(music => {
     let bound = 56
     let samples = []
     data.showLoading = false
