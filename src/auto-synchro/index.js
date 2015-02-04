@@ -52,13 +52,21 @@ export function main() {
           }, () => { alert('Oops cannot send!') })
         }
       })
-      window.addEventListener('keydown', e => {
-        if (e.which !== 32) return
-        e.preventDefault()
+      let tap = () => {
         samples.push(remote.getSample())
         remote.progress(Math.min(1, samples.length / bound))
         if (samples.length >= bound) remote.ok()
         data.numSamples = samples.length
+      }
+      window.addEventListener('keydown', e => {
+        if (e.which !== 32) return
+        e.preventDefault()
+        tap()
+      })
+      window.addEventListener('touchstart', e => {
+        if (e.touches.length !== 1) return
+        e.preventDefault()
+        tap()
       })
     }
   })

@@ -44,6 +44,8 @@ export function load() {
 function music(master, samples) {
   return function play(callbacks) {
 
+    master.unmute()
+
     let BPM = 148
     let time = new AudioTime(context, -1)
 

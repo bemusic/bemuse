@@ -11,10 +11,10 @@
   div(v-show='showStart')
     button(v-on='click:start') Start the Music
   div(v-show='showLoading')
-    button(disabled) Loading Music
+    button(disabled) Loading Music (~700kb)
   div(v-show='showStarted')
     button(disabled) Playing Music
-  h2 2. Press space bar when you hear the "kick drum"
+  h2 2. Press space bar (mobile phone: tap the screen) when you hear the "kick drum"
   div(v-show='showCollect')
     p {{numSamples}} samples recorded.
     p We need 56 to 84 samples.
