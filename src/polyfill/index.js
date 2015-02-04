@@ -1,3 +1,5 @@
 
 import '6to5/polyfill'
-import 'prfun'
+import Bluebird from 'bluebird'
+
+global.Promise = Bluebird
