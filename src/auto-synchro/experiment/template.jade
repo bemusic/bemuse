@@ -15,6 +15,8 @@
   div(v-show='showStarted')
     button(disabled) Playing Music
   h2 2. Listen to the beats...
+  div(v-show='!showCollection && showStarted')
+    h2 3. (please wait)
   div(v-show='showCollection')
     h2 3. Press space bar (mobile phone: tap the screen) when you hear the "kick drum"
     div(v-show='showCollect')
