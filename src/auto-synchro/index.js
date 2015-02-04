@@ -33,6 +33,7 @@ export function main() {
         showThank: false,
         numSamples: 0,
         showCollect: true,
+        showCollection: false,
         latency: 0,
       }
 
@@ -75,16 +76,19 @@ export function main() {
         if (samples.length >= bound) remote.ok()
         data.numSamples = samples.length
       }
-      window.addEventListener('keydown', e => {
-        if (e.which !== 32) return
-        e.preventDefault()
-        tap()
-      })
-      window.addEventListener('touchstart', e => {
-        if (e.touches.length !== 1) return
-        e.preventDefault()
-        tap()
-      })
+      setTimeout(() => {
+        data.showCollection = true
+        window.addEventListener('keydown', e => {
+          if (e.which !== 32) return
+          e.preventDefault()
+          tap()
+        })
+        window.addEventListener('touchstart', e => {
+          if (e.touches.length !== 1) return
+          e.preventDefault()
+          tap()
+        })
+      }, 6675)
     }
   })
 

@@ -14,14 +14,16 @@
     button(disabled) Loading Music (~700kb)
   div(v-show='showStarted')
     button(disabled) Playing Music
-  h2 2. Press space bar (mobile phone: tap the screen) when you hear the "kick drum"
-  div(v-show='showCollect')
-    p {{numSamples}} samples recorded.
-    p We need 56 to 84 samples.
+  h2 2. Listen to the beats...
+  div(v-show='showCollection')
+    h2 3. Press space bar (mobile phone: tap the screen) when you hear the "kick drum"
+    div(v-show='showCollect')
+      p {{numSamples}} samples recorded.
+      p We need 56 to 84 samples.
   div(v-show='showSending')
-    h2 3. Sending results to server
+    h2 4. Sending results to server
   div.experiment--result(v-show='showThank')
-    h2 4. Finished! Thank you!
+    h2 5. Finished! Thank you!
     p
       b Your computer's audio+input latency is {{latency}} ms
     p More results will be published later
