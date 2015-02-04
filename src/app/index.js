@@ -3,9 +3,25 @@ import '../polyfill'
 import * as Scintillator from '../scintillator'
 import co from 'co'
 import $ from 'jquery'
+import * as AutoSynchro from '../auto-synchro'
 
 export function main() {
   co(function*() {
+    AutoSynchro.load().then(music => {
+      let remote = music()
+      let count = 0
+      let samples = []
+      $(window).keydown(function() {
+        count += 1
+        samples.push(remote.getSample())
+        window.data = samples
+        if (count <= 56) {
+          remote.progress(count / 32)
+        } else {
+          remote.ok()
+        }
+      })
+    })
     console.log(Scintillator)
     let skin      = yield Scintillator.load('/skins/default/skin.xml')
     let context   = new Scintillator.Context(skin)

@@ -3,7 +3,7 @@ export default readBlob
 
 export function readBlob(blob) {
   return {
-    as: function(type) {
+    as(type) {
       return new Promise(function(resolve, reject) {
         let reader = new FileReader()
         reader.onload = function() {
