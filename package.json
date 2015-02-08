@@ -28,7 +28,8 @@
   },
   "homepage": "https://github.com/spacetme/bemuse",
   "devDependencies": {
-    "6to5": "^3.3.1",
+    "6to5": "^3.5.3",
+    "6to5-core": "^3.5.3",
     "6to5-loader": "^3.0.0",
     "autoprefixer-loader": "^1.0.0",
     "body-parser": "^1.10.0",
