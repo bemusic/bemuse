@@ -26,15 +26,16 @@ let mode = data.mode || 'comingSoon'
 /* istanbul ignore else - we can check that by functional tests */
 if (loadModule[mode]) {
   let context = new LoadingContext()
+  boot.setProgress(null)
+  context.onprogress = function(loaded, total) {
+    boot.setProgress(loaded / total)
+  }
   context.use(function() {
     loadModule[mode](function(loadedModule) {
       boot.hide()
       loadedModule.main()
     })
   })
-  context.onprogress = function(loaded, total) {
-    boot.setProgress(loaded / total)
-  }
 } else {
   console.error('Invalid mode:', mode)
 }
