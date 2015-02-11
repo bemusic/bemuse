@@ -9,6 +9,7 @@ import querystring      from 'querystring'
 
 import loadModule       from 'val!./loader.js'
 
+import LoadingContext   from './loading-context'
 import * as boot        from './boot'
 import * as ErrorDialog from './error-dialog'
 
@@ -24,10 +25,16 @@ let mode = data.mode || 'comingSoon'
 
 /* istanbul ignore else - we can check that by functional tests */
 if (loadModule[mode]) {
-  loadModule[mode](function(loadedModule) {
-    boot.hide()
-    loadedModule.main()
+  let context = new LoadingContext()
+  context.use(function() {
+    loadModule[mode](function(loadedModule) {
+      boot.hide()
+      loadedModule.main()
+    })
   })
+  context.onprogress = function(loaded, total) {
+    boot.setProgress(loaded / total)
+  }
 } else {
   console.error('Invalid mode:', mode)
 }
