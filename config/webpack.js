@@ -1,7 +1,8 @@
 
-import path     from './path'
-import NODE_ENV from 'node-env'
-import webpack  from 'webpack'
+import path           from './path'
+import NODE_ENV       from 'node-env'
+import webpack        from 'webpack'
+import ProgressPlugin from '../src/webpack-progress'
 
 let config = {
   context: path('src'),
@@ -50,7 +51,9 @@ let config = {
     ],
     postLoaders: [],
   },
-  plugins: [],
+  plugins: [
+    new ProgressPlugin(),
+  ],
 }
 
 if (NODE_ENV === 'test' || process.env.COV === 'true') {
