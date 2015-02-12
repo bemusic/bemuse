@@ -20,16 +20,29 @@ export function main() {
     let columns = ['SC', '1', '2', '3', '4', '5', '6', '7']
 
     function updateNotes() {
-      let p = data.t * 180 / 60
-      let entities = area.getVisibleNotes(p, p + (5 / 3), 550)
+      let p = data.t * 192 / 60
       for (let column of columns) {
-        data[`note_${column}`] = entities.filter(entity =>
-          !entity.height && entity.column === column)
-        data[`longnote_${column}`] = entities.filter(entity =>
-          entity.height && entity.column === column)
-        .map(entity => Object.assign({ }, entity, {
-          active: entity.y + entity.height > 550
-        }))
+        data[`note_${column}`].length = 0
+        data[`longnote_${column}`].length = 0
+      }
+      let entities = area.getVisibleNotes(p, p + (5 / 2.5))
+      for (let entity of entities) {
+        let note = entity.note
+        let column = note.column
+        if (entity.height) {
+          data[`longnote_${column}`].push({
+            key:    note.id,
+            y:      entity.y * 550,
+            height: entity.height * 550,
+            active: entity.y + entity.height > 1,
+            missed: entity.y + entity.height > 1.1 && note.id % 5 === 0,
+          })
+        } else {
+          data[`note_${column}`].push({
+            key:    note.id,
+            y:      entity.y * 550,
+          })
+        }
       }
     }
 
@@ -63,9 +76,9 @@ function generateRandomNotes() {
   for (let column of columns) {
     let position = 4
     for (let j = 0; j < 2000; j ++) {
-      position += chance.integer({ min: 1, max: 6 }) / 8
-      let length = chance.bool({ likelihood: 20 }) ?
-                      chance.integer({ min: 1, max: 8 }) / 8 : 0
+      position += chance.integer({ min: 1, max: 6 }) / 4
+      let length = chance.bool({ likelihood: 10 }) ?
+                      chance.integer({ min: 1, max: 24 }) / 4 : 0
       let id = nextId++
       if (length > 0) {
         let end = { position: position + length }
