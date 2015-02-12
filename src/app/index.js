@@ -4,46 +4,44 @@ import * as Scintillator from 'bemuse/scintillator'
 
 import co from 'co'
 import $ from 'jquery'
+import Chance from 'chance'
+
+import NoteArea from 'bemuse/game/note-area'
 
 export function main() {
   co(function*() {
     let skin      = yield Scintillator.load('/skins/default/skin.xml')
     let context   = new Scintillator.Context(skin)
 
+    let notes     = generateRandomNotes()
+    let area      = new NoteArea(notes)
+
     let data = { }
+    let columns = ['SC', '1', '2', '3', '4', '5', '6', '7']
 
-    data['note_sc'] = [ { key: 1, y: 10 }, { key: 2, y: 160 } ]
-    data['note_1']  = [ { key: 1, y: 20 }, { key: 2, y: 150 } ]
-    data['note_2']  = [ { key: 1, y: 30 }, { key: 2, y: 140 } ]
-    data['note_3']  = [ { key: 1, y: 40 }, { key: 2, y: 130 } ]
-    data['note_4']  = [ { key: 1, y: 50 }, { key: 2, y: 120 } ]
-    data['note_5']  = [ { key: 1, y: 60 }, { key: 2, y: 110 } ]
-    data['note_6']  = [ { key: 1, y: 70 }, { key: 2, y: 90 } ]
-    data['note_7']  = [ { key: 1, y: 80 } ]
+    function updateNotes() {
+      let p = data.t * 180 / 60
+      let entities = area.getVisibleNotes(p, p + (5 / 3), 550)
+      for (let column of columns) {
+        data[`note_${column}`] = entities.filter(entity =>
+          !entity.height && entity.column === column)
+        data[`longnote_${column}`] = entities.filter(entity =>
+          entity.height && entity.column === column)
+        .map(entity => Object.assign({ }, entity, {
+          active: entity.y + entity.height > 550
+        }))
+      }
+    }
 
-    data['longnote_sc'] = [ { key: 1, active: false, y: 210, height: 0  },
-                            { key: 3, active: true,  y: 40,  height: 100,
-                              missed: true, }, ]
-    data['longnote_1']  = [ { key: 1, active: false, y: 220, height: 10 } ]
-    data['longnote_2']  = [ { key: 1, active: false, y: 230, height: 20 } ]
-    data['longnote_3']  = [ { key: 1, active: false, y: 240, height: 40,
-                              missed: true, } ]
-    data['longnote_4']  = [ { key: 1, active: false, y: 250, height: 60 } ]
-    data['longnote_5']  = [ { key: 1, active: false, y: 260, height: 80 } ]
-    data['longnote_6']  = [ { key: 1, active: false, y: 270, height: 70,
-                              missed: true, } ]
-    data['longnote_7']  = [ { key: 1, active: false, y: 280, height: 60 } ]
-
-    for (let i of ['longnote_sc', 'longnote_1', 'longnote_2', 'longnote_3',
-                    'longnote_4', 'longnote_5', 'longnote_6', 'longnote_7', ]) {
-      let y = data[i][0].y + data[i][0].height + 50
-      let height = 450 - y
-      data[i].push({ key: 2, y, height, active: true })
+    for (let column of columns) {
+      data[`note_${column}`] = []
+      data[`longnote_${column}`] = []
     }
 
     let started = new Date().getTime()
     let draw = () => {
       data.t = (new Date().getTime() - started) / 1000
+      updateNotes()
       context.render(data)
     }
     draw()
@@ -55,6 +53,30 @@ export function main() {
   })
   .done()
 
+}
+
+function generateRandomNotes() {
+  let notes = []
+  let chance = new Chance(1234)
+  let columns = ['SC', '1', '2', '3', '4', '5', '6', '7']
+  let nextId = 1
+  for (let column of columns) {
+    let position = 4
+    for (let j = 0; j < 2000; j ++) {
+      position += chance.integer({ min: 1, max: 6 }) / 8
+      let length = chance.bool({ likelihood: 20 }) ?
+                      chance.integer({ min: 1, max: 8 }) / 8 : 0
+      let id = nextId++
+      if (length > 0) {
+        let end = { position: position + length }
+        notes.push({ position: position, end, column, id })
+        position = end.position
+      } else {
+        notes.push({ position: position, column, id })
+      }
+    }
+  }
+  return notes
 }
 
 function showCanvas(view) {

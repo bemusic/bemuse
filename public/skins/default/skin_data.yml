@@ -5,7 +5,7 @@ styles:
 
 mode:
   iidx_l:
-    - { style: 'scratch', channel: 'sc' }
+    - { style: 'scratch', channel: 'SC' }
     - { style: 'white',   channel: '1' }
     - { style: 'blue',    channel: '2' }
     - { style: 'white',   channel: '3' }

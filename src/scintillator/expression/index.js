@@ -5,7 +5,9 @@ let log = debug('scintillator:expression')
 import parser from './parser.pegjs'
 
 function createFunction(code) {
-  return eval('(function(get) { return ' + code + ' })')
+  let fn = eval('(function(get) { return ' + code + ' })')
+  fn.displayName = '(' + code + ')'
+  return fn
 }
 
 export function Expression(text) {
