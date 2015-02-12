@@ -1,6 +1,7 @@
 
-import '../polyfill'
-import * as Scintillator from '../scintillator'
+import 'bemuse/polyfill'
+import * as Scintillator from 'bemuse/scintillator'
+
 import co from 'co'
 import $ from 'jquery'
 

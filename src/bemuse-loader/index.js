@@ -1,5 +1,5 @@
 
-import readBlob from '../read-blob'
+import readBlob from 'bemuse/read-blob'
 import url      from 'url'
 
 export class BemuseLoader {

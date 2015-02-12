@@ -3,10 +3,10 @@
 // The code is compiled on build-time.
 
 var modules = {
-      app: '../app',
-      test: '../test',
-      comingSoon: '../coming-soon',
-      sync: '../auto-synchro',
+      app:        'bemuse/app',
+      test:       'bemuse/test',
+      comingSoon: 'bemuse/coming-soon',
+      sync:       'bemuse/auto-synchro',
     }
 
 var code = 'module.exports = {'

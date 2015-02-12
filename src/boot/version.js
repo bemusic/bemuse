@@ -3,5 +3,5 @@
 // It fetches the current version from `package.json` and export the version!
 //
 
-module.exports = 'module.exports=' + JSON.stringify(
-  require('../../package.json').version)
+let { version } = require('../../package.json')
+module.exports = 'module.exports=' + JSON.stringify(version)

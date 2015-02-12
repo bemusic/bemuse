@@ -1,15 +1,16 @@
 
-import '../../polyfill'
+import 'bemuse/polyfill'
 
 import $ from 'jquery'
 import co from 'co'
-import SamplingMaster from '../../sampling-master'
-import readBlob from '../../read-blob'
-import ctx from 'audio-context'
+
+import SamplingMaster from 'bemuse/sampling-master'
+import readBlob       from 'bemuse/read-blob'
+import ctx            from 'audio-context'
 
 import Compiler from 'bms/compiler'
-import Timing from 'bms/timing'
-import Notes from 'bms/notes'
+import Timing   from 'bms/timing'
+import Notes    from 'bms/notes'
 
 import template from './template.jade'
 import './style.scss'

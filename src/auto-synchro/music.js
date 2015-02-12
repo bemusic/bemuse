@@ -1,8 +1,9 @@
 
-import download       from '../download'
+import download       from 'bemuse/download'
+import SamplingMaster from 'bemuse/sampling-master'
+
 import co             from 'co'
 import once           from 'once'
-import SamplingMaster from '../sampling-master'
 import context        from 'audio-context'
 import R              from 'ramda'
 

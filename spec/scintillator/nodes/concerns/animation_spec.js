@@ -1,6 +1,6 @@
 
 import { _compile, _attrs, Animation }
-  from '../../../../src/scintillator/nodes/concerns/animation'
+  from 'bemuse/scintillator/nodes/concerns/animation'
 import $ from 'jquery'
 
 let $xml = xml => $($.parseXML(xml).documentElement)
