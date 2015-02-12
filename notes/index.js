@@ -14,24 +14,50 @@ var CHANNEL_MAPPING = {
   },
 }
 
+/**
+ * The Notes class holds the Note objects in the game. A note object may or
+ * may not be playable.
+ *
+ * @class Notes
+ * @constructor
+ */
 function Notes(notes) {
   this._notes = notes
 }
 
+/**
+ * Returns the number of notes in this object.
+ *
+ * @method count
+ * @return {Number}
+ */
 Notes.prototype.count = function() {
   return this._notes.length
 }
 
+/**
+ * Returns an Array of all notes.
+ *
+ * @method all
+ * @return {Note[]}
+ */
 Notes.prototype.all = function() {
   return this._notes.slice()
 }
 
+/**
+ * Creates a Notes object from a BMSChart.
+ *
+ * @static
+ * @method fromBMSChart
+ * @param {BMSChart} chart    the chart to process
+ * @param {Object}   options  the note options
+ */
 Notes.fromBMSChart = function(chart, options) {
   options = options || { }
   var builder = new BMSNoteBuilder(chart)
   return builder.build()
 }
-
 
 function BMSNoteBuilder(chart) {
   this._chart = chart
@@ -66,6 +92,21 @@ BMSNoteBuilder.prototype._handle = function(object) {
 BMSNoteBuilder.prototype._handleNormalNote = function(object) {
   var channel = this._normalizeChannel(object.channel)
   var beat = this._getBeat(object)
+  /**
+   * @class Note
+   */
+  /**
+   * @property beat
+   * @type Number
+   */
+  /**
+   * @property column
+   * @type Column|undefined
+   */
+  /**
+   * @property keysound
+   * @type String
+   */
   this._notes.push({ 
     beat: beat,
     column: this._getColumn(channel),
