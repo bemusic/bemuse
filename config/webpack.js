@@ -6,6 +6,11 @@ import ProgressPlugin from '../src/webpack-progress'
 
 let config = {
   context: path('src'),
+  resolve: {
+    alias: {
+      bemuse: path('src'),
+    },
+  },
   entry: {
     boot: './boot'
   },
