@@ -12,17 +12,17 @@ skin(width='1280' height='720')
     // body
     sprite(image='Note/DX.png'
             frame=(cur.width + 'x64+' + cur.x + '+' + (22 + add))
-            x=(x) y='y+4' width=(cur.width) height='height'
+            x=(x) y='y+4-12' width=(cur.width) height='height'
             visible=visible)
     // tail
     sprite(image='Note/DX.png'
             frame=(cur.width + 'x8+' + cur.x + '+' + (104 + add))
-            x=(x) y='y+height+4'
+            x=(x) y='y+height+4-12'
             visible=visible)
     // head
     sprite(image='Note/DX.png'
             frame=(cur.width + 'x8+' + cur.x + '+' + (12 + add))
-            x=(x) y='y'
+            x=(x) y='y-12'
             visible=visible)
 
   mixin notes(columns)
@@ -32,7 +32,7 @@ skin(width='1280' height='720')
       - var ch  = column.channel
       object(key='note_' + ch)
         sprite(image='Note/DX.png' frame=(cur.width + 'x12+' + cur.x + '+0')
-                x=(x) y='y')
+                x=(x) y='y - 12')
       object(key='longnote_' + ch)
         +longnote(x, cur, 0, '!active && !missed')
         +longnote(x, cur, 100, '!!active && !missed')
@@ -50,8 +50,7 @@ skin(width='1280' height='720')
       sprite(image='NoteArea/Flash.png' x='1' y='476' blend='screen'
               alpha='1 - (t % 0.4) / 0.4')
       group(x='1' mask='283x550+1+0')
-        group(y='(t * 500 % 1500) - 500')
-          +notes(mode.iidx_l)
+        +notes(mode.iidx_l)
 
   // info panel
   sprite(image='InfoPanel/Background.png' y='616')
