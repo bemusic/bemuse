@@ -1,7 +1,7 @@
 
 import co from 'co'
 
-import * as Scintillator from '../../src/scintillator'
+import * as Scintillator from 'bemuse/scintillator'
 
 let fixture = file => `/spec/scintillator/fixtures/${file}`
 

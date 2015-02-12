@@ -1,5 +1,5 @@
 
-import { Cachier } from '../../src/cachier'
+import { Cachier } from 'bemuse/cachier'
 
 describe('Cachier', function() {
 
