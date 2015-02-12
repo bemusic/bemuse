@@ -17,8 +17,9 @@ export function Instance(context, callback) {
     },
     bind(...pipeline) {
       let sideEffect = onChange(pipeline.pop())
-      helper.onData(function(value) {
-        for (let f of pipeline) value = f(value)
+      helper.onData(function applyBinding(value) {
+        // using var here to optimize
+        for (var i = 0; i < pipeline.length; i ++) value = pipeline[i](value)
         sideEffect(value)
       })
     },
