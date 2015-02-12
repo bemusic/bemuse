@@ -21,7 +21,7 @@ export function main() {
 
     function updateNotes() {
       let p = data.t * 180 / 60
-      let entities = area.getVisibleNotes(p, p + (5 / 0.25), 550)
+      let entities = area.getVisibleNotes(p, p + (5 / 3), 550)
       for (let column of columns) {
         data[`note_${column}`] = entities.filter(entity =>
           !entity.height && entity.column === column)
