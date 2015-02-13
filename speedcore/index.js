@@ -1,4 +1,6 @@
 
+var Segment = require('./segment')
+
 /**
  * Speedcore is a library to help compute the speed and position
  * of linear motion. A Speedcore is constructed from an array of Segments.
@@ -15,7 +17,7 @@ module.exports = Speedcore
  * @param {Segment[]} segments  An array of segments.
  */
 function Speedcore(segments) {
-  this._segments = segments
+  this._segments = segments.map(Segment)
 }
 
 Speedcore.prototype.t = function(x) {
@@ -35,23 +37,3 @@ Speedcore.prototype.x = function(t) {
     }
   }
 }
-
-/**
- * @class Segment
- */
-/**
- * @property inclusive
- * @type Boolean
- */
-/**
- * @property t
- * @type Number
- */
-/**
- * @property x
- * @type Number
- */
-/**
- * @property dx
- * @type Number
- */
