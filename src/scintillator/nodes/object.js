@@ -62,7 +62,7 @@ export class ObjectNode extends SkinNode {
       let manager = new ChildManager()
       manager.createInstance = () =>
         multi(this.children.map(c => c.instantiate(context, object)))
-      self.bind(this.key, array => manager.push(array))
+      self.onData(data => manager.push(this.key(data)))
     })
   }
 }

@@ -101,6 +101,18 @@ describe('Scintillator', function() {
       expect(stage.children[0].children).to.have.length(2)
       context.destroy()
     }))
+    it('should update same array with content changed', co.wrap(function*() {
+      let skin = yield Scintillator.load(fixture('expr_object.xml'))
+      let context = new Scintillator.Context(skin)
+      let stage = context.stage
+      let notes = []
+      context.render({ notes })
+      expect(stage.children[0].children).to.have.length(0)
+      notes.push({ key: 'a', y: 20 })
+      context.render({ notes })
+      expect(stage.children[0].children).to.have.length(2)
+      context.destroy()
+    }))
     it('should let children get value from item', co.wrap(function*() {
       let skin = yield Scintillator.load(fixture('expr_object_var.xml'))
       let context = new Scintillator.Context(skin)
