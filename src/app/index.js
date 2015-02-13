@@ -6,6 +6,7 @@ import co from 'co'
 import $ from 'jquery'
 import Chance from 'chance'
 
+import GameNote from 'bemuse/game/data/game-note'
 import NoteArea from 'bemuse/game/note-area'
 
 export function main() {
@@ -81,11 +82,13 @@ function generateRandomNotes() {
                       chance.integer({ min: 1, max: 24 }) / 4 : 0
       let id = nextId++
       if (length > 0) {
-        let end = { position: position + length }
-        notes.push({ position: position, end, column, id })
+        let end = { position: position + length, beat: 0, time: 0 }
+        notes.push(new GameNote({ position: position, end, column, id,
+                    beat: 0, time: 0, }))
         position = end.position
       } else {
-        notes.push({ position: position, column, id })
+        notes.push(new GameNote({ position: position, column, id,
+                    beat: 0, time: 0, end: null, }))
       }
     }
   }
