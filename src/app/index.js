@@ -109,8 +109,7 @@ function showCanvas(view) {
   function resize() {
     var scale = Math.min(
       window.innerWidth / width,
-      window.innerHeight / height,
-      1
+      window.innerHeight / height
     )
     view.style.width = Math.round(width * scale) + 'px'
     view.style.height = Math.round(height * scale) + 'px'
