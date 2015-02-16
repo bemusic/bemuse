@@ -10,21 +10,32 @@ import PIXI from 'pixi.js'
 import Resources from './resources'
 import Compiler from './compiler'
 
-export function load(xmlPath) {
+export function load(xmlPath, task) {
   return co(function*() {
+
+    let notify = task ? o => task.update(o) : () => {}
 
     log('load XML from %s', xmlPath)
     let $xml = yield loadXml(xmlPath)
 
-    log('loading resources')
+    // scan all images
     let resources = new Resources()
-    for (let image of Array.from($xml.children('image'))) {
+    let images = Array.from($xml.children('image'))
+    for (let image of images) {
       let src = $(image).attr('src')
       let imageUrl = url.resolve(xmlPath, src)
       resources.add(src, imageUrl)
     }
-    yield loadResources(resources)
 
+    // load all images + progress reporting
+    log('loading resources')
+    let loaded  = 1
+    let total   = 1 + images.length
+    let update  = () => notify({ progress: loaded / total })
+    update()
+    yield loadResources(resources, () => { loaded += 1; update() })
+
+    // compile the skin
     log('compiling')
     let skin = new Compiler({ resources }).compile($xml)
 
@@ -38,7 +49,7 @@ function loadXml(url) {
     .then(xml => $(xml.documentElement))
 }
 
-function loadResources(resources) {
+function loadResources(resources, onprogress) {
   log('loading resources')
   return new Promise(function(resolve) {
     if (resources.urls.length === 0) return resolve()
@@ -47,6 +58,7 @@ function loadResources(resources) {
       log('resources finished loading')
       resolve()
     })
+    if (onprogress) loader.on('onProgress', onprogress)
     loader.load()
   })
 }

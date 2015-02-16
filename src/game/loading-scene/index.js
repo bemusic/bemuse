@@ -2,44 +2,21 @@
 import View from 'bemuse/view!./view.jade'
 import './style.scss'
 
-export default function LoadingScene() {
-  return function(container) {
-    let data = {
-      song: {
-        title: 'BY☆MY☆SIDE',
-        subtitle: [
-          '[TUTORIAL]',
-        ],
-        artist: 'iaht',
-        genre: 'Trance Core',
-      },
-      items: [
-        {
-          text: 'Loading game engine',
-          width: '20%',
-        },
-        {
-          text: 'Loading skin',
-          width: '50%',
-        },
-        {
-          text: 'Loading packages (3/5)',
-          width: '60%',
-        },
-        {
-          text: 'Loading sounds (853/1293)',
-          width: '66%',
-        },
-        {
-          text: 'Decoded KICK.ogg',
-          width: '32%',
-        },
-        {
-          text: 'Loading BGA (0/1)',
-          width: '0%',
-        },
-      ],
+export default function LoadingScene({ loader, song }) {
+  function getData() {
+    return {
+      song,
+      items: loader.tasks.map(task => ({
+        text: task.text + (task.current && task.total ?
+                ` (${task.current} / ${task.total})` : ''),
+        width: Math.round((task.progress * 100) || 0) + '%',
+      })),
     }
-    new View({ el: container, data })
+  }
+  return function(container) {
+    let data = getData()
+    let view = new View({ el: container, data })
+    loader.on('progress', () => { console.log('progress') })
+    loader.on('progress', () => view.set(getData()))
   }
 }
