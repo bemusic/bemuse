@@ -1,22 +1,16 @@
+mixin section(name)
+  != '{{#' + name + '}}'
+  block
+  != '{{/' + name + '}}'
+
 .loading-scene
   .loading-scene-song-info
-    .loading-scene-song-info--genre TRANCE CORE
-    .loading-scene-song-info--title BY&#9733;MY&#9733;SIDE
-    .loading-scene-song-info--artist flicknote
+    .loading-scene-song-info--genre {{song.genre}}
+    .loading-scene-song-info--title {{song.title}}
+    .loading-scene-song-info--artist {{song.artist}}
   .loading-scene-progress
-    .loading-scene-progress--item
-      .loading-scene-progress-bar
-        .loading-scene-progress-bar--bar
-      | Loading packages (1/5)
-    .loading-scene-progress--item
-      .loading-scene-progress-bar
-        .loading-scene-progress-bar--bar
-      | Loading sounds (1371/984)
-    .loading-scene-progress--item
-      .loading-scene-progress-bar
-        .loading-scene-progress-bar--bar
-      | Decoded abc.wav
-    .loading-scene-progress--item
-      .loading-scene-progress-bar
-        .loading-scene-progress-bar--bar
-      | Loading BGA (0/1)
+    +section('items')
+      .loading-scene-progress--item
+        .loading-scene-progress-bar
+          .loading-scene-progress-bar--bar(style='width:{{width}}')
+        | {{text}}
