@@ -8,10 +8,13 @@
   background: url(~assets/bg/a.jpg) center no-repeat;
   background-size: cover;
 
-  .loading-scene-song-info {
+  &--info {
     position: absolute;
     top: 40%; left: 0; right: 0;
     transform: translateY(-50%);
+  }
+
+  .loading-scene-song-info {
     animation: loading-scene-song-info-animation 1s ease;
   }
 
@@ -20,11 +23,39 @@
     bottom: 10px; left: 10px;
   }
 
+  &--cover {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0; opacity: 0;
+    pointer-events: none;
+
+    background: black;
+  }
+
+  .scene.is-exiting & {
+    &--info {
+      animation: loading-scene--info-exit 0.3s linear;
+    }
+    &--cover {
+      animation: loading-scene--cover-exit 0.3s linear;
+      opacity: 1;
+    }
+  }
+
 }
 
 @keyframes loading-scene-song-info-animation {
-  0%    { transform: translateY(-50%) scale(1.5, 0.02); }
-  100%  { transform: translateY(-50%) scale(1, 1); }
+  0%    { transform: scale(1.5, 0.02); }
+  100%  { transform: scale(1, 1); }
+}
+
+@keyframes loading-scene--info-exit {
+  0%    { transform: translateY(-50%) scale(1, 1); }
+  100%  { transform: translateY(-50%) scale(2, 2); }
+}
+
+@keyframes loading-scene--cover-exit {
+  0%    { opacity: 0; }
+  100%  { opacity: 1; }
 }
 
 .loading-scene-song-info {

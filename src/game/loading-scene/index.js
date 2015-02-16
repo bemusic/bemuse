@@ -19,5 +19,9 @@ export default function LoadingScene({ loader, song }) {
     let view = new View({ el: container, data })
     loader.on('progress', () => { console.log('progress') })
     loader.on('progress', () => view.set(getData()))
+    return function() {
+      container.classList.add('is-exiting')
+      return Promise.delay(500)
+    }
   }
 }

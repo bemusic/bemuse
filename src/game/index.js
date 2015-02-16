@@ -15,5 +15,7 @@ export function main() {
   let loader = new GameLoader()
   let promise = loader.load('/music/aoi_olivia/olivia_SPpp.bml')
   SCENE_MANAGER.display(new LoadingScene({ loader, song }))
-  promise.done()
+  promise.then(function() {
+    SCENE_MANAGER.display(null)
+  })
 }
