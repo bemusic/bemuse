@@ -62,7 +62,7 @@
     "node-env": "^0.1.6",
     "node-notifier": "^4.0.3",
     "pegjs-loader": "^0.1.1",
-    "sass-loader": "^0.3.1",
+    "sass-loader": "^0.4.0-beta.1",
     "script-loader": "^0.6.1",
     "style-loader": "^0.8.2",
     "through2": "^0.6.3",
