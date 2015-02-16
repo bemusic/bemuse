@@ -36,14 +36,18 @@
   box-shadow: 0 2px 18px rgba(#000, 0.2);
 
   &--genre {
-    font-size: 3vh;
+    font-size: 3vmin;
   }
   &--title {
-    font-size: 6vh;
+    font-size: 8vmin;
     font-weight: bold;
   }
+  &--subtitle {
+    font-size: 6vmin;
+  }
   &--artist {
-    font-size: 4vh;
+    font-size: 4vmin;
+    margin-top: 0.8ex;
   }
 
 }

@@ -7,6 +7,8 @@ mixin section(name)
   .loading-scene-song-info
     .loading-scene-song-info--genre {{song.genre}}
     .loading-scene-song-info--title {{song.title}}
+    +section('song.subtitle')
+      .loading-scene-song-info--subtitle {{.}}
     .loading-scene-song-info--artist {{song.artist}}
   .loading-scene-progress
     +section('items')

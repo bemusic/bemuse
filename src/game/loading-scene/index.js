@@ -7,6 +7,9 @@ export default function LoadingScene() {
     let data = {
       song: {
         title: 'BY☆MY☆SIDE',
+        subtitle: [
+          '[TUTORIAL]',
+        ],
         artist: 'iaht',
         genre: 'Trance Core',
       },
