@@ -6,11 +6,14 @@ import GameLoader from './game-loader'
 export function main() {
   let song = {
         title: 'オリヴィアの幻術',
-        subtitle: [
+        subtitles: [
           '[Tonalite]',
         ],
         artist: '葵',
         genre: 'Sexy Dance',
+        subartists: [
+          'mov:いとう まさき/obj:止ヒ糸',
+        ],
       }
   let loader = new GameLoader()
   let promise = loader.load('/music/aoi_olivia/olivia_SPpp.bml')

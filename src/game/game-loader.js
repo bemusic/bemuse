@@ -2,6 +2,7 @@
 import co from 'co'
 import bytes from 'bytes'
 import { basename } from 'path'
+import BMS from 'bms'
 
 import { EventEmitter } from 'events'
 import TaskList         from 'bemuse/task-list'
@@ -30,7 +31,11 @@ export class GameLoader extends EventEmitter {
         }.bind(this)),
         song: co(function*() {
           let buffer = yield download(bms).as('arraybuffer', tasks.bms)
-          return buffer
+          let source = yield readBMS(buffer)
+          let compileResult = BMS.Compiler.compile(source)
+          let chart = compileResult.chart
+          let songInfo = BMS.SongInfo.fromBMSChart(chart)
+          void songInfo
         }.bind(this)),
       }
       yield Promise.all([promises.graphics, promises.song])
@@ -65,6 +70,11 @@ function loadEngine(task) {
       )
     })
   })
+}
+
+function readBMS(buffer) {
+  buffer = new Buffer(new Uint8Array(buffer))
+  return Promise.promisify(BMS.Reader.readAsync)(buffer)
 }
 
 export default GameLoader
