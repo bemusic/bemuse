@@ -12,6 +12,7 @@
     position: absolute;
     top: 40%; left: 0; right: 0;
     transform: translateY(-50%);
+    animation: loading-scene-song-info-animation 1s ease;
   }
 
   .loading-scene-progress {
@@ -19,6 +20,11 @@
     bottom: 10px; left: 10px;
   }
 
+}
+
+@keyframes loading-scene-song-info-animation {
+  0%    { transform: translateY(-50%) scale(1.5, 0.02); }
+  100%  { transform: translateY(-50%) scale(1, 1); }
 }
 
 .loading-scene-song-info {
