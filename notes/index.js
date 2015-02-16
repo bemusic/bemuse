@@ -1,4 +1,6 @@
 
+var Note = require('./note')
+
 module.exports = Notes
 
 var CHANNEL_MAPPING = {
@@ -22,6 +24,7 @@ var CHANNEL_MAPPING = {
  * @constructor
  */
 function Notes(notes) {
+  notes.forEach(Note.validate)
   this._notes = notes
 }
 
@@ -92,25 +95,9 @@ BMSNoteBuilder.prototype._handle = function(object) {
 BMSNoteBuilder.prototype._handleNormalNote = function(object) {
   var channel = this._normalizeChannel(object.channel)
   var beat = this._getBeat(object)
-  /**
-   * @class Note
-   */
-  /**
-   * @property beat
-   * @type Number
-   */
-  /**
-   * @property column
-   * @type Column|undefined
-   */
-  /**
-   * @property keysound
-   * @type String
-   */
-  this._notes.push({ 
+  this._notes.push({
     beat: beat,
     column: this._getColumn(channel),
-    keysound: object.value,
   })
 }
 
