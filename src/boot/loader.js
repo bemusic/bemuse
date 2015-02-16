@@ -7,6 +7,7 @@ var modules = {
       test:       'bemuse/test',
       comingSoon: 'bemuse/coming-soon',
       sync:       'bemuse/auto-synchro',
+      game:       'bemuse/game',
     }
 
 var code = 'module.exports = {'
