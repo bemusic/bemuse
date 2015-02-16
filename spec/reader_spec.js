@@ -45,4 +45,19 @@ describe('bms.Reader', function() {
 
   })
 
+  describe('asynchronous detection', function() {
+
+    it('should work', function(done) {
+      var x = false
+      Reader.readAsync(fixture('en'), function(err, result) {
+        expect(err).to.be.null()
+        expect(result).to.match(/Hello/)
+        x = true
+        done()
+      })
+      expect(x).to.be.false()
+    })
+
+  })
+
 })
