@@ -1,13 +1,9 @@
 
-import $ from 'jquery'
+import View from 'bemuse/view!./view.jade'
+import './style.scss'
 
-export class LoadingScene {
-  constructor() {
-    this.element = $('<div><h1>Loading</h1></div>')[0]
-  }
-  attached() {
-    console.log('DOM attached!')
+export default function LoadingScene() {
+  return function(container) {
+    new View({ el: container })
   }
 }
-
-export default LoadingScene

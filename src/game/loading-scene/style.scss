@@ -1,0 +1,69 @@
+.loading-scene {
+
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+
+  overflow: hidden;
+
+  background: url(~assets/bg/a.jpg) center no-repeat;
+  background-size: cover;
+
+  .loading-scene-song-info {
+    position: absolute;
+    top: 40%; left: 0; right: 0;
+    transform: translateY(-50%);
+  }
+
+  .loading-scene-progress {
+    position: absolute;
+    bottom: 10px; left: 10px;
+  }
+
+}
+
+.loading-scene-song-info {
+
+  background: rgba(#fff, 0.96);
+  color: #191817;
+  text-align: center;
+  padding: 25px 0px;
+  box-shadow: 0 2px 18px rgba(#000, 0.2);
+
+  &--genre {
+    font-size: 3vh;
+  }
+  &--title {
+    font-size: 6vh;
+    font-weight: bold;
+  }
+  &--artist {
+    font-size: 4vh;
+  }
+
+}
+
+.loading-scene-progress {
+  color: #333;
+  font-size: 11px;
+  .loading-scene-progress-bar {
+    display: inline-block;
+    vertical-align: middle;
+    width: 48px;
+    margin-right: 4px;
+    position: relative;
+    top: -1px;
+  }
+}
+
+
+.loading-scene-progress-bar {
+  border: 1px solid rgba(#000, 0.6);
+  padding: 1px;
+  &--bar {
+    height: 8px;
+    background: rgba(#000, 0.6);
+    width: 0%;
+  }
+}
+
+

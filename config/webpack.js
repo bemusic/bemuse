@@ -9,6 +9,12 @@ let config = {
   resolve: {
     alias: {
       bemuse: path('src'),
+      assets: path('assets'),
+    },
+  },
+  resolveLoader: {
+    alias: {
+      bemuse: path('src'),
     },
   },
   entry: {
@@ -52,6 +58,14 @@ let config = {
       {
         test: /\.jade/,
         loader: 'jade',
+      },
+      {
+        test: /\.png$/,
+        loader: 'url-loader?limit=100000&mimetype=image/png',
+      },
+      {
+        test: /\.jpg$/,
+        loader: 'file-loader',
       },
     ],
     postLoaders: [],

@@ -7,15 +7,14 @@ export class SceneManager {
   }
   display(scene) {
     return co(function*() {
-      if (this.currentScene) {
-        yield Promise.resolve(this.currentScene.exit())
+      if (this.exit) {
+        yield Promise.resolve(this.exit())
         detach(this.currentElement)
-        yield Promise.resolve(this.currentScene.detached())
       }
-      this.currentScene = scene
-      this.currentElement = scene.element
-      document.body.appendChild(this.currentElement)
-      yield Promise.resolve(this.currentScene.attached())
+      var element = document.createElement('div')
+      element.className = 'scene'
+      document.body.appendChild(element)
+      this.exit = scene(element)
     })
   }
 }
