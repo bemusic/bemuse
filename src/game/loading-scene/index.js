@@ -7,8 +7,9 @@ export default function LoadingScene({ loader, song }) {
     return {
       song,
       items: loader.tasks.map(task => ({
-        text: task.text + (task.current && task.total ?
-                ` (${task.current} / ${task.total})` : ''),
+        text: task.text,
+        progress: (task.current && task.total ?
+                    ` (${task.current} / ${task.total})` : ''),
         width: Math.round((task.progress * 100) || 0) + '%',
       })),
     }
