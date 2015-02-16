@@ -31,7 +31,11 @@ export function load(xmlPath, task) {
     log('loading resources')
     let loaded  = 1
     let total   = 1 + images.length
-    let update  = () => notify({ progress: loaded / total })
+    let update  = () => notify({
+                    progress: loaded / total,
+                    current:  loaded + '',
+                    total:    total + ' resources',
+                  })
     update()
     yield loadResources(resources, () => { loaded += 1; update() })
 
