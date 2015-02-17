@@ -13,7 +13,7 @@ export default class Payload {
     return result
   }
   get hash() {
-    let hash = createHash('sha1')
+    let hash = createHash('md5')
     for (let buffer of this.buffers) {
       hash.update(buffer)
     }
