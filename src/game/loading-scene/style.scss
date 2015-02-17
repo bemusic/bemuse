@@ -23,6 +23,15 @@
     bottom: 10px; left: 10px;
   }
 
+  &--flash {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0; opacity: 0;
+    pointer-events: none;
+
+    background: white;
+    animation: loading-scene--flash-animation 0.8s ease-out;
+  }
+
   &--cover {
     position: absolute;
     top: 0; right: 0; bottom: 0; left: 0; opacity: 0;
@@ -34,6 +43,9 @@
   .scene.is-exiting & {
     &--info {
       animation: loading-scene--info-exit 0.3s linear;
+    }
+    &--flash {
+      animation: loading-scene--flash-exit 0.3s ease;
     }
     &--cover {
       animation: loading-scene--cover-exit 0.3s linear;
@@ -56,6 +68,16 @@
 @keyframes loading-scene--cover-exit {
   0%    { opacity: 0; }
   100%  { opacity: 1; }
+}
+
+@keyframes loading-scene--flash-animation {
+  0%    { opacity: 1; }
+  100%  { opacity: 0; }
+}
+
+@keyframes loading-scene--flash-exit {
+  0%    { opacity: 0.5; }
+  100%  { opacity: 0; }
 }
 
 .loading-scene-song-info {

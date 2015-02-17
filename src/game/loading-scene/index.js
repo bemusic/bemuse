@@ -17,7 +17,6 @@ export default function LoadingScene({ loader, song }) {
   return function(container) {
     let data = getData()
     let view = new View({ el: container, data })
-    loader.on('progress', () => { console.log('progress') })
     loader.on('progress', () => view.set(getData()))
     return function() {
       container.classList.add('is-exiting')

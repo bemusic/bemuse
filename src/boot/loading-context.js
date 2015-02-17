@@ -1,5 +1,18 @@
 
+import bytes from 'bytes'
+
 export class LoadingContext {
+  constructor(task) {
+    if (task) {
+      this.onprogress = (loaded, total) => {
+        task.update({
+          current:  bytes(loaded),
+          total:    bytes(total),
+          progress: loaded / total,
+        })
+      }
+    }
+  }
   load(script, head) {
     let src = script.src
     let xh = new XMLHttpRequest()

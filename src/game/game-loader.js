@@ -1,6 +1,5 @@
 
 import co from 'co'
-import bytes from 'bytes'
 import { basename } from 'path'
 import BMS from 'bms'
 
@@ -16,29 +15,41 @@ export class GameLoader extends EventEmitter {
   }
   load(bms) {
     return co(function*() {
-      let tasks = {
-        engine: this._task('Loading game engine'),
-        skin:   this._task('Loading skin'),
-        bms:    this._task('Loading ' + basename(bms)),
-      }
       let promises = {
-        graphics: co(function*() {
-          let Scintillator  = yield loadEngine(tasks.engine)
-          let skin          = yield Scintillator.load('/skins/default/skin.xml',
-                                      tasks.skin)
-          let context       = new Scintillator.Context(skin)
-          return { skin, context }
-        }.bind(this)),
-        song: co(function*() {
-          let buffer = yield download(bms).as('arraybuffer', tasks.bms)
-          let source = yield readBMS(buffer)
-          let compileResult = BMS.Compiler.compile(source)
-          let chart = compileResult.chart
-          let songInfo = BMS.SongInfo.fromBMSChart(chart)
-          void songInfo
-        }.bind(this)),
+        graphics: this._loadEngine(),
+        song:     this._loadSong(bms),
       }
       yield Promise.all([promises.graphics, promises.song])
+    }.bind(this))
+  }
+  _loadEngine() {
+    let tasks = {
+      engine: this._task('Loading game engine'),
+      skin:   this._task('Loading skin'),
+    }
+    return co(function*() {
+      let Scintillator  = yield loadEngineModule(tasks.engine)
+      let skin          = yield Scintillator.load('/skins/default/skin.xml',
+                                  tasks.skin)
+      let context       = new Scintillator.Context(skin)
+      return { skin, context }
+    }.bind(this))
+  }
+  _loadSong(bms) {
+    let tasks = {
+      bms:    this._task('Loading ' + basename(bms)),
+      pack:   this._task('Loading song package'),
+      audio:  this._task('Loading audio'),
+      bga:    this._task('Loading BGA'),
+      decode: this._task('Decoding audio'),
+    }
+    return co(function*() {
+      let buffer = yield download(bms).as('arraybuffer', tasks.bms)
+      let source = yield readBMS(buffer)
+      let compileResult = BMS.Compiler.compile(source)
+      let chart = compileResult.chart
+      let songInfo = BMS.SongInfo.fromBMSChart(chart)
+      void songInfo
     }.bind(this))
   }
   _task(text) {
@@ -49,16 +60,9 @@ export class GameLoader extends EventEmitter {
   }
 }
 
-function loadEngine(task) {
+function loadEngineModule(task) {
   return new Promise((resolve) => {
-    let context = new LoadingContext()
-    context.onprogress = function(loaded, total) {
-      task.update({
-        current:  bytes(loaded),
-        total:    bytes(total),
-        progress: loaded / total,
-      })
-    }
+    let context = new LoadingContext(task)
     context.use(function() {
       require.ensure(
         ['bemuse/scintillator'],
