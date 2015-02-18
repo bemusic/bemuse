@@ -12,10 +12,15 @@ var files = {
   sources: [
     '*.js',
     'bms/*.js',
-    'reader/*.js',
     'compiler/*.js',
+    'keysounds/*.js',
+    'notes/*.js',
+    'reader/*.js',
+    'song-info/*.js',
     'speedcore/*.js',
+    'time-signatures/*.js',
     'timing/*.js',
+    'util/*.js',
   ],
   get features() {
     var home = process.env.BMSPEC_HOME

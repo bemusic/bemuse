@@ -14,6 +14,19 @@ function BMSHeaders() {
 }
 
 /**
+ * Invokes a function at each header.
+ *
+ * @method each
+ * @param  {Function} callback function to be invoked
+ * @return {BMSHeaders} self
+ */
+BMSHeaders.prototype.each = function(callback) {
+  for (var i in this._data) {
+    callback(i, this._data[i])
+  }
+}
+
+/**
  * Retrieves the header.
  *
  * @method get

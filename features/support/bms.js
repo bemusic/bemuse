@@ -1,10 +1,11 @@
 
 var bms = require('../..')
 
-var Compiler = bms.Compiler
-var Timing   = bms.Timing
-var Notes    = bms.Notes
-var SongInfo = bms.SongInfo
+var Compiler  = bms.Compiler
+var Timing    = bms.Timing
+var Notes     = bms.Notes
+var SongInfo  = bms.SongInfo
+var Keysounds = bms.Keysounds
 
 module.exports = function() {
 
@@ -42,6 +43,10 @@ module.exports = function() {
 
   World.prop('songInfo', function() {
     return SongInfo.fromBMSChart(this.chart)
+  })
+
+  World.prop('keysounds', function() {
+    return Keysounds.fromBMSChart(this.chart)
   })
 
 }
