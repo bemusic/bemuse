@@ -5,6 +5,7 @@ import co         from 'co'
 import fs         from 'fs'
 import { join }   from 'path'
 
+import bmp2png          from './bmp2png'
 import AudioConvertor   from './audio'
 import Directory        from './directory'
 import BemusePacker     from './bemuse-packer'
@@ -41,12 +42,19 @@ function packIntoBemuse(path) {
     console.log('-> Loading movies')
     let webms     = yield directory.files('*.webm')
 
+    console.log('-> Loading and converting images')
+    let imgs      = [].concat(
+      yield directory.files('*.{jpg,png}'),
+      yield dotMap(directory.files('*.bmp'), bmp2png)
+    )
+
     console.log('-> Converting audio to mp3')
     let mp3c      = new AudioConvertor('mp3')
     let mp3s      = yield dotMap(audio, file => mp3c.convert(file))
 
     packer.pack('mp3',  mp3s)
-    packer.pack('webm', webms)
+    packer.pack('bga',  imgs)
+    packer.pack('bgv',  webms)
 
     console.log('-> Writing...')
     let out = join(path, 'assets')

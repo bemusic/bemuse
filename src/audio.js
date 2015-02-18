@@ -36,7 +36,7 @@ export class AudioConvertor {
           }
         }))
       })
-      sox.on('close', function(code) {
+      sox.on('close', (code) => {
         if (code === 0) {
           resolve(data)
         } else {
