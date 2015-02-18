@@ -39,11 +39,14 @@ export class GameLoader extends EventEmitter {
     let { bms, assets } = song
     let tasks = {
       bms:    this._task('Loading ' + bms.name),
-      pack:   this._task('Loading song package'),
+      cpack:  this._task('Loading package'),
+      pack:   this._task('Loading song packages'),
       audio:  this._task('Loading audio'),
       bga:    this._task('Loading BGA'),
       decode: this._task('Decoding audio'),
     }
+    assets.task = tasks.pack
+    assets.currentPackageTask = tasks.cpack
     return co(function*() {
       let buffer        = yield bms.read(tasks.bms)
       let source        = yield readBMS(buffer)

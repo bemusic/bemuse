@@ -45,12 +45,16 @@ function ProgressNotifier(total, load, decode) {
   return {
     loaded: function(name) {
       a += 1
-      load.update({ current: a, total, progress: a / total })
+      if (load) {
+        load.update({ current: a, total, progress: a / total })
+      }
       void name
     },
     decoded: function(name) {
       b += 1
-      decode.update({ text: 'Decoded ' + name, progress: b / total })
+      if (decode) {
+        decode.update({ text: 'Decoded ' + name, progress: b / total })
+      }
     },
   }
 }
