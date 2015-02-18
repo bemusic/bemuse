@@ -1,10 +1,11 @@
 
 import readBlob from '../read-blob'
+import defaultAudioContext from 'audio-context'
 
 export class SamplingMaster {
 
   constructor(audioContext) {
-    this._audioContext = audioContext
+    this._audioContext = audioContext || defaultAudioContext
     this._samples = []
     this._instances = new Set()
   }
@@ -58,8 +59,8 @@ export class SamplingMaster {
         function decodeAudioDataSuccess(audioBuffer) {
           resolve(audioBuffer)
         },
-        function decodeAudioDataFailure(err) {
-          reject(err)
+        function decodeAudioDataFailure(e) {
+          reject('Unable to decode audio: ' + e)
         }
       )
     })

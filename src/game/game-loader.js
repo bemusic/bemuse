@@ -1,23 +1,23 @@
 
 import co from 'co'
-import { basename } from 'path'
 import BMS from 'bms'
 
 import { EventEmitter } from 'events'
 import TaskList         from 'bemuse/task-list'
 import LoadingContext   from 'bemuse/boot/loading-context'
-import download         from 'bemuse/download'
+
+import AudioLoader      from './audio-loader'
 
 export class GameLoader extends EventEmitter {
   constructor() {
     this._tasks = new TaskList()
     this._tasks.on('progress', () => this.emit('progress'))
   }
-  load(bms) {
+  load(song) {
     return co(function*() {
       let promises = {
         graphics: this._loadEngine(),
-        song:     this._loadSong(bms),
+        song:     this._loadSong(song),
       }
       yield Promise.all([promises.graphics, promises.song])
     }.bind(this))
@@ -35,21 +35,26 @@ export class GameLoader extends EventEmitter {
       return { skin, context }
     }.bind(this))
   }
-  _loadSong(bms) {
+  _loadSong(song) {
+    let { bms, assets } = song
     let tasks = {
-      bms:    this._task('Loading ' + basename(bms)),
+      bms:    this._task('Loading ' + bms.name),
       pack:   this._task('Loading song package'),
       audio:  this._task('Loading audio'),
       bga:    this._task('Loading BGA'),
       decode: this._task('Decoding audio'),
     }
     return co(function*() {
-      let buffer = yield download(bms).as('arraybuffer', tasks.bms)
-      let source = yield readBMS(buffer)
+      let buffer        = yield bms.read(tasks.bms)
+      let source        = yield readBMS(buffer)
       let compileResult = BMS.Compiler.compile(source)
-      let chart = compileResult.chart
-      let songInfo = BMS.SongInfo.fromBMSChart(chart)
-      void songInfo
+      let chart         = compileResult.chart
+      let keysounds     = BMS.Keysounds.fromBMSChart(chart)
+      let audioLoader   = new AudioLoader(assets)
+      audioLoader.audioTask   = tasks.audio
+      audioLoader.decodeTask  = tasks.decode
+      let audio         = yield audioLoader.loadFrom(keysounds)
+      console.log(audio)
     }.bind(this))
   }
   _task(text) {
