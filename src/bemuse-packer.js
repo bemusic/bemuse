@@ -1,112 +1,81 @@
 
-import gutil                 from 'gulp-util'
-import { basename }          from 'path'
-import MIME                  from 'mime'
-import { createHash }        from 'crypto'
-import { createWriteStream } from 'fs'
-import bytes                 from 'bytes'
+import Promise                from 'bluebird'
+import co                     from 'co'
+import { join }               from 'path'
+import { createWriteStream }  from 'fs'
+import fs                     from 'fs'
+import Payload                from './payload'
 
-import Payload      from './payload'
+let writeFile = Promise.promisify(fs.writeFile, fs)
 
-MIME.define({
-  'application/vnd.be-music-source': ['bms', 'bme', 'bml', 'pms']
-})
-
-const MAX_PACKAGE_SIZE = 1474560
-
-class Ref {
-  constructor(number, path) {
-    this.number  = number
-    this.payload = new Payload()
-    this.number  = number
-    this.path    = path
+export class BemusePacker {
+  constructor() {
+    this._refs  = []
   }
-  add(buffer) {
-    return this.payload.add(buffer)
-  }
-  toJSON() {
-    let out = {
-      size: this.payload.size,
-      hash: this.payload.hash,
-    }
-    if (this.number > 0) {
-      out.path = basename(this.path)
-    }
-    return out
-  }
-  write(metadataBuffer) {
-    let file = createWriteStream(this.path)
-    let size = new Buffer(4)
-    size.writeUInt32LE(metadataBuffer.length, 0)
-
-    file.write(new Buffer('BEMUSEPACK'))
-    file.write(size)
-    file.write(metadataBuffer)
-    for (let buffer of this.payload.buffers) {
-      file.write(buffer)
-    }
-
-    return Promise.promisify(file.end.bind(file))()
-      .tap(() => gutil.log(`[BemusePack ${this.path}]`,
-                    `payload: ${bytes(this.payload.size)}`))
-  }
-}
-
-export default class BemusePacker {
-  constructor(out) {
-    this._out    = out
-    this._files  = [ ]
-    this._refs   = [new Ref(0, out + '.bemuse')]
-    this._refMap = { }
-  }
-  add(file) {
-    if (!(file.contents instanceof Buffer)) {
-      throw new gutil.PluginError('BemusePack',
-                  'require file.contents to be a buffer')
-    }
-    let entry = {
-      name: file.relative,
-      type: MIME.lookup(file.path),
-      size: file.contents.length,
-      hash: createHash('sha1').update(file.contents).digest('hex'),
-      refs: this._makeContentRefs(file.contents, file.assetType)
-    }
-    this._files.push(entry)
-    // this.log(entry.refs, '<<', entry.name)
-  }
-  write(songMetadata) {
-    let metadata = this._generateMetadata(songMetadata)
-    let promises = this._refs.map(ref => {
-      if (ref.number === 0) {
-        return ref.write(new Buffer(JSON.stringify(metadata)))
-      } else {
-        return ref.write(new Buffer(0))
+  pack(name, files) {
+    let max   = 1474560
+    let cur   = null
+    files = files.slice()
+    files.sort((a, b) => b.size - a.size)
+    for (let file of files) {
+      if (cur === null || (cur.size > 0 && cur.size + file.size > max)) {
+        cur = this.ref(name)
       }
-    })
-    return Promise.all(promises)
-  }
-  log(...args) {
-    gutil.log('[BemusePacker]', ...args)
-  }
-  _makeContentRefs(buffer, assetType) {
-    let ref = this._refMap[assetType]
-    if (!ref || ref.payload.size >= MAX_PACKAGE_SIZE) {
-      ref = this._refMap[assetType] = this._createRef(assetType)
+      cur.add(file)
     }
-    return [
-      [ref.number, ...ref.add(buffer)]
-    ]
   }
-  _createRef(type) {
-    let path = `${this._out}_${type}${this._refs.length}.bemuse`
-    let ref = new Ref(this._refs.length, path)
+  ref(name) {
+    let ref = new Ref(name, this._refs.length)
     this._refs.push(ref)
     return ref
   }
-  _generateMetadata(songMetadata) {
-    let files = this._files
-    let refs  = this._refs.map(ref => ref.toJSON())
-    return { version: 2, refs, files, song: songMetadata }
+  write(folder) {
+    return co(function*() {
+      let files = []
+      let refs = []
+      for (let ref of this._refs) {
+        let payload = new Payload()
+        for (let file of ref.files) {
+          let [start, end] = payload.add(file.buffer)
+          files.push({ name: file.name, ref: [ref.index, start, end] })
+        }
+        let hash = payload.hash
+        let out   = ref.name + '.' + ref.index + '.' +
+                    hash.substr(0, 8) + '.bemuse'
+        refs.push({ path: out, hash: hash })
+        yield this._writeBin(join(folder, out), new Buffer(0), payload)
+        console.log(`Written ${out}`)
+      }
+      let metadata = { files, refs }
+      yield writeFile(join(folder, 'metadata.json'), JSON.stringify(metadata))
+      console.log(`Written metadata.json`)
+    }.bind(this))
+  }
+  _writeBin(path, metadataBuffer, payload) {
+    let file = createWriteStream(path)
+    let size = new Buffer(4)
+    size.writeUInt32LE(metadataBuffer.length, 0)
+    file.write(new Buffer('BEMUSEPACK'))
+    file.write(size)
+    file.write(metadataBuffer)
+    for (let buffer of payload.buffers) {
+      file.write(buffer)
+    }
+    return Promise.promisify(file.end.bind(file))()
   }
 }
 
+export class Ref {
+  constructor(name, index) {
+    this.name = name
+    this.index = index
+    this.size = 0
+    this.files = []
+  }
+  add(file) {
+    this.files.push(file)
+    this.size += file.size
+  }
+}
+
+export default BemusePacker

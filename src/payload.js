@@ -1,7 +1,7 @@
 
 import { createHash } from 'crypto'
 
-export default class Payload {
+export class Payload {
   constructor() {
     this.buffers = []
     this.size = 0
@@ -20,3 +20,5 @@ export default class Payload {
     return hash.digest('hex')
   }
 }
+
+export default Payload
