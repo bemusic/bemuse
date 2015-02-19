@@ -106,7 +106,7 @@ class PlayInstance {
     gain.connect(node || context.destination)
     this._source = source
     this._gain = gain
-    source.start(delay === 0 ? 0 : Math.max(0, context.currentTime + delay))
+    source.start(!delay ? 0 : Math.max(0, context.currentTime + delay))
     setTimeout(() => this.stop(), (delay + buffer.duration + 0.01) * 1000)
     this._master._startPlaying(this)
   }
