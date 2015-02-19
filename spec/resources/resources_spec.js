@@ -25,6 +25,17 @@ describe('BemusePackageResources', function() {
         .then(buffer => buffer.byteLength)).to.eventually.eq(30093)
     })
 
+    it('data is correct', function() {
+      return resources.file('mi.mp3')
+        .then(file => file.read())
+        .then(buffer => new Uint8Array(buffer))
+        .then(array => {
+          console.log(array)
+          expect([array[0], array[1], array[2]]).to.deep.equal(
+            [0xff, 0xfb, 0x90])
+        })
+    })
+
   })
 
 })

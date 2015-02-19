@@ -1,9 +1,7 @@
 
-import bytes from 'bytes'
-
 export function download(url) {
   return {
-    as(type, task) {
+    as(type, progress) {
       return new Promise((resolve, reject) => {
         var xh = new XMLHttpRequest()
         xh.open('GET', url, true)
@@ -16,13 +14,7 @@ export function download(url) {
           }
         }
         xh.onerror = () => reject(new Error(`Unable to download ${url}`))
-        xh.onprogress = (e) => {
-          if (e.total && task) task.update({
-            progress: e.loaded / e.total,
-            current:  bytes(e.loaded),
-            total:    bytes(e.total),
-          })
-        }
+        if (progress) xh.onprogress = e => progress.report(e.loaded, e.total)
         xh.send(null)
       })
     }

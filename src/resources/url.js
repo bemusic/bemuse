@@ -6,8 +6,8 @@ export class URLResource {
   constructor(url) {
     this._url = url
   }
-  read(task) {
-    return download(this._url).as('arraybuffer', task)
+  read(progress) {
+    return download(this._url).as('arraybuffer', progress)
   }
   get name() {
     return basename(this._url)

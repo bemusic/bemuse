@@ -6,14 +6,13 @@ import $ from 'jquery'
 import url from 'url'
 import co from 'co'
 import PIXI from 'pixi.js'
+import * as ProgressUtils from 'bemuse/progress/utils'
 
 import Resources from './resources'
 import Compiler from './compiler'
 
-export function load(xmlPath, task) {
+export function load(xmlPath, progress) {
   return co(function*() {
-
-    let notify = task ? o => task.update(o) : () => {}
 
     log('load XML from %s', xmlPath)
     let $xml = yield loadXml(xmlPath)
@@ -28,16 +27,9 @@ export function load(xmlPath, task) {
     }
 
     // load all images + progress reporting
-    log('loading resources')
-    let loaded  = 1
-    let total   = 1 + images.length
-    let update  = () => notify({
-                    progress: loaded / total,
-                    current:  loaded + '',
-                    total:    total + ' resources',
-                  })
-    update()
-    yield loadResources(resources, () => { loaded += 1; update() })
+    let onload = ProgressUtils.fixed(1 + images.length, progress)
+    onload()
+    yield loadResources(resources, onload)
 
     // compile the skin
     log('compiling')

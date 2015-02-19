@@ -2,16 +2,31 @@
 import co from 'co'
 import BMS from 'bms'
 
+import Progress           from 'bemuse/progress'
+import * as ProgressUtils from 'bemuse/progress/utils'
+
 import { EventEmitter } from 'events'
-import TaskList         from 'bemuse/task-list'
 import LoadingContext   from 'bemuse/boot/loading-context'
 
 import AudioLoader      from './audio-loader'
+import bytes            from 'bytes'
+
+let Formatters = {
+  NORMAL: progress =>
+            progress.total ? `${progress.current} / ${progress.total}` : '',
+  EXTRA:  progress =>
+            progress.extra,
+  BYTES:  progress =>
+            progress.total ?
+              `${bytes(progress.current)} / ${bytes(progress.total)}` : '',
+}
 
 export class GameLoader extends EventEmitter {
   constructor() {
-    this._tasks = new TaskList()
-    this._tasks.on('progress', () => this.emit('progress'))
+    this._tasks = []
+  }
+  get tasks() {
+    return this._tasks
   }
   load(song) {
     return co(function*() {
@@ -23,61 +38,69 @@ export class GameLoader extends EventEmitter {
     }.bind(this))
   }
   _loadEngine() {
-    let tasks = {
-      engine: this._task('Loading game engine'),
+    let progress = {
+      engine: this._task('Loading game engine',     Formatters.BYTES),
       skin:   this._task('Loading skin'),
     }
     return co(function*() {
-      let Scintillator  = yield loadEngineModule(tasks.engine)
+      let Scintillator  = yield loadEngineModule(progress.engine)
       let skin          = yield Scintillator.load('/skins/default/skin.xml',
-                                  tasks.skin)
+                                  progress.skin)
       let context       = new Scintillator.Context(skin)
       return { skin, context }
     }.bind(this))
   }
   _loadSong(song) {
     let { bms, assets } = song
-    let tasks = {
-      bms:    this._task('Loading ' + bms.name),
-      cpack:  this._task('Loading package'),
+    let progress = {
+      bms:    this._task('Loading ' + bms.name,     Formatters.BYTES),
+      cpack:  this._task('Loading package',         Formatters.BYTES),
       pack:   this._task('Loading song packages'),
       audio:  this._task('Loading audio'),
       bga:    this._task('Loading BGA'),
-      decode: this._task('Decoding audio'),
+      decode: this._task('Decoding audio',          Formatters.EXTRA),
     }
-    assets.task = tasks.pack
-    assets.currentPackageTask = tasks.cpack
+    if (assets.progress) {
+      if (assets.progress.current) {
+        ProgressUtils.bind(assets.progress.current, progress.cpack)
+      }
+      if (assets.progress.all) {
+        ProgressUtils.bind(assets.progress.all, progress.pack)
+      }
+    }
     return co(function*() {
-      let buffer        = yield bms.read(tasks.bms)
+      let buffer        = yield bms.read(progress.bms)
       let source        = yield readBMS(buffer)
       let compileResult = BMS.Compiler.compile(source)
       let chart         = compileResult.chart
       let keysounds     = BMS.Keysounds.fromBMSChart(chart)
       let audioLoader   = new AudioLoader(assets)
-      audioLoader.audioTask   = tasks.audio
-      audioLoader.decodeTask  = tasks.decode
-      let audio         = yield audioLoader.loadFrom(keysounds)
+      let audio         = yield audioLoader.loadFrom(keysounds,
+                            progress.audio, progress.decode)
       console.log(audio)
     }.bind(this))
   }
-  _task(text) {
-    return this._tasks.task(text)
-  }
-  get tasks() {
-    return this._tasks
+  _task(text, formatter) {
+    formatter = formatter || Formatters.NORMAL
+    let progress = new Progress()
+    let task = { text: text, progress: null, progressText: '' }
+    this._tasks.push(task)
+    progress.watch(() => {
+      task.progressText = formatter(progress)
+      task.progress     = progress.progress
+      this.emit('progress')
+    })
+    return progress
   }
 }
 
-function loadEngineModule(task) {
+function loadEngineModule(progress) {
   return new Promise((resolve) => {
-    let context = new LoadingContext(task)
+    let context = new LoadingContext(progress)
     context.use(function() {
       require.ensure(
         ['bemuse/scintillator'],
-        function(require) {
-          task.update({ progress: 1 })
-          resolve(require('bemuse/scintillator'))
-        },
+        (require) => resolve(require('bemuse/scintillator')),
         'gameEngine'
       )
     })

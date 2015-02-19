@@ -6,11 +6,10 @@ export default function LoadingScene({ loader, song }) {
   function getData() {
     return {
       song,
-      items: loader.tasks.map(task => ({
-        text: task.text,
-        progress: (task.current && task.total ?
-                    ` (${task.current} / ${task.total})` : ''),
-        width: Math.round((task.progress * 100) || 0) + '%',
+      items: loader.tasks.map(({ text, progressText, progress }) => ({
+        text:     text,
+        progress: progressText ? ` (${progressText})` : '',
+        width:    Math.round((progress * 100) || 0) + '%',
       })),
     }
   }
