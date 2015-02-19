@@ -1,5 +1,8 @@
 
 export class LoadingContext {
+  constructor(progress) {
+    this._progress = progress
+  }
   load(script, head) {
     let src = script.src
     let xh = new XMLHttpRequest()
@@ -7,7 +10,7 @@ export class LoadingContext {
     xh.responseType = 'blob'
     xh.onprogress = (e) => {
       if (e.total && e.lengthComputable) {
-        this.onprogress(e.loaded, e.total)
+        this._progress.report(e.loaded, e.total)
       }
     }
     xh.onload = () => {
@@ -18,8 +21,6 @@ export class LoadingContext {
       head.appendChild(script)
     }
     xh.send(null)
-  }
-  onprogress() {
   }
   use(callback) {
     let old = window.WebpackLoadingContext

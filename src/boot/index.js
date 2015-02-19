@@ -6,6 +6,7 @@
 //
 
 import querystring      from 'querystring'
+import Progress         from 'bemuse/progress'
 
 import loadModule       from 'val!./loader.js'
 
@@ -25,11 +26,9 @@ let mode = data.mode || 'comingSoon'
 
 /* istanbul ignore else - we can check that by functional tests */
 if (loadModule[mode]) {
-  let context = new LoadingContext()
-  boot.setProgress(null)
-  context.onprogress = function(loaded, total) {
-    boot.setProgress(loaded / total)
-  }
+  let progress = new Progress()
+  let context = new LoadingContext(progress)
+  progress.watch(() => boot.setProgress(progress.progress))
   context.use(function() {
     loadModule[mode](function(loadedModule) {
       boot.hide()

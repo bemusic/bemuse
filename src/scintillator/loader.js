@@ -6,25 +6,32 @@ import $ from 'jquery'
 import url from 'url'
 import co from 'co'
 import PIXI from 'pixi.js'
+import * as ProgressUtils from 'bemuse/progress/utils'
 
 import Resources from './resources'
 import Compiler from './compiler'
 
-export function load(xmlPath) {
+export function load(xmlPath, progress) {
   return co(function*() {
 
     log('load XML from %s', xmlPath)
     let $xml = yield loadXml(xmlPath)
 
-    log('loading resources')
+    // scan all images
     let resources = new Resources()
-    for (let image of Array.from($xml.children('image'))) {
+    let images = Array.from($xml.children('image'))
+    for (let image of images) {
       let src = $(image).attr('src')
       let imageUrl = url.resolve(xmlPath, src)
       resources.add(src, imageUrl)
     }
-    yield loadResources(resources)
 
+    // load all images + progress reporting
+    let onload = ProgressUtils.fixed(1 + images.length, progress)
+    onload()
+    yield loadResources(resources, onload)
+
+    // compile the skin
     log('compiling')
     let skin = new Compiler({ resources }).compile($xml)
 
@@ -38,7 +45,7 @@ function loadXml(url) {
     .then(xml => $(xml.documentElement))
 }
 
-function loadResources(resources) {
+function loadResources(resources, onprogress) {
   log('loading resources')
   return new Promise(function(resolve) {
     if (resources.urls.length === 0) return resolve()
@@ -47,6 +54,7 @@ function loadResources(resources) {
       log('resources finished loading')
       resolve()
     })
+    if (onprogress) loader.on('onProgress', onprogress)
     loader.load()
   })
 }

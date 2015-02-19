@@ -1,0 +1,24 @@
+mixin section(name)
+  != '{{#' + name + '}}'
+  block
+  != '{{/' + name + '}}'
+
+.loading-scene
+  .loading-scene--info
+    .loading-scene-song-info
+      .loading-scene-song-info--genre {{song.genre}}
+      .loading-scene-song-info--title {{song.title}}
+      +section('song.subtitles')
+        .loading-scene-song-info--subtitle {{.}}
+      .loading-scene-song-info--artist {{song.artist}}
+      +section('song.subartists')
+        .loading-scene-song-info--subartist {{.}}
+  .loading-scene-progress
+    +section('items')
+      .loading-scene-progress--item
+        .loading-scene-progress-bar
+          .loading-scene-progress-bar--bar(style='width:{{width}}')
+        | {{text}}
+        span.loading-scene-progress-bar--progress {{progress}}
+  .loading-scene--flash
+  .loading-scene--cover

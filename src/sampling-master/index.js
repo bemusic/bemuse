@@ -1,10 +1,11 @@
 
 import readBlob from '../read-blob'
+import defaultAudioContext from 'audio-context'
 
 export class SamplingMaster {
 
   constructor(audioContext) {
-    this._audioContext = audioContext
+    this._audioContext = audioContext || defaultAudioContext
     this._samples = []
     this._instances = new Set()
   }
@@ -58,8 +59,8 @@ export class SamplingMaster {
         function decodeAudioDataSuccess(audioBuffer) {
           resolve(audioBuffer)
         },
-        function decodeAudioDataFailure(err) {
-          reject(err)
+        function decodeAudioDataFailure(e) {
+          reject('Unable to decode audio: ' + e)
         }
       )
     })
@@ -105,7 +106,7 @@ class PlayInstance {
     gain.connect(node || context.destination)
     this._source = source
     this._gain = gain
-    source.start(delay === 0 ? 0 : Math.max(0, context.currentTime + delay))
+    source.start(!delay ? 0 : Math.max(0, context.currentTime + delay))
     setTimeout(() => this.stop(), (delay + buffer.duration + 0.01) * 1000)
     this._master._startPlaying(this)
   }

@@ -9,6 +9,12 @@ let config = {
   resolve: {
     alias: {
       bemuse: path('src'),
+      assets: path('assets'),
+    },
+  },
+  resolveLoader: {
+    alias: {
+      bemuse: path('src'),
     },
   },
   entry: {
@@ -29,11 +35,8 @@ let config = {
   module: {
     loaders: [
       {
-        test: /[\\\/]src[\\\/].*\.js$/,
-        loader: '6to5?modules=common&experimental=true',
-      },
-      {
-        test: /[\\\/]spec[\\\/].*\.js$/,
+        test: /\.js$/,
+        include: [path('src'), path('spec')],
         loader: '6to5?modules=common&experimental=true',
       },
       {
@@ -53,6 +56,14 @@ let config = {
         test: /\.jade/,
         loader: 'jade',
       },
+      {
+        test: /\.png$/,
+        loader: 'url-loader?limit=100000&mimetype=image/png',
+      },
+      {
+        test: /\.jpg$/,
+        loader: 'file-loader',
+      },
     ],
     postLoaders: [],
   },
@@ -63,8 +74,13 @@ let config = {
 
 if (NODE_ENV === 'test' || process.env.COV === 'true') {
   config.module.postLoaders.push({
-    test: /\/src\/.*\.js$/,
-    exclude: /\/src\/test\/.*\.js$|\/src\/boot\/loader\.js$/,
+    test: /\.js$/,
+    include: [path('src')],
+    exclude: [
+      path('src', 'test'),
+      path('src', 'polyfill'),
+      path('src', 'boot', 'loader.js'),
+    ],
     loader: 'istanbul-instrumenter',
   })
 }
