@@ -115,7 +115,7 @@ BMSNoteBuilder.prototype._handleLongNote = function(object) {
     this._activeLN[channel] = {
       beat: beat,
       keysound: object.value,
-      column: this._getColumn(object.channel),
+      column: this._getColumn(channel),
     }
   }
 }
