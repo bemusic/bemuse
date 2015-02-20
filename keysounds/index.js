@@ -13,6 +13,10 @@ Keysounds.prototype.files = function() {
   return _.uniq(_.values(this._map))
 }
 
+Keysounds.prototype.all = function() {
+  return this._map
+}
+
 Keysounds.fromBMSChart = function(chart) {
   var map = {}
   chart.headers.each(function(name, value) {

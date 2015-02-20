@@ -13,5 +13,19 @@ describe('Keysounds', function() {
     })
   })
 
+  describe('#all', function() {
+    it('should return the keysound map', function() {
+      expect(new Keysounds({
+        'AA': 'a.wav',
+        'BB': 'a.ogg',
+        'CC': 'a.wav',
+      }).all()).to.deep.equal({
+        'AA': 'a.wav',
+        'BB': 'a.ogg',
+        'CC': 'a.wav',
+      })
+    })
+  })
+
 })
 
