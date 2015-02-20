@@ -81,7 +81,7 @@ if (NODE_ENV === 'test' || process.env.COV === 'true') {
       path('src', 'polyfill'),
       path('src', 'boot', 'loader.js'),
     ],
-    loader: 'istanbul-instrumenter',
+    loader: 'istanbul-instrumenter!bemuse/webpack-istanbul-babel-skipper',
   })
 }
 
