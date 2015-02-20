@@ -1,5 +1,5 @@
 
-import '6to5/polyfill'
+import 'babel-core/polyfill'
 import debug    from 'debug'
 import Bluebird from 'bluebird'
 
