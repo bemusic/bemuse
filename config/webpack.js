@@ -37,7 +37,7 @@ let config = {
       {
         test: /\.js$/,
         include: [path('src'), path('spec')],
-        loader: '6to5?modules=common&experimental=true',
+        loader: 'babel?modules=common&experimental=true',
       },
       {
         test: /\.pegjs/,
