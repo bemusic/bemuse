@@ -97,6 +97,8 @@ BMSNoteBuilder.prototype._handleNormalNote = function(object) {
   var beat = this._getBeat(object)
   this._notes.push({
     beat: beat,
+    endBeat: undefined,
+    keysound: object.value,
     column: this._getColumn(channel),
   })
 }

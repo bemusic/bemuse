@@ -17,6 +17,12 @@ module.exports = new DataStructure({
   beat: Number,
 
   /**
+   * @property endBeat
+   * @type Number|undefined
+   */
+  endBeat: DataStructure.maybe(Number),
+
+  /**
    * @property column
    * @type Column|undefined
    */
