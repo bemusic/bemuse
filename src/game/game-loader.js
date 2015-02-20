@@ -1,15 +1,19 @@
 
 import co from 'co'
 import BMS from 'bms'
+import bytes from 'bytes'
 
 import Progress           from 'bemuse/progress'
 import * as ProgressUtils from 'bemuse/progress/utils'
+import SamplingMaster     from 'bemuse/sampling-master'
 
 import { EventEmitter } from 'events'
 import LoadingContext   from 'bemuse/boot/loading-context'
 
-import AudioLoader      from './audio-loader'
-import bytes            from 'bytes'
+import SamplesLoader    from './samples-loader'
+import Game             from './game'
+import GameController   from './game-controller'
+import GameDisplay      from './game-display'
 
 let Formatters = {
   NORMAL: progress =>
@@ -30,11 +34,21 @@ export class GameLoader extends EventEmitter {
   }
   load(song) {
     return co(function*() {
+
       let promises = {
         graphics: this._loadEngine(),
         song:     this._loadSong(song),
       }
-      yield Promise.all([promises.graphics, promises.song])
+
+      let [{ skin, context }, { master, samples, game }] =
+        yield Promise.all([promises.graphics, promises.song])
+
+      void master
+      void samples
+
+      let display = new GameDisplay({ game, skin, context })
+      return new GameController({ game, display })
+
     }.bind(this))
   }
   _loadEngine() {
@@ -73,11 +87,12 @@ export class GameLoader extends EventEmitter {
       let source        = yield readBMS(buffer)
       let compileResult = BMS.Compiler.compile(source)
       let chart         = compileResult.chart
-      let keysounds     = BMS.Keysounds.fromBMSChart(chart)
-      let audioLoader   = new AudioLoader(assets)
-      let audio         = yield audioLoader.loadFrom(keysounds,
+      let master        = new SamplingMaster()
+      let samplesLoader = new SamplesLoader(assets, master)
+      let samples       = yield samplesLoader.loadFromBMSChart(chart,
                             progress.audio, progress.decode)
-      console.log(audio)
+      let game          = new Game(chart, { players: [{}] })
+      return { master, samples, game }
     }.bind(this))
   }
   _task(text, formatter) {
