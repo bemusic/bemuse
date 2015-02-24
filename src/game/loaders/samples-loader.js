@@ -41,6 +41,7 @@ export class SamplesLoader {
   _getFile(name) {
     return this._assets.file(name)
       .catch(() => this._assets.file(name.replace(/\.\w+$/, '.mp3')))
+      .catch(() => this._assets.file(name.replace(/\.\w+$/, '.ogg')))
   }
 }
 

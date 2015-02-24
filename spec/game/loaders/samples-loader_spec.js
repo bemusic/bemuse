@@ -39,6 +39,7 @@ describe('SamplesLoader', function() {
     it('should not include failed matches', function() {
       assets.file.withArgs('a.wav').returns(Promise.reject())
       assets.file.withArgs('a.mp3').returns(Promise.reject())
+      assets.file.withArgs('a.ogg').returns(Promise.reject())
       return expect(loader.loadFiles(['a.wav'])).to.eventually.deep.eq({ })
     })
 
