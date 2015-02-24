@@ -11,9 +11,9 @@ export class Progress {
     this._observable  = new Observable()
   }
   report(current, total, extra) {
-    this.current  = current
-    this.total    = total
-    this.extra    = extra
+    this.current    = current
+    this.total      = total
+    this.extra      = extra
     this._observable.notify()
   }
   watch(f) {
@@ -25,6 +25,15 @@ export class Progress {
       return this.current / this.total
     } else {
       return null
+    }
+  }
+  toString() {
+    if (this.formatter !== undefined) {
+      return this.formatter(this)
+    } else if (this.progress !== null) {
+      return this.current + ' / ' + this.total
+    } else {
+      return ''
     }
   }
 }

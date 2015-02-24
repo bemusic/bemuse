@@ -1,7 +1,8 @@
 
-import R                  from 'ramda'
-import * as ProgressUtils from 'bemuse/progress/utils'
-import BMS                from 'bms'
+import R                    from 'ramda'
+import * as ProgressUtils   from 'bemuse/progress/utils'
+import { EXTRA_FORMATTER }  from 'bemuse/progress/formatters'
+import BMS                  from 'bms'
 
 export class SamplesLoader {
   constructor(assets, master) {
@@ -12,6 +13,7 @@ export class SamplesLoader {
     let onload    = ProgressUtils.fixed(files.length, loadProgress)
     let ondecode  = ProgressUtils.fixed(files.length, decodeProgress)
     let load      = name => this._loadSample(name, onload, ondecode)
+    if (decodeProgress) decodeProgress.formatter = EXTRA_FORMATTER
     return Promise.map(files, load).then(R.fromPairs)
   }
   loadFromBMSChart(chart, loadProgress, decodeProgress) {
