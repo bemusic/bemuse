@@ -10,7 +10,7 @@ import SamplesLoader    from './samples-loader'
 import * as Multitasker from './multitasker'
 import Game             from '../game'
 import GameController   from '../game-controller'
-import GameDisplay      from '../game-display'
+import GameDisplay      from '../display'
 
 export function load(spec) {
 
