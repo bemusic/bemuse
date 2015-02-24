@@ -1,4 +1,6 @@
 
+// !! avoid external dependencies since this is used in boot script!
+
 export class Observable {
   constructor() {
     this._observers = { }
