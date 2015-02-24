@@ -30,6 +30,9 @@ export class Notechart {
   secondsToBeat(seconds) {
     return this._timing.secondsToBeat(seconds)
   }
+  secondsToPosition(seconds) {
+    return this.beatToPosition(this.secondsToBeat(seconds))
+  }
   _generatePlayableNotesFromBMS(bmsNotes) {
     let nextId = 1
     return bmsNotes.all()
