@@ -2,7 +2,7 @@ import co from 'co'
 
 import SCENE_MANAGER from 'bemuse/scene-manager'
 import LoadingScene from './loading-scene'
-import GameLoader from './game-loader'
+import GameLoader from './loaders/game-loader'
 import GameScene from './game-scene'
 
 import URLResource from 'bemuse/resources/url'

@@ -1,5 +1,5 @@
 
-import SamplesLoader from 'bemuse/game/samples-loader'
+import SamplesLoader from 'bemuse/game/loaders/samples-loader'
 
 describe('SamplesLoader', function() {
 

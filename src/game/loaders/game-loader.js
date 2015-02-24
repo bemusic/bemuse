@@ -11,9 +11,9 @@ import { EventEmitter } from 'events'
 import LoadingContext   from 'bemuse/boot/loading-context'
 
 import SamplesLoader    from './samples-loader'
-import Game             from './game'
-import GameController   from './game-controller'
-import GameDisplay      from './game-display'
+import Game             from '../game'
+import GameController   from '../game-controller'
+import GameDisplay      from '../game-display'
 
 let Formatters = {
   NORMAL: progress =>
