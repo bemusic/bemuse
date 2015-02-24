@@ -1,9 +1,12 @@
 
+import GameTimer from './game-timer'
+
 export class GameController {
   constructor({ game, display, audio }) {
     this._game    = game
     this._display = display
     this._audio   = audio
+    this._timer   = new GameTimer()
   }
   get game() {
     return this._game
@@ -15,7 +18,6 @@ export class GameController {
     return this._audio
   }
   start() {
-    if (this._started) return
     this._display.start()
     let frame = () => {
       this._update()
@@ -24,7 +26,7 @@ export class GameController {
     requestAnimationFrame(frame)
   }
   _update() {
-    this._display.update()
+    this._display.update(this._timer.time)
   }
 }
 
