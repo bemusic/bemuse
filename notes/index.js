@@ -69,6 +69,8 @@ function BMSNoteBuilder(chart) {
 BMSNoteBuilder.prototype.build = function() {
   this._notes = []
   this._activeLN = { }
+  this._lastNote = { }
+  this._lnObj = (this._chart.headers.get('lnobj') || '').toLowerCase()
   this._channelMapping = CHANNEL_MAPPING.IIDX_P1
   this._objects = this._chart.objects.allSorted()
   this._objects.forEach(function(object) {
@@ -95,12 +97,20 @@ BMSNoteBuilder.prototype._handle = function(object) {
 BMSNoteBuilder.prototype._handleNormalNote = function(object) {
   var channel = this._normalizeChannel(object.channel)
   var beat = this._getBeat(object)
-  this._notes.push({
-    beat: beat,
-    endBeat: undefined,
-    keysound: object.value,
-    column: this._getColumn(channel),
-  })
+  if (object.value.toLowerCase() === this._lnObj) {
+    if (this._lastNote[channel]) {
+      this._lastNote[channel].endBeat = beat
+    }
+  } else {
+    var note = {
+      beat: beat,
+      endBeat: undefined,
+      keysound: object.value,
+      column: this._getColumn(channel),
+    }
+    this._lastNote[channel] = note
+    this._notes.push(note)
+  }
 }
 
 BMSNoteBuilder.prototype._handleLongNote = function(object) {
