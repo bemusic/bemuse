@@ -1,8 +1,13 @@
 
+import PlayerDisplay from './player-display'
+
 export class GameDisplay {
   constructor({ game, skin, context }) {
     this._context = context
-    this._data = { }
+    this._data    = { }
+    this._players = new Map(game.players.map(player =>
+      [player, new PlayerDisplay(player)]))
+    console.log(this._players)
   }
   start() {
     this._started = new Date().getTime()

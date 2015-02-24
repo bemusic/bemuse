@@ -7,7 +7,7 @@ import $ from 'jquery'
 import Chance from 'chance'
 
 import GameNote from 'bemuse/game/data/game-note'
-import NoteArea from 'bemuse/game/note-area'
+import NoteArea from 'bemuse/game/display/note-area'
 
 export function main() {
   co(function*() {

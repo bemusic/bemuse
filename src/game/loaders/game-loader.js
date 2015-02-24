@@ -88,7 +88,7 @@ export function load(spec) {
       return new GameDisplay({ game, skin, context })
     })
 
-    task('GameController', null, ['Game', 'GameDisplay', 'Samples'],
+    task('GameController', null, ['Game', 'GameDisplay'/*, 'Samples'*/],
     function(game, display, samples) {
       void samples
       return new GameController({ game, display })
