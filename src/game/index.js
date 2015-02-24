@@ -1,12 +1,13 @@
 import co from 'co'
 
-import SCENE_MANAGER from 'bemuse/scene-manager'
-import LoadingScene from './loading-scene'
-import GameLoader from './loaders/game-loader'
-import GameScene from './game-scene'
+import SCENE_MANAGER  from 'bemuse/scene-manager'
+import LoadingScene   from './loading-scene'
+import GameScene      from './game-scene'
 
-import URLResource from 'bemuse/resources/url'
+import URLResource            from 'bemuse/resources/url'
 import BemusePackageResources from 'bemuse/resources/bemuse-package'
+
+import * as GameLoader from './loaders/game-loader'
 
 export function main() {
   let song = {
@@ -21,12 +22,11 @@ export function main() {
         ],
       }
   co(function*() {
-    let loader = new GameLoader()
-    let promise = loader.load({
+    let { tasks, promise } = GameLoader.load({
       bms:    new URLResource('/music/[aoi]olivia/olivia_SPpp.bml'),
       assets: new BemusePackageResources('/music/[aoi]olivia/assets/'),
     })
-    SCENE_MANAGER.display(new LoadingScene({ loader, song }))
+    SCENE_MANAGER.display(new LoadingScene({ tasks, song }))
     let controller = yield promise
     yield SCENE_MANAGER.display(new GameScene(controller.display))
     controller.start()

@@ -3,6 +3,7 @@ import co from 'co'
 import BMS from 'bms'
 import bytes from 'bytes'
 
+import Observable         from 'bemuse/observable'
 import Progress           from 'bemuse/progress'
 import * as ProgressUtils from 'bemuse/progress/utils'
 import SamplingMaster     from 'bemuse/sampling-master'
@@ -25,7 +26,18 @@ let Formatters = {
               `${bytes(progress.current)} / ${bytes(progress.total)}` : '',
 }
 
-export class GameLoader extends EventEmitter {
+export function load(spec) {
+
+  let loader = new GameLoader()
+  let promise = loader.load(spec)
+  let tasks = new Observable(loader.tasks)
+  loader.on('progress', () => tasks.value = loader.tasks)
+
+  return { promise, tasks }
+
+}
+
+class GameLoader extends EventEmitter {
   constructor() {
     this._tasks = []
   }
