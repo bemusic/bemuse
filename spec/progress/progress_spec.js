@@ -14,6 +14,24 @@ describe('Progress', function() {
     })
   })
 
+  describe('#toString', function() {
+    it('should return blank string when no progress', function() {
+      let progress = new Progress()
+      expect(progress.toString()).to.equal('')
+    })
+    it('should return a string representation of the progress', function() {
+      let progress = new Progress()
+      progress.report(1, 10)
+      expect(progress.toString()).to.equal('1 / 10')
+    })
+    it('should use a formatter', function() {
+      let progress = new Progress()
+      progress.report(1, 10)
+      progress.formatter = (p) => p.progress + ''
+      expect(progress.toString()).to.equal('0.1')
+    })
+  })
+
   describe('#report', function() {
     it('should fire to all watchers', function() {
       let progress = new Progress()

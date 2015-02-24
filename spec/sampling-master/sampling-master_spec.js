@@ -90,6 +90,13 @@ describe('SamplingMaster', function() {
       master.destroy()
       return expect(master.sample(new Blob([]))).to.be.rejected
     })
+    it('only destroys once', function() {
+      let a = sample.play()
+      sinon.spy(a, 'destroy')
+      master.destroy()
+      master.destroy()
+      expect(a.destroy).to.have.callCount(1)
+    })
   })
 
   after(() => { WebAudioTestAPI.unuse() })
