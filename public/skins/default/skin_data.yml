@@ -3,6 +3,8 @@ styles:
   white:    { x: 62, width: 34 }
   blue:     { x: 97, width: 26 }
 
+area_height: 550
+
 mode:
   iidx_l:
     - { style: 'scratch', channel: 'SC' }

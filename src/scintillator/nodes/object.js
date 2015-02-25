@@ -13,6 +13,7 @@ class ChildManager {
   }
   push(array) {
     let unused = new Set(this._instances.keys())
+    if (!array) array = []
     for (let item of array) {
       let key = item.key
       let instance

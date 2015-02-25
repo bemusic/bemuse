@@ -1,5 +1,5 @@
 
-import NoteArea from 'bemuse/game/note-area'
+import NoteArea from 'bemuse/game/display/note-area'
 
 describe('NoteArea', function() {
 

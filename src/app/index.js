@@ -7,7 +7,7 @@ import $ from 'jquery'
 import Chance from 'chance'
 
 import GameNote from 'bemuse/game/data/game-note'
-import NoteArea from 'bemuse/game/note-area'
+import NoteArea from 'bemuse/game/display/note-area'
 
 export function main() {
   co(function*() {
@@ -23,33 +23,33 @@ export function main() {
     function updateNotes() {
       let p = data.t * 192 / 60
       for (let column of columns) {
-        data[`note_${column}`].length = 0
-        data[`longnote_${column}`].length = 0
+        data[`p1_note_${column}`].length = 0
+        data[`p1_longnote_${column}`].length = 0
       }
       let entities = area.getVisibleNotes(p, p + (5 / 2.5))
       for (let entity of entities) {
         let note = entity.note
         let column = note.column
         if (entity.height) {
-          data[`longnote_${column}`].push({
+          data[`p1_longnote_${column}`].push({
             key:    note.id,
-            y:      entity.y * 550,
-            height: entity.height * 550,
+            y:      entity.y,
+            height: entity.height,
             active: entity.y + entity.height > 1,
             missed: entity.y + entity.height > 1.1 && note.id % 5 === 0,
           })
         } else {
-          data[`note_${column}`].push({
+          data[`p1_note_${column}`].push({
             key:    note.id,
-            y:      entity.y * 550,
+            y:      entity.y,
           })
         }
       }
     }
 
     for (let column of columns) {
-      data[`note_${column}`] = []
-      data[`longnote_${column}`] = []
+      data[`p1_note_${column}`] = []
+      data[`p1_longnote_${column}`] = []
     }
 
     let started = new Date().getTime()

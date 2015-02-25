@@ -1,4 +1,6 @@
 
+import { BYTES_FORMATTER } from 'bemuse/progress/formatters'
+
 export function download(url) {
   return {
     as(type, progress) {
@@ -14,7 +16,10 @@ export function download(url) {
           }
         }
         xh.onerror = () => reject(new Error(`Unable to download ${url}`))
-        if (progress) xh.onprogress = e => progress.report(e.loaded, e.total)
+        if (progress) {
+          progress.formatter = BYTES_FORMATTER
+          xh.onprogress = e => progress.report(e.loaded, e.total)
+        }
         xh.send(null)
       })
     }

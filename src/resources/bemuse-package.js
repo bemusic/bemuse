@@ -5,8 +5,8 @@ import R                  from 'ramda'
 import download           from 'bemuse/download'
 import readBlob           from 'bemuse/read-blob'
 import throat             from 'throat'
-import * as ProgressUtils from 'bemuse/progress/utils'
 import Progress           from 'bemuse/progress'
+import * as ProgressUtils from 'bemuse/progress/utils'
 
 export class BemusePackageResources {
   constructor(url) {
