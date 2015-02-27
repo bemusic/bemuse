@@ -1,5 +1,6 @@
 
 import GameTimer from './game-timer'
+import GameInput from './input'
 
 export class GameController {
   constructor({ game, display, audio }) {
@@ -7,6 +8,7 @@ export class GameController {
     this._display = display
     this._audio   = audio
     this._timer   = new GameTimer()
+    this._input   = new GameInput()
   }
   get game() {
     return this._game
