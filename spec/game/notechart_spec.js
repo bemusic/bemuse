@@ -27,6 +27,13 @@ describe('Notechart', function() {
     })
   })
 
+  describe('#samples', function() {
+    it('should return an array of all used samples', function() {
+      var subject = notechart('#WAV0X wow.wav\n#00101:0x0x')
+      expect(subject.samples).to.deep.equal(['wow.wav'])
+    })
+  })
+
   describe('#secondsToBeat', function() {
     it('should convert seconds to beat', function() {
       var subject = notechart('#BPM 120')

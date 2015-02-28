@@ -1,11 +1,5 @@
 
 import SamplesLoader  from 'bemuse/game/loaders/samples-loader'
-import BMS            from 'bms'
-import Progress       from 'bemuse/progress'
-
-function chart(code) {
-  return BMS.Compiler.compile(code).chart
-}
 
 describe('SamplesLoader', function() {
 
@@ -17,20 +11,6 @@ describe('SamplesLoader', function() {
     assets    = { file: sinon.stub() }
     master    = { sample: sinon.stub() }
     loader = new SamplesLoader(assets, master)
-  })
-
-  describe('#loadFromBMSChart', function() {
-    it('should load from a BMSChart', function() {
-      let c       = chart('#WAV01 a.wav\n#WAV02 a.wav')
-      let pLoad   = new Progress()
-      let pDecode = new Progress()
-      assets.file.withArgs('a.wav').returns(Promise.resolve({
-        read: () => Promise.resolve('ok1')
-      }))
-      master.sample.withArgs('ok1').returns(Promise.resolve('ok2'))
-      return expect(loader.loadFromBMSChart(c, pLoad, pDecode))
-          .to.eventually.deep.eq({ 'a.wav': 'ok2' })
-    })
   })
 
   describe('#loadFiles', function() {

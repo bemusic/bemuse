@@ -10,6 +10,7 @@ import SamplesLoader    from './samples-loader'
 import * as Multitasker from './multitasker'
 import Game             from '../game'
 import GameController   from '../game-controller'
+import GameAudio        from '../audio'
 import GameDisplay      from '../display'
 
 export function load(spec) {
@@ -71,13 +72,6 @@ export function load(spec) {
       return new SamplingMaster()
     })
 
-    task('Samples', null, ['SamplingMaster', 'BMSChart'],
-    function(master, chart) {
-      let samplesLoader = new SamplesLoader(assets, master)
-      return samplesLoader.loadFromBMSChart(
-                chart, audioLoadProgress, audioDecodeProgress)
-    })
-
     task('Game', null, ['BMSChart'],
     function(chart) {
       return new Game(chart, { players: [{}] })
@@ -88,7 +82,19 @@ export function load(spec) {
       return new GameDisplay({ game, skin, context })
     })
 
-    task('GameController', null, ['Game', 'GameDisplay'/*, 'Samples'*/],
+    task('Samples', null, ['SamplingMaster', 'Game'],
+    function(master, game) {
+      let samplesLoader = new SamplesLoader(assets, master)
+      return samplesLoader.loadFiles(game.samples,
+          audioLoadProgress, audioDecodeProgress)
+    })
+
+    task('GameAudio', null, ['Game', 'Samples', 'SamplingMaster'],
+    function(game, samples, master) {
+      return new GameAudio({ game, samples, master })
+    })
+
+    task('GameController', null, ['Game', 'GameDisplay', 'GameAudio'],
     function(game, display, samples) {
       void samples
       return new GameController({ game, display })

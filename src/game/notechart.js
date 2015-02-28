@@ -8,10 +8,14 @@ import GameNote   from './data/game-note'
 // game will ever need.
 //
 export class Notechart {
-  constructor(bmsNotes, timing, playerNumber, playerOptions) {
-    this._timing  = timing
-    this._notes   = this._generatePlayableNotesFromBMS(bmsNotes)
-    this._autos   = this._generateAutoKeysoundEventsFromBMS(bmsNotes)
+  constructor(bms, playerNumber, playerOptions) {
+    let bmsNotes    = BMS.Notes.fromBMSChart(bms)
+    let timing      = BMS.Timing.fromBMSChart(bms)
+    let keysounds   = BMS.Keysounds.fromBMSChart(bms)
+    this._timing    = timing
+    this._notes     = this._generatePlayableNotesFromBMS(bmsNotes)
+    this._autos     = this._generateAutoKeysoundEventsFromBMS(bmsNotes)
+    this._samples   = this._generateKeysoundFiles(keysounds)
     void playerNumber
     void playerOptions
   }
@@ -20,6 +24,9 @@ export class Notechart {
   }
   get autos() {
     return this._autos
+  }
+  get samples() {
+    return this._samples
   }
   beatToSeconds(beat) {
     return this._timing.beatToSeconds(beat)
@@ -59,6 +66,16 @@ export class Notechart {
       return new GameEvent(spec)
     })
   }
+  _generateKeysoundFiles(keysounds) {
+    let set = new Set()
+    for (let array of [this.notes, this.autos]) {
+      for (let event_ of array) {
+        let file = keysounds.get(event_.keysound)
+        if (file) set.add(file)
+      }
+    }
+    return Array.from(set)
+  }
   _generateEvent(beat) {
     return {
       beat:     beat,
@@ -67,9 +84,7 @@ export class Notechart {
     }
   }
   static fromBMSChart(chart, playerNumber, playerOptions) {
-    let notes     = BMS.Notes.fromBMSChart(chart)
-    let timing    = BMS.Timing.fromBMSChart(chart)
-    return new Notechart(notes, timing, playerNumber, playerOptions)
+    return new Notechart(chart, playerNumber, playerOptions)
   }
 }
 
