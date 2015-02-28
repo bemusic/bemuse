@@ -17,7 +17,7 @@ describe('Payload', function() {
     it('should have size of 7', () => expect(payload.size).to.equal(7))
 
     it('should have correct hash', () =>
-      expect(payload.hash).to.equal('52b02aa91ac578dc41ea70335db3507cb5b799d5'))
+      expect(payload.hash).to.equal('0b76896c047e4a9070813cfe8bdd83f5'))
 
     it('should return slicing for new buffers', () =>
       expect(payload.add(new Buffer('world!'))).to.deep.equal([7, 13]))

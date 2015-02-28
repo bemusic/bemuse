@@ -17,20 +17,18 @@
   },
   "homepage": "https://github.com/bemusic/pack",
   "dependencies": {
-    "6to5": "^1.15.0",
-    "bms": "^0.2.0",
+    "6to5": "^3.6.5",
+    "bluebird": "^2.9.9",
+    "bms": "^0.5.0",
     "bytes": "^1.0.0",
     "co": "^4.0.2",
     "commander": "^2.5.1",
     "endpoint": "^0.4.2",
-    "gulp": "^3.8.10",
+    "glob": "^4.3.5",
     "gulp-util": "^3.0.1",
-    "map-stream": "0.0.5",
-    "merge-stream": "^0.1.6",
     "mime": "^1.2.11",
-    "prfun": "^1.0.2",
-    "throat": "^1.0.0",
-    "through2": "^0.6.3"
+    "mkdirp": "^0.5.0",
+    "throat": "^1.0.0"
   },
   "devDependencies": {
     "chai": "^1.10.0",

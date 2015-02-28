@@ -1,43 +1,51 @@
 
-import gutil      from 'gulp-util'
 import Throat     from 'throat'
 import { cpus }   from 'os'
 import { spawn }  from 'child_process'
 import endpoint   from 'endpoint'
-import map        from 'map-stream'
+import { extname, basename } from 'path'
 
-export function convertAudio() {
-  let throat = new Throat(cpus().length || 1)
-  return map(function(file, callback) {
-    let path = file.path
-    let oldName = file.relative
-    file.path = file.path.replace(/\.\w+$/, '.mp3')
-    let log = gutil.log.bind(gutil, '[convertAudio]',
-                oldName, '->', file.relative)
-    throat(() => new Promise(function(resolve, reject) {
-      let sox = spawn('sox', [path, '-t', 'mp3', '-'])
+let throat = new Throat(cpus().length || 1)
+
+export class AudioConvertor {
+  constructor(type) {
+    this._target = type
+  }
+  convert(file) {
+    let ext = extname(file.name).toLowerCase()
+    if (ext === '.' + this._target) {
+      return Promise.resolve(file)
+    } else {
+      let name = basename(file.name, ext) + '.' + this._target
+      return this._doConvert(file.path, this._target)
+        .then(buffer => file.derive(name, buffer))
+    }
+  }
+  _doConvert(path, type) {
+    return throat(() => new Promise((resolve, reject) => {
+      let sox = spawn('sox', [path, '-t', type, '-'])
       sox.stdin.end()
       sox.stderr.on('data', x => process.stderr.write(x))
-      sox.stdout.pipe(endpoint(function(err, buffer) {
-        if (err) {
-          log('ERROR!')
-          return reject(err)
-        }
-        file.contents = buffer
-      }))
-      sox.on('close', function(code) {
+      let data = new Promise((resolve, reject) => {
+        sox.stdout.pipe(endpoint((err, buffer) => {
+          if (err) {
+            console.error('Error reading audio!')
+            reject(err)
+          } else {
+            resolve(buffer)
+          }
+        }))
+      })
+      sox.on('close', (code) => {
         if (code === 0) {
-          resolve(file)
+          resolve(data)
         } else {
-          log('Unable to convert audio file -- SoX exited ' + code)
+          console.error('Unable to convert audio file -- SoX exited ' + code)
           reject(new Error('SoX process exited: ' + code))
         }
       })
     }))
-    .then(
-      result => callback(null, result),
-      error => callback(error)
-    )
-  })
+  }
 }
 
+export default AudioConvertor

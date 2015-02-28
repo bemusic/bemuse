@@ -5,7 +5,7 @@
   "camelcase": true,
   "funcscope": true,
   "immed": true,
-  "latedef": "nofunc",
+  "latedef": false,
   "noarg": true,
   "unused": true,
 
