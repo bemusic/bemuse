@@ -5,9 +5,9 @@ import defaultAudioContext from 'audio-context'
 export class SamplingMaster {
 
   constructor(audioContext) {
-    this._audioContext = audioContext || defaultAudioContext
-    this._samples = []
-    this._instances = new Set()
+    this._audioContext  = audioContext || defaultAudioContext
+    this._samples       = []
+    this._instances     = new Set()
   }
 
   /**
@@ -97,6 +97,7 @@ class Sample {
 class PlayInstance {
 
   constructor(samplingMaster, buffer, delay, node) {
+    delay = delay || 0
     this._master = samplingMaster
     let context = samplingMaster.audioContext
     let source = context.createBufferSource()

@@ -95,9 +95,8 @@ export function load(spec) {
     })
 
     task('GameController', null, ['Game', 'GameDisplay', 'GameAudio'],
-    function(game, display, samples) {
-      void samples
-      return new GameController({ game, display })
+    function(game, display, audio) {
+      return new GameController({ game, display, audio })
     })
 
     return run('GameController')

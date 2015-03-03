@@ -8,7 +8,11 @@ export class GameAudio {
     void samples
     void master
   }
-  update() {
+  update(t) {
+    for (let [player, audio] of this._players) {
+      void player
+      audio.update(t)
+    }
   }
 }
 

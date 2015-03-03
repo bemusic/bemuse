@@ -16,6 +16,7 @@ export class Notechart {
     this._notes     = this._generatePlayableNotesFromBMS(bmsNotes)
     this._autos     = this._generateAutoKeysoundEventsFromBMS(bmsNotes)
     this._samples   = this._generateKeysoundFiles(keysounds)
+    this.keysounds  = keysounds.all()
     void playerNumber
     void playerOptions
   }

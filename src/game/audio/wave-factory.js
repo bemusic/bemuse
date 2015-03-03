@@ -1,14 +1,19 @@
 
 export class WaveFactory {
 
-  constructor(master, samples) {
-    void master
-    void samples
+  constructor(master, samples, map) {
+    this._master  = master
+    this._samples = samples
+    this._map     = map
   }
 
   // Plays an autokeysound note (using limited polyphony)
   playAuto(keysound) {
-    void keysound
+    let filename  = this._map[keysound.toLowerCase()]
+    if (!filename) return
+    let sample    = this._samples[filename]
+    if (!sample) return
+    sample.play()
   }
 
   // Plays a hit note (using limited polyphony)
