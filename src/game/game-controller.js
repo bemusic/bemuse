@@ -29,6 +29,7 @@ export class GameController {
   }
   _update() {
     this._display.update(this._timer.time)
+    this._audio.update(this._timer.time)
   }
 }
 
