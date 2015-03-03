@@ -18,13 +18,18 @@ function autoplayer(array) {
 
 export class PlayerAudio {
   constructor({ player, samples, master, waveFactory }) {
+    let notechart = player.notechart
     this._waveFactory = waveFactory ||
-        new WaveFactory(master, samples, player.notechart.keysounds)
-    this._autos       = autoplayer(player.notechart.autos)
+        new WaveFactory(master, samples, notechart.keysounds)
+    this._autos       = autoplayer(notechart.autos)
+    this._notes       = autoplayer(notechart.notes)
   }
   update(time) {
     for (let auto of this._autos.next(time + 1 / 30)) {
-      this._waveFactory.playAuto(auto.keysound)
+      this._waveFactory.playAuto(auto.keysound, auto.time - time)
+    }
+    for (let note of this._notes.next(time + 1 / 30)) {
+      this._waveFactory.playAuto(note.keysound, note.time - time)
     }
   }
 }
