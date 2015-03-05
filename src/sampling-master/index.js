@@ -15,10 +15,7 @@ export class SamplingMaster {
    * iOS devices.
    */
   unmute() {
-    let ctx = this._audioContext
-    let gain = ctx.createGain()
-    gain.connect(ctx.destination)
-    gain.disconnect()
+    unmuteAudio(this._audioContext)
   }
 
   get audioContext() {
@@ -130,4 +127,10 @@ class PlayInstance {
 }
 
 export default SamplingMaster
+
+export function unmuteAudio(ctx) {
+  let gain = ctx.createGain()
+  gain.connect(ctx.destination)
+  gain.disconnect()
+}
 
