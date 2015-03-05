@@ -66,6 +66,7 @@ let config = {
       },
     ],
     postLoaders: [],
+    preLoaders: [],
   },
   plugins: [
     new ProgressPlugin(),
@@ -73,7 +74,7 @@ let config = {
 }
 
 if (NODE_ENV === 'test' || process.env.COV === 'true') {
-  config.module.postLoaders.push({
+  config.module.preLoaders.push({
     test: /\.js$/,
     include: [path('src')],
     exclude: [
@@ -81,7 +82,7 @@ if (NODE_ENV === 'test' || process.env.COV === 'true') {
       path('src', 'polyfill'),
       path('src', 'boot', 'loader.js'),
     ],
-    loader: 'istanbul-instrumenter!bemuse/webpack-istanbul-babel-skipper',
+    loader: 'isparta-instrumenter',
   })
 }
 
