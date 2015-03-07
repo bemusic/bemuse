@@ -2,7 +2,7 @@
 import './error-dialog.scss'
 import template from './error-dialog.jade'
 
-/* istanbul ignore next */
+/* isparta ignore next */
 function show(message, url, line, col, e) {
   var div = document.createElement('div')
   div.className = 'error-dialog'
