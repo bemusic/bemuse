@@ -88,6 +88,20 @@ describe('SamplingMaster', function() {
           instance.stop()
           void expect(bufferSource.stop).to.have.been.called
         })
+        it('can be called multiple times', function() {
+          let instance = sample.play()
+          sinon.spy(bufferSource, 'stop')
+          instance.stop()
+          instance.stop()
+          instance.stop()
+          void expect(bufferSource.stop).to.have.been.calledOnce
+        })
+        it('should call #onstop', function() {
+          let instance = sample.play()
+          instance.onstop = sinon.spy()
+          instance.stop()
+          void expect(instance.onstop).to.have.been.called
+        })
       })
     })
   })
