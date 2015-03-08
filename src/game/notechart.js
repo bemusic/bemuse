@@ -13,10 +13,10 @@ export class Notechart {
     let timing      = BMS.Timing.fromBMSChart(bms)
     let keysounds   = BMS.Keysounds.fromBMSChart(bms)
     this._timing    = timing
+    this._keysounds = keysounds
     this._notes     = this._generatePlayableNotesFromBMS(bmsNotes)
     this._autos     = this._generateAutoKeysoundEventsFromBMS(bmsNotes)
     this._samples   = this._generateKeysoundFiles(keysounds)
-    this.keysounds  = keysounds.all()
     void playerNumber
     void playerOptions
   }
@@ -28,6 +28,9 @@ export class Notechart {
   }
   get samples() {
     return this._samples
+  }
+  get keysounds() {
+    return this._keysounds.all()
   }
   beatToSeconds(beat) {
     return this._timing.beatToSeconds(beat)
