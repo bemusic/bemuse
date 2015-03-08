@@ -5,9 +5,9 @@ import defaultAudioContext from 'audio-context'
 export class SamplingMaster {
 
   constructor(audioContext) {
-    this._audioContext = audioContext || defaultAudioContext
-    this._samples = []
-    this._instances = new Set()
+    this._audioContext  = audioContext || defaultAudioContext
+    this._samples       = []
+    this._instances     = new Set()
   }
 
   /**
@@ -15,10 +15,7 @@ export class SamplingMaster {
    * iOS devices.
    */
   unmute() {
-    let ctx = this._audioContext
-    let gain = ctx.createGain()
-    gain.connect(ctx.destination)
-    gain.disconnect()
+    unmuteAudio(this._audioContext)
   }
 
   get audioContext() {
@@ -97,17 +94,18 @@ class Sample {
 class PlayInstance {
 
   constructor(samplingMaster, buffer, delay, node) {
+    delay = delay || 0
     this._master = samplingMaster
     let context = samplingMaster.audioContext
     let source = context.createBufferSource()
     source.buffer = buffer
+    source.onended = () => this.stop()
     let gain = context.createGain()
     source.connect(gain)
     gain.connect(node || context.destination)
     this._source = source
     this._gain = gain
     source.start(!delay ? 0 : Math.max(0, context.currentTime + delay))
-    setTimeout(() => this.stop(), (delay + buffer.duration + 0.01) * 1000)
     this._master._startPlaying(this)
   }
 
@@ -129,4 +127,10 @@ class PlayInstance {
 }
 
 export default SamplingMaster
+
+export function unmuteAudio(ctx) {
+  let gain = ctx.createGain()
+  gain.connect(ctx.destination)
+  gain.disconnect()
+}
 

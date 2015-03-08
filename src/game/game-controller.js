@@ -28,7 +28,9 @@ export class GameController {
     requestAnimationFrame(frame)
   }
   _update() {
-    this._display.update(this._timer.time)
+    let t = this._timer.time
+    this._display.update(t)
+    this._audio.update(t)
   }
 }
 

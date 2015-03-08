@@ -6,10 +6,19 @@ import GameScene      from './game-scene'
 
 import URLResource            from 'bemuse/resources/url'
 import BemusePackageResources from 'bemuse/resources/bemuse-package'
+import { unmuteAudio }        from 'bemuse/sampling-master'
+import audioContext           from 'audio-context'
 
 import * as GameLoader from './loaders/game-loader'
 
 export function main() {
+
+  // iOS
+  window.addEventListener('touchstart', function unmute() {
+    unmuteAudio(audioContext)
+    window.removeEventListener('touchstart', unmute)
+  })
+
   let song = {
         title: 'オリヴィアの幻術',
         subtitles: [

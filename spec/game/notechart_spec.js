@@ -27,6 +27,28 @@ describe('Notechart', function() {
     })
   })
 
+  describe('#samples', function() {
+    it('should return an array of all used samples', function() {
+      var subject = notechart('#WAV0X wow.wav\n#00101:0x0x')
+      expect(subject.samples).to.deep.equal(['wow.wav'])
+    })
+  })
+
+  describe('#keysounds', function() {
+    it('should return an object of all keysounds', function() {
+      var subject = notechart(
+            '#WAV0X wow.wav\n' +
+            '#WAV0Y wow.wav\n' +
+            '#WAV0Z foon.wav\n' +
+            '#00101:0x0x0y0y0Z0Z')
+      expect(subject.keysounds).to.deep.equal({
+        '0x': 'wow.wav',
+        '0y': 'wow.wav',
+        '0z': 'foon.wav',
+      })
+    })
+  })
+
   describe('#secondsToBeat', function() {
     it('should convert seconds to beat', function() {
       var subject = notechart('#BPM 120')
