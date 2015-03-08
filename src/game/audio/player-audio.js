@@ -19,6 +19,7 @@ function autoplayer(array) {
 export class PlayerAudio {
   constructor({ player, samples, master, waveFactory }) {
     let notechart = player.notechart
+    console.log(player.notechart)
     this._waveFactory = waveFactory ||
         new WaveFactory(master, samples, notechart.keysounds)
     this._autos       = autoplayer(notechart.autos)

@@ -41,8 +41,11 @@ describe('SamplingMaster', function() {
     describe('#play', function() {
       let sample
       let bufferSource
+      let buffer
       beforeEach(function() {
         bufferSource = context.createBufferSource()
+        buffer = context.createBuffer(1, 44100, 44100)
+        bufferSource.buffer = buffer
         sinon.stub(context, 'createBufferSource').returns(bufferSource)
         sinon.spy(bufferSource, 'start')
         return master.sample(new Blob([])).then(s => sample = s)
@@ -57,6 +60,12 @@ describe('SamplingMaster', function() {
         sample.play(20)
         void expect(context.createBufferSource).to.have.been.called
         expect(bufferSource.start).to.have.been.calledWith(21)
+      })
+      it('should call #stop when time passed', function() {
+        let instance = sample.play()
+        sinon.spy(instance, 'stop')
+        context.$processTo(1.5)
+        void expect(instance.stop).to.have.been.called
       })
       describe('#stop', function() {
         it('should stop the buffer source', function() {
