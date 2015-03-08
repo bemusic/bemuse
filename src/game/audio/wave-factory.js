@@ -20,7 +20,7 @@ export class WaveFactory {
 
   // Plays a note when hitting in the blank area (unlimited polyphony)
   playFree(keysound) {
-    void keysound
+    this._play({ keysound, delay: 0, exclusive: false })
   }
 
   // Plays a note
