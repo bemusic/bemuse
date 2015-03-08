@@ -61,12 +61,26 @@ describe('SamplingMaster', function() {
         void expect(context.createBufferSource).to.have.been.called
         expect(bufferSource.start).to.have.been.calledWith(21)
       })
-      it('should call #stop when time passed', function() {
+
+      // HACK: only enable this test case when Event#type can be set after
+      // being constructed. If this isn't true, WebAudioTestAPI will cause
+      // an error due to how its own Event is implemented.
+      // https://github.com/mohayonao/web-audio-test-api/issues/18
+      void (function() {
+        try {
+          new Event('wat').type = 'customevent'
+          return it
+        } catch (e) {
+          void e
+          return it.skip
+        }
+      }())('should call #stop when playing finished', function() {
         let instance = sample.play()
         sinon.spy(instance, 'stop')
         context.$processTo(1.5)
         void expect(instance.stop).to.have.been.called
       })
+
       describe('#stop', function() {
         it('should stop the buffer source', function() {
           let instance = sample.play()
