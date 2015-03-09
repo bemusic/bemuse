@@ -46,7 +46,7 @@ Play on your computer or on your iPad.
 
 ## Development
 
-See the [Developer's Documentation](http://bemuse.readthedocs.org/en/sphinx/developers/README.html).
+See the [Developer's Documentation](http://bemuse.readthedocs.org/en/latest/developers/README.html).
 
 
 ## License
