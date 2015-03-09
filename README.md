@@ -10,9 +10,9 @@
   <a href="https://circleci.com/gh/bemusic/bemuse"><img src="https://img.shields.io/circleci/project/bemusic/bemuse/master.svg?style=flat" alt="CircleCI"></a>
   <a href="https://codeclimate.com/github/bemusic/bemuse"><img src="https://img.shields.io/codeclimate/github/bemusic/bemuse.svg?style=flat" alt="Code Climate"></a>
   <a href="https://coveralls.io/r/bemusic/bemuse"><img src="https://img.shields.io/coveralls/bemusic/bemuse.svg?style=flat" alt="Coveralls"></a>
-  <a href="http://bemusic.viewdocs.io/bemuse"><img src="https://img.shields.io/badge/view-docs-brightgreen.svg?style=flat" alt="View Docs"></a>
   <a href="https://gitter.im/bemusic/bemuse"><img src="https://img.shields.io/badge/gitter-join%20chat-green.svg?style=flat" alt="Gitter"></a>
   <br>
+  <a href="http://bemuse.rtfd.org/"><img src="https://img.shields.io/badge/read%20the-docs-brightgreen.svg?style=flat" alt="RTFD"></a>
   <a href="https://david-dm.org/bemusic/bemuse" title="Dependency status"><img src="https://david-dm.org/bemusic/bemuse.svg" alt="david-dm Dependency Status"></a>
   <a href="https://david-dm.org/bemusic/bemuse#info=devDependencies" title="devDependency status"><img src="https://david-dm.org/bemusic/bemuse/dev-status.svg" alt="david-dm Development Depedency Status"></a>
 </p>
