@@ -28,6 +28,8 @@ Directory Structure
 `src`
   Contains the production code.
   Code is split into *modules* for different parts of the application.
+`tasks`
+  Gulp tasks to run test server, build, test the application.
 
 
 Important Modules
