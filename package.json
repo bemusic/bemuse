@@ -63,7 +63,7 @@
     "node-notifier": "^4.0.3",
     "pegjs-loader": "^0.1.1",
     "ractive-loader": "^0.5.6",
-    "sass-loader": "^0.3.1",
+    "sass-loader": "^0.4.1",
     "script-loader": "^0.6.1",
     "sinon": "git://github.com/cjohansen/Sinon.JS#sinon-2.0",
     "sinon-chai": "^2.7.0",
