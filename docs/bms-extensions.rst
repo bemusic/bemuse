@@ -31,6 +31,8 @@ History
 
 Speed and scroll segments are introduced in StepMania 5
 to dynamically change notes spacing and notes scrolling speed.
+This allows scrolling effects to be created without relying on BPM changes
+or STOPs.
 
 
 Extension Lines
