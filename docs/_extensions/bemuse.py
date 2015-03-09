@@ -4,6 +4,7 @@ from docutils import nodes
 def setup(app):
     app.add_role('github', Autolink('https://github.com/%s'))
     app.add_role('module', Autolink('https://github.com/bemusic/bemuse/tree/master/src/%s'))
+    app.add_role('tree', Autolink('https://github.com/bemusic/bemuse/tree/master/%s'))
 
 class Autolink:
     def __init__(self, pattern):

@@ -5,6 +5,8 @@ Getting Started
 This page describes how to setup the project on your computer
 for local development.
 
+.. contents::
+
 
 Prerequisites
 -------------

@@ -5,4 +5,5 @@ Developer's Documentation
 
    getting-started
    architecture
+   skinning
 
