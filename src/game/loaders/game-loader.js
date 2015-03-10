@@ -35,7 +35,7 @@ export function load(spec) {
 
     task('Skin', 'Loading skin', ['Scintillator'],
     function(Scintillator, progress) {
-      return Scintillator.load('/skins/default/skin.xml', progress)
+      return Scintillator.load(Scintillator.getSkinUrl(), progress)
     })
 
     task('SkinContext', null, ['Scintillator', 'Skin'],

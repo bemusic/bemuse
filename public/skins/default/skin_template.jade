@@ -1,48 +1,13 @@
 doctype xml
-skin(width='1280' height='720')
+include _lib/common
+
++media('screen', 1280, 720)
 
   image(src='NotePanel/Left.png')
   image(src='InfoPanel/Background.png')
   image(src='NoteArea/Background/DXL.png')
   image(src='NoteArea/Flash.png')
   image(src='Note/DX.png')
-
-  // mixins
-  mixin longnote(x, cur, add, visible)
-    // body
-    sprite(image='Note/DX.png'
-            frame=(cur.width + 'x64+' + cur.x + '+' + (22 + add))
-            x=(x)
-            y=('(y*'+area_height+')+4-12')
-            width=(cur.width)
-            height=('height*'+area_height)
-            visible=visible)
-    // tail
-    sprite(image='Note/DX.png'
-            frame=(cur.width + 'x8+' + cur.x + '+' + (104 + add))
-            x=(x)
-            y='((y+height)*'+area_height+')+4-12'
-            visible=visible)
-    // head
-    sprite(image='Note/DX.png'
-            frame=(cur.width + 'x8+' + cur.x + '+' + (12 + add))
-            x=(x)
-            y='(y*'+area_height+')-12'
-            visible=visible)
-
-  mixin notes(columns)
-    - var x = 0
-    each column in columns
-      - var cur = styles[column.style]
-      - var ch  = column.channel
-      object(key='p1_note_' + ch)
-        sprite(image='Note/DX.png' frame=(cur.width + 'x12+' + cur.x + '+0')
-                x=(x) y='(y*'+area_height+')-12')
-      object(key='p1_longnote_' + ch)
-        +longnote(x, cur, 0, '!active && !missed')
-        +longnote(x, cur, 100, '!!active && !missed')
-        +longnote(x, cur, 200, '!!missed')
-      - x = x + cur.width + 1
 
   // note panel
   group
@@ -62,3 +27,58 @@ skin(width='1280' height='720')
     animation
       keyframe(t='0' y='720')
       keyframe(t='0.3' y='616' ease='quadOut')
+
++media('touch', 768, 928)
+
+  - var width = 768
+  - var height = 928
+
+  image(src='Touch/NotePanel.png')
+  image(src='Touch/ButtonPanel.png')
+  image(src='Touch/Buttons/Normal.png')
+  image(src='Touch/Buttons/Active.png')
+  image(src='NoteArea/Background/DXL.png')
+  image(src='NoteArea/Flash.png')
+  image(src='Note/DX.png')
+
+  // note panel
+  group(x=(width / 2 - 185))
+    animation
+      keyframe(t='0.25' alpha='0')
+      keyframe(t='0.6' alpha='1' ease='quadOut')
+    sprite(image='Touch/NotePanel.png' x='0' y='0')
+    group(x='42' y='0')
+      sprite(image='NoteArea/Background/DXL.png' x='0' y='0')
+      sprite(image='NoteArea/Flash.png' x='1' y='476' blend='screen'
+              alpha='1 - (t % 0.4) / 0.4')
+      group(x='1' mask='283x550+1+0')
+        +notes(mode.iidx_l)
+
+  // button panel
+  group(y=(height - 311))
+    animation
+      keyframe(t='0' y=(height))
+      keyframe(t='0.3' y=(height - 311) ease='quadOut')
+    sprite(image='Touch/ButtonPanel.png')
+    mixin button(i, row, n)
+      - var buttonWidth = 150
+      - var buttonHeight = 132
+      - var xbase = width / 2 - buttonWidth / 2
+      - var ybase = 20
+      - var spacing = 8
+      - var x = xbase + (buttonWidth + spacing) / 2 * i
+      - var y = ybase + row * (buttonHeight + spacing)
+      sprite(image='Touch/Buttons/Normal.png' x=x y=y)
+      sprite(image='Touch/Buttons/Active.png' x=x y=y alpha='p1_active_' + n)
+    +button(-3, 1, 1)
+    +button(-2, 0, 2)
+    +button(-1, 1, 3)
+    +button( 0, 0, 4)
+    +button( 1, 1, 5)
+    +button( 2, 0, 6)
+    +button( 3, 1, 7)
+
+
+
+
+

@@ -16,7 +16,8 @@ gulp.task('compile', function() {
   var globals   = yaml.safeLoad(fs.readFileSync('skin_data.yml', 'utf8'))
   var template  = jade.compileFile('skin_template.jade', { pretty: true })
   var compile   = createCompiler(template, globals)
-  compile('skin.xml', { })
+  compile('skin_screen.xml', { media: 'screen' })
+  compile('skin_touch.xml', { media: 'touch' })
 })
 
 var sources = [
