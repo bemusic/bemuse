@@ -6,6 +6,8 @@ To make it easy to adjust the gameplay screen's appearance,
 the *skin* is not built into the game's source code.
 
 .. contents::
+   :local:
+
 
 Location
 --------

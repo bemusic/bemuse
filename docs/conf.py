@@ -12,8 +12,22 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys
 import os
+import sys
+
+# Monkey-patch Sphinx to use XeTeX
+from os import path
+from sphinx.builders import latex
+
+class XeLaTeXBuilder(latex.LaTeXBuilder):
+    def finish(self):
+        super(XeLaTeXBuilder, self).finish()
+        makefile_name = path.join(self.outdir, 'Makefile')
+        with open(makefile_name, 'r') as f: makefile = f.read()
+        makefile = makefile.replace('pdflatex', 'xelatex')
+        with open(makefile_name, 'w') as f: f.write(makefile)
+
+latex.LaTeXBuilder = XeLaTeXBuilder
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -194,6 +208,11 @@ latex_elements = {
 
 # Additional stuff for the LaTeX preamble.
 #'preamble': '',
+    'inputenc': '',
+    'utf8extra': '',
+    'preamble': '''
+    \usepackage{fontspec}
+    ''',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
@@ -201,7 +220,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
   ('README', 'Bemuse.tex', u'Bemuse Documentation',
-   u'The BEAT☆MUSIC☆SEQUENCE team', 'manual'),
+   u'The Bemuse team', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
