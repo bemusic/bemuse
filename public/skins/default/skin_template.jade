@@ -44,7 +44,7 @@ skin(width='1280' height='720')
         +longnote(x, cur, 200, '!!missed')
       - x = x + cur.width + 1
 
-  // note panel
+  // note panel (Left)
   group
     animation
       keyframe(t='0.25' x='-361')
@@ -55,6 +55,19 @@ skin(width='1280' height='720')
       sprite(image='NoteArea/Flash.png' x='1' y='476' blend='screen'
               alpha='1 - (t % 0.4) / 0.4')
       group(x='1' mask='283x550+1+0')
+        +notes(mode.iidx_l)
+
+  // note panel (Right)
+  group
+    animation
+      keyframe(t='0.25' x='-361')
+      keyframe(t='0.6' x='100' ease='quadOut')
+    sprite(image='NotePanel/Right.png' x='0' y='0')
+    group(x='100' y='0')
+      sprite(image='NoteArea/Background/DXL.png' x='0' y='0')
+      sprite(image='NoteArea/Flash.png' x='1' y='476' blend='screen'
+              alpha='1 - (t % 0.4) / 0.4')
+      group(x='101' mask='283x550+1+0')
         +notes(mode.iidx_l)
 
   // info panel
