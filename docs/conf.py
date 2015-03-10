@@ -188,7 +188,7 @@ htmlhelp_basename = 'Bemusedoc'
 
 latex_elements = {
   'papersize': 'a4paper',
-  'pointsize': '12pt',
+  'pointsize': '11pt',
   'preamble': r'''
     \usepackage{charter}
     \usepackage[defaultsans]{lato}
