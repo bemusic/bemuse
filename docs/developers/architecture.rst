@@ -8,27 +8,27 @@ This section describes the architecture of the project.
 Directory Structure
 -------------------
 
-`assets`
+:tree:`assets`
   Image assets for use in the game.
   These assets can be referred from webpack code by ``require('assets/...')``.
-`bin`
+:tree:`bin`
   Useful scripts for routine work.
   Examples include setting up Git commit hooks and releasing a new version.
-`config`
+:tree:`config`
   Configuration code for webpack and other things.
-`docs`
+:tree:`docs`
   This documentation.
-`public`
+:tree:`public`
   Files that will be deployed verbatim to the server,
   **except for** ``index.html``, where the boot script will be inlined.
   These include skin files.
-`spec`
+:tree:`spec`
   Contains the unit tests.
   Its directory structure resembles the ``src`` directory.
-`src`
+:tree:`src`
   Contains the production code.
   Code is split into *modules* for different parts of the application.
-`tasks`
+:tree:`tasks`
   Gulp tasks to run test server, build, test the application.
 
 
