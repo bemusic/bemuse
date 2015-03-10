@@ -15,22 +15,6 @@
 import os
 import sys
 
-# Monkey-patch Sphinx to use XeTeX
-from os import path
-from sphinx.builders.latex import LaTeXBuilder
-
-original_finish = LaTeXBuilder.finish
-
-def hack_finish(self):
-    original_finish(self)
-    print "Hacking Makefile to use XeLaTeX"
-    makefile_name = path.join(self.outdir, 'Makefile')
-    with open(makefile_name, 'r') as f: makefile = f.read()
-    makefile = makefile.replace('pdflatex', 'xelatex')
-    with open(makefile_name, 'w') as f: f.write(makefile)
-
-LaTeXBuilder.finish = hack_finish
-
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
@@ -212,8 +196,10 @@ latex_elements = {
 #'preamble': '',
     'inputenc': '',
     'utf8extra': '',
-    'preamble': '''
-    \usepackage{fontspec}
+    'preamble': r'''
+    \usepackage{charter}
+    \usepackage[defaultsans]{lato}
+    \usepackage{inconsolata}
     ''',
 }
 
