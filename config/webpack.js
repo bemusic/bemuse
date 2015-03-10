@@ -46,7 +46,7 @@ let config = {
       {
         test: /\.scss$/,
         loader: 'style!css!autoprefixer?browsers=last 2 version' +
-                '!bemuse/webpack-map-demolisher!sass?outputStyle=expanded',
+                '!sass?outputStyle=expanded',
       },
       {
         test: /\.css$/,
