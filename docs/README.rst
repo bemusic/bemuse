@@ -19,6 +19,6 @@ This game can be played on browsers that implement these technologies
 .. toctree::
    :maxdepth: 2
 
-   bms-extensions
+   users/README
    developers/README
 

@@ -1,5 +1,5 @@
-Developer's Documentation
-=========================
+Developer Documentation
+=======================
 
 .. toctree::
 
