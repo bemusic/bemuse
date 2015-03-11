@@ -15,3 +15,13 @@ mode:
     - { style: 'white',   channel: '5' }
     - { style: 'blue',    channel: '6' }
     - { style: 'white',   channel: '7' }
+
+  iidx_r:
+    - { style: 'white',   channel: '1' }
+    - { style: 'blue',    channel: '2' }
+    - { style: 'white',   channel: '3' }
+    - { style: 'blue',    channel: '4' }
+    - { style: 'white',   channel: '5' }
+    - { style: 'blue',    channel: '6' }
+    - { style: 'white',   channel: '7' }
+    - { style: 'scratch', channel: 'SC' }
