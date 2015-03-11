@@ -5,6 +5,7 @@ include _lib/common
 
   image(src='NotePanel/Left.png')
   image(src='NotePanel/Right.png')
+  image(src='NotePanel/NotePanel.png')
   image(src='InfoPanel/Background.png')
   image(src='NoteArea/Background/DXL.png')
   image(src='NoteArea/Flash.png')
@@ -63,10 +64,23 @@ include _lib/common
   // note panel (Right)
   group
     animation
-      keyframe(t='0.25' x='361')
+      keyframe(t='0.25' x='-361')
       keyframe(t='0.6' x='490' ease='quadOut')
     sprite(image='NotePanel/Right.png' x='430' y='0')
     group(x='472' y='0')
+      sprite(image='NoteArea/Background/DXL.png' x='0' y='0')
+      sprite(image='NoteArea/Flash.png' x='1' y='476' blend='screen'
+              alpha='1 - (t % 0.4) / 0.4')
+      group(x='1' mask='283x550+1+0')
+        +notes(mode.iidx_l)
+        
+  // note panel (Mid)
+  group
+    animation
+      keyframe(t='0.25' x='-361')
+      keyframe(t='0.6' x='300' ease='quadOut')
+    sprite(image='NotePanel/NotePanel.png' x='160' y='0')
+    group(x='202' y='0')
       sprite(image='NoteArea/Background/DXL.png' x='0' y='0')
       sprite(image='NoteArea/Flash.png' x='1' y='476' blend='screen'
               alpha='1 - (t % 0.4) / 0.4')
