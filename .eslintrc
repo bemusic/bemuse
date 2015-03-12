@@ -1,0 +1,18 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "semi": [2, "never"],
+    "quotes": [2, "single", "avoid-escape"],
+    "comma-dangle": 0,
+    "no-multi-spaces": 0,
+    "no-underscore-dangle": 0
+  },
+  "ecmaFeatures": {
+    "modules": true
+  }
+}
