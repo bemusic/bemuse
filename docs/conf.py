@@ -55,8 +55,9 @@ copyright = u'2015, The BEAT☆MUSIC☆SEQUENCE team'
 # built documents.
 #
 
+import re
 # The full version, including alpha/beta/rc tags.
-release = os.popen('git describe').read().strip()
+release = re.sub('^v', '', os.popen('git describe').read().strip())
 # The short X.Y version.
 version = release
 
