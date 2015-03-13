@@ -213,18 +213,18 @@
     </animation>
     <sprite image="Touch/ButtonPanel.png"></sprite>
       <sprite image="Touch/Buttons/Normal.png" x="72" y="160"></sprite>
-      <sprite image="Touch/Buttons/Active.png" x="72" y="160" alpha="p1_active_1"></sprite>
+      <sprite image="Touch/Buttons/Active.png" x="72" y="160" alpha="p1_1_active"></sprite>
       <sprite image="Touch/Buttons/Normal.png" x="151" y="20"></sprite>
-      <sprite image="Touch/Buttons/Active.png" x="151" y="20" alpha="p1_active_2"></sprite>
+      <sprite image="Touch/Buttons/Active.png" x="151" y="20" alpha="p1_2_active"></sprite>
       <sprite image="Touch/Buttons/Normal.png" x="230" y="160"></sprite>
-      <sprite image="Touch/Buttons/Active.png" x="230" y="160" alpha="p1_active_3"></sprite>
+      <sprite image="Touch/Buttons/Active.png" x="230" y="160" alpha="p1_3_active"></sprite>
       <sprite image="Touch/Buttons/Normal.png" x="309" y="20"></sprite>
-      <sprite image="Touch/Buttons/Active.png" x="309" y="20" alpha="p1_active_4"></sprite>
+      <sprite image="Touch/Buttons/Active.png" x="309" y="20" alpha="p1_4_active"></sprite>
       <sprite image="Touch/Buttons/Normal.png" x="388" y="160"></sprite>
-      <sprite image="Touch/Buttons/Active.png" x="388" y="160" alpha="p1_active_5"></sprite>
+      <sprite image="Touch/Buttons/Active.png" x="388" y="160" alpha="p1_5_active"></sprite>
       <sprite image="Touch/Buttons/Normal.png" x="467" y="20"></sprite>
-      <sprite image="Touch/Buttons/Active.png" x="467" y="20" alpha="p1_active_6"></sprite>
+      <sprite image="Touch/Buttons/Active.png" x="467" y="20" alpha="p1_6_active"></sprite>
       <sprite image="Touch/Buttons/Normal.png" x="546" y="160"></sprite>
-      <sprite image="Touch/Buttons/Active.png" x="546" y="160" alpha="p1_active_7"></sprite>
+      <sprite image="Touch/Buttons/Active.png" x="546" y="160" alpha="p1_7_active"></sprite>
   </group>
 </skin>

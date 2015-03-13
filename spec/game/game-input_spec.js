@@ -47,6 +47,9 @@ describe('GameInput', function() {
       expect(input.get('wow').changed).to.equal(false)
       input.update()
       expect(input.get('wow').changed).to.equal(false)
+      plugin.out = { wow: 0 }
+      input.update()
+      expect(input.get('wow').changed).to.equal(true)
     })
   })
 

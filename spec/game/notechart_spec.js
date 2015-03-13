@@ -1,14 +1,5 @@
 
-import BMS from 'bms'
-import Notechart from 'bemuse/game/notechart'
-
-function chart(code) {
-  return BMS.Compiler.compile(code).chart
-}
-
-function notechart(code) {
-  return Notechart.fromBMSChart(chart(code), 1, { })
-}
+import { notechart } from './spec_helper'
 
 describe('Notechart', function() {
 
@@ -60,6 +51,14 @@ describe('Notechart', function() {
     it('should convert seconds to position', function() {
       var subject = notechart('#BPM 120')
       expect(subject.secondsToPosition(1)).to.equal(2)
+    })
+  })
+
+  describe('#columns', function() {
+    it('should return columns in notechart', function() {
+      var subject = notechart('#00111:11')
+      expect(subject.columns)
+          .to.deep.equal(['SC', '1', '2', '3', '4', '5', '6', '7'])
     })
   })
 

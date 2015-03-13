@@ -8,7 +8,7 @@ import GameNote   from './data/game-note'
 // game will ever need.
 //
 export class Notechart {
-  constructor(bms, playerNumber, playerOptions) {
+  constructor(bms) {
     let bmsNotes    = BMS.Notes.fromBMSChart(bms)
     let timing      = BMS.Timing.fromBMSChart(bms)
     let keysounds   = BMS.Keysounds.fromBMSChart(bms)
@@ -17,8 +17,6 @@ export class Notechart {
     this._notes     = this._generatePlayableNotesFromBMS(bmsNotes)
     this._autos     = this._generateAutoKeysoundEventsFromBMS(bmsNotes)
     this._samples   = this._generateKeysoundFiles(keysounds)
-    void playerNumber
-    void playerOptions
   }
   get notes() {
     return this._notes
@@ -31,6 +29,9 @@ export class Notechart {
   }
   get keysounds() {
     return this._keysounds.all()
+  }
+  get columns() {
+    return ['SC', '1', '2', '3', '4', '5', '6', '7']
   }
   beatToSeconds(beat) {
     return this._timing.beatToSeconds(beat)

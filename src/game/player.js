@@ -3,8 +3,10 @@ export class Player {
   constructor(notechart, playerNumber, options) {
     this._notechart = notechart
     this._number    = playerNumber
-    void playerNumber
     void options
+  }
+  get columns() {
+    return this._notechart.columns
   }
   get notechart() {
     return this._notechart
