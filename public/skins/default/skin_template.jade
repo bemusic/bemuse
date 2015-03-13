@@ -64,10 +64,10 @@ include _lib/common
   // note panel (Right)
   group
     animation
-      keyframe(t='0.25' x='-361')
-      keyframe(t='0.6' x='490' ease='quadOut')
-    sprite(image='NotePanel/Right.png' x='430' y='0')
-    group(x='472' y='0')
+      keyframe(t='0.25' x='1280')
+      keyframe(t='0.6' x='919' ease='quadOut')
+    sprite(image='NotePanel/Right.png' x='0' y='0')
+    group(x='42' y='0')
       sprite(image='NoteArea/Background/DXL.png' x='0' y='0')
       sprite(image='NoteArea/Flash.png' x='1' y='476' blend='screen'
               alpha='1 - (t % 0.4) / 0.4')
@@ -75,12 +75,12 @@ include _lib/common
         +notes(mode.iidx_r)
         
   // note panel (Mid)
-  group
+  group(x='455')
     animation
-      keyframe(t='0.25' x='-361')
-      keyframe(t='0.6' x='300' ease='quadOut')
-    sprite(image='NotePanel/Middle.png' x='160' y='0')
-    group(x='202' y='0')
+      keyframe(t='0.25' alpha='0')
+      keyframe(t='0.6' alpha='1' ease='quadOut')
+    sprite(image='NotePanel/Middle.png' x='0' y='0')
+    group(x='42' y='0')
       sprite(image='NoteArea/Background/DXL.png' x='0' y='0')
       sprite(image='NoteArea/Flash.png' x='1' y='476' blend='screen'
               alpha='1 - (t % 0.4) / 0.4')
