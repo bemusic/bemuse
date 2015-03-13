@@ -134,7 +134,7 @@ include _lib/common
       - var x = xbase + (buttonWidth + spacing) / 2 * i
       - var y = ybase + row * (buttonHeight + spacing)
       sprite(image='Touch/Buttons/Normal.png' x=x y=y)
-      sprite(image='Touch/Buttons/Active.png' x=x y=y alpha='p1_active_' + n)
+      sprite(image='Touch/Buttons/Active.png' x=x y=y alpha='p1_' + n + '_active')
     +button(-3, 1, 1)
     +button(-2, 0, 2)
     +button(-1, 1, 3)

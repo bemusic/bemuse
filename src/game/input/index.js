@@ -70,6 +70,7 @@ export class GameInput {
         let last    = +state[key] || 0
         let current = +out[key]   || 0
         if (last !== current) diff.push([key, current])
+        state[key] = current
       }
       return diff
     })

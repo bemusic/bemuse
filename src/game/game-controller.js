@@ -1,5 +1,6 @@
 
 import GameTimer from './game-timer'
+import GameState from './state'
 import GameInput from './input'
 
 export class GameController {
@@ -9,6 +10,7 @@ export class GameController {
     this._audio   = audio
     this._timer   = new GameTimer()
     this._input   = new GameInput()
+    this._state   = new GameState(game)
   }
   get game() {
     return this._game
@@ -29,8 +31,10 @@ export class GameController {
   }
   _update() {
     let t = this._timer.time
-    this._display.update(t)
-    this._audio.update(t)
+    this._input.update()
+    this._state.update(t,   this._input)
+    this._audio.update(t,   this._state)
+    this._display.update(t, this._state)
   }
 }
 
