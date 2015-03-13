@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <skin width="1280" height="720">
   <image src="NotePanel/Left.png"></image>
+  <image src="NotePanel/Middle.png"></image>
   <image src="NotePanel/Right.png"></image>
-  <image src="NotePanel/NotePanel.png"></image>
   <image src="InfoPanel/Background.png"></image>
   <image src="NoteArea/Background/DXL.png"></image>
   <image src="NoteArea/Flash.png"></image>
@@ -410,7 +410,7 @@
       <keyframe t="0.25" x="-361"></keyframe>
       <keyframe t="0.6" x="300" ease="quadOut"></keyframe>
     </animation>
-    <sprite image="NotePanel/NotePanel.png" x="160" y="0"></sprite>
+    <sprite image="NotePanel/Middle.png" x="160" y="0"></sprite>
     <group x="202" y="0">
       <sprite image="NoteArea/Background/DXL.png" x="0" y="0"></sprite>
       <sprite image="NoteArea/Flash.png" x="1" y="476" blend="screen" alpha="1 - (t % 0.4) / 0.4"></sprite>
