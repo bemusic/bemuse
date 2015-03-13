@@ -11,7 +11,7 @@ import NoteArea from 'bemuse/game/display/note-area'
 
 export function main() {
   co(function*() {
-    let skin      = yield Scintillator.load('/skins/default/skin.xml')
+    let skin      = yield Scintillator.load(Scintillator.getSkinUrl())
     let context   = new Scintillator.Context(skin)
 
     let notes     = generateRandomNotes()
