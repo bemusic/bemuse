@@ -34,6 +34,7 @@ In the first line,
     - Meanings same as [Angular](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#type).
 - Scope is where the change was made.
     - This one is optional; use when applicable.
+    - If it affects the whole project, use the tilde as the scope. e.g. chore(~).
 - Subject
     - Be short and concise.
     - Start with lower case verb, don't end with a period.
