@@ -4,9 +4,9 @@
   <image src="NotePanel/Middle.png"></image>
   <image src="NotePanel/Right.png"></image>
   <image src="InfoPanel/Background.png"></image>
-  <image src="NoteArea/Background/DXL.png"></image>
   <image src="NoteArea/Flash.png"></image>
-  <image src="Note/DX.png"></image>
+  <image src="Note/DX/BackgroundLeft.png"></image>
+  <image src="Note/DX/Note.png"></image>
   <!-- mixins-->
   <!-- note panel (Left)-->
   <group>
@@ -16,7 +16,7 @@
     </animation>
     <sprite image="NotePanel/Left.png" x="0" y="0"></sprite>
     <group x="34" y="0">
-      <sprite image="NoteArea/Background/DXL.png" x="0" y="0"></sprite>
+      <sprite image="Note/DX/BackgroundLeft.png" x="0" y="0"></sprite>
       <sprite image="NoteArea/Flash.png" x="1" y="455" blend="screen" alpha="1 - (t % 0.4) / 0.4"></sprite>
       <group x="1" mask="283x550+1+0">
         <object key="p1_note_SC">
@@ -214,7 +214,7 @@
     </animation>
     <sprite image="NotePanel/Right.png" x="0" y="0"></sprite>
     <group x="42" y="0">
-      <sprite image="NoteArea/Background/DXL.png" x="0" y="0"></sprite>
+      <sprite image="Note/DX/BackgroundLeft.png" x="0" y="0"></sprite>
       <sprite image="NoteArea/Flash.png" x="1" y="455" blend="screen" alpha="1 - (t % 0.4) / 0.4"></sprite>
       <group x="1" mask="283x550+1+0">
         <object key="p1_note_1">
@@ -412,7 +412,7 @@
     </animation>
     <sprite image="NotePanel/Middle.png" x="0" y="0"></sprite>
     <group x="42" y="0">
-      <sprite image="NoteArea/Background/DXL.png" x="0" y="0"></sprite>
+      <sprite image="Note/DX/BackgroundLeft.png" x="0" y="0"></sprite>
       <sprite image="NoteArea/Flash.png" x="1" y="455" blend="screen" alpha="1 - (t % 0.4) / 0.4"></sprite>
       <group x="1" mask="283x550+1+0">
         <object key="p1_note_SC">

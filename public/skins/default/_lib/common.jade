@@ -6,7 +6,7 @@ mixin media(type, width, height)
 
 mixin longnote(x, cur, add, visible)
   // body
-  sprite(image='Note/DX.png'
+  sprite(image='Note/DX/Note.png'
           frame=(cur.width + 'x64+' + cur.x + '+' + (22 + add))
           x=(x)
           y=('(y*'+area_height+')+4-12')
@@ -14,13 +14,13 @@ mixin longnote(x, cur, add, visible)
           height=('height*'+area_height)
           visible=visible)
   // tail
-  sprite(image='Note/DX.png'
+  sprite(image='Note/DX/Note.png'
           frame=(cur.width + 'x8+' + cur.x + '+' + (104 + add))
           x=(x)
           y='((y+height)*'+area_height+')+4-12'
           visible=visible)
   // head
-  sprite(image='Note/DX.png'
+  sprite(image='Note/DX/Note.png'
           frame=(cur.width + 'x8+' + cur.x + '+' + (12 + add))
           x=(x)
           y='(y*'+area_height+')-12'
@@ -32,7 +32,7 @@ mixin notes(columns)
     - var cur = styles[column.style]
     - var ch  = column.channel
     object(key='p1_note_' + ch)
-      sprite(image='Note/DX.png' frame=(cur.width + 'x12+' + cur.x + '+0')
+      sprite(image='Note/DX/Note.png' frame=(cur.width + 'x12+' + cur.x + '+0')
               x=(x) y='(y*'+area_height+')-12')
     object(key='p1_longnote_' + ch)
       +longnote(x, cur, 0, '!active && !missed')

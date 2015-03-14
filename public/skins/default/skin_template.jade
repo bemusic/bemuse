@@ -7,9 +7,9 @@ include _lib/common
   image(src='NotePanel/Middle.png')
   image(src='NotePanel/Right.png')
   image(src='InfoPanel/Background.png')
-  image(src='NoteArea/Background/DXL.png')
   image(src='NoteArea/Flash.png')
-  image(src='Note/DX.png')
+  image(src='Note/DX/BackgroundLeft.png')
+  image(src='Note/DX/Note.png')
 
   // mixins
   mixin longnote(x, cur, add, visible)
@@ -55,7 +55,7 @@ include _lib/common
       keyframe(t='0.6' x='0' ease='quadOut')
     sprite(image='NotePanel/Left.png' x='0' y='0')
     group(x='34' y='0')
-      sprite(image='NoteArea/Background/DXL.png' x='0' y='0')
+      sprite(image='Note/DX/BackgroundLeft.png' x='0' y='0')
       sprite(image='NoteArea/Flash.png' x='1' y='455' blend='screen'
               alpha='1 - (t % 0.4) / 0.4')
       group(x='1' mask='283x550+1+0')
@@ -68,7 +68,7 @@ include _lib/common
       keyframe(t='0.6' x='919' ease='quadOut')
     sprite(image='NotePanel/Right.png' x='0' y='0')
     group(x='42' y='0')
-      sprite(image='NoteArea/Background/DXL.png' x='0' y='0')
+      sprite(image='Note/DX/BackgroundLeft.png' x='0' y='0')
       sprite(image='NoteArea/Flash.png' x='1' y='455' blend='screen'
               alpha='1 - (t % 0.4) / 0.4')
       group(x='1' mask='283x550+1+0')
@@ -81,7 +81,7 @@ include _lib/common
       keyframe(t='0.6' alpha='1' ease='quadOut')
     sprite(image='NotePanel/Middle.png' x='0' y='0')
     group(x='42' y='0')
-      sprite(image='NoteArea/Background/DXL.png' x='0' y='0')
+      sprite(image='Note/DX/BackgroundLeft.png' x='0' y='0')
       sprite(image='NoteArea/Flash.png' x='1' y='455' blend='screen'
               alpha='1 - (t % 0.4) / 0.4')
       group(x='1' mask='283x550+1+0')
@@ -102,9 +102,9 @@ include _lib/common
   image(src='Touch/ButtonPanel.png')
   image(src='Touch/Buttons/Normal.png')
   image(src='Touch/Buttons/Active.png')
-  image(src='NoteArea/Background/DXL.png')
   image(src='NoteArea/Flash.png')
-  image(src='Note/DX.png')
+  image(src='Note/DX/Note.png')
+  image(src='Note/DX/BackgroundLeft.png')
 
   // note panel
   group(x=(width / 2 - 185))
@@ -113,7 +113,7 @@ include _lib/common
       keyframe(t='0.6' alpha='1' ease='quadOut')
     sprite(image='Touch/NotePanel.png' x='0' y='0')
     group(x='42' y='0')
-      sprite(image='NoteArea/Background/DXL.png' x='0' y='0')
+      sprite(image='Note/DX/BackgroundLeft.png' x='0' y='0')
       sprite(image='NoteArea/Flash.png' x='1' y='455' blend='screen'
               alpha='1 - (t % 0.4) / 0.4')
       group(x='1' mask='283x550+1+0')
