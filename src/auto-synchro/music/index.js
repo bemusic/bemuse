@@ -22,13 +22,27 @@ let audioExt =  once(() =>
                   canPlay('audio/ogg; codecs="vorbis"') ? '.ogg' : '.m4a')
 
 /**
+ * The asset URL of these files...
+ */
+let ASSET_URLS = {
+  'bgm.m4a': require('./data/bgm.m4a'),
+  'bgm.ogg': require('./data/bgm.ogg'),
+  'intro.m4a': require('./data/intro.m4a'),
+  'intro.ogg': require('./data/intro.ogg'),
+  'kick.m4a': require('./data/kick.m4a'),
+  'kick.ogg': require('./data/kick.ogg'),
+  'snare.m4a': require('./data/snare.m4a'),
+  'snare.ogg': require('./data/snare.ogg'),
+}
+
+/**
  * Loads the files and create a music instance.
  */
 export function load() {
   return co(function*() {
     let master  = new SamplingMaster(context)
     let sample  =
-          name => download(`/sounds/sync/${name}${audioExt()}`)
+          name => download(ASSET_URLS[`${name}${audioExt()}`])
             .as('arraybuffer')
             .then(buf => master.sample(buf))
     let samples = R.fromPairs(

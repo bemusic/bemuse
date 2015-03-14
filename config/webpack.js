@@ -64,6 +64,10 @@ let config = {
         test: /\.jpg$/,
         loader: 'file-loader',
       },
+      {
+        test: /\.(?:mp3|mp4|ogg|m4a)$/,
+        loader: 'file-loader',
+      },
     ],
     postLoaders: [],
     preLoaders: [],
