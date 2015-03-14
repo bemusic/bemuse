@@ -7,25 +7,40 @@ import Instance from '../lib/instance'
 import Expression from '../../expression'
 import Animation  from './animation'
 
+// Numeric properties that may be interpreted as expressions.
+let properties = [
+  { name: 'x',       default: '0', apply: (obj, v) => obj.x = v },
+  { name: 'y',       default: '0', apply: (obj, v) => obj.y = v },
+  { name: 'scale-x', default: '1', apply: (obj, v) => obj.scale.x = v },
+  { name: 'scale-y', default: '1', apply: (obj, v) => obj.scale.y = v },
+  { name: 'alpha',   default: '1', apply: (obj, v) => obj.alpha = v },
+  { name: 'width',                 apply: (obj, v) => obj.width = v},
+  { name: 'height',                apply: (obj, v) => obj.height = v },
+  { name: 'visible',               apply: (obj, v) => obj.visible = v },
+]
+
 export class DisplayObject extends SkinNode {
   compile(compiler, $el) {
-    this.x          = new Expression($el.attr('x') || '0')
-    this.y          = new Expression($el.attr('y') || '0')
-    this.alpha      = new Expression($el.attr('alpha') || '1')
-    this.animation  = Animation.compile(compiler, $el)
-    this.blendMode  = parseBlendMode($el.attr('blend') || 'normal')
-    if ($el.attr('width'))   this.width   = new Expression($el.attr('width'))
-    if ($el.attr('height'))  this.height  = new Expression($el.attr('height'))
-    if ($el.attr('visible')) this.visible = new Expression($el.attr('visible'))
+    this._animation  = Animation.compile(compiler, $el)
+    this._properties = properties.map(property => {
+      let value = $el.attr(property.name)
+      if (!property.default && !value) {
+        return () => {}
+      } else {
+        let expression = new Expression(value || property.default)
+        return (self, object) => {
+          self.bind(this._animation.prop(property.name, expression),
+              value => property.apply(object, value))
+        }
+      }
+    })
+    this.blendMode = parseBlendMode($el.attr('blend') || 'normal')
   }
   instantiate(context, object) {
     return new Instance(context, self => {
-      self.bind(this.animation.prop('x',     this.x),     x => object.x = x)
-      self.bind(this.animation.prop('y',     this.y),     y => object.y = y)
-      self.bind(this.animation.prop('alpha', this.alpha), a => object.alpha = a)
-      if (this.width)   self.bind(this.width,   w => object.width   = w)
-      if (this.height)  self.bind(this.height,  h => object.height  = h)
-      if (this.visible) self.bind(this.visible, v => object.visible = v)
+      for (let instantiateProperty of this._properties) {
+        instantiateProperty(self, object)
+      }
       object.blendMode = this.blendMode
     })
   }

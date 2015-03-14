@@ -21,8 +21,8 @@ gulp.task('compile', function() {
 })
 
 var sources = [
-      '*.jade',
-      '*.yml',
+      '**/*.jade',
+      '**/*.yml',
     ]
 
 gulp.task('watch', function() {

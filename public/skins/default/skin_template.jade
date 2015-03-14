@@ -7,46 +7,11 @@ include _lib/common
   image(src='NotePanel/Middle.png')
   image(src='NotePanel/Right.png')
   image(src='InfoPanel/Background.png')
-  image(src='NoteArea/Background/DXL.png')
   image(src='NoteArea/Flash.png')
-  image(src='Note/DX.png')
-
-  // mixins
-  mixin longnote(x, cur, add, visible)
-    // body
-    sprite(image='Note/DX.png'
-            frame=(cur.width + 'x64+' + cur.x + '+' + (22 + add))
-            x=(x)
-            y=('(y*'+area_height+')+4-12')
-            width=(cur.width)
-            height=('height*'+area_height)
-            visible=visible)
-    // tail
-    sprite(image='Note/DX.png'
-            frame=(cur.width + 'x8+' + cur.x + '+' + (104 + add))
-            x=(x)
-            y='((y+height)*'+area_height+')+4-12'
-            visible=visible)
-    // head
-    sprite(image='Note/DX.png'
-            frame=(cur.width + 'x8+' + cur.x + '+' + (12 + add))
-            x=(x)
-            y='(y*'+area_height+')-12'
-            visible=visible)
-
-  mixin notes(columns)
-    - var x = 0
-    each column in columns
-      - var cur = styles[column.style]
-      - var ch  = column.channel
-      object(key='p1_note_' + ch)
-        sprite(image='Note/DX.png' frame=(cur.width + 'x12+' + cur.x + '+0')
-                x=(x) y='(y*'+area_height+')-12')
-      object(key='p1_longnote_' + ch)
-        +longnote(x, cur, 0, '!active && !missed')
-        +longnote(x, cur, 100, '!!active && !missed')
-        +longnote(x, cur, 200, '!!missed')
-      - x = x + cur.width + 1
+  image(src='Note/DX/BackgroundLeft.png')
+  image(src='Note/DX/BackgroundRight.png')
+  image(src='Note/DX/Note.png')
+  image(src='Note/DX/Highlight.png')
 
   // note panel (Left)
   group
@@ -55,11 +20,7 @@ include _lib/common
       keyframe(t='0.6' x='0' ease='quadOut')
     sprite(image='NotePanel/Left.png' x='0' y='0')
     group(x='34' y='0')
-      sprite(image='NoteArea/Background/DXL.png' x='0' y='0')
-      sprite(image='NoteArea/Flash.png' x='1' y='455' blend='screen'
-              alpha='1 - (t % 0.4) / 0.4')
-      group(x='1' mask='283x550+1+0')
-        +notes(mode.iidx_l)
+      +note-area(mode.iidx_l)
 
   // note panel (Right)
   group
@@ -68,11 +29,7 @@ include _lib/common
       keyframe(t='0.6' x='919' ease='quadOut')
     sprite(image='NotePanel/Right.png' x='0' y='0')
     group(x='42' y='0')
-      sprite(image='NoteArea/Background/DXL.png' x='0' y='0')
-      sprite(image='NoteArea/Flash.png' x='1' y='455' blend='screen'
-              alpha='1 - (t % 0.4) / 0.4')
-      group(x='1' mask='283x550+1+0')
-        +notes(mode.iidx_r)
+      +note-area(mode.iidx_r)
         
   // note panel (Middle)
   group(x='455')
@@ -81,11 +38,7 @@ include _lib/common
       keyframe(t='0.6' alpha='1' ease='quadOut')
     sprite(image='NotePanel/Middle.png' x='0' y='0')
     group(x='42' y='0')
-      sprite(image='NoteArea/Background/DXL.png' x='0' y='0')
-      sprite(image='NoteArea/Flash.png' x='1' y='455' blend='screen'
-              alpha='1 - (t % 0.4) / 0.4')
-      group(x='1' mask='283x550+1+0')
-        +notes(mode.iidx_l)
+      +note-area(mode.iidx_l)
 
   // info panel
   sprite(image='InfoPanel/Background.png' y='616')
@@ -102,9 +55,10 @@ include _lib/common
   image(src='Touch/ButtonPanel.png')
   image(src='Touch/Buttons/Normal.png')
   image(src='Touch/Buttons/Active.png')
-  image(src='NoteArea/Background/DXL.png')
   image(src='NoteArea/Flash.png')
-  image(src='Note/DX.png')
+  image(src='Note/DX/Note.png')
+  image(src='Note/DX/BackgroundLeft.png')
+  image(src='Note/DX/Highlight.png')
 
   // note panel
   group(x=(width / 2 - 185))
@@ -113,11 +67,7 @@ include _lib/common
       keyframe(t='0.6' alpha='1' ease='quadOut')
     sprite(image='Touch/NotePanel.png' x='0' y='0')
     group(x='42' y='0')
-      sprite(image='NoteArea/Background/DXL.png' x='0' y='0')
-      sprite(image='NoteArea/Flash.png' x='1' y='455' blend='screen'
-              alpha='1 - (t % 0.4) / 0.4')
-      group(x='1' mask='283x550+1+0')
-        +notes(mode.iidx_l)
+      +note-area(mode.iidx_l)
 
   // button panel
   group(y=(height - 311))
