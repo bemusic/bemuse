@@ -5,15 +5,18 @@ export class PlayerDisplay {
   constructor(player) {
     this._player    = player
     this._noteArea  = new NoteArea(player.notechart.notes)
+    this._stateful  = { }
   }
   update(time, gameTime, playerState) {
     let player   = this._player
     let noteArea = this._noteArea
+    let stateful = this._stateful
     let position = player.notechart.secondsToPosition(gameTime)
     let data     = { }
     let push     = (key, value) => (data[key] || (data[key] = [])).push(value)
     updateVisibleNotes()
     updateInput()
+    Object.assign(data, stateful)
     return data
 
     function updateVisibleNotes() {
@@ -45,9 +48,9 @@ export class PlayerDisplay {
         data[`${column}_active`] = (control.value !== 0) ? 1 : 0
         if (control.changed) {
           if (control.value !== 0) {
-            data[`${column}_down`] = time
+            stateful[`${column}_down`] = time
           } else {
-            data[`${column}_up`] = time
+            stateful[`${column}_up`] = time
           }
         }
       }

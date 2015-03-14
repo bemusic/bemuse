@@ -11,6 +11,8 @@ export class DisplayObject extends SkinNode {
   compile(compiler, $el) {
     this.x          = new Expression($el.attr('x') || '0')
     this.y          = new Expression($el.attr('y') || '0')
+    this.scaleX     = new Expression($el.attr('scale-x') || '1')
+    this.scaleY     = new Expression($el.attr('scale-y') || '1')
     this.alpha      = new Expression($el.attr('alpha') || '1')
     this.animation  = Animation.compile(compiler, $el)
     this.blendMode  = parseBlendMode($el.attr('blend') || 'normal')
@@ -20,9 +22,14 @@ export class DisplayObject extends SkinNode {
   }
   instantiate(context, object) {
     return new Instance(context, self => {
-      self.bind(this.animation.prop('x',     this.x),     x => object.x = x)
-      self.bind(this.animation.prop('y',     this.y),     y => object.y = y)
-      self.bind(this.animation.prop('alpha', this.alpha), a => object.alpha = a)
+      self.bind(this.animation.prop('x',       this.x),      x => object.x = x)
+      self.bind(this.animation.prop('y',       this.y),      y => object.y = y)
+      self.bind(this.animation.prop('alpha',   this.alpha),
+          a => object.alpha = a)
+      self.bind(this.animation.prop('scale-x', this.scaleX),
+          x => object.scale.x = x)
+      self.bind(this.animation.prop('scale-y', this.scaleY),
+          y => object.scale.y = y)
       if (this.width)   self.bind(this.width,   w => object.width   = w)
       if (this.height)  self.bind(this.height,  h => object.height  = h)
       if (this.visible) self.bind(this.visible, v => object.visible = v)
