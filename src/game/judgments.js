@@ -1,4 +1,14 @@
 
+export const UNJUDGED = 0
+export const MISSED = -1
+
+export const JUDGMENTS = [
+  { value: 1, timegate: 0.018 },
+  { value: 2, timegate: 0.040 },
+  { value: 3, timegate: 0.100 },
+  { value: 4, timegate: 0.200 },
+]
+
 /**
  * Takes a gameTime and noteTime and returns the appropriate judgment.
  *
@@ -11,14 +21,12 @@
  */
 export function judgeTime(gameTime, noteTime) {
   let delta = Math.abs(gameTime - noteTime)
-  if (delta < 0.018) return 1
-  if (delta < 0.040) return 2
-  if (delta < 0.100) return 3
-  if (delta < 0.200) return 4
-  if (gameTime < noteTime) return 0
-  return -1
+  for (let i = 0; i < JUDGMENTS.length; i ++) {
+    if (delta < JUDGMENTS[i].timegate) return JUDGMENTS[i].value
+  }
+  return gameTime < noteTime ? UNJUDGED : MISSED
 }
 
 export function breaksCombo(judgment) {
-  return judgment === -1 || judgment >= 4
+  return judgment === MISSED || judgment >= 4
 }

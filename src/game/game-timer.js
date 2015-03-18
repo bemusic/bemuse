@@ -3,11 +3,13 @@
 // This class should be tied to the AudioContext.
 //
 export class GameTimer {
-  constructor() {
-    this._started = new Date().getTime()
+  constructor(audio) {
+    audio.unmute() // kick start the currentTime of audio context
+    this._context = audio.context
+    this._started = this._context.currentTime
   }
   get time() {
-    return (new Date().getTime() - this._started) / 1000
+    return this._context.currentTime - this._started
   }
 }
 
