@@ -56,9 +56,21 @@ describe('PlayerDisplay', function() {
     beforeEach(function() {
       setup(playerWithBMS('#BPM 60\n#00151:1111'))
     })
-    it('displays unjudged notes', function() {
+    it('displays unjudged long notes', function() {
       update(3.95, 3.95, blankState())
       expect(data['longnote_1']).to.have.length(1)
+      void expect(data['longnote_1'][0].active).to.be.false
+      void expect(data['longnote_1'][0].missed).to.be.false
+    })
+    it('displays holding long notes', function() {
+      let state = tap(s => s.getNoteJudgment.returns(1), blankState())
+      update(3.95, 3.95, state)
+      void expect(data['longnote_1'][0].active).to.be.true
+    })
+    it('displays missed long notes', function() {
+      let state = tap(s => s.getNoteJudgment.returns(-1), blankState())
+      update(3.95, 3.95, state)
+      void expect(data['longnote_1'][0].missed).to.be.true
     })
   })
 
@@ -84,6 +96,7 @@ describe('PlayerDisplay', function() {
       input: { get: () => ({ value: 0, changed: false }) },
       notifications: { },
       getNoteStatus: sinon.stub().returns('unjudged'),
+      getNoteJudgment: sinon.stub().returns(0),
     }
   }
 

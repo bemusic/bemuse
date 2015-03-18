@@ -1,6 +1,6 @@
 
 import R from 'ramda'
-import { judgeTime, MISSED } from '../judgments'
+import { judgeTime, judgeEndTime, MISSED } from '../judgments'
 import PlayerStats   from './player-stats'
 
 export class PlayerState {
@@ -60,7 +60,7 @@ export class PlayerState {
       let hit       = judgment > 0 && control.changed && control.value
       return missed || hit
     } else if (status === 'active') {
-      let judgment  = judgeTime(this._gameTime, note.end.time)
+      let judgment  = judgeEndTime(this._gameTime, note.end.time)
       let missed    = judgment === MISSED
       let lifted    = !control.value
       return missed || lifted
@@ -78,7 +78,7 @@ export class PlayerState {
         result = { status, judgment, delta }
       } else if (result.status === 'active') {
         delta    = this._gameTime - note.end.time
-        judgment = judgeTime(this._gameTime, note.end.time) || MISSED
+        judgment = judgeEndTime(this._gameTime, note.end.time) || MISSED
         result = { status: 'judged', judgment, delta }
       }
     } else {
