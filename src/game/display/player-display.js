@@ -1,5 +1,6 @@
 
 import NoteArea from './note-area'
+import { MISSED } from '../judgments'
 
 export class PlayerDisplay {
   constructor(player) {
@@ -24,17 +25,18 @@ export class PlayerDisplay {
       let entities = noteArea.getVisibleNotes(position, position + (5 / 3))
       for (let entity of entities) {
         let note    = entity.note
-        if (playerState.getNoteStatus(note) !== 'judged') {
-          let column  = note.column
-          if (entity.height) {
-            push(`longnote_${column}`, {
-              key:    note.id,
-              y:      entity.y,
-              height: entity.height,
-              active: entity.y + entity.height > 1,
-              missed: false,
-            })
-          } else {
+        let column  = note.column
+        if (entity.height) {
+          let judgment = playerState.getNoteJudgment(note)
+          push(`longnote_${column}`, {
+            key:    note.id,
+            y:      entity.y,
+            height: entity.height,
+            active: judgment > 0,
+            missed: judgment === MISSED,
+          })
+        } else {
+          if (playerState.getNoteStatus(note) !== 'judged') {
             push(`note_${column}`, {
               key:    note.id,
               y:      entity.y,
