@@ -58,3 +58,15 @@ mixin note-area(modeObject)
   group(x='1' mask='283x550+1+0')
     +notes(modeObject.columns)
 
+mixin judgments
+  each judgment in judgments
+    sprite(image=judgment.image x='0' y='0' alpha='0')
+      +judgment-animation(judgment)
+
+mixin judgment-animation(item)
+  each judgment in judgments
+    animation(on='p1_judge_' + judgment.name)
+      if item.name == judgment.name
+        keyframe(t='0' alpha='1')
+      else
+        keyframe(t='0' alpha='0')

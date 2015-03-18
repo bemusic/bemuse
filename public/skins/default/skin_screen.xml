@@ -880,6 +880,93 @@
           <sprite image="Note/DX/Note.png" frame="34x8+62+212" x="248" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
       </group>
+      <group y="400" x="10">
+        <sprite image="Judgment/Meticulous.png" x="0" y="0" alpha="0">
+          <animation on="p1_judge_1">
+            <keyframe t="0" alpha="1"></keyframe>
+          </animation>
+          <animation on="p1_judge_2">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_3">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_4">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_missed">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+        </sprite>
+        <sprite image="Judgment/Precise.png" x="0" y="0" alpha="0">
+          <animation on="p1_judge_1">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_2">
+            <keyframe t="0" alpha="1"></keyframe>
+          </animation>
+          <animation on="p1_judge_3">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_4">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_missed">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+        </sprite>
+        <sprite image="Judgment/Good.png" x="0" y="0" alpha="0">
+          <animation on="p1_judge_1">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_2">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_3">
+            <keyframe t="0" alpha="1"></keyframe>
+          </animation>
+          <animation on="p1_judge_4">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_missed">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+        </sprite>
+        <sprite image="Judgment/Offbeat.png" x="0" y="0" alpha="0">
+          <animation on="p1_judge_1">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_2">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_3">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_4">
+            <keyframe t="0" alpha="1"></keyframe>
+          </animation>
+          <animation on="p1_judge_missed">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+        </sprite>
+        <sprite image="Judgment/Missed.png" x="0" y="0" alpha="0">
+          <animation on="p1_judge_1">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_2">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_3">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_4">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_missed">
+            <keyframe t="0" alpha="1"></keyframe>
+          </animation>
+        </sprite>
+      </group>
     </group>
   </group>
   <!-- info panel-->

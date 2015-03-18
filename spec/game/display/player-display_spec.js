@@ -12,20 +12,23 @@ describe('PlayerDisplay', function() {
     let data = pd.update(555, 0.5, {
       input: new Map([
         ['wow', { value: 0, changed: false }]
-      ])
+      ]),
+      notifications: { },
     })
     expect(data['wow_active']).to.equal(0)
     data = pd.update(557, 2.5, {
       input: new Map([
         ['wow', { value: 1, changed: true }]
-      ])
+      ]),
+      notifications: { },
     })
     expect(data['wow_active']).to.equal(1)
     expect(data['wow_down']).to.equal(557)
     data = pd.update(558, 3.5, {
       input: new Map([
         ['wow', { value: 0, changed: true }]
-      ])
+      ]),
+      notifications: { },
     })
     expect(data['wow_active']).to.equal(0)
     expect(data['wow_up']).to.equal(558)

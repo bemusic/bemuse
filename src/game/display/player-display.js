@@ -16,6 +16,7 @@ export class PlayerDisplay {
     let push     = (key, value) => (data[key] || (data[key] = [])).push(value)
     updateVisibleNotes()
     updateInput()
+    updateJudgment()
     Object.assign(data, stateful)
     return data
 
@@ -55,6 +56,15 @@ export class PlayerDisplay {
             stateful[`${column}_up`] = time
           }
         }
+      }
+    }
+
+    function updateJudgment() {
+      let notification = playerState.notifications.judgment
+      if (notification) {
+        let name = notification.judgment === -1 ? 'missed' :
+              `${notification.judgment}`
+        stateful[`judge_${name}`] = time
       }
     }
 
