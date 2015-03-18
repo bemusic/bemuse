@@ -8,7 +8,7 @@ export class GameController {
     this._game    = game
     this._display = display
     this._audio   = audio
-    this._timer   = new GameTimer()
+    this._timer   = new GameTimer(this._audio)
     this._input   = new GameInput()
     this._state   = new GameState(game)
   }

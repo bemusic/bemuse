@@ -29,3 +29,16 @@ mode:
       - { style: 'blue',    channel: '6' }
       - { style: 'white',   channel: '7' }
       - { style: 'scratch', channel: 'SC' }
+
+judgments:
+  - name: 1
+    image: 'Judgment/Meticulous.png'
+  - name: 2
+    image: 'Judgment/Precise.png'
+  - name: 3
+    image: 'Judgment/Good.png'
+  - name: 4
+    image: 'Judgment/Offbeat.png'
+  - name: missed
+    image: 'Judgment/Missed.png'
+

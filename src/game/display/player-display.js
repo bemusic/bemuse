@@ -16,6 +16,7 @@ export class PlayerDisplay {
     let push     = (key, value) => (data[key] || (data[key] = [])).push(value)
     updateVisibleNotes()
     updateInput()
+    updateJudgment()
     Object.assign(data, stateful)
     return data
 
@@ -23,20 +24,22 @@ export class PlayerDisplay {
       let entities = noteArea.getVisibleNotes(position, position + (5 / 3))
       for (let entity of entities) {
         let note    = entity.note
-        let column  = note.column
-        if (entity.height) {
-          push(`longnote_${column}`, {
-            key:    note.id,
-            y:      entity.y,
-            height: entity.height,
-            active: entity.y + entity.height > 1,
-            missed: false,
-          })
-        } else {
-          push(`note_${column}`, {
-            key:    note.id,
-            y:      entity.y,
-          })
+        if (playerState.getNoteStatus(note) !== 'judged') {
+          let column  = note.column
+          if (entity.height) {
+            push(`longnote_${column}`, {
+              key:    note.id,
+              y:      entity.y,
+              height: entity.height,
+              active: entity.y + entity.height > 1,
+              missed: false,
+            })
+          } else {
+            push(`note_${column}`, {
+              key:    note.id,
+              y:      entity.y,
+            })
+          }
         }
       }
     }
@@ -53,6 +56,15 @@ export class PlayerDisplay {
             stateful[`${column}_up`] = time
           }
         }
+      }
+    }
+
+    function updateJudgment() {
+      let notification = playerState.notifications.judgment
+      if (notification) {
+        let name = notification.judgment === -1 ? 'missed' :
+              `${notification.judgment}`
+        stateful[`judge_${name}`] = time
       }
     }
 

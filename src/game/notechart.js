@@ -17,6 +17,8 @@ export class Notechart {
     this._notes     = this._generatePlayableNotesFromBMS(bmsNotes)
     this._autos     = this._generateAutoKeysoundEventsFromBMS(bmsNotes)
     this._samples   = this._generateKeysoundFiles(keysounds)
+    this._infos     = new Map(this._notes.map(
+        note => [note, this._getNoteInfo(note)]))
   }
   get notes() {
     return this._notes
@@ -33,6 +35,14 @@ export class Notechart {
   get columns() {
     return ['SC', '1', '2', '3', '4', '5', '6', '7']
   }
+
+  /**
+   * Returns the characteristic of the note.
+   */
+  info(note) {
+    return this._infos.get(note)
+  }
+
   beatToSeconds(beat) {
     return this._timing.beatToSeconds(beat)
   }
@@ -87,6 +97,10 @@ export class Notechart {
       time:     this.beatToSeconds(beat),
       position: this.beatToPosition(beat),
     }
+  }
+  _getNoteInfo(note) {
+    let combos = note.end ? 2 : 1
+    return { combos }
   }
   static fromBMSChart(chart, playerNumber, playerOptions) {
     return new Notechart(chart, playerNumber, playerOptions)

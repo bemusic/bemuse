@@ -3,16 +3,6 @@ include _lib/common
 
 +media('screen', 1280, 720)
 
-  image(src='NotePanel/Left.png')
-  image(src='NotePanel/Middle.png')
-  image(src='NotePanel/Right.png')
-  image(src='InfoPanel/Background.png')
-  image(src='NoteArea/Flash.png')
-  image(src='Note/DX/BackgroundLeft.png')
-  image(src='Note/DX/BackgroundRight.png')
-  image(src='Note/DX/Note.png')
-  image(src='Note/DX/Highlight.png')
-
   // note panel (Left)
   group
     animation
@@ -39,6 +29,8 @@ include _lib/common
     sprite(image='NotePanel/Middle.png' x='0' y='0')
     group(x='42' y='0')
       +note-area(mode.iidx_l)
+      group(y='400' x='10')
+        +judgments
 
   // info panel
   sprite(image='InfoPanel/Background.png' y='616')
@@ -50,15 +42,6 @@ include _lib/common
 
   - var width = 768
   - var height = 928
-
-  image(src='Touch/NotePanel.png')
-  image(src='Touch/ButtonPanel.png')
-  image(src='Touch/Buttons/Normal.png')
-  image(src='Touch/Buttons/Active.png')
-  image(src='NoteArea/Flash.png')
-  image(src='Note/DX/Note.png')
-  image(src='Note/DX/BackgroundLeft.png')
-  image(src='Note/DX/Highlight.png')
 
   // note panel
   group(x=(width / 2 - 185))
