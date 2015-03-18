@@ -1,5 +1,7 @@
 
 import R from 'ramda'
+import { judgeTime } from '../judgments'
+import PlayerStats   from './player-stats'
 
 export class PlayerState {
   constructor(player) {
@@ -8,12 +10,13 @@ export class PlayerState {
     this._notesByColumn = R.groupBy(R.prop('column'),
         R.sortBy(R.prop('time'), player.notechart.notes))
     this._noteResult    = new Map()
+    this.stats          = new PlayerStats(player.notechart)
+    this.notifications  = { }
   }
   update(gameTime, input) {
-    let prefix = `p${this._player.number}_`
     this._gameTime = gameTime
-    this.input = new Map(this._columns.map((column) =>
-        [column, input.get(`${prefix}${column}`)]))
+    this.notifications = { }
+    this.input = this._createInputColumnMap(input)
     this._judgeNotes(gameTime)
   }
   getNoteStatus(note) {
@@ -25,6 +28,11 @@ export class PlayerState {
     let result = this._noteResult.get(note)
     if (!result) return 0
     return result.judgment
+  }
+  _createInputColumnMap(input) {
+    let prefix = `p${this._player.number}_`
+    return new Map(this._columns.map((column) =>
+        [column, input.get(`${prefix}${column}`)]))
   }
   _judgeNotes() {
     for (let column of this._columns) {
@@ -52,30 +60,13 @@ export class PlayerState {
     return missed || hit
   }
   _judge(note) {
-    this._noteResult.set(note, {
-      status: 'judged', judgment: judgeTime(this._gameTime, note.time),
-    })
+    let delta = this._gameTime - note.time
+    let judgment = judgeTime(this._gameTime, note.time)
+    this._noteResult.set(note, { status: 'judged', judgment, delta })
+    this.stats.handleJudgment(judgment)
+    this.notifications.judgment = { judgment, combo: this.stats.combo, delta }
   }
 }
 
-/**
- * Takes a gameTime and noteTime and returns the appropriate judgment.
- *
- *  1 - METICULOUS
- *  2 - PRECISE
- *  3 - GOOD
- *  4 - OFFBEAT
- *  0 - (not judge)
- * -1 - MISSED
- */
-export function judgeTime(gameTime, noteTime) {
-  let delta = Math.abs(gameTime - noteTime)
-  if (delta < 0.018) return 1
-  if (delta < 0.040) return 2
-  if (delta < 0.100) return 3
-  if (delta < 0.200) return 4
-  if (gameTime < noteTime) return 0
-  return -1
-}
 
 export default PlayerState

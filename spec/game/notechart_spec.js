@@ -62,4 +62,16 @@ describe('Notechart', function() {
     })
   })
 
+  describe('#info', function() {
+    it('normal note should have 1 combo', function() {
+      var subject = notechart('#00111:11')
+      expect(subject.info(subject.notes[0]).combos).to.equal(1)
+    })
+    it('long note should have 2 combos', function() {
+      var subject = notechart('#00151:1111')
+      expect(subject.info(subject.notes[0]).combos).to.equal(2)
+    })
+  })
+
 })
+
