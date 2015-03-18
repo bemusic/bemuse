@@ -1,5 +1,4 @@
 <skin width="123" height="456">
-  <image src="test.png" />
   <sprite image="test.png" width="1+2" height="4-3" frame="10x11+12+13"
           visible="!1" blend="screen" />
 </skin>

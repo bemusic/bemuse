@@ -17,10 +17,6 @@ describe('Scintillator', function() {
       return expect(Scintillator.load(fixture('invalid_tag.xml')))
           .to.be.rejected
     })
-    it('should reject if image not declared', function() {
-      return expect(Scintillator.load(fixture('invalid_no_image.xml')))
-          .to.be.rejected
-    })
   })
 
   describe('Context', function() {

@@ -2,14 +2,15 @@
 import debug from 'debug/browser'
 let log = debug('scintillator:loader')
 
-import $ from 'jquery'
-import url from 'url'
-import co from 'co'
+import $    from 'jquery'
+import url  from 'url'
+import co   from 'co'
 import PIXI from 'pixi.js'
+import R    from 'ramda'
 import * as ProgressUtils from 'bemuse/progress/utils'
 
-import Resources from './resources'
-import Compiler from './compiler'
+import Resources  from './resources'
+import Compiler   from './compiler'
 
 export function load(xmlPath, progress) {
   return co(function*() {
@@ -19,9 +20,9 @@ export function load(xmlPath, progress) {
 
     // scan all images
     let resources = new Resources()
-    let images = Array.from($xml.children('image'))
-    for (let image of images) {
-      let src = $(image).attr('src')
+    let images = R.uniq(Array.from($xml.find('[image]'))
+          .map(element => $(element).attr('image')))
+    for (let src of images) {
       let imageUrl = url.resolve(xmlPath, src)
       resources.add(src, imageUrl)
     }
