@@ -66,6 +66,48 @@ describe('PlayerState', function() {
 
     })
 
+    it('judges multiple notes in different column', function() {
+
+      setup(`
+        #BPM 120
+        #00111:01
+        #00112:01
+      `)
+
+      advance(2, { 'p1_1': 1, 'p1_2': 1 })
+      expect(state.getNoteStatus(chart.notes[0])).to.equal('judged')
+      expect(state.getNoteStatus(chart.notes[1])).to.equal('judged')
+
+    })
+
+    it('judges single note from one column at a time', function() {
+
+      setup(`
+        #BPM 120
+        #00111:01010100000000000000000000000000
+      `)
+
+      advance(2.125, { 'p1_1': 1 })
+      expect(state.getNoteStatus(chart.notes[0])).to.equal('judged')
+      expect(state.getNoteStatus(chart.notes[1])).to.equal('unjudged')
+      expect(state.getNoteStatus(chart.notes[2])).to.equal('unjudged')
+      advance(2.125, { 'p1_1': 0 })
+      advance(2.125, { 'p1_1': 1 })
+      expect(state.getNoteStatus(chart.notes[0])).to.equal('judged')
+      expect(state.getNoteStatus(chart.notes[1])).to.equal('judged')
+      expect(state.getNoteStatus(chart.notes[2])).to.equal('unjudged')
+      advance(2.125, { 'p1_1': 0 })
+      advance(2.125, { 'p1_1': 1 })
+      expect(state.getNoteStatus(chart.notes[0])).to.equal('judged')
+      expect(state.getNoteStatus(chart.notes[1])).to.equal('judged')
+      expect(state.getNoteStatus(chart.notes[2])).to.equal('judged')
+
+      expect(state.getNoteJudgment(chart.notes[0])).to.gt(1)
+      expect(state.getNoteJudgment(chart.notes[1])).to.eq(1)
+      expect(state.getNoteJudgment(chart.notes[2])).to.gt(1)
+
+    })
+
   })
 
 })

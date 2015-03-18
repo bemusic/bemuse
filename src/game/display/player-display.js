@@ -23,20 +23,22 @@ export class PlayerDisplay {
       let entities = noteArea.getVisibleNotes(position, position + (5 / 3))
       for (let entity of entities) {
         let note    = entity.note
-        let column  = note.column
-        if (entity.height) {
-          push(`longnote_${column}`, {
-            key:    note.id,
-            y:      entity.y,
-            height: entity.height,
-            active: entity.y + entity.height > 1,
-            missed: false,
-          })
-        } else {
-          push(`note_${column}`, {
-            key:    note.id,
-            y:      entity.y,
-          })
+        if (playerState.getNoteStatus(note) !== 'judged') {
+          let column  = note.column
+          if (entity.height) {
+            push(`longnote_${column}`, {
+              key:    note.id,
+              y:      entity.y,
+              height: entity.height,
+              active: entity.y + entity.height > 1,
+              missed: false,
+            })
+          } else {
+            push(`note_${column}`, {
+              key:    note.id,
+              y:      entity.y,
+            })
+          }
         }
       }
     }

@@ -3,14 +3,16 @@ import R from 'ramda'
 
 export class PlayerState {
   constructor(player) {
-    this._player       = player
-    this._notes        = R.sortBy(R.prop('time'), player.notechart.notes)
-    this._noteResult   = new Map()
+    this._player        = player
+    this._columns       = player.columns
+    this._notesByColumn = R.groupBy(R.prop('column'),
+        R.sortBy(R.prop('time'), player.notechart.notes))
+    this._noteResult    = new Map()
   }
   update(gameTime, input) {
     let prefix = `p${this._player.number}_`
     this._gameTime = gameTime
-    this.input = new Map(this._player.columns.map((column) =>
+    this.input = new Map(this._columns.map((column) =>
         [column, input.get(`${prefix}${column}`)]))
     this._judgeNotes(gameTime)
   }
@@ -25,19 +27,27 @@ export class PlayerState {
     return result.judgment
   }
   _judgeNotes() {
-    for (let i = 0; i < this._notes.length; i ++) {
-      let note = this._notes[i]
-      if (this._shouldJudge(note)) {
+    for (let column of this._columns) {
+      let notes   = this._notesByColumn[column]
+      if (notes) {
+        let control = this.input.get(column)
+        this._judgeColumn(notes, control)
+      }
+    }
+  }
+  _judgeColumn(notes, control) {
+    for (let i = 0; i < notes.length; i ++) {
+      let note = notes[i]
+      if (this._shouldJudge(note, control)) {
         this._judge(note)
         break
       }
     }
   }
-  _shouldJudge(note) {
+  _shouldJudge(note, control) {
     if (this.getNoteStatus(note) !== 'unjudged') return false
     let judgment  = judgeTime(this._gameTime, note.time)
     let missed    = judgment === -1
-    let control   = this.input.get(note.column)
     let hit       = judgment > 0 && control.changed && control.value
     return missed || hit
   }
