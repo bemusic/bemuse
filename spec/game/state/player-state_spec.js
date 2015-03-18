@@ -115,6 +115,46 @@ describe('PlayerState', function() {
 
     })
 
+    describe('with long note', function() {
+      let note
+      beforeEach(function() {
+        setup(`
+          #BPM 120
+          #00151:0101
+        `)
+        note = chart.notes[0]
+      })
+      it('judges long note', function() {
+        advance(2, { 'p1_1': 1 })
+        expect(state.getNoteStatus(note)).to.equal('active')
+        expect(state.getNoteJudgment(note)).to.equal(1)
+        expect(state.notifications.judgment.judgment).to.equal(1)
+        advance(3, { 'p1_1': 0 })
+        expect(state.getNoteStatus(note)).to.equal('judged')
+        expect(state.getNoteJudgment(note)).to.equal(1)
+        expect(state.notifications.judgment.judgment).to.equal(1)
+      })
+      it('judges missed long note', function() {
+        advance(2.3, { 'p1_1': 1 })
+        expect(state.getNoteStatus(note)).to.equal('judged')
+        expect(state.getNoteJudgment(note)).to.equal(-1)
+      })
+      it('judges long note lifted too fast as missed', function() {
+        advance(2, { 'p1_1': 1 })
+        advance(2.01, { 'p1_1': 0 })
+        expect(state.getNoteStatus(note)).to.equal('judged')
+        expect(state.getNoteJudgment(note)).to.equal(-1)
+      })
+      it('judges long note lifted too slow as missed', function() {
+        advance(2, { 'p1_1': 1 })
+        advance(4, { 'p1_1': 1 })
+        expect(state.getNoteStatus(note)).to.equal('judged')
+        expect(state.getNoteJudgment(note)).to.equal(-1)
+        expect(state.notifications.judgment).to.deep.equal({
+            judgment: -1, combo: 0, delta: 1, })
+      })
+    })
+
   })
 
 })

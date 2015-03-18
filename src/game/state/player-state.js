@@ -1,6 +1,6 @@
 
 import R from 'ramda'
-import { judgeTime } from '../judgments'
+import { judgeTime, MISSED } from '../judgments'
 import PlayerStats   from './player-stats'
 
 export class PlayerState {
@@ -53,16 +53,41 @@ export class PlayerState {
     }
   }
   _shouldJudge(note, control) {
-    if (this.getNoteStatus(note) !== 'unjudged') return false
-    let judgment  = judgeTime(this._gameTime, note.time)
-    let missed    = judgment === -1
-    let hit       = judgment > 0 && control.changed && control.value
-    return missed || hit
+    let status = this.getNoteStatus(note)
+    if (status === 'unjudged') {
+      let judgment  = judgeTime(this._gameTime, note.time)
+      let missed    = judgment === MISSED
+      let hit       = judgment > 0 && control.changed && control.value
+      return missed || hit
+    } else if (status === 'active') {
+      let judgment  = judgeTime(this._gameTime, note.end.time)
+      let missed    = judgment === MISSED
+      let lifted    = !control.value
+      return missed || lifted
+    } else {
+      return false
+    }
   }
   _judge(note) {
-    let delta = this._gameTime - note.time
+    let delta    = this._gameTime - note.time
     let judgment = judgeTime(this._gameTime, note.time)
-    this._noteResult.set(note, { status: 'judged', judgment, delta })
+    let result   = this._noteResult.get(note)
+    if (note.end) {
+      if (!result || result.status === 'unjudged') {
+        let status = judgment === MISSED ? 'judged' : 'active'
+        result = { status, judgment, delta }
+      } else if (result.status === 'active') {
+        delta    = this._gameTime - note.end.time
+        judgment = judgeTime(this._gameTime, note.end.time) || MISSED
+        result = { status: 'judged', judgment, delta }
+      }
+    } else {
+      result = { status: 'judged', judgment, delta }
+    }
+    this._noteResult.set(note, result)
+    this._setJudgment(judgment, delta)
+  }
+  _setJudgment(judgment, delta) {
     this.stats.handleJudgment(judgment)
     this.notifications.judgment = { judgment, combo: this.stats.combo, delta }
   }
