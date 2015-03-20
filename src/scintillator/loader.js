@@ -6,7 +6,6 @@ import $    from 'jquery'
 import url  from 'url'
 import co   from 'co'
 import PIXI from 'pixi.js'
-import R    from 'ramda'
 import * as ProgressUtils from 'bemuse/progress/utils'
 
 import Resources  from './resources'
@@ -20,15 +19,20 @@ export function load(xmlPath, progress) {
 
     // scan all images
     let resources = new Resources()
-    let images = R.uniq(Array.from($xml.find('[image]'))
-          .map(element => $(element).attr('image')))
-    for (let src of images) {
-      let imageUrl = url.resolve(xmlPath, src)
-      resources.add(src, imageUrl)
+    let paths     = new Set()
+    for (let element of Array.from($xml.find('[image]'))) {
+      paths.add($(element).attr('image'))
+    }
+    for (let element of Array.from($xml.find('[font-src]'))) {
+      paths.add($(element).attr('font-src'))
+    }
+    for (let path of paths) {
+      let assetUrl = url.resolve(xmlPath, path)
+      resources.add(path, assetUrl)
     }
 
     // load all images + progress reporting
-    let onload = ProgressUtils.fixed(1 + images.length, progress)
+    let onload = ProgressUtils.fixed(1 + paths.size, progress)
     onload()
     yield loadResources(resources, onload)
 

@@ -2,7 +2,15 @@
 mixin media(type, width, height)
   if media == type
     skin(width=width height=height)
+      +fonts
       block
+
+mixin fonts
+  font(src='Fonts/BemuseDefault-Meticulous.fnt')
+  font(src='Fonts/BemuseDefault-MeticulousGlow.fnt')
+  font(src='Fonts/BemuseDefault-Precise.fnt')
+  font(src='Fonts/BemuseDefault-Good.fnt')
+  font(src='Fonts/BemuseDefault-Other.fnt')
 
 mixin longnote(x, cur, add, visible)
   // body

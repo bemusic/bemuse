@@ -82,6 +82,18 @@ describe('Scintillator', function() {
     })
   })
 
+  describe('TextNode', function() {
+    it('should display text', co.wrap(function*() {
+      let skin = yield Scintillator.load(fixture('font.xml'))
+      let context = new Scintillator.Context(skin)
+      let stage = context.stage
+      context.render({ })
+      let text = stage.children[0]
+      expect(text.text).to.equal('Hello world')
+      context.destroy()
+    }))
+  })
+
   describe('ObjectNode', function() {
     it('should display children', co.wrap(function*() {
       let skin = yield Scintillator.load(fixture('expr_object.xml'))

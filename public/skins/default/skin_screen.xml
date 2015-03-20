@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<skin width="1280" height="720">
+<skin width="1280" height="720"><font src="Fonts/BemuseDefault-Meticulous.fnt"></font><font src="Fonts/BemuseDefault-MeticulousGlow.fnt"></font><font src="Fonts/BemuseDefault-Precise.fnt"></font><font src="Fonts/BemuseDefault-Good.fnt"></font><font src="Fonts/BemuseDefault-Other.fnt"></font>
   <!-- note panel (Left)-->
   <group>
     <animation>
