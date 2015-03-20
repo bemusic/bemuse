@@ -22,7 +22,7 @@ export class PlayerDisplay {
     return data
 
     function updateVisibleNotes() {
-      let entities = noteArea.getVisibleNotes(position, position + (5 / 3))
+      let entities = noteArea.getVisibleNotes(position, position + (5 / 3), 1)
       for (let entity of entities) {
         let note    = entity.note
         let column  = note.column

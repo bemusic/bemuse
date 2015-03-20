@@ -5,14 +5,15 @@ export class NoteArea {
   constructor(notes) {
     this._notes = R.sortBy(position, notes)
   }
-  getVisibleNotes(lower, upper) {
+  getVisibleNotes(lower, upper, headroom) {
     let out = []
     let notes = this._notes
+    if (!headroom) headroom = 0
     for (let i = 0; i < notes.length; i ++) {
       let note = notes[i]
       let visible = note.end ?
-            !(note.position > upper || note.end.position < lower) :
-            !(note.position > upper || note.position < lower)
+            !(note.position > upper || note.end.position < lower - headroom) :
+            !(note.position > upper || note.position < lower - headroom)
       if (visible) {
         let entity = { note: note }
         if (!note.end) {

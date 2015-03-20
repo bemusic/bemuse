@@ -16,6 +16,7 @@ describe('NoteArea', function() {
     ]
     let area = new NoteArea(notes)
     expect(area.getVisibleNotes(1.5, 3.5)).to.have.length(2)
+    expect(area.getVisibleNotes(2.5, 3.5, 1)).to.have.length(2)
     expect(area.getVisibleNotes(-1, 7)).to.have.length(6)
     expect(area.getVisibleNotes(8, 10.1)).to.have.length(1)
     expect(area.getVisibleNotes(8, 10.1)).to.have.length(1)
