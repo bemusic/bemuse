@@ -2,15 +2,7 @@
 mixin media(type, width, height)
   if media == type
     skin(width=width height=height)
-      +fonts
       block
-
-mixin fonts
-  font(src='Fonts/BemuseDefault-Meticulous.fnt')
-  font(src='Fonts/BemuseDefault-MeticulousGlow.fnt')
-  font(src='Fonts/BemuseDefault-Precise.fnt')
-  font(src='Fonts/BemuseDefault-Good.fnt')
-  font(src='Fonts/BemuseDefault-Other.fnt')
 
 mixin longnote(x, cur, add, visible)
   // body
@@ -67,17 +59,37 @@ mixin note-area(modeObject)
     +notes(modeObject.columns)
 
 mixin judgments
-  each judgment in judgments
-    sprite(image=judgment.image x='0' y='0' alpha='0')
-      +judgment-animation(judgment)
+  +judgment('1')
+    +judgment-text('Meticulous')(text='*%s' data='p1_combo')
+  +judgment('2')
+    +judgment-text('Precise')(text='*%s' data='p1_combo')
+  +judgment('3')
+    +judgment-text('Good')(text='*%s' data='p1_combo')
+  +judgment('4')
+    +judgment-text('Other')(text='1')
+  +judgment('missed')
+    +judgment-text('Other')(text='0')
 
-mixin judgment-animation(item)
-  each judgment in judgments
-    animation(on='p1_judge_' + judgment.name)
-      if item.name == judgment.name
-        keyframe(t='0' y='-16' alpha='1')
-        keyframe(t='0.1' y='0' ease='quadOut')
-        keyframe(t='0.6' alpha='1')
-        keyframe(t='1' alpha='0')
-      else
-        keyframe(t='0' alpha='0')
+mixin judgment-text(name)
+  text(font='BemuseDefault-'+name font-src='Fonts/BemuseDefault-'+name+'.fnt')&attributes(attributes)
+
+mixin judgment(type)
+  group(alpha='0')
+    +judgment-animation(type)
+    block
+
+mixin judgment-animation(type)
+  animation(on='p1_judge_1'):       +judgment-keyframes((type == '1'))
+  animation(on='p1_judge_2'):       +judgment-keyframes((type == '2'))
+  animation(on='p1_judge_3'):       +judgment-keyframes((type == '3'))
+  animation(on='p1_judge_4'):       +judgment-keyframes((type == '4'))
+  animation(on='p1_judge_missed'):  +judgment-keyframes((type == 'missed'))
+
+mixin judgment-keyframes(active)
+  if active
+    keyframe(t='0' y='-16' alpha='1')
+    keyframe(t='0.1' y='0' ease='quadOut')
+    keyframe(t='0.6' alpha='1')
+    keyframe(t='1' alpha='0')
+  else
+    keyframe(t='0' alpha='0')

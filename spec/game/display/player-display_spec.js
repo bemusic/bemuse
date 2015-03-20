@@ -88,6 +88,11 @@ describe('PlayerDisplay', function() {
       update(12, 34, makeState({ notifications: { judgment: info } }))
       expect(data['judge_missed']).to.equal(12)
     })
+    it('sets combo', function() {
+      let info = { judgment: 1, delta: 0, combo: 123 }
+      update(12, 34, makeState({ notifications: { judgment: info } }))
+      expect(data['combo']).to.equal(123)
+    })
   })
 
   // Mock PlayerState

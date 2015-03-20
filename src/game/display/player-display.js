@@ -67,6 +67,7 @@ export class PlayerDisplay {
         let name = notification.judgment === -1 ? 'missed' :
               `${notification.judgment}`
         stateful[`judge_${name}`] = time
+        stateful[`combo`] = notification.combo
       }
     }
 
