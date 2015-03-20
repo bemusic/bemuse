@@ -31,10 +31,11 @@ export class GameController {
   }
   _update() {
     let t = this._timer.time
+    let A = 0.044
     this._input.update()
-    this._state.update(t,   this._input)
-    this._audio.update(t,   this._state)
-    this._display.update(t, this._state)
+    this._state.update(t - A, this._input)
+    this._audio.update(t,     this._state)
+    this._display.update(t,   this._state)
   }
 }
 
