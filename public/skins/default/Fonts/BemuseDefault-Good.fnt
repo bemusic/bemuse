@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<info face="BemuseDefault-Good" size="40">
+  <common lineHeight="40"/>
+  <page id="0" file="JudgmentCombo.png"/>
+  <char id="48" x="0" y="0" width="29" height="40" xadvance="29" xoffset="0" yoffset="0"/>
+  <char id="49" x="32" y="0" width="20" height="40" xadvance="20" xoffset="0" yoffset="0"/>
+  <char id="50" x="59" y="0" width="28" height="40" xadvance="28" xoffset="0" yoffset="0"/>
+  <char id="51" x="89" y="0" width="27" height="40" xadvance="27" xoffset="0" yoffset="0"/>
+  <char id="52" x="117" y="0" width="30" height="40" xadvance="30" xoffset="0" yoffset="0"/>
+  <char id="53" x="147" y="0" width="27" height="40" xadvance="27" xoffset="0" yoffset="0"/>
+  <char id="54" x="175" y="0" width="29" height="40" xadvance="29" xoffset="0" yoffset="0"/>
+  <char id="55" x="205" y="0" width="27" height="40" xadvance="27" xoffset="0" yoffset="0"/>
+  <char id="56" x="233" y="0" width="29" height="40" xadvance="29" xoffset="0" yoffset="0"/>
+  <char id="57" x="262" y="0" width="28" height="40" xadvance="28" xoffset="0" yoffset="0"/>
+  <char id="42" x="0" y="270" width="79" height="40" xoffset="0" yoffset="-1" xadvance="79"/>
+</info>

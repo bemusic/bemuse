@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<info face="BemuseDefault-Other" size="40">
+  <common lineHeight="40"/>
+  <page id="0" file="JudgmentCombo.png"/>
+  <char id="49" x="0" y="220" width="119" height="40" xoffset="0" yoffset="-1" xadvance="119"/>
+  <char id="48" x="0" y="170" width="113" height="40" xoffset="0" yoffset="-1" xadvance="113"/>
+</info>
