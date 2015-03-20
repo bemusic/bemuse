@@ -883,7 +883,10 @@
       <group y="400" x="10">
         <sprite image="Judgment/Meticulous.png" x="0" y="0" alpha="0">
           <animation on="p1_judge_1">
-            <keyframe t="0" alpha="1"></keyframe>
+            <keyframe t="0" y="-16" alpha="1"></keyframe>
+            <keyframe t="0.1" y="0" ease="quadOut"></keyframe>
+            <keyframe t="0.6" alpha="1"></keyframe>
+            <keyframe t="1" alpha="0"></keyframe>
           </animation>
           <animation on="p1_judge_2">
             <keyframe t="0" alpha="0"></keyframe>
@@ -903,7 +906,10 @@
             <keyframe t="0" alpha="0"></keyframe>
           </animation>
           <animation on="p1_judge_2">
-            <keyframe t="0" alpha="1"></keyframe>
+            <keyframe t="0" y="-16" alpha="1"></keyframe>
+            <keyframe t="0.1" y="0" ease="quadOut"></keyframe>
+            <keyframe t="0.6" alpha="1"></keyframe>
+            <keyframe t="1" alpha="0"></keyframe>
           </animation>
           <animation on="p1_judge_3">
             <keyframe t="0" alpha="0"></keyframe>
@@ -923,7 +929,10 @@
             <keyframe t="0" alpha="0"></keyframe>
           </animation>
           <animation on="p1_judge_3">
-            <keyframe t="0" alpha="1"></keyframe>
+            <keyframe t="0" y="-16" alpha="1"></keyframe>
+            <keyframe t="0.1" y="0" ease="quadOut"></keyframe>
+            <keyframe t="0.6" alpha="1"></keyframe>
+            <keyframe t="1" alpha="0"></keyframe>
           </animation>
           <animation on="p1_judge_4">
             <keyframe t="0" alpha="0"></keyframe>
@@ -943,7 +952,10 @@
             <keyframe t="0" alpha="0"></keyframe>
           </animation>
           <animation on="p1_judge_4">
-            <keyframe t="0" alpha="1"></keyframe>
+            <keyframe t="0" y="-16" alpha="1"></keyframe>
+            <keyframe t="0.1" y="0" ease="quadOut"></keyframe>
+            <keyframe t="0.6" alpha="1"></keyframe>
+            <keyframe t="1" alpha="0"></keyframe>
           </animation>
           <animation on="p1_judge_missed">
             <keyframe t="0" alpha="0"></keyframe>
@@ -963,7 +975,10 @@
             <keyframe t="0" alpha="0"></keyframe>
           </animation>
           <animation on="p1_judge_missed">
-            <keyframe t="0" alpha="1"></keyframe>
+            <keyframe t="0" y="-16" alpha="1"></keyframe>
+            <keyframe t="0.1" y="0" ease="quadOut"></keyframe>
+            <keyframe t="0.6" alpha="1"></keyframe>
+            <keyframe t="1" alpha="0"></keyframe>
           </animation>
         </sprite>
       </group>

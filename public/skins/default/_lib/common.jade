@@ -67,6 +67,9 @@ mixin judgment-animation(item)
   each judgment in judgments
     animation(on='p1_judge_' + judgment.name)
       if item.name == judgment.name
-        keyframe(t='0' alpha='1')
+        keyframe(t='0' y='-16' alpha='1')
+        keyframe(t='0.1' y='0' ease='quadOut')
+        keyframe(t='0.6' alpha='1')
+        keyframe(t='1' alpha='0')
       else
         keyframe(t='0' alpha='0')
