@@ -901,6 +901,7 @@
             <keyframe t="0" alpha="0"></keyframe>
           </animation>
           <text font="BemuseDefault-Meticulous" font-src="Fonts/BemuseDefault-Meticulous.fnt" text="*%s" data="p1_combo"></text>
+          <text font="BemuseDefault-MeticulousGlow" font-src="Fonts/BemuseDefault-MeticulousGlow.fnt" text="*%s" data="p1_combo" alpha="1 - ((t * 10) % 1)"></text>
         </group>
         <group alpha="0">
           <animation on="p1_judge_1">

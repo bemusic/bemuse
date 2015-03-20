@@ -61,6 +61,7 @@ mixin note-area(modeObject)
 mixin judgments
   +judgment('1')
     +judgment-text('Meticulous')(text='*%s' data='p1_combo')
+    +judgment-text('MeticulousGlow')(text='*%s' data='p1_combo' alpha='1 - ((t * 10) % 1)')
   +judgment('2')
     +judgment-text('Precise')(text='*%s' data='p1_combo')
   +judgment('3')
