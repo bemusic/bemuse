@@ -1,9 +1,25 @@
 
 import PlayerAudio  from 'bemuse/game/audio/player-audio'
+import { playerWithBMS } from '../spec_helper'
 
 describe('PlayerAudio', function() {
+
+  let player
+  let audio
+  let waveFactory
+
+  function setup(_player) {
+    player      = _player
+    waveFactory = {
+      playAuto: sinon.stub().returns({}),
+      playNote: sinon.stub().returns({}),
+      playFree: sinon.stub().returns({}),
+    }
+    audio       = new PlayerAudio({ player, waveFactory })
+  }
+
   it('should play notes on correct time', function() {
-    let player = {
+    setup({
       notechart: {
         autos: [
           { time: 1, keysound: '0x', },
@@ -12,9 +28,7 @@ describe('PlayerAudio', function() {
         ],
         notes: [],
       },
-    }
-    let waveFactory = { playAuto: sinon.spy(), }
-    let audio = new PlayerAudio({ player, waveFactory })
+    })
     audio.update(0)
     expect(waveFactory.playAuto).to.have.callCount(0)
     audio.update(1)
@@ -23,17 +37,81 @@ describe('PlayerAudio', function() {
     audio.update(2)
     expect(waveFactory.playAuto).to.have.callCount(3)
   })
+
   it('should play notes ahead of time', function() {
-    let player = {
+    setup({
       notechart: {
         autos: [ { time: 1, keysound: '0x', }, ],
         notes: [],
       },
-    }
-    let waveFactory = { playAuto: sinon.spy(), }
-    let audio = new PlayerAudio({ player, waveFactory })
+    })
     audio.update(0.999)
     expect(waveFactory.playAuto).to.have.been.calledWith('0x')
     expect(waveFactory.playAuto.getCall(0).args[1]).to.be.closeTo(0.001, 1e-5)
   })
+
+  it('should play hit notes', function() {
+    setup(playerWithBMS())
+    audio.update(0.999, {
+      notifications: {
+        sounds: [
+          { note: { keysound: '0x' }, type: 'hit' }
+        ]
+      },
+      stats: { },
+    })
+    expect(waveFactory.playNote).to.have.been.calledWith('0x')
+  })
+
+  it('should stop sound when broken', function() {
+    setup(playerWithBMS())
+    let note = { keysound: '0x' }
+    let instance = { stop: sinon.spy() }
+    waveFactory.playNote.returns(instance)
+    audio.update(0.999, {
+      notifications: {
+        sounds: [ { note: note, type: 'hit' } ]
+      },
+      stats: { },
+    })
+    audio.update(1.100, {
+      notifications: {
+        sounds: [ { note: note, type: 'break' } ]
+      },
+      stats: { },
+    })
+    void expect(instance.stop).to.have.been.called
+  })
+
+  it('should play sounds when hitting blank space', function() {
+    setup(playerWithBMS())
+    audio.update(0.999, {
+      notifications: {
+        sounds: [
+          { note: { keysound: '0x' }, type: 'free' }
+        ],
+      },
+      stats: { },
+    })
+    expect(waveFactory.playFree).to.have.been.calledWith('0x')
+  })
+
+  it('should play hit note once', function() {
+    setup(playerWithBMS())
+    let note = { keysound: '0x' }
+    audio.update(0.999, {
+      notifications: {
+        sounds: [ { note: note, type: 'hit' } ],
+      },
+      stats: { },
+    })
+    audio.update(1.000, {
+      notifications: {
+        sounds: [ { note: note, type: 'hit' } ],
+      },
+      stats: { },
+    })
+    expect(waveFactory.playNote).to.have.callCount(1)
+  })
+
 })

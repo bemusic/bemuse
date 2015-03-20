@@ -14,10 +14,9 @@ export class GameAudio {
   get context() {
     return this._context
   }
-  update(t) {
-    for (let [player, audio] of this._players) {
-      void player
-      audio.update(t)
+  update(t, state) {
+    for (let [player, playerAudio] of this._players) {
+      playerAudio.update(t, state.player(player))
     }
   }
 }

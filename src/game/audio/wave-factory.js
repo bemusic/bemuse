@@ -9,28 +9,29 @@ export class WaveFactory {
 
   // Plays an autokeysound note (using limited polyphony)
   playAuto(keysound, delay) {
-    this._play({ keysound, delay, exclusive: true })
+    return this._play({ keysound, delay, exclusive: true })
   }
 
   // Plays a hit note (using limited polyphony)
   // Returns the SoundInstance which may be stopped when hold note is missed
   playNote(keysound, delay) {
-    this._play({ keysound, delay, exclusive: true })
+    return this._play({ keysound, delay, exclusive: true })
   }
 
   // Plays a note when hitting in the blank area (unlimited polyphony)
   playFree(keysound) {
-    this._play({ keysound, delay: 0, exclusive: false })
+    return this._play({ keysound, delay: 0, exclusive: false })
   }
 
   // Plays a note
   _play({ keysound, delay, exclusive }) {
-    let filename  = this._map[keysound.toLowerCase()]
+    let filename = this._map[keysound.toLowerCase()]
     if (!filename) return
-    let sample    = this._samples[filename]
+    let sample = this._samples[filename]
     if (!sample) return
-    sample.play(delay)
+    let instance = sample.play(delay)
     void exclusive
+    return instance
   }
 
 }

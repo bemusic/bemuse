@@ -51,6 +51,7 @@ describe('PlayerState', function() {
 
       expect(state.getNoteStatus(chart.notes[0])).to.equal('unjudged')
       expect(state.stats.combo).to.equal(0)
+      expect(state.stats.poor).to.equal(false)
       expect(state.stats.totalCombo).to.equal(2)
       void expect(state.notifications.judgment).to.be.falsy
 
@@ -63,6 +64,7 @@ describe('PlayerState', function() {
       expect(state.getNoteStatus(chart.notes[1])).to.equal('unjudged')
       expect(state.notifications.judgment).to.deep.equal({
           judgment: 1, combo: 1, delta: 0, })
+      expect(state.stats.poor).to.equal(false)
 
       advance(2.1, { 'p1_1': 0 })
       advance(5,   { 'p1_1': 0 })
@@ -70,6 +72,7 @@ describe('PlayerState', function() {
       expect(state.getNoteJudgment(chart.notes[1])).to.equal(-1)
       expect(state.notifications.judgment).to.deep.equal({
           judgment: -1, combo: 0, delta: 2, })
+      expect(state.stats.poor).to.equal(true)
 
     })
 
@@ -152,6 +155,58 @@ describe('PlayerState', function() {
         expect(state.getNoteJudgment(note)).to.equal(-1)
         expect(state.notifications.judgment).to.deep.equal({
             judgment: -1, combo: 0, delta: 1, })
+      })
+    })
+
+    describe('sound notifications', function() {
+      it('notifies of note hit', function() {
+        setup(`
+          #BPM 120
+          #00111:0102
+        `)
+        advance(2, { 'p1_1': 1 })
+        expect(state.notifications.sounds[0].note).to.equal(chart.notes[0])
+        expect(state.notifications.sounds[0].type).to.equal('hit')
+      })
+      it('should notify missed notes as break', function() {
+        setup(`
+          #BPM 120
+          #00111:01
+        `)
+        advance(5, { 'p1_1': 0 })
+        expect(state.notifications.sounds[0].note).to.equal(chart.notes[0])
+        expect(state.notifications.sounds[0].type).to.equal('break')
+      })
+      it('notifies of free keysound hit', function() {
+        setup(`
+          #BPM 60
+          #00111:01
+          #00211:02
+        `)
+
+        // hit the first note
+        advance(4, { 'p1_1': 1 })
+        advance(4, { 'p1_1': 0 })
+
+        // hit the blank area
+        advance(4, { 'p1_1': 1 })
+        expect(state.notifications.sounds[0].note).to.equal(chart.notes[0])
+        expect(state.notifications.sounds[0].type).to.equal('free')
+
+        // release the button
+        advance(4, { 'p1_1': 0 })
+        void expect(state.notifications.sounds).to.be.empty
+
+        // try again
+        advance(5, { 'p1_1': 1 })
+        expect(state.notifications.sounds[0].note).to.equal(chart.notes[0])
+
+        // release the button
+        advance(5, { 'p1_1': 0 })
+
+        // wait and try again. this time keysound should change
+        advance(7, { 'p1_1': 1 })
+        expect(state.notifications.sounds[0].note).to.equal(chart.notes[1])
       })
     })
 

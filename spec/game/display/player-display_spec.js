@@ -68,7 +68,9 @@ describe('PlayerDisplay', function() {
       void expect(data['longnote_1'][0].active).to.be.true
     })
     it('displays missed long notes', function() {
-      let state = tap(s => s.getNoteJudgment.returns(-1), blankState())
+      let state = blankState()
+      state.getNoteJudgment.returns(-1)
+      state.getNoteStatus.returns('judged')
       update(3.95, 3.95, state)
       void expect(data['longnote_1'][0].missed).to.be.true
     })

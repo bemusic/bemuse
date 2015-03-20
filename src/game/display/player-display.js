@@ -1,6 +1,6 @@
 
 import NoteArea from './note-area'
-import { MISSED } from '../judgments'
+import { breaksCombo } from '../judgments'
 
 export class PlayerDisplay {
   constructor(player) {
@@ -27,13 +27,14 @@ export class PlayerDisplay {
         let note    = entity.note
         let column  = note.column
         if (entity.height) {
-          let judgment = playerState.getNoteJudgment(note)
+          let judgment  = playerState.getNoteJudgment(note)
+          let status    = playerState.getNoteStatus(note)
           push(`longnote_${column}`, {
             key:    note.id,
             y:      entity.y,
             height: entity.height,
-            active: judgment > 0,
-            missed: judgment === MISSED,
+            active: judgment !== 0 && !breaksCombo(judgment),
+            missed: status === 'judged' && breaksCombo(judgment),
           })
         } else {
           if (playerState.getNoteStatus(note) !== 'judged') {

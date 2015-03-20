@@ -8,7 +8,7 @@ export const JUDGMENTS = [
   { value: 1, timegate: 0.018, endTimegate: 0.036 },
   { value: 2, timegate: 0.040, endTimegate: 0.080 },
   { value: 3, timegate: 0.100, endTimegate: 0.200 },
-  { value: 4, timegate: 0.200, endTimegate: 0.400 },
+  { value: 4, timegate: 0.200, endTimegate: 0.200 },
 ]
 
 /**
