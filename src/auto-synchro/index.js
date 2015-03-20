@@ -10,21 +10,6 @@ export function main() {
 
   let el = $('<div></div>').appendTo('body')
 
-  function send(device, data) {
-    return new Promise((resolve) => {
-      $.getScript('//www.parsecdn.com/js/parse-1.3.4.min.js', () => {
-        Parse.initialize('JPhEf2EisJuKiuSOD50p6De7ZW7iwKVPakcbMo0h',
-                          'jd0W1cM8Kpn5jTBUp8emJJSimjfYmpP5o0tSpH71')
-        let SurveyResult = Parse.Object.extend('SurveyResult')
-        resolve(new SurveyResult().save({
-          agent: navigator.userAgent,
-          device: device,
-          samples: data,
-        }))
-      })
-    })
-  }
-
   let data = {
         showLoading: true,
         showStart: false,
@@ -63,11 +48,8 @@ export function main() {
       let remote = music({
         a() {
           data.showCollect = false
-          data.showSending = true
           data.latency = getLatency(samples)
-          send(data.device, samples).then(() => {
-            data.showThank = true
-          }, () => { alert('Oops cannot send!') })
+          data.showThank = true
         }
       })
       let tap = () => {

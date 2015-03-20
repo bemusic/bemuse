@@ -1,13 +1,7 @@
 
 .experiment
   h1 An Experiment on Audio+Input Latency Calibration for Rhythm Action Games
-  h2 1. Please answer the questionaire and click the button
-  p What kind of audio device you are using?
-  select(v-model='device')
-    option(selected) Built-in Speaker
-    option Earphone
-    option External Speaker
-  p When you are ready...
+  h2 1. Click the button
   div(v-show='showStart')
     button(v-on='click:start') Start the Music
   div(v-show='showLoading')
