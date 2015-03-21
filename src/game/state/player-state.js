@@ -45,19 +45,24 @@ export class PlayerState {
     }
   }
   _judgeColumn(notes, control) {
-    let judgedNote = null
+    let judgedNote
+    let judgment
     for (let i = 0; i < notes.length; i ++) {
       let note = notes[i]
       if (this._shouldJudge(note, control)) {
         judgedNote = note
-        this._judge(note)
+        judgment = this._judge(note)
         break
       }
     }
     let justPressed = control.changed && control.value
     if (justPressed) {
       if (judgedNote) {
-        this.notifications.sounds.push({ note: judgedNote, type: 'hit' })
+        this.notifications.sounds.push({
+          note: judgedNote,
+          type: 'hit',
+          judgment: judgment,
+        })
       } else {
         let closestNote = this._getClosestNote(notes)
         if (closestNote) {
@@ -106,6 +111,7 @@ export class PlayerState {
     }
     this._noteResult.set(note, result)
     this._setJudgment(judgment, delta)
+    return judgment
   }
   _setJudgment(judgment, delta) {
     this.stats.handleJudgment(judgment)

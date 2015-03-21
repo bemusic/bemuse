@@ -34,6 +34,12 @@ export function judgeTimeWith(f) {
 export const judgeTime    = judgeTimeWith(R.prop('timegate'))
 export const judgeEndTime = judgeTimeWith(R.prop('endTimegate'))
 
-export function breaksCombo(judgment) {
-  return judgment === MISSED || judgment >= 4
+export function isBad(judgment) {
+  return judgment >= 4
 }
+
+export function breaksCombo(judgment) {
+  return judgment === MISSED || isBad(judgment)
+}
+
+

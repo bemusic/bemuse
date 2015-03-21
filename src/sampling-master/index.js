@@ -120,6 +120,13 @@ class PlayInstance {
     if (this.onstop) this.onstop()
   }
 
+  bad() {
+    if (!this._source) return
+    this._source.playbackRate.value = (Math.random() < 0.5 ?
+      Math.pow(2,  1 / 12) :
+      Math.pow(2, -1 / 12))
+  }
+
   destroy() {
     this.stop()
   }

@@ -9,7 +9,7 @@ describe('WaveFactory', function() {
   let waveFactory
   beforeEach(function() {
     master  = { }
-    sample  = { play: sinon.spy() }
+    sample  = { play: sinon.stub() }
     samples = { 'wow.wav': sample }
     map     = { '0z': 'wow.wav' }
     waveFactory = new WaveFactory(master, samples, map)
@@ -24,6 +24,13 @@ describe('WaveFactory', function() {
     it('should play the keysound', function() {
       waveFactory.playNote('0z', 0.1)
       expect(sample.play).to.have.been.calledWith(0.1)
+    })
+    it('should stop old sound', function() {
+      let instance = { stop: sinon.spy() }
+      sample.play.returns(instance)
+      waveFactory.playNote('0z', 0)
+      waveFactory.playNote('0z', 0)
+      expect(instance.stop).to.have.callCount(1)
     })
   })
   describe('playFree', function() {

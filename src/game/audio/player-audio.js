@@ -1,6 +1,7 @@
 
 import R            from 'ramda'
 import WaveFactory  from './wave-factory'
+import { isBad }    from '../judgments'
 
 function autoplayer(array) {
   array = R.sortBy(R.prop('time'), array)
@@ -38,15 +39,17 @@ export class PlayerAudio {
   _playAutosounds(time, state) {
     let autosounds = this._notes.next(time + 1 / 30)
     let shouldSkip = state && state.stats.poor
+    shouldSkip = true
     if (shouldSkip) return
     for (let note of autosounds) {
       this._hitNote(note, note.time - time)
     }
   }
   _handleSoundNotifications(soundNotifications) {
-    for (let { type, note } of soundNotifications) {
+    for (let notification of soundNotifications) {
+      let { type, note } = notification
       if (type === 'hit') {
-        this._hitNote(note, 0)
+        this._hitNote(note, 0, notification.judgment)
       } else if (type === 'break') {
         this._breakNote(note)
       } else if (type === 'free') {
@@ -54,11 +57,14 @@ export class PlayerAudio {
       }
     }
   }
-  _hitNote(note, delay) {
+  _hitNote(note, delay, judgment) {
     let instance = this._played.get(note)
     if (!instance) {
-      let instance = this._waveFactory.playNote(note.keysound, delay)
+      instance = this._waveFactory.playNote(note.keysound, delay)
       this._played.set(note, instance)
+    }
+    if (isBad(judgment)) {
+      instance.bad()
     }
   }
   _breakNote(note) {
