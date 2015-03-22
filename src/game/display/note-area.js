@@ -2,8 +2,9 @@
 import R from 'ramda'
 
 export class NoteArea {
-  constructor(notes) {
-    this._notes = R.sortBy(position, notes)
+  constructor(notes, barLines) {
+    this._notes     = R.sortBy(position, notes)
+    this._barLines  = R.sortBy(R.identity, R.map(R.prop('position'), barLines))
   }
   getVisibleNotes(lower, upper, headroom) {
     let out = []
@@ -28,6 +29,12 @@ export class NoteArea {
       }
     }
     return out
+  }
+  getVisibleBarLines(lower, upper, headroom) {
+    if (!headroom) headroom = 0
+    return this._barLines
+        .filter(pos => (lower - headroom <= pos && pos <= upper))
+        .map(pos => ({ id: pos, y: y(lower, upper, pos) }))
   }
 }
 

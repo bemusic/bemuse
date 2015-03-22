@@ -28,6 +28,8 @@ mixin longnote(x, cur, add, visible)
 
 mixin notes(columns)
   - var x = 0
+  object(key='p1_barlines')
+    sprite(image='NoteArea/Bar.png' x=0 y='(y*'+area_height+')-1')
   each column in columns
     - var cur = styles[column.style]
     - var ch  = column.channel

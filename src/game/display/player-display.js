@@ -4,8 +4,9 @@ import { breaksCombo } from '../judgments'
 
 export class PlayerDisplay {
   constructor(player) {
+    let notechart = player.notechart
     this._player    = player
-    this._noteArea  = new NoteArea(player.notechart.notes)
+    this._noteArea  = new NoteArea(notechart.notes, notechart.barLines)
     this._stateful  = { }
   }
   update(time, gameTime, playerState) {
@@ -16,10 +17,20 @@ export class PlayerDisplay {
     let data     = { }
     let push     = (key, value) => (data[key] || (data[key] = [])).push(value)
     updateVisibleNotes()
+    updateBarLines()
     updateInput()
     updateJudgment()
     Object.assign(data, stateful)
     return data
+
+    function updateBarLines() {
+      let entities = noteArea.getVisibleBarLines(
+                        position, position + (5 / 3), 1)
+      for (let entity of entities) {
+        push(`barlines`, { key: entity.id, y: entity.y })
+      }
+      console.log(entities.length)
+    }
 
     function updateVisibleNotes() {
       let entities = noteArea.getVisibleNotes(position, position + (5 / 3), 1)
