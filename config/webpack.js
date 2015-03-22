@@ -20,7 +20,6 @@ let config = {
   entry: {
     boot: './boot'
   },
-  devtool: 'source-map',
   output: {
     path: path('dist', 'build'),
     publicPath: 'build/',
@@ -75,6 +74,10 @@ let config = {
   plugins: [
     new ProgressPlugin(),
   ],
+}
+
+if (process.env.SOURCE_MAPS === 'true') {
+  config.devtool = 'source-map'
 }
 
 if (NODE_ENV === 'test' || process.env.COV === 'true') {

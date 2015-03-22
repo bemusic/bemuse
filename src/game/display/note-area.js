@@ -2,17 +2,19 @@
 import R from 'ramda'
 
 export class NoteArea {
-  constructor(notes) {
-    this._notes = R.sortBy(position, notes)
+  constructor(notes, barLines) {
+    this._notes     = R.sortBy(position, notes)
+    this._barLines  = R.sortBy(R.identity, R.map(R.prop('position'), barLines))
   }
-  getVisibleNotes(lower, upper) {
+  getVisibleNotes(lower, upper, headroom) {
     let out = []
     let notes = this._notes
+    if (!headroom) headroom = 0
     for (let i = 0; i < notes.length; i ++) {
       let note = notes[i]
       let visible = note.end ?
-            !(note.position > upper || note.end.position < lower) :
-            !(note.position > upper || note.position < lower)
+            !(note.position > upper || note.end.position < lower - headroom) :
+            !(note.position > upper || note.position < lower - headroom)
       if (visible) {
         let entity = { note: note }
         if (!note.end) {
@@ -27,6 +29,12 @@ export class NoteArea {
       }
     }
     return out
+  }
+  getVisibleBarLines(lower, upper, headroom) {
+    if (!headroom) headroom = 0
+    return this._barLines
+        .filter(pos => (lower - headroom <= pos && pos <= upper))
+        .map(pos => ({ id: pos, y: y(lower, upper, pos) }))
   }
 }
 

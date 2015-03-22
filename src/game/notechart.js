@@ -1,6 +1,7 @@
 
 import BMS from 'bms'
 
+import R          from 'ramda'
 import GameEvent  from './data/event'
 import GameNote   from './data/game-note'
 
@@ -16,6 +17,7 @@ export class Notechart {
     this._keysounds = keysounds
     this._notes     = this._generatePlayableNotesFromBMS(bmsNotes)
     this._autos     = this._generateAutoKeysoundEventsFromBMS(bmsNotes)
+    this._barLines  = this._generateBarLines(bmsNotes, bms)
     this._samples   = this._generateKeysoundFiles(keysounds)
     this._infos     = new Map(this._notes.map(
         note => [note, this._getNoteInfo(note)]))
@@ -31,6 +33,9 @@ export class Notechart {
   }
   get keysounds() {
     return this._keysounds.all()
+  }
+  get barLines() {
+    return this._barLines
   }
   get columns() {
     return ['SC', '1', '2', '3', '4', '5', '6', '7']
@@ -80,6 +85,20 @@ export class Notechart {
       spec.keysound = note.keysound
       return new GameEvent(spec)
     })
+  }
+  _generateBarLines(bmsNotes, bms) {
+    let max = R.max(bmsNotes.all().map(note => note.endBeat || note.beat))
+    let barLines = [ { beat: 0, position: 0 } ]
+    let currentBeat     = 0
+    let currentMeasure  = 0
+    let currentPosition = 0
+    do {
+      currentBeat += bms.timeSignatures.getBeats(currentMeasure)
+      currentMeasure += 1
+      currentPosition = this.beatToPosition(currentBeat)
+      barLines.push({ beat: currentBeat, position: currentPosition })
+    } while (currentBeat <= max)
+    return barLines
   }
   _generateKeysoundFiles(keysounds) {
     let set = new Set()

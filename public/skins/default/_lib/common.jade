@@ -28,6 +28,8 @@ mixin longnote(x, cur, add, visible)
 
 mixin notes(columns)
   - var x = 0
+  object(key='p1_barlines')
+    sprite(image='NoteArea/Bar.png' x=0 y='(y*'+area_height+')-1' blend='screen')
   each column in columns
     - var cur = styles[column.style]
     - var ch  = column.channel
@@ -59,14 +61,38 @@ mixin note-area(modeObject)
     +notes(modeObject.columns)
 
 mixin judgments
-  each judgment in judgments
-    sprite(image=judgment.image x='0' y='0' alpha='0')
-      +judgment-animation(judgment)
+  +judgment('1')
+    +judgment-text('Meticulous')(text='*%s' data='p1_combo')
+    +judgment-text('MeticulousGlow')(text='*%s' data='p1_combo' alpha='1 - ((t * 10) % 1)')
+  +judgment('2')
+    +judgment-text('Precise')(text='*%s' data='p1_combo')
+  +judgment('3')
+    +judgment-text('Good')(text='*%s' data='p1_combo')
+  +judgment('4')
+    +judgment-text('Other')(text='1')
+  +judgment('missed')
+    +judgment-text('Other')(text='0')
 
-mixin judgment-animation(item)
-  each judgment in judgments
-    animation(on='p1_judge_' + judgment.name)
-      if item.name == judgment.name
-        keyframe(t='0' alpha='1')
-      else
-        keyframe(t='0' alpha='0')
+mixin judgment-text(name)
+  text(font='BemuseDefault-'+name font-src='Fonts/BemuseDefault-'+name+'.fnt')&attributes(attributes)
+
+mixin judgment(type)
+  group(alpha='0')
+    +judgment-animation(type)
+    block
+
+mixin judgment-animation(type)
+  animation(on='p1_judge_1'):       +judgment-keyframes((type == '1'))
+  animation(on='p1_judge_2'):       +judgment-keyframes((type == '2'))
+  animation(on='p1_judge_3'):       +judgment-keyframes((type == '3'))
+  animation(on='p1_judge_4'):       +judgment-keyframes((type == '4'))
+  animation(on='p1_judge_missed'):  +judgment-keyframes((type == 'missed'))
+
+mixin judgment-keyframes(active)
+  if active
+    keyframe(t='0' y='-16' alpha='1')
+    keyframe(t='0.1' y='0' ease='quadOut')
+    keyframe(t='0.6' alpha='1')
+    keyframe(t='1' alpha='0')
+  else
+    keyframe(t='0' alpha='0')

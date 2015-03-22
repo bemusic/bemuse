@@ -19,6 +19,7 @@ let canPlay = (() => {
  * The audio format to use (.ogg or .m4a)
  */
 let audioExt =  once(() =>
+                  canPlay('audio/mpeg') ? '.mp3' :
                   canPlay('audio/ogg; codecs="vorbis"') ? '.ogg' : '.m4a')
 
 /**
@@ -27,12 +28,16 @@ let audioExt =  once(() =>
 let ASSET_URLS = {
   'bgm.m4a': require('./data/bgm.m4a'),
   'bgm.ogg': require('./data/bgm.ogg'),
+  'bgm.mp3': require('./data/bgm.mp3'),
   'intro.m4a': require('./data/intro.m4a'),
   'intro.ogg': require('./data/intro.ogg'),
+  'intro.mp3': require('./data/intro.mp3'),
   'kick.m4a': require('./data/kick.m4a'),
   'kick.ogg': require('./data/kick.ogg'),
+  'kick.mp3': require('./data/kick.mp3'),
   'snare.m4a': require('./data/snare.m4a'),
   'snare.ogg': require('./data/snare.ogg'),
+  'snare.mp3': require('./data/snare.mp3'),
 }
 
 /**

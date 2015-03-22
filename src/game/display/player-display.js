@@ -1,11 +1,12 @@
 
 import NoteArea from './note-area'
-import { MISSED } from '../judgments'
+import { breaksCombo } from '../judgments'
 
 export class PlayerDisplay {
   constructor(player) {
+    let notechart = player.notechart
     this._player    = player
-    this._noteArea  = new NoteArea(player.notechart.notes)
+    this._noteArea  = new NoteArea(notechart.notes, notechart.barLines)
     this._stateful  = { }
   }
   update(time, gameTime, playerState) {
@@ -16,24 +17,35 @@ export class PlayerDisplay {
     let data     = { }
     let push     = (key, value) => (data[key] || (data[key] = [])).push(value)
     updateVisibleNotes()
+    updateBarLines()
     updateInput()
     updateJudgment()
     Object.assign(data, stateful)
     return data
 
+    function updateBarLines() {
+      let entities = noteArea.getVisibleBarLines(
+                        position, position + (5 / 3), 1)
+      for (let entity of entities) {
+        push(`barlines`, { key: entity.id, y: entity.y })
+      }
+      console.log(entities.length)
+    }
+
     function updateVisibleNotes() {
-      let entities = noteArea.getVisibleNotes(position, position + (5 / 3))
+      let entities = noteArea.getVisibleNotes(position, position + (5 / 3), 1)
       for (let entity of entities) {
         let note    = entity.note
         let column  = note.column
         if (entity.height) {
-          let judgment = playerState.getNoteJudgment(note)
+          let judgment  = playerState.getNoteJudgment(note)
+          let status    = playerState.getNoteStatus(note)
           push(`longnote_${column}`, {
             key:    note.id,
             y:      entity.y,
             height: entity.height,
-            active: judgment > 0,
-            missed: judgment === MISSED,
+            active: judgment !== 0 && !breaksCombo(judgment),
+            missed: status === 'judged' && breaksCombo(judgment),
           })
         } else {
           if (playerState.getNoteStatus(note) !== 'judged') {
@@ -67,6 +79,7 @@ export class PlayerDisplay {
         let name = notification.judgment === -1 ? 'missed' :
               `${notification.judgment}`
         stateful[`judge_${name}`] = time
+        stateful[`combo`] = notification.combo
       }
     }
 

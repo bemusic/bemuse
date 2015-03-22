@@ -68,7 +68,9 @@ describe('PlayerDisplay', function() {
       void expect(data['longnote_1'][0].active).to.be.true
     })
     it('displays missed long notes', function() {
-      let state = tap(s => s.getNoteJudgment.returns(-1), blankState())
+      let state = blankState()
+      state.getNoteJudgment.returns(-1)
+      state.getNoteStatus.returns('judged')
       update(3.95, 3.95, state)
       void expect(data['longnote_1'][0].missed).to.be.true
     })
@@ -87,6 +89,11 @@ describe('PlayerDisplay', function() {
       let info = { judgment: -1, delta: 0, combo: 0 }
       update(12, 34, makeState({ notifications: { judgment: info } }))
       expect(data['judge_missed']).to.equal(12)
+    })
+    it('sets combo', function() {
+      let info = { judgment: 1, delta: 0, combo: 123 }
+      update(12, 34, makeState({ notifications: { judgment: info } }))
+      expect(data['combo']).to.equal(123)
     })
   })
 

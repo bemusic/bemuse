@@ -5,8 +5,8 @@
 // we minimize the amount of dependencies.
 //
 
-import querystring      from 'querystring'
 import Progress         from 'bemuse/progress'
+import query            from 'bemuse/query'
 
 import loadModule       from 'val!./loader.js'
 
@@ -14,7 +14,6 @@ import LoadingContext   from './loading-context'
 import * as boot        from './boot'
 import * as ErrorDialog from './error-dialog'
 
-let data = querystring.parse(location.search.replace(/^\?/, ''))
 
 /* isparta ignore next */
 window.onerror = function(message, url, line, col, e) {
@@ -22,7 +21,7 @@ window.onerror = function(message, url, line, col, e) {
 }
 
 /* isparta ignore next */
-let mode = data.mode || 'comingSoon'
+let mode = query.mode || 'comingSoon'
 
 /* isparta ignore else - we can check that by functional tests */
 if (loadModule[mode]) {

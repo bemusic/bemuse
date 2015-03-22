@@ -103,6 +103,14 @@ describe('SamplingMaster', function() {
           void expect(instance.onstop).to.have.been.called
         })
       })
+
+      describe('#bad', function() {
+        it('should change pitch of sound', function() {
+          let instance = sample.play()
+          instance.bad()
+          expect(bufferSource.playbackRate.value).not.to.equal(1)
+        })
+      })
     })
   })
 

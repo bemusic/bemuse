@@ -3,7 +3,9 @@ export class Player {
   constructor(notechart, playerNumber, options) {
     this._notechart = notechart
     this._number    = playerNumber
-    void options
+    this._options   = {
+      autosound: !options.autosound,
+    }
   }
   get columns() {
     return this._notechart.columns
@@ -13,6 +15,9 @@ export class Player {
   }
   get number() {
     return this._number
+  }
+  get options() {
+    return this._options
   }
 }
 

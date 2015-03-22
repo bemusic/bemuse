@@ -1,6 +1,6 @@
 
 import R from 'ramda'
-import { judgeTime, judgeEndTime, MISSED } from '../judgments'
+import { judgeTime, judgeEndTime, breaksCombo, MISSED } from '../judgments'
 import PlayerStats   from './player-stats'
 
 export class PlayerState {
@@ -16,6 +16,7 @@ export class PlayerState {
   update(gameTime, input) {
     this._gameTime = gameTime
     this.notifications = { }
+    this.notifications.sounds = [ ]
     this.input = this._createInputColumnMap(input)
     this._judgeNotes(gameTime)
   }
@@ -44,13 +45,34 @@ export class PlayerState {
     }
   }
   _judgeColumn(notes, control) {
+    let judgedNote
+    let judgment
     for (let i = 0; i < notes.length; i ++) {
       let note = notes[i]
       if (this._shouldJudge(note, control)) {
-        this._judge(note)
+        judgedNote = note
+        judgment = this._judge(note)
         break
       }
     }
+    let justPressed = control.changed && control.value
+    if (justPressed) {
+      if (judgedNote) {
+        this.notifications.sounds.push({
+          note: judgedNote,
+          type: 'hit',
+          judgment: judgment,
+        })
+      } else {
+        let closestNote = this._getClosestNote(notes)
+        if (closestNote) {
+          this.notifications.sounds.push({ note: closestNote, type: 'free' })
+        }
+      }
+    }
+  }
+  _getClosestNote(notes) {
+    return R.minBy(note => Math.abs(this._gameTime - note.time), notes)
   }
   _shouldJudge(note, control) {
     let status = this.getNoteStatus(note)
@@ -84,8 +106,12 @@ export class PlayerState {
     } else {
       result = { status: 'judged', judgment, delta }
     }
+    if (breaksCombo(judgment)) {
+      this.notifications.sounds.push({ note, type: 'break' })
+    }
     this._noteResult.set(note, result)
     this._setJudgment(judgment, delta)
+    return judgment
   }
   _setJudgment(judgment, delta) {
     this.stats.handleJudgment(judgment)

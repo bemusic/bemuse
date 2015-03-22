@@ -11,6 +11,9 @@
       <sprite image="Note/DX/BackgroundLeft.png" x="0" y="0"></sprite>
       <sprite image="NoteArea/Flash.png" x="1" y="455" blend="screen" alpha="1 - (t % 0.4) / 0.4"></sprite>
       <group x="1" mask="283x550+1+0">
+        <object key="p1_barlines">
+          <sprite image="NoteArea/Bar.png" x="0" y="(y*550)-1" blend="screen"></sprite>
+        </object>
         <sprite image="Note/DX/Highlight.png" frame="61x552+0+0" x="0" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -305,6 +308,9 @@
       <sprite image="Note/DX/BackgroundRight.png" x="0" y="0"></sprite>
       <sprite image="NoteArea/Flash.png" x="1" y="455" blend="screen" alpha="1 - (t % 0.4) / 0.4"></sprite>
       <group x="1" mask="283x550+1+0">
+        <object key="p1_barlines">
+          <sprite image="NoteArea/Bar.png" x="0" y="(y*550)-1" blend="screen"></sprite>
+        </object>
         <sprite image="Note/DX/Highlight.png" frame="34x552+62+0" x="0" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -599,6 +605,9 @@
       <sprite image="Note/DX/BackgroundLeft.png" x="0" y="0"></sprite>
       <sprite image="NoteArea/Flash.png" x="1" y="455" blend="screen" alpha="1 - (t % 0.4) / 0.4"></sprite>
       <group x="1" mask="283x550+1+0">
+        <object key="p1_barlines">
+          <sprite image="NoteArea/Bar.png" x="0" y="(y*550)-1" blend="screen"></sprite>
+        </object>
         <sprite image="Note/DX/Highlight.png" frame="61x552+0+0" x="0" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -881,9 +890,12 @@
         </object>
       </group>
       <group y="400" x="10">
-        <sprite image="Judgment/Meticulous.png" x="0" y="0" alpha="0">
+        <group alpha="0">
           <animation on="p1_judge_1">
-            <keyframe t="0" alpha="1"></keyframe>
+            <keyframe t="0" y="-16" alpha="1"></keyframe>
+            <keyframe t="0.1" y="0" ease="quadOut"></keyframe>
+            <keyframe t="0.6" alpha="1"></keyframe>
+            <keyframe t="1" alpha="0"></keyframe>
           </animation>
           <animation on="p1_judge_2">
             <keyframe t="0" alpha="0"></keyframe>
@@ -897,13 +909,18 @@
           <animation on="p1_judge_missed">
             <keyframe t="0" alpha="0"></keyframe>
           </animation>
-        </sprite>
-        <sprite image="Judgment/Precise.png" x="0" y="0" alpha="0">
+          <text font="BemuseDefault-Meticulous" font-src="Fonts/BemuseDefault-Meticulous.fnt" text="*%s" data="p1_combo"></text>
+          <text font="BemuseDefault-MeticulousGlow" font-src="Fonts/BemuseDefault-MeticulousGlow.fnt" text="*%s" data="p1_combo" alpha="1 - ((t * 10) % 1)"></text>
+        </group>
+        <group alpha="0">
           <animation on="p1_judge_1">
             <keyframe t="0" alpha="0"></keyframe>
           </animation>
           <animation on="p1_judge_2">
-            <keyframe t="0" alpha="1"></keyframe>
+            <keyframe t="0" y="-16" alpha="1"></keyframe>
+            <keyframe t="0.1" y="0" ease="quadOut"></keyframe>
+            <keyframe t="0.6" alpha="1"></keyframe>
+            <keyframe t="1" alpha="0"></keyframe>
           </animation>
           <animation on="p1_judge_3">
             <keyframe t="0" alpha="0"></keyframe>
@@ -914,8 +931,9 @@
           <animation on="p1_judge_missed">
             <keyframe t="0" alpha="0"></keyframe>
           </animation>
-        </sprite>
-        <sprite image="Judgment/Good.png" x="0" y="0" alpha="0">
+          <text font="BemuseDefault-Precise" font-src="Fonts/BemuseDefault-Precise.fnt" text="*%s" data="p1_combo"></text>
+        </group>
+        <group alpha="0">
           <animation on="p1_judge_1">
             <keyframe t="0" alpha="0"></keyframe>
           </animation>
@@ -923,7 +941,10 @@
             <keyframe t="0" alpha="0"></keyframe>
           </animation>
           <animation on="p1_judge_3">
-            <keyframe t="0" alpha="1"></keyframe>
+            <keyframe t="0" y="-16" alpha="1"></keyframe>
+            <keyframe t="0.1" y="0" ease="quadOut"></keyframe>
+            <keyframe t="0.6" alpha="1"></keyframe>
+            <keyframe t="1" alpha="0"></keyframe>
           </animation>
           <animation on="p1_judge_4">
             <keyframe t="0" alpha="0"></keyframe>
@@ -931,25 +952,9 @@
           <animation on="p1_judge_missed">
             <keyframe t="0" alpha="0"></keyframe>
           </animation>
-        </sprite>
-        <sprite image="Judgment/Offbeat.png" x="0" y="0" alpha="0">
-          <animation on="p1_judge_1">
-            <keyframe t="0" alpha="0"></keyframe>
-          </animation>
-          <animation on="p1_judge_2">
-            <keyframe t="0" alpha="0"></keyframe>
-          </animation>
-          <animation on="p1_judge_3">
-            <keyframe t="0" alpha="0"></keyframe>
-          </animation>
-          <animation on="p1_judge_4">
-            <keyframe t="0" alpha="1"></keyframe>
-          </animation>
-          <animation on="p1_judge_missed">
-            <keyframe t="0" alpha="0"></keyframe>
-          </animation>
-        </sprite>
-        <sprite image="Judgment/Missed.png" x="0" y="0" alpha="0">
+          <text font="BemuseDefault-Good" font-src="Fonts/BemuseDefault-Good.fnt" text="*%s" data="p1_combo"></text>
+        </group>
+        <group alpha="0">
           <animation on="p1_judge_1">
             <keyframe t="0" alpha="0"></keyframe>
           </animation>
@@ -960,12 +965,37 @@
             <keyframe t="0" alpha="0"></keyframe>
           </animation>
           <animation on="p1_judge_4">
+            <keyframe t="0" y="-16" alpha="1"></keyframe>
+            <keyframe t="0.1" y="0" ease="quadOut"></keyframe>
+            <keyframe t="0.6" alpha="1"></keyframe>
+            <keyframe t="1" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_missed">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <text font="BemuseDefault-Other" font-src="Fonts/BemuseDefault-Other.fnt" text="1"></text>
+        </group>
+        <group alpha="0">
+          <animation on="p1_judge_1">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_2">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_3">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_4">
             <keyframe t="0" alpha="0"></keyframe>
           </animation>
           <animation on="p1_judge_missed">
-            <keyframe t="0" alpha="1"></keyframe>
+            <keyframe t="0" y="-16" alpha="1"></keyframe>
+            <keyframe t="0.1" y="0" ease="quadOut"></keyframe>
+            <keyframe t="0.6" alpha="1"></keyframe>
+            <keyframe t="1" alpha="0"></keyframe>
           </animation>
-        </sprite>
+          <text font="BemuseDefault-Other" font-src="Fonts/BemuseDefault-Other.fnt" text="0"></text>
+        </group>
       </group>
     </group>
   </group>

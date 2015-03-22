@@ -5,10 +5,10 @@ export const UNJUDGED = 0
 export const MISSED = -1
 
 export const JUDGMENTS = [
-  { value: 1, timegate: 0.018, endTimegate: 0.036 },
-  { value: 2, timegate: 0.040, endTimegate: 0.080 },
+  { value: 1, timegate: 0.020, endTimegate: 0.040 },
+  { value: 2, timegate: 0.050, endTimegate: 0.100 },
   { value: 3, timegate: 0.100, endTimegate: 0.200 },
-  { value: 4, timegate: 0.200, endTimegate: 0.400 },
+  { value: 4, timegate: 0.200, endTimegate: 0.200 },
 ]
 
 /**
@@ -34,6 +34,12 @@ export function judgeTimeWith(f) {
 export const judgeTime    = judgeTimeWith(R.prop('timegate'))
 export const judgeEndTime = judgeTimeWith(R.prop('endTimegate'))
 
-export function breaksCombo(judgment) {
-  return judgment === MISSED || judgment >= 4
+export function isBad(judgment) {
+  return judgment >= 4
 }
+
+export function breaksCombo(judgment) {
+  return judgment === MISSED || isBad(judgment)
+}
+
+

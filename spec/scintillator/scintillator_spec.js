@@ -82,6 +82,27 @@ describe('Scintillator', function() {
     })
   })
 
+  describe('TextNode', function() {
+    it('should display text', co.wrap(function*() {
+      let skin = yield Scintillator.load(fixture('text.xml'))
+      let context = new Scintillator.Context(skin)
+      let stage = context.stage
+      context.render({ })
+      let text = stage.children[0]
+      expect(text.text).to.equal('Hello world')
+      context.destroy()
+    }))
+    it('should support data interpolation', co.wrap(function*() {
+      let skin = yield Scintillator.load(fixture('text_interpolation.xml'))
+      let context = new Scintillator.Context(skin)
+      let stage = context.stage
+      context.render({ lol: 'wow' })
+      let text = stage.children[0]
+      expect(text.text).to.equal('Hello world wow')
+      context.destroy()
+    }))
+  })
+
   describe('ObjectNode', function() {
     it('should display children', co.wrap(function*() {
       let skin = yield Scintillator.load(fixture('expr_object.xml'))

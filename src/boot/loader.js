@@ -8,6 +8,7 @@ var modules = {
       comingSoon: 'bemuse/coming-soon',
       sync:       'bemuse/auto-synchro',
       game:       'bemuse/game',
+      testFont:   'bemuse/devtools/test-font',
     }
 
 var code = 'module.exports = {'
