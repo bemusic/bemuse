@@ -18,7 +18,7 @@ describe('PlayerAudio', function() {
     audio       = new PlayerAudio({ player, waveFactory })
   }
 
-  it('should play notes on correct time', function() {
+  it('should play autokeysounds on correct time', function() {
     setup({
       notechart: {
         autos: [
@@ -27,6 +27,9 @@ describe('PlayerAudio', function() {
           { time: 2, keysound: '0z', },
         ],
         notes: [],
+      },
+      options: {
+        autosound: false,
       },
     })
     audio.update(0)
@@ -38,12 +41,29 @@ describe('PlayerAudio', function() {
     expect(waveFactory.playAuto).to.have.callCount(3)
   })
 
+  it('should play notes automatically when autosound is on', function() {
+    setup({
+      notechart: {
+        autos: [ ],
+        notes: [
+          { time: 1, keysound: '0x', },
+        ],
+      },
+      options: {
+        autosound: true,
+      },
+    })
+    audio.update(1)
+    expect(waveFactory.playNote).to.have.been.calledWith('0x')
+  })
+
   it('should play notes ahead of time', function() {
     setup({
       notechart: {
         autos: [ { time: 1, keysound: '0x', }, ],
         notes: [],
       },
+      options: { },
     })
     audio.update(0.999)
     expect(waveFactory.playAuto).to.have.been.calledWith('0x')

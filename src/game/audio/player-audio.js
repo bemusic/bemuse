@@ -25,6 +25,7 @@ export class PlayerAudio {
     this._autos       = autoplayer(notechart.autos)
     this._notes       = autoplayer(notechart.notes)
     this._played      = new Map()
+    this._autosound   = !!player.options.autosound
   }
   update(time, state) {
     this._playAutokeysounds(time)
@@ -38,9 +39,9 @@ export class PlayerAudio {
   }
   _playAutosounds(time, state) {
     let autosounds = this._notes.next(time + 1 / 30)
-    let shouldSkip = state && state.stats.poor
-    shouldSkip = true
-    if (shouldSkip) return
+    let poor       = state && state.stats.poor
+    let shouldPlay = this._autosound && !poor
+    if (!shouldPlay) return
     for (let note of autosounds) {
       this._hitNote(note, note.time - time)
     }
