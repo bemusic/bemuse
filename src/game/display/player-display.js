@@ -16,6 +16,7 @@ export class PlayerDisplay {
     let position = player.notechart.secondsToPosition(gameTime)
     let data     = { }
     let push     = (key, value) => (data[key] || (data[key] = [])).push(value)
+
     updateVisibleNotes()
     updateBarLines()
     updateInput()
@@ -24,15 +25,14 @@ export class PlayerDisplay {
     return data
 
     function updateBarLines() {
-      let entities = noteArea.getVisibleBarLines(
-                        position, position + (5 / 3), 1)
+      let entities = noteArea.getVisibleBarLines(position, getUpperBound(), 1)
       for (let entity of entities) {
         push(`barlines`, { key: entity.id, y: entity.y })
       }
     }
 
     function updateVisibleNotes() {
-      let entities = noteArea.getVisibleNotes(position, position + (5 / 3), 1)
+      let entities = noteArea.getVisibleNotes(position, getUpperBound(), 1)
       for (let entity of entities) {
         let note    = entity.note
         let column  = note.column
@@ -80,6 +80,14 @@ export class PlayerDisplay {
         stateful[`judge_${name}`] = time
         stateful[`combo`] = notification.combo
       }
+    }
+
+    function getUpperBound() {
+      return position + (5 / getSpeed())
+    }
+
+    function getSpeed() {
+      return 2.5
     }
 
   }
