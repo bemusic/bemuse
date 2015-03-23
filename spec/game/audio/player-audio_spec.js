@@ -57,6 +57,21 @@ describe('PlayerAudio', function() {
     expect(waveFactory.playNote).to.have.been.calledWith('0x')
   })
 
+  it('should not play notes automatically when autosound is off', function() {
+    setup({
+      notechart: {
+        autos: [ ],
+        notes: [
+          { time: 1, keysound: '0x', },
+        ],
+      },
+      options: {
+      },
+    })
+    audio.update(1)
+    void expect(waveFactory.playNote).to.not.have.been.called
+  })
+
   it('should play notes ahead of time', function() {
     setup({
       notechart: {

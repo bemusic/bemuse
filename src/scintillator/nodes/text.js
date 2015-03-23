@@ -14,12 +14,15 @@ export class TextNode extends SkinNode {
     this.display  = DisplayObject.compile(compiler, $el)
   }
   instantiate(context, container) {
-    return new Instance(context, self => {
-      let text = new PIXI.BitmapText(this.text, { font: this.font })
-      self.child(this.display, text)
-      self.bind(this.data, v => text.setText(this.text.replace('%s', v)))
-      container.addChild(text)
-      self.onDestroy(() => { container.removeChild(text) })
+    let text = new PIXI.BitmapText(this.text, { font: this.font })
+    return new Instance({
+      context:  context,
+      parent:   container,
+      object:   text,
+      concerns: [this.display],
+      bindings: [
+        [this.data, v => text.setText(this.text.replace('%s', v))],
+      ],
     })
   }
 }

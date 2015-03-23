@@ -11,10 +11,11 @@ export class SkinRootNode extends SkinNode {
     this.height   = +$el.attr('height')
   }
   instantiate(context) {
-    return new Instance(context, self => {
-      let stage = new PIXI.Stage(0x090807)
-      self.children(this.children, stage)
-      context.stage = stage
+    let stage = new PIXI.Stage(0x090807)
+    return new Instance({
+      context:  context,
+      object:   stage,
+      children: this.children,
     })
   }
 }

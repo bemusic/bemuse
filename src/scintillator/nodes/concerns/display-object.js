@@ -21,27 +21,37 @@ let properties = [
 
 export class DisplayObject extends SkinNode {
   compile(compiler, $el) {
-    this._animation  = Animation.compile(compiler, $el)
-    this._properties = properties.map(property => {
-      let value = $el.attr(property.name)
-      if (!property.default && !value) {
-        return () => {}
-      } else {
-        let expression = new Expression(value || property.default)
-        return (self, object) => {
-          self.bind(this._animation.prop(property.name, expression),
-              value => property.apply(object, value))
-        }
-      }
-    })
-    this.blendMode = parseBlendMode($el.attr('blend') || 'normal')
+    this._animation = Animation.compile(compiler, $el)
+    this._bindings  = [ ]
+    for (let property of properties) {
+      let code = $el.attr(property.name) || property.default
+      if (!code) continue
+      let expression  = new Expression(code)
+      let getter      = this._animation.prop(property.name, expression)
+      this._bindings.push({
+        getter: getter,
+        apply:  property.apply,
+      })
+    }
+    this.blendMode  = parseBlendMode($el.attr('blend') || 'normal')
+    this.ref        = $el.attr('ref') || null
   }
-  instantiate(context, object) {
-    return new Instance(context, self => {
-      for (let instantiateProperty of this._properties) {
-        instantiateProperty(self, object)
-      }
-      object.blendMode = this.blendMode
+  instantiate(context, subject) {
+    var object      = subject.object
+    var bindings    = [ ]
+    var onDestroy   = null
+    object.blendMode = this.blendMode
+    for (var i = 0; i < this._bindings.length; i ++) {
+      var binding = this._bindings[i]
+      bindings.push([ binding.getter, binding.apply.bind(null, object) ])
+    }
+    if (this.ref) {
+      context.ref(this.ref, object)
+      onDestroy = () => context.unref(this.ref, object)
+    }
+    return new Instance({
+      bindings: bindings,
+      onDestroy: onDestroy,
     })
   }
 }

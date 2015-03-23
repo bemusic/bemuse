@@ -15,7 +15,7 @@ export function main() {
     let context   = new Scintillator.Context(skin)
 
     let notes     = generateRandomNotes()
-    let area      = new NoteArea(notes)
+    let area      = new NoteArea(notes, [])
 
     let data = { }
     let columns = ['SC', '1', '2', '3', '4', '5', '6', '7']

@@ -29,7 +29,6 @@ export class PlayerDisplay {
       for (let entity of entities) {
         push(`barlines`, { key: entity.id, y: entity.y })
       }
-      console.log(entities.length)
     }
 
     function updateVisibleNotes() {

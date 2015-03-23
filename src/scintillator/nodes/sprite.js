@@ -14,11 +14,12 @@ export class SpriteNode extends SkinNode {
     this.frame    = parseFrame($el.attr('frame') || '')
   }
   instantiate(context, container) {
-    return new Instance(context, self => {
-      let sprite  = new PIXI.Sprite(this.getTexture())
-      self.child(this.display, sprite)
-      container.addChild(sprite)
-      self.onDestroy(() => { container.removeChild(sprite) })
+    let sprite = new PIXI.Sprite(this.getTexture())
+    return new Instance({
+      context:  context,
+      object:   sprite,
+      parent:   container,
+      concerns: [this.display],
     })
   }
   getTexture() {

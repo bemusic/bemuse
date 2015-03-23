@@ -1,7 +1,6 @@
 <skin width="123" height="456">
   <object key="notes">
     <sprite image="test.png" x="10" y="20" />
-    <sprite image="test.png" x="30" y="40" />
   </object>
 </skin>
 

@@ -24,7 +24,8 @@ export function main() {
 
   let getSong = co.wrap(function*() {
     yield Promise.resolve() // to prevent jslint from complaining
-    let url = query.bms || '/music/[aoi]olivia/olivia_SPpp.bml'
+    let url = query.bms || '/music/[ricora]ourjourney/hyper.bms'
+    url = '/music/test/[drreb]fakepuppet/fakepuppet-7h.bme'
     let assetsUrl = resolve(url, 'assets/')
     let metadata = {
       title: url,

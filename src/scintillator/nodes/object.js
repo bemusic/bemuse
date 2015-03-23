@@ -7,63 +7,73 @@ import Expression     from '../expression'
 
 import DisplayObject  from './concerns/display-object'
 
-class ChildManager {
-  constructor() {
-    this._instances = new Map()
-  }
-  push(array) {
-    let unused = new Set(this._instances.keys())
-    if (!array) array = []
-    for (let item of array) {
-      let key = item.key
-      let instance
-      if (this._instances.has(key)) {
-        instance = this._instances.get(key)
-      } else {
-        instance = this.createInstance()
-        this._instances.set(key, instance)
-      }
-      instance.push(item)
-      unused.delete(key)
-    }
-    for (let key of unused) {
-      let instance = this._instances.get(key)
-      instance.destroy()
-      this._instances.delete(key)
-    }
-  }
-}
-
-function multi(instances) {
-  if (instances.length === 1) {
-    return instances[0]
-  }
+function ChildManager(expr, child) {
   return {
-    destroy() {
-      for (let instance of instances) instance.destroy()
-    },
-    push(value) {
-      for (let instance of instances) instance.push(value)
-    },
+    instantiate(context, subject) {
+      let instances = new Map()
+      let pool      = []
+      return new Instance({
+        context:  context,
+        onData:   (data) => {
+          update(expr(data))
+        },
+      })
+      function update(array) {
+        var unused = new Set(instances.keys())
+        var key
+        var item
+        var instance
+        if (!array) array = []
+        for (var i = 0; i < array.length; i ++) {
+          item  = array[i]
+          key = item.key
+          if (instances.has(key)) {
+            instance = instances.get(key)
+          } else {
+            instance = createInstance()
+            instances.set(key, instance)
+          }
+          instance.push(item)
+          unused.delete(key)
+        }
+        for (key of unused) {
+          instance = instances.get(key)
+          instance.detach()
+          instances.delete(key)
+          pool.push(instance)
+        }
+      }
+      function createInstance() {
+        var instance = pool.pop()
+        if (instance) {
+          instance.attachTo(subject.object)
+        } else {
+          instance = child.instantiate(context, subject.object)
+        }
+        return instance
+      }
+    }
   }
 }
 
 export class ObjectNode extends SkinNode {
   compile(compiler, $el) {
     this.children = compiler.compileChildren($el)
+    if (this.children.length !== 1) {
+      throw new Error('Expected exactly 1 children, ' +
+        this.children.length + ' given')
+    }
     this.display  = DisplayObject.compile(compiler, $el)
     this.key      = new Expression($el.attr('key'))
   }
   instantiate(context, container) {
-    return new Instance(context, self => {
-      let object = new PIXI.SpriteBatch()
-      self.child(this.display, object)
-      container.addChild(object)
-      self.onDestroy(() => { container.removeChild(object) })
-      let manager = new ChildManager()
-      manager.createInstance = () =>
-        multi(this.children.map(c => c.instantiate(context, object)))
-      self.onData(data => manager.push(this.key(data)))
+    let batch = new PIXI.SpriteBatch()
+    let manager = new ChildManager(this.key, this.children[0])
+    return new Instance({
+      context:  context,
+      parent:   container,
+      object:   batch,
+      concerns: [manager],
     })
   }
 }
