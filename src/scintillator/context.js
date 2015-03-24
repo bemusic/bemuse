@@ -6,7 +6,7 @@ export class Context {
     this.refs       = { }
     this._skin      = skin
     this._instance  = skin.instantiate(this)
-    this._renderer  = new PIXI.autoDetectRenderer(skin.width, skin.height)
+    this._renderer  = new PIXI.CanvasRenderer(skin.width, skin.height)
     this.stage      = this._instance.object
     this.view       = this._renderer.view
     this._setupInteractivity()

@@ -6,7 +6,7 @@ mixin media(type, width, height)
 
 mixin longnote(key, x, cur, add, visible)
   // body
-  object(key=key)
+  object(key=key pool='8')
     sprite(image='Note/DX/Note.png'
           frame=(cur.width + 'x64+' + cur.x + '+' + (22 + add))
           x=(x)
@@ -15,14 +15,14 @@ mixin longnote(key, x, cur, add, visible)
           height=('height*'+area_height)
           visible=visible)
   // tail
-  object(key=key)
+  object(key=key pool='8')
     sprite(image='Note/DX/Note.png'
           frame=(cur.width + 'x8+' + cur.x + '+' + (104 + add))
           x=(x)
           y='((y+height)*'+area_height+')+4-12'
           visible=visible)
   // head
-  object(key=key)
+  object(key=key pool='8')
     sprite(image='Note/DX/Note.png'
           frame=(cur.width + 'x8+' + cur.x + '+' + (12 + add))
           x=(x)
@@ -31,7 +31,7 @@ mixin longnote(key, x, cur, add, visible)
 
 mixin notes(columns)
   - var x = 0
-  object(key='p1_barlines')
+  object(key='p1_barlines' pool='8')
     sprite(image='NoteArea/Bar.png' x=0 y='(y*'+area_height+')-1' blend='screen')
   each column in columns
     - var cur = styles[column.style]
@@ -46,7 +46,7 @@ mixin notes(columns)
       animation(on='p1_' + ch + '_up')
         keyframe(t='0' alpha='1' scale-x='1' x=(x))
         keyframe(t='0.18' ease='quadOut' alpha='0' scale-x='0' x=(x + cur.width / 2))
-    object(key='p1_note_' + ch)
+    object(key='p1_note_' + ch pool='24')
       sprite(image='Note/DX/Note.png' frame=(cur.width + 'x12+' + cur.x + '+0')
               x=(x) y='(y*'+area_height+')-12')
     +longnote('p1_longnote_' + ch, x, cur, 0, '!active && !missed')

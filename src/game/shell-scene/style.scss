@@ -1,0 +1,39 @@
+
+.game-shell {
+  margin: 20px auto;
+  background: #353433;
+  border: 1px solid #555453;
+  padding: 15px;
+  max-width: 720px;
+  form > div {
+    margin-bottom: 1em;
+  }
+  form label {
+    > .label {
+      display: block;
+      color: #8b8685;
+      font-weight: bold;
+      font-size: 0.8em;
+      margin-bottom: 0.5ex;
+    }
+    > input {
+      font: inherit;
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px inset #555453;
+      background: #252423;
+      color: #bfb;
+    }
+  }
+  button {
+    background: #8b8685;
+    border: 1px outset #aba6a5;
+    font: inherit;
+    font-size: 1.5em;
+    color: #e9e8e7;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}

@@ -56,11 +56,15 @@ export class GameController {
   }
   start() {
     this._display.start()
-    let frame = () => {
-      this._update()
+    if (/Mobile.*?Safari/.test(navigator.userAgent)) {
+      setInterval(() => this._update(), 10)
+    } else {
+      let frame = () => {
+        this._update()
+        requestAnimationFrame(frame)
+      }
       requestAnimationFrame(frame)
     }
-    requestAnimationFrame(frame)
   }
   _update() {
     this._clock.update()
@@ -73,6 +77,7 @@ export class GameController {
   }
   enableBenchmark() {
     let bench = window.GAME_BENCHMARK = this._bench = new Benchmarker()
+    bench.benchmark('update', this, '_update')
     bench.benchmark('input_update', this._input, 'update')
     bench.benchmark('state_update', this._state, 'update')
     bench.benchmark('audio_update', this._audio, 'update')

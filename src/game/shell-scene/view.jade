@@ -1,0 +1,20 @@
+
+include ~bemuse/view/utils
+
+.game-shell
+  h1 Bemuse Game Shell
+  p This tool is intended for developers testing the game.
+
+  form(on-submit='submit')
+    div
+      label
+        span.label BMS URL:
+        input(type='text' value='{{options.url}}')
+    +section('options.players', 'index')
+      h2 Player {{index + 1}}
+      div
+        label
+          span.label HI-SPEED:
+          input(type='number' value='{{speed}}')
+    button(type='submit') Play
+
