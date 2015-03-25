@@ -11,6 +11,7 @@ describe('PlayerState', function() {
       number: 1,
       columns: ['wow'],
       notechart: notechart(''),
+      options: { speed: 1 },
     })
     let input = {
       get: name => ({ name })
@@ -29,7 +30,7 @@ describe('PlayerState', function() {
 
     function setup(bms) {
       chart   = notechart(bms)
-      player  = new Player(chart, 1, { })
+      player  = new Player(chart, 1, { speed: 1 })
       state   = new PlayerState(player)
       input   = new GameInput()
       buttons = { }

@@ -12,6 +12,7 @@ export class PlayerState {
     this._noteResult    = new Map()
     this.stats          = new PlayerStats(player.notechart)
     this.notifications  = { }
+    this.speed          = player.options.speed
   }
   update(gameTime, input) {
     this._gameTime = gameTime

@@ -100,6 +100,7 @@ describe('PlayerDisplay', function() {
   // Mock PlayerState
   function blankState() {
     return {
+      speed: 1,
       input: { get: () => ({ value: 0, changed: false }) },
       notifications: { },
       getNoteStatus: sinon.stub().returns('unjudged'),

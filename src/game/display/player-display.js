@@ -87,7 +87,7 @@ export class PlayerDisplay {
     }
 
     function getSpeed() {
-      return player.options.speed
+      return playerState.speed
     }
 
   }
