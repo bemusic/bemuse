@@ -57,16 +57,21 @@ export function main() {
       subartists: [],
     }
     let loadSpec = {
-      bms:    new URLResource(url),
-      assets: new BemusePackageResources(assetsUrl),
+      bms:      new URLResource(url),
+      assets:   new BemusePackageResources(assetsUrl),
+      metadata: metadata,
+      options:  Object.assign({ }, options.game, { players: options.players }),
     }
-    return { metadata, loadSpec }
+    return loadSpec
   })
 
   co(function*() {
-    let { metadata, loadSpec } = yield getSong()
+    let loadSpec = yield getSong()
     let { tasks, promise } = GameLoader.load(loadSpec)
-    yield SCENE_MANAGER.display(new LoadingScene({ tasks, song: metadata }))
+    yield SCENE_MANAGER.display(new LoadingScene({
+      tasks: tasks,
+      song: loadSpec.metadata,
+    }))
     let controller = yield promise
     yield SCENE_MANAGER.display(new GameScene(controller.display))
     controller.start()

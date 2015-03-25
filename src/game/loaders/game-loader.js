@@ -74,7 +74,7 @@ export function load(spec) {
 
     task('Game', null, ['BMSChart'],
     function(chart) {
-      return new Game(chart, { players: [{}] })
+      return new Game(chart, spec.options)
     })
 
     task('GameDisplay', null, ['Game', 'Skin', 'SkinContext'],

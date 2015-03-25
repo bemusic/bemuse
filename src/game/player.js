@@ -5,6 +5,7 @@ export class Player {
     this._number    = playerNumber
     this._options   = {
       autosound: !!options.autosound,
+      speed:      +options.speed,
     }
   }
   get columns() {
