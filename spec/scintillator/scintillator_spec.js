@@ -153,8 +153,17 @@ describe('Scintillator', function() {
       let context = new Scintillator.Context(skin)
       let stage = context.stage
       context.render({ })
-      let text = stage.children[0]
+      let text = stage.children[0].children[0]
       expect(text.text).to.equal('Hello world')
+      context.destroy()
+    }))
+    it('should center text', co.wrap(function*() {
+      let skin = yield Scintillator.load(fixture('text_center.xml'))
+      let context = new Scintillator.Context(skin)
+      let stage = context.stage
+      context.render({ })
+      let text = stage.children[0].children[0]
+      expect(text.x).to.be.lessThan(0)
       context.destroy()
     }))
     it('should support data interpolation', co.wrap(function*() {
@@ -162,7 +171,7 @@ describe('Scintillator', function() {
       let context = new Scintillator.Context(skin)
       let stage = context.stage
       context.render({ lol: 'wow' })
-      let text = stage.children[0]
+      let text = stage.children[0].children[0]
       expect(text.text).to.equal('Hello world wow')
       context.destroy()
     }))
