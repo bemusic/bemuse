@@ -7,23 +7,28 @@
   max-width: 720px;
   form > div {
     margin-bottom: 1em;
-  }
-  form label {
-    > .label {
-      display: block;
-      color: #8b8685;
-      font-weight: bold;
-      font-size: 0.8em;
-      margin-bottom: 0.5ex;
+    &.text {
+      .label {
+        display: block;
+        color: #8b8685;
+        font-weight: bold;
+        font-size: 0.8em;
+        margin-bottom: 0.5ex;
+      }
+      input {
+        font: inherit;
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px inset #555453;
+        background: #252423;
+        color: #bfb;
+      }
     }
-    > input {
-      font: inherit;
-      display: block;
-      width: 100%;
-      box-sizing: border-box;
-      border: 1px inset #555453;
-      background: #252423;
-      color: #bfb;
+    &.checkbox {
+      input {
+        margin-right: 1ex;
+      }
     }
   }
   button {

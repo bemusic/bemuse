@@ -39,14 +39,17 @@ export function main() {
     let options = {
       url: query.bms || '/music/[ricora]ourjourney/hyper.bms',
       game: {
+        audioInputLatency: +query.audioInputLatency || 0,
       },
       players: [
         {
-          speed: 3,
+          speed:    +query.speed || 3,
+          autoplay: !!query.autoplay,
         }
       ],
     }
     options = yield displayShell(options)
+    console.log(options)
     let url = options.url
     let assetsUrl = resolve(url, 'assets/')
     let metadata = {

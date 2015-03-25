@@ -1,4 +1,5 @@
 
+// TODO: Document why this class is needed
 export class Clock {
   constructor(audio) {
     audio.unmute() // kick start the currentTime of audio context

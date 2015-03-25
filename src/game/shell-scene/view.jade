@@ -6,15 +6,23 @@ include ~bemuse/view/utils
   p This tool is intended for developers testing the game.
 
   form(on-submit='submit')
-    div
+    div.text
       label
         span.label BMS URL:
         input(type='text' value='{{options.url}}')
+    div.text
+      label
+        span.label Audio-Input Latency
+        input(type='text' value='{{options.game.audioInputLatency}}')
     +section('options.players', 'index')
       h2 Player {{index + 1}}
-      div
+      div.text
         label
           span.label HI-SPEED:
           input(type='text' value='{{speed}}')
+      div.checkbox
+        label
+          input(type='checkbox' checked='{{autoplay}}')
+          span.label AUTOPLAY
     button(type='submit') Play
 
