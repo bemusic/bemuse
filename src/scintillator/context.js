@@ -1,12 +1,20 @@
 
 import PIXI from 'pixi.js'
 
+function createRenderer(w, h) {
+  if (navigator.userAgent.match(/Gecko/)) {
+    return new PIXI.autoDetectRenderer(w, h)
+  } else {
+    return new PIXI.CanvasRenderer(w, h)
+  }
+}
+
 export class Context {
   constructor(skin) {
     this.refs       = { }
     this._skin      = skin
     this._instance  = skin.instantiate(this)
-    this._renderer  = new PIXI.CanvasRenderer(skin.width, skin.height)
+    this._renderer  = createRenderer(skin.width, skin.height)
     this.stage      = this._instance.object
     this.view       = this._renderer.view
     this._setupInteractivity()

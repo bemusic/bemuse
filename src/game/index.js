@@ -43,25 +43,24 @@ export function main() {
       },
       players: [
         {
-          speed:    +query.speed || 3,
-          autoplay: !!query.autoplay,
+          speed:      +query.speed || 3,
+          autoplay:   !!query.autoplay,
         }
       ],
     }
     options = yield displayShell(options)
-    console.log(options)
     let url = options.url
     let assetsUrl = resolve(url, 'assets/')
     let metadata = {
-      title: url,
+      title: 'Loading',
       subtitles: [],
-      artist: '...',
-      genre: '...',
+      artist: '',
+      genre: '',
       subartists: [],
     }
     let loadSpec = {
-      bms:      new URLResource(url),
-      assets:   new BemusePackageResources(assetsUrl),
+      bms:      options.resource  || new URLResource(url),
+      assets:   options.resources || new BemusePackageResources(assetsUrl),
       metadata: metadata,
       options:  Object.assign({ }, options.game, { players: options.players }),
     }

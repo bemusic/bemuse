@@ -5,6 +5,15 @@
   border: 1px solid #555453;
   padding: 15px;
   max-width: 720px;
+  .drop-zone {
+    border: 2px dashed #555453;
+    padding: 5px;
+  }
+  .drop-zone-hint {
+    padding: 10px;
+    text-align: center;
+    color: #8b8685;
+  }
   form > div {
     margin-bottom: 1em;
     &.text {
@@ -40,5 +49,8 @@
     display: block;
     width: 100%;
     box-sizing: border-box;
+  }
+  a {
+    color: #fed;
   }
 }

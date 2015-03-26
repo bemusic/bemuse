@@ -29,7 +29,7 @@ export function TouchPlugin(context) {
   function getScratch() {
     scratchY = null
     for (let input of context.input) {
-      if (input.x < 72) scratchY = input.y
+      if (input.x < 107) scratchY = input.y
     }
     if (scratchY === null) {
       scratchStartY = null

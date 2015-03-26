@@ -12,6 +12,18 @@ include ~bemuse/view/utils
         input(type='text' value='{{options.url}}')
     div.text
       label
+        span.label -or- Drop BMS folder here
+        div.drop-zone(on-dragover='dragover' on-drop='drop')
+          +inverted-section('files')
+            div.drop-zone-hint
+              | Drop BMS folder here
+              br
+              | (only works on Google Chrome)
+          +section('files')
+            div
+              a(href='javascript://' on-click='playFile') {{name}}
+    div.text
+      label
         span.label Audio-Input Latency
         input(type='text' value='{{options.game.audioInputLatency}}')
     +section('options.players', 'index')

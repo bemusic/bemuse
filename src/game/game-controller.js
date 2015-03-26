@@ -35,6 +35,7 @@ function Benchmarker() {
 
 export class GameController {
   constructor({ game, display, audio }) {
+    this._audioInputLatency = game.options.audioInputLatency
     this._game    = game
     this._display = display
     this._audio   = audio
@@ -69,7 +70,7 @@ export class GameController {
   _update() {
     this._clock.update()
     let t = this._timer.time
-    let A = 0.0
+    let A = this._audioInputLatency
     this._input.update()
     this._state.update(t - A, this._input)
     this._audio.update(t,     this._state)
