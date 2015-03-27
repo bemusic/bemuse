@@ -1,6 +1,6 @@
 
 import NoteArea from './note-area'
-import { breaksCombo } from '../judgments'
+import { MISSED } from '../judgments'
 
 export class PlayerDisplay {
   constructor(player) {
@@ -43,8 +43,8 @@ export class PlayerDisplay {
             key:    note.id,
             y:      entity.y,
             height: entity.height,
-            active: judgment !== 0 && !breaksCombo(judgment),
-            missed: status === 'judged' && breaksCombo(judgment),
+            active: judgment !== 0 && judgment !== MISSED,
+            missed: status === 'judged' && judgment === MISSED,
           })
         } else {
           if (playerState.getNoteStatus(note) !== 'judged') {

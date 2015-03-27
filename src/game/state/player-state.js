@@ -107,7 +107,7 @@ export class PlayerState {
     } else {
       result = { status: 'judged', judgment, delta }
     }
-    if (breaksCombo(judgment)) {
+    if (judgment === MISSED) {
       this.notifications.sounds.push({ note, type: 'break' })
     }
     this._noteResult.set(note, result)
