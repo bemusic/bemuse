@@ -554,5 +554,7 @@
       <sprite image="Touch/Buttons/Active.png" x="497.5" y="20" alpha="p1_6_active"></sprite>
       <sprite image="Touch/Buttons/Normal.png" x="576.5" y="160" ref="p1_7"></sprite>
       <sprite image="Touch/Buttons/Active.png" x="576.5" y="160" alpha="p1_7_active"></sprite>
+    <sprite image="Touch/Scratch/ScratchAreaL.png" x="0" y="8" ref="p1_SC"></sprite>
+    <sprite image="Touch/Scratch/ScratchGlowL.png" x="0" y="6" alpha="p1_SC_active"></sprite>
   </group>
 </skin>

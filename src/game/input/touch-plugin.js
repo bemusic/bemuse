@@ -27,9 +27,19 @@ export function TouchPlugin(context) {
     return 0
   }
   function getScratch() {
+    let objects = context.refs['p1_SC']
+    if (!objects) return
     scratchY = null
     for (let input of context.input) {
-      if (input.x < 107) scratchY = input.y
+      for (let object of objects) {
+        if (object.getBounds().contains(input.x, input.y)) {
+          scratchY = input.y
+          break
+        }
+      }
+      if (scratchY !== null) {
+        break
+      }
     }
     if (scratchY === null) {
       scratchStartY = null
@@ -38,9 +48,14 @@ export function TouchPlugin(context) {
     if (scratchStartY === null) {
       scratchStartY = scratchY
     }
+    if (scratchY > scratchStartY + 16) {
+      scratchStartY = scratchY - 16
+    } else if (scratchY < scratchStartY - 16) {
+      scratchStartY = scratchY + 16
+    }
     return (
-      scratchY > scratchStartY + 16 ? -1 :
-      scratchY < scratchStartY - 16 ? 1 : 0
+      scratchY > scratchStartY + 8 ? -1 :
+      scratchY < scratchStartY - 8 ? 1 : 0
     )
   }
 }
