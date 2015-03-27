@@ -37,8 +37,14 @@ function getFilesFromEvent(event) {
   let out = []
 
   return co(function*() {
-    for (let item of Array.from(event.dataTransfer.items)) {
-      yield readItem(item)
+    if (event.dataTransfer.items) {
+      for (let item of Array.from(event.dataTransfer.items)) {
+        yield readItem(item)
+      }
+    } else if (event.dataTransfer.files) {
+      for (let file of Array.from(event.dataTransfer.files)) {
+        addFile(file)
+      }
     }
     return out
   })
@@ -50,9 +56,7 @@ function getFilesFromEvent(event) {
         yield readEntry(entry, '')
       } else {
         let file = item.getAsFile && item.getAsFile()
-        if (file) {
-          out.push({ name: file.name, file })
-        }
+        addFile(file)
       }
     })
   }
@@ -70,7 +74,7 @@ function getFilesFromEvent(event) {
       entry.file(resolve, reject)
     })
     .tap((file) => {
-      out.push({ name: file.name, file })
+      addFile(file)
     })
   }
 
@@ -90,6 +94,12 @@ function getFilesFromEvent(event) {
         yield readEntry(entry)
       }
     })
+  }
+
+  function addFile(file) {
+    if (file) {
+      out.push({ name: file.name, file })
+    }
   }
 
 }

@@ -119,7 +119,7 @@ describe('PlayerState', function() {
 
     })
 
-    it('leaves note unjudged when there are closer note', function() {
+    it('leaves note unjudged when bad and there are closer note', function() {
 
       setup(`
         #BPM 120
