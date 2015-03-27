@@ -28,6 +28,9 @@ export class FileResource {
   read() {
     return readBlob(this._file).as('arraybuffer')
   }
+  get name() {
+    return this._file.name
+  }
 }
 
 export default DndResources
