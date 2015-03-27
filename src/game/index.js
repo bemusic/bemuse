@@ -4,6 +4,7 @@ import SCENE_MANAGER  from 'bemuse/scene-manager'
 import query          from 'bemuse/query'
 import LoadingScene   from './loading-scene'
 import GameScene      from './game-scene'
+import GameShellScene from './shell-scene'
 
 import URLResource            from 'bemuse/resources/url'
 import BemusePackageResources from 'bemuse/resources/bemuse-package'
@@ -22,28 +23,57 @@ export function main() {
     window.removeEventListener('touchstart', unmute)
   })
 
+  let displayShell = function(options) {
+    return new Promise(function(resolve) {
+      let scene = new GameShellScene({
+        options: options,
+        play: function(data) {
+          resolve(data)
+        },
+      })
+      SCENE_MANAGER.display(scene)
+    })
+  }
+
   let getSong = co.wrap(function*() {
-    yield Promise.resolve() // to prevent jslint from complaining
-    let url = query.bms || '/music/[aoi]olivia/olivia_SPpp.bml'
+    let options = {
+      url: query.bms || '/music/[ricora]ourjourney/hyper.bms',
+      game: {
+        audioInputLatency: +query.audioInputLatency || 0,
+      },
+      players: [
+        {
+          speed:      +query.speed || 3,
+          autoplay:   !!query.autoplay,
+        }
+      ],
+    }
+    options = yield displayShell(options)
+    let url = options.url
     let assetsUrl = resolve(url, 'assets/')
     let metadata = {
-      title: url,
+      title: 'Loading',
       subtitles: [],
-      artist: '...',
-      genre: '...',
+      artist: '',
+      genre: '',
       subartists: [],
     }
     let loadSpec = {
-      bms:    new URLResource(url),
-      assets: new BemusePackageResources(assetsUrl),
+      bms:      options.resource  || new URLResource(url),
+      assets:   options.resources || new BemusePackageResources(assetsUrl),
+      metadata: metadata,
+      options:  Object.assign({ }, options.game, { players: options.players }),
     }
-    return { metadata, loadSpec }
+    return loadSpec
   })
 
   co(function*() {
-    let { metadata, loadSpec } = yield getSong()
+    let loadSpec = yield getSong()
     let { tasks, promise } = GameLoader.load(loadSpec)
-    SCENE_MANAGER.display(new LoadingScene({ tasks, song: metadata }))
+    yield SCENE_MANAGER.display(new LoadingScene({
+      tasks: tasks,
+      song: loadSpec.metadata,
+    }))
     let controller = yield promise
     yield SCENE_MANAGER.display(new GameScene(controller.display))
     controller.start()

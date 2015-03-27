@@ -4,7 +4,8 @@ export class Player {
     this._notechart = notechart
     this._number    = playerNumber
     this._options   = {
-      autosound: !options.autosound,
+      autosound: !!options.autosound,
+      speed:      +options.speed,
     }
   }
   get columns() {

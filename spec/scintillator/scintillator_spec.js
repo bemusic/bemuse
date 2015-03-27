@@ -26,6 +26,71 @@ describe('Scintillator', function() {
       context.render({})
       context.destroy()
     }))
+    describe('#input', function() {
+      let skin
+      let context
+      beforeEach(co.wrap(function*() {
+        skin = yield Scintillator.load(fixture('bare.xml'))
+        context = new Scintillator.Context(skin)
+        context.render({})
+        context.view.style.position = 'fixed'
+        context.view.style.top = '0'
+        context.view.style.left = '0'
+        document.body.appendChild(context.view)
+      }))
+      afterEach(function() {
+        context.destroy()
+        document.body.removeChild(context.view)
+      })
+      function mouse(type, x, y) {
+        context.view.dispatchEvent(new MouseEvent(`mouse${type}`, {
+          clientX: x,
+          clientY: y,
+        }))
+      }
+      function touch(type, touches, changedTouches) {
+        // since TouchEvent is damn complicated, we resort to using a custom
+        // event that imitates a touch event.
+        let event = new Event(`touch${type}`)
+        event.touches = touches
+        event.changedTouches = changedTouches
+        context.view.dispatchEvent(event)
+      }
+      it('should report touches/mouse inside the region', function() {
+        mouse('move', 10, 10)
+        mouse('down', 10, 10)
+        expect(context.input).to.deep.equal([
+          { x: 10, y: 10, id: 'mouse' },
+        ])
+        let t = { identifier: 1, clientX: 80, clientY: 80 }
+        touch('start', [t], [t])
+        expect(context.input).to.deep.equal([
+          { x: 10, y: 10, id: 'mouse' },
+          { x: 80, y: 80, id: 'touch1' },
+        ])
+        mouse('move', 20, 20)
+        expect(context.input).to.deep.equal([
+          { x: 20, y: 20, id: 'mouse' },
+          { x: 80, y: 80, id: 'touch1' },
+        ])
+        mouse('up', 10, 10)
+        expect(context.input).to.deep.equal([
+          { x: 80, y: 80, id: 'touch1' },
+        ])
+        touch('end', [], [t])
+        expect(context.input).to.deep.equal([])
+      })
+    })
+    describe('#refs', function() {
+      it('should be a set of refs to the display object', co.wrap(function*() {
+        let skin = yield Scintillator.load(fixture('refs.xml'))
+        let context = new Scintillator.Context(skin)
+        context.render({})
+        expect(Array.from(context.refs['a'])[0])
+            .to.equal(context.stage.children[0])
+        context.destroy()
+      }))
+    })
   })
 
   describe('Expressions', function() {
@@ -88,8 +153,17 @@ describe('Scintillator', function() {
       let context = new Scintillator.Context(skin)
       let stage = context.stage
       context.render({ })
-      let text = stage.children[0]
+      let text = stage.children[0].children[0]
       expect(text.text).to.equal('Hello world')
+      context.destroy()
+    }))
+    it('should center text', co.wrap(function*() {
+      let skin = yield Scintillator.load(fixture('text_center.xml'))
+      let context = new Scintillator.Context(skin)
+      let stage = context.stage
+      context.render({ })
+      let text = stage.children[0].children[0]
+      expect(text.x).to.be.lessThan(0)
       context.destroy()
     }))
     it('should support data interpolation', co.wrap(function*() {
@@ -97,7 +171,7 @@ describe('Scintillator', function() {
       let context = new Scintillator.Context(skin)
       let stage = context.stage
       context.render({ lol: 'wow' })
-      let text = stage.children[0]
+      let text = stage.children[0].children[0]
       expect(text.text).to.equal('Hello world wow')
       context.destroy()
     }))
@@ -111,11 +185,11 @@ describe('Scintillator', function() {
       context.render({ notes: [] })
       expect(stage.children[0].children).to.have.length(0)
       context.render({ notes: [{ key: 'a', y: 20 }] })
-      expect(stage.children[0].children).to.have.length(2)
+      expect(stage.children[0].children).to.have.length(1)
       context.render({ notes: [{ key: 'a', y: 20 }, { key: 'b', y: 10 }] })
-      expect(stage.children[0].children).to.have.length(4)
-      context.render({ notes: [{ key: 'b', y: 10 }] })
       expect(stage.children[0].children).to.have.length(2)
+      context.render({ notes: [{ key: 'b', y: 10 }] })
+      expect(stage.children[0].children).to.have.length(1)
       context.destroy()
     }))
     it('should update same array with content changed', co.wrap(function*() {
@@ -127,7 +201,7 @@ describe('Scintillator', function() {
       expect(stage.children[0].children).to.have.length(0)
       notes.push({ key: 'a', y: 20 })
       context.render({ notes })
-      expect(stage.children[0].children).to.have.length(2)
+      expect(stage.children[0].children).to.have.length(1)
       context.destroy()
     }))
     it('should let children get value from item', co.wrap(function*() {
@@ -150,7 +224,7 @@ describe('Scintillator', function() {
       let skin = yield Scintillator.load(fixture('group_mask.xml'))
       let context = new Scintillator.Context(skin)
       let stage = context.stage
-      let mask = stage.children[1].mask
+      let mask = stage.children[0].mask
       expect(mask).not.to.equal(null)
       context.destroy()
     }))

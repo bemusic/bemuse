@@ -57,6 +57,21 @@ describe('PlayerAudio', function() {
     expect(waveFactory.playNote).to.have.been.calledWith('0x')
   })
 
+  it('should not play notes automatically when autosound is off', function() {
+    setup({
+      notechart: {
+        autos: [ ],
+        notes: [
+          { time: 1, keysound: '0x', },
+        ],
+      },
+      options: {
+      },
+    })
+    audio.update(1)
+    void expect(waveFactory.playNote).to.not.have.been.called
+  })
+
   it('should play notes ahead of time', function() {
     setup({
       notechart: {
@@ -75,12 +90,42 @@ describe('PlayerAudio', function() {
     audio.update(0.999, {
       notifications: {
         sounds: [
-          { note: { keysound: '0x' }, type: 'hit' }
+          { note: { keysound: '0x' }, type: 'hit', judgment: 1 }
         ]
       },
       stats: { },
     })
     expect(waveFactory.playNote).to.have.been.calledWith('0x')
+  })
+
+  it('badly hit note should sound off-pitch', function() {
+    setup(playerWithBMS())
+    let instance = {
+      bad: sinon.stub()
+    }
+    waveFactory.playNote.returns(instance)
+    audio.update(0.999, {
+      notifications: {
+        sounds: [
+          { note: { keysound: '0x' }, type: 'hit', judgment: 4 }
+        ]
+      },
+      stats: { },
+    })
+    void expect(instance.bad).to.have.been.called
+  })
+
+  it('should work even without audio', function() {
+    setup(playerWithBMS())
+    waveFactory.playNote.returns(null)
+    audio.update(0.999, {
+      notifications: {
+        sounds: [
+          { note: { keysound: '0x' }, type: 'hit', judgment: 4 }
+        ]
+      },
+      stats: { },
+    })
   })
 
   it('should stop sound when broken', function() {

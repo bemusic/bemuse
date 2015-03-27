@@ -12,14 +12,26 @@ export class TextNode extends SkinNode {
     this.text     = $el.attr('text')
     this.data     = new Expression($el.attr('data') || '0')
     this.display  = DisplayObject.compile(compiler, $el)
+    this.align    = $el.attr('align') === 'center' ? 0.5 : 0
   }
   instantiate(context, container) {
-    return new Instance(context, self => {
-      let text = new PIXI.BitmapText(this.text, { font: this.font })
-      self.child(this.display, text)
-      self.bind(this.data, v => text.setText(this.text.replace('%s', v)))
-      container.addChild(text)
-      self.onDestroy(() => { container.removeChild(text) })
+    let text = new PIXI.BitmapText(this.text, { font: this.font })
+    let object = new PIXI.DisplayObjectContainer()
+    object.addChild(text)
+    return new Instance({
+      context:  context,
+      parent:   container,
+      object:   object,
+      concerns: [this.display],
+      bindings: [
+        [
+          this.data,
+          v => {
+            text.setText(this.text.replace('%s', v))
+            text.x = text.width * -this.align
+          },
+        ],
+      ],
     })
   }
 }

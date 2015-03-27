@@ -1,0 +1,10 @@
+
+mixin section(name, as)
+  != '{{#' + name + (as ? ':' + as : '') + '}}'
+  block
+  != '{{/' + name + '}}'
+
+mixin inverted-section(name)
+  != '{{^' + name + '}}'
+  block
+  != '{{/' + name + '}}'

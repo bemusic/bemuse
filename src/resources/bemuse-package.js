@@ -33,7 +33,7 @@ export class BemusePackageResources {
     return this.metadata.then(metadata => {
       let file = R.find(file => file.name === name, metadata.files)
       if (!file) throw new Error('Unable to find: ' + name)
-      return new BemusePackageFileResource(this, file.ref)
+      return new BemusePackageFileResource(this, file.ref, file.name)
     })
   }
   getBlob(ref) {
@@ -46,13 +46,17 @@ export class BemusePackageResources {
 }
 
 class BemusePackageFileResource {
-  constructor(resources, ref) {
+  constructor(resources, ref, name) {
     this._resources = resources
     this._ref = ref
+    this._name = name
   }
   read() {
     return this._resources.getBlob(this._ref)
       .then(blob => readBlob(blob).as('arraybuffer'))
+  }
+  get name() {
+    return this._name
   }
 }
 

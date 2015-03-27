@@ -64,8 +64,10 @@ export class PlayerAudio {
       instance = this._waveFactory.playNote(note.keysound, delay)
       this._played.set(note, instance)
     }
-    if (isBad(judgment)) {
-      instance.bad()
+    if (instance) {
+      if (isBad(judgment)) {
+        instance.bad()
+      }
     }
   }
   _breakNote(note) {

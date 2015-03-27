@@ -24,11 +24,43 @@ function HardcodedKeyboardPlugin() {
   }
 }
 
+function GamepadPlugin() {
+  let gamepads = []
+  window.addEventListener('gamepadconnected', function(e) {
+    gamepads.push(e.gamepad)
+  })
+  function button(i) {
+    return gamepads.some(gamepad => gamepad.buttons[i].pressed)
+  }
+  function axis(i) {
+    for (var j = 0; j < gamepads.length; j ++) {
+      var gamepad = gamepads[j]
+      if (Math.abs(gamepad.axes[i]) > 0.01) return gamepad.axes[i]
+    }
+    return 0
+  }
+  return {
+    get() {
+      return {
+        'p1_1': button(3),
+        'p1_2': button(6),
+        'p1_3': button(2),
+        'p1_4': button(7),
+        'p1_5': button(1),
+        'p1_6': button(4),
+        'p1_7': axis(3),
+        'p1_SC': axis(4),
+      }
+    }
+  }
+}
+
 export class GameInput {
   constructor() {
     this._controls = new Map()
     this._plugins = []
     this.use(new HardcodedKeyboardPlugin())
+    this.use(new GamepadPlugin())
   }
   update() {
     let changes = new Map()

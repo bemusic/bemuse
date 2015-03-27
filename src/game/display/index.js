@@ -24,6 +24,9 @@ export class GameDisplay {
     }
     this._context.render(data)
   }
+  get context() {
+    return this._context
+  }
   get view() {
     return this._context.view
   }

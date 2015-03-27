@@ -1,17 +1,19 @@
 
 import R from 'ramda'
-import { judgeTime, judgeEndTime, breaksCombo, MISSED } from '../judgments'
+import { judgeTime, judgeEndTime, isBad, MISSED } from '../judgments'
 import PlayerStats   from './player-stats'
 
 export class PlayerState {
   constructor(player) {
     this._player        = player
     this._columns       = player.columns
-    this._notesByColumn = R.groupBy(R.prop('column'),
-        R.sortBy(R.prop('time'), player.notechart.notes))
+    this._noteBufferByColumn = R.mapObj(noteBuffer(this))(
+        R.groupBy(R.prop('column'))(
+          R.sortBy(R.prop('time'), player.notechart.notes)))
     this._noteResult    = new Map()
     this.stats          = new PlayerStats(player.notechart)
     this.notifications  = { }
+    this.speed          = player.options.speed
   }
   update(gameTime, input) {
     this._gameTime = gameTime
@@ -37,19 +39,21 @@ export class PlayerState {
   }
   _judgeNotes() {
     for (let column of this._columns) {
-      let notes   = this._notesByColumn[column]
-      if (notes) {
+      let buffer = this._noteBufferByColumn[column]
+      if (buffer) {
         let control = this.input.get(column)
-        this._judgeColumn(notes, control)
+        this._judgeColumn(buffer, control)
+        buffer.update()
       }
     }
   }
-  _judgeColumn(notes, control) {
+  _judgeColumn(buffer, control) {
     let judgedNote
     let judgment
-    for (let i = 0; i < notes.length; i ++) {
+    let notes = buffer.notes
+    for (let i = buffer.startIndex; i < notes.length; i ++) {
       let note = notes[i]
-      if (this._shouldJudge(note, control)) {
+      if (this._shouldJudge(note, control, buffer)) {
         judgedNote = note
         judgment = this._judge(note)
         break
@@ -74,12 +78,15 @@ export class PlayerState {
   _getClosestNote(notes) {
     return R.minBy(note => Math.abs(this._gameTime - note.time), notes)
   }
-  _shouldJudge(note, control) {
+  _shouldJudge(note, control, buffer) {
     let status = this.getNoteStatus(note)
     if (status === 'unjudged') {
       let judgment  = judgeTime(this._gameTime, note.time)
       let missed    = judgment === MISSED
       let hit       = judgment > 0 && control.changed && control.value
+      if (isBad(judgment) && this._getClosestNote(buffer.notes) !== note) {
+        hit = false
+      }
       return missed || hit
     } else if (status === 'active') {
       let judgment  = judgeEndTime(this._gameTime, note.end.time)
@@ -106,7 +113,7 @@ export class PlayerState {
     } else {
       result = { status: 'judged', judgment, delta }
     }
-    if (breaksCombo(judgment)) {
+    if (judgment === MISSED) {
       this.notifications.sounds.push({ note, type: 'break' })
     }
     this._noteResult.set(note, result)
@@ -119,5 +126,22 @@ export class PlayerState {
   }
 }
 
+function noteBuffer(state) {
+  return function bufferNotes(notes) {
+    let startIndex  = 0
+    return {
+      notes,
+      get startIndex() {
+        return startIndex
+      },
+      update() {
+        while (startIndex < notes.length &&
+            state.getNoteStatus(notes[startIndex]) === 'judged') {
+          startIndex += 1
+        }
+      },
+    }
+  }
+}
 
 export default PlayerState

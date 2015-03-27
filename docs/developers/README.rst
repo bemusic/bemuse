@@ -6,4 +6,5 @@ Developer Documentation
    getting-started
    architecture
    skinning
+   options
 

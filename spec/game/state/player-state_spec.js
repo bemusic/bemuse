@@ -11,6 +11,7 @@ describe('PlayerState', function() {
       number: 1,
       columns: ['wow'],
       notechart: notechart(''),
+      options: { speed: 1 },
     })
     let input = {
       get: name => ({ name })
@@ -29,7 +30,7 @@ describe('PlayerState', function() {
 
     function setup(bms) {
       chart   = notechart(bms)
-      player  = new Player(chart, 1, { })
+      player  = new Player(chart, 1, { speed: 1 })
       state   = new PlayerState(player)
       input   = new GameInput()
       buttons = { }
@@ -93,21 +94,21 @@ describe('PlayerState', function() {
     it('judges single note from one column at a time', function() {
 
       setup(`
-        #BPM 120
+        #BPM 480
         #00111:01010100000000000000000000000000
       `)
 
-      advance(2.125, { 'p1_1': 1 })
+      advance(0.531, { 'p1_1': 1 })
       expect(state.getNoteStatus(chart.notes[0])).to.equal('judged')
       expect(state.getNoteStatus(chart.notes[1])).to.equal('unjudged')
       expect(state.getNoteStatus(chart.notes[2])).to.equal('unjudged')
-      advance(2.125, { 'p1_1': 0 })
-      advance(2.125, { 'p1_1': 1 })
+      advance(0.531, { 'p1_1': 0 })
+      advance(0.531, { 'p1_1': 1 })
       expect(state.getNoteStatus(chart.notes[0])).to.equal('judged')
       expect(state.getNoteStatus(chart.notes[1])).to.equal('judged')
       expect(state.getNoteStatus(chart.notes[2])).to.equal('unjudged')
-      advance(2.125, { 'p1_1': 0 })
-      advance(2.125, { 'p1_1': 1 })
+      advance(0.531, { 'p1_1': 0 })
+      advance(0.531, { 'p1_1': 1 })
       expect(state.getNoteStatus(chart.notes[0])).to.equal('judged')
       expect(state.getNoteStatus(chart.notes[1])).to.equal('judged')
       expect(state.getNoteStatus(chart.notes[2])).to.equal('judged')
@@ -115,6 +116,20 @@ describe('PlayerState', function() {
       expect(state.getNoteJudgment(chart.notes[0])).to.gt(1)
       expect(state.getNoteJudgment(chart.notes[1])).to.eq(1)
       expect(state.getNoteJudgment(chart.notes[2])).to.gt(1)
+
+    })
+
+    it('leaves note unjudged when bad and there are closer note', function() {
+
+      setup(`
+        #BPM 120
+        #00111:01010100000000000000000000000000
+      `)
+
+      advance(2.125, { 'p1_1': 1 })
+      expect(state.getNoteStatus(chart.notes[0])).to.equal('unjudged')
+      expect(state.getNoteStatus(chart.notes[1])).to.equal('judged')
+      expect(state.getNoteStatus(chart.notes[2])).to.equal('unjudged')
 
     })
 
