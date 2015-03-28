@@ -2,33 +2,62 @@
 var match = require('../util/match')
 var BMSChart = require('../bms/chart')
 
-exports.compile = function(text) {
+exports.compile = function(text, options) {
+
+  options = options || { }
 
   var chart = new BMSChart()
+
+  var rng = options.rng || function(max) {
+    return 1 + Math.floor(Math.random() * max)
+  }
+
+  var randomStack = []
+  var skipStack = [false]
 
   var result = {
     headerSentences: 0,
     channelSentences: 0,
+    controlSentences: 0,
+    skippedSentences: 0,
     malformedSentences: 0,
     chart: chart,
     warnings: []
   }
 
   eachLine(text, function(text, lineNumber) {
-    void lineNumber
+    var flow = true
     if (text.charAt(0) !== '#') return
+    match(text)
+    .when(/^#RANDOM\s+(\d+)$/i, function(m) {
+      result.controlSentences += 1
+      randomStack.push(rng(+m[1]))
+    })
+    .when(/^#IF\s+(\d+)$/i, function(m) {
+      result.controlSentences += 1
+      skipStack.push(randomStack[randomStack.length - 1] !== +m[1])
+    })
+    .when(/^#ENDIF$/i, function(m) {
+      result.controlSentences += 1
+      skipStack.pop()
+    })
+    .else(function() {
+      flow = false
+    })
+    if (flow) return
+    var skipped = skipStack[skipStack.length - 1]
     match(text)
     .when(/^#(\d\d\d)02:(\S*)$/, function(m) {
       result.channelSentences += 1
-      chart.timeSignatures.set(+m[1], +m[2])
+      if (!skipped) chart.timeSignatures.set(+m[1], +m[2])
     })
     .when(/^#(\d\d\d)(\S\S):(\S*)$/, function(m) {
       result.channelSentences += 1
-      handleChannelSentence(+m[1], m[2], m[3], lineNumber)
+      if (!skipped) handleChannelSentence(+m[1], m[2], m[3], lineNumber)
     })
     .when(/^#(\w+)(?:\s+(\S.*))?$/, function(m) {
       result.headerSentences += 1
-      chart.headers.set(m[1], m[2])
+      if (!skipped) chart.headers.set(m[1], m[2])
     })
     .else(function() {
       warn(lineNumber, 'Invalid command')

@@ -11,9 +11,13 @@ module.exports = function() {
 
   var World = this.World
 
+  World.plug(function() {
+    this.parseOptions = { }
+  })
+
   World.prototype.parseBMS = function(string) {
     this.source = string
-    this.result = Compiler.compile(this.source)
+    this.result = Compiler.compile(this.source, this.parseOptions)
     this.chart  = this.result.chart
   }
 

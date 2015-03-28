@@ -12,5 +12,6 @@ module.exports = [
   'basic/08-WAV.feature',
   'bml/*.feature',
   'song-info/*.feature',
+  'random/*.feature',
 
 ]
