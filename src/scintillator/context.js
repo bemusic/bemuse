@@ -2,7 +2,7 @@
 import PIXI from 'pixi.js'
 
 function createRenderer(w, h) {
-  if (navigator.userAgent.match(/Gecko/)) {
+  if (navigator.userAgent.match(/Gecko\//)) {
     return new PIXI.autoDetectRenderer(w, h)
   } else {
     return new PIXI.CanvasRenderer(w, h)

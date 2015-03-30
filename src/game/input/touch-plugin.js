@@ -54,8 +54,8 @@ export function TouchPlugin(context) {
       scratchStartY = scratchY + 16
     }
     return (
-      scratchY > scratchStartY + 8 ? -1 :
-      scratchY < scratchStartY - 8 ? 1 : 0
+      scratchY > scratchStartY + 4 ? -1 :
+      scratchY < scratchStartY - 4 ? 1 : 0
     )
   }
 }

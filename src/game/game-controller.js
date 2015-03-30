@@ -89,12 +89,15 @@ export class GameController {
         this._display._context._renderer, 'render')
     let button = document.createElement('button')
     button.innerHTML = 'Show Benchmark Stats'
-    button.addEventListener('click', function() {
-      alert('Benchmarking Result\n' + JSON.stringify(bench.stats, null, 2))
-    })
+    button.addEventListener('click', handler)
+    button.addEventListener('touchstart', handler)
     button.setAttribute('style',
         'position:fixed;top:10px;right:10px;z-index:99999')
     document.body.appendChild(button)
+    function handler(e) {
+      alert('Benchmarking Result\n' + JSON.stringify(bench.stats, null, 2))
+      e.preventDefault()
+    }
   }
 }
 
