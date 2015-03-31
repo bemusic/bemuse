@@ -9,6 +9,7 @@ import SpriteNode   from './nodes/sprite'
 import GroupNode    from './nodes/group'
 import ObjectNode   from './nodes/object'
 import TextNode     from './nodes/text'
+import IfNode       from './nodes/if'
 
 let NODES = {
   'skin':   SkinRootNode,
@@ -16,6 +17,7 @@ let NODES = {
   'group':  GroupNode,
   'object': ObjectNode,
   'text':   TextNode,
+  'if':     IfNode,
 }
 
 
