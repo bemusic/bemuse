@@ -2,8 +2,11 @@
 import 'bemuse/polyfill'
 import co from 'co'
 
-// The SceneManager takes care of the game scene.
-// A scene is defined like this::
+// The SceneManager takes care of managing the scenes in this game.
+// Only a single scene may be displayed at any given time, but a scene may
+// contain any number of UI elements.
+//
+// Programmatically, a scene is defined like this::
 //
 //    var scene = function onEnter(container) {
 //      // container :: HTMLElement
@@ -14,6 +17,11 @@ import co from 'co'
 //        })
 //      }
 //    }
+//
+// To use the SceneManager, get the instance and use it::
+//
+//    import SCENEMAN from 'bemuse/scene-manager'
+//    SCENEMAN.display(scene)
 //
 export class SceneManager {
   constructor() {

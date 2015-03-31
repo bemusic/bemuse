@@ -2,26 +2,31 @@
 import readBlob from '../read-blob'
 import defaultAudioContext from 'audio-context'
 
+// The sampling master is a wrapper class around Web Audio API
+// that takes care of:
+//
+// - Decoding audio from an ArrayBuffer or Blob (resulting in a "Sample").
+// - Playing the `Sample` and managing its lifecycle.
 export class SamplingMaster {
-
   constructor(audioContext) {
     this._audioContext  = audioContext || defaultAudioContext
     this._samples       = []
     this._instances     = new Set()
   }
 
-  /**
-   * Connects a dummy node to the audio, thereby unmuting the audio system on
-   * iOS devices.
-   */
+  // Connects a dummy node to the audio, thereby unmuting the audio system on
+  // iOS devices (which keeps the audio muted until a user interacts with the
+  // page).
   unmute() {
     unmuteAudio(this._audioContext)
   }
 
+  // The underlying AudioContext.
   get audioContext() {
     return this._audioContext
   }
 
+  // Destroys this SamplingMaster, make it unusable.
   destroy() {
     if (this._destroyed) return
     this._destroyed = true
@@ -31,6 +36,7 @@ export class SamplingMaster {
     this._instances = null
   }
 
+  // Creates a `Sample` from a Blob or an ArrayBuffer.
   sample(blobOrArrayBuffer) {
     return this._coerceToArrayBuffer(blobOrArrayBuffer)
     .then(arrayBuffer => this._decodeAudio(arrayBuffer))
@@ -73,6 +79,10 @@ export class SamplingMaster {
 
 }
 
+// The Sample is created by and belongs to the `SamplingMaster`.
+//
+// You don't invoke this constructor directly; it is invoked by
+// `SamplingMaster#create`.
 class Sample {
 
   constructor(samplingMaster, audioBuffer) {
@@ -80,10 +90,12 @@ class Sample {
     this._buffer = audioBuffer
   }
 
+  // Plays the sample and returns the new PlayInstance.
   play(delay, node) {
     return new PlayInstance(this._master, this._buffer, delay, node)
   }
 
+  // Destroys this sample, thereby making it unusable.
   destroy() {
     this._master = null
     this._buffer = null
@@ -91,8 +103,12 @@ class Sample {
 
 }
 
+// When a `Sample` is played, a PlayInstance is created.
+// A PlayInstance may not be reused; after the sound finishes playing,
+// you have to invoke `Sample#play` again.
+//
+// You don't invoke this constructor directly; it is invoked by `Sample#play`.
 class PlayInstance {
-
   constructor(samplingMaster, buffer, delay, node) {
     delay = delay || 0
     this._master = samplingMaster
@@ -109,6 +125,7 @@ class PlayInstance {
     this._master._startPlaying(this)
   }
 
+  // Stops the sample and disconnects the underlying Web Audio nodes.
   stop() {
     if (!this._source) return
     this._source.stop(0)
@@ -120,6 +137,8 @@ class PlayInstance {
     if (this.onstop) this.onstop()
   }
 
+  // Makes this PlayInstance sound off-pitch, as a result of badly hitting
+  // a note.
   bad() {
     if (!this._source) return
     this._source.playbackRate.value = (Math.random() < 0.5 ?
@@ -127,6 +146,7 @@ class PlayInstance {
       Math.pow(2, -1 / 12))
   }
 
+  // Destroys this PlayInstance.
   destroy() {
     this.stop()
   }
