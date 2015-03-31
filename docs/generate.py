@@ -20,178 +20,162 @@ def mkpath(path):
         else:
             raise
 
-class DocumentationBlock(object):
-    def __init__(self, name):
-        self.name = name
-        self.contents = []
-    def add(self, content):
-        self.contents.append(content)
-    def get_text(self):
-        return '\n'.join(map(self.to_str, self.contents)).strip()
-    def __repr__(self):
-        return '<:doc: %s %s>' % (self.name, self.contents)
-    def to_str(self, text):
-        if type(text) == str:
-            return text
-        else:
-            return '\n' + text.get_text()
-    def beget(self, old_block, blocktype=None, *args):
-        if blocktype is None: blocktype = DocumentationBlock
-        new_block = blocktype(None, *args)
-        new_block.add(old_block.get_text())
-        self.contents.append(new_block)
-        return new_block
-
-class DocumentationGenerator(object):
-    def __init__(self, modpath):
-        self.blocks = []
-        self.modpath = modpath
-    def block(self, name):
-        return self.add(DocumentationBlock(name))
-    def add(self, block):
-        self.current = block
-        self.blocks.append(self.current)
-        return self.current
-    def moduledoc(self, blocktype=DocumentationBlock, *args):
-        block = blocktype('modules/' + self.modpath + '.rst', *args)
-        return self.add(block)
-    def beget(self, old_block, blocktype=DocumentationBlock, *args):
-        new_block = self.moduledoc(blocktype, *args)
-        new_block.add(old_block.get_text())
-        return new_block
-
-class ClassDocumentation(DocumentationBlock):
-    def __init__(self, name, class_name):
-        super(ClassDocumentation, self).__init__(name)
-        self.class_name = class_name
-        self.class_params = ''
-    def get_text(self):
-        text = super(ClassDocumentation, self).get_text()
-        return (
-            '.. js:class:: ' + self.class_name + self.class_params + '\n\n' + indent(text))
-
-class FunctionDocumentation(DocumentationBlock):
-    def __init__(self, name, method_name):
-        super(FunctionDocumentation, self).__init__(name)
-        self.method_name = method_name
-    def get_text(self):
-        text = super(FunctionDocumentation, self).get_text()
-        return (
-            '.. js:function:: ' + self.method_name + '\n\n' + indent(text))
-
-class AttributeDocumentation(DocumentationBlock):
-    def __init__(self, name, attribute_name):
-        super(AttributeDocumentation, self).__init__(name)
-        self.attribute_name = attribute_name
-    def get_text(self):
-        text = super(AttributeDocumentation, self).get_text()
-        return (
-            '.. js:attribute:: ' + self.attribute_name + '\n\n' + indent(text))
-
-def indent(x):
+def indent3(x):
     return '\n'.join('   ' + line for line in x.splitlines())
 
-METHOD_RE = re.compile(r'(\w+\(.*?\)) {$')
-GETTER_RE = re.compile(r'get (\w+)\(\) {$')
-ATTRIBUTE_RE = re.compile(r'this.(\w+) =')
+COMMENT_RE      = re.compile(r'^//(?: (.*$)|$)')
+CLASS_RE        = re.compile(r'^export class (\w+)')
+EXPORT_LET_RE   = re.compile(r'^export let (\w+)')
+CONSTRUCTOR_RE  = re.compile(r'^constructor\((.*?)\) \{$')
+METHOD_RE       = re.compile(r'^(\w+\(.*?\)) {$')
+GETTER_RE       = re.compile(r'^get (\w+)\(\) {$')
+ATTRIBUTE_RE    = re.compile(r'^this.(\w+) =')
+MODULE_RE       = re.compile(r'src/(.*?)\.js$')
 
-def scan_docs(path):
-    modpath = os.path.relpath(path, '../src')[:-3]
-    generate = DocumentationGenerator(modpath)
-    current = None
-    implicit_class = None
-    implicit_method = None
-    implicit_state = None
-    with open(path, 'r') as f:
-        for line in f:
-            line = line.strip()
-            if line.startswith('// :doc: '):
-                current = generate.block('_gen/' + line[9:])
-            elif line == '// :doc:':
-                current = generate.moduledoc()
-            elif current:
-                if line == '//':
-                    current.add('')
-                elif line.startswith('// '):
-                    current.add(line[3:])
-                elif current.name is None:
-                    if implicit_state is None and line.startswith('export class '):
-                        implicit_class = generate.beget(current,
-                            ClassDocumentation,
-                            line[len('export class '):].split()[0])
-                        implicit_state = 'class'
-                    elif (implicit_state is None and
-                            implicit_state == 'class' and
-                            line.startswith('constructor(')):
-                        implicit_class.class_params = line[len('constructor'):][:-2]
-                        implicit_state = 'done'
-                    elif (implicit_state is None and
-                            implicit_class is not None and
-                            METHOD_RE.match(line)):
-                        match = METHOD_RE.match(line)
-                        implicit_method = implicit_class.beget(current,
-                            FunctionDocumentation,
-                            match.group(1))
-                        implicit_state = 'done'
-                    elif (implicit_state is None and
-                            implicit_class is not None and
-                            ATTRIBUTE_RE.match(line)):
-                        match = ATTRIBUTE_RE.match(line)
-                        implicit_method = implicit_class.beget(current,
-                            AttributeDocumentation,
-                            match.group(1))
-                        implicit_state = 'done'
-                    elif (implicit_state is None and
-                            implicit_class is not None and
-                            GETTER_RE.match(line)):
-                        match = GETTER_RE.match(line)
-                        implicit_method = implicit_class.beget(current,
-                            AttributeDocumentation,
-                            match.group(1))
-                        implicit_state = 'done'
-                    else:
-                        current = None
-                        implicit_state = None
-                else:
-                    current = None
-                    implicit_state = None
-            else:
-                if line == '//':
-                    current = DocumentationBlock(None)
-                elif line.startswith('// '):
-                    current = DocumentationBlock(None)
-                    current.add(line[3:])
-                
-    return generate.blocks
+class FileProcessor(object):
 
-def get_all_blocks():
-    key = lambda doc: doc.name
-    return groupby(sorted((doc
-        for path in get_source_files()
-            for doc in scan_docs(path)), key=key), key)
+    def __init__(self, path, root):
+        self.root = root
+        self.path = path
+        self.buffer = None
+
+    def module_doc(self):
+        match = MODULE_RE.search(self.path)
+        modulename = match.group(1)
+        return self.root.module(modulename)
+
+    def process(self):
+        self.state = None
+        self.current_class = None
+        with open(self.path, 'r') as f:
+            for line in f:
+                self.current_line = line.strip()
+                self.process_line()
+
+    def match(self, regex):
+        match = regex.match(self.current_line)
+        self.current_match = match
+        return match
+
+    def group(self, group):
+        return self.current_match.group(group)
+
+    def process_line(self):
+        if self.match(COMMENT_RE):
+            if self.buffer is None: self.buffer = []
+            self.buffer.append(self.group(1) or '')
+        elif self.buffer is not None:
+            self.post_state = None
+            self.process_post_comment()
+            self.buffer = None
+
+    def process_post_comment(self):
+        if self.post_state is None:
+            if self.match(CLASS_RE):
+                module_node = self.module_doc()
+                class_node = self.current_class = ClassNode(self.group(1))
+                module_node.add(class_node)
+                class_node.add_text(self.buffer)
+                self.post_state = 'class'
+            elif self.current_class and self.match(METHOD_RE):
+                method_node = MethodNode(self.group(1))
+                method_node.add_text(self.buffer)
+                self.current_class.add(method_node)
+            elif self.current_class and (self.match(GETTER_RE) or self.match(ATTRIBUTE_RE)):
+                attr_node = AttributeNode(self.group(1))
+                attr_node.add_text(self.buffer)
+                self.current_class.add(attr_node)
+            elif self.match(EXPORT_LET_RE):
+                data_node = DataNode(self.group(1))
+                data_node.add_text(self.buffer)
+                self.module_doc().add(data_node)
+        elif self.post_state == 'class':
+            if self.match(CONSTRUCTOR_RE):
+                self.current_class.arguments = self.match(1)
+
+class RootNode(object):
+    def __init__(self):
+        self.modules = { }
+    def module(self, module_name):
+        if module_name in self.modules:
+            return self.modules[module_name]
+        else:
+            node = self.modules[module_name] = ModuleNode(module_name)
+            return node
+
+class Node(object):
+    def __init__(self, *args):
+        self.contents = []
+        self.initialize(*args)
+    def add(self, item):
+        self.contents.append(item)
+    def add_text(self, buf):
+        self.contents.append('\n'.join(buf))
+    def text_contents(self):
+        return '\n\n'.join(map(str, self.contents))
+
+class ModuleNode(Node):
+    def initialize(self, name):
+        self.name = name
+    def __str__(self):
+        return (
+            self.name + '\n' +
+            '=' * len(self.name) + '\n' +
+            self.text_contents())
+
+class ClassNode(Node):
+    def initialize(self, name):
+        self.name = name
+        self.arguments = ''
+    def __str__(self):
+        return (
+            '.. js:class:: ' + self.name + '(' + self.arguments + ')\n\n' +
+            indent3(self.text_contents()))
+
+class MethodNode(Node):
+    def initialize(self, name):
+        self.name = name
+    def __str__(self):
+        return (
+            '.. js:function:: ' + self.name + '\n\n' +
+            indent3(self.text_contents()))
+
+class AttributeNode(Node):
+    def initialize(self, name):
+        self.name = name
+    def __str__(self):
+        return (
+            '.. js:attribute:: ' + self.name + '\n\n' +
+            indent3(self.text_contents()))
+
+class DataNode(Node):
+    def initialize(self, name):
+        self.name = name
+    def __str__(self):
+        return (
+            '.. js:data:: ' + self.name + '\n\n' +
+            indent3(self.text_contents()))
+
 
 def main():
-    modules = []
-    for filename, docs in get_all_blocks():
+    root = RootNode()
+    for path in get_source_files():
+        processor = FileProcessor(path, root)
+        processor.process()
+    for key in root.modules:
+        filename = 'modules/' + key + '.rst'
         mkpath(os.path.dirname(filename))
         print filename
         with open(filename, 'w') as f:
-            if filename.startswith('modules/'):
-                name = filename[8:][:-4]
-                modules.append(name)
-                print >> f, name
-                print >> f, '=' * len(name)
-            print >> f, '\n\n'.join(doc.get_text() for doc in docs)
+            f.write(str(root.modules[key]))
     with open('modules/index.rst', 'w') as f:
         print >> f, 'Modules Index'
         print >> f, '============='
-        print >> f, ''
         print >> f, '.. toctree::'
         print >> f, '   :maxdepth: 2'
         print >> f, ''
-        for name in modules:
-            print >> f, '   ' + name
-            
+        for key in sorted(root.modules):
+            print >> f, '   ' + key
 
 if __name__ == '__main__':
     main()

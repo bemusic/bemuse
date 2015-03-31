@@ -3,6 +3,8 @@ import R from 'ramda'
 import { judgeTime, judgeEndTime, isBad, MISSED } from '../judgments'
 import PlayerStats   from './player-stats'
 
+// The PlayerState class holds a single player's state, including the stats
+// (score, current combo, maximum combo).
 export class PlayerState {
   constructor(player) {
     this._player        = player
@@ -11,10 +13,18 @@ export class PlayerState {
         R.groupBy(R.prop('column'))(
           R.sortBy(R.prop('time'), player.notechart.notes)))
     this._noteResult    = new Map()
+
+    // The PlayerStats object.
     this.stats          = new PlayerStats(player.notechart)
+
+    // The notifications from the previous update.
     this.notifications  = { }
+
+    // The current note scrolling speed.
     this.speed          = player.options.speed
   }
+
+  // Updates the state. Judge the notes and emit notifications.
   update(gameTime, input) {
     this._gameTime = gameTime
     this.notifications = { }
@@ -22,16 +32,35 @@ export class PlayerState {
     this.input = this._createInputColumnMap(input)
     this._judgeNotes(gameTime)
   }
+
+  // Returns the status of the note as a string. The results may be:
+  //
+  // unjudged
+  //   This note is unjudged.
+  // active
+  //   For long notes -- when the player is holding the note
+  //   but not yet release it.
+  // judged
+  //   This note is fully-judged.
   getNoteStatus(note) {
     let result = this._noteResult.get(note)
     if (!result) return 'unjudged'
     return result.status
   }
+
+  // Returns the Number representing judgment of the note.
+  // The judgment may be:
+  //
+  // 0
+  //   When the note is unjudged.
+  // otherwise
+  //   See the game/judgments module for information about this number.
   getNoteJudgment(note) {
     let result = this._noteResult.get(note)
     if (!result) return 0
     return result.judgment
   }
+
   _createInputColumnMap(input) {
     let prefix = `p${this._player.number}_`
     return new Map(this._columns.map((column) =>

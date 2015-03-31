@@ -1,4 +1,5 @@
 
+// The object representing the player's information, notechart and options.
 export class Player {
   constructor(notechart, playerNumber, options) {
     this._notechart = notechart
@@ -8,18 +9,27 @@ export class Player {
       speed:      +options.speed,
     }
   }
-  get columns() {
-    return this._notechart.columns
-  }
+
+  // The Notechart object.
   get notechart() {
     return this._notechart
   }
+
+  // An array of column names for this Notechart.
+  get columns() {
+    return this._notechart.columns
+  }
+
+  // The player number.
   get number() {
     return this._number
   }
+
+  // An Object representing player options.
   get options() {
     return this._options
   }
+
 }
 
 export default Player
