@@ -423,7 +423,7 @@
           <sprite image="Note/DX/Note.png" frame="34x8+62+212" x="248" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
       </group>
-      <group y="400" x="10">
+      <group y="400">
         <group alpha="0">
           <animation on="p1_judge_1">
             <keyframe t="0" y="-16" alpha="1"></keyframe>

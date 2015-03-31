@@ -4,34 +4,35 @@ include _lib/common
 +media('screen', 1280, 720)
 
   // note panel (Left)
-  group
-    animation
-      keyframe(t='0.25' x='-361')
-      keyframe(t='0.6' x='0' ease='quadOut')
-    sprite(image='NotePanel/Left.png' x='0' y='0')
-    group(x='34' y='0')
-      +note-area(mode.iidx_l)
+  #{'if'}(key='p1_placement' value='left')
+    group
+      animation
+        keyframe(t='0.25' x='-361')
+        keyframe(t='0.6' x='0' ease='quadOut')
+      sprite(image='NotePanel/Left.png' x='0' y='0')
+      group(x='34' y='0')
+        +note-area(mode.iidx_l)
+
+  // note panel (Center)
+  #{'if'}(key='p1_placement' value='center')
+    group(x='455')
+      animation
+        keyframe(t='0.25' alpha='0')
+        keyframe(t='0.6' alpha='1' ease='quadOut')
+      sprite(image='NotePanel/Middle.png' x='0' y='0')
+      group(x='42' y='0')
+        +note-area(mode.iidx_l)
 
   // note panel (Right)
-  group
-    animation
-      keyframe(t='0.25' x='1280')
-      keyframe(t='0.6' x='919' ease='quadOut')
-    sprite(image='NotePanel/Right.png' x='0' y='0')
-    group(x='42' y='0')
-      +note-area(mode.iidx_r)
+  #{'if'}(key='p1_placement' value='right')
+    group
+      animation
+        keyframe(t='0.25' x='1280')
+        keyframe(t='0.6' x='919' ease='quadOut')
+      sprite(image='NotePanel/Right.png' x='0' y='0')
+      group(x='42' y='0')
+        +note-area(mode.iidx_r)
         
-  // note panel (Middle)
-  group(x='455')
-    animation
-      keyframe(t='0.25' alpha='0')
-      keyframe(t='0.6' alpha='1' ease='quadOut')
-    sprite(image='NotePanel/Middle.png' x='0' y='0')
-    group(x='42' y='0')
-      +note-area(mode.iidx_l)
-      group(y='400')
-        +judgments
-
   // info panel
   sprite(image='InfoPanel/Background.png' y='616')
     animation
@@ -51,8 +52,6 @@ include _lib/common
     sprite(image='Touch/NotePanel.png' x='0' y='0')
     group(x='42' y='0')
       +note-area(mode.iidx_l)
-      group(y='400' x='10')
-        +judgments
 
   // button panel
   group(y=(height - 311))

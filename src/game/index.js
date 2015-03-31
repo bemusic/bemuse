@@ -45,6 +45,7 @@ export function main() {
         {
           speed:      +query.speed || 3,
           autoplay:   !!query.autoplay,
+          placement:  'center',
         }
       ],
     }

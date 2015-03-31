@@ -36,5 +36,16 @@ include ~bemuse/view/utils
         label
           input(type='checkbox' checked='{{autoplay}}')
           span.label AUTOPLAY
+      div.radio
+        h3 Placement
+        label
+          input(type='radio' name='{{placement}}' value='left')
+          span.label Left
+        label
+          input(type='radio' name='{{placement}}' value='center')
+          span.label Center
+        label
+          input(type='radio' name='{{placement}}' value='right')
+          span.label Right
     button(type='submit') Play
 
