@@ -30,7 +30,7 @@ EXPORT_LET_RE   = re.compile(r'^export let (\w+)')
 CONSTRUCTOR_RE  = re.compile(r'^constructor\((.*?)\) \{$')
 METHOD_RE       = re.compile(r'^(\w+\(.*?\)) {$')
 GETTER_RE       = re.compile(r'^get (\w+)\(\) {$')
-ATTRIBUTE_RE    = re.compile(r'^this.(\w+) =')
+ATTRIBUTE_RE    = re.compile(r'^this.(\w+)\s*=')
 MODULE_RE       = re.compile(r'src/(.*?)\.js$')
 
 class FileProcessor(object):
