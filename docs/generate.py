@@ -44,6 +44,7 @@ CODEDOC_RE      = re.compile(r'^>> (\S+)$')
 COMMENT_RE      = re.compile(r'^(?://|#)(?: (.*$)|$)')
 CLASS_RE        = re.compile(r'^(?:export )?class (\w+)')
 EXPORT_LET_RE   = re.compile(r'^export let (\w+)')
+EXPORT_FN_RE    = re.compile(r'^export function (\w+\(.*?\))')
 CONSTRUCTOR_RE  = re.compile(r'^constructor\((.*?)\) \{$')
 METHOD_RE       = re.compile(r'^(\w+\(.*?\)) {$')
 GETTER_RE       = re.compile(r'^get (\w+)\(\) {$')
@@ -104,6 +105,7 @@ class FileProcessor(object):
                 file_name = '_codedoc/%s.txt' % match.group(1)
                 codedoc = self.last_codedoc = self.root.file(file_name)
                 codedoc.add_text(self.buffer[1:])
+
             # >>
             # The previous codedoc can be added later by starting a block
             # of inline comment with `>>`::
@@ -119,6 +121,13 @@ class FileProcessor(object):
                 self.last_codedoc.add_text(self.buffer[1:])
 
             # >> docs/moduledoc
+            # If a block of inline comment starts with ``:doc:``, then the
+            # comment will be added into the module's documentation.
+            #
+            elif self.buffer[0] == ':doc:':
+                module_node = self.last_codedoc = self.module_doc()
+                module_node.add_text(self.buffer[1:])
+            #
             # If a block of inline comment starts directly before an ES6 class,
             # it will be used as the documentation for that class::
             #
@@ -169,6 +178,17 @@ class FileProcessor(object):
             #   // The global SceneManager instance.
             #   export let instance = new SceneManager()
             elif self.match(EXPORT_LET_RE):
+                module_node = self.module_doc()
+                data_node = DataNode(module_node, self.group(1))
+                data_node.add_text(self.buffer)
+                module_node.add(data_node)
+            # >>
+            # If ``export function`` is found after a comment block, then the
+            # comment block documents that module export::
+            # 
+            #   // The global SceneManager instance.
+            #   export function download() {
+            elif self.match(EXPORT_FN_RE):
                 module_node = self.module_doc()
                 data_node = DataNode(module_node, self.group(1))
                 data_node.add_text(self.buffer)
@@ -246,6 +266,15 @@ class MethodNode(DomainNode):
         self.class_node = class_node
     def index(self):
         return '%s#%s' % (self.class_node.index(), self.name)
+    def directive(self):
+        return 'js:function:: %s' % (self.name)
+
+class FunctionNode(DomainNode):
+    def initialize(self, module, name):
+        self.name = name
+        self.module = module
+    def index(self):
+        return '%s; %s' % (self.module.name, self.name)
     def directive(self):
         return 'js:function:: %s' % (self.name)
 

@@ -1,6 +1,14 @@
 
 import { BYTES_FORMATTER } from 'bemuse/progress/formatters'
 
+// Downloads the file from the URL.
+// The download will not actually be started unless the ``as()`` method
+// is called.
+//
+// .. js:function:: as(type)
+//
+//    Initiates the download as ``type``. The ``type`` is a string such as
+//    "arraybuffer" or "blob".
 export function download(url) {
   return {
     as(type, progress) {

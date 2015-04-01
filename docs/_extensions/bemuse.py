@@ -7,6 +7,7 @@ def setup(app):
     app.add_role('github', autolink('https://github.com/%s'))
     app.add_role('module', autolink('https://github.com/bemusic/bemuse/tree/master/src/%s'))
     app.add_role('tree', autolink('https://github.com/bemusic/bemuse/tree/master/%s'))
+    app.add_role('src', autolink('https://github.com/bemusic/bemuse/tree/master/src/%s'))
 
     # >> docs/codedoc-usage
     # To include that codedoc, use the ``codedoc`` directive::

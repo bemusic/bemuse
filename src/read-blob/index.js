@@ -1,6 +1,13 @@
 
 export default readBlob
 
+// Reads the blob as a specified type. The blob will not actually be read
+// unless the ``as()`` method is called.
+//
+// .. js:function:: as(type)
+//
+//    Starts reading the blob as ``type``. The ``type`` is a String such as
+//    "arraybuffer" or "text".
 export function readBlob(blob) {
   return {
     as(type) {

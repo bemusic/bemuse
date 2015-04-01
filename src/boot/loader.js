@@ -1,15 +1,40 @@
 
-// This file holds a logic to generate a code-splitting loader function.
+// This file holds the logic to generate a code-splitting loader function.
 // The code is compiled on build-time.
-
 var modules = {
-      app:        'bemuse/app',
-      test:       'bemuse/test',
-      comingSoon: 'bemuse/coming-soon',
-      sync:       'bemuse/auto-synchro',
-      game:       'bemuse/game',
-      testFont:   'bemuse/devtools/test-font',
-    }
+
+  // >> boot/modes
+  // app
+  //   The main game application. This will bring up the Title Screen.
+  app:        'bemuse/app',
+
+  // >>
+  // test
+  //   The unit tests.
+  test:       'bemuse/test',
+
+  // >>
+  // comingSoon
+  //   Displays the "coming soon" text.
+  comingSoon: 'bemuse/coming-soon',
+
+  // >>
+  // sync
+  //   Displays a simple UI for determining your computer's audio+input
+  //   latency.
+  sync:       'bemuse/auto-synchro',
+
+  // >>
+  // game
+  //   Runs the game shell.
+  game:       'bemuse/game',
+
+  // >>
+  // testFont
+  //   Used by developers to test fonts.
+  testFont:   'bemuse/devtools/test-font',
+
+}
 
 var code = 'module.exports = {'
 
