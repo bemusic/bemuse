@@ -5,6 +5,7 @@ Developer Documentation
 
    getting-started
    architecture
+   documentation
    game-loop
    skinning
    options
