@@ -42,4 +42,10 @@ export function breaksCombo(judgment) {
   return judgment === MISSED || isBad(judgment)
 }
 
+export function weight(judgment) {
+  if (judgment === 1) return 100
+  if (judgment === 2) return 80
+  if (judgment === 3) return 50
+  return 0
+}
 

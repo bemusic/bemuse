@@ -1606,10 +1606,12 @@
     </group>
   </if>
   <!-- info panel-->
-  <sprite image="InfoPanel/Background.png" y="616">
+  <group y="616">
     <animation>
       <keyframe t="0" y="720"></keyframe>
       <keyframe t="0.3" y="616" ease="quadOut"></keyframe>
     </animation>
-  </sprite>
+    <sprite image="InfoPanel/Background.png"></sprite>
+    <text x="100" y="20" text="%s" data="p1_score" font="ScoreNumber" font-src="Fonts/ScoreNumber.fnt"></text>
+  </group>
 </skin>

@@ -83,6 +83,7 @@ export class PlayerDisplay {
         stateful[`judge_${name}`] = time
         stateful[`combo`] = notification.combo
       }
+      data[`score`] = playerState.stats.score
     }
 
     function getUpperBound() {

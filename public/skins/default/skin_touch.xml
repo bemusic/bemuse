@@ -540,20 +540,36 @@
       <keyframe t="0.3" y="617" ease="quadOut"></keyframe>
     </animation>
     <sprite image="Touch/ButtonPanel.png"></sprite>
-      <sprite image="Touch/Buttons/Normal.png" x="102.5" y="160" ref="p1_1"></sprite>
-      <sprite image="Touch/Buttons/Active.png" x="102.5" y="160" alpha="p1_1_active"></sprite>
-      <sprite image="Touch/Buttons/Normal.png" x="181.5" y="20" ref="p1_2"></sprite>
-      <sprite image="Touch/Buttons/Active.png" x="181.5" y="20" alpha="p1_2_active"></sprite>
-      <sprite image="Touch/Buttons/Normal.png" x="260.5" y="160" ref="p1_3"></sprite>
-      <sprite image="Touch/Buttons/Active.png" x="260.5" y="160" alpha="p1_3_active"></sprite>
-      <sprite image="Touch/Buttons/Normal.png" x="339.5" y="20" ref="p1_4"></sprite>
-      <sprite image="Touch/Buttons/Active.png" x="339.5" y="20" alpha="p1_4_active"></sprite>
-      <sprite image="Touch/Buttons/Normal.png" x="418.5" y="160" ref="p1_5"></sprite>
-      <sprite image="Touch/Buttons/Active.png" x="418.5" y="160" alpha="p1_5_active"></sprite>
-      <sprite image="Touch/Buttons/Normal.png" x="497.5" y="20" ref="p1_6"></sprite>
-      <sprite image="Touch/Buttons/Active.png" x="497.5" y="20" alpha="p1_6_active"></sprite>
-      <sprite image="Touch/Buttons/Normal.png" x="576.5" y="160" ref="p1_7"></sprite>
-      <sprite image="Touch/Buttons/Active.png" x="576.5" y="160" alpha="p1_7_active"></sprite>
+      <group x="102.5" y="160">
+        <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_1"></sprite>
+        <text x="75" y="32" text="Score" align="center" font="InfoSmall" font-src="Fonts/InfoSmall.fnt"></text>
+        <text x="75" y="56" text="%s" align="center" data="p1_score" font="ScoreNumberSmall" font-src="Fonts/ScoreNumberSmall.fnt"></text>
+        <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_1_active"></sprite>
+      </group>
+      <group x="181.5" y="20">
+        <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_2"></sprite>
+        <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_2_active"></sprite>
+      </group>
+      <group x="260.5" y="160">
+        <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_3"></sprite>
+        <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_3_active"></sprite>
+      </group>
+      <group x="339.5" y="20">
+        <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_4"></sprite>
+        <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_4_active"></sprite>
+      </group>
+      <group x="418.5" y="160">
+        <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_5"></sprite>
+        <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_5_active"></sprite>
+      </group>
+      <group x="497.5" y="20">
+        <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_6"></sprite>
+        <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_6_active"></sprite>
+      </group>
+      <group x="576.5" y="160">
+        <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_7"></sprite>
+        <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_7_active"></sprite>
+      </group>
     <sprite image="Touch/Scratch/ScratchAreaL.png" x="0" y="8" ref="p1_SC"></sprite>
     <sprite image="Touch/Scratch/ScratchGlowL.png" x="0" y="6" alpha="p1_SC_active"></sprite>
   </group>
