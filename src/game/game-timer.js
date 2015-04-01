@@ -9,6 +9,7 @@ export class GameTimer {
     this.startTime = null
   }
 
+  // True if the game is started, false otherwise.
   get started() {
     return this.startTime !== null
   }

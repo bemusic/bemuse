@@ -103,7 +103,7 @@ export class GameController {
     this._timer.update()
     let t = this._timer.time
     let A = this._audioInputLatency
-    this._state.update(t - A, this._input)
+    this._state.update(t - A, this._input, this._timer)
     this._audio.update(t,     this._state)
     this._display.update(t,   this._state)
   }
