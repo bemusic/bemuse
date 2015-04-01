@@ -60,6 +60,8 @@ class FileProcessor(object):
     def module_doc(self):
         match = MODULE_RE.search(self.path)
         modulename = match.group(1)
+        if modulename.endswith('/index'):
+            modulename = modulename[:-6]
         return self.root.module(modulename)
 
     def process(self):
