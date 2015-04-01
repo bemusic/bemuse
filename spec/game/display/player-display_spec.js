@@ -22,6 +22,9 @@ describe('PlayerDisplay', function() {
     setup({
       notechart: notechart(),
       columns: ['wow'],
+      options: {
+        placement: 'center',
+      },
     })
 
     update(555, 0.5, inputState([['wow', { value: 0, changed: false }]]))
@@ -110,6 +113,7 @@ describe('PlayerDisplay', function() {
       notifications: { },
       getNoteStatus: sinon.stub().returns('unjudged'),
       getNoteJudgment: sinon.stub().returns(0),
+      stats: { score: 0 },
     }
   }
 

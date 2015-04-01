@@ -1,0 +1,6 @@
+<skin width="123" height="456">
+  <if key="a" value="b">
+    <sprite image="test.png" x="10" y="20" />
+  </if>
+</skin>
+

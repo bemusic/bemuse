@@ -7,6 +7,7 @@ export class Player {
     this._options   = {
       autosound: !!options.autosound,
       speed:      +options.speed,
+      placement:   options.placement || 'center',
     }
   }
 

@@ -1,0 +1,22 @@
+<?xml version='1.0'?>
+   <font>
+       <info aa='1' size='32' smooth='1' stretchH='100' bold='0' padding='0,0,0,0' spacing='0,0' charset='' italic='0' unicode='0' face='ScoreNumberSmall'/>
+       <common scaleW='128' packed='0' pages='1' lineHeight='42' scaleH='128' base='34'/>
+       <pages>
+            <page id='0' file='ScoreNumberSmall.png'/>
+       </pages>
+        <chars count='12'>
+            <char xadvance='8' x='2' chnl='0' yoffset='34' y='114' xoffset='0' id='32' page='0' height='0' width='0'/>
+            <char xadvance='16' x='112' chnl='0' yoffset='10' y='2' xoffset='2' id='49' page='0' height='26' width='12'/>
+            <char xadvance='16' x='94' chnl='0' yoffset='10' y='2' xoffset='1' id='50' page='0' height='26' width='16'/>
+            <char xadvance='16' x='76' chnl='0' yoffset='10' y='2' xoffset='1' id='51' page='0' height='26' width='16'/>
+            <char xadvance='16' x='56' chnl='0' yoffset='10' y='2' xoffset='1' id='52' page='0' height='26' width='18'/>
+            <char xadvance='16' x='38' chnl='0' yoffset='10' y='2' xoffset='2' id='53' page='0' height='26' width='16'/>
+            <char xadvance='16' x='20' chnl='0' yoffset='10' y='2' xoffset='2' id='54' page='0' height='26' width='16'/>
+            <char xadvance='16' x='2' chnl='0' yoffset='10' y='86' xoffset='1' id='55' page='0' height='26' width='16'/>
+            <char xadvance='16' x='2' chnl='0' yoffset='10' y='58' xoffset='2' id='56' page='0' height='26' width='16'/>
+            <char xadvance='16' x='2' chnl='0' yoffset='10' y='30' xoffset='2' id='57' page='0' height='26' width='16'/>
+            <char xadvance='8' x='20' chnl='0' yoffset='28' y='30' xoffset='1' id='44' page='0' height='12' width='8'/>
+            <char xadvance='16' x='2' chnl='0' yoffset='10' y='2' xoffset='2' id='48' page='0' height='26' width='16'/>
+       </chars>
+   </font>
