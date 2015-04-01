@@ -70,7 +70,7 @@
             <keyframe t="0" alpha="0" scale-x="0"></keyframe>
           </animation>
           <animation on="p1_SC_up">
-            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0" alpha="1" scale-x="1" x="0"></keyframe>
             <keyframe t="0.18" alpha="0" scale-x="2" x="-40"></keyframe>
           </animation>
         </sprite>
@@ -130,7 +130,7 @@
             <keyframe t="0" alpha="0" scale-x="0"></keyframe>
           </animation>
           <animation on="p1_1_up">
-            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0" alpha="1" scale-x="1" x="62"></keyframe>
             <keyframe t="0.18" alpha="0" scale-x="2" x="22"></keyframe>
           </animation>
         </sprite>
@@ -190,7 +190,7 @@
             <keyframe t="0" alpha="0" scale-x="0"></keyframe>
           </animation>
           <animation on="p1_2_up">
-            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0" alpha="1" scale-x="1" x="97"></keyframe>
             <keyframe t="0.18" alpha="0" scale-x="2" x="57"></keyframe>
           </animation>
         </sprite>
@@ -250,7 +250,7 @@
             <keyframe t="0" alpha="0" scale-x="0"></keyframe>
           </animation>
           <animation on="p1_3_up">
-            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0" alpha="1" scale-x="1" x="124"></keyframe>
             <keyframe t="0.18" alpha="0" scale-x="2" x="84"></keyframe>
           </animation>
         </sprite>
@@ -310,7 +310,7 @@
             <keyframe t="0" alpha="0" scale-x="0"></keyframe>
           </animation>
           <animation on="p1_4_up">
-            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0" alpha="1" scale-x="1" x="159"></keyframe>
             <keyframe t="0.18" alpha="0" scale-x="2" x="119"></keyframe>
           </animation>
         </sprite>
@@ -370,7 +370,7 @@
             <keyframe t="0" alpha="0" scale-x="0"></keyframe>
           </animation>
           <animation on="p1_5_up">
-            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0" alpha="1" scale-x="1" x="186"></keyframe>
             <keyframe t="0.18" alpha="0" scale-x="2" x="146"></keyframe>
           </animation>
         </sprite>
@@ -430,7 +430,7 @@
             <keyframe t="0" alpha="0" scale-x="0"></keyframe>
           </animation>
           <animation on="p1_6_up">
-            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0" alpha="1" scale-x="1" x="221"></keyframe>
             <keyframe t="0.18" alpha="0" scale-x="2" x="181"></keyframe>
           </animation>
         </sprite>
@@ -490,7 +490,7 @@
             <keyframe t="0" alpha="0" scale-x="0"></keyframe>
           </animation>
           <animation on="p1_7_up">
-            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0" alpha="1" scale-x="1" x="248"></keyframe>
             <keyframe t="0.18" alpha="0" scale-x="2" x="208"></keyframe>
           </animation>
         </sprite>
