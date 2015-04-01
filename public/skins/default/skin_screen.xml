@@ -65,6 +65,15 @@
         <object key="p1_longnote_SC" pool="8">
           <sprite image="Note/DX/Note.png" frame="61x8+0+212" x="0" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_SC_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="-40"></keyframe>
+          </animation>
+        </sprite>
         <sprite image="Note/DX/Highlight.png" frame="34x552+62+0" x="62" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -116,6 +125,15 @@
         <object key="p1_longnote_1" pool="8">
           <sprite image="Note/DX/Note.png" frame="34x8+62+212" x="62" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_1_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="22"></keyframe>
+          </animation>
+        </sprite>
         <sprite image="Note/DX/Highlight.png" frame="26x552+97+0" x="97" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -167,6 +185,15 @@
         <object key="p1_longnote_2" pool="8">
           <sprite image="Note/DX/Note.png" frame="26x8+97+212" x="97" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_2_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="57"></keyframe>
+          </animation>
+        </sprite>
         <sprite image="Note/DX/Highlight.png" frame="34x552+62+0" x="124" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -218,6 +245,15 @@
         <object key="p1_longnote_3" pool="8">
           <sprite image="Note/DX/Note.png" frame="34x8+62+212" x="124" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_3_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="84"></keyframe>
+          </animation>
+        </sprite>
         <sprite image="Note/DX/Highlight.png" frame="26x552+97+0" x="159" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -269,6 +305,15 @@
         <object key="p1_longnote_4" pool="8">
           <sprite image="Note/DX/Note.png" frame="26x8+97+212" x="159" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_4_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="119"></keyframe>
+          </animation>
+        </sprite>
         <sprite image="Note/DX/Highlight.png" frame="34x552+62+0" x="186" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -320,6 +365,15 @@
         <object key="p1_longnote_5" pool="8">
           <sprite image="Note/DX/Note.png" frame="34x8+62+212" x="186" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_5_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="146"></keyframe>
+          </animation>
+        </sprite>
         <sprite image="Note/DX/Highlight.png" frame="26x552+97+0" x="221" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -371,6 +425,15 @@
         <object key="p1_longnote_6" pool="8">
           <sprite image="Note/DX/Note.png" frame="26x8+97+212" x="221" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_6_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="181"></keyframe>
+          </animation>
+        </sprite>
         <sprite image="Note/DX/Highlight.png" frame="34x552+62+0" x="248" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -422,6 +485,15 @@
         <object key="p1_longnote_7" pool="8">
           <sprite image="Note/DX/Note.png" frame="34x8+62+212" x="248" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_7_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="208"></keyframe>
+          </animation>
+        </sprite>
       </group>
     </group>
   </group>
@@ -490,6 +562,15 @@
         <object key="p1_longnote_1" pool="8">
           <sprite image="Note/DX/Note.png" frame="34x8+62+212" x="0" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_1_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="-40"></keyframe>
+          </animation>
+        </sprite>
         <sprite image="Note/DX/Highlight.png" frame="26x552+97+0" x="35" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -541,6 +622,15 @@
         <object key="p1_longnote_2" pool="8">
           <sprite image="Note/DX/Note.png" frame="26x8+97+212" x="35" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_2_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="-5"></keyframe>
+          </animation>
+        </sprite>
         <sprite image="Note/DX/Highlight.png" frame="34x552+62+0" x="62" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -592,6 +682,15 @@
         <object key="p1_longnote_3" pool="8">
           <sprite image="Note/DX/Note.png" frame="34x8+62+212" x="62" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_3_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="22"></keyframe>
+          </animation>
+        </sprite>
         <sprite image="Note/DX/Highlight.png" frame="26x552+97+0" x="97" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -643,6 +742,15 @@
         <object key="p1_longnote_4" pool="8">
           <sprite image="Note/DX/Note.png" frame="26x8+97+212" x="97" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_4_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="57"></keyframe>
+          </animation>
+        </sprite>
         <sprite image="Note/DX/Highlight.png" frame="34x552+62+0" x="124" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -694,6 +802,15 @@
         <object key="p1_longnote_5" pool="8">
           <sprite image="Note/DX/Note.png" frame="34x8+62+212" x="124" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_5_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="84"></keyframe>
+          </animation>
+        </sprite>
         <sprite image="Note/DX/Highlight.png" frame="26x552+97+0" x="159" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -745,6 +862,15 @@
         <object key="p1_longnote_6" pool="8">
           <sprite image="Note/DX/Note.png" frame="26x8+97+212" x="159" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_6_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="119"></keyframe>
+          </animation>
+        </sprite>
         <sprite image="Note/DX/Highlight.png" frame="34x552+62+0" x="186" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -796,6 +922,15 @@
         <object key="p1_longnote_7" pool="8">
           <sprite image="Note/DX/Note.png" frame="34x8+62+212" x="186" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_7_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="146"></keyframe>
+          </animation>
+        </sprite>
         <sprite image="Note/DX/Highlight.png" frame="61x552+0+0" x="221" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -847,6 +982,15 @@
         <object key="p1_longnote_SC" pool="8">
           <sprite image="Note/DX/Note.png" frame="61x8+0+212" x="221" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_SC_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="181"></keyframe>
+          </animation>
+        </sprite>
       </group>
     </group>
   </group>
@@ -915,6 +1059,15 @@
         <object key="p1_longnote_SC" pool="8">
           <sprite image="Note/DX/Note.png" frame="61x8+0+212" x="0" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_SC_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="-40"></keyframe>
+          </animation>
+        </sprite>
         <sprite image="Note/DX/Highlight.png" frame="34x552+62+0" x="62" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -966,6 +1119,15 @@
         <object key="p1_longnote_1" pool="8">
           <sprite image="Note/DX/Note.png" frame="34x8+62+212" x="62" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_1_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="22"></keyframe>
+          </animation>
+        </sprite>
         <sprite image="Note/DX/Highlight.png" frame="26x552+97+0" x="97" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -1017,6 +1179,15 @@
         <object key="p1_longnote_2" pool="8">
           <sprite image="Note/DX/Note.png" frame="26x8+97+212" x="97" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_2_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="57"></keyframe>
+          </animation>
+        </sprite>
         <sprite image="Note/DX/Highlight.png" frame="34x552+62+0" x="124" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -1068,6 +1239,15 @@
         <object key="p1_longnote_3" pool="8">
           <sprite image="Note/DX/Note.png" frame="34x8+62+212" x="124" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_3_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="84"></keyframe>
+          </animation>
+        </sprite>
         <sprite image="Note/DX/Highlight.png" frame="26x552+97+0" x="159" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -1119,6 +1299,15 @@
         <object key="p1_longnote_4" pool="8">
           <sprite image="Note/DX/Note.png" frame="26x8+97+212" x="159" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_4_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="119"></keyframe>
+          </animation>
+        </sprite>
         <sprite image="Note/DX/Highlight.png" frame="34x552+62+0" x="186" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -1170,6 +1359,15 @@
         <object key="p1_longnote_5" pool="8">
           <sprite image="Note/DX/Note.png" frame="34x8+62+212" x="186" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_5_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="146"></keyframe>
+          </animation>
+        </sprite>
         <sprite image="Note/DX/Highlight.png" frame="26x552+97+0" x="221" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -1221,6 +1419,15 @@
         <object key="p1_longnote_6" pool="8">
           <sprite image="Note/DX/Note.png" frame="26x8+97+212" x="221" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_6_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="181"></keyframe>
+          </animation>
+        </sprite>
         <sprite image="Note/DX/Highlight.png" frame="34x552+62+0" x="248" y="0" blend="screen" scale-x="1">
           <animation>
             <keyframe t="0" alpha="0" scale-x="1"></keyframe>
@@ -1272,6 +1479,15 @@
         <object key="p1_longnote_7" pool="8">
           <sprite image="Note/DX/Note.png" frame="34x8+62+212" x="248" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
+        <sprite image="NoteArea/Boom.png" y="522">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="0"></keyframe>
+          </animation>
+          <animation on="p1_7_up">
+            <keyframe t="0" alpha="1" scale-x="1" x="NaN"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" x="208"></keyframe>
+          </animation>
+        </sprite>
       </group>
       <group y="400">
         <group alpha="0">
