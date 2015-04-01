@@ -6,6 +6,7 @@ export class GameDisplay {
     this._context = context
     this._players = new Map(game.players.map(player =>
         [player, new PlayerDisplay(player)]))
+    this._stateful = { }
   }
   start() {
     this._started = new Date().getTime()
@@ -22,7 +23,10 @@ export class GameDisplay {
         data[`p${player.number}_${key}`] = playerData[key]
       }
     }
-    this._context.render(data)
+    if (this._stateful.started === undefined) {
+      if (gameState.started) this._stateful.started = time
+    }
+    this._context.render(Object.assign({ }, this._stateful, data))
   }
   get context() {
     return this._context

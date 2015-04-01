@@ -19,6 +19,7 @@ function HardcodedKeyboardPlugin() {
         'p1_6': data[69],
         'p1_7': data[73],
         'p1_SC': data[65],
+        'start': data[13],
       }
     }
   }

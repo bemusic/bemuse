@@ -41,8 +41,8 @@ export class GameController {
     this._display = display
     this._audio   = audio
     this._clock   = new Clock(this._audio)
-    this._timer   = new GameTimer(this._clock)
     this._input   = new GameInput()
+    this._timer   = new GameTimer(this._clock, this._input)
     this._state   = new GameState(game)
     this._input.use(new TouchPlugin(this._display.context))
     this.enableBenchmark()
@@ -99,10 +99,11 @@ export class GameController {
     //   state
     //
     this._clock.update()
+    this._input.update()
+    this._timer.update()
     let t = this._timer.time
     let A = this._audioInputLatency
-    this._input.update()
-    this._state.update(t - A, this._input)
+    this._state.update(t - A, this._input, this._timer)
     this._audio.update(t,     this._state)
     this._display.update(t,   this._state)
   }

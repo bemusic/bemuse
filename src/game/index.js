@@ -37,9 +37,9 @@ export function main() {
 
   let getSong = co.wrap(function*() {
     let options = {
-      url: query.bms || '/music/test/[ym1024]started/start_[7-9_Another].bme',
+      url: query.bms || '/music/[ricora]ourjourney/hyper.bms',
       game: {
-        audioInputLatency: +query.audioInputLatency || 0.02,
+        audioInputLatency: +query.audioInputLatency || 0,
       },
       players: [
         {
