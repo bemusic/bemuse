@@ -5,8 +5,6 @@ import SkinNode       from './lib/base'
 import Instance       from './lib/instance'
 import Expression     from '../expression'
 
-import DisplayObject  from './concerns/display-object'
-
 function ChildManager(expr, child, poolSize) {
   return {
     instantiate(context, subject) {
@@ -74,7 +72,6 @@ export class ObjectNode extends SkinNode {
         this.children.length + ' given')
     }
     this.pool     = +$el.attr('pool') || 1
-    this.display  = DisplayObject.compile(compiler, $el)
     this.key      = new Expression($el.attr('key'))
   }
   instantiate(context, container) {

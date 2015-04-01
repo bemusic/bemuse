@@ -14,15 +14,19 @@
     text-align: center;
     color: #8b8685;
   }
+  @mixin option-label {
+    display: block;
+    color: #8b8685;
+    font-weight: bold;
+    font-size: 0.8em;
+    margin: 0;
+    margin-bottom: 0.5ex;
+  }
   form > div {
     margin-bottom: 1em;
     &.text {
       .label {
-        display: block;
-        color: #8b8685;
-        font-weight: bold;
-        font-size: 0.8em;
-        margin-bottom: 0.5ex;
+        @include option-label;
       }
       input {
         font: inherit;
@@ -35,6 +39,17 @@
       }
     }
     &.checkbox {
+      input {
+        margin-right: 1ex;
+      }
+    }
+    &.radio {
+      > h3 {
+        @include option-label;
+      }
+      > label {
+        display: block;
+      }
       input {
         margin-right: 1ex;
       }

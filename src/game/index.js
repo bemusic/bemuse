@@ -37,14 +37,15 @@ export function main() {
 
   let getSong = co.wrap(function*() {
     let options = {
-      url: query.bms || '/music/[ricora]ourjourney/hyper.bms',
+      url: query.bms || '/music/test/[ym1024]started/start_[7-9_Another].bme',
       game: {
-        audioInputLatency: +query.audioInputLatency || 0,
+        audioInputLatency: +query.audioInputLatency || 0.02,
       },
       players: [
         {
-          speed:      +query.speed || 3,
+          speed:      +query.speed || 3.5,
           autoplay:   !!query.autoplay,
+          placement:  'center',
         }
       ],
     }

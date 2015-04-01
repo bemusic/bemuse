@@ -177,6 +177,25 @@ describe('Scintillator', function() {
     }))
   })
 
+  describe('IfNode', function() {
+    it('should display child when correct value', co.wrap(function*() {
+      let skin = yield Scintillator.load(fixture('expr_if.xml'))
+      let context = new Scintillator.Context(skin)
+      let stage = context.stage
+      context.render({ a: 'b' })
+      expect(stage.children[0].children).to.have.length(1)
+      context.destroy()
+    }))
+    it('should not display child when correct value', co.wrap(function*() {
+      let skin = yield Scintillator.load(fixture('expr_if.xml'))
+      let context = new Scintillator.Context(skin)
+      let stage = context.stage
+      context.render({ a: 'x' })
+      expect(stage.children[0].children).to.have.length(0)
+      context.destroy()
+    }))
+  })
+
   describe('ObjectNode', function() {
     it('should display children', co.wrap(function*() {
       let skin = yield Scintillator.load(fixture('expr_object.xml'))

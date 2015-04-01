@@ -4,39 +4,42 @@ include _lib/common
 +media('screen', 1280, 720)
 
   // note panel (Left)
-  group
-    animation
-      keyframe(t='0.25' x='-361')
-      keyframe(t='0.6' x='0' ease='quadOut')
-    sprite(image='NotePanel/Left.png' x='0' y='0')
-    group(x='34' y='0')
-      +note-area(mode.iidx_l)
+  #{'if'}(key='p1_placement' value='left')
+    group
+      animation
+        keyframe(t='0.25' x='-361')
+        keyframe(t='0.6' x='0' ease='quadOut')
+      sprite(image='NotePanel/Left.png' x='0' y='0')
+      group(x='34' y='0')
+        +note-area(mode.iidx_l)
+
+  // note panel (Center)
+  #{'if'}(key='p1_placement' value='center')
+    group(x='455')
+      animation
+        keyframe(t='0.25' alpha='0')
+        keyframe(t='0.6' alpha='1' ease='quadOut')
+      sprite(image='NotePanel/Middle.png' x='0' y='0')
+      group(x='42' y='0')
+        +note-area(mode.iidx_l)
 
   // note panel (Right)
-  group
-    animation
-      keyframe(t='0.25' x='1280')
-      keyframe(t='0.6' x='919' ease='quadOut')
-    sprite(image='NotePanel/Right.png' x='0' y='0')
-    group(x='42' y='0')
-      +note-area(mode.iidx_r)
+  #{'if'}(key='p1_placement' value='right')
+    group
+      animation
+        keyframe(t='0.25' x='1280')
+        keyframe(t='0.6' x='919' ease='quadOut')
+      sprite(image='NotePanel/Right.png' x='0' y='0')
+      group(x='42' y='0')
+        +note-area(mode.iidx_r)
         
-  // note panel (Middle)
-  group(x='455')
-    animation
-      keyframe(t='0.25' alpha='0')
-      keyframe(t='0.6' alpha='1' ease='quadOut')
-    sprite(image='NotePanel/Middle.png' x='0' y='0')
-    group(x='42' y='0')
-      +note-area(mode.iidx_l)
-      group(y='400')
-        +judgments
-
   // info panel
-  sprite(image='InfoPanel/Background.png' y='616')
+  group(y='616')
     animation
       keyframe(t='0' y='720')
       keyframe(t='0.3' y='616' ease='quadOut')
+    sprite(image='InfoPanel/Background.png')
+    text(x='100' y='20' text='%s' data='p1_score' font='ScoreNumber' font-src='Fonts/ScoreNumber.fnt')
 
 +media('touch', 768, 928)
 
@@ -51,8 +54,6 @@ include _lib/common
     sprite(image='Touch/NotePanel.png' x='0' y='0')
     group(x='42' y='0')
       +note-area(mode.iidx_l)
-      group(y='400' x='10')
-        +judgments
 
   // button panel
   group(y=(height - 311))
@@ -68,9 +69,15 @@ include _lib/common
       - var spacing = 8
       - var x = xbase + (buttonWidth + spacing) / 2 * i
       - var y = ybase + row * (buttonHeight + spacing)
-      sprite(image='Touch/Buttons/Normal.png' x=x y=y ref='p1_' + n)
-      sprite(image='Touch/Buttons/Active.png' x=x y=y alpha='p1_' + n + '_active')
+      group(x=x y=y)
+        sprite(image='Touch/Buttons/Normal.png' x='0' y='0' ref='p1_' + n)
+        block
+        sprite(image='Touch/Buttons/Active.png' x='-1' y='-1' alpha='p1_' + n + '_active')
     +button(-3, 1, 1)
+      text(x='75' y='32' text='Score' align='center'
+            font='InfoSmall' font-src='Fonts/InfoSmall.fnt')
+      text(x='75' y='56' text='%s' align='center' data='p1_score'
+            font='ScoreNumberSmall' font-src='Fonts/ScoreNumberSmall.fnt')
     +button(-2, 0, 2)
     +button(-1, 1, 3)
     +button( 0, 0, 4)

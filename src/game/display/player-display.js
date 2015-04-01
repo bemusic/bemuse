@@ -5,16 +5,19 @@ import { MISSED } from '../judgments'
 export class PlayerDisplay {
   constructor(player) {
     let notechart = player.notechart
-    this._player    = player
-    this._noteArea  = new NoteArea(notechart.notes, notechart.barLines)
-    this._stateful  = { }
+    this._player      = player
+    this._noteArea    = new NoteArea(notechart.notes, notechart.barLines)
+    this._stateful    = { }
+    this._defaultData = {
+      placement: player.options.placement,
+    }
   }
   update(time, gameTime, playerState) {
     let player   = this._player
     let noteArea = this._noteArea
     let stateful = this._stateful
     let position = player.notechart.secondsToPosition(gameTime)
-    let data     = { }
+    let data     = Object.assign({ }, this._defaultData)
     let push     = (key, value) => (data[key] || (data[key] = [])).push(value)
 
     updateVisibleNotes()
@@ -80,6 +83,7 @@ export class PlayerDisplay {
         stateful[`judge_${name}`] = time
         stateful[`combo`] = notification.combo
       }
+      data[`score`] = playerState.stats.score
     }
 
     function getUpperBound() {
