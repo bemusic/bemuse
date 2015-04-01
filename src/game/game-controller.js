@@ -72,7 +72,7 @@ export class GameController {
   }
 
   _update() {
-    // :doc: game/loop
+    // >> game/loop
     //
     // Turn-Based Update Cycle
     // -----------------------

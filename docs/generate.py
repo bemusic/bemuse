@@ -23,8 +23,9 @@ def mkpath(path):
 def indent3(x):
     return '\n'.join('   ' + line for line in x.splitlines())
 
+CODEDOC_RE      = re.compile(r'^>> (\S+)$')
 COMMENT_RE      = re.compile(r'^//(?: (.*$)|$)')
-CLASS_RE        = re.compile(r'^export class (\w+)')
+CLASS_RE        = re.compile(r'^(?:export )?class (\w+)')
 EXPORT_LET_RE   = re.compile(r'^export let (\w+)')
 CONSTRUCTOR_RE  = re.compile(r'^constructor\((.*?)\) \{$')
 METHOD_RE       = re.compile(r'^(\w+\(.*?\)) {$')
@@ -71,48 +72,65 @@ class FileProcessor(object):
 
     def process_post_comment(self):
         if self.post_state is None:
-            if self.match(CLASS_RE):
+            if CODEDOC_RE.match(self.buffer[0]):
+                match = CODEDOC_RE.match(self.buffer[0])
+                file_name = '_codedoc/%s.txt' % match.group(1)
+                self.root.file(file_name).add_text(self.buffer[1:])
+            elif self.match(CLASS_RE):
                 module_node = self.module_doc()
-                class_node = self.current_class = ClassNode(self.group(1))
+                class_node = self.current_class = ClassNode(module_node, self.group(1))
                 module_node.add(class_node)
                 class_node.add_text(self.buffer)
                 self.post_state = 'class'
             elif self.current_class and self.match(METHOD_RE):
-                method_node = MethodNode(self.group(1))
+                method_node = MethodNode(self.current_class, self.group(1))
                 method_node.add_text(self.buffer)
                 self.current_class.add(method_node)
             elif self.current_class and (self.match(GETTER_RE) or self.match(ATTRIBUTE_RE)):
-                attr_node = AttributeNode(self.group(1))
+                attr_node = AttributeNode(self.current_class, self.group(1))
                 attr_node.add_text(self.buffer)
                 self.current_class.add(attr_node)
             elif self.match(EXPORT_LET_RE):
-                data_node = DataNode(self.group(1))
+                module_node = self.module_doc()
+                data_node = DataNode(module_node, self.group(1))
                 data_node.add_text(self.buffer)
-                self.module_doc().add(data_node)
+                module_node.add(data_node)
         elif self.post_state == 'class':
             if self.match(CONSTRUCTOR_RE):
                 self.current_class.arguments = self.match(1)
-
-class RootNode(object):
-    def __init__(self):
-        self.modules = { }
-    def module(self, module_name):
-        if module_name in self.modules:
-            return self.modules[module_name]
-        else:
-            node = self.modules[module_name] = ModuleNode(module_name)
-            return node
 
 class Node(object):
     def __init__(self, *args):
         self.contents = []
         self.initialize(*args)
+    def initialize(self):
+        pass
     def add(self, item):
         self.contents.append(item)
     def add_text(self, buf):
         self.contents.append('\n'.join(buf))
     def text_contents(self):
         return '\n\n'.join(map(str, self.contents))
+    def __str__(self):
+        return self.text_contents()
+
+class RootNode(object):
+    def __init__(self):
+        self.modules = { }
+        self.files = { }
+    def file(self, file_name, node_type=Node, *args):
+        if file_name in self.files:
+            return self.files[file_name]
+        else:
+            node = self.files[file_name] = node_type(*args)
+            return node
+    def module(self, module_name):
+        if module_name in self.modules:
+            return self.modules[module_name]
+        else:
+            file_name = 'modules/%s.rst' % module_name
+            node = self.modules[module_name] = self.file(file_name, ModuleNode, module_name)
+            return node
 
 class ModuleNode(Node):
     def initialize(self, name):
@@ -123,51 +141,64 @@ class ModuleNode(Node):
             '=' * len(self.name) + '\n' +
             self.text_contents())
 
-class ClassNode(Node):
-    def initialize(self, name):
+class DomainNode(Node):
+    def directive(self):
+        pass
+    def index(self):
+        pass
+    def __str__(self):
+        return (
+            '.. index::\n   single: %s\n\n' % self.index() +
+            '.. %s\n   :noindex:\n\n' % self.directive() +
+            indent3(self.text_contents()))
+
+class ClassNode(DomainNode):
+    def initialize(self, module, name):
         self.name = name
+        self.module = module
         self.arguments = ''
-    def __str__(self):
-        return (
-            '.. js:class:: ' + self.name + '(' + self.arguments + ')\n\n' +
-            indent3(self.text_contents()))
+    def index(self):
+        return '%s; %s' % (self.module.name, self.name)
+    def directive(self):
+        return 'js:class:: %s(%s)' % (self.name, self.arguments)
 
-class MethodNode(Node):
-    def initialize(self, name):
+class MethodNode(DomainNode):
+    def initialize(self, class_node, name):
         self.name = name
-    def __str__(self):
-        return (
-            '.. js:function:: ' + self.name + '\n\n' +
-            indent3(self.text_contents()))
+        self.class_node = class_node
+    def index(self):
+        return '%s#%s' % (self.class_node.index(), self.name)
+    def directive(self):
+        return 'js:function:: %s' % (self.name)
 
-class AttributeNode(Node):
-    def initialize(self, name):
+class AttributeNode(DomainNode):
+    def initialize(self, class_node, name):
         self.name = name
-    def __str__(self):
-        return (
-            '.. js:attribute:: ' + self.name + '\n\n' +
-            indent3(self.text_contents()))
+        self.class_node = class_node
+    def index(self):
+        return '%s#%s' % (self.class_node.index(), self.name)
+    def directive(self):
+        return 'js:attribute:: %s' % (self.name)
 
-class DataNode(Node):
-    def initialize(self, name):
+class DataNode(DomainNode):
+    def initialize(self, module, name):
         self.name = name
-    def __str__(self):
-        return (
-            '.. js:data:: ' + self.name + '\n\n' +
-            indent3(self.text_contents()))
-
+        self.module = module
+    def index(self):
+        return '%s; %s' % (self.module.name, self.name)
+    def directive(self):
+        return 'js:data:: %s' % (self.name)
 
 def main():
     root = RootNode()
     for path in get_source_files():
         processor = FileProcessor(path, root)
         processor.process()
-    for key in root.modules:
-        filename = 'modules/' + key + '.rst'
+    for filename in root.files:
         mkpath(os.path.dirname(filename))
         print filename
         with open(filename, 'w') as f:
-            f.write(str(root.modules[key]))
+            f.write(str(root.files[filename]))
     with open('modules/index.rst', 'w') as f:
         print >> f, 'Modules Index'
         print >> f, '============='

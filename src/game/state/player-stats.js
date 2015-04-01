@@ -2,6 +2,26 @@
 import R from 'ramda'
 import * as Judgments from '../judgments'
 
+// >> game/grading
+//
+// After playing the game, the grade is calculated according to this table:
+//
+// =========== ===============
+//    Grade      Minimum Score
+// =========== ===============
+//     F                     0
+//     D                300000
+//     C                350000
+//     B                400000
+//     A                450000
+//     S                500000
+//     SS               520000
+//    SSS               530000
+//    SSSS              540000
+//    SSSSS             550000
+//   555555             555555
+// =========== ===============
+
 export class PlayerStats {
   constructor(notechart) {
     this.totalCombo = R.sum(R.map(note => notechart.info(note).combos)(
@@ -14,6 +34,21 @@ export class PlayerStats {
     this.poor = false
   }
   get score() {
+    // >> game/scoring
+    //
+    // The player's score is calculated from this formula:
+    //
+    // .. math::
+    //
+    //    \text{score} &= 500000 \times \text{accuracy}
+    //      + 55555 \times \text{combo bonus} \\[10pt]
+    //    \text{accuracy} &= \frac{
+    //      \sum\text{accuracy score}
+    //    }{\sum\text{total combos}} \\[10pt]
+    //    \text{combo bonus} &= \frac{
+    //      \sum_{c \in \text{combos}}{\text{combo weight}(c)}
+    //    }{\sum_{i = 1}^{\text{total combos}}{\text{combo weight}(i)}} \\[10pt]
+    //    \text{combo weight}(c) &= \left\lfloor\sqrt{c}\right\rfloor
     let total = Judgments.weight(1) * this.totalCombo
     let accuracyScore = Math.floor(
           this.rawSumJudgmentWeight * 500000 / total)
