@@ -20,20 +20,36 @@ function Speedcore(segments) {
   this._segments = segments.map(Segment)
 }
 
-Speedcore.prototype.t = function(x) {
+var T = function(segment) { return segment.t }
+var X = function(segment) { return segment.x }
+Speedcore.prototype._reached = function(index, typeFn, position) {
+  if (index >= this._segments.length) return false
+  var segment = this._segments[index]
+  var target  = typeFn(segment)
+  return segment.inclusive ? position >= target : position > target
+}
+
+Speedcore.prototype._segmentAt = function(typeFn, position) {
   for (var i = 0; i < this._segments.length; i ++) {
-    if (i + 1 >= this._segments.length || x <= this._segments[i + 1].x) {
-      var segment = this._segments[i]
-      return segment.t + (x - segment.x) / segment.dx
-    }
+    if (!this._reached(i + 1, typeFn, position)) return this._segments[i]
   }
 }
 
-Speedcore.prototype.x = function(t) {
-  for (var i = 0; i < this._segments.length; i ++) {
-    if (i + 1 >= this._segments.length || t <= this._segments[i + 1].t) {
-      var segment = this._segments[i]
-      return segment.x + (t - segment.t) * segment.dx
-    }
-  }
+Speedcore.prototype.segmentAtX = function(x) {
+  return this._segmentAt(X, x)
 }
+
+Speedcore.prototype.segmentAtT = function(t) {
+  return this._segmentAt(T, t)
+}
+
+Speedcore.prototype.t = function(x) {
+  var segment = this.segmentAtX(x)
+  return segment.t + (x - segment.x) / (segment.dx || 1)
+}
+
+Speedcore.prototype.x = function(t) {
+  var segment = this.segmentAtT(t)
+  return segment.x + (t - segment.t) * segment.dx
+}
+

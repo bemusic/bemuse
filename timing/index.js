@@ -13,7 +13,14 @@ var precedence = { bpm: 1, stop: 2 }
 
 function Timing(initialBPM, actions) {
   var state = { bpm: initialBPM, beat: 0, seconds: 0 }
-  var segments = [{ t: 0, x: 0, dx: initialBPM / 60 }]
+  var segments = [ ]
+  segments.push({
+    t: 0,
+    x: 0,
+    dx: state.bpm / 60,
+    bpm: state.bpm,
+    inclusive: true,
+  })
   actions = actions.slice()
   actions.sort(function(a, b) {
     return a.beat - b.beat || precedence[a.type] - precedence[b.type]
@@ -24,12 +31,30 @@ function Timing(initialBPM, actions) {
     switch (action.type) {
     case 'bpm':
       state.bpm = action.bpm
-      segments.push({ t: seconds, x: beat, dx: state.bpm / 60 })
+      segments.push({
+        t: seconds,
+        x: beat,
+        dx: state.bpm / 60,
+        bpm: state.bpm,
+        inclusive: true,
+      })
       break
     case 'stop':
-      segments.push({ t: seconds, x: beat, dx: 0 })
+      segments.push({
+        t: seconds,
+        x: beat,
+        dx: 0,
+        bpm: state.bpm,
+        inclusive: true,
+      })
       seconds += (action.stopBeats || 0) * 60 / state.bpm
-      segments.push({ t: seconds, x: beat, dx: state.bpm / 60 })
+      segments.push({
+        t: seconds,
+        x: beat,
+        dx: state.bpm / 60,
+        bpm: state.bpm,
+        inclusive: false,
+      })
       break
     default:
       throw new Error("Unrecognized segment object!")
@@ -46,6 +71,10 @@ Timing.prototype.beatToSeconds = function(beat) {
 
 Timing.prototype.secondsToBeat = function(seconds) {
   return this._speedcore.x(seconds)
+}
+
+Timing.prototype.bpmAtBeat = function(beat) {
+  return this._speedcore.segmentAtX(beat).bpm
 }
 
 Timing.fromBMSChart = function(chart) {

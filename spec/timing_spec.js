@@ -21,6 +21,13 @@ describe('Timing', function() {
     expect(t.beatToSeconds(5)).to.be.closeTo(2.833, 1e-2)
   })
 
+  it('should allow getting BPM at beat', function() {
+    var t = case1()
+    expect(t.bpmAtBeat(0)).to.equal(120)
+    expect(t.bpmAtBeat(3)).to.equal(90)
+    expect(t.bpmAtBeat(4)).to.equal(180)
+  })
+
   it('should convert seconds to beat', function() {
     var t = case1()
     expect(t.secondsToBeat(0.000)).to.be.closeTo(0, 1e-2)
