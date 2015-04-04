@@ -92,8 +92,8 @@ Timing.fromBMSChart = function(chart) {
       bpm = parseInt(object.value, 16)
       actions.push({ type: 'bpm', beat: beat, bpm: bpm })
     } else if (object.channel === '08') {
-      bpm = chart.headers.get('bpm' + object.value)
-      actions.push({ type: 'bpm', beat: beat, bpm: bpm })
+      bpm = +chart.headers.get('bpm' + object.value)
+      if (!isNaN(bpm)) actions.push({ type: 'bpm', beat: beat, bpm: bpm })
     } else if (object.channel === '09') {
       var stopBeats = chart.headers.get('stop' + object.value) / 48
       actions.push({ type: 'stop', beat: beat, stopBeats: stopBeats })

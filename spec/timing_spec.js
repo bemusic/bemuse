@@ -1,5 +1,6 @@
 
 var Timing = require('../timing')
+var Compiler = require('../compiler')
 
 describe('Timing', function() {
 
@@ -45,6 +46,14 @@ describe('Timing', function() {
     expect(t.secondsToBeat(2.400)).to.be.closeTo(4, 1e-2)
     expect(t.secondsToBeat(2.500)).to.be.closeTo(4, 1e-2)
     expect(t.secondsToBeat(2.833)).to.be.closeTo(5, 1e-2)
+  })
+
+  describe('.fromBMSChart', function() {
+    it('should work with extbpm', function() {
+      var chart = Compiler.compile('#BPM01 123.45\n#00108:01').chart
+      var t = Timing.fromBMSChart(chart)
+      expect(t.bpmAtBeat(5)).to.equal(123.45)
+    })
   })
 
 })
