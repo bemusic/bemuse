@@ -3,6 +3,7 @@
 // They are created from a notechart.
 
 var Speedcore = require('../speedcore')
+var _ = require('lodash')
 
 /**
  * @module timing
@@ -62,7 +63,8 @@ function Timing(initialBPM, actions) {
     state.beat    = beat
     state.seconds = seconds
   })
-  this._speedcore = new Speedcore(segments)
+  this._speedcore   = new Speedcore(segments)
+  this._eventBeats  = _.uniq(_.pluck(actions, 'beat'), true)
 }
 
 Timing.prototype.beatToSeconds = function(beat) {
@@ -75,6 +77,10 @@ Timing.prototype.secondsToBeat = function(seconds) {
 
 Timing.prototype.bpmAtBeat = function(beat) {
   return this._speedcore.segmentAtX(beat).bpm
+}
+
+Timing.prototype.getEventBeats = function(beat) {
+  return this._eventBeats
 }
 
 Timing.fromBMSChart = function(chart) {

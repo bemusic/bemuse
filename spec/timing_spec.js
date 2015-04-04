@@ -11,6 +11,11 @@ describe('Timing', function() {
     ])
   }
 
+  it('should return beats where there are events', function() {
+    var t = case1()
+    expect(t.getEventBeats()).to.deep.equal([3, 4])
+  })
+
   it('should convert beats to seconds', function() {
     var t = case1()
     expect(t.beatToSeconds(0)).to.be.closeTo(0,     1e-2)
