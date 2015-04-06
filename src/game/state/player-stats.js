@@ -49,12 +49,13 @@ export class PlayerStats {
     //      \sum_{c \in \text{combos}}{\text{combo weight}(c)}
     //    }{\sum_{i = 1}^{\text{total combos}}{\text{combo level}(i)}} \\[10pt]
     //    \text{combo level}(c) &= \begin{cases}
-    //      0 & 0 \leq c \le 23 \\
-    //      1 & 23 \leq c \le 51 \\
-    //      2 & 51 \leq c \le 92 \\
-    //      3 & 92 \leq c \le 161 \\
-    //      4 & 161 \leq c \le 230 \\
-    //      5 & 230 \leq c
+    //      0 & c = 0 \\
+    //      1 & 0 \leq c \le 23 \\
+    //      2 & 23 \leq c \le 51 \\
+    //      3 & 51 \leq c \le 92 \\
+    //      4 & 92 \leq c \le 161 \\
+    //      5 & 161 \leq c \le 230 \\
+    //      6 & 230 \leq c
     //    \end{cases}
     let total = Judgments.weight(1) * this.totalCombo
     let accuracyScore = Math.floor(
@@ -89,30 +90,33 @@ export class PlayerStats {
     // Here's how the combo level formula comes from.
     // Let's assume, for simplicity, a player with 99% hit rate,
     // regardless of difficulty.
-    // The probability that the player will attain $c$ combos is $0.99^c$.
+    // The probability that the player will attain :math:`c` combos
+    // is :math:`0.99^c`.
     //
     // Now we have 6 combo levels.
     // The probability that the player will
     // attain that level gradually decreases.
-    // Therefore, the minimum combo is $\left\lceil\log_{0.99} p\right\rceil$.
+    // Therefore, the minimum combo is
+    // :math:`\left\lceil\log_{0.99} p\right\rceil`.
     //
     // ============ ================= ===========
     //  Combo Level  Max. Probability  Min. Combo
     // ============ ================= ===========
-    //            0              100%           0
-    //            1               80%          23
-    //            2               60%          51
-    //            3               40%          92
-    //            4               20%         161
-    //            5               10%         230
+    //            1              100%           1
+    //            2               80%          23
+    //            3               60%          51
+    //            4               40%          92
+    //            5               20%         161
+    //            6               10%         230
     // ============ ================= ===========
     //
-    if (i < 23) return 0
-    if (i < 51) return 1
-    if (i < 92) return 2
-    if (i < 161) return 3
-    if (i < 230) return 4
-    return 5
+    if (i === 0) return 0
+    if (i < 23) return 1
+    if (i < 51) return 2
+    if (i < 92) return 3
+    if (i < 161) return 4
+    if (i < 230) return 5
+    return 6
   }
 }
 
