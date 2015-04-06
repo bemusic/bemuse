@@ -52,12 +52,14 @@ mixin notes(columns)
     +longnote('p1_longnote_' + ch, x, cur, 0, '!active && !missed')
     +longnote('p1_longnote_' + ch, x, cur, 100, '!!active && !missed')
     +longnote('p1_longnote_' + ch, x, cur, 200, '!!missed')
-    sprite(image='NoteArea/Boom.png' y=522)
+    sprite(image='NoteArea/Boom2.png' y='525')
       animation
         keyframe(t='0' alpha='0' scale-x='0')
       animation(on='p1_' + ch + '_up')
-        keyframe(t='0' alpha='1' scale-x='1' x=(cur.x+cur.y/2-25)
-        keyframe(t='0.18'  alpha='0' scale-x='2' x=(x - 40))
+        //keyframe(t='0' alpha='1' scale-x='2' x=(cur.x+(cur.y/2)-25)*525)
+        keyframe(t='0' alpha='1' scale-x='2')
+        //keyframe(t='0.18'  alpha='0' scale-x='2' x=(x - 40))
+        keyframe(t='0.18'  alpha='0' scale-x='2' scale-y='2' x=(x - 40))
     - x = x + cur.width + 1
 
 mixin note-area(modeObject)
