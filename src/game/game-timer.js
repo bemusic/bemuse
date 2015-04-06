@@ -28,15 +28,16 @@ export class GameTimer {
   }
 
   _calculateTime() {
-    if (this.startTime === null) {
-      return -0.5
+    // When initializing the game, we suspend the timer at -0.333 seconds.
+    // Then, when the player starts the game, we slowly accelerate such that
+    // after 1 second, the timer approaches 0 seconds at normal speed.
+    // This is accomplished using some magic formula ;).
+    //
+    var delta = this.startTime === null ? 0 : this._clock.time - this.startTime
+    if (delta < 1) {
+      return (Math.pow(delta, 6) - 1) / 6 - 1 / 30
     } else {
-      var delta = this._clock.time - this.startTime
-      if (delta < 1) {
-        return 0.5 * delta * delta - 0.5
-      } else {
-        return delta - 1
-      }
+      return delta - 31 / 30
     }
   }
 
