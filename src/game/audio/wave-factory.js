@@ -26,7 +26,7 @@ export class WaveFactory {
 
   // Plays a note
   _play({ keysound, delay, exclusive }) {
-    if (exclusive) this._stopOldExclusiveSound(keysound)
+    if (exclusive) this._stopOldExclusiveSound(keysound, delay)
     let filename = this._map[keysound.toLowerCase()]
     if (!filename) return
     let sample = this._samples[filename]
@@ -36,10 +36,10 @@ export class WaveFactory {
     return instance
   }
 
-  _stopOldExclusiveSound(keysound) {
+  _stopOldExclusiveSound(keysound, delay) {
     let instance = this._exclusiveInstances.get(keysound)
     if (instance) {
-      instance.stop()
+      setTimeout(() => instance.stop(), delay * 1000)
       this._exclusiveInstances.delete(keysound)
     }
   }

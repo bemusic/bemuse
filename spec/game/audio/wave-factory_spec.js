@@ -30,7 +30,8 @@ describe('WaveFactory', function() {
       sample.play.returns(instance)
       waveFactory.playNote('0z', 0)
       waveFactory.playNote('0z', 0)
-      expect(instance.stop).to.have.callCount(1)
+      return Promise.delay(0).then(() =>
+        expect(instance.stop).to.have.callCount(1))
     })
   })
   describe('playFree', function() {
