@@ -49,6 +49,14 @@ export default function GameShellScene({ options, play }) {
           play(options)
         }
       })
+      .catch(e => {
+        if (e.constructor.name === 'FileError') {
+          throw new Error('File Error code ' + e.code)
+        } else {
+          throw e
+        }
+      })
+      .done()
     }
 
     return function exit() {
