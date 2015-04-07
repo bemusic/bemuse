@@ -28,7 +28,8 @@ export class PlayerState {
   update(gameTime, input) {
     this._gameTime = gameTime
     this.notifications = { }
-    this.notifications.sounds = [ ]
+    this.notifications.sounds     = [ ]
+    this.notifications.judgments  = [ ]
     this.input = this._createInputColumnMap(input)
     this._judgeNotes(gameTime)
   }
@@ -146,12 +147,13 @@ export class PlayerState {
       this.notifications.sounds.push({ note, type: 'break' })
     }
     this._noteResult.set(note, result)
-    this._setJudgment(judgment, delta)
+    this._setJudgment(judgment, delta, note.column)
     return judgment
   }
-  _setJudgment(judgment, delta) {
+  _setJudgment(judgment, delta, column) {
     this.stats.handleJudgment(judgment)
-    this.notifications.judgment = { judgment, combo: this.stats.combo, delta }
+    let info = { judgment, combo: this.stats.combo, delta, column }
+    this.notifications.judgments.push(info)
   }
 }
 

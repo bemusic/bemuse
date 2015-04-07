@@ -428,7 +428,7 @@
           <animation>
             <keyframe t="0" alpha="0" scale-x="1" scale-y="1"></keyframe>
           </animation>
-          <animation on="p1_SC_up">
+          <animation on="p1_SC_explode">
             <keyframe t="0" alpha="1" scale-x="2" scale-y="1"></keyframe>
             <keyframe t="0.18" alpha="0" scale-x="2" scale-y="2"></keyframe>
           </animation>
@@ -438,7 +438,7 @@
           <animation>
             <keyframe t="0" alpha="0" scale-x="1" scale-y="1"></keyframe>
           </animation>
-          <animation on="p1_1_up">
+          <animation on="p1_1_explode">
             <keyframe t="0" alpha="1" scale-x="2" scale-y="1"></keyframe>
             <keyframe t="0.18" alpha="0" scale-x="2" scale-y="2"></keyframe>
           </animation>
@@ -448,7 +448,7 @@
           <animation>
             <keyframe t="0" alpha="0" scale-x="1" scale-y="1"></keyframe>
           </animation>
-          <animation on="p1_2_up">
+          <animation on="p1_2_explode">
             <keyframe t="0" alpha="1" scale-x="2" scale-y="1"></keyframe>
             <keyframe t="0.18" alpha="0" scale-x="2" scale-y="2"></keyframe>
           </animation>
@@ -458,7 +458,7 @@
           <animation>
             <keyframe t="0" alpha="0" scale-x="1" scale-y="1"></keyframe>
           </animation>
-          <animation on="p1_3_up">
+          <animation on="p1_3_explode">
             <keyframe t="0" alpha="1" scale-x="2" scale-y="1"></keyframe>
             <keyframe t="0.18" alpha="0" scale-x="2" scale-y="2"></keyframe>
           </animation>
@@ -468,7 +468,7 @@
           <animation>
             <keyframe t="0" alpha="0" scale-x="1" scale-y="1"></keyframe>
           </animation>
-          <animation on="p1_4_up">
+          <animation on="p1_4_explode">
             <keyframe t="0" alpha="1" scale-x="2" scale-y="1"></keyframe>
             <keyframe t="0.18" alpha="0" scale-x="2" scale-y="2"></keyframe>
           </animation>
@@ -478,7 +478,7 @@
           <animation>
             <keyframe t="0" alpha="0" scale-x="1" scale-y="1"></keyframe>
           </animation>
-          <animation on="p1_5_up">
+          <animation on="p1_5_explode">
             <keyframe t="0" alpha="1" scale-x="2" scale-y="1"></keyframe>
             <keyframe t="0.18" alpha="0" scale-x="2" scale-y="2"></keyframe>
           </animation>
@@ -488,7 +488,7 @@
           <animation>
             <keyframe t="0" alpha="0" scale-x="1" scale-y="1"></keyframe>
           </animation>
-          <animation on="p1_6_up">
+          <animation on="p1_6_explode">
             <keyframe t="0" alpha="1" scale-x="2" scale-y="1"></keyframe>
             <keyframe t="0.18" alpha="0" scale-x="2" scale-y="2"></keyframe>
           </animation>
@@ -498,7 +498,7 @@
           <animation>
             <keyframe t="0" alpha="0" scale-x="1" scale-y="1"></keyframe>
           </animation>
-          <animation on="p1_7_up">
+          <animation on="p1_7_explode">
             <keyframe t="0" alpha="1" scale-x="2" scale-y="1"></keyframe>
             <keyframe t="0.18" alpha="0" scale-x="2" scale-y="2"></keyframe>
           </animation>

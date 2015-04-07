@@ -50,11 +50,13 @@ describe('PlayerState', function() {
         #00111:0101
       `)
 
+      let column = chart.notes[0].column
+
       expect(state.getNoteStatus(chart.notes[0])).to.equal('unjudged')
       expect(state.stats.combo).to.equal(0)
       expect(state.stats.poor).to.equal(false)
       expect(state.stats.totalCombo).to.equal(2)
-      void expect(state.notifications.judgment).to.be.falsy
+      void expect(state.notifications.judgments).to.be.empty
 
       advance(1.999, { })
       expect(state.getNoteStatus(chart.notes[0])).to.equal('unjudged')
@@ -63,16 +65,16 @@ describe('PlayerState', function() {
       expect(state.getNoteStatus(chart.notes[0])).to.equal('judged')
       expect(state.getNoteJudgment(chart.notes[0])).to.equal(1)
       expect(state.getNoteStatus(chart.notes[1])).to.equal('unjudged')
-      expect(state.notifications.judgment).to.deep.equal({
-          judgment: 1, combo: 1, delta: 0, })
+      expect(state.notifications.judgments[0]).to.deep.equal({
+          judgment: 1, combo: 1, delta: 0, column, })
       expect(state.stats.poor).to.equal(false)
 
       advance(2.1, { 'p1_1': 0 })
       advance(5,   { 'p1_1': 0 })
       expect(state.getNoteStatus(chart.notes[1])).to.equal('judged')
       expect(state.getNoteJudgment(chart.notes[1])).to.equal(-1)
-      expect(state.notifications.judgment).to.deep.equal({
-          judgment: -1, combo: 0, delta: 2, })
+      expect(state.notifications.judgments[0]).to.deep.equal({
+          judgment: -1, combo: 0, delta: 2, column, })
       expect(state.stats.poor).to.equal(true)
 
     })
@@ -146,11 +148,11 @@ describe('PlayerState', function() {
         advance(2, { 'p1_1': 1 })
         expect(state.getNoteStatus(note)).to.equal('active')
         expect(state.getNoteJudgment(note)).to.equal(1)
-        expect(state.notifications.judgment.judgment).to.equal(1)
+        expect(state.notifications.judgments[0].judgment).to.equal(1)
         advance(3, { 'p1_1': 0 })
         expect(state.getNoteStatus(note)).to.equal('judged')
         expect(state.getNoteJudgment(note)).to.equal(1)
-        expect(state.notifications.judgment.judgment).to.equal(1)
+        expect(state.notifications.judgments[0].judgment).to.equal(1)
       })
       it('judges missed long note', function() {
         advance(2.3, { 'p1_1': 1 })
@@ -168,8 +170,8 @@ describe('PlayerState', function() {
         advance(4, { 'p1_1': 1 })
         expect(state.getNoteStatus(note)).to.equal('judged')
         expect(state.getNoteJudgment(note)).to.equal(-1)
-        expect(state.notifications.judgment).to.deep.equal({
-            judgment: -1, combo: 0, delta: 1, })
+        expect(state.notifications.judgments[0]).to.deep.equal({
+            judgment: -1, combo: 0, delta: 1, column: note.column, })
       })
     })
 

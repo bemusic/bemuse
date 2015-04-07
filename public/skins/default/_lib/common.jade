@@ -62,7 +62,7 @@ mixin explosions(columns)
     group(x=(x + cur.width / 2) y='550')
       animation
         keyframe(t='0' alpha='0' scale-x='1' scale-y='1')
-      animation(on='p1_' + ch + '_up')
+      animation(on='p1_' + ch + '_explode')
         keyframe(t='0' alpha='1' scale-x='2' scale-y='1')
         keyframe(t='0.18' alpha='0' scale-x='2' scale-y='2')
       sprite(image='Explosion/NoteExplosion.png' x='-25' y='-25' blend='screen')
