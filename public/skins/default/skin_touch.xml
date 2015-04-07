@@ -423,6 +423,88 @@
           <sprite image="Note/DX/Note.png" frame="34x8+62+212" x="248" y="(y*550)-12" visible="!!missed"></sprite>
         </object>
       </group>
+      <group x="1">
+        <group x="30.5" y="550">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="1" scale-y="1"></keyframe>
+          </animation>
+          <animation on="p1_SC_up">
+            <keyframe t="0" alpha="1" scale-x="2" scale-y="1"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" scale-y="2"></keyframe>
+          </animation>
+          <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+        </group>
+        <group x="79" y="550">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="1" scale-y="1"></keyframe>
+          </animation>
+          <animation on="p1_1_up">
+            <keyframe t="0" alpha="1" scale-x="2" scale-y="1"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" scale-y="2"></keyframe>
+          </animation>
+          <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+        </group>
+        <group x="110" y="550">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="1" scale-y="1"></keyframe>
+          </animation>
+          <animation on="p1_2_up">
+            <keyframe t="0" alpha="1" scale-x="2" scale-y="1"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" scale-y="2"></keyframe>
+          </animation>
+          <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+        </group>
+        <group x="141" y="550">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="1" scale-y="1"></keyframe>
+          </animation>
+          <animation on="p1_3_up">
+            <keyframe t="0" alpha="1" scale-x="2" scale-y="1"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" scale-y="2"></keyframe>
+          </animation>
+          <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+        </group>
+        <group x="172" y="550">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="1" scale-y="1"></keyframe>
+          </animation>
+          <animation on="p1_4_up">
+            <keyframe t="0" alpha="1" scale-x="2" scale-y="1"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" scale-y="2"></keyframe>
+          </animation>
+          <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+        </group>
+        <group x="203" y="550">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="1" scale-y="1"></keyframe>
+          </animation>
+          <animation on="p1_5_up">
+            <keyframe t="0" alpha="1" scale-x="2" scale-y="1"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" scale-y="2"></keyframe>
+          </animation>
+          <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+        </group>
+        <group x="234" y="550">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="1" scale-y="1"></keyframe>
+          </animation>
+          <animation on="p1_6_up">
+            <keyframe t="0" alpha="1" scale-x="2" scale-y="1"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" scale-y="2"></keyframe>
+          </animation>
+          <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+        </group>
+        <group x="265" y="550">
+          <animation>
+            <keyframe t="0" alpha="0" scale-x="1" scale-y="1"></keyframe>
+          </animation>
+          <animation on="p1_7_up">
+            <keyframe t="0" alpha="1" scale-x="2" scale-y="1"></keyframe>
+            <keyframe t="0.18" alpha="0" scale-x="2" scale-y="2"></keyframe>
+          </animation>
+          <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+        </group>
+      </group>
       <group x="140" y="400" alpha="1">
         <animation>
           <keyframe t="0" alpha="1"></keyframe>
