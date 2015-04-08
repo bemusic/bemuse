@@ -1,6 +1,6 @@
 
 import NoteArea from './note-area'
-import { MISSED } from '../judgments'
+import { MISSED, breaksCombo } from '../judgments'
 
 export class PlayerDisplay {
   constructor(player) {
@@ -24,6 +24,7 @@ export class PlayerDisplay {
     updateBarLines()
     updateInput()
     updateJudgment()
+    updateExplode()
     Object.assign(data, stateful)
     return data
 
@@ -76,7 +77,8 @@ export class PlayerDisplay {
     }
 
     function updateJudgment() {
-      let notification = playerState.notifications.judgment
+      let notifications = playerState.notifications.judgments
+      let notification = notifications[notifications.length - 1]
       if (notification) {
         let name = notification.judgment === -1 ? 'missed' :
               `${notification.judgment}`
@@ -84,6 +86,16 @@ export class PlayerDisplay {
         stateful[`combo`] = notification.combo
       }
       data[`score`] = playerState.stats.score
+    }
+
+    function updateExplode() {
+      let notifications = playerState.notifications.judgments
+      for (let i = 0; i < notifications.length; i ++) {
+        let notification = notifications[i]
+        if (!breaksCombo(notification.judgment)) {
+          stateful[`${notification.column}_explode`] = time
+        }
+      }
     }
 
     function getUpperBound() {

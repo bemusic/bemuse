@@ -89,19 +89,29 @@ describe('PlayerDisplay', function() {
       setup(playerWithBMS())
     })
     it('sets judgment time', function() {
-      let info = { judgment: 1, delta: 0, combo: 123 }
-      update(12, 34, makeState({ notifications: { judgment: info } }))
+      let info = { judgment: 1, delta: 0, combo: 123, column: 'SC' }
+      update(12, 34, makeState({ notifications: { judgments: [info] } }))
       expect(data['judge_1']).to.equal(12)
     })
     it('sets judgment missed time', function() {
-      let info = { judgment: -1, delta: 0, combo: 0 }
-      update(12, 34, makeState({ notifications: { judgment: info } }))
+      let info = { judgment: -1, delta: 0, combo: 0, column: 'SC' }
+      update(12, 34, makeState({ notifications: { judgments: [info] } }))
       expect(data['judge_missed']).to.equal(12)
     })
     it('sets combo', function() {
-      let info = { judgment: 1, delta: 0, combo: 123 }
-      update(12, 34, makeState({ notifications: { judgment: info } }))
+      let info = { judgment: 1, delta: 0, combo: 123, column: 'SC' }
+      update(12, 34, makeState({ notifications: { judgments: [info] } }))
       expect(data['combo']).to.equal(123)
+    })
+    it('sets note explode time', function() {
+      let info = { judgment: 1, delta: 0, combo: 123, column: 'SC' }
+      update(12, 34, makeState({ notifications: { judgments: [info] } }))
+      expect(data['SC_explode']).to.equal(12)
+    })
+    it('does not set note explode time if missed', function() {
+      let info = { judgment: -1, delta: 0, combo: 123, column: 'SC' }
+      update(12, 34, makeState({ notifications: { judgments: [info] } }))
+      void expect(data['SC_explode']).to.be.empty
     })
   })
 
@@ -110,7 +120,7 @@ describe('PlayerDisplay', function() {
     return {
       speed: 1,
       input: { get: () => ({ value: 0, changed: false }) },
-      notifications: { },
+      notifications: { judgments: [ ] },
       getNoteStatus: sinon.stub().returns('unjudged'),
       getNoteJudgment: sinon.stub().returns(0),
       stats: { score: 0 },
