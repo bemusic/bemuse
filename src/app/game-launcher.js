@@ -18,7 +18,7 @@ export function launch({ server, song, chart }) {
       bms:      new URLResource(url),
       assets:   new BemusePackageResources(assetsUrl),
       options:  {
-        audioInputLatency: 0,
+        audioInputLatency: +query.latency || 0,
         players: [
           {
             speed:      +query.speed || 3,
