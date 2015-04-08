@@ -3,12 +3,14 @@ import Promise    from 'bluebird'
 import program    from 'commander'
 import co         from 'co'
 import fs         from 'fs'
-import { join }   from 'path'
+
+import { join } from 'path'
 
 import bmp2png          from './bmp2png'
 import AudioConvertor   from './audio'
 import Directory        from './directory'
 import BemusePacker     from './bemuse-packer'
+import { index }        from './indexer'
 
 let mkdirp    = Promise.promisify(require('mkdirp'))
 let fileStat  = Promise.promisify(fs.stat, fs)
@@ -18,7 +20,11 @@ program
 .usage('[options] <directory> <output.bemuse>')
 .parse(process.argv)
 
-if (program.args.length === 1) {
+if (program.args[0] === 'index') {
+  Promise.resolve(index('.'))
+  .then(() => console.log('indexed successfully'))
+  .done()
+} else if (program.args.length === 1) {
   Promise.resolve(packIntoBemuse(program.args[0]))
   .then(() => console.log('converted successfully'))
   .done()
@@ -48,13 +54,19 @@ function packIntoBemuse(path) {
       yield dotMap(directory.files('*.bmp'), bmp2png)
     )
 
-    console.log('-> Converting audio to mp3')
+    console.log('-> Converting audio to ogg [better audio performance]')
+    let oggc      = new AudioConvertor('ogg', '-C', '3')
+    oggc.force    = true
+    let oggs      = yield dotMap(audio, file => oggc.convert(file))
+
+    console.log('-> Converting audio to mp3 [for iOS and Safari]')
     let mp3c      = new AudioConvertor('mp3')
     let mp3s      = yield dotMap(audio, file => mp3c.convert(file))
 
     packer.pack('mp3',  mp3s)
     packer.pack('bga',  imgs)
     packer.pack('bgv',  webms)
+    packer.pack('ogg',  oggs)
 
     console.log('-> Writing...')
     let out = join(path, 'assets')
@@ -64,8 +76,10 @@ function packIntoBemuse(path) {
   })
 }
 
+
 function dotMap(array, map) {
   return Promise.map(array, item =>
             Promise.resolve(map(item)).tap(() => process.stdout.write('.')))
     .tap(() => process.stdout.write('\n'))
 }
+

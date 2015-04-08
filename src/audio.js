@@ -8,12 +8,13 @@ import { extname, basename } from 'path'
 let throat = new Throat(cpus().length || 1)
 
 export class AudioConvertor {
-  constructor(type) {
+  constructor(type, ...extra) {
     this._target = type
+    this._extra = extra
   }
   convert(file) {
     let ext = extname(file.name).toLowerCase()
-    if (ext === '.' + this._target) {
+    if (ext === '.' + this._target && !this.force) {
       return Promise.resolve(file)
     } else {
       let name = basename(file.name, ext) + '.' + this._target
@@ -23,7 +24,7 @@ export class AudioConvertor {
   }
   _doConvert(path, type) {
     return throat(() => new Promise((resolve, reject) => {
-      let sox = spawn('sox', [path, '-t', type, '-'])
+      let sox = spawn('sox', [path, '-t', type, ...this._extra, '-'])
       sox.stdin.end()
       sox.stderr.on('data', x => process.stderr.write(x))
       let data = new Promise((resolve, reject) => {

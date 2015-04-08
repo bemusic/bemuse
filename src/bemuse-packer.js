@@ -33,6 +33,7 @@ export class BemusePacker {
     return co(function*() {
       let files = []
       let refs = []
+      let nums = {}
       for (let ref of this._refs) {
         let payload = new Payload()
         for (let file of ref.files) {
@@ -40,7 +41,9 @@ export class BemusePacker {
           files.push({ name: file.name, ref: [ref.index, start, end] })
         }
         let hash = payload.hash
-        let out   = ref.name + '.' + ref.index + '.' +
+        let num  = (nums[ref.name] || 0) + 1
+        nums[ref.name] = num
+        let out   = ref.name + '.' + num + '.' +
                     hash.substr(0, 8) + '.bemuse'
         refs.push({ path: out, hash: hash })
         yield this._writeBin(join(folder, out), new Buffer(0), payload)
