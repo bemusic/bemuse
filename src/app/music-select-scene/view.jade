@@ -23,9 +23,22 @@ h1 Select Music
           div.song-info--genre {{genre}}
           div.song-info--title {{title}}
           div.song-info--artist {{artist}}
-          | {{md5}} {{file}}
       ul.chart-list
         +section('song.charts')
           li(class="{{isChartSelected(this) ? 'active' : ''}}"
              on-click="selectChart(this)") {{info.level}}
+      dl
+        dt MD5
+        dd {{md5}}
+        dt Filename
+        dd {{file}}
+        +section('song')
+          dt Artist URL
+          dd {{artist_url}}
+          dt BMS URL
+          dd {{bms_url}}
+          dt Song URL
+          dd {{song_url}}
+          dt Long Version URL
+          dd {{long_url}}
 
