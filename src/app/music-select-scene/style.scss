@@ -1,0 +1,110 @@
+
+@import "../../view/common.scss";
+
+.music-select-scene {
+
+  @extend %scene;
+  @include main-bg;
+
+  font: 2.5vmin $ui-font, sans-serif;
+
+  .loading {
+    @include centered;
+    font-size: 5vmin;
+    text-align: center;
+    color: rgba(black, 0.5);
+    text-shadow: 0 2px 0 rgba(white, 0.3);
+  }
+
+  > h1 {
+    @extend %scene-heading;
+    z-index: 10;
+  }
+
+  .music-list {
+
+    @include full-screen;
+    @include scrolling-y;
+    padding: 25vmin 0 3vmin;
+    margin: 0;
+    list-style: none;
+
+    .music-list-item {
+      margin: 2vmin;
+      margin-left: 5vw;
+      margin-right: 52vw;
+    }
+
+  }
+
+  .music-list-item {
+
+    @include soft-shadow;
+    background: rgba(#fff, 0.9);
+    border: 5px solid rgba(#fff, 0);
+    border-radius: 2vmin;
+    color: black;
+    padding: 1.5vmin 2vmin;
+    position: relative;
+
+    > .title {
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-bottom: 0.5ex;
+    }
+    > .genre {
+      position: absolute;
+      bottom: 1.5vmin; right: 2vmin;
+      opacity: 0.6;
+    }
+
+    &.active {
+      background: rgba(#fff, 0.95);
+      border: 5px solid rgba(#000, 0.2);
+    }
+
+  }
+
+  .selected-song {
+    position: absolute;
+    top: 0; right: 5vw; bottom: 0; left: 52vw;
+    background: rgba(white, 0.8);
+    color: black;
+    padding-top: 25vh;
+    .song-info {
+      margin: 0 2vw;
+    }
+  }
+
+  .song-info {
+    &--title {
+      font-size: 2em;
+      font-weight: bold;
+    }
+  }
+
+  .chart-list {
+    padding: 0;
+    list-style: none;
+    padding-left: 2vw;
+    > li {
+      display: inline-block;
+      box-sizing: border-box;
+      border: 2px solid #8ac;
+      width: 12vmin;
+      height: 12vmin;
+      line-height: 12vmin;
+      font-size: 5vmin;
+      text-align: center;
+      background: rgba(#fff, 0.8);
+      margin: 0.6vmin 1.2vmin 0.6vmin 0;
+      border-radius: 2vmin;
+      &.active {
+        background: #8ac;
+        color: white;
+      }
+    }
+  }
+
+}
+
