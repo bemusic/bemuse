@@ -1,0 +1,31 @@
+include ~bemuse/view/utils
+
+h1 Select Music
+
++section('loading')
+
+  p.loading Loading…
+
++inverted-section('loading')
+
+  ul.music-list
+    +section('songs')
+      li.music-list-item(class="{{isSongSelected(this) ? 'active' : ''}}"
+                         on-click="selectSong(this)")
+        div.title {{title}}
+        div.artist {{artist}}
+        div.genre {{genre}}
+
+  +section('chart')
+    section.selected-song
+      +section('info')
+        section.song-info
+          div.song-info--genre {{genre}}
+          div.song-info--title {{title}}
+          div.song-info--artist {{artist}}
+          | {{md5}} {{file}}
+      ul.chart-list
+        +section('song.charts')
+          li(class="{{isChartSelected(this) ? 'active' : ''}}"
+             on-click="selectChart(this)") {{info.level}}
+

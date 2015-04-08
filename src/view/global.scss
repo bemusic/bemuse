@@ -1,0 +1,11 @@
+
+@import "./common.scss";
+
+canvas { /* https://code.google.com/p/chromium/issues/detail?id=424025 */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-crisp-edges;
+  image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+

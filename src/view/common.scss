@@ -1,0 +1,43 @@
+
+$ui-font: "Source Sans Pro", "Segoe UI", "Helvetica Neue", sans-serif;
+
+@mixin full-screen {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+}
+
+@mixin centered {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+@mixin scrolling-y {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@mixin main-bg {
+  background: url(~assets/bg/a.jpg) center no-repeat;
+  background-size: cover;
+}
+
+@mixin soft-shadow {
+  box-shadow: 0 0.1vh 3vh rgba(#000, 0.1);
+}
+
+%scene {
+  @include full-screen;
+  overflow: hidden;
+}
+
+%scene-heading {
+  @include soft-shadow;
+  position: absolute;
+  top: 5vmin; right: 0; left: 0;
+  background: white;
+  margin: 0; padding: 0 5vw;
+  font: bold 9vmin/16vmin $ui-font;
+  color: black;
+}

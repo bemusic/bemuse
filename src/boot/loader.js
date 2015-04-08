@@ -34,6 +34,11 @@ var modules = {
   //   Used by developers to test fonts.
   testFont:   'bemuse/devtools/test-font',
 
+  // >>
+  // testSkin
+  //   Used by developers to test skin.
+  testSkin:   'bemuse/devtools/test-skin',
+
 }
 
 var code = 'module.exports = {'
