@@ -3,7 +3,11 @@ import $ from 'jquery'
 import Control from './control'
 import R from 'ramda'
 
+
+import query from 'bemuse/query'
+
 function HardcodedKeyboardPlugin() {
+  let kbm = (query.keyboard || '').split(',').map(x => +x)
   let data = { }
   $(window)
   .keydown(e => data[e.which] = 1)
@@ -11,14 +15,14 @@ function HardcodedKeyboardPlugin() {
   return {
     get() {
       return {
-        'p1_1': data[83],
-        'p1_2': data[68],
-        'p1_3': data[70],
-        'p1_4': data[32],
-        'p1_5': data[74],
-        'p1_6': data[75],
-        'p1_7': data[76],
-        'p1_SC': data[65],
+        'p1_1':  data[kbm[0] || 83],
+        'p1_2':  data[kbm[1] || 68],
+        'p1_3':  data[kbm[2] || 70],
+        'p1_4':  data[kbm[3] || 32],
+        'p1_5':  data[kbm[4] || 74],
+        'p1_6':  data[kbm[5] || 75],
+        'p1_7':  data[kbm[6] || 76],
+        'p1_SC': data[kbm[7] || 65],
         'start': data[13],
       }
     }
