@@ -21,6 +21,9 @@ export function MusicSelectScene() {
         isChartSelected(chart) {
           return chart.md5 === this.get('chart.md5')
         },
+        joinsubs(array) {
+          return (array || []).join(' · ')
+        },
       },
       selectSong(song) {
         this.set('song', song)

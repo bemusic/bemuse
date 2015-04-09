@@ -21,8 +21,17 @@ h1 Select Music
       +section('info')
         section.song-info
           div.song-info--genre {{genre}}
-          div.song-info--title {{title}}
-          div.song-info--artist {{artist}}
+          div.song-info--title
+            {{title}}
+          +section('subtitles')
+            div.song-info--subtitle {{.}}
+          div.song-info--artist
+            {{artist}}
+            = ' '
+            +section('subartists')
+              small
+                = '· '
+                | {{joinsubs(subartists)}}
       ul.chart-list
         +section('song.charts')
           li(class="{{isChartSelected(this) ? 'active' : ''}}"
