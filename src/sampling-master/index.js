@@ -2,6 +2,13 @@
 import readBlob from '../read-blob'
 import defaultAudioContext from 'audio-context'
 
+let dummyAudioTag = document.createElement('audio')
+
+// Checks whether an audio format is supported.
+export function canPlay(type) {
+  return dummyAudioTag.canPlayType(type) === 'probably'
+}
+
 // The sampling master is a wrapper class around Web Audio API
 // that takes care of:
 //

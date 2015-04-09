@@ -1,19 +1,12 @@
 
 import download       from 'bemuse/download'
 import SamplingMaster from 'bemuse/sampling-master'
+import { canPlay }    from 'bemuse/sampling-master'
 
 import co             from 'co'
 import once           from 'once'
 import context        from 'audio-context'
 import R              from 'ramda'
-
-/**
- * Checks whether an audio format is supported.
- */
-let canPlay = (() => {
-  let dummyAudioTag = document.createElement('audio')
-  return (type) => dummyAudioTag.canPlayType(type) === 'probably'
-})()
 
 /**
  * The audio format to use (.ogg or .m4a)

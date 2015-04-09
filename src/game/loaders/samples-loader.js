@@ -1,7 +1,9 @@
 
+import co                   from 'co'
 import R                    from 'ramda'
 import * as ProgressUtils   from 'bemuse/progress/utils'
 import { EXTRA_FORMATTER }  from 'bemuse/progress/formatters'
+import { canPlay }          from 'bemuse/sampling-master'
 
 export class SamplesLoader {
   constructor(assets, master) {
@@ -33,9 +35,19 @@ export class SamplesLoader {
     return this._master.sample(buffer)
   }
   _getFile(name) {
-    return this._assets.file(name)
-      .catch(() => this._assets.file(name.replace(/\.\w+$/, '.ogg')))
-      .catch(() => this._assets.file(name.replace(/\.\w+$/, '.mp3')))
+    return co(function*() {
+      let ogg = canPlay('audio/ogg; codecs="vorbis"')
+      try {
+        if (!ogg) throw new Error('cannot play OGG')
+        return yield this._assets.file(name.replace(/\.\w+$/, '.ogg'))
+      } catch (e) {
+        try {
+          return yield this._assets.file(name.replace(/\.\w+$/, '.mp3'))
+        } catch (e) {
+          return yield this._assets.file(name)
+        }
+      }
+    }.bind(this))
   }
 }
 
