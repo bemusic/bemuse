@@ -1,6 +1,7 @@
 
 import co from 'co'
 import { resolve } from 'url'
+import screenfull from 'screenfull'
 
 import query                  from 'bemuse/query'
 import SCENE_MANAGER          from 'bemuse/scene-manager'
@@ -12,6 +13,11 @@ import LoadingScene           from 'bemuse/game/loading-scene'
 
 export function launch({ server, song, chart }) {
   return co(function*() {
+    if (screenfull.enabled) {
+      let safari = /Safari/.test(navigator.userAgent) &&
+                  !/Chrom/.test(navigator.userAgent)
+      if (!safari) screenfull.request()
+    }
     let url       = server.url + '/' + song.dir + '/' + chart.file
     let assetsUrl = resolve(url, 'assets/')
     let loadSpec = {
