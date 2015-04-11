@@ -23,7 +23,10 @@ function HardcodedKeyboardPlugin() {
         'p1_6':  data[kbm[5] || 75],
         'p1_7':  data[kbm[6] || 76],
         'p1_SC': data[kbm[7] || 65],
+        'p1_speedup': data[38],
+        'p1_speeddown': data[40],
         'start': data[13],
+        'select': data[18],
       }
     }
   }
@@ -46,7 +49,7 @@ function GamepadPlugin() {
   }
   return {
     get() {
-      return {
+      var out = {
         'p1_1': button(3),
         'p1_2': button(6),
         'p1_3': button(2),
@@ -55,7 +58,14 @@ function GamepadPlugin() {
         'p1_6': button(4),
         'p1_7': axis(3),
         'p1_SC': axis(4),
+        'start': button(9),
+        'select': button(8),
       }
+      out['p1_speedup'] = (out['start'] || out['select']) && (
+        out['p1_2'] || out['p1_4'] || out['p1_6'])
+      out['p1_speeddown'] = (out['start'] || out['select']) && (
+        out['p1_1'] || out['p1_3'] || out['p1_5'] || out['p1_7'])
+      return out
     }
   }
 }

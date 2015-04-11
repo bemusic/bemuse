@@ -27,11 +27,13 @@ export class PlayerState {
   // Updates the state. Judge the notes and emit notifications.
   update(gameTime, input) {
     this._gameTime = gameTime
+    this._rawInput = input
     this.notifications = { }
     this.notifications.sounds     = [ ]
     this.notifications.judgments  = [ ]
-    this.input = this._createInputColumnMap(input)
-    this._judgeNotes(gameTime)
+    this._updateInputColumnMap()
+    this._judgeNotes()
+    this._updateSpeed()
   }
 
   // Returns the status of the note as a string. The results may be:
@@ -62,11 +64,14 @@ export class PlayerState {
     return result.judgment
   }
 
-  _createInputColumnMap(input) {
-    let prefix = `p${this._player.number}_`
-    return new Map(this._columns.map((column) =>
-        [column, input.get(`${prefix}${column}`)]))
+  getPlayerInput(control) {
+    return this._rawInput.get(`p${this._player.number}_${control}`)
   }
+  _updateInputColumnMap() {
+    this.input = new Map(this._columns.map((column) =>
+        [column, this.getPlayerInput(column)]))
+  }
+
   _judgeNotes() {
     for (let column of this._columns) {
       let buffer = this._noteBufferByColumn[column]
@@ -77,6 +82,19 @@ export class PlayerState {
       }
     }
   }
+  _updateSpeed() {
+    if (this.getPlayerInput('speedup').justPressed) {
+      this._modifySpeed(+1)
+    }
+    if (this.getPlayerInput('speeddown').justPressed) {
+      this._modifySpeed(-1)
+    }
+  }
+  _modifySpeed(direction) {
+    let amount = this._rawInput.get('select').value ? 0.1 : 0.5
+    this.speed += direction * amount
+  }
+
   _judgeColumn(buffer, control) {
     let judgedNote
     let judgment
@@ -89,8 +107,7 @@ export class PlayerState {
         break
       }
     }
-    let justPressed = control.changed && control.value
-    if (justPressed) {
+    if (control.justPressed) {
       if (judgedNote) {
         this.notifications.sounds.push({
           note: judgedNote,

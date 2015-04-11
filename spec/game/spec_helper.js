@@ -6,8 +6,7 @@ import R          from 'ramda'
 
 export let tap = R.tap
 
-export function chart(code) {
-  if (code === undefined) code = ''
+export function chart(code='') {
   return BMS.Compiler.compile(code).chart
 }
 
@@ -15,6 +14,6 @@ export function notechart(code) {
   return Notechart.fromBMSChart(chart(code))
 }
 
-export function playerWithBMS(code) {
-  return new Player(notechart(code), 1, { })
+export function playerWithBMS(code, options={}) {
+  return new Player(notechart(code), 1, options)
 }
