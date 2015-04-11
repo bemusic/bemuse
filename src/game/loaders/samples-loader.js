@@ -41,11 +41,9 @@ export class SamplesLoader {
         if (!ogg) throw new Error('cannot play OGG')
         return yield this._assets.file(name.replace(/\.\w+$/, '.ogg'))
       } catch (e) {
-        try {
-          return yield this._assets.file(name.replace(/\.\w+$/, '.mp3'))
-        } catch (e) {
-          return yield this._assets.file(name)
-        }
+        return yield this._assets.file(name.replace(/\.\w+$/, '.m4a'))
+          .catch(() => this._assets.file(name.replace(/\.\w+$/, '.mp3')))
+          .catch(() => this._assets.file(name))
       }
     }.bind(this))
   }
