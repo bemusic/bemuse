@@ -28,38 +28,49 @@ Setting Up the Project
    
    For Windows users, there (will be) a dedicated quick-start guide.
 
-TODO: Write this section
+First, you should create a folder for Bemuse development::
+
+   mkdir Bemuse
+   cd Bemuse
+
+Then, clone the Bemuse repository and music repository::
+
+   git clone git@github.com:bemusic/bemuse.git
+   git clone git@github.com:bemusic/music.git
+
+After these repository has been cloned, ``cd`` into the Bemuse repository::
+
+   cd bemuse
+
+Install the project's dependencies::
+
+   npm install
+
+When it finishes installing, start the development server::
+
+   npm start
+
+The game should be accessible at ``http://localhost:8080/?mode=app``.
+
+To run unit tests, go to ``http://localhost:8080/?mode=test``.
 
 
-
-
-Starting the Development Server
--------------------------------
-
-::
-
-  npm start
-
-
-- To run the application, go to ``http://localhost:8080/``.
-- To run unit tests, go to ``http://localhost:8080/?mode=test``.
 
 
 Coverage Mode
-~~~~~~~~~~~~~
+-------------
 
-We run code coverage on our code to make sure that most part of our code
-is covered by a unit test.
+We measure the code coverage to make sure that most part of our code
+is covered by some test.
 This helps us be more confident in modifying our code.
 
-To turn on the coverage mode, start the server using the following command::
+To turn on the coverage mode, start the server with the ``COV`` environment variable set to ``true``::
 
   COV=true npm start
 
 Then run the unit tests.
 After the unit tests are run, the coverage report will be generated.
-
-You can view the coverage report at `http://localhost:8080/coverage/`.
+They can be viewed at ``http://localhost:8080/coverage/``.
 
 
 
