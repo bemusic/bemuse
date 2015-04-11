@@ -50,12 +50,11 @@ export class PlayerStats {
     //    }{\sum_{i = 1}^{\text{total combos}}{\text{combo level}(i)}} \\[10pt]
     //    \text{combo level}(c) &= \begin{cases}
     //      0 & c = 0 \\
-    //      1 & 0 \leq c \le 23 \\
-    //      2 & 23 \leq c \le 51 \\
-    //      3 & 51 \leq c \le 92 \\
-    //      4 & 92 \leq c \le 161 \\
-    //      5 & 161 \leq c \le 230 \\
-    //      6 & 230 \leq c
+    //      1 & 1 \leq c \leq 22 \\
+    //      2 & 23 \leq c \leq 50 \\
+    //      3 & 51 \leq c \leq 91 \\
+    //      4 & 92 \leq c \leq 160 \\
+    //      6 & 161 \leq c
     //    \end{cases}
     let total = Judgments.weight(1) * this.totalCombo
     let accuracyScore = Math.floor(
@@ -107,7 +106,6 @@ export class PlayerStats {
     //            3               60%          51
     //            4               40%          92
     //            5               20%         161
-    //            6               10%         230
     // ============ ================= ===========
     //
     if (i === 0) return 0
@@ -115,8 +113,7 @@ export class PlayerStats {
     if (i < 51) return 2
     if (i < 92) return 3
     if (i < 161) return 4
-    if (i < 230) return 5
-    return 6
+    return 5
   }
 }
 
