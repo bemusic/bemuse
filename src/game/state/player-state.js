@@ -91,8 +91,10 @@ export class PlayerState {
     }
   }
   _modifySpeed(direction) {
-    let amount = this._rawInput.get('select').value ? 0.1 : 0.5
+    let amount = this._rawInput.get('select').value ?
+                    0.1 : (this.speed < 0.5 ? 0.3 : 0.5)
     this.speed += direction * amount
+    if (this.speed < 0.2) this.speed = 0.2
   }
 
   _judgeColumn(buffer, control) {

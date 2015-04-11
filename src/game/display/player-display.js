@@ -5,10 +5,11 @@ import { MISSED, breaksCombo } from '../judgments'
 export class PlayerDisplay {
   constructor(player) {
     let notechart = player.notechart
-    this._player      = player
-    this._noteArea    = new NoteArea(notechart.notes, notechart.barLines)
-    this._stateful    = { }
-    this._defaultData = {
+    this._currentSpeed  = 1
+    this._player        = player
+    this._noteArea      = new NoteArea(notechart.notes, notechart.barLines)
+    this._stateful      = { }
+    this._defaultData   = {
       placement: player.options.placement,
     }
   }
@@ -19,6 +20,9 @@ export class PlayerDisplay {
     let position = player.notechart.secondsToPosition(gameTime)
     let data     = Object.assign({ }, this._defaultData)
     let push     = (key, value) => (data[key] || (data[key] = [])).push(value)
+
+    this._currentSpeed += (playerState.speed - this._currentSpeed) / 3
+    let speed    = this._currentSpeed
 
     updateVisibleNotes()
     updateBarLines()
@@ -99,11 +103,7 @@ export class PlayerDisplay {
     }
 
     function getUpperBound() {
-      return position + (5 / getSpeed())
-    }
-
-    function getSpeed() {
-      return playerState.speed
+      return position + (5 / speed)
     }
 
   }
