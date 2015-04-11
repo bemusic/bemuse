@@ -140,7 +140,7 @@ export class PlayerState {
     } else if (status === 'active') {
       let judgment  = judgeEndTime(this._gameTime, note.end.time)
       let missed    = judgment === MISSED
-      let lifted    = !control.value
+      let lifted    = control.changed
       return missed || lifted
     } else {
       return false
@@ -155,9 +155,11 @@ export class PlayerState {
         let status = judgment === MISSED ? 'judged' : 'active'
         result = { status, judgment, delta }
       } else if (result.status === 'active') {
-        delta    = this._gameTime - note.end.time
-        judgment = judgeEndTime(this._gameTime, note.end.time) || MISSED
-        result = { status: 'judged', judgment, delta }
+        let scratch = note.column === 'SC'
+        delta     = this._gameTime - note.end.time
+        judgment  = judgeEndTime(this._gameTime, note.end.time) || MISSED
+        if (scratch && delta > 0) judgment = 1
+        result    = { status: 'judged', judgment, delta }
       }
     } else {
       result = { status: 'judged', judgment, delta }

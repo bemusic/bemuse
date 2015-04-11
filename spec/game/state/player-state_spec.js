@@ -177,6 +177,27 @@ describe('PlayerState', function() {
         })
       })
 
+      describe('with long scratch note', function() {
+        let note
+        beforeEach(function() {
+          setup(`
+            #BPM 120
+            #00156:0101
+          `)
+          note = chart.notes[0]
+        })
+        it('ends automatically', function() {
+          advance(2, { 'p1_SC': 1 })
+          expect(state.getNoteStatus(note)).to.equal('active')
+          expect(state.getNoteJudgment(note)).to.equal(1)
+          expect(state.notifications.judgments[0].judgment).to.equal(1)
+          advance(4, { 'p1_SC': 1 })
+          expect(state.getNoteStatus(note)).to.equal('judged')
+          expect(state.getNoteJudgment(note)).to.equal(1)
+          expect(state.notifications.judgments[0].judgment).to.equal(1)
+        })
+      })
+
       describe('sound notifications', function() {
         it('notifies of note hit', function() {
           setup(`
