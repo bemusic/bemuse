@@ -198,6 +198,22 @@ describe('PlayerState', function() {
         })
       })
 
+      describe('with long scratch note next to each other', function() {
+        beforeEach(function() {
+          setup(`
+#BPM 120
+#00156:0100000000000000000000000000000000000000000000000000000000000001
+#00256:0100000000000000000000000000000000000000000000000000000000000001
+          `)
+        })
+        it('should switch to next one on change', function() {
+          advance(2, { 'p1_SC': 1 })
+          advance(4, { 'p1_SC': -1 })
+          expect(state.getNoteStatus(chart.notes[0])).to.equal('judged')
+          expect(state.getNoteStatus(chart.notes[1])).to.equal('active')
+        })
+      })
+
       describe('sound notifications', function() {
         it('notifies of note hit', function() {
           setup(`

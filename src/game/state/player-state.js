@@ -104,9 +104,10 @@ export class PlayerState {
     for (let i = buffer.startIndex; i < notes.length; i ++) {
       let note = notes[i]
       if (this._shouldJudge(note, control, buffer)) {
+        let shouldBreak = this.getNoteStatus(note) !== 'active'
         judgedNote = note
         judgment = this._judge(note)
-        break
+        if (shouldBreak) break
       }
     }
     if (control.justPressed) {
