@@ -5,12 +5,14 @@ import $ from 'jquery'
 import co from 'co'
 
 import SamplingMaster from 'bemuse/sampling-master'
-import readBlob       from 'bemuse/read-blob'
+import DndResources   from 'bemuse/resources/dnd-resources'
 import ctx            from 'audio-context'
 
+import Reader   from 'bms/reader'
 import Compiler from 'bms/compiler'
 import Timing   from 'bms/timing'
 import Notes    from 'bms/notes'
+import SongInfo from 'bms/song-info'
 
 import template from './template.jade'
 import './style.scss'
@@ -32,83 +34,13 @@ export function main(element) {
     el
     .on('dragover', () => false)
     .on('drop', e => {
-      let dndLoader = new DndLoader(e.originalEvent)
+      e.preventDefault()
+      let dndLoader = new DndResources(e.originalEvent)
       go(dndLoader, el)
       return false
     })
   }
 
-}
-
-class DndLoader {
-  constructor(event) {
-    this._files = this._getFiles(event)
-  }
-  _getFiles(event) {
-    let out = []
-    let promises = []
-    for (let item of Array.from(event.dataTransfer.items)) {
-      promises.push(this._readItem(item, out))
-    }
-    return Promise.all(promises).then(() => out)
-  }
-  _readItem(item, out) {
-    return new Promise((resolve, reject) => {
-      let entry = item.webkitGetAsEntry && item.webkitGetAsEntry()
-      if (entry) {
-        resolve(this._readEntry(entry, out))
-      } else {
-        let file = item.getAsFile && item.getAsFile()
-        if (file) {
-          out.push(file)
-          resolve()
-        }
-      }
-      reject(new Error('unsupported API'))
-    })
-  }
-  _readEntry(entry, out) {
-    if (entry.isFile) {
-      return this._readFile(entry, out)
-    } else if (entry.isDirectory) {
-      return this._readDirectory(entry, out)
-    }
-  }
-  _readFile(entry, out) {
-    return new Promise((resolve, reject) => {
-      entry.file(file => { out.push(file); resolve() }, reject)
-    })
-  }
-  _readDirectory(entry, out) {
-    let entries = []
-    return new Promise((resolve, reject) => {
-      let reader = entry.createReader()
-      let read = () => reader.readEntries(results => {
-        console.log(results.length)
-        if (results.length === 0) {
-          resolve()
-        } else {
-          entries.push(...Array.from(results))
-          read()
-        }
-      }, reject)
-      read()
-    }).then(() =>
-      Promise.map(entries, entry => this._readEntry(entry, out)))
-  }
-  file(name) {
-    return this._files.then(function(files) {
-      for (let file of files) {
-        if (file.name.toLowerCase() === name.toLowerCase()) {
-          return file
-        }
-      }
-      throw new Error('unable to find ' + name)
-    })
-  }
-  get fileList() {
-    return Promise.resolve(this._files.map(f => f.name))
-  }
 }
 
 function go(loader, element) {
@@ -123,11 +55,15 @@ function go(loader, element) {
     let list = yield loader.fileList
     let bmsFile = list.filter(f => f.match(/\.(?:bms|bme|bml|pms)$/i))[0]
     log('Loading ' + bmsFile)
-    let bms = yield loader.file(bmsFile)
-    let text = yield readBlob(bms).as('text')
+
+    let arraybuffer = yield (yield loader.file(bmsFile)).read()
+    let buffer = new Buffer(new Uint8Array(arraybuffer))
+    let text = yield Promise.promisify(Reader.readAsync)(buffer)
     let chart = Compiler.compile(text).chart
     var timing = Timing.fromBMSChart(chart)
     var notes = Notes.fromBMSChart(chart)
+    var info = SongInfo.fromBMSChart(chart)
+    $('<pre wrap></pre>').text(JSON.stringify(info, null, 2)).appendTo($sampler)
     log('Loading samples')
     var samples = yield loadSamples(notes, chart)
     log('Click the button to play!')
@@ -198,6 +134,7 @@ function go(loader, element) {
       .catch(() => loader.file(name.replace(/\.\w+$/, '.ogg')))
       .catch(() => loader.file(name.replace(/\.\w+$/, '.mp3')))
       .catch(() => loader.file(name.replace(/\.\w+$/, '.wav')))
+      .then(file => file.read())
   }
 
 }
