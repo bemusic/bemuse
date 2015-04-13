@@ -3,6 +3,11 @@ styles:
   white:    { x: 62, width: 34 }
   blue:     { x: 97, width: 26 }
 
+hints:
+  scratch:  { xoffset: 0, yoffset: 1, xadvance: 64, image: 'Scratch.png' }
+  white:    { xoffset: 0, yoffset: 6, xadvance: 31, image: 'Note.png' }
+  blue:     { xoffset: 0, yoffset: 0, xadvance: 31, image: 'Note.png' }
+
 area_height: 550
 
 mode:

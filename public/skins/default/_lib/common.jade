@@ -59,7 +59,7 @@ mixin explosions(columns)
   each column in columns
     - var cur = styles[column.style]
     - var ch  = column.channel
-    group(x=(x + cur.width / 2) y='550')
+    group(x=(x + cur.width / 2))
       animation
         keyframe(t='0' alpha='0' scale-x='1' scale-y='1')
       animation(on='p1_' + ch + '_explode')
@@ -68,17 +68,38 @@ mixin explosions(columns)
       sprite(image='Explosion/NoteExplosion.png' x='-25' y='-25' blend='screen')
     - x = x + cur.width + 1
 
+mixin note-hints(columns)
+  - var x = 0
+  each column in columns
+    - var cur = hints[column.style]
+    - var ch = column.channel
+    group(x=(x))
+      sprite(image=('NoteHint/Normal/' + cur.image)
+              x=(cur.xoffset) y=(cur.yoffset))
+      sprite(image=('NoteHint/Active/' + cur.image)
+              x=(cur.xoffset - 1) y=(cur.yoffset - 1))
+        animation
+          keyframe(t='0' alpha='0')
+        animation(on='p1_' + ch + '_down')
+          keyframe(t='0' alpha='1')
+        animation(on='p1_' + ch + '_up')
+          keyframe(t='0' alpha='1')
+          keyframe(t='0.18' alpha='0')
+    - x = x + cur.xadvance
+
 mixin note-area(modeObject)
   sprite(image=modeObject.background x='0' y='0')
   sprite(image='NoteArea/Flash.png' x='1' y='455' blend='screen'
           alpha='1 - (t % 0.4) / 0.4')
   group(x='1' mask='283x550+1+0')
     +notes(modeObject.columns)
-  group(x='1')
-    +explosions(modeObject.columns)
+  group(x='3' y='556')
+    +note-hints(modeObject.columns)
   +press-start
   group(y='400')
     +judgments
+  group(x='1' y='550')
+    +explosions(modeObject.columns)
 
 mixin press-start
   group(x='140' y='400' alpha='1')
