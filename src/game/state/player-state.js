@@ -89,6 +89,17 @@ export class PlayerState {
     if (this.getPlayerInput('speeddown').justPressed) {
       this._modifySpeed(-1)
     }
+    let pinch = this.getPlayerInput('pinch').value
+    if (pinch && !this._pinching) {
+      this._pinching = { start: pinch, speed: this.speed }
+    } else if (!pinch) {
+      this._pinching = null
+    }
+    if (pinch) {
+      let pinching = this._pinching
+      let speed = pinching.speed * pinch / pinching.start
+      this.speed = Math.max(0.2, Math.round(speed * 10) / 10)
+    }
   }
   _modifySpeed(direction) {
     let amount = this._rawInput.get('select').value ?

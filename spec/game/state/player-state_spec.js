@@ -285,6 +285,12 @@ describe('PlayerState', function() {
         advance(1.0, { 'p1_speedup': 1, 'select': 1 })
         expect(state.speed).to.equal(2.1)
       })
+      it('supports pinching to zoom', function() {
+        setup('', { speed: 2 })
+        advance(1.0, { 'p1_pinch': 300 })
+        advance(1.2, { 'p1_pinch': 450 })
+        expect(state.speed).to.equal(3)
+      })
     })
 
   })

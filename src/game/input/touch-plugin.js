@@ -11,6 +11,7 @@ export function TouchPlugin(context) {
       for (let button of BUTTONS) {
         output[button] = getButton(button)
       }
+      output['p1_pinch'] = getPinch()
       return output
     }
   }
@@ -57,6 +58,26 @@ export function TouchPlugin(context) {
       scratchY > scratchStartY + 4 ? -1 :
       scratchY < scratchStartY - 4 ? 1 : 0
     )
+  }
+  function getPinch() {
+    let a = null
+    let b = null
+    for (let input of context.input) {
+      if (input.y < 550) {
+        if (a === null) {
+          a = input.y
+        } else if (b === null) {
+          b = input.y
+        } else {
+          return 0
+        }
+      }
+    }
+    if (a !== null && b !== null) {
+      return Math.abs(a - b)
+    } else {
+      return 0
+    }
   }
 }
 
