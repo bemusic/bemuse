@@ -27,11 +27,13 @@ export class PlayerState {
   // Updates the state. Judge the notes and emit notifications.
   update(gameTime, input) {
     this._gameTime = gameTime
+    this._rawInput = input
     this.notifications = { }
     this.notifications.sounds     = [ ]
     this.notifications.judgments  = [ ]
-    this.input = this._createInputColumnMap(input)
-    this._judgeNotes(gameTime)
+    this._updateInputColumnMap()
+    this._judgeNotes()
+    this._updateSpeed()
   }
 
   // Returns the status of the note as a string. The results may be:
@@ -62,11 +64,14 @@ export class PlayerState {
     return result.judgment
   }
 
-  _createInputColumnMap(input) {
-    let prefix = `p${this._player.number}_`
-    return new Map(this._columns.map((column) =>
-        [column, input.get(`${prefix}${column}`)]))
+  getPlayerInput(control) {
+    return this._rawInput.get(`p${this._player.number}_${control}`)
   }
+  _updateInputColumnMap() {
+    this.input = new Map(this._columns.map((column) =>
+        [column, this.getPlayerInput(column)]))
+  }
+
   _judgeNotes() {
     for (let column of this._columns) {
       let buffer = this._noteBufferByColumn[column]
@@ -77,6 +82,32 @@ export class PlayerState {
       }
     }
   }
+  _updateSpeed() {
+    if (this.getPlayerInput('speedup').justPressed) {
+      this._modifySpeed(+1)
+    }
+    if (this.getPlayerInput('speeddown').justPressed) {
+      this._modifySpeed(-1)
+    }
+    let pinch = this.getPlayerInput('pinch').value
+    if (pinch && !this._pinching) {
+      this._pinching = { start: pinch, speed: this.speed }
+    } else if (!pinch) {
+      this._pinching = null
+    }
+    if (pinch) {
+      let pinching = this._pinching
+      let speed = pinching.speed * pinch / pinching.start
+      this.speed = Math.max(0.2, Math.round(speed * 10) / 10)
+    }
+  }
+  _modifySpeed(direction) {
+    let amount = this._rawInput.get('select').value ?
+                    0.1 : (this.speed < 0.5 ? 0.3 : 0.5)
+    this.speed += direction * amount
+    if (this.speed < 0.2) this.speed = 0.2
+  }
+
   _judgeColumn(buffer, control) {
     let judgedNote
     let judgment
@@ -84,13 +115,13 @@ export class PlayerState {
     for (let i = buffer.startIndex; i < notes.length; i ++) {
       let note = notes[i]
       if (this._shouldJudge(note, control, buffer)) {
+        let shouldBreak = this.getNoteStatus(note) !== 'active'
         judgedNote = note
         judgment = this._judge(note)
-        break
+        if (shouldBreak) break
       }
     }
-    let justPressed = control.changed && control.value
-    if (justPressed) {
+    if (control.justPressed) {
       if (judgedNote) {
         this.notifications.sounds.push({
           note: judgedNote,
@@ -121,7 +152,7 @@ export class PlayerState {
     } else if (status === 'active') {
       let judgment  = judgeEndTime(this._gameTime, note.end.time)
       let missed    = judgment === MISSED
-      let lifted    = !control.value
+      let lifted    = control.changed
       return missed || lifted
     } else {
       return false
@@ -136,9 +167,11 @@ export class PlayerState {
         let status = judgment === MISSED ? 'judged' : 'active'
         result = { status, judgment, delta }
       } else if (result.status === 'active') {
-        delta    = this._gameTime - note.end.time
-        judgment = judgeEndTime(this._gameTime, note.end.time) || MISSED
-        result = { status: 'judged', judgment, delta }
+        let scratch = note.column === 'SC'
+        delta     = this._gameTime - note.end.time
+        judgment  = judgeEndTime(this._gameTime, note.end.time) || MISSED
+        if (scratch && delta > 0) judgment = 1
+        result    = { status: 'judged', judgment, delta }
       }
     } else {
       result = { status: 'judged', judgment, delta }

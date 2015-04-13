@@ -16,6 +16,7 @@ describe('SamplesLoader', function() {
   describe('#loadFiles', function() {
 
     it('should load file when matches', function() {
+      assets.file.returns(Promise.reject())
       assets.file.withArgs('a.wav').returns(Promise.resolve({
         read: () => Promise.resolve('ok1')
       }))
@@ -36,6 +37,7 @@ describe('SamplesLoader', function() {
     it('should try mp3', function() {
       assets.file.withArgs('a.wav').returns(Promise.reject())
       assets.file.withArgs('a.ogg').returns(Promise.reject())
+      assets.file.withArgs('a.m4a').returns(Promise.reject())
       assets.file.withArgs('a.mp3').returns(Promise.resolve({
         read: () => Promise.resolve('ok1')
       }))

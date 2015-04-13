@@ -30,6 +30,7 @@ $ui-font: "Source Sans Pro", "Segoe UI", "Helvetica Neue", sans-serif;
 %scene {
   @include full-screen;
   overflow: hidden;
+  font-family: $ui-font;
 }
 
 %scene-heading {
