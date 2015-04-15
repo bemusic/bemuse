@@ -16,7 +16,9 @@ export class LoadingContext {
     xh.onload = () => {
       let parts = [xh.response, '\n//# sourceURL=' + src]
       let type = 'text/javascript'
-      let url = URL.createObjectURL(new Blob(parts, { type }))
+      let blob = new Blob(parts, { type })
+      let url = URL.createObjectURL(blob)
+      this._progress.report(blob.size, blob.size)
       script.src = url
       head.appendChild(script)
     }
