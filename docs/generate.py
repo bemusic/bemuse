@@ -209,20 +209,19 @@ class FeatureProcessor(object):
         self.path = path
 
     def process(self):
-        in_feature = False
+        docstring = False
         output = []
         with open(self.path, 'r') as f:
             for line in f:
-                if line.startswith('  Scenario:'):
-                    in_feature = True
-                elif line.startswith('  ') and not line.startswith('    '):
-                    in_feature = False
-                if not in_feature:
-                    if line.startswith('  '):
-                        output.append(line[2:])
-                    else:
-                        head = line.strip()
-                        output.append(head + '\n' + '-' * len(head) + '\n')
+                if line.strip() == '"""':
+                    docstring = not docstring
+                    if not docstring:
+                        output.append('\n\n')
+                elif docstring:
+                    output.append(line)
+                elif line.startswith('Feature:'):
+                    head = line.strip()
+                    output.append(head + '\n' + '-' * len(head) + '\n')
         self.root.file('_codedoc/features.txt').add(''.join(output))
 
 class Node(object):

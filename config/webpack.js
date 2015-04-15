@@ -80,7 +80,7 @@ if (process.env.SOURCE_MAPS === 'true') {
   config.devtool = 'source-map'
 }
 
-if (NODE_ENV === 'test' || process.env.COV === 'true') {
+if (NODE_ENV === 'test' || process.env.BEMUSE_COV === 'true') {
   config.module.preLoaders.push({
     test: /\.js$/,
     include: [path('src')],

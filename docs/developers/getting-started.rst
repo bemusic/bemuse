@@ -64,9 +64,9 @@ We measure the code coverage to make sure that most part of our code
 is covered by some test.
 This helps us be more confident in modifying our code.
 
-To turn on the coverage mode, start the server with the ``COV`` environment variable set to ``true``::
+To turn on the coverage mode, start the server with the ``BEMUSE_COV`` environment variable set to ``true``::
 
-  COV=true npm start
+  BEMUSE_COV=true npm start
 
 Then run the unit tests.
 After the unit tests are run, the coverage report will be generated.

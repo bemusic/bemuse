@@ -6,7 +6,7 @@
   "scripts": {
     "code-review": "gulp code-review",
     "ci:code-review": "npm run code-review; ./bin/upload-code-review",
-    "test": "bash -c \"COV=true gulp build && COV=true gulp test:exit\"",
+    "test": "bash -c \"BEMUSE_COV=true gulp build && BEMUSE_COV=true gulp test:exit\"",
     "deploy": "rm -rf dist && NODE_ENV=production gulp build && gulp deploy",
     "lint": "gulp lint",
     "start": "gulp server",
@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/spacetme/bemuse",
   "devDependencies": {
+    "artstep": "^2015.1.0",
     "autoprefixer-loader": "^1.2.0",
     "babel-core": "^4.3.0",
     "babel-loader": "^4.0.0",
@@ -47,7 +48,9 @@
     "gulp": "^3.8.10",
     "gulp-gh-pages": "git://github.com/dtinth/gulp-gh-pages",
     "gulp-jshint": "^1.9.0",
+    "gulp-mocha": "^2.0.1",
     "gulp-util": "^3.0.1",
+    "hide-stack-frames-from": "^1.0.0",
     "istanbul": "^0.3.5",
     "istanbul-instrumenter-loader": "^0.1.2",
     "jade": "^1.9.2",
@@ -66,6 +69,7 @@
     "ractive-loader": "^0.5.6",
     "sass-loader": "^0.4.2",
     "script-loader": "^0.6.1",
+    "selenium-webdriver": "^2.45.1",
     "sinon": "git://github.com/cjohansen/Sinon.JS#sinon-2.0",
     "sinon-chai": "^2.7.0",
     "style-loader": "^0.9.0",
@@ -74,7 +78,8 @@
     "val-loader": "^0.5.0",
     "web-audio-test-api": "^0.2.1",
     "webpack": "^1.4.13",
-    "webpack-dev-server": "^1.6.6"
+    "webpack-dev-server": "^1.6.6",
+    "yadda": "^0.11.5"
   },
   "dependencies": {
     "audio-context": "^0.1.0",
@@ -85,6 +90,7 @@
     "co": "^4.3.1",
     "data-structure": "^1.2.0",
     "debug": "^2.1.1",
+    "gulp-cucumber": "0.0.8",
     "isparta": "^2.2.0",
     "isparta-instrumenter-loader": "^0.1.1",
     "jquery": "^2.1.3",
