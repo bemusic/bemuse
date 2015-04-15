@@ -1,0 +1,4 @@
+Functional Specifications
+=========================
+
+.. codedoc:: features

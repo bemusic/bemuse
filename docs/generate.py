@@ -28,6 +28,11 @@ def get_source_files():
         for filename in fnmatch.filter(filenames, '*.py'):
             yield root + '/' + filename
 
+def get_feature_files():
+    for root, dirnames, filenames in os.walk('../features'):
+        for filename in fnmatch.filter(filenames, '*.feature'):
+            yield root + '/' + filename
+
 def mkpath(path):
     try:
         os.makedirs(path)
@@ -197,6 +202,29 @@ class FileProcessor(object):
             if self.match(CONSTRUCTOR_RE):
                 self.current_class.arguments = self.match(1)
 
+class FeatureProcessor(object):
+
+    def __init__(self, path, root):
+        self.root = root
+        self.path = path
+
+    def process(self):
+        in_feature = False
+        output = []
+        with open(self.path, 'r') as f:
+            for line in f:
+                if line.startswith('  Scenario:'):
+                    in_feature = True
+                elif line.startswith('  ') and not line.startswith('    '):
+                    in_feature = False
+                if not in_feature:
+                    if line.startswith('  '):
+                        output.append(line[2:])
+                    else:
+                        head = line.strip()
+                        output.append(head + '\n' + '-' * len(head) + '\n')
+        self.root.file('_codedoc/features.txt').add(''.join(output))
+
 class Node(object):
     def __init__(self, *args):
         self.contents = []
@@ -296,24 +324,44 @@ class DataNode(DomainNode):
     def directive(self):
         return 'js:data:: %s' % (self.name)
 
+def wtf(filename, contents): # write to file
+    try:
+        with open(filename, 'r') as f:
+            old_contents = f.read()
+    except IOError as exc:
+        if exc.errno == errno.ENOENT:
+            old_contents = None
+        else:
+            raise exc
+    if old_contents == contents:
+        return
+    print "Write", filename
+    with open(filename, 'w') as f:
+        f.write(contents)
+
 def main():
     root = RootNode()
     for path in get_source_files():
         processor = FileProcessor(path, root)
         processor.process()
+    for path in get_feature_files():
+        processor = FeatureProcessor(path, root)
+        processor.process()
     for filename in root.files:
         mkpath(os.path.dirname(filename))
-        print filename
-        with open(filename, 'w') as f:
-            f.write(str(root.files[filename]))
-    with open('modules/index.rst', 'w') as f:
-        print >> f, 'Modules Index'
-        print >> f, '============='
-        print >> f, '.. toctree::'
-        print >> f, '   :maxdepth: 2'
-        print >> f, ''
-        for key in sorted(root.modules):
-            print >> f, '   ' + key
+        wtf(filename, str(root.files[filename]))
+    wtf('modules/index.rst', toc(root))
+
+def toc(root):
+    out = []
+    out.append('Modules Index')
+    out.append('=============')
+    out.append('.. toctree::')
+    out.append('   :maxdepth: 2')
+    out.append('')
+    for key in sorted(root.modules):
+        out.append('   ' + key)
+    return '\n'.join(out)
 
 if __name__ == '__main__':
     main()

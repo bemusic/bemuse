@@ -24,7 +24,6 @@ def autolink(pattern):
     return role
 
 def autogen(app):
-    system('rm -rf modules _codedoc')
     system('python generate.py')
 
 class Codedoc(Directive):
