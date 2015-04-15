@@ -1,5 +1,4 @@
 
-import 'bemuse/polyfill'
 import co from 'co'
 
 // The SceneManager takes care of managing the scenes in this game.

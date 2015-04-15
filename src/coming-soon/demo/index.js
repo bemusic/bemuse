@@ -1,6 +1,4 @@
 
-import 'bemuse/polyfill'
-
 import $ from 'jquery'
 import co from 'co'
 

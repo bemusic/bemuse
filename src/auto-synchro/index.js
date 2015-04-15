@@ -1,5 +1,4 @@
 
-import 'bemuse/polyfill'
 import * as Music from './music'
 import Vue from 'vue'
 import template from './experiment/template.jade'

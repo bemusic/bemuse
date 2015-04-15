@@ -1,6 +1,4 @@
 
-import 'bemuse/polyfill'
-
 import R from 'ramda'
 import $ from 'jquery'
 import View from 'bemuse/view!./view.jade'
