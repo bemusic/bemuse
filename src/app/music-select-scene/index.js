@@ -1,6 +1,7 @@
 
 import 'bemuse/polyfill'
 
+import R from 'ramda'
 import $ from 'jquery'
 import View from 'bemuse/view!./view.jade'
 import './style.scss'
@@ -31,10 +32,13 @@ export function MusicSelectScene() {
       },
       selectChart(chart) {
         if (chart.md5 === this.get('chart.md5')) {
-          this.fire('start', this.get('song'), this.get('chart'))
+          this.startGame()
         } else {
           this.set('chart', chart)
         }
+      },
+      startGame() {
+        this.fire('start', this.get('song'), this.get('chart'))
       },
     })
 
@@ -45,8 +49,10 @@ export function MusicSelectScene() {
     container.classList.add('music-select-scene')
     view.set('loading', true)
     view.set('server', server)
+
     Promise.resolve($.get(server.url + '/index.json'))
     .then(function(songs) {
+      songs = R.sortBy(song => song.tutorial ? 0 : 1, songs)
       view.set('songs', songs)
       view.set('song', songs[0])
       view.set('chart', songs[0].charts[0])
@@ -55,6 +61,7 @@ export function MusicSelectScene() {
       view.set('loading', false)
     })
     .done()
+
     return function() {
     }
   }
