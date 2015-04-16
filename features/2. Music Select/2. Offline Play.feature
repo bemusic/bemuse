@@ -71,9 +71,14 @@ Design Considerations
   - **Cancellation.** Player may wish to abort downloading the song.
   - **Multiple parents.** A task may belong to multiple parent tasks. For example, a single download task may be used for multiple parent tasks (e.g. download for saving and download for on-demand playing).
   - **Progress reporting.** A task should be able to report its own progress. If a task is composed of several sub-tasks, a task should be able to compute its own progress based on its sub-tasks. A sub-task can have different weight.
-  - Rough design of tasks management system:
+  - **Success/failure outcome.** This can be accomplished using a Promise.
+  - Rough design of tasks lifecycle:
 
-    - When a task is created, it is created in "Idle" state.
+    - When a task is created, it is created in **idle** state; nothing is run yet.
+    - When the task gets added to a parent task, or is run on its own, the task starts **running**.
+    - If a task no longer has any parent left, then its outcome is not needed anymore, and it is **canceled**.
+    - If a task finishes running cleanly, it is **completed**.
+    - If there is an error, the task **errored**.
 
 - To allow updates, each song must have a "hash" that can be checked against to detect new updates.
 - Storage strategy:

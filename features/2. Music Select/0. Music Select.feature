@@ -17,6 +17,8 @@ This screen will let player:
 - see online ranking.
 - set options.
 - save songs for offline play.
+
+.. image:: /images/spec/02-music-select.*
 """
 
 Background:

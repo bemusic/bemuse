@@ -18,6 +18,8 @@ Directory Structure
   Configuration code for webpack and other things.
 :tree:`docs`
   This documentation.
+:tree:`features`
+  The functional specifications and end-to-end tests.
 :tree:`public`
   Files that will be deployed verbatim to the server,
   **except for** ``index.html``, where the boot script will be inlined.
@@ -93,10 +95,8 @@ we also maintain other closely-related projects in a separate repository.
 
 :github:`bemusic/pack`
   This repository contains the code needed to convert a BMS package
-  into a Bemuse package. 
+  into a Bemuse package.
   Traditional BMS packages are optimized for offline playing.
   They are distributed as a large ``.zip`` file with ``.wav``, ``.mpg``, and
   ``.bms`` files. This is not suitable for web consumption.
   See :github:`bemusic/pack` for more information.
-
-
