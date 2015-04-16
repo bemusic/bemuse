@@ -202,6 +202,10 @@ class FileProcessor(object):
             if self.match(CONSTRUCTOR_RE):
                 self.current_class.arguments = self.match(1)
 
+FEATURE_RE  = re.compile(r'^Feature:')
+SCENARIO_RE = re.compile(r'^(?:Background|Scenario):')
+STEP_RE     = re.compile(r'^(Given|When|Then)')
+
 class FeatureProcessor(object):
 
     def __init__(self, path, root):
@@ -210,18 +214,23 @@ class FeatureProcessor(object):
 
     def process(self):
         docstring = False
+        scenario = False
         output = []
         with open(self.path, 'r') as f:
             for line in f:
-                if line.strip() == '"""':
+                text = line.strip()
+                if text == '"""':
                     docstring = not docstring
-                    if not docstring:
-                        output.append('\n\n')
+                    output.append('\n\n')
                 elif docstring:
                     output.append(line)
-                elif line.startswith('Feature:'):
-                    head = line.strip()
-                    output.append(head + '\n' + '-' * len(head) + '\n')
+                elif FEATURE_RE.match(text):
+                    output.append(text + '\n' + '-' * len(text) + '\n\n')
+                elif SCENARIO_RE.match(text):
+                    output.append('\n\n' + text + '\n' + '~' * len(text) + '\n')
+                    scenario = True
+                elif STEP_RE.match(text):
+                    output.append('\n- ' + STEP_RE.sub(r'**\1**', text))
         self.root.file('_codedoc/features.txt').add(''.join(output))
 
 class Node(object):

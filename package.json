@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/spacetme/bemuse",
   "devDependencies": {
-    "artstep": "^2015.1.0",
+    "artstep": "^5555.0.0",
     "autoprefixer-loader": "^1.2.0",
     "babel-core": "^4.3.0",
     "babel-loader": "^4.0.0",
