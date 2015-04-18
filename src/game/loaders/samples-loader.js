@@ -1,5 +1,4 @@
 
-import co                   from 'co'
 import _                    from 'lodash'
 import * as ProgressUtils   from 'bemuse/progress/utils'
 import { EXTRA_FORMATTER }  from 'bemuse/progress/formatters'
@@ -36,17 +35,15 @@ export class SamplesLoader {
     return this._master.sample(buffer)
   }
   _getFile(name) {
-    return co(function*() {
-      let ogg = canPlay('audio/ogg; codecs="vorbis"')
-      try {
-        if (!ogg) throw new Error('cannot play OGG')
-        return yield this._assets.file(name.replace(/\.\w+$/, '.ogg'))
-      } catch (e) {
-        return yield this._assets.file(name.replace(/\.\w+$/, '.m4a'))
-          .catch(() => this._assets.file(name.replace(/\.\w+$/, '.mp3')))
-          .catch(() => this._assets.file(name))
+    return Promise.try(() => {
+      if (!canPlay('audio/ogg; codecs="vorbis"')) {
+        throw new Error('cannot play OGG')
       }
-    }.bind(this))
+      return this._assets.file(name.replace(/\.\w+$/, '.ogg'))
+    })
+    .catch(() => this._assets.file(name.replace(/\.\w+$/, '.m4a')))
+    .catch(() => this._assets.file(name.replace(/\.\w+$/, '.mp3')))
+    .catch(() => this._assets.file(name))
   }
 }
 

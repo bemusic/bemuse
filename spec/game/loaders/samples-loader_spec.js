@@ -27,6 +27,7 @@ describe('SamplesLoader', function() {
     })
 
     it('should not include undecodable audio', function() {
+      assets.file.returns(Promise.reject())
       assets.file.withArgs('a.wav').returns(Promise.resolve({
         read: () => Promise.resolve('ok1')
       }))
@@ -35,9 +36,7 @@ describe('SamplesLoader', function() {
     })
 
     it('should try mp3', function() {
-      assets.file.withArgs('a.wav').returns(Promise.reject())
-      assets.file.withArgs('a.ogg').returns(Promise.reject())
-      assets.file.withArgs('a.m4a').returns(Promise.reject())
+      assets.file.returns(Promise.reject())
       assets.file.withArgs('a.mp3').returns(Promise.resolve({
         read: () => Promise.resolve('ok1')
       }))
@@ -48,9 +47,7 @@ describe('SamplesLoader', function() {
     })
 
     it('should not include failed matches', function() {
-      assets.file.withArgs('a.wav').returns(Promise.reject())
-      assets.file.withArgs('a.mp3').returns(Promise.reject())
-      assets.file.withArgs('a.ogg').returns(Promise.reject())
+      assets.file.returns(Promise.reject())
       return expect(loader.loadFiles(['a.wav'])).to.eventually.deep.eq({ })
     })
 
