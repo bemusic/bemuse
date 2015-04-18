@@ -17,13 +17,15 @@ export class PlayerDisplay {
     let player   = this._player
     let noteArea = this._noteArea
     let stateful = this._stateful
-    let position = player.notechart.secondsToPosition(gameTime)
+    let beat     = player.notechart.secondsToBeat(gameTime)
+    let position = player.notechart.beatToPosition(beat)
     let data     = Object.assign({ }, this._defaultData)
     let push     = (key, value) => (data[key] || (data[key] = [])).push(value)
 
     this._currentSpeed += (playerState.speed - this._currentSpeed) / 3
     let speed    = this._currentSpeed
 
+    updateBeat()
     updateVisibleNotes()
     updateBarLines()
     updateInput()
@@ -32,11 +34,8 @@ export class PlayerDisplay {
     Object.assign(data, stateful)
     return data
 
-    function updateBarLines() {
-      let entities = noteArea.getVisibleBarLines(position, getUpperBound(), 1)
-      for (let entity of entities) {
-        push(`barlines`, { key: entity.id, y: entity.y })
-      }
+    function updateBeat() {
+      data.beat = beat
     }
 
     function updateVisibleNotes() {
@@ -62,6 +61,13 @@ export class PlayerDisplay {
             })
           }
         }
+      }
+    }
+
+    function updateBarLines() {
+      let entities = noteArea.getVisibleBarLines(position, getUpperBound(), 1)
+      for (let entity of entities) {
+        push(`barlines`, { key: entity.id, y: entity.y })
       }
     }
 

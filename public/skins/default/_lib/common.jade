@@ -90,7 +90,7 @@ mixin note-hints(columns)
 mixin note-area(modeObject)
   sprite(image=modeObject.background x='0' y='0')
   sprite(image='NoteArea/Flash.png' x='1' y='455' blend='screen'
-          alpha='1 - (t % 0.4) / 0.4')
+          alpha='1 - (p1_beat % 1)')
   group(x='1' mask='283x550+1+0')
     +notes(modeObject.columns)
   group(x='3' y='556')
