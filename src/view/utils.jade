@@ -13,3 +13,9 @@ mixin inverted-section(name)
   != '{{^' + name + '}}'
   block
   != '{{/}}'
+
+mixin content
+  != '{{>content}}'
+
+mixin yield
+  != '{{yield}}'

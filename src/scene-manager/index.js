@@ -37,7 +37,7 @@ export class SceneManager {
         detach(this.currentElement)
       }
       var element = document.createElement('div')
-      element.className = 'scene'
+      element.className = 'scene-manager--scene'
       document.body.appendChild(element)
       this.currentElement = element
       this.currentScene = scene(element)

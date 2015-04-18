@@ -1,8 +1,9 @@
 
+import './music-select-scene.scss'
+import MusicSelectSceneTemplate from 'bemuse/view!./music-select-scene.jade'
+
 import _ from 'lodash'
 import $ from 'jquery'
-import View from 'bemuse/view!./view.jade'
-import './style.scss'
 import * as GameLauncher from '../game-launcher'
 
 export function MusicSelectScene() {
@@ -11,7 +12,7 @@ export function MusicSelectScene() {
 
     let server = { url: '/music' }
 
-    let view = new View({
+    let view = new MusicSelectSceneTemplate({
       el: container,
       data: {
         isSongSelected(song) {
@@ -38,13 +39,16 @@ export function MusicSelectScene() {
       startGame() {
         this.fire('start', this.get('song'), this.get('chart'))
       },
+      components: {
+        Scene:        require('bemuse/ui/scene'),
+        SceneHeading: require('bemuse/ui/scene-heading'),
+      },
     })
 
     view.on('start', function(song, chart) {
       GameLauncher.launch({ server, song, chart }).done()
     })
 
-    container.classList.add('music-select-scene')
     view.set('loading', true)
     view.set('server', server)
 
