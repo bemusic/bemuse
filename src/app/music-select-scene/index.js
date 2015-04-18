@@ -1,5 +1,5 @@
 
-import R from 'ramda'
+import _ from 'lodash'
 import $ from 'jquery'
 import View from 'bemuse/view!./view.jade'
 import './style.scss'
@@ -50,7 +50,7 @@ export function MusicSelectScene() {
 
     Promise.resolve($.get(server.url + '/index.json'))
     .then(function(songs) {
-      songs = R.sortBy(song => song.tutorial ? 0 : 1, songs)
+      songs = _.sortBy(songs, song => song.tutorial ? 0 : 1)
       view.set('songs', songs)
       view.set('song', songs[0])
       view.set('chart', songs[0].charts[0])

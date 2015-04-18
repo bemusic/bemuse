@@ -1,7 +1,7 @@
 
 import { resolve }        from 'url'
 import addLazyProperty    from 'lazy-property'
-import R                  from 'ramda'
+import _                  from 'lodash'
 import download           from 'bemuse/download'
 import readBlob           from 'bemuse/read-blob'
 import throat             from 'throat'
@@ -31,7 +31,7 @@ export class BemusePackageResources {
   }
   file(name) {
     return this.metadata.then(metadata => {
-      let file = R.find(file => file.name === name, metadata.files)
+      let file = _.find(metadata.files, { name: name })
       if (!file) throw new Error('Unable to find: ' + name)
       return new BemusePackageFileResource(this, file.ref, file.name)
     })

@@ -6,7 +6,7 @@ import jshint           from 'gulp-jshint'
 import jscs             from './support/jscs'
 import through2         from 'through2'
 import { relative }     from 'path'
-import R                from 'ramda'
+import _                from 'lodash'
 import fs               from 'fs'
 
 gulp.task('code-review', function() {
@@ -49,7 +49,7 @@ function formatReviewMessage() {
       let filePath = relative(path(), file.path)
       let link = linkTo(filePath)
       lines.push('* ' + link(`__${filePath}__`, ''))
-      for (var problem of R.sortBy(R.prop('line'))(file.problems)) {
+      for (var problem of _.sortBy(file.problems, 'line')) {
         lines.push([
           '    * ',
           link(`line ${problem.line}`, `#L${problem.line}`),

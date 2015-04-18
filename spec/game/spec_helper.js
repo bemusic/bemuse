@@ -2,9 +2,9 @@
 import BMS        from 'bms'
 import Notechart  from 'bemuse/game/notechart'
 import Player     from 'bemuse/game/player'
-import R          from 'ramda'
+import _          from 'lodash'
 
-export let tap = R.tap
+export let tap = _.tap
 
 export function chart(code='') {
   return BMS.Compiler.compile(code).chart

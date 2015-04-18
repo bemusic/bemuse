@@ -1,5 +1,5 @@
 
-import R from 'ramda'
+import _ from 'lodash'
 import { judgeTime, judgeEndTime, isBad, MISSED } from '../judgments'
 import PlayerStats   from './player-stats'
 
@@ -9,9 +9,8 @@ export class PlayerState {
   constructor(player) {
     this._player        = player
     this._columns       = player.columns
-    this._noteBufferByColumn = R.mapObj(noteBuffer(this))(
-        R.groupBy(R.prop('column'))(
-          R.sortBy(R.prop('time'), player.notechart.notes)))
+    this._noteBufferByColumn = _(player.notechart.notes)
+      .sortBy('time').groupBy('column').mapValues(noteBuffer(this)).value()
     this._noteResult    = new Map()
 
     // The PlayerStats object.
@@ -137,7 +136,7 @@ export class PlayerState {
     }
   }
   _getClosestNote(notes) {
-    return R.minBy(note => Math.abs(this._gameTime - note.time), notes)
+    return _.min(notes, note => Math.abs(this._gameTime - note.time))
   }
   _shouldJudge(note, control, buffer) {
     let status = this.getNoteStatus(note)

@@ -1,10 +1,10 @@
 
-import R            from 'ramda'
+import _            from 'lodash'
 import WaveFactory  from './wave-factory'
 import { isBad }    from '../judgments'
 
 function autoplayer(array) {
-  array = R.sortBy(R.prop('time'), array)
+  array = _.sortBy(array, 'time')
   let i = 0
   return {
     next(time) {

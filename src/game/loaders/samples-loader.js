@@ -1,6 +1,6 @@
 
 import co                   from 'co'
-import R                    from 'ramda'
+import _                    from 'lodash'
 import * as ProgressUtils   from 'bemuse/progress/utils'
 import { EXTRA_FORMATTER }  from 'bemuse/progress/formatters'
 import { canPlay }          from 'bemuse/sampling-master'
@@ -15,7 +15,8 @@ export class SamplesLoader {
     let ondecode  = ProgressUtils.fixed(files.length, decodeProgress)
     let load      = name => this._loadSample(name, onload, ondecode)
     if (decodeProgress) decodeProgress.formatter = EXTRA_FORMATTER
-    return Promise.map(files, load).then(R.fromPairs)
+    return Promise.map(files, load)
+        .then(arr => _(arr).filter().object().value())
   }
   _loadSample(name, onload, ondecode) {
     return this._getFile(name).then(
