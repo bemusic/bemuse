@@ -2,9 +2,14 @@
 mixin section(name, as)
   != '{{#' + name + (as ? ':' + as : '') + '}}'
   block
-  != '{{/' + name + '}}'
+  != '{{/}}'
+
+mixin if(expr)
+  != '{{#if ' + expr + '}}'
+  block
+  != '{{/if}}'
 
 mixin inverted-section(name)
   != '{{^' + name + '}}'
   block
-  != '{{/' + name + '}}'
+  != '{{/}}'
