@@ -60,7 +60,9 @@ export function MusicSelectScene() {
     })
     .done()
 
-    return function() {
+    return {
+      teardown() {
+      }
     }
   }
 

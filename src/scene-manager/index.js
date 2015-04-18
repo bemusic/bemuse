@@ -10,10 +10,12 @@ import co from 'co'
 //    var scene = function onEnter(container) {
 //      // container :: HTMLElement
 //      // add DOM elements to container
-//      return function onExit() {
-//        return new Promise(function(resolve) {
-//          // when the scene finish exiting, call resolve()
-//        })
+//      return {
+//        teardown() {
+//          return new Promise(function(resolve) {
+//            // when the scene finish exiting, call resolve()
+//          })
+//        }
 //      }
 //    }
 //
@@ -30,15 +32,15 @@ export class SceneManager {
   // scene finishes exiting.
   display(scene) {
     return co(function*() {
-      if (this.exit) {
-        yield Promise.resolve(this.exit())
+      if (this.currentScene) {
+        yield Promise.resolve(this.currentScene.teardown())
         detach(this.currentElement)
       }
       var element = document.createElement('div')
       element.className = 'scene'
       document.body.appendChild(element)
       this.currentElement = element
-      this.exit = scene(element)
+      this.currentScene = scene(element)
     })
   }
 }

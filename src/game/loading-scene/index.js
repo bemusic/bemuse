@@ -19,9 +19,11 @@ export default function LoadingScene({ tasks, song }) {
     let data = getData()
     let view = new View({ el: container, data })
     tasks.watch(() => view.set(getData()))
-    return function() {
-      container.classList.add('is-exiting')
-      return Promise.delay(500)
+    return {
+      teardown() {
+        container.classList.add('is-exiting')
+        return Promise.delay(500)
+      }
     }
   }
 

@@ -6,8 +6,10 @@ export default function GameScene(display) {
     let handler = () => false
     $(window).on('touchstart', handler)
     showCanvas(display.view, container)
-    return function() {
-      $(window).off('touchstart', handler)
+    return {
+      teardown() {
+        $(window).off('touchstart', handler)
+      }
     }
   }
 }
