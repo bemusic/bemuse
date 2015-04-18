@@ -6,7 +6,7 @@ import { canPlay }    from 'bemuse/sampling-master'
 import co             from 'co'
 import once           from 'once'
 import context        from 'audio-context'
-import R              from 'ramda'
+import _              from 'lodash'
 
 /**
  * The audio format to use (.ogg or .m4a)
@@ -38,7 +38,7 @@ export function load() {
           name => download(ASSET_URLS[`${name}${audioExt()}`])
             .as('arraybuffer')
             .then(buf => master.sample(buf))
-    let samples = R.fromPairs(
+    let samples = _.object(
           yield Promise.all(
             ['bgm', 'intro', 'kick', 'snare'].map(
               name => sample(name).then(sample => [name, sample]))))

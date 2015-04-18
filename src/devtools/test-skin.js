@@ -1,5 +1,4 @@
 
-import 'bemuse/polyfill'
 import * as Scintillator from 'bemuse/scintillator'
 
 import co from 'co'

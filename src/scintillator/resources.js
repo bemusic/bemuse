@@ -1,5 +1,5 @@
 
-import R from 'ramda'
+import _ from 'lodash'
 
 /**
  * The resources class contains a mapping from an image "src" to the resolved
@@ -17,7 +17,7 @@ export class Resources {
     return this._map[src]
   }
   get urls() {
-    return R.values(this._map)
+    return _.values(this._map)
   }
 }
 

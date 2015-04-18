@@ -4,6 +4,7 @@ Developer Documentation
 .. toctree::
 
    getting-started
+   getting-started-windows
    functional
    architecture
    documentation
@@ -11,4 +12,3 @@ Developer Documentation
    skinning
    options
    ../modules/index
-

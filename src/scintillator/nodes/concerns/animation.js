@@ -1,16 +1,19 @@
 
-import R        from 'ramda'
+import _        from 'lodash'
 import $        from 'jquery'
 import keytime  from 'keytime'
 
-let createKeytime = R.evolve({ data: keytime })
-let getEvents = R.pipe(R.prop('data'), R.map(R.prop('name')))
+let createKeytime = def => Object.assign({ }, def, { data: keytime(def.data) })
 
 export class Animation {
   constructor(animations) {
-    this._properties  = new Set(R.chain(getEvents, animations))
-    this._animations  = R.map(createKeytime, animations)
-    this._events      = R.uniq(R.map(R.prop('on'), animations))
+    this._properties  = _(animations)
+        .map(animation => _.pluck(animation.data, 'name'))
+        .flatten()
+        .thru(array => new Set(array))
+        .value()
+    this._animations  = _.map(animations, createKeytime)
+    this._events      = _.uniq(_.pluck(animations, 'on'))
   }
   prop(name, fallback) {
     if (!this._properties.has(name)) {
@@ -26,8 +29,9 @@ export class Animation {
     }
   }
   _getAnimation(data) {
-    let event       = R.maxBy(e => data[e] || 0,
-                        this._events.filter(e => e === '' || e in data))
+    let event       = _(this._events)
+        .filter(e => e === '' || e in data)
+        .max(e => data[e] || 0)
     let t           = data.t - (data[event] || 0)
     let animations  = this._animations.filter(a => a.on === event)
     let values      = animations.map(a => a.data.values(t))
@@ -35,13 +39,13 @@ export class Animation {
   }
   static compile(compiler, $el) {
     let animationElements = Array.from($el.children('animation'))
-    let animations = R.map(el => _compile($(el)), animationElements)
+    let animations = _.map(animationElements, el => _compile($(el)))
     return new Animation(animations)
   }
 }
 
 export function _compile($el) {
-  let keyframes = R.map(_attrs, Array.from($el.children('keyframe')))
+  let keyframes = _.map(Array.from($el.children('keyframe')), _attrs)
   let attrs = { }
   for (let keyframe of keyframes) {
     let time = +keyframe.t
@@ -56,7 +60,7 @@ export function _compile($el) {
   }
   return {
     on:   $el.attr('on') || '',
-    data: R.values(attrs),
+    data: _.values(attrs),
   }
 }
 
@@ -65,7 +69,10 @@ function _createKeyframes(name) {
 }
 
 export function _attrs(el) {
-  return R.fromPairs(R.map(n => [n.name.toLowerCase(), n.value], el.attributes))
+  return _(el.attributes)
+      .map(n => [n.name.toLowerCase(), n.value])
+      .object()
+      .value()
 }
 
 export default Animation

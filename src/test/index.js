@@ -1,7 +1,6 @@
 
 // This file boots up Jasmine
 //
-import 'bemuse/polyfill'
 import 'script!mocha/mocha.js'
 import 'style!mocha/mocha.css'
 import 'style!./support/mocha-overrides.css'

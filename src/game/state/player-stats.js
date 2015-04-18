@@ -1,5 +1,5 @@
 
-import R from 'ramda'
+import _ from 'lodash'
 import * as Judgments from '../judgments'
 
 // >> game/grading
@@ -24,8 +24,9 @@ import * as Judgments from '../judgments'
 
 export class PlayerStats {
   constructor(notechart) {
-    this.totalCombo = R.sum(R.map(note => notechart.info(note).combos)(
-        notechart.notes))
+    this.totalCombo = _(notechart.notes)
+        .map(note => notechart.info(note).combos)
+        .sum()
     this.combo = 0
     this.maxCombo = 0
     this.rawSumJudgmentWeight = 0

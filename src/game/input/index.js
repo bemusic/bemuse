@@ -1,7 +1,7 @@
 
 import $ from 'jquery'
 import Control from './control'
-import R from 'ramda'
+import _ from 'lodash'
 
 
 import query from 'bemuse/query'
@@ -113,7 +113,7 @@ export class GameInput {
     this._plugins.push(function() {
       let out = plugin.get()
       let diff = [ ]
-      for (let key of R.union(R.keys(out), R.keys(state))) {
+      for (let key of _.union(_.keys(out), _.keys(state))) {
         let last    = +state[key] || 0
         let current = +out[key]   || 0
         if (last !== current) diff.push([key, current])

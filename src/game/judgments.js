@@ -1,5 +1,5 @@
 
-import R from 'ramda'
+import _ from 'lodash'
 
 // >> game/judgments
 //
@@ -46,8 +46,8 @@ export function judgeTimeWith(f) {
   }
 }
 
-export const judgeTime    = judgeTimeWith(R.prop('timegate'))
-export const judgeEndTime = judgeTimeWith(R.prop('endTimegate'))
+export const judgeTime    = judgeTimeWith(_.property('timegate'))
+export const judgeEndTime = judgeTimeWith(_.property('endTimegate'))
 
 export function isBad(judgment) {
   return judgment >= 4

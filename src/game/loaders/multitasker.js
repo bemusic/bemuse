@@ -1,7 +1,7 @@
 
-import Observable from 'bemuse/observable'
-import Progress   from 'bemuse/progress'
-import throttle   from 'lodash.throttle'
+import Observable   from 'bemuse/observable'
+import Progress     from 'bemuse/progress'
+import { throttle } from 'lodash'
 
 export function start(callback) {
 

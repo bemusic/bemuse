@@ -12,30 +12,35 @@ h1 Select Music
     +section('songs')
       li.music-list-item(class="{{isSongSelected(this) ? 'active' : ''}}"
                          on-click="selectSong(this)")
-        div.title {{title}}
-        div.artist {{artist}}
-        div.genre {{genre}}
+        +section('tutorial')
+          div.tutorial Tutorial
+        +inverted-section('tutorial')
+          div.title {{title}}
+          div.artist {{artist}}
+          div.genre {{genre}}
 
   +section('chart')
     section.selected-song
       +section('info')
         section.song-info
           div.song-info--genre {{genre}}
-          div.song-info--title
-            {{title}}
+          div.song-info--title {{title}}
           +section('subtitles')
             div.song-info--subtitle {{.}}
           div.song-info--artist
-            {{artist}}
+            | {{artist}}
             = ' '
             +section('subartists')
               small
                 = '· '
                 | {{joinsubs(subartists)}}
-      ul.chart-list
-        +section('song.charts')
-          li(class="{{isChartSelected(this) ? 'active' : ''}}"
-             on-click="selectChart(this)") {{info.level}}
+      +section('song.tutorial')
+        .start-tutorial-button(on-click="startGame()") Start Tutorial
+      +inverted-section('song.tutorial')
+        ul.chart-list
+          +section('song.charts')
+            li(class="{{isChartSelected(this) ? 'active' : ''}}"
+               on-click="selectChart(this)") {{info.level}}
       dl
         dt MD5
         dd {{md5}}

@@ -1,7 +1,7 @@
 
 import BMS from 'bms'
 
-import R          from 'ramda'
+import _          from 'lodash'
 import GameEvent  from './data/event'
 import GameNote   from './data/game-note'
 
@@ -112,7 +112,7 @@ export class Notechart {
   }
 
   _generateBarLines(bmsNotes, bms) {
-    let max = R.max(bmsNotes.all().map(note => note.endBeat || note.beat))
+    let max = _.max(bmsNotes.all().map(note => note.endBeat || note.beat))
     let barLines = [ { beat: 0, position: 0 } ]
     let currentBeat     = 0
     let currentMeasure  = 0

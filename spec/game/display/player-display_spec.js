@@ -49,7 +49,7 @@ describe('PlayerDisplay', function() {
       expect(data['note_1']).to.have.length(1)
     })
     it('hides judged notes', function() {
-      let state = tap(s => s.getNoteStatus.returns('judged'), blankState())
+      let state = tap(blankState(), s => s.getNoteStatus.returns('judged'))
       update(3.95, 3.95, state)
       void expect(data['note_1']).to.be.empty
     })
@@ -66,12 +66,12 @@ describe('PlayerDisplay', function() {
       void expect(data['longnote_1'][0].missed).to.be.false
     })
     it('displays holding long notes', function() {
-      let state = tap(s => s.getNoteJudgment.returns(1), blankState())
+      let state = tap(blankState(), s => s.getNoteJudgment.returns(1))
       update(3.95, 3.95, state)
       void expect(data['longnote_1'][0].active).to.be.true
     })
     it('displays holding long notes event it is bad', function() {
-      let state = tap(s => s.getNoteJudgment.returns(4), blankState())
+      let state = tap(blankState(), s => s.getNoteJudgment.returns(4))
       update(3.95, 3.95, state)
       void expect(data['longnote_1'][0].active).to.be.true
     })
