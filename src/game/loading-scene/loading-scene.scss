@@ -2,7 +2,6 @@
 @import "../../ui/common.scss";
 
 .loading-scene {
-  @extend %scene;
   @include main-bg;
 
   &--info {

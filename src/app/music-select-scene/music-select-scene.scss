@@ -8,7 +8,7 @@
 
   font: 2.5vmin $ui-font, sans-serif;
 
-  .loading {
+  &--loading {
     @include centered;
     font-size: 5vmin;
     text-align: center;
@@ -16,8 +16,7 @@
     text-shadow: 0 2px 0 rgba(white, 0.3);
   }
 
-  > h1 {
-    @extend %scene-heading;
+  &--heading {
     z-index: 10;
   }
 

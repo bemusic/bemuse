@@ -1,6 +1,6 @@
 
-import View from 'bemuse/view!./view.jade'
-import './style.scss'
+import './loading-scene.scss'
+import LoadingSceneTemplate from 'bemuse/view!./loading-scene.jade'
 
 export default function LoadingScene({ tasks, song }) {
 
@@ -16,15 +16,26 @@ export default function LoadingScene({ tasks, song }) {
   }
 
   return function(container) {
+
     let data = getData()
-    let view = new View({ el: container, data })
+
+    let view = new LoadingSceneTemplate({
+      el:     container,
+      data:   data,
+      components: {
+        Scene: require('bemuse/ui/scene'),
+      },
+    })
+
     tasks.watch(() => view.set(getData()))
+
     return {
       teardown() {
-        container.classList.add('is-exiting')
+        view.find('.loading-scene').classList.add('is-exiting')
         return Promise.delay(500)
       }
     }
+
   }
 
 }
