@@ -7,7 +7,6 @@
     "code-review": "gulp code-review",
     "ci:code-review": "npm run code-review; ./bin/upload-code-review",
     "test": "bash -c \"BEMUSE_COV=true gulp build && BEMUSE_COV=true gulp test:exit\"",
-    "deploy": "rm -rf dist && NODE_ENV=production gulp build && gulp pre-deploy && gulp deploy",
     "lint": "gulp lint",
     "start": "gulp server",
     "build": "gulp build",
