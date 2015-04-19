@@ -1,6 +1,6 @@
 
 import path           from './path'
-import NODE_ENV       from 'node-env'
+import * as Env       from './env'
 import webpack        from 'webpack'
 import ProgressPlugin from '../src/webpack-progress'
 
@@ -93,7 +93,7 @@ if (process.env.SOURCE_MAPS === 'true') {
   config.devtool = 'source-map'
 }
 
-if (NODE_ENV === 'test' || process.env.BEMUSE_COV === 'true') {
+if (Env.test() || process.env.BEMUSE_COV === 'true') {
   config.module.preLoaders.push({
     test: /\.js$/,
     include: [path('src')],
@@ -106,7 +106,7 @@ if (NODE_ENV === 'test' || process.env.BEMUSE_COV === 'true') {
   })
 }
 
-if (NODE_ENV === 'production') {
+if (Env.production()) {
   config.plugins.push(
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.optimize.OccurenceOrderPlugin()

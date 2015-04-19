@@ -1,27 +1,38 @@
 
-import fs      from 'fs'
-import gulp    from 'gulp'
-import gutil   from 'gulp-util'
-import webpack from 'webpack'
-import config  from '../config/webpack'
-import path    from '../config/path'
+import co       from 'co'
+import fs       from 'fs'
+import gulp     from 'gulp'
+import gutil    from 'gulp-util'
+import webpack  from 'webpack'
+import config   from '../config/webpack'
+import path     from '../config/path'
+import * as Env from '../config/env'
 
-gulp.task('build', ['dist'], function(callback) {
-  webpack(config, function(err, stats) {
-    if (err) throw new gutil.PluginError('webpack', err)
-    gutil.log('[webpack]', stats.toString({ colors: true }))
-    inlineBootScript()
-    callback()
-  })
-})
+const readFile  = Promise.promisify(fs.readFile, fs)
+const writeFile = Promise.promisify(fs.writeFile, fs)
 
-// Inlines boot loading script directly into the HTML file
-function inlineBootScript() {
-  let contents = fs.readFileSync(path('dist', 'index.html'), 'utf-8')
+gulp.task('build', ['dist'], co.wrap(function*() {
+  let stats = yield Promise.promisify(webpack)(config)
+  gutil.log('[webpack]', stats.toString({ colors: true }))
+  if (Env.production()) yield postProcess()
+}))
+
+function postProcess() {
+  return readFile(path('dist', 'index.html'), 'utf-8')
+    .then(inlineBootScript)
+    .then(ssi)
+    .then(result => writeFile(path('dist', 'index.html'), result, 'utf-8'))
+}
+
+function inlineBootScript(html) {
+  const re = /(<!--\sBEGIN BOOT SCRIPT\s-->)[\s\S]*(<!--\sEND BOOT SCRIPT\s-->)/
   let boot = fs.readFileSync(path('dist', 'build', 'boot.js'), 'utf-8')
-  let re = /(<!--\sBEGIN BOOT SCRIPT\s-->)[\s\S]*(<!--\sEND BOOT SCRIPT\s-->)/
-  ;contents = contents.replace(re, (x, a, b) => `${a}${scriptTag(boot)}${b}`)
-  fs.writeFileSync(path('dist', 'index.html'), contents, 'utf-8')
+  return html.replace(re, (x, a, b) => `${a}${scriptTag(boot)}${b}`)
+}
+
+function ssi(html) {
+  const re = /<!--\s*#include file="([^"]+)"\s*-->/g
+  return html.replace(re, (x, file) => fs.readFileSync(path('dist', file)))
 }
 
 function scriptTag(text) {
