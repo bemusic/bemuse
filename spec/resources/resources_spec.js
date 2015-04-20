@@ -26,7 +26,7 @@ describe('BemusePackageResources', function() {
     })
 
     it('cannot read if not bemuse file', function() {
-      let resources = new BemusePackageResources('/spec/resources/fixtures/b/')
+      resources = new BemusePackageResources('/spec/resources/fixtures/b/')
       return expect(resources.file('do.mp3')
         .then(file => file.read()))
         .to.be.rejected

@@ -4,14 +4,14 @@ import './style.scss'
 
 import DndResources from 'bemuse/resources/dnd-resources'
 
-export default function GameShellScene({ options, play }) {
+export default function GameShellScene({ initialOptions, play }) {
 
   return function enter(container) {
 
     let view = new View({
       el: container,
       data: {
-        options: options,
+        options: initialOptions,
       },
     })
 
@@ -65,4 +65,3 @@ export default function GameShellScene({ options, play }) {
   }
 
 }
-

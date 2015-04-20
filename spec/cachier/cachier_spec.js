@@ -90,9 +90,9 @@ describe('Cachier', function() {
       return cachier.save('wow4', blob)
         .delay(10)
         .then(() => cachier.load('wow4'))
-        .then(function({ blob }) {
-          expect(blob.size).to.equal(5)
-          expect(blob.type).to.equal('text/plain')
+        .then(function({ blob: retrievedBlob }) {
+          expect(retrievedBlob.size).to.equal(5)
+          expect(retrievedBlob.type).to.equal('text/plain')
         })
     })
   })

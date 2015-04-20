@@ -41,7 +41,7 @@ function GamepadPlugin() {
     return gamepads.some(gamepad => gamepad.buttons[i].pressed)
   }
   function axis(i) {
-    for (var j = 0; j < gamepads.length; j ++) {
+    for (var j = 0; j < gamepads.length; j++) {
       var gamepad = gamepads[j]
       if (Math.abs(gamepad.axes[i]) > 0.01) return gamepad.axes[i]
     }
@@ -125,4 +125,3 @@ export class GameInput {
 }
 
 export default GameInput
-

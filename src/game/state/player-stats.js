@@ -80,7 +80,7 @@ export class PlayerStats {
   }
   _calculateRawTotalComboScore() {
     var sum = 0
-    for (var i = 1; i <= this.totalCombo; i ++) {
+    for (var i = 1; i <= this.totalCombo; i++) {
       sum += this._calculateRawComboScore(i)
     }
     return sum

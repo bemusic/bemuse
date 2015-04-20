@@ -41,7 +41,7 @@ export function load() {
     let samples = _.object(
           yield Promise.all(
             ['bgm', 'intro', 'kick', 'snare'].map(
-              name => sample(name).then(sample => [name, sample]))))
+              name => sample(name).then(sampleObj => [name, sampleObj]))))
     return music(master, samples)
   })
 }
@@ -120,16 +120,12 @@ function beatSequencer(bpm, f) {
 }
 
 class AudioTime {
-  constructor(context, leadTime) {
-    this._context = context
-    this._start = context.currentTime
+  constructor(audioContext, leadTime) {
+    this._context = audioContext
+    this._start = audioContext.currentTime
     this._startTime = leadTime
   }
   get t() {
-    return context.currentTime - this._start + this._startTime
+    return this._context.currentTime - this._start + this._startTime
   }
 }
-
-
-
-

@@ -100,7 +100,7 @@ export class PlayerDisplay {
 
     function updateExplode() {
       let notifications = playerState.notifications.judgments
-      for (let i = 0; i < notifications.length; i ++) {
+      for (let i = 0; i < notifications.length; i++) {
         let notification = notifications[i]
         if (!breaksCombo(notification.judgment)) {
           stateful[`${notification.column}_explode`] = time

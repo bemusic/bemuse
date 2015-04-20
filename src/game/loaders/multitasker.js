@@ -29,11 +29,11 @@ export function start(callback) {
   }
 
   function getTaskStatuses() {
-    return taskList.map(task => {
+    return taskList.map(t => {
       return {
-        text:         task.text,
-        progress:     task.progress.progress,
-        progressText: task.progress.toString(),
+        text:         t.text,
+        progress:     t.progress.progress,
+        progressText: t.progress.toString(),
       }
     })
   }

@@ -29,7 +29,7 @@ export function TouchPlugin(context) {
   }
   function getScratch() {
     let objects = context.refs['p1_SC']
-    if (!objects) return
+    if (!objects) return 0
     scratchY = null
     for (let input of context.input) {
       for (let object of objects) {

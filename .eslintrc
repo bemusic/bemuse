@@ -6,11 +6,22 @@
   },
   "parser": "babel-eslint",
   "rules": {
-    "semi": [2, "never"],
-    "quotes": [2, "single", "avoid-escape"],
     "comma-dangle": 0,
+    "curly": [2, "multi-line"],
+    "dot-notation": 0,
+    "key-spacing": 0,
+    "new-cap": 0,
+    "no-alert": 0,
+    "no-eval": 0,
+    "no-loop-func": 0,
     "no-multi-spaces": 0,
-    "no-underscore-dangle": 0
+    "no-process-exit": 0,
+    "no-undef": 0,
+    "no-underscore-dangle": 0,
+    "no-use-before-define": 0,
+    "quotes": [2, "single", "avoid-escape"],
+    "semi": [2, "never"],
+    "yoda": 0,
   },
   "ecmaFeatures": {
     "modules": true

@@ -9,7 +9,7 @@ function autoplayer(array) {
   return {
     next(time) {
       let out = [ ]
-      for (; i < array.length && time >= array[i].time; i ++) {
+      for (; i < array.length && time >= array[i].time; i++) {
         out.push(array[i])
       }
       return out

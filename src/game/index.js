@@ -24,11 +24,11 @@ export function main() {
   })
 
   let displayShell = function(options) {
-    return new Promise(function(resolve) {
+    return new Promise(function(_resolve) {
       let scene = new GameShellScene({
         options: options,
         play: function(data) {
-          resolve(data)
+          _resolve(data)
         },
       })
       SCENE_MANAGER.display(scene)

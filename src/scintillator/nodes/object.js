@@ -20,7 +20,7 @@ function ChildManager(expr, child, poolSize) {
       function initPool() {
         var instance
         console.log('init i' + poolSize)
-        for (var i = 0; i < poolSize; i ++) {
+        for (var i = 0; i < poolSize; i++) {
           instance = child.instantiate(context, subject.object)
           instance.detach()
           pool.push(instance)
@@ -32,7 +32,7 @@ function ChildManager(expr, child, poolSize) {
         var item
         var instance
         if (!array) array = []
-        for (var i = 0; i < array.length; i ++) {
+        for (var i = 0; i < array.length; i++) {
           item  = array[i]
           key = item.key
           if (instances.has(key)) {

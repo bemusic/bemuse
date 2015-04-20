@@ -10,7 +10,7 @@ export class NoteArea {
     let out = []
     let notes = this._notes
     if (!headroom) headroom = 0
-    for (let i = 0; i < notes.length; i ++) {
+    for (let i = 0; i < notes.length; i++) {
       let note = notes[i]
       let visible = note.end ?
             !(note.position > upper || note.end.position < lower - headroom) :
@@ -40,8 +40,8 @@ export class NoteArea {
 
 export default NoteArea
 
-function y(lower, upper, position) {
-  return 1 - (position - lower) / (upper - lower)
+function y(lower, upper, pos) {
+  return 1 - (pos - lower) / (upper - lower)
 }
 
 function position(event) {

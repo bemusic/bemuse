@@ -66,7 +66,7 @@ function go(loader, element) {
     var samples = yield loadSamples(notes, chart)
     log('Click the button to play!')
     yield waitForPlay()
-    ;(function() {
+    void (function() {
       master.unmute()
       for (let note of notes.all()) {
         setTimeout(() => {

@@ -75,7 +75,7 @@ function generateRandomNotes() {
   let nextId = 1
   for (let column of columns) {
     let position = 4
-    for (let j = 0; j < 2000; j ++) {
+    for (let j = 0; j < 2000; j++) {
       position += chance.integer({ min: 1, max: 6 }) / 4
       let length = chance.bool({ likelihood: 10 }) ?
                       chance.integer({ min: 1, max: 24 }) / 4 : 0

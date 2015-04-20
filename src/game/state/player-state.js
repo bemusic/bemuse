@@ -111,7 +111,7 @@ export class PlayerState {
     let judgedNote
     let judgment
     let notes = buffer.notes
-    for (let i = buffer.startIndex; i < notes.length; i ++) {
+    for (let i = buffer.startIndex; i < notes.length; i++) {
       let note = notes[i]
       if (this._shouldJudge(note, control, buffer)) {
         let shouldBreak = this.getNoteStatus(note) !== 'active'
