@@ -1,5 +1,5 @@
 
-@import "../../ui/common.scss";
+@import "~bemuse/ui/common";
 
 .loading-scene {
   @include main-bg;
@@ -131,5 +131,3 @@
     opacity: 0.7;
   }
 }
-
-

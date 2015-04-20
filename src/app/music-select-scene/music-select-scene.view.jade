@@ -2,24 +2,14 @@ include ~bemuse/view/utils
 
 Scene.music-select-scene
 
-  SceneHeading.music-select-scene--heading Select Music
+  SceneHeading Select Music
 
   +section('loading')
-
     p.music-select-scene--loading Loading…
 
   +inverted-section('loading')
-
     ul.music-list
-      +section('songs')
-        li.music-list-item(class="{{isSongSelected(this) ? 'active' : ''}}"
-                           on-click="selectSong(this)")
-          +section('tutorial')
-            div.tutorial Tutorial
-          +inverted-section('tutorial')
-            div.title {{title}}
-            div.artist {{artist}}
-            div.genre {{genre}}
+      MusicList(songs='{{songs}}' selectedSong='{{song}}')
 
     +section('chart')
       section.selected-song

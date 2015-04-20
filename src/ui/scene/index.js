@@ -1,3 +1,3 @@
 
 import './scene.scss'
-export default require('bemuse/view!./scene.jade')
+export default require('./scene.view.jade')

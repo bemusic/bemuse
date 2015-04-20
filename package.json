@@ -61,7 +61,7 @@
     "mocha": "^2.1.0",
     "node-env": "^0.1.6",
     "node-notifier": "^4.0.3",
-    "node-sass": "^2.0.1",
+    "node-sass": "^2.1.1",
     "node-ssi": "^0.3.0",
     "pegjs-loader": "^0.1.1",
     "ractive-loader": "^0.5.6",

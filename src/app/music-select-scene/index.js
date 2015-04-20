@@ -1,6 +1,6 @@
 
 import './music-select-scene.scss'
-import MusicSelectSceneTemplate from 'bemuse/view!./music-select-scene.jade'
+import MusicSelectSceneTemplate from './music-select-scene.view.jade'
 
 import _ from 'lodash'
 import $ from 'jquery'
@@ -15,19 +15,12 @@ export function MusicSelectScene() {
     let view = new MusicSelectSceneTemplate({
       el: container,
       data: {
-        isSongSelected(song) {
-          return song.dir === this.get('song.dir')
-        },
         isChartSelected(chart) {
           return chart.md5 === this.get('chart.md5')
         },
         joinsubs(array) {
           return (array || []).join(' · ')
         },
-      },
-      selectSong(song) {
-        this.set('song', song)
-        this.set('chart', song.charts[0])
       },
       selectChart(chart) {
         if (chart.md5 === this.get('chart.md5')) {
@@ -42,11 +35,19 @@ export function MusicSelectScene() {
       components: {
         Scene:        require('bemuse/ui/scene'),
         SceneHeading: require('bemuse/ui/scene-heading'),
+        MusicList:    require('./music-list')
       },
     })
 
-    view.on('start', function(song, chart) {
-      GameLauncher.launch({ server, song, chart }).done()
+    view.on({
+      start(song, chart) {
+        GameLauncher.launch({ server, song, chart }).done()
+      },
+      ['MusicList.selectSong'](event) {
+        let song = this.get('songs')[event.index.song]
+        this.set('song', song)
+        this.set('chart', song.charts[0])
+      },
     })
 
     view.set('loading', true)

@@ -2,7 +2,7 @@
 import path           from './path'
 import * as Env       from './env'
 import webpack        from 'webpack'
-import ProgressPlugin from '../src/webpack-progress'
+import ProgressPlugin from '../src/hacks/webpack-progress'
 
 let config = {
   context: path('src'),
@@ -11,6 +11,7 @@ let config = {
       bemuse: path('src'),
       assets: path('assets'),
     },
+    extensions: ['', '.webpack.js', '.web.js', '.view.jade', '.js']
   },
   resolveLoader: {
     alias: {
@@ -45,14 +46,19 @@ let config = {
       {
         test: /\.scss$/,
         loader: 'style!css!autoprefixer?browsers=last 2 version' +
-                '!sass?outputStyle=expanded',
+                '!sass?outputStyle=expanded' +
+                '!bemuse/hacks/sass-import-rewriter',
       },
       {
         test: /\.css$/,
         loader: 'style!css!autoprefixer?browsers=last 2 version',
       },
       {
-        test: /\.jade/,
+        test: /\.view\.jade$/,
+        loader: 'bemuse/view',
+      },
+      {
+        test: /\.jade$/,
         loader: 'jade',
       },
       {

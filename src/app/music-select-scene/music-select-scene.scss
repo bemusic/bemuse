@@ -1,5 +1,4 @@
-
-@import "../../ui/common.scss";
+@import "~bemuse/ui/common";
 
 .music-select-scene {
 
@@ -16,56 +15,8 @@
     text-shadow: 0 2px 0 rgba(white, 0.3);
   }
 
-  &--heading {
+  > .scene-heading {
     z-index: 10;
-  }
-
-  .music-list {
-
-    @include full-screen;
-    @include scrolling-y;
-    padding: 25vmin 0 3vmin;
-    margin: 0;
-    list-style: none;
-
-    .music-list-item {
-      margin: 2vmin;
-      margin-left: 5vw;
-      margin-right: 52vw;
-    }
-
-  }
-
-  .music-list-item {
-
-    @include soft-shadow;
-    background: rgba(#fff, 0.9);
-    border: 5px solid rgba(#fff, 0);
-    border-radius: 2vmin;
-    color: black;
-    padding: 1.5vmin 2vmin;
-    position: relative;
-
-    > .title {
-      font-size: 1.5em;
-      font-weight: bold;
-      margin-bottom: 0.5ex;
-    }
-    > .genre {
-      position: absolute;
-      bottom: 1.5vmin; right: 2vmin;
-      opacity: 0.6;
-    }
-    > .tutorial {
-      font-size: 2.5em;
-      font-weight: bold;
-    }
-
-    &.active {
-      background: rgba(#fff, 0.95);
-      border: 5px solid rgba(#000, 0.2);
-    }
-
   }
 
   .selected-song {
@@ -138,4 +89,3 @@
   50% { background: $color2; }
   100% { background: $color1; }
 }
-
