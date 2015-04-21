@@ -54,10 +54,6 @@ let config = {
         loader: 'style!css!autoprefixer?browsers=last 2 version',
       },
       {
-        test: /\.view\.jade$/,
-        loader: 'bemuse/view',
-      },
-      {
         test: /\.jade$/,
         loader: 'jade',
       },
