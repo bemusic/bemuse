@@ -6,7 +6,7 @@ import DndResources from 'bemuse/resources/dnd-resources'
 
 export default function GameShellScene({ initialOptions, play }) {
 
-  return function enter(container) {
+  return function(container) {
 
     let view = new View({
       el: container,
@@ -59,8 +59,7 @@ export default function GameShellScene({ initialOptions, play }) {
       .done()
     }
 
-    return function exit() {
-    }
+    return view
 
   }
 

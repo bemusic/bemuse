@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+var fs = require('fs')
+var name = process.argv[2]
+
+if (!name) throw new Error('Please input name for view component.')
+
+fs.mkdirSync(name)
+fs.writeFileSync(name + '/index.js',
+  'import \'./' + name + '.scss\'\n' +
+  'export default require(\'./' + name + '.view.jade\')\n')
+fs.writeFileSync(name + '/' + name + '.view.jade',
+  'include ~bemuse/view/utils\n\n' +
+  '.' + name + '\n')
+fs.writeFileSync(name + '/' + name + '.scss',
+  '@import "~bemuse/ui/common";\n\n' +
+  '.' + name + ' {\n}\n')

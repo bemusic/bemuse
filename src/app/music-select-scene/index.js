@@ -1,8 +1,9 @@
 
+import './music-select-scene.scss'
+import MusicSelectSceneTemplate from './music-select-scene.view.jade'
+
 import _ from 'lodash'
 import $ from 'jquery'
-import View from 'bemuse/view!./view.jade'
-import './style.scss'
 import * as GameLauncher from '../game-launcher'
 
 export function MusicSelectScene() {
@@ -11,22 +12,15 @@ export function MusicSelectScene() {
 
     let server = { url: '/music' }
 
-    let view = new View({
+    let view = new MusicSelectSceneTemplate({
       el: container,
       data: {
-        isSongSelected(song) {
-          return song.dir === this.get('song.dir')
-        },
         isChartSelected(chart) {
           return chart.md5 === this.get('chart.md5')
         },
         joinsubs(array) {
           return (array || []).join(' · ')
         },
-      },
-      selectSong(song) {
-        this.set('song', song)
-        this.set('chart', song.charts[0])
       },
       selectChart(chart) {
         if (chart.md5 === this.get('chart.md5')) {
@@ -38,13 +32,24 @@ export function MusicSelectScene() {
       startGame() {
         this.fire('start', this.get('song'), this.get('chart'))
       },
+      components: {
+        Scene:        require('bemuse/ui/scene'),
+        SceneHeading: require('bemuse/ui/scene-heading'),
+        MusicList:    require('./music-list')
+      },
     })
 
-    view.on('start', function(song, chart) {
-      GameLauncher.launch({ server, song, chart }).done()
+    view.on({
+      start(song, chart) {
+        GameLauncher.launch({ server, song, chart }).done()
+      },
+      ['MusicList.selectSong'](event) {
+        let song = this.get('songs')[event.index.song]
+        this.set('song', song)
+        this.set('chart', song.charts[0])
+      },
     })
 
-    container.classList.add('music-select-scene')
     view.set('loading', true)
     view.set('server', server)
 
@@ -60,7 +65,9 @@ export function MusicSelectScene() {
     })
     .done()
 
-    return function() {
+    return {
+      teardown() {
+      }
     }
   }
 

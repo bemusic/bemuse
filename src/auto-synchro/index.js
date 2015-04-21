@@ -1,7 +1,6 @@
 
 import * as Music from './music'
-import ExperimentView from 'bemuse/view!./experiment/template.jade'
-import './experiment/style.scss'
+import ExperimentView from './experiment-view'
 import $ from 'jquery'
 
 export function main() {
