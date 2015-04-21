@@ -17,7 +17,7 @@ const CustomChartSelector = React.createClass({
                     onClick={this.handleItemClick(file)}
                     className={
                         c({ 'is-active':
-                            file.resource == this.props.selectedResource })}>
+                            file.resource === this.props.selectedResource })}>
                   {file.name}
                 </a>
               </li>
@@ -56,17 +56,17 @@ const CustomChartSelector = React.createClass({
     .then(bms => {
       this.setState({ files: bms, resources: resources })
     })
-    .catch(e => {
-      if (e.constructor.name === 'FileError') {
+    .catch(err => {
+      if (err.constructor.name === 'FileError') {
         throw new Error('File Error code ' + e.code)
       } else {
-        throw e
+        throw err
       }
     })
     .done()
   },
   handleItemClick(file) {
-    return (e) => {
+    return () => {
       this.props.onSelect(this.state.resources, file.resource)
     }
   },
@@ -125,7 +125,7 @@ export default React.createClass({
               <input type="radio" value={placement}
                   onChange={this.bindOption((o, v) =>
                       o.players[0].placement = v)}
-                  checked={options.players[0].placement == placement} />
+                  checked={options.players[0].placement === placement} />
               <span className="label">{placement}</span>
             </label>
           )}
