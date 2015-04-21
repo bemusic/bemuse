@@ -28,9 +28,9 @@ export class WaveFactory {
   _play({ keysound, delay, exclusive }) {
     if (exclusive) this._stopOldExclusiveSound(keysound, delay)
     let filename = this._map[keysound.toLowerCase()]
-    if (!filename) return
+    if (!filename) return null
     let sample = this._samples[filename]
-    if (!sample) return
+    if (!sample) return null
     let instance = sample.play(delay)
     if (exclusive) this._exclusiveInstances.set(keysound, instance)
     return instance

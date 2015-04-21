@@ -2,8 +2,7 @@
 import gulp             from 'gulp'
 import path             from '../config/path'
 import { javascripts }  from '../config/sources'
-import jshint           from 'gulp-jshint'
-import jscs             from './support/jscs'
+import eslint           from 'gulp-eslint'
 import through2         from 'through2'
 import { relative }     from 'path'
 import _                from 'lodash'
@@ -11,8 +10,7 @@ import fs               from 'fs'
 
 gulp.task('code-review', function() {
   gulp.src(javascripts)
-    .pipe(jshint())
-    .pipe(jscs())
+    .pipe(eslint())
     .pipe(codeReview())
     .pipe(formatReviewMessage())
 })
@@ -20,8 +18,7 @@ gulp.task('code-review', function() {
 function codeReview() {
   return through2.obj(function(file, enc, cb) {
     let problems = []
-    if (file.jshint) reviewJSHint(file.jshint, problems)
-    if (file.jscs)   reviewJSCS(file.jscs, problems)
+    if (file.eslint) reviewEslint(file.eslint, problems)
     if (problems.length > 0) {
       file.problems = problems
     }
@@ -30,14 +27,14 @@ function codeReview() {
 }
 
 function formatReviewMessage() {
-  let linkTo = path => (text, extra) => {
+  let linkTo = repoPath => (text, extra) => {
     if (!process.env.TRAVIS_REPO_SLUG) return text
     let url = [
       'https://github.com',
       process.env.TRAVIS_REPO_SLUG,
       'blob',
       process.env.TRAVIS_COMMIT,
-      path,
+      repoPath,
     ].join('/') + extra
     return `[${text}](${url})`
   }
@@ -53,7 +50,7 @@ function formatReviewMessage() {
         lines.push([
           '    * ',
           link(`line ${problem.line}`, `#L${problem.line}`),
-          `, col ${problem.col}`,
+          ', ' + `col ${problem.col}`,
           ': ',
           `${problem.message} (${problem.code})`,
         ].join(''))
@@ -91,33 +88,16 @@ function formatReviewMessage() {
   )
 }
 
-function reviewJSHint(result, problems) {
-  if (result.success) return
-  for (let entry of result.results) {
-    let err = entry.error
+function reviewEslint(result, problems) {
+  let messages = (result && result.messages) || []
+  for (let msg of messages) {
     let problem = {
-      source:   'jshint',
-      line:     err.line,
-      col:      err.character,
-      code:     err.code,
-      message:  err.reason,
-      evidence: err.evidence,
+      source:   'eslint',
+      line:     msg.line,
+      col:      msg.column,
+      code:     msg.ruleId,
+      message:  msg.message,
     }
     problems.push(problem)
   }
 }
-
-function reviewJSCS(errors, problems) {
-  if (errors.isEmpty()) return
-  for (let err of errors.getErrorList()) {
-    let problem = {
-      source:   'jscs',
-      line:     err.line,
-      col:      err.column,
-      code:     err.rule,
-      message:  err.message,
-    }
-    problems.push(problem)
-  }
-}
-

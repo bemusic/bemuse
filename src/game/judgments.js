@@ -39,7 +39,7 @@ export const JUDGMENTS = [
 export function judgeTimeWith(f) {
   return function judgeTimeWithF(gameTime, noteTime) {
     let delta = Math.abs(gameTime - noteTime)
-    for (let i = 0; i < JUDGMENTS.length; i ++) {
+    for (let i = 0; i < JUDGMENTS.length; i++) {
       if (delta < f(JUDGMENTS[i])) return JUDGMENTS[i].value
     }
     return gameTime < noteTime ? UNJUDGED : MISSED
@@ -63,4 +63,3 @@ export function weight(judgment) {
   if (judgment === 3) return 50
   return 0
 }
-

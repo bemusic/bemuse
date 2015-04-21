@@ -23,8 +23,10 @@ export class BemusePackageResources {
       current:  new Progress(),
     }
     this._loadPayload = ProgressUtils.wrapPromise(this.progress.all,
-      throat(1, (url) => download(url).as('blob', this.progress.current)
-        .then(getPayload)))
+      throat(1, (payloadUrl) =>
+        download(payloadUrl).as('blob', this.progress.current).then(getPayload)
+      )
+    )
   }
   get url() {
     return this._url
@@ -36,8 +38,7 @@ export class BemusePackageResources {
       return new BemusePackageFileResource(this, file.ref, file.name)
     })
   }
-  getBlob(ref) {
-    let [index, start, end] = ref
+  getBlob([index, start, end]) {
     return this.refs
       .then(refs => refs[index])
       .then(ref => ref.load())

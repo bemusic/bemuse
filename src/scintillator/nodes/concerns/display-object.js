@@ -41,7 +41,7 @@ export class DisplayObject extends SkinNode {
     var bindings    = [ ]
     var onDestroy   = null
     object.blendMode = this.blendMode
-    for (var i = 0; i < this._bindings.length; i ++) {
+    for (var i = 0; i < this._bindings.length; i++) {
       var binding = this._bindings[i]
       bindings.push([ binding.getter, binding.apply.bind(null, object) ])
     }

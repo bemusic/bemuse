@@ -7,6 +7,7 @@ export class GameDisplay {
     this._players = new Map(game.players.map(player =>
         [player, new PlayerDisplay(player)]))
     this._stateful = { }
+    void skin
   }
   start() {
     this._started = new Date().getTime()

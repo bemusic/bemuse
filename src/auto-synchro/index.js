@@ -26,12 +26,12 @@ export function main() {
   let play
 
   function getLatency(samples) {
-    let data = samples.map(([a, b]) => b)
+    let data = samples.map(d => d[1])
     data.sort((a, b) => a - b)
     let count = 0
     let sum = 0
     let start = Math.floor(data.length * 1 / 7)
-    for (let i = start; i < data.length * 6 / 7; i ++) {
+    for (let i = start; i < data.length * 6 / 7; i++) {
       count += 1
       sum += data[i]
     }

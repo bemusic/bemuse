@@ -1,20 +1,11 @@
 
 import gulp             from 'gulp'
 import { javascripts }  from '../config/sources'
-import jshint           from 'gulp-jshint'
-import jscs             from './support/jscs'
+import eslint           from 'gulp-eslint'
 
-gulp.task('lint', ['lint:jshint', 'lint:jscs'])
-
-gulp.task('lint:jshint', function() {
+gulp.task('lint', function() {
   return gulp.src(javascripts)
-    .pipe(jshint())
-    .pipe(jshint.reporter('jshint-stylish', { verbose: true }))
-    .pipe(jshint.reporter('fail'))
+    .pipe(eslint())
+    .pipe(eslint.format())
 })
 
-gulp.task('lint:jscs', function() {
-  return gulp.src(javascripts)
-    .pipe(jscs())
-    .pipe(jscs.report())
-})

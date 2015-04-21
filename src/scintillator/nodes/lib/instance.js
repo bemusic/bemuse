@@ -40,7 +40,7 @@ export class Instance {
       sideEffect(pipeline[0]())
     } else {
       this._bindings.push((value) => {
-        for (var i = 0; i < pipeline.length; i ++) {
+        for (var i = 0; i < pipeline.length; i++) {
           value = pipeline[i](value)
         }
         sideEffect(value)
@@ -59,17 +59,17 @@ export class Instance {
   }
   push(value) {
     var i
-    for (i = 0; i < this._bindings.length; i ++) {
+    for (i = 0; i < this._bindings.length; i++) {
       this._bindings[i](value)
     }
-    for (i = 0; i < this._concerns.length; i ++) {
+    for (i = 0; i < this._concerns.length; i++) {
       this._concerns[i].push(value)
     }
     this.onData.call(value)
   }
   destroy() {
     this.detach()
-    for (var i = 0; i < this._concerns.length; i ++) {
+    for (var i = 0; i < this._concerns.length; i++) {
       this._concerns[i].destroy()
     }
     this.onDestroy.call()

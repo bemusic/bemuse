@@ -12,9 +12,9 @@ export function start() {
     let app = express()
     let server = http.createServer(app)
 
-    server.testResult = new Promise(function(resolve) {
+    server.testResult = new Promise(function(_resolve) {
       app.use('/api/test', testMiddleware(function(result) {
-        resolve(result)
+        _resolve(result)
       }))
     })
 
