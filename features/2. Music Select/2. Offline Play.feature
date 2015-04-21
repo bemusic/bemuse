@@ -17,6 +17,7 @@ Background:
   And I selected a song
 
 Scenario: Downloading Song
+  Given this scenario is pending
 """
 Upon clicking the "Download" button,
 a popup window should display:
@@ -36,6 +37,7 @@ and indicate the error status.
 """
 
 Scenario: Downloaded Songs
+  Given this scenario is pending
 """
 When a song is already downloaded,
 the download button should be disabled and display the text "Downloaded."
@@ -45,6 +47,7 @@ This song should be playable without Internet connection.
 
 
 Scenario: Offline Mode
+  Given this scenario is pending
 """
 When the browser is offline,
 songs that are not downloaded are grayed out and cannot be played.
@@ -52,6 +55,7 @@ songs that are not downloaded are grayed out and cannot be played.
 
 
 Scenario: Updating Song
+  Given this scenario is pending
 """
 When the song is found to be outdated,
 the download button should be enabled again.
