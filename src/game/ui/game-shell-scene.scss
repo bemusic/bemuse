@@ -1,5 +1,5 @@
 
-.game-shell {
+.game-shell-scene {
   margin: 20px auto;
   background: #353433;
   border: 1px solid #555453;
@@ -8,6 +8,9 @@
   .drop-zone {
     border: 2px dashed #555453;
     padding: 5px;
+    a.is-active {
+      font-weight: bold;
+    }
   }
   .drop-zone-hint {
     padding: 10px;
@@ -36,6 +39,9 @@
         border: 1px inset #555453;
         background: #252423;
         color: #bfb;
+      }
+      input:disabled {
+        opacity: 0.2;
       }
     }
     &.checkbox {
