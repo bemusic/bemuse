@@ -4,7 +4,7 @@ import './style.scss'
 
 import DndResources from 'bemuse/resources/dnd-resources'
 
-export default function GameShellScene({ initialOptions, play }) {
+export default function GameShellScene({ options: initialOptions, play }) {
 
   return function(container) {
 

@@ -1,7 +1,8 @@
 
-import co from 'co'
-import { resolve } from 'url'
-import screenfull from 'screenfull'
+import co           from 'co'
+import { resolve }  from 'url'
+import screenfull   from 'screenfull'
+import React        from 'react'
 
 import query                  from 'bemuse/query'
 import SCENE_MANAGER          from 'bemuse/scene-manager'
@@ -9,7 +10,7 @@ import URLResource            from 'bemuse/resources/url'
 import BemusePackageResources from 'bemuse/resources/bemuse-package'
 import * as GameLoader        from 'bemuse/game/loaders/game-loader'
 import GameScene              from 'bemuse/game/game-scene'
-import LoadingScene           from 'bemuse/game/loading-scene'
+import LoadingScene           from 'bemuse/game/ui/loading-scene.jsx'
 
 export function launch({ server, song, chart }) {
   return co(function*() {
@@ -35,7 +36,7 @@ export function launch({ server, song, chart }) {
       },
     }
     let { tasks, promise } = GameLoader.load(loadSpec)
-    let scene = new LoadingScene({
+    let scene = React.createElement(LoadingScene, {
       tasks: tasks,
       song:  chart.info,
     })

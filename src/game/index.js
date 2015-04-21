@@ -2,7 +2,8 @@ import co from 'co'
 
 import SCENE_MANAGER  from 'bemuse/scene-manager'
 import query          from 'bemuse/query'
-import LoadingScene   from './loading-scene'
+import React          from 'react'
+import LoadingScene   from './ui/loading-scene.jsx'
 import GameScene      from './game-scene'
 import GameShellScene from './shell-scene'
 
@@ -71,7 +72,7 @@ export function main() {
   co(function*() {
     let loadSpec = yield getSong()
     let { tasks, promise } = GameLoader.load(loadSpec)
-    yield SCENE_MANAGER.display(new LoadingScene({
+    yield SCENE_MANAGER.display(React.createElement(LoadingScene, {
       tasks: tasks,
       song: loadSpec.metadata,
     }))
