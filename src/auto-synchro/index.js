@@ -1,26 +1,30 @@
 
-import * as Music from './music'
-import ExperimentView from './experiment-view'
-import $ from 'jquery'
+import * as Music       from './music'
+import React            from 'react'
+import ExperimentScene  from './ui/experiment-scene.jsx'
+import $                from 'jquery'
+import State            from 'bemuse/utils/state'
 
 export function main() {
 
-  let ractive = new ExperimentView({
-    el: $('<div></div>').appendTo('body')[0],
-    data: {
-      showLoading: true,
-      showStart: false,
-      showSending: false,
-      showStarted: false,
-      showThank: false,
-      numSamples: 0,
-      showCollect: true,
-      showCollection: false,
-      latency: 0,
-    },
+  const state = new State({
+    showLoading: true,
+    showStart: false,
+    showSending: false,
+    showStarted: false,
+    showThank: false,
+    numSamples: 0,
+    showCollect: true,
+    showCollection: false,
+    latency: 0,
   })
 
-  ractive.on('start', () => play())
+  const scene = React.createElement(ExperimentScene, {
+    state:    state,
+    onStart:  () => play(),
+  })
+
+  React.render(scene, $('<div></div>').appendTo('body')[0])
 
   let play
 
@@ -40,18 +44,18 @@ export function main() {
   Music.load().then(music => {
     let bound = 56
     let samples = []
-    ractive.set({
+    state.set({
       showLoading: false,
       showStart: true,
     })
     play = () => {
-      ractive.set({
+      state.set({
         showStart: false,
         showStarted: false,
       })
       let remote = music({
         a() {
-          ractive.set({
+          state.set({
             showCollect: false,
             latency: getLatency(samples),
             showThank: true,
@@ -62,12 +66,12 @@ export function main() {
         samples.push(remote.getSample())
         remote.progress(Math.min(1, samples.length / bound))
         if (samples.length >= bound) remote.ok()
-        ractive.set({
+        state.set({
           numSamples: samples.length,
         })
       }
       setTimeout(() => {
-        ractive.set({
+        state.set({
           showCollection: true,
         })
         window.addEventListener('keydown', e => {

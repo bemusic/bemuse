@@ -1,11 +1,8 @@
 @import "~bemuse/ui/common";
 
 .music-list {
-
-  @include full-screen;
-  @include scrolling-y;
-  padding: 25vmin 0 3vmin;
   margin: 0;
+  padding: 0;
   list-style: none;
 
   .music-list-item {
@@ -13,5 +10,4 @@
     margin-left: 5vw;
     margin-right: 52vw;
   }
-
 }

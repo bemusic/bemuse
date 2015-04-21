@@ -35,7 +35,7 @@ let config = {
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         include: [path('src'), path('spec')],
         loader: 'babel?modules=common&experimental=true',
       },
@@ -52,10 +52,6 @@ let config = {
       {
         test: /\.css$/,
         loader: 'style!css!autoprefixer?browsers=last 2 version',
-      },
-      {
-        test: /\.view\.jade$/,
-        loader: 'bemuse/view',
       },
       {
         test: /\.jade$/,

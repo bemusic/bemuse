@@ -1,5 +1,6 @@
 
-import co from 'co'
+import co     from 'co'
+import React  from 'react'
 
 // The SceneManager takes care of managing the scenes in this game.
 // Only a single scene may be displayed at any given time, but a scene may
@@ -31,6 +32,7 @@ export class SceneManager {
   // Displays the scene and returns a promise that resolves when the old
   // scene finishes exiting.
   display(scene) {
+    if (typeof scene !== 'function') scene = new ReactScene(scene)
     return co(function*() {
       if (this.currentScene) {
         yield Promise.resolve(this.currentScene.teardown())
@@ -55,3 +57,14 @@ function detach(element) {
 export let instance = new SceneManager()
 
 export default instance
+
+function ReactScene(element) {
+  return function instantiate(container) {
+    let component = React.render(element, container)
+    return {
+      teardown() {
+        if (component.teardown) return component.teardown()
+      }
+    }
+  }
+}

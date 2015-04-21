@@ -2,9 +2,10 @@ import co from 'co'
 
 import SCENE_MANAGER  from 'bemuse/scene-manager'
 import query          from 'bemuse/query'
-import LoadingScene   from './loading-scene'
+import React          from 'react'
+import LoadingScene   from './ui/loading-scene.jsx'
+import GameShellScene from './ui/game-shell-scene.jsx'
 import GameScene      from './game-scene'
-import GameShellScene from './shell-scene'
 
 import URLResource            from 'bemuse/resources/url'
 import BemusePackageResources from 'bemuse/resources/bemuse-package'
@@ -25,13 +26,13 @@ export function main() {
 
   let displayShell = function(options) {
     return new Promise(function(_resolve) {
-      let scene = new GameShellScene({
+      let scene = React.createElement(GameShellScene, {
         options: options,
         play: function(data) {
           _resolve(data)
         },
       })
-      SCENE_MANAGER.display(scene)
+      SCENE_MANAGER.display(scene).done()
     })
   }
 
@@ -71,7 +72,7 @@ export function main() {
   co(function*() {
     let loadSpec = yield getSong()
     let { tasks, promise } = GameLoader.load(loadSpec)
-    yield SCENE_MANAGER.display(new LoadingScene({
+    yield SCENE_MANAGER.display(React.createElement(LoadingScene, {
       tasks: tasks,
       song: loadSpec.metadata,
     }))

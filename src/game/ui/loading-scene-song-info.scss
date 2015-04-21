@@ -1,0 +1,28 @@
+
+.loading-scene-song-info {
+
+  background: rgba(#fff, 0.96);
+  color: #191817;
+  text-align: center;
+  padding: 25px 0px;
+  box-shadow: 0 2px 18px rgba(#000, 0.2);
+
+  &--genre {
+    font-size: 3vmin;
+  }
+  &--title {
+    font-size: 8vmin;
+    font-weight: bold;
+  }
+  &--subtitle {
+    font-size: 6vmin;
+  }
+  &--artist {
+    font-size: 4vmin;
+    margin-top: 0.8ex;
+  }
+  &--subartist {
+    font-size: 2.5vmin;
+  }
+
+}

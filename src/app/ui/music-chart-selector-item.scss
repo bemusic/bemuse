@@ -1,0 +1,14 @@
+
+.music-chart-selector-item {
+  border: 2px solid #8ac;
+  height: 12vmin;
+  line-height: 12vmin;
+  font-size: 5vmin;
+  text-align: center;
+  background: rgba(#fff, 0.8);
+  border-radius: 2vmin;
+  &.is-active {
+    background: #8ac;
+    color: white;
+  }
+}

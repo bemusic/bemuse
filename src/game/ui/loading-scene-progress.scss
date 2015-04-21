@@ -1,0 +1,16 @@
+.loading-scene-progress {
+  color: #333;
+  font-size: 11px;
+  .loading-scene-progress-bar {
+    display: inline-block;
+    vertical-align: middle;
+    width: 48px;
+    margin-right: 4px;
+    position: relative;
+    top: -1px;
+  }
+  &--extra {
+    font-size: 83%;
+    opacity: 0.7;
+  }
+}
