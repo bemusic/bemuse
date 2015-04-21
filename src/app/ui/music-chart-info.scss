@@ -1,0 +1,14 @@
+
+.music-chart-info {
+  &--title {
+    font-size: 2em;
+    font-weight: bold;
+  }
+  &--subtitle {
+    font-size: 1.5em; color: rgba(black, 0.6);
+    font-weight: bold;
+  }
+  &--artist {
+    > small { font-size: 1em; color: rgba(black, 0.6); }
+  }
+}

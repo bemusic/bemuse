@@ -35,7 +35,7 @@ let config = {
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         include: [path('src'), path('spec')],
         loader: 'babel?modules=common&experimental=true',
       },

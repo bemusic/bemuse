@@ -1,5 +1,0 @@
-include ~bemuse/view/utils
-
-ul.music-list
-  +section('songs', 'song')
-    MusicListItem(song='{{this}}' selected='{{dir == selectedSong.dir}}' on-click="selectSong")
