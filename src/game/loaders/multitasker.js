@@ -1,5 +1,5 @@
 
-import Observable   from 'bemuse/observable'
+import Observable   from 'bemuse/utils/observable'
 import Progress     from 'bemuse/progress'
 import { throttle } from 'lodash'
 

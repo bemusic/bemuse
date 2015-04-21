@@ -1,7 +1,7 @@
 
 // !! avoid external dependencies since this is used in boot script!
 
-import Observable from 'bemuse/observable'
+import Observable from 'bemuse/utils/observable'
 
 // The Progress class represents the progress of an asynchronous operation.
 // It is inspired by `C#'s IProgress`_ interface.
@@ -68,4 +68,3 @@ export class Progress {
 }
 
 export default Progress
-

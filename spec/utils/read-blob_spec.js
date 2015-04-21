@@ -1,5 +1,5 @@
 
-import readBlob from 'bemuse/read-blob'
+import readBlob from 'bemuse/utils/read-blob'
 
 describe('readBlob', function() {
 

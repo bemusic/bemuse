@@ -4,7 +4,7 @@ import { resolve }  from 'url'
 import screenfull   from 'screenfull'
 import React        from 'react'
 
-import query                  from 'bemuse/query'
+import query                  from 'bemuse/utils/query'
 import SCENE_MANAGER          from 'bemuse/scene-manager'
 import URLResource            from 'bemuse/resources/url'
 import BemusePackageResources from 'bemuse/resources/bemuse-package'

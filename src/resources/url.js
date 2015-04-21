@@ -1,5 +1,5 @@
 
-import download from 'bemuse/download'
+import download from 'bemuse/utils/download'
 import { basename } from 'path'
 
 export class URLResource {

@@ -1,5 +1,5 @@
 
-import readBlob from '../read-blob'
+import readBlob from 'bemuse/utils/read-blob'
 import defaultAudioContext from 'audio-context'
 
 let dummyAudioTag = document.createElement('audio')
@@ -167,4 +167,3 @@ export function unmuteAudio(ctx) {
   gain.connect(ctx.destination)
   gain.disconnect()
 }
-

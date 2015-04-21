@@ -24,11 +24,10 @@ $ui-font: "Source Sans Pro", "Segoe UI", "Helvetica Neue", sans-serif;
 }
 
 @mixin main-bg {
-  background: url(~assets/bg/a.jpg) center no-repeat;
+  background: url(~bemuse/ui/images/bg/a.jpg) center no-repeat;
   background-size: cover;
 }
 
 @mixin soft-shadow {
   box-shadow: 0 0.1vh 3vh rgba(#000, 0.1);
 }
-

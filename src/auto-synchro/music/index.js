@@ -1,5 +1,5 @@
 
-import download       from 'bemuse/download'
+import download       from 'bemuse/utils/download'
 import SamplingMaster from 'bemuse/sampling-master'
 import { canPlay }    from 'bemuse/sampling-master'
 

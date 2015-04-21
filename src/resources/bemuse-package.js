@@ -2,8 +2,8 @@
 import { resolve }        from 'url'
 import addLazyProperty    from 'lazy-property'
 import _                  from 'lodash'
-import download           from 'bemuse/download'
-import readBlob           from 'bemuse/read-blob'
+import download           from 'bemuse/utils/download'
+import readBlob           from 'bemuse/utils/read-blob'
 import throat             from 'throat'
 import Progress           from 'bemuse/progress'
 import * as ProgressUtils from 'bemuse/progress/utils'
@@ -92,4 +92,3 @@ function getPayload(blob) {
     })
     .then(metadataLength => blob.slice(14 + metadataLength))
 }
-

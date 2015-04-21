@@ -1,6 +1,6 @@
 
 import co from 'co'
-import readBlob from 'bemuse/read-blob'
+import readBlob from 'bemuse/utils/read-blob'
 
 export class DndResources {
   constructor(event) {

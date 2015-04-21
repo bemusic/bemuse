@@ -9,7 +9,6 @@ let config = {
   resolve: {
     alias: {
       bemuse: path('src'),
-      assets: path('assets'),
     },
     extensions: ['', '.webpack.js', '.web.js', '.view.jade', '.js']
   },

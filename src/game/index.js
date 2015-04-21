@@ -1,7 +1,7 @@
 import co from 'co'
 
 import SCENE_MANAGER  from 'bemuse/scene-manager'
-import query          from 'bemuse/query'
+import query          from 'bemuse/utils/query'
 import React          from 'react'
 import LoadingScene   from './ui/loading-scene.jsx'
 import GameShellScene from './ui/game-shell-scene.jsx'

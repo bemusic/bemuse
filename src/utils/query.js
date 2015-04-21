@@ -4,7 +4,7 @@
 //
 // Example::
 //
-//    import query from 'bemuse/query'
+//    import query from 'bemuse/utils/query'
 //    alert(query.mode)
 
 import querystring from 'querystring'

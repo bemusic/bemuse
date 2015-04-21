@@ -1,10 +1,10 @@
 
-import download from 'bemuse/download'
+import download from 'bemuse/utils/download'
 
 describe('download', function() {
 
   it('resolves with correct type', function() {
-    return expect(download('/spec/download/fixtures/hello.txt').as('text'))
+    return expect(download('/spec/utils/fixtures/download/hello.txt').as('text'))
       .to.eventually.match(/hello world/)
   })
 

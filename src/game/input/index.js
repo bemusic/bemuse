@@ -4,7 +4,7 @@ import Control from './control'
 import _ from 'lodash'
 
 
-import query from 'bemuse/query'
+import query from 'bemuse/utils/query'
 
 function HardcodedKeyboardPlugin() {
   let kbm = (query.keyboard || '').split(',').map(x => +x)

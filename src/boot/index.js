@@ -9,7 +9,7 @@ import 'style?-singleton!bemuse/ui/fonts.scss'
 import 'bemuse/ui/global.scss'
 
 import Progress         from 'bemuse/progress'
-import query            from 'bemuse/query'
+import query            from 'bemuse/utils/query'
 
 import LoadingContext   from './loading-context'
 import * as boot        from './boot'
@@ -63,4 +63,3 @@ function(require) {
   }
 
 }, 'environment')
-

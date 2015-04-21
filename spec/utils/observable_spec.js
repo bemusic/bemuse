@@ -1,5 +1,5 @@
 
-import Observable from 'bemuse/observable'
+import Observable from 'bemuse/utils/observable'
 
 describe('Observable', function() {
 
