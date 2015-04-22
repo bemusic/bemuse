@@ -6,24 +6,24 @@ import React  from 'react'
 // Only a single scene may be displayed at any given time, but a scene may
 // contain any number of UI elements.
 //
-// Programmatically, a scene is defined like this::
+// A scene is a React component that renders a ``<Scene>``::
 //
-//    var scene = function onEnter(container) {
-//      // container :: HTMLElement
-//      // add DOM elements to container
-//      return {
-//        teardown() {
-//          return new Promise(function(resolve) {
-//            // when the scene finish exiting, call resolve()
-//          })
-//        }
+//    export default React.createClass({
+//      render() {
+//        return <Scene>contents</Scene>
 //      }
-//    }
+//    })
 //
 // To use the SceneManager, get the instance and use it::
 //
-//    import SCENEMAN from 'bemuse/scene-manager'
-//    SCENEMAN.display(scene)
+//    import SCENE_MANAGER from 'bemuse/scene-manager'
+//    import TitleScene from './title-scene'
+//    SCENE_MANAGER.display(<TitleScene />)
+//
+// Non-React Scene
+//   You can also use a scene that is not React-based. Define your scene
+//   as a function that accepts an HTMLElement and returns an object with a
+//   ``teardown()`` method.
 //
 export class SceneManager {
   constructor() {

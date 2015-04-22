@@ -30,12 +30,11 @@ window.onerror = function(message, url, line, col, e) {
 /* isparta ignore next */
 let mode = query.mode || 'comingSoon'
 
-require.ensure(['jquery', 'bemuse/polyfill', 'val!./loader.js'],
+require.ensure(['./environment'],
 function(require) {
 
+  require('./environment')
   var loadModule = require('val!./loader.js')
-
-  require('bemuse/polyfill')
 
   /* isparta ignore else - we can check that by functional tests */
   if (loadModule[mode]) {

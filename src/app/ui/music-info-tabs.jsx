@@ -3,6 +3,7 @@ import './music-info-tabs.scss'
 
 import React  from 'react'
 import c      from 'classnames'
+import Icon   from 'react-fa'
 
 import MusicInfoTabStats        from './music-info-tab-stats.jsx'
 import MusicInfoTabInformation  from './music-info-tab-information.jsx'
@@ -12,6 +13,9 @@ export default React.createClass({
   render() {
     return <section className="music-info-tabs">
       <ul className="music-info-tabs--tabs">
+        <li className="music-info-tabs--options" onClick={this.props.onOptions}>
+          <Icon name="gear" /> Options
+        </li>
         {this.renderTab(0, 'Stats')}
         {this.renderTab(1, 'Ranking')}
         {this.renderTab(2, 'Information')}

@@ -2,17 +2,22 @@
 import './music-select-scene.scss'
 
 import React            from 'react'
+import c                from 'classnames'
 import { Binding }      from 'bemuse/flux'
-import Scene            from 'bemuse/ui/scene.jsx'
-import SceneHeading     from 'bemuse/ui/scene-heading.jsx'
-import MusicList        from './music-list.jsx'
-import MusicInfo        from './music-info.jsx'
+import Scene            from 'bemuse/ui/scene'
+import SceneHeading     from 'bemuse/ui/scene-heading'
+import ModalPopup       from 'bemuse/ui/modal-popup'
+import MusicList        from './music-list'
+import MusicInfo        from './music-info'
 import Store            from '../stores/music-select-store'
 import * as Actions     from '../actions/music-select-actions'
+
+React.initializeTouchEvents(true)
 
 export default React.createClass({
 
   render() {
+    let musicSelect = this.state.musicSelect
     return <Scene className="music-select-scene">
       <Binding store={Store} onChange={this.handleState} />
       <SceneHeading>
@@ -22,37 +27,53 @@ export default React.createClass({
             placeholder="Filter…"
             className="music-select-scene--search"
             onChange={this.handleFilter}
-            value={this.state.filterText} />
+            value={musicSelect.filterText} />
       </SceneHeading>
       {
-        this.state.loading
+        musicSelect.loading
         ? <div className="music-select-scene--loading">Loading…</div>
-        : <div>
+        : <div className={c('music-select-scene--main',
+              { 'is-in-song': this.state.inSong })}>
             <MusicList
-                songs={this.state.songs}
-                selectedSong={this.state.song}
-                onSelect={this.handleSongSelect} />
+                songs={musicSelect.songs}
+                selectedSong={musicSelect.song}
+                onSelect={this.handleSongSelect}
+                onTouch={this.handleMusicListTouch} />
             <MusicInfo
-                song={this.state.song}
-                chart={this.state.chart}
-                charts={this.state.charts}
-                onChartClick={this.handleChartClick} />
+                song={musicSelect.song}
+                chart={musicSelect.chart}
+                charts={musicSelect.charts}
+                onChartClick={this.handleChartClick}
+                onOptions={this.handleOptions} />
           </div>
       }
+      <ModalPopup
+          visible={this.state.optionsVisible}
+          onBackdropClick={this.handleOptionsBackdropClick}>
+        Hello world
+      </ModalPopup>
     </Scene>
   },
 
   getInitialState() {
-    return Store.get()
+    return {
+      musicSelect: Store.get(),
+      optionsVisible: false,
+      inSong: false,
+    }
   },
   handleState(state) {
-    this.setState(state)
+    this.setState({ musicSelect: state })
   },
   handleSongSelect(song) {
     Actions.selectSong(song)
+    this.setState({ inSong: true })
+  },
+  handleMusicListTouch() {
+    this.setState({ inSong: false })
   },
   handleChartClick(chart) {
-    if (this.state.chart.md5 === chart.md5) {
+    if (this.state.musicSelect.chart.md5 === chart.md5) {
       Actions.launchGame()
     } else {
       Actions.selectChart(chart)
@@ -60,6 +81,12 @@ export default React.createClass({
   },
   handleFilter(e) {
     Actions.setFilterText(e.target.value)
-  }
+  },
+  handleOptions() {
+    this.setState({ optionsVisible: true })
+  },
+  handleOptionsBackdropClick() {
+    this.setState({ optionsVisible: false })
+  },
 
 })

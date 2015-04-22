@@ -7,7 +7,8 @@ import MusicListItem  from './music-list-item.jsx'
 export default React.createClass({
 
   render() {
-    return <ul className="music-list">
+    return <ul className="music-list"
+        onTouchStart={this.props.onTouch}>
       {this.props.songs.map(song => <MusicListItem
           key={song.id}
           song={song}

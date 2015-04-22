@@ -1,0 +1,17 @@
+
+@import "common";
+
+.modal-popup {
+  @include full-screen;
+  z-index: 10000;
+  &--backdrop {
+    @include full-screen;
+    background: rgba(#111, 0.5);
+  }
+  &--contents {
+    @include centered;
+  }
+  &:not(.is-visible) {
+    display: none;
+  }
+}

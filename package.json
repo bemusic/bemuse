@@ -92,6 +92,7 @@
     "co": "^4.3.1",
     "data-structure": "^1.2.0",
     "debug": "^2.1.1",
+    "fastclick": "^1.0.6",
     "gulp-cucumber": "0.0.8",
     "isparta": "^2.2.0",
     "isparta-instrumenter-loader": "^0.1.1",
@@ -102,6 +103,7 @@
     "once": "^1.3.1",
     "pixi.js": "^2.2.3",
     "react": "^0.13.2",
+    "react-fa": "^3.2.0",
     "remarkable": "^1.6.0",
     "screenfull": "^2.0.0",
     "throat": "^2.0.2"

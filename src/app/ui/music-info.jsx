@@ -20,7 +20,8 @@ export default React.createClass({
           onChartClick={this.props.onChartClick} />
       <MusicInfoTabs
           song={song}
-          chart={chart} />
+          chart={chart}
+          onOptions={this.props.onOptions} />
     </section>
   }
 

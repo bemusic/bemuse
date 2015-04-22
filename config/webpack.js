@@ -39,7 +39,7 @@ let config = {
         loader: 'babel?modules=common&experimental=true',
       },
       {
-        test: /\.pegjs/,
+        test: /\.pegjs$/,
         loader: 'pegjs',
       },
       {
@@ -67,6 +67,10 @@ let config = {
       {
         test: /\.(?:mp3|mp4|ogg|m4a)$/,
         loader: 'file-loader',
+      },
+      {
+        test: /\.(otf|eot|svg|ttf|woff|woff2)(?:$|\?)/,
+        loader: 'url-loader?limit=8192'
       },
     ],
     postLoaders: [],

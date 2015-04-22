@@ -9,6 +9,12 @@
     padding: 0 2vw;
     list-style: none;
   }
+  &--options {
+    float: right;
+    line-height: 2em;
+    cursor: pointer;
+    color: #666;
+  }
   &--tab {
     display: inline-block;
     padding: 0 0.5em;
