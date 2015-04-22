@@ -1,12 +1,14 @@
 styles:
-  scratch:  { x:  0, width: 61 }
-  white:    { x: 62, width: 34 }
-  blue:     { x: 97, width: 26 }
+  scratch:  { x:   0, width: 61 }
+  white:    { x:  62, width: 34 }
+  blue:     { x:  97, width: 26 }
+  green:    { x: 159, width: 26 }
 
 hints:
   scratch:  { xoffset: 0, yoffset: 1, xadvance: 64, image: 'Scratch.png' }
   white:    { xoffset: 0, yoffset: 6, xadvance: 31, image: 'Note.png' }
   blue:     { xoffset: 0, yoffset: 0, xadvance: 31, image: 'Note.png' }
+  green:    { xoffset: 0, yoffset: 0, xadvance: 31, image: 'Note.png' }
 
 area_height: 550
 
@@ -18,7 +20,7 @@ mode:
       - { style: 'white',   channel: '1' }
       - { style: 'blue',    channel: '2' }
       - { style: 'white',   channel: '3' }
-      - { style: 'blue',    channel: '4' }
+      - { style: 'green',   channel: '4' }
       - { style: 'white',   channel: '5' }
       - { style: 'blue',    channel: '6' }
       - { style: 'white',   channel: '7' }
@@ -29,7 +31,7 @@ mode:
       - { style: 'white',   channel: '1' }
       - { style: 'blue',    channel: '2' }
       - { style: 'white',   channel: '3' }
-      - { style: 'blue',    channel: '4' }
+      - { style: 'green',   channel: '4' }
       - { style: 'white',   channel: '5' }
       - { style: 'blue',    channel: '6' }
       - { style: 'white',   channel: '7' }
