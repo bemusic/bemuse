@@ -15,7 +15,8 @@ export function Store(template) {
   let store = Bacon.combineTemplate(template)
   store.get = () => {
     let data
-    store.onValue(_data => data = _data)()
+    let unsubscribe = store.onValue(_data => data = _data)
+    setTimeout(unsubscribe)
     return data
   }
   return store
@@ -29,7 +30,7 @@ export class Binding extends React.Component {
     this._unsubscribe = this.props.store.onValue(value =>
         this.props.onChange(value))
   }
-  componentDidUnmount() {
+  componentWillUnmount() {
     this._unsubscribe()
   }
 }
