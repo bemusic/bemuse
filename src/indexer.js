@@ -6,6 +6,7 @@ import bms        from 'bms'
 import _          from 'lodash'
 import chalk      from 'chalk'
 import json       from 'format-json'
+import yaml       from 'js-yaml'
 import lcs        from './lcs'
 
 import { createHash } from 'crypto'
@@ -16,7 +17,7 @@ let readFile  = Promise.promisify(fs.readFile, fs)
 let writeFile = Promise.promisify(fs.writeFile, fs)
 let glob      = Promise.promisify(require('glob'))
 
-export function index(path) {
+export function index(path, { recursive }) {
   return co(function*() {
 
     let stat = yield fileStat(path)
@@ -24,7 +25,8 @@ export function index(path) {
 
     console.log('-> Scanning files...')
     let dirs = new Map()
-    for (var name of yield glob('*/*.{bms,bme,bml}', { cwd: path })) {
+    let pattern = (recursive ? '**/' : '') + '*/*.{bms,bme,bml}'
+    for (var name of yield glob(pattern, { cwd: path })) {
       let bmsPath = join(path, name)
       put(dirs, dirname(bmsPath), () => []).push(basename(bmsPath))
     }
@@ -37,7 +39,8 @@ export function index(path) {
         charts.push(yield getChartInfo(dir, file))
       }
       let song = {
-        dir:    dir,
+        id:     dir,
+        path:   dir,
         title:  common(charts, x => x.info.title),
         artist: common(charts, x => x.info.artist),
         genre:  common(charts, x => x.info.genre),
@@ -50,6 +53,15 @@ export function index(path) {
                   chart.keys === '14K' ? chalk.red : chalk.inverse
         return ch(chart.info.level)
       })
+      let meta
+      let readmePath
+      try {
+        let readme = yield readFile(join(dir, 'README.md'), 'utf-8')
+        meta = yaml.safeLoad(readme.substr(0, readme.indexOf('---', 3)))
+        readmePath = 'README.md'
+      } catch (e) {
+        console.error(chalk.red('Unable to read metadata:'), '' + e)
+      }
       console.log(
         chalk.dim(_.padRight(dir, maxDirLength)),
         chalk.yellow(_.padLeft(Math.round(song.bpm) + 'bpm', 7)),
@@ -57,10 +69,15 @@ export function index(path) {
         song.artist + '-' + song.title,
         levels.join(' ')
       )
-      songs.push(Object.assign({ }, song, { charts }))
+      songs.push(Object.assign({ },
+          song, meta, { charts, readme: readmePath }))
+    }
+
+    let collection = {
+      songs: songs,
     }
     
-    writeFile(join(path, 'index.json'), json.diffy(songs))
+    writeFile(join(path, 'index.json'), json.diffy(collection))
 
   })
 }

@@ -28,9 +28,11 @@
     "format-json": "^1.0.3",
     "glob": "^4.3.5",
     "gulp-util": "^3.0.1",
+    "js-yaml": "^3.2.7",
     "lodash": "^3.6.0",
     "mime": "^1.2.11",
     "mkdirp": "^0.5.0",
+    "temp": "^0.8.1",
     "throat": "^1.0.0"
   },
   "devDependencies": {

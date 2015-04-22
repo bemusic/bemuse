@@ -17,20 +17,24 @@ let fileStat  = Promise.promisify(fs.stat, fs)
 
 program
 .version(require('../package.json').version)
-.usage('[options] <directory> <output.bemuse>')
-.parse(process.argv)
 
-if (program.args[0] === 'index') {
-  Promise.resolve(index('.'))
-  .then(() => console.log('indexed successfully'))
-  .done()
-} else if (program.args.length === 1) {
-  Promise.resolve(packIntoBemuse(program.args[0]))
-  .then(() => console.log('converted successfully'))
-  .done()
-} else {
-  console.error('Error: 1 arguments expected')
+program.command('pack <dir>')
+  .description('generate bemuse package assets')
+  .action(dir => { handle(packIntoBemuse(dir)) })
+
+program.command('index')
+  .description('index BMS songs into index.json')
+  .option('-r, --recursive', 'find songs recursively!')
+  .action((opts) => { handle(index('.', { recursive: opts.recursive })) })
+
+program.parse(process.argv)
+
+if (process.argv.length <= 2) {
   program.outputHelp()
+}
+
+function handle(promise) {
+  Promise.resolve(promise).done()
 }
 
 function packIntoBemuse(path) {
@@ -59,11 +63,18 @@ function packIntoBemuse(path) {
     oggc.force    = true
     let oggs      = yield dotMap(audio, file => oggc.convert(file))
 
+    /*
     console.log('-> Converting audio to mp3 [for iOS and Safari]')
     let mp3c      = new AudioConvertor('mp3')
     let mp3s      = yield dotMap(audio, file => mp3c.convert(file))
+    */
 
-    packer.pack('mp3',  mp3s)
+    console.log('-> Converting audio to m4a [for iOS and Safari]')
+    let m4ac      = new AudioConvertor('m4a')
+    let m4as      = yield dotMap(audio, file => m4ac.convert(file))
+
+    // packer.pack('mp3',  mp3s)
+    packer.pack('m4a',  m4as)
     packer.pack('bga',  imgs)
     packer.pack('bgv',  webms)
     packer.pack('ogg',  oggs)
