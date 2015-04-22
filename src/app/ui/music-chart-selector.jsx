@@ -11,9 +11,9 @@ export default React.createClass({
       {this.props.charts.map(chart =>
         <MusicChartSelectorItem
             chart={chart}
+            isTutorial={this.props.song.tutorial}
             isSelected={chart.md5 === this.props.selectedChart.md5}
-            onChartClick={this.props.onChartClick} />
-      )}
+            onChartClick={this.props.onChartClick} />)}
     </ul>
   }
 

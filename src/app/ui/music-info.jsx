@@ -13,8 +13,9 @@ export default React.createClass({
     return <section className="music-info">
       <MusicChartInfo chart={chart} />
       <MusicChartSelector
-          charts={song.charts}
+          song={song}
           selectedChart={chart}
+          charts={this.props.charts}
           onChartClick={this.props.onChartClick} />
       {chart.file}
     </section>
