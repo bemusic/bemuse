@@ -1,7 +1,7 @@
 
 .music-chart-selector {
-  padding: 0 2vw;
   list-style: none;
+  padding: 0;
   .music-chart-selector-item {
     display: inline-block;
     width: 12vmin;
@@ -10,6 +10,7 @@
     &.is-tutorial {
       display: block;
       width: auto;
+      margin-right: 0;
     }
   }
 }
