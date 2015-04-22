@@ -1,10 +1,8 @@
 
-@import "../common.scss";
+@import "./common.scss";
 
 .scene-heading {
   @include soft-shadow;
-  position: absolute;
-  top: 5vmin; right: 0; left: 0;
   background: white;
   margin: 0; padding: 0 5vw;
   font: bold 9vmin/16vmin $ui-font;
