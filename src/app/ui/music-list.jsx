@@ -9,9 +9,9 @@ export default React.createClass({
   render() {
     return <ul className="music-list">
       {this.props.songs.map(song => <MusicListItem
-          key={song.dir}
+          key={song.id}
           song={song}
-          selected={song.dir === this.props.selectedSong.dir}
+          selected={song.id === this.props.selectedSong.id}
           onSelect={this.props.onSelect} />)}
     </ul>
   },

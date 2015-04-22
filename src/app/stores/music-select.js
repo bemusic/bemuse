@@ -58,8 +58,8 @@ export default new Store({
 })
 
 Promise.resolve($.get(server.url + '/index.json'))
-.then(function(songs) {
-  songs = _.sortBy(songs, song => song.tutorial ? 0 : 1)
+.then(function(collection) {
+  let songs = _.sortBy(collection.songs, song => song.tutorial ? 0 : 1)
   songsBus.push(songs)
 })
 .finally(function() {

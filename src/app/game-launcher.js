@@ -19,7 +19,7 @@ export function launch({ server, song, chart }) {
                   !/Chrom/.test(navigator.userAgent)
       if (!safari) screenfull.request()
     }
-    let url       = server.url + '/' + song.dir + '/' + chart.file
+    let url       = server.url + '/' + song.path + '/' + chart.file
     let assetsUrl = resolve(url, 'assets/')
     let loadSpec = {
       bms:      new URLResource(url),

@@ -4,7 +4,8 @@ import './music-info-tabs.scss'
 import React  from 'react'
 import c      from 'classnames'
 
-import MusicInfoTabStats from './music-info-tab-stats.jsx'
+import MusicInfoTabStats        from './music-info-tab-stats.jsx'
+import MusicInfoTabInformation  from './music-info-tab-information.jsx'
 
 export default React.createClass({
 
@@ -35,6 +36,10 @@ export default React.createClass({
     switch (this.state.selectedTab) {
     case 0:
       return <MusicInfoTabStats
+          song={this.props.song}
+          chart={this.props.chart} />
+    case 2:
+      return <MusicInfoTabInformation
           song={this.props.song}
           chart={this.props.chart} />
     default:
