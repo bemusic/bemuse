@@ -2,7 +2,6 @@
 import './music-info-tab-information.scss'
 
 import React  from 'react'
-import c      from 'classnames'
 
 import { Binding } from 'bemuse/flux'
 import ReadmeStore from '../stores/readme-store'

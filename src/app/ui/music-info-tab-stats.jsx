@@ -2,12 +2,10 @@
 import './music-info-tab-stats.scss'
 
 import React  from 'react'
-import c      from 'classnames'
 
 export default React.createClass({
 
   render() {
-    const song  = this.props.song
     const chart = this.props.chart
     return <div className="music-info-tab-stats">
       <dl className="music-info-tab-stats--column is-left">

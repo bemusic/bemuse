@@ -10,8 +10,6 @@ import MusicInfoTabInformation  from './music-info-tab-information.jsx'
 export default React.createClass({
 
   render() {
-    const song  = this.props.song
-    const chart = this.props.chart
     return <section className="music-info-tabs">
       <ul className="music-info-tabs--tabs">
         {this.renderTab(0, 'Stats')}
