@@ -7,7 +7,7 @@ import Scene            from 'bemuse/ui/scene.jsx'
 import SceneHeading     from 'bemuse/ui/scene-heading.jsx'
 import MusicList        from './music-list.jsx'
 import MusicInfo        from './music-info.jsx'
-import Store            from '../stores/music-select'
+import Store            from '../stores/music-select-store'
 import * as Actions     from '../actions/music-select-actions'
 
 export default React.createClass({

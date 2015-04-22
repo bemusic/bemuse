@@ -10,7 +10,7 @@ let config = {
     alias: {
       bemuse: path('src'),
     },
-    extensions: ['', '.webpack.js', '.web.js', '.view.jade', '.js']
+    extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx']
   },
   resolveLoader: {
     alias: {

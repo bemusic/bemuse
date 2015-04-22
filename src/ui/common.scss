@@ -23,6 +23,12 @@ $link-color: #039;
   -webkit-overflow-scrolling: touch;
 }
 
+@mixin scrolling-x {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
 @mixin main-bg {
   background: url(~bemuse/ui/images/bg/a.jpg) center no-repeat;
   background-size: cover;

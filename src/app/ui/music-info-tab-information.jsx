@@ -4,15 +4,25 @@ import './music-info-tab-information.scss'
 import React  from 'react'
 import c      from 'classnames'
 
+import { Binding } from 'bemuse/flux'
+import ReadmeStore from '../stores/readme-store'
+
+import Markdown from 'bemuse/ui/markdown'
+
 export default React.createClass({
 
   render() {
-    const song  = this.props.song
+    const song = this.props.song
     return <div className="music-info-tab-information">
+      <Binding store={ReadmeStore} onChange={this.handleReadme} />
       {this.renderButtons()}
       <p className="music-info-tab-information--artist">
-        <span>Artist:</span> <strong>{link(song.artist, song.artist_url)}</strong>
+        <span>Artist:</span>
+        <strong>{link(song.artist, song.artist_url)}</strong>
       </p>
+      <section className="music-info-tab-information--readme">
+        <Markdown source={this.state.readme.text} />
+      </section>
     </div>
   },
   renderButtons() {
@@ -34,6 +44,12 @@ export default React.createClass({
     } else {
       return <p className="music-info-tab-information--buttons">{buttons}</p>
     }
+  },
+  getInitialState() {
+    return { readme: ReadmeStore.get() }
+  },
+  handleReadme(readme) {
+    this.setState({ readme: readme })
   },
 
 })

@@ -7,12 +7,14 @@ import { Store }  from 'bemuse/flux'
 import * as GameLauncher from '../game-launcher'
 import * as Actions      from '../actions/music-select-actions'
 
-let server = { url: '/music' }
+const $server       = Bacon.constant({ url: '/music' })
+const $collection   = $server.flatMapLatest(loadCollection)
 
-const loadingBus    = new Bacon.Bus()
-const songsBus      = new Bacon.Bus()
-const $loading      = loadingBus.toProperty(true)
-const $songs        = songsBus.toProperty([])
+const $loading      = $collection.map(({ loading }) => loading).toProperty(true)
+const $songs        = $collection.map(({ collection }) =>
+    _((collection && collection.songs) || [])
+        .sortBy(song => song.tutorial ? 0 : 1)
+        .value()).toProperty([])
 
 const $levelAnchor  = Bacon.update(
     0,
@@ -45,11 +47,15 @@ const $chart = Bacon.update(
     [Actions.selectChart.bus], (prev, chart) => chart,
     [$visibleCharts.changes(), $levelAnchorStrategy], ensureSelectedPresent)
 
-Bacon.when([Actions.launchGame.bus, $song, $chart], (e, song, chart) =>
-    GameLauncher.launch({ server, song, chart })).onValue()
+Bacon.when(
+    [Actions.launchGame.bus,
+        $server, $song, $chart], (e, server, song, chart) => (
+            { server, song, chart }))
+.onValue(options => GameLauncher.launch(options))
 
 export default new Store({
   loading:    $loading,
+  server:     $server,
   songs:      $visibleSongs,
   song:       $song,
   charts:     $visibleCharts,
@@ -57,15 +63,16 @@ export default new Store({
   filterText: $filterText,
 })
 
-Promise.resolve($.get(server.url + '/index.json'))
-.then(function(collection) {
-  let songs = _.sortBy(collection.songs, song => song.tutorial ? 0 : 1)
-  songsBus.push(songs)
-})
-.finally(function() {
-  loadingBus.push(false)
-})
-.done()
+function loadCollection(server) {
+  let promise = Promise.resolve($.get(server.url + '/index.json'))
+  .then(function(collection) {
+    return { loading: false, collection: collection }
+  })
+  .catch(function(e) {
+    return { loading: false, error: e }
+  })
+  return Bacon.once({ loading: true }).merge(Bacon.fromPromise(promise))
+}
 
 function matches(song, filterText) {
   if (!filterText) return true

@@ -35,4 +35,12 @@
       font-size: 1.3em;
     }
   }
+  &--readme {
+    clear: both;
+    font-size: 0.9em;
+    @include scrolling-x;
+    pre {
+      white-space: pre-wrap;
+    }
+  }
 }
