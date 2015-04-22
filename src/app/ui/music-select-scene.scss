@@ -5,7 +5,7 @@
   @extend %scene;
   @include main-bg;
 
-  font: 2.5vmin $ui-font, sans-serif;
+  font: 2.5vmin $ui-font;
 
   &--loading {
     @include centered;
@@ -13,6 +13,19 @@
     text-align: center;
     color: rgba(black, 0.5);
     text-shadow: 0 2px 0 rgba(white, 0.3);
+  }
+
+  &--search {
+    position: absolute;
+    top: 50%; right: 5vw;
+    transform: translateY(-50%);
+    width: 8em;
+    font: 0.4em $ui-font;
+    padding: 0.3em;
+    border: 1px solid #ddd;
+    background: linear-gradient(to bottom, #f5f4f3, #fff);
+    border-radius: 1em;
+    text-indent: 1ex;
   }
 
   .scene-heading {
@@ -31,24 +44,4 @@
     top: 0; right: 5vw; bottom: 0; left: 52vw;
   }
 
-  .start-tutorial-button {
-    line-height: 12vmin;
-    font-size: 5vmin;
-    margin: 0.6vmin 2vw 0.6vmin;
-    background: #8ac;
-    color: white;
-    animation: 2s start-tutorial-button-animation infinite;
-    border-radius: 2vmin;
-    text-align: center;
-  }
-
-}
-
-@keyframes start-tutorial-button-animation {
-  $color: #8ac;
-  $color1: lighten($color, 10%);
-  $color2: darken($color, 10%);
-  0% { background: $color1; }
-  50% { background: $color2; }
-  100% { background: $color1; }
 }

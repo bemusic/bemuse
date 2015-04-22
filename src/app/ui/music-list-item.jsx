@@ -12,7 +12,7 @@ export default React.createClass({
         className={c('music-list-item', { 'is-active': this.props.selected })}
         onClick={this.handleClick}>
       {
-        song.selected
+        song.tutorial
         ? <div className="music-list-item--tutorial">Tutorial</div>
         : <div className="music-list-item--info">
             <div className="music-list-item--title">{song.title}</div>

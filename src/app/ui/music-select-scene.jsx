@@ -2,17 +2,28 @@
 import './music-select-scene.scss'
 
 import React            from 'react'
+import { Binding }      from 'bemuse/flux'
 import Scene            from 'bemuse/ui/scene.jsx'
 import SceneHeading     from 'bemuse/ui/scene-heading.jsx'
 import MusicList        from './music-list.jsx'
 import MusicInfo        from './music-info.jsx'
-import * as MusicSelect from '../stores/music-select'
+import Store            from '../stores/music-select-store'
+import * as Actions     from '../actions/music-select-actions'
 
 export default React.createClass({
 
   render() {
     return <Scene className="music-select-scene">
-      <SceneHeading>Select Music</SceneHeading>
+      <Binding store={Store} onChange={this.handleState} />
+      <SceneHeading>
+        Select Music
+        <input
+            type="text"
+            placeholder="Filter…"
+            className="music-select-scene--search"
+            onChange={this.handleFilter}
+            value={this.state.filterText} />
+      </SceneHeading>
       {
         this.state.loading
         ? <div className="music-select-scene--loading">Loading…</div>
@@ -24,6 +35,7 @@ export default React.createClass({
             <MusicInfo
                 song={this.state.song}
                 chart={this.state.chart}
+                charts={this.state.charts}
                 onChartClick={this.handleChartClick} />
           </div>
       }
@@ -31,24 +43,23 @@ export default React.createClass({
   },
 
   getInitialState() {
-    return MusicSelect.state.get()
+    return Store.get()
   },
-  componentDidMount() {
-    this._unsubscribe = MusicSelect.state.watch(this.setState.bind(this))
+  handleState(state) {
+    this.setState(state)
   },
-  componentDidUnmount() {
-    this._unsubscribe()
-  },
-
   handleSongSelect(song) {
-    MusicSelect.selectSong(song)
+    Actions.selectSong(song)
   },
   handleChartClick(chart) {
     if (this.state.chart.md5 === chart.md5) {
-      MusicSelect.launchGame()
+      Actions.launchGame()
     } else {
-      MusicSelect.selectChart(chart)
+      Actions.selectChart(chart)
     }
   },
+  handleFilter(e) {
+    Actions.setFilterText(e.target.value)
+  }
 
 })

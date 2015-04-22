@@ -1,12 +1,16 @@
 
 .music-chart-selector {
-  padding: 0;
   list-style: none;
-  padding-left: 2vw;
+  padding: 0;
   .music-chart-selector-item {
     display: inline-block;
     width: 12vmin;
     box-sizing: border-box;
     margin: 0.6vmin 1.2vmin 0.6vmin 0;
+    &.is-tutorial {
+      display: block;
+      width: auto;
+      margin-right: 0;
+    }
   }
 }

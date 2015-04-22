@@ -1,5 +1,5 @@
 
-import './scene-heading/scene-heading.scss'
+import './scene-heading.scss'
 
 import React  from 'react'
 import c      from 'classnames'

@@ -9,3 +9,6 @@ canvas { /* https://code.google.com/p/chromium/issues/detail?id=424025 */
   -ms-interpolation-mode: nearest-neighbor;
 }
 
+a {
+  color: $link-color;
+}

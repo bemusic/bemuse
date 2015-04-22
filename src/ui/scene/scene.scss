@@ -1,8 +1,0 @@
-
-@import "../common.scss";
-
-.scene {
-  @include full-screen;
-  overflow: hidden;
-  font-family: $ui-font;
-}

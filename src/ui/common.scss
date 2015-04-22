@@ -3,8 +3,8 @@
 // This file must not emit any CSS code! It can only contain variable,
 // mixin, or silent class declarations.
 
-
 $ui-font: "Source Sans Pro", "Segoe UI", "Helvetica Neue", sans-serif;
+$link-color: #039;
 
 @mixin full-screen {
   position: absolute;
@@ -20,6 +20,12 @@ $ui-font: "Source Sans Pro", "Segoe UI", "Helvetica Neue", sans-serif;
 @mixin scrolling-y {
   overflow-x: hidden;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@mixin scrolling-x {
+  overflow-x: auto;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
 }
 

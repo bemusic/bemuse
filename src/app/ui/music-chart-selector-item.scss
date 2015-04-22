@@ -7,8 +7,19 @@
   text-align: center;
   background: rgba(#fff, 0.8);
   border-radius: 2vmin;
+  cursor: pointer;
   &.is-active {
     background: #8ac;
     color: white;
+    animation: 3s music-chart-selector-item--active-animation infinite;
   }
+}
+
+@keyframes music-chart-selector-item--active-animation {
+  $color: #8ac;
+  $color1: lighten($color, 10%);
+  $color2: darken($color, 10%);
+  0% { background: $color1; }
+  50% { background: $color2; }
+  100% { background: $color1; }
 }

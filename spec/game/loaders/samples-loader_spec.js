@@ -15,17 +15,6 @@ describe('SamplesLoader', function() {
 
   describe('#loadFiles', function() {
 
-    it('should load file when matches', function() {
-      assets.file.returns(Promise.reject())
-      assets.file.withArgs('a.wav').returns(Promise.resolve({
-        read: () => Promise.resolve('ok1')
-      }))
-      master.sample.withArgs('ok1').returns(Promise.resolve('ok2'))
-      return expect(loader.loadFiles(['a.wav'])).to.eventually.deep.eq({
-        'a.wav': 'ok2'
-      })
-    })
-
     it('should not include undecodable audio', function() {
       assets.file.returns(Promise.reject())
       assets.file.withArgs('a.wav').returns(Promise.resolve({

@@ -7,11 +7,18 @@ import c      from 'classnames'
 export default React.createClass({
 
   render() {
-    let active = this.props.isSelected
+    let classes = c('music-chart-selector-item', {
+          'is-active': this.props.isSelected,
+          'is-tutorial': this.props.isTutorial,
+        })
     return <li
-        className={c('music-chart-selector-item', { 'is-active': active })}
+        className={classes}
         onClick={this.handleClick}>
-      {this.props.chart.info.level}
+      {
+        this.props.isTutorial
+        ? 'Start Tutorial'
+        : this.props.chart.info.level
+      }
     </li>
   },
 

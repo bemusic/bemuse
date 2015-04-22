@@ -22,7 +22,7 @@ export default React.createClass({
   componentDidMount() {
     this._unsubscribe = this.props.tasks.watch(() => this.forceUpdate())
   },
-  componentDidUnmount() {
+  componentWillUnmount() {
     this._unsubscribe()
   },
 })
