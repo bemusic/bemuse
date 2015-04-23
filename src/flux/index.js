@@ -18,7 +18,7 @@ export function Action(transform=x => x) {
 }
 
 export function Store(store) {
-  let store = toProperty(store)
+  store = toProperty(store)
   store.get = () => {
     let data
     let unsubscribe = store.onValue(_data => data = _data)

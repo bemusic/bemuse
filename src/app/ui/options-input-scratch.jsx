@@ -5,17 +5,24 @@ import c     from 'classnames'
 
 export default React.createClass({
   render() {
-    return <div className="options-input-scratch">
+    return <div
+        className={c('options-input-scratch',
+            { 'is-editing': this.props.isEditing })}
+        onClick={this.handleClick}>
       <svg width="200" height="200" viewBox="-100 -100 200 200">
         <path d={star()} className="options-input-scratch--star" />
       </svg>
+      <div className="options-input-scratch--text">{this.props.text}</div>
     </div>
-  }
+  },
+  handleClick() {
+    this.props.onEdit('SC')
+  },
 })
 
 function star() {
   let out = ''
-  for (let i = 0; i < 10; i ++) {
+  for (let i = 0; i < 10; i++) {
     let r = i % 2 === 0 ? 40 : 90
     let θ = i * Math.PI / 5
     let x = Math.sin(θ) * r

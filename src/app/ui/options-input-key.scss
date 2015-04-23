@@ -14,6 +14,9 @@
       @include options-input-button($color);
     }
   }
+  &--text {
+    @include options-input-button--text;
+  }
   @include color(#feb);
   &[data-n="2"], &[data-n="6"] {
     @include color(#abf);

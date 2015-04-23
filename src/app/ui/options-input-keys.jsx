@@ -1,21 +1,22 @@
 
 import './options-input-keys.scss'
 import React from 'react'
-import c     from 'classnames'
 
 import OptionsInputKey from './options-input-key'
 
 export default React.createClass({
   render() {
+    let keys = []
+    for (let i = 1; i <= 7; i++) {
+      keys.push(<OptionsInputKey
+          n={i}
+          text={this.props.texts[i]}
+          isEditing={'' + i === '' + this.props.editing}
+          onEdit={this.props.onEdit} />)
+    }
     return <div className="options-input-keys">
       <div className="options-input-keys--keys">
-        <OptionsInputKey n={1} />
-        <OptionsInputKey n={2} />
-        <OptionsInputKey n={3} />
-        <OptionsInputKey n={4} />
-        <OptionsInputKey n={5} />
-        <OptionsInputKey n={6} />
-        <OptionsInputKey n={7} />
+        {keys}
       </div>
     </div>
   }

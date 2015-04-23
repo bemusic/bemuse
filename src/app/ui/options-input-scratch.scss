@@ -8,8 +8,15 @@
   height: 200px;
   background: rgba(#000, 0.1);
   border-radius: 200px;
+  position: relative;
   @include options-input-button($color);
+  > svg {
+    @include centered;
+  }
   &--star {
     fill: rgba($color, 0.2);
+  }
+  &--text {
+    @include options-input-button--text;
   }
 }

@@ -1,11 +1,21 @@
-
 @mixin options-input-button($color) {
   border: 1px solid $color;
   box-shadow: 0 0 1px $color, inset 0 0 10px rgba($color, 0.4);
   cursor: pointer;
   background-color: rgba($color, 0);
   transition: 0.1s background-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $color;
   &:hover {
     background-color: rgba($color, 0.1);
   }
+  &.is-editing {
+    background-color: rgba($color, 0.25);
+  }
+}
+
+@mixin options-input-button--text {
+  position: relative;
 }
