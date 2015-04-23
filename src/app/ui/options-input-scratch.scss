@@ -1,0 +1,15 @@
+
+@import "~bemuse/ui/common";
+@import "options-input-common";
+
+.options-input-scratch {
+  $color: #faa;
+  width: 200px;
+  height: 200px;
+  background: rgba(#000, 0.1);
+  border-radius: 200px;
+  @include options-input-button($color);
+  &--star {
+    fill: rgba($color, 0.2);
+  }
+}

@@ -1,0 +1,24 @@
+
+@import "~bemuse/ui/common";
+@import "options-input-common";
+
+.options-input-key {
+  &--contents {
+    width: 100%;
+    height: 100%;
+    background: rgba(#000, 0.1);
+    border-radius: 4px;
+  }
+  @mixin color($color) {
+    .options-input-key--contents {
+      @include options-input-button($color);
+    }
+  }
+  @include color(#feb);
+  &[data-n="2"], &[data-n="6"] {
+    @include color(#abf);
+  }
+  &[data-n="4"] {
+    @include color(#bfa);
+  }
+}

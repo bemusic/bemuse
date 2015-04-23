@@ -1,0 +1,24 @@
+
+@import "~bemuse/ui/common";
+
+.options-input {
+  display: flex;
+  align-items: stretch;
+  padding: 2em;
+  &--zone {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    &.is-scratch {
+      margin-right: 24px;
+    }
+  }
+  &--control {
+    flex: 1;
+  }
+  &--title {
+    text-align: center;
+    padding-top: 1ex;
+    color: #8b8685;
+  }
+}

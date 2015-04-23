@@ -3,13 +3,18 @@
 
 .modal-popup {
   @include full-screen;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 10000;
   &--backdrop {
     @include full-screen;
     background: rgba(#111, 0.5);
+    z-index: 1;
   }
   &--contents {
-    @include centered;
+    position: relative;
+    z-index: 2;
   }
   &:not(.is-visible) {
     display: none;

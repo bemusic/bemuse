@@ -1,20 +1,20 @@
 
 import _          from 'lodash'
-import $          from 'jquery'
 import Bacon      from 'baconjs'
 import { Store }  from 'bemuse/flux'
 
 import * as GameLauncher from '../game-launcher'
 import * as Actions      from '../actions/music-select-actions'
+import CollectionStore   from './collection-store'
 
-const $server       = Bacon.constant({ url: '/music' })
-const $collection   = $server.flatMapLatest(loadCollection)
+const $server       = CollectionStore.map(state => state.server)
+const $collection   = CollectionStore.map(state => state.collection)
+const $loading      = $collection.map(({ loading }) => loading)
 
-const $loading      = $collection.map(({ loading }) => loading).toProperty(true)
 const $songs        = $collection.map(({ collection }) =>
     _((collection && collection.songs) || [])
         .sortBy(song => song.tutorial ? 0 : 1)
-        .value()).toProperty([])
+        .value())
 
 const $levelAnchor  = Bacon.update(
     0,
@@ -62,17 +62,6 @@ export default new Store({
   chart:      $chart,
   filterText: $filterText,
 })
-
-function loadCollection(server) {
-  let promise = Promise.resolve($.get(server.url + '/index.json'))
-  .then(function(collection) {
-    return { loading: false, collection: collection }
-  })
-  .catch(function(e) {
-    return { loading: false, error: e }
-  })
-  return Bacon.once({ loading: true }).merge(Bacon.fromPromise(promise))
-}
 
 function matches(song, filterText) {
   if (!filterText) return true
