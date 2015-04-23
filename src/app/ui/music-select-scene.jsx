@@ -13,6 +13,8 @@ import Options          from './options'
 import Store            from '../stores/music-select-store'
 import * as Actions     from '../actions/music-select-actions'
 
+import { shouldShowOptions } from 'bemuse/devtools/query-flags'
+
 React.initializeTouchEvents(true)
 
 export default React.createClass({
@@ -59,7 +61,7 @@ export default React.createClass({
   getInitialState() {
     return {
       musicSelect: Store.get(),
-      optionsVisible: true,
+      optionsVisible: shouldShowOptions(),
       inSong: false,
     }
   },
