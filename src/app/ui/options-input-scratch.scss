@@ -4,14 +4,15 @@
 
 .options-input-scratch {
   $color: #faa;
-  width: 200px;
-  height: 200px;
+  width: 160px;
+  height: 160px;
   background: rgba(#000, 0.1);
   border-radius: 200px;
   position: relative;
   @include options-input-button($color);
   > svg {
-    @include centered;
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%;
   }
   &--star {
     fill: rgba($color, 0.2);

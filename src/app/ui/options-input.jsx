@@ -1,14 +1,16 @@
 
 import './options-input.scss'
-import React    from 'react'
-import keycode  from 'keycode'
-
-import OptionsInputScratch from './options-input-scratch'
-import OptionsInputKeys    from './options-input-keys'
+import React                from 'react'
+import { Binding }          from 'bemuse/flux'
+import Store                from '../stores/options-input-store'
+import * as Actions         from '../actions/options-input-actions'
+import OptionsInputScratch  from './options-input-scratch'
+import OptionsInputKeys     from './options-input-keys'
 
 export default React.createClass({
   render() {
     return <div className="options-input">
+      <Binding store={Store} onChange={this.handleState} />
       <div className="options-input--zone is-scratch">
         <div className="options-input--control">
           <OptionsInputScratch text={this.state.texts['SC']}
@@ -33,20 +35,16 @@ export default React.createClass({
     </div>
   },
   getInitialState() {
-    return {
-      editing: null,
-      order: ['SC', '1', '2', '3', '4', '5', '6', '7', null],
-      texts: {
-        'SC': 'Shift', '1': 'Z', '2': 'S', '3': 'X',
-        '4': 'D', '5': 'C', '6': 'F', '7': 'V',
-      },
-    }
+    return Store.get()
+  },
+  handleState(state) {
+    this.setState(state)
   },
   handleEdit(key) {
     if (this.state.editing === key) {
-      this.setState({ editing: null })
+      Actions.deselectKey()
     } else {
-      this.setState({ editing: key })
+      Actions.selectKey(key)
     }
   },
   componentDidMount() {
@@ -59,10 +57,7 @@ export default React.createClass({
     if (this.state.editing) {
       e.stopPropagation()
       e.preventDefault()
-      this.state.texts[this.state.editing] = keycode(e.keyCode)
-          .replace(/[a-z]/, x => x.toUpperCase())
-      let index = this.state.order.indexOf(this.state.editing)
-      this.setState({ editing: this.state.order[index + 1] })
+      Actions.setKeyCode(this.state.editing, e.keyCode)
     }
   },
 })

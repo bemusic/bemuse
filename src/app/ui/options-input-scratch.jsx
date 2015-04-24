@@ -9,7 +9,7 @@ export default React.createClass({
         className={c('options-input-scratch',
             { 'is-editing': this.props.isEditing })}
         onClick={this.handleClick}>
-      <svg width="200" height="200" viewBox="-100 -100 200 200">
+      <svg viewBox="-100 -100 200 200">
         <path d={star()} className="options-input-scratch--star" />
       </svg>
       <div className="options-input-scratch--text">{this.props.text}</div>
