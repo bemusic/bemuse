@@ -27,6 +27,11 @@
     font-weight: bold;
   }
 
+  &--highlight {
+    background: #ffa;
+    color: #a00;
+  }
+
   &.is-active {
     background: rgba(#fff, 0.95);
     border: 5px solid rgba(#000, 0.2);

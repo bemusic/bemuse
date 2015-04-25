@@ -3,6 +3,7 @@ import './music-chart-selector-item.scss'
 
 import React  from 'react'
 import c      from 'classnames'
+import Icon   from 'react-fa'
 
 export default React.createClass({
 
@@ -17,8 +18,13 @@ export default React.createClass({
       {
         this.props.isTutorial
         ? 'Start Tutorial'
-        : this.props.chart.info.level
+        : <span className="music-chart-selector-item--level">
+            {this.props.chart.info.level}
+          </span>
       }
+      <span className="music-chart-selector-item--play">
+        <Icon name="play" />
+      </span>
     </li>
   },
 

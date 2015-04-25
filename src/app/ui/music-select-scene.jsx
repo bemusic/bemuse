@@ -39,6 +39,7 @@ export default React.createClass({
               { 'is-in-song': this.state.inSong })}>
             <MusicList
                 songs={musicSelect.songs}
+                highlight={musicSelect.filterText}
                 selectedSong={musicSelect.song}
                 onSelect={this.handleSongSelect}
                 onTouch={this.handleMusicListTouch} />

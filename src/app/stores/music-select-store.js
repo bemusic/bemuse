@@ -66,7 +66,8 @@ export default new Store({
 function matches(song, filterText) {
   if (!filterText) return true
   return contains(song.title, filterText) ||
-      contains(song.artist, filterText)
+      contains(song.artist, filterText) ||
+      contains(song.genre, filterText)
 }
 
 function contains(haystack, needle) {

@@ -1,4 +1,6 @@
 
+@import "~bemuse/ui/common";
+
 .music-chart-selector-item {
   border: 2px solid #8ac;
   height: 12vmin;
@@ -8,10 +10,28 @@
   background: rgba(#fff, 0.8);
   border-radius: 2vmin;
   cursor: pointer;
+  position: relative;
   &.is-active {
     background: #8ac;
     color: white;
     animation: 3s music-chart-selector-item--active-animation infinite;
+  }
+  &--level {
+    opacity: 1;
+    transition: 0.3s opacity;
+  }
+  &--play {
+    @include centered;
+    opacity: 0;
+    transition: 0.3s opacity;
+  }
+  &:not(.is-tutorial).is-active:hover {
+    .music-chart-selector-item--play {
+      opacity: 1;
+    }
+    .music-chart-selector-item--level {
+      opacity: 0;
+    }
   }
 }
 
