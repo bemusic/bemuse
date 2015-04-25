@@ -7,19 +7,24 @@ export const startLoading   = new Action()
 export const finishLoading  = new Action()
 export const errorLoading   = new Action()
 
-export const loadCollection = new Action(url => ({ url }))
+let loadCollectionBus = new Bacon.Bus()
+export function loadCollection(url) {
+  loadCollectionBus.push({ url })
+}
 
-loadCollection
-.bus
+loadCollectionBus
 .flatMapLatest(server => {
-  let promise = Promise.resolve($.get(server.url + '/index.json'))
-  .then(function(collection) {
-    return () => finishLoading(collection)
+  let bus = new Bacon.Bus()
+  setTimeout(function() {
+    bus.push(() => startLoading(server))
+    Promise.resolve($.get(server.url + '/index.json'))
+    .then(function(collection) {
+      bus.push(() => finishLoading(collection))
+    })
+    .catch(function(e) {
+      bus.push(() => errorLoading(e))
+    })
   })
-  .catch(function(e) {
-    return () => errorLoading(e)
-  })
-  return Bacon.once(() => startLoading(server))
-      .merge(Bacon.fromPromise(promise))
+  return bus
 })
 .onValue(f => f())

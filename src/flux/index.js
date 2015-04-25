@@ -4,10 +4,20 @@ import React from 'react'
 
 export { Bacon }
 
+let lock = false
+
 export function Action(transform=x => x) {
   var bus = new Bacon.Bus()
   var action = function() {
-    bus.push(transform.apply(null, arguments))
+    if (lock) {
+      throw new Error('An action should not fire another action!')
+    }
+    try {
+      lock = true
+      bus.push(transform.apply(null, arguments))
+    } finally {
+      lock = false
+    }
   }
   action.bus = bus
   action.debug = function(prefix) {
