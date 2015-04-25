@@ -78,7 +78,7 @@ export default React.createClass({
   },
   handleChartClick(chart) {
     if (this.state.musicSelect.chart.md5 === chart.md5) {
-      Actions.launchGame()
+      Actions.launchGame({ scene: this.props.scene })
     } else {
       Actions.selectChart(chart)
     }

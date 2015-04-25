@@ -15,7 +15,7 @@ import GameScene              from 'bemuse/game/game-scene'
 import LoadingScene           from 'bemuse/game/ui/loading-scene.jsx'
 import * as Options           from './options'
 
-export function launch({ server, song, chart }) {
+export function launch({ server, song, chart, scene: originalScene }) {
   return co(function*() {
     if (screenfull.enabled) {
       let safari = /Safari/.test(navigator.userAgent) &&
@@ -42,13 +42,20 @@ export function launch({ server, song, chart }) {
       },
     }
     let { tasks, promise } = GameLoader.load(loadSpec)
-    let scene = React.createElement(LoadingScene, {
+    let loadingScene = React.createElement(LoadingScene, {
       tasks: tasks,
       song:  chart.info,
     })
-    yield SCENE_MANAGER.display(scene)
+    yield SCENE_MANAGER.display(loadingScene)
     let controller = yield promise
     yield SCENE_MANAGER.display(new GameScene(controller.display))
     controller.start()
+    let state = yield controller.promise
+    if (state.finished) {
+      // TODO: display evaluation result
+    }
+    yield SCENE_MANAGER.display(originalScene)
+    controller.destroy()
+
   })
 }

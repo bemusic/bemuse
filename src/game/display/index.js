@@ -12,6 +12,9 @@ export class GameDisplay {
   start() {
     this._started = new Date().getTime()
   }
+  destroy() {
+    this._context.destroy()
+  }
   update(gameTime, gameState) {
     let time = (new Date().getTime() - this._started) / 1000
     let data = { }

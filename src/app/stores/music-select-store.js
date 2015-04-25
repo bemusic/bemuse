@@ -15,7 +15,10 @@ export function MusicSelectStoreFactory(CollectionStore) {
 
   const $songs        = $collection.map(({ collection }) =>
       _((collection && collection.songs) || [])
-          .sortBy(song => song.tutorial ? 0 : 1)
+          .sortByAll([
+            song => song.tutorial ? 0 : 1,
+            song => song.title.toLowerCase(),
+          ])
           .value())
 
   const $levelAnchor  = Bacon.update(
@@ -52,8 +55,8 @@ export function MusicSelectStoreFactory(CollectionStore) {
   Bacon.when(
       [Actions.launchGame.bus,
           $server, $song, $chart], (e, server, song, chart) => (
-              { server, song, chart }))
-  .onValue(options => GameLauncher.launch(options))
+              { server, song, chart, scene: e.scene }))
+  .onValue(options => GameLauncher.launch(options).done())
 
   return new Store({
     loading:    $loading,

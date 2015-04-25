@@ -14,6 +14,7 @@ export class Notechart {
     let keysounds   = BMS.Keysounds.fromBMSChart(bms)
     this._timing    = timing
     this._keysounds = keysounds
+    this._duration  = 0
     this._notes     = this._generatePlayableNotesFromBMS(bmsNotes)
     this._autos     = this._generateAutoKeysoundEventsFromBMS(bmsNotes)
     this._barLines  = this._generateBarLines(bmsNotes, bms)
@@ -50,6 +51,11 @@ export class Notechart {
   // An Array of all column names in this notechart.
   get columns() {
     return ['SC', '1', '2', '3', '4', '5', '6', '7']
+  }
+
+  // Notechart's duration (time of last event)
+  get duration() {
+    return this._duration
   }
 
   // Returns the characteristic of the note as an Object.
@@ -92,13 +98,19 @@ export class Notechart {
       spec.id       = nextId++
       spec.column   = note.column.column
       spec.keysound = note.keysound
+      this._updateDuration(spec)
       if (note.endBeat !== undefined) {
         spec.end = this._generateEvent(note.endBeat)
+        this._updateDuration(spec.end)
       } else {
         spec.end = undefined
       }
       return new GameNote(spec)
     })
+  }
+
+  _updateDuration(event) {
+    if (event.time > this._duration) this._duration = event.time
   }
 
   _generateAutoKeysoundEventsFromBMS(bmsNotes) {

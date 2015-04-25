@@ -47,6 +47,7 @@ export class GameController {
     this._state   = new GameState(game)
     this._input.use(new GameKeyboardPlugin(game))
     this._input.use(new TouchPlugin(this._display.context))
+    this._promise = new Promise((resolve) => this._resolvePromise = resolve)
     this.enableBenchmark()
   }
   get game() {
@@ -58,19 +59,33 @@ export class GameController {
   get audio() {
     return this._audio
   }
+  get promise() {
+    return this._promise
+  }
 
   // Initializes the game components and kickstarts the game loop.
   start() {
     this._display.start()
     if (/Mobile.*?Safari/.test(navigator.userAgent)) {
-      setInterval(() => this._update(), 10)
+      let id = setInterval(() => this._update(), 10)
+      this._endGameLoop = () => clearInterval(id)
     } else {
+      let stopped = false
       let frame = () => {
+        if (stopped) return
         this._update()
         requestAnimationFrame(frame)
       }
       requestAnimationFrame(frame)
+      this._endGameLoop = () => stopped = true
     }
+  }
+
+  // Destroy the game.
+  destroy() {
+    this._endGameLoop()
+    this._audio.destroy()
+    this._display.destroy()
   }
 
   _update() {
@@ -108,6 +123,10 @@ export class GameController {
     this._state.update(t - A, this._input, this._timer)
     this._audio.update(t,     this._state)
     this._display.update(t,   this._state)
+    if (this._state.finished && this._resolvePromise) {
+      this._resolvePromise(this._state)
+      this._resolvePromise = null
+    }
   }
 
   enableBenchmark() {
