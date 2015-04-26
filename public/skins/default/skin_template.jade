@@ -11,7 +11,7 @@ include _lib/common
         keyframe(t='0.6' x='0' ease='quadOut')
       sprite(image='NotePanel/Left.png' x='0' y='0')
       group(x='34' y='0')
-        +note-area(mode.iidx_l)
+        +all-note-area
 
   // note panel (Center)
   #{'if'}(key='p1_placement' value='center')
@@ -21,7 +21,7 @@ include _lib/common
         keyframe(t='0.6' alpha='1' ease='quadOut')
       sprite(image='NotePanel/Middle.png' x='0' y='0')
       group(x='42' y='0')
-        +note-area(mode.iidx_l)
+        +all-note-area
 
   // note panel (Right)
   #{'if'}(key='p1_placement' value='right')
@@ -31,7 +31,7 @@ include _lib/common
         keyframe(t='0.6' x='919' ease='quadOut')
       sprite(image='NotePanel/Right.png' x='0' y='0')
       group(x='42' y='0')
-        +note-area(mode.iidx_r)
+        +all-note-area
         
   // info panel
   group(y='616')
@@ -53,7 +53,7 @@ include _lib/common
       keyframe(t='0.6' alpha='1' ease='quadOut')
     sprite(image='Touch/NotePanel.png' x='0' y='0')
     group(x='42' y='0')
-      +note-area(mode.iidx_l)
+      +all-note-area
 
   // button panel
   group(y=(height - 311))
@@ -86,4 +86,3 @@ include _lib/common
     +button( 3, 1, 7)
     sprite(image='Touch/Scratch/ScratchAreaL.png' x=0 y=8 ref='p1_SC')
     sprite(image='Touch/Scratch/ScratchGlowL.png' x=0 y=6 alpha='p1_SC_active')
-

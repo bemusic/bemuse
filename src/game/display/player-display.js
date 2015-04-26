@@ -11,6 +11,7 @@ export class PlayerDisplay {
     this._stateful      = { }
     this._defaultData   = {
       placement: player.options.placement,
+      scratch:   player.options.scratch,
     }
   }
   update(time, gameTime, playerState) {

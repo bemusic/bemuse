@@ -39,7 +39,7 @@ export function main() {
   let getSong = co.wrap(function*() {
     let kbm = (query.keyboard || '').split(',').map(x => +x)
     let options = {
-      url: query.bms || '/music/[snack]ddddevelopers/dddd_sph.bme',
+      url: query.bms || '/music/[snack]dddd/dddd_sph.bme',
       game: {
         audioInputLatency: +query.audioInputLatency || 0,
       },
@@ -48,6 +48,7 @@ export function main() {
           speed:      +query.speed || 3.5,
           autoplay:   !!query.autoplay,
           placement:  'center',
+          scratch:    query.scratch || 'left',
           input: {
             keyboard: {
               '1':  kbm[0] || 83,
