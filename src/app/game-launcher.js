@@ -33,7 +33,8 @@ export function launch({ server, song, chart, scene: originalScene }) {
           {
             speed:      +query.speed || 1,
             autoplay:   false,
-            placement:  'center',
+            placement:  Options.get('player.P1.panel'),
+            scratch:    Options.get('player.P1.scratch'),
             input: {
               keyboard: Options.getKeyboardMapping(),
             }

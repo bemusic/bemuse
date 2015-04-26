@@ -1,0 +1,22 @@
+
+@import "~bemuse/ui/common";
+
+.options-player-graphics {
+  border: 1px solid #8b8685;
+  display: inline-block;
+  &.is-active {
+    border: 1px solid #bef;
+    outline: 1px solid #bef;
+  }
+  svg {
+    display: block;
+  }
+  &--line {
+    fill: none;
+    stroke: #8b8685;
+    stroke-width: 1;
+    .options-player-graphics.is-active & {
+      stroke: #a9a8a7;
+    }
+  }
+}
