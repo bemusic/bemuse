@@ -10,10 +10,10 @@ export function chart(code='') {
   return BMS.Compiler.compile(code).chart
 }
 
-export function notechart(code) {
-  return Notechart.fromBMSChart(chart(code))
+export function notechart(code, options={}) {
+  return Notechart.fromBMSChart(chart(code), 1, options)
 }
 
 export function playerWithBMS(code, options={}) {
-  return new Player(notechart(code), 1, options)
+  return new Player(notechart(code, 1, options), 1, options)
 }

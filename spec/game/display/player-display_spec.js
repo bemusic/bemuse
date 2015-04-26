@@ -24,6 +24,7 @@ describe('PlayerDisplay', function() {
       columns: ['wow'],
       options: {
         placement: 'center',
+        scratch: 'left',
       },
     })
 
@@ -132,4 +133,3 @@ describe('PlayerDisplay', function() {
   }
 
 })
-

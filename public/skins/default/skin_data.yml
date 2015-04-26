@@ -1,20 +1,28 @@
 styles:
-  scratch:  { x:   0, width: 61 }
-  white:    { x:  62, width: 34 }
-  blue:     { x:  97, width: 26 }
-  green:    { x: 159, width: 26 }
+  scratch:  { x:   0, width: 61, image: 'Note/DX/Note.png' }
+  white:    { x:  62, width: 34, image: 'Note/DX/Note.png' }
+  blue:     { x:  97, width: 26, image: 'Note/DX/Note.png' }
+  green:    { x: 159, width: 26, image: 'Note/DX/Note.png' }
+  lwhite:   { x:   0, width: 40, image: 'Note/KB/Note.png' }
+  lblue:    { x:  41, width: 37, image: 'Note/KB/Note.png' }
+  lgreen:   { x:  79, width: 42, image: 'Note/KB/Note.png' }
 
 hints:
   scratch:  { xoffset: 0, yoffset: 1, xadvance: 64, image: 'Scratch.png' }
   white:    { xoffset: 0, yoffset: 6, xadvance: 31, image: 'Note.png' }
   blue:     { xoffset: 0, yoffset: 0, xadvance: 31, image: 'Note.png' }
   green:    { xoffset: 0, yoffset: 0, xadvance: 31, image: 'Note.png' }
+  lwhite:   { xoffset: 0, yoffset: 6, xadvance: 41, image: 'LNote.png' }
+  lblue:    { xoffset: 0, yoffset: 0, xadvance: 41, image: 'LNote.png' }
+  lgreen:   { xoffset: 0, yoffset: 0, xadvance: 41, image: 'LNote.png' }
 
 area_height: 550
 
 mode:
   iidx_l:
     background: 'Note/DX/BackgroundLeft.png'
+    highlight: 'Note/DX/Highlight.png'
+    hintStart: 3
     columns:
       - { style: 'scratch', channel: 'SC' }
       - { style: 'white',   channel: '1' }
@@ -24,9 +32,10 @@ mode:
       - { style: 'white',   channel: '5' }
       - { style: 'blue',    channel: '6' }
       - { style: 'white',   channel: '7' }
-
   iidx_r:
     background: 'Note/DX/BackgroundRight.png'
+    highlight: 'Note/DX/Highlight.png'
+    hintStart: 3
     columns:
       - { style: 'white',   channel: '1' }
       - { style: 'blue',    channel: '2' }
@@ -36,4 +45,15 @@ mode:
       - { style: 'blue',    channel: '6' }
       - { style: 'white',   channel: '7' }
       - { style: 'scratch', channel: 'SC' }
-
+  kb:
+    background: 'Note/KB/Background.png'
+    highlight: 'Note/KB/Highlight.png'
+    hintStart: 0
+    columns:
+      - { style: 'lwhite',  channel: '1' }
+      - { style: 'lblue',   channel: '2' }
+      - { style: 'lwhite',  channel: '3' }
+      - { style: 'lgreen',  channel: '4' }
+      - { style: 'lwhite',  channel: '5' }
+      - { style: 'lblue',   channel: '6' }
+      - { style: 'lwhite',  channel: '7' }

@@ -282,5 +282,18 @@ describe('Scintillator', function() {
     }))
   })
 
-})
+  describe('defs', function() {
+    it('should allow reuse of skin nodes', co.wrap(function*() {
+      let skin = yield Scintillator.load(fixture('defs.xml'))
+      let context = new Scintillator.Context(skin)
+      context.render({})
+      let stage = context.stage
+      expect(stage.children[0].x).to.equal(6)
+      expect(stage.children[0].y).to.equal(7)
+      expect(stage.children[1].x).to.equal(6)
+      expect(stage.children[1].y).to.equal(7)
+      context.destroy()
+    }))
+  })
 
+})

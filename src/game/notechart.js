@@ -8,10 +8,11 @@ import GameNote   from './data/game-note'
 // A notechart holds every info about a single player's note chart that the
 // game will ever need.
 export class Notechart {
-  constructor(bms) {
-    let bmsNotes    = BMS.Notes.fromBMSChart(bms)
+  constructor(bms, playerNumber=1, playerOptions={ }) {
+    let bmsNotes    = BMS.Notes.fromBMSChart(bms).all()
     let timing      = BMS.Timing.fromBMSChart(bms)
     let keysounds   = BMS.Keysounds.fromBMSChart(bms)
+    this._preTransform(bmsNotes, playerOptions)
     this._timing    = timing
     this._keysounds = keysounds
     this._duration  = 0
@@ -89,9 +90,19 @@ export class Notechart {
     return this.beatToPosition(this.secondsToBeat(seconds))
   }
 
+  _preTransform(bmsNotes, playerOptions) {
+    if (playerOptions.scratch === 'off') {
+      for (let note of bmsNotes) {
+        if (note.column && note.column.column === 'SC') {
+          note.column = null
+        }
+      }
+    }
+  }
+
   _generatePlayableNotesFromBMS(bmsNotes) {
     let nextId = 1
-    return bmsNotes.all()
+    return bmsNotes
     .filter(note => note.column)
     .map(note => {
       let spec = this._generateEvent(note.beat)
@@ -114,7 +125,7 @@ export class Notechart {
   }
 
   _generateAutoKeysoundEventsFromBMS(bmsNotes) {
-    return bmsNotes.all()
+    return bmsNotes
     .filter(note => !note.column)
     .map(note => {
       let spec = this._generateEvent(note.beat)
@@ -124,7 +135,7 @@ export class Notechart {
   }
 
   _generateBarLines(bmsNotes, bms) {
-    let max = _.max(bmsNotes.all().map(note => note.endBeat || note.beat))
+    let max = _.max(bmsNotes.map(note => note.endBeat || note.beat))
     let barLines = [ { beat: 0, position: 0 } ]
     let currentBeat     = 0
     let currentMeasure  = 0

@@ -4,6 +4,9 @@
 .options {
   display: flex;
   flex-direction: row-reverse;
+  @media (orientation: portrait) {
+    flex-direction: column;
+  }
   &--vgroup {
     display: flex;
     flex-direction: column;
