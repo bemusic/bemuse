@@ -12,8 +12,18 @@ export class GameDisplay {
   start() {
     this._started = new Date().getTime()
   }
+  destroy() {
+    this._context.destroy()
+  }
   update(gameTime, gameState) {
     let time = (new Date().getTime() - this._started) / 1000
+    let data = this._getData(time, gameTime, gameState)
+    if (this._stateful.started === undefined) {
+      if (gameState.started) this._stateful.started = time
+    }
+    this._context.render(Object.assign({ }, this._stateful, data))
+  }
+  _getData(time, gameTime, gameState) {
     let data = { }
     data.t        = time
     data.gameTime = gameTime
@@ -24,10 +34,7 @@ export class GameDisplay {
         data[`p${player.number}_${key}`] = playerData[key]
       }
     }
-    if (this._stateful.started === undefined) {
-      if (gameState.started) this._stateful.started = time
-    }
-    this._context.render(Object.assign({ }, this._stateful, data))
+    return data
   }
   get context() {
     return this._context

@@ -12,6 +12,7 @@ export class PlayerState {
     this._noteBufferByColumn = _(player.notechart.notes)
       .sortBy('time').groupBy('column').mapValues(noteBuffer(this)).value()
     this._noteResult    = new Map()
+    this._duration      = player.notechart.duration
 
     // The PlayerStats object.
     this.stats          = new PlayerStats(player.notechart)
@@ -21,6 +22,14 @@ export class PlayerState {
 
     // The current note scrolling speed.
     this.speed          = player.options.speed
+
+    // ``true`` if finished playing, ``false`` otherwise.
+    this.finished       = false
+  }
+
+  // The `Player` associated with this `PlayerState`.
+  get player() {
+    return this._player
   }
 
   // Updates the state. Judge the notes and emit notifications.
@@ -33,6 +42,7 @@ export class PlayerState {
     this._updateInputColumnMap()
     this._judgeNotes()
     this._updateSpeed()
+    if (gameTime > this._duration + 1) this.finished = true
   }
 
   // Returns the status of the note as a string. The results may be:

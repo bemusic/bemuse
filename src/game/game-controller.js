@@ -3,35 +3,10 @@ import GameTimer from './game-timer'
 import GameState from './state'
 import GameInput from './input'
 import Clock     from './clock'
+import bench     from 'bemuse/devtools/benchmark'
 
 import TouchPlugin        from './input/touch-plugin'
 import GameKeyboardPlugin from './input/game-keyboard-plugin'
-
-function Benchmarker() {
-  var stats = { }
-  var sum = { }
-  var count = { }
-  var now = window.performance ?
-        () => window.performance.now() :
-        () => Date.now()
-  return {
-    stats,
-    benchmark(title, obj, name) {
-      let old = obj[name]
-      obj[name] = function() {
-        try {
-          var start = now()
-          return old.apply(this, arguments)
-        } finally {
-          var finish = now()
-          sum[title] = (sum[title] || 0) + finish - start
-          count[title] = (count[title] || 0) + 1
-          stats[title] = sum[title] / count[title]
-        }
-      }
-    },
-  }
-}
 
 // The GameController takes care of communications between each game
 // component, and takes care of the Game loop.
@@ -47,7 +22,8 @@ export class GameController {
     this._state   = new GameState(game)
     this._input.use(new GameKeyboardPlugin(game))
     this._input.use(new TouchPlugin(this._display.context))
-    this.enableBenchmark()
+    this._promise = new Promise((resolve) => this._resolvePromise = resolve)
+    if (bench.enabled) this.enableBenchmark()
   }
   get game() {
     return this._game
@@ -58,19 +34,33 @@ export class GameController {
   get audio() {
     return this._audio
   }
+  get promise() {
+    return this._promise
+  }
 
   // Initializes the game components and kickstarts the game loop.
   start() {
     this._display.start()
     if (/Mobile.*?Safari/.test(navigator.userAgent)) {
-      setInterval(() => this._update(), 10)
+      let id = setInterval(() => this._update(), 10)
+      this._endGameLoop = () => clearInterval(id)
     } else {
+      let stopped = false
       let frame = () => {
+        if (stopped) return
         this._update()
         requestAnimationFrame(frame)
       }
       requestAnimationFrame(frame)
+      this._endGameLoop = () => stopped = true
     }
+  }
+
+  // Destroy the game.
+  destroy() {
+    this._endGameLoop()
+    this._audio.destroy()
+    this._display.destroy()
   }
 
   _update() {
@@ -108,30 +98,23 @@ export class GameController {
     this._state.update(t - A, this._input, this._timer)
     this._audio.update(t,     this._state)
     this._display.update(t,   this._state)
+    if (this._state.finished && this._resolvePromise) {
+      this._resolvePromise(this._state)
+      this._resolvePromise = null
+    }
   }
 
   enableBenchmark() {
-    let bench = window.GAME_BENCHMARK = this._bench = new Benchmarker()
     bench.benchmark('update', this, '_update')
     bench.benchmark('input_update', this._input, 'update')
     bench.benchmark('state_update', this._state, 'update')
     bench.benchmark('audio_update', this._audio, 'update')
     bench.benchmark('display_update', this._display, 'update')
+    bench.benchmark('display_compute', this._display, '_getData')
     bench.benchmark('display_push',
         this._display._context._instance, 'push')
     bench.benchmark('display_render',
         this._display._context._renderer, 'render')
-    let button = document.createElement('button')
-    button.innerHTML = 'Show Benchmark Stats'
-    button.addEventListener('click', handler)
-    button.addEventListener('touchstart', handler)
-    button.setAttribute('style',
-        'position:fixed;top:10px;right:10px;z-index:99999')
-    document.body.appendChild(button)
-    function handler(e) {
-      alert('Benchmarking Result\n' + JSON.stringify(bench.stats, null, 2))
-      e.preventDefault()
-    }
   }
 
 }

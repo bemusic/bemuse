@@ -8,6 +8,9 @@ export class GameAudio {
     this._players = new Map(game.players.map(player =>
       [player, new PlayerAudio({ player, samples, master })]))
   }
+  destroy() {
+    this._master.destroy()
+  }
   unmute() {
     this._master.unmute()
   }

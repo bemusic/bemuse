@@ -14,6 +14,10 @@ import React  from 'react'
 //      }
 //    })
 //
+// Behind the scene, are using some advanced techniques which requires
+// the scene class to be declared using ``React.createClass`` (not by extending
+// ``React.Component``)
+//
 // To use the SceneManager, get the instance and use it::
 //
 //    import SCENE_MANAGER from 'bemuse/scene-manager'
@@ -61,9 +65,14 @@ export default instance
 function ReactScene(element) {
   return function instantiate(container) {
     let component = React.render(element, container)
+    component.setProps({ scene: element })
     return {
       teardown() {
-        if (component.teardown) return component.teardown()
+        return Promise.try(() => {
+          if (component.teardown) return component.teardown()
+        }).then(() => {
+          React.unmountComponentAtNode(container)
+        })
       }
     }
   }

@@ -1,40 +1,52 @@
 
+import bench from 'bemuse/devtools/benchmark'
+
 let BUTTONS = ['p1_1', 'p1_2', 'p1_3', 'p1_4', 'p1_5', 'p1_6', 'p1_7', 'start']
 
 export function TouchPlugin(context) {
   let scratchStartY = null
   let scratchY = null
+  let getInput = bench.wrap('input:touch:I', _getInput)
+  let getScratch = bench.wrap('input:touch:SC', _getScratch)
+  let getButton = bench.wrap('input:touch:B', _getButton)
+  let getPinch = bench.wrap('input:touch:P', _getPinch)
   return {
+    name: 'TouchPlugin',
     get() {
+      let input = getInput()
       let output = { }
-      output['p1_SC'] = getScratch()
+      if (bench.enabled) bench.stats['input:touch:n'] = '' + input.length
+      output['p1_SC'] = getScratch(input)
       for (let button of BUTTONS) {
-        output[button] = getButton(button)
+        output[button] = getButton(input, button)
       }
-      output['p1_pinch'] = getPinch()
+      output['p1_pinch'] = getPinch(input)
       return output
     }
   }
-  function getButton(button) {
+  function _getInput() {
+    return context.input
+  }
+  function _getButton(input, button) {
     let objects = context.refs[button]
     if (objects) {
       for (let object of objects) {
         let bounds = object.getBounds()
-        for (let input of context.input) {
-          if (bounds.contains(input.x, input.y)) return 1
+        for (let p of input) {
+          if (bounds.contains(p.x, p.y)) return 1
         }
       }
     }
     return 0
   }
-  function getScratch() {
+  function _getScratch(input) {
     let objects = context.refs['p1_SC']
     if (!objects) return 0
     scratchY = null
-    for (let input of context.input) {
+    for (let p of input) {
       for (let object of objects) {
-        if (object.getBounds().contains(input.x, input.y)) {
-          scratchY = input.y
+        if (object.getBounds().contains(p.x, p.y)) {
+          scratchY = p.y
           break
         }
       }
@@ -59,15 +71,15 @@ export function TouchPlugin(context) {
       scratchY < scratchStartY - 4 ? 1 : 0
     )
   }
-  function getPinch() {
+  function _getPinch(input) {
     let a = null
     let b = null
-    for (let input of context.input) {
-      if (input.y < 550) {
+    for (let p of input) {
+      if (p.y < 550) {
         if (a === null) {
-          a = input.y
+          a = p.y
         } else if (b === null) {
-          b = input.y
+          b = p.y
         } else {
           return 0
         }

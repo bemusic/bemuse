@@ -293,7 +293,17 @@ describe('PlayerState', function() {
       })
     })
 
+    describe('finish', function() {
+      it('should become true when song is finished', function() {
+        setup('#00111:0101')
+        expect(state.finished).to.equal(false)
+        advance(4.0, { })
+        expect(state.finished).to.equal(false)
+        advance(16.0, { })
+        expect(state.finished).to.equal(true)
+      })
+    })
+
   })
 
 })
-

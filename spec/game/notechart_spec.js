@@ -25,6 +25,17 @@ describe('Notechart', function() {
     })
   })
 
+  describe('#duration', function() {
+    it('should return the duration of notechart', function() {
+      var subject = notechart('#00111:0101')
+      expect(subject.duration).to.equal(6)
+    })
+    it('should work with long notes', function() {
+      var subject = notechart('#00151:0101')
+      expect(subject.duration).to.equal(6)
+    })
+  })
+
   describe('#keysounds', function() {
     it('should return an object of all keysounds', function() {
       var subject = notechart(
@@ -94,4 +105,3 @@ describe('Notechart', function() {
   })
 
 })
-

@@ -1,6 +1,7 @@
 
 import Control  from './control'
 import _        from 'lodash'
+import bench    from 'bemuse/devtools/benchmark'
 
 function GamepadPlugin() {
   let gamepads = []
@@ -18,6 +19,7 @@ function GamepadPlugin() {
     return 0
   }
   return {
+    name: 'GamepadPlugin',
     get() {
       var out = {
         'p1_1': button(3),
@@ -79,7 +81,8 @@ export class GameInput {
   }
   use(plugin) {
     let state = { }
-    this._plugins.push(function() {
+    let name = 'input:' + plugin.name
+    this._plugins.push(bench.wrap(name, function() {
       let out = plugin.get()
       let diff = [ ]
       for (let key of _.union(_.keys(out), _.keys(state))) {
@@ -89,7 +92,7 @@ export class GameInput {
         state[key] = current
       }
       return diff
-    })
+    }))
   }
 }
 
