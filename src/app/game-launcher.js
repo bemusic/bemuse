@@ -4,13 +4,16 @@ import { resolve }  from 'url'
 import screenfull   from 'screenfull'
 import React        from 'react'
 
+// TODO: remove this dependency and use Options
 import query                  from 'bemuse/utils/query'
+
 import SCENE_MANAGER          from 'bemuse/scene-manager'
 import URLResource            from 'bemuse/resources/url'
 import BemusePackageResources from 'bemuse/resources/bemuse-package'
 import * as GameLoader        from 'bemuse/game/loaders/game-loader'
 import GameScene              from 'bemuse/game/game-scene'
 import LoadingScene           from 'bemuse/game/ui/loading-scene.jsx'
+import * as Options           from './options'
 
 export function launch({ server, song, chart }) {
   return co(function*() {
@@ -28,9 +31,12 @@ export function launch({ server, song, chart }) {
         audioInputLatency: +query.latency || 0,
         players: [
           {
-            speed:      +query.speed || 3,
+            speed:      +query.speed || 1,
             autoplay:   false,
             placement:  'center',
+            input: {
+              keyboard: Options.getKeyboardMapping(),
+            }
           },
         ],
       },

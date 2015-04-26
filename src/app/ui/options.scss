@@ -1,0 +1,14 @@
+
+@import "~bemuse/ui/common";
+
+.options {
+  display: flex;
+  flex-direction: row-reverse;
+  &--vgroup {
+    display: flex;
+    flex-direction: column;
+  }
+  .options-panel {
+    margin: 0.8em;
+  }
+}

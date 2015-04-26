@@ -1,0 +1,30 @@
+
+@import "~bemuse/ui/common";
+
+.options-input-keys {
+  width: 240px;
+  height: 160px;
+  position: relative;
+  $spacing: 12px;
+  &--keys {
+    position: absolute;
+    top: 0; right: -$spacing; bottom: -$spacing; left: 0;
+  }
+  .options-input-key {
+    position: absolute;
+    box-sizing: border-box;
+    width: 25%;
+    height: 50%;
+    padding-bottom: $spacing;
+    padding-right: $spacing;
+    &[data-n="1"], &[data-n="3"], &[data-n="5"], &[data-n="7"] { top: 50%; }
+    &[data-n="2"], &[data-n="4"], &[data-n="6"] { top: 0%; }
+    &[data-n="1"] { left: 0%; }
+    &[data-n="2"] { left: 12.5%; }
+    &[data-n="3"] { left: 25%; }
+    &[data-n="4"] { left: 37.5%; }
+    &[data-n="5"] { left: 50%; }
+    &[data-n="6"] { left: 62.5%; }
+    &[data-n="7"] { left: 75%; }
+  }
+}

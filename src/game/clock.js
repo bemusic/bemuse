@@ -1,4 +1,6 @@
 
+import now from 'bemuse/utils/now'
+
 // The game clock provides a high-accuracy time source for the game.
 //
 // We want our timing to be based on audio. If the audio lags, the time
@@ -22,7 +24,7 @@ export class Clock {
 
   // Updates the clock. This method should be called every frame.
   update() {
-    let realTime  = new Date().getTime() / 1000
+    let realTime  = now() / 1000
     let delta     = realTime - this._context.currentTime
     this._offset.push(delta)
     this._sum += delta

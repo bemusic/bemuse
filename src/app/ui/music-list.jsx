@@ -13,7 +13,8 @@ export default React.createClass({
           key={song.id}
           song={song}
           selected={song.id === this.props.selectedSong.id}
-          onSelect={this.props.onSelect} />)}
+          onSelect={this.props.onSelect}
+          highlight={this.props.highlight} />)}
     </ul>
   },
 

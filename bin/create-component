@@ -1,0 +1,36 @@
+#!/usr/bin/env babel-node
+
+import { writeFileSync } from 'fs'
+import { basename } from 'path'
+
+let path = process.argv[2]
+let jsx   = path + '.jsx'
+let scss  = path + '.scss'
+let 名    = basename(path)
+
+let jsxData = `
+import './名.scss'
+import React from 'react'
+import c     from 'classnames'
+
+export default React.createClass({
+  render() {
+    return <div className="名"></div>
+  }
+})
+`.replace(/名/g, 名)
+
+let scssData = `
+@import "~bemuse/ui/common";
+
+.名 {
+}
+`.replace(/名/g, 名)
+
+write(jsx, jsxData)
+write(scss, scssData)
+
+function write(target, content) {
+  console.log('Writing: ' + target)
+  writeFileSync(target, content)
+}

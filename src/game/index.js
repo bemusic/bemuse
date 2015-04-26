@@ -37,6 +37,7 @@ export function main() {
   }
 
   let getSong = co.wrap(function*() {
+    let kbm = (query.keyboard || '').split(',').map(x => +x)
     let options = {
       url: query.bms || '/music/[snack]ddddevelopers/dddd_sph.bme',
       game: {
@@ -47,6 +48,18 @@ export function main() {
           speed:      +query.speed || 3.5,
           autoplay:   !!query.autoplay,
           placement:  'center',
+          input: {
+            keyboard: {
+              '1':  kbm[0] || 83,
+              '2':  kbm[1] || 68,
+              '3':  kbm[2] || 70,
+              '4':  kbm[3] || 32,
+              '5':  kbm[4] || 74,
+              '6':  kbm[5] || 75,
+              '7':  kbm[6] || 76,
+              'SC': kbm[7] || 65,
+            },
+          },
         }
       ],
     }

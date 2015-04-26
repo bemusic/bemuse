@@ -8,6 +8,7 @@ export class Player {
       autosound: !!options.autosound,
       speed:      +options.speed,
       placement:   options.placement || 'center',
+      input:       options.input,
     }
   }
 

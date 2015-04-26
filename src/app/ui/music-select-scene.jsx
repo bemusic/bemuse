@@ -9,8 +9,11 @@ import SceneHeading     from 'bemuse/ui/scene-heading'
 import ModalPopup       from 'bemuse/ui/modal-popup'
 import MusicList        from './music-list'
 import MusicInfo        from './music-info'
+import Options          from './options'
 import Store            from '../stores/music-select-store'
 import * as Actions     from '../actions/music-select-actions'
+
+import { shouldShowOptions } from 'bemuse/devtools/query-flags'
 
 React.initializeTouchEvents(true)
 
@@ -36,6 +39,7 @@ export default React.createClass({
               { 'is-in-song': this.state.inSong })}>
             <MusicList
                 songs={musicSelect.songs}
+                highlight={musicSelect.filterText}
                 selectedSong={musicSelect.song}
                 onSelect={this.handleSongSelect}
                 onTouch={this.handleMusicListTouch} />
@@ -50,7 +54,7 @@ export default React.createClass({
       <ModalPopup
           visible={this.state.optionsVisible}
           onBackdropClick={this.handleOptionsBackdropClick}>
-        Hello world
+        <Options />
       </ModalPopup>
     </Scene>
   },
@@ -58,7 +62,7 @@ export default React.createClass({
   getInitialState() {
     return {
       musicSelect: Store.get(),
-      optionsVisible: false,
+      optionsVisible: shouldShowOptions(),
       inSong: false,
     }
   },
