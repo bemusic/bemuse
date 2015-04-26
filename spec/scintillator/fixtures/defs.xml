@@ -1,0 +1,7 @@
+<skin width="123" height="456">
+  <defs>
+    <group x="1+2+3" y="3+4" id="wow" />
+  </defs>
+  <use def="wow" />
+  <use def="wow" />
+</skin>
