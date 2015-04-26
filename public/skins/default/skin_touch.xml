@@ -1,5 +1,39 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <skin width="768" height="928">
+  <defs>
+    <group id="dxbuttons">
+          <group x="72" y="160">
+            <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_1"></sprite>
+            <text x="75" y="32" text="Score" align="center" font="InfoSmall" font-src="Fonts/InfoSmall.fnt"></text>
+            <text x="75" y="56" text="%s" align="center" data="p1_score" font="ScoreNumberSmall" font-src="Fonts/ScoreNumberSmall.fnt"></text>
+            <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_1_active"></sprite>
+          </group>
+          <group x="151" y="20">
+            <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_2"></sprite>
+            <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_2_active"></sprite>
+          </group>
+          <group x="230" y="160">
+            <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_3"></sprite>
+            <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_3_active"></sprite>
+          </group>
+          <group x="309" y="20">
+            <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_4"></sprite>
+            <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_4_active"></sprite>
+          </group>
+          <group x="388" y="160">
+            <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_5"></sprite>
+            <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_5_active"></sprite>
+          </group>
+          <group x="467" y="20">
+            <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_6"></sprite>
+            <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_6_active"></sprite>
+          </group>
+          <group x="546" y="160">
+            <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_7"></sprite>
+            <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_7_active"></sprite>
+          </group>
+    </group>
+  </defs>
   <!-- note panel-->
   <group x="199">
     <animation>
@@ -1943,37 +1977,55 @@
       <keyframe t="0.3" y="617" ease="quadOut"></keyframe>
     </animation>
     <sprite image="Touch/ButtonPanel.png"></sprite>
-      <group x="102.5" y="160">
-        <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_1"></sprite>
-        <text x="75" y="32" text="Score" align="center" font="InfoSmall" font-src="Fonts/InfoSmall.fnt"></text>
-        <text x="75" y="56" text="%s" align="center" data="p1_score" font="ScoreNumberSmall" font-src="Fonts/ScoreNumberSmall.fnt"></text>
-        <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_1_active"></sprite>
+    <if key="p1_scratch" value="left">
+      <group>
+        <group x="30.5">
+          <use def="dxbuttons"></use>
+        </group>
+        <sprite image="Touch/Scratch/ScratchAreaL.png" x="0" y="8" ref="p1_SC"></sprite>
+        <sprite image="Touch/Scratch/ScratchGlowL.png" x="0" y="6" alpha="p1_SC_active"></sprite>
       </group>
-      <group x="181.5" y="20">
-        <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_2"></sprite>
-        <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_2_active"></sprite>
+    </if>
+    <if key="p1_scratch" value="right">
+      <group>
+        <group x="-30.5">
+          <use def="dxbuttons"></use>
+        </group>
+        <sprite image="Touch/Scratch/ScratchAreaR.png" x="674" y="8" ref="p1_SC"></sprite>
+        <sprite image="Touch/Scratch/ScratchGlowR.png" x="674" y="6" alpha="p1_SC_active"></sprite>
       </group>
-      <group x="260.5" y="160">
-        <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_3"></sprite>
-        <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_3_active"></sprite>
+    </if>
+    <if key="p1_scratch" value="off">
+      <group>
+              <group x="27" y="32">
+                <sprite image="Touch/Buttons/KNormal.png" x="0" y="0" ref="p1_1"></sprite>
+                <sprite image="Touch/Buttons/KActive.png" x="-1" y="-1" alpha="p1_1_active"></sprite>
+              </group>
+              <group x="147" y="32">
+                <sprite image="Touch/Buttons/KNormal.png" x="0" y="0" ref="p1_2"></sprite>
+                <sprite image="Touch/Buttons/KActive.png" x="-1" y="-1" alpha="p1_2_active"></sprite>
+              </group>
+              <group x="267" y="32">
+                <sprite image="Touch/Buttons/KNormal.png" x="0" y="0" ref="p1_3"></sprite>
+                <sprite image="Touch/Buttons/KActive.png" x="-1" y="-1" alpha="p1_3_active"></sprite>
+              </group>
+              <group x="387" y="32">
+                <sprite image="Touch/Buttons/KNormal.png" x="0" y="0" ref="p1_5"></sprite>
+                <sprite image="Touch/Buttons/KActive.png" x="-1" y="-1" alpha="p1_5_active"></sprite>
+              </group>
+              <group x="507" y="32">
+                <sprite image="Touch/Buttons/KNormal.png" x="0" y="0" ref="p1_6"></sprite>
+                <sprite image="Touch/Buttons/KActive.png" x="-1" y="-1" alpha="p1_6_active"></sprite>
+              </group>
+              <group x="627" y="32">
+                <sprite image="Touch/Buttons/KNormal.png" x="0" y="0" ref="p1_7"></sprite>
+                <sprite image="Touch/Buttons/KActive.png" x="-1" y="-1" alpha="p1_7_active"></sprite>
+              </group>
+        <group x="147" y="180">
+          <sprite image="Touch/Buttons/SNormal.png" x="0" y="0" ref="p1_4"></sprite>
+          <sprite image="Touch/Buttons/SActive.png" x="-1" y="-1" alpha="p1_4_active"></sprite>
+        </group>
       </group>
-      <group x="339.5" y="20">
-        <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_4"></sprite>
-        <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_4_active"></sprite>
-      </group>
-      <group x="418.5" y="160">
-        <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_5"></sprite>
-        <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_5_active"></sprite>
-      </group>
-      <group x="497.5" y="20">
-        <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_6"></sprite>
-        <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_6_active"></sprite>
-      </group>
-      <group x="576.5" y="160">
-        <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_7"></sprite>
-        <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_7_active"></sprite>
-      </group>
-    <sprite image="Touch/Scratch/ScratchAreaL.png" x="0" y="8" ref="p1_SC"></sprite>
-    <sprite image="Touch/Scratch/ScratchGlowL.png" x="0" y="6" alpha="p1_SC_active"></sprite>
+    </if>
   </group>
 </skin>

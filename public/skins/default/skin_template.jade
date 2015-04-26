@@ -48,6 +48,32 @@ include _lib/common
 
   - var width = 768
   - var height = 928
+  
+  defs
+    group(id='dxbuttons')
+      mixin button(i, row, n)
+        - var buttonWidth = 150
+        - var buttonHeight = 132
+        - var xbase = width / 2 - buttonWidth / 2
+        - var ybase = 20
+        - var spacing = 8
+        - var x = xbase + (buttonWidth + spacing) / 2 * i
+        - var y = ybase + row * (buttonHeight + spacing)
+        group(x=x y=y)
+          sprite(image='Touch/Buttons/Normal.png' x='0' y='0' ref='p1_' + n)
+          block
+          sprite(image='Touch/Buttons/Active.png' x='-1' y='-1' alpha='p1_' + n + '_active')
+      +button(-3, 1, 1)
+        text(x='75' y='32' text='Score' align='center'
+              font='InfoSmall' font-src='Fonts/InfoSmall.fnt')
+        text(x='75' y='56' text='%s' align='center' data='p1_score'
+              font='ScoreNumberSmall' font-src='Fonts/ScoreNumberSmall.fnt')
+      +button(-2, 0, 2)
+      +button(-1, 1, 3)
+      +button( 0, 0, 4)
+      +button( 1, 1, 5)
+      +button( 2, 0, 6)
+      +button( 3, 1, 7)
 
   // note panel
   group(x=(width / 2 - 185))
@@ -64,28 +90,31 @@ include _lib/common
       keyframe(t='0' y=(height))
       keyframe(t='0.3' y=(height - 311) ease='quadOut')
     sprite(image='Touch/ButtonPanel.png')
-    mixin button(i, row, n)
-      - var buttonWidth = 150
-      - var buttonHeight = 132
-      - var xbase = width / 2 + styles.scratch.width / 2 - buttonWidth / 2
-      - var ybase = 20
-      - var spacing = 8
-      - var x = xbase + (buttonWidth + spacing) / 2 * i
-      - var y = ybase + row * (buttonHeight + spacing)
-      group(x=x y=y)
-        sprite(image='Touch/Buttons/Normal.png' x='0' y='0' ref='p1_' + n)
-        block
-        sprite(image='Touch/Buttons/Active.png' x='-1' y='-1' alpha='p1_' + n + '_active')
-    +button(-3, 1, 1)
-      text(x='75' y='32' text='Score' align='center'
-            font='InfoSmall' font-src='Fonts/InfoSmall.fnt')
-      text(x='75' y='56' text='%s' align='center' data='p1_score'
-            font='ScoreNumberSmall' font-src='Fonts/ScoreNumberSmall.fnt')
-    +button(-2, 0, 2)
-    +button(-1, 1, 3)
-    +button( 0, 0, 4)
-    +button( 1, 1, 5)
-    +button( 2, 0, 6)
-    +button( 3, 1, 7)
-    sprite(image='Touch/Scratch/ScratchAreaL.png' x=0 y=8 ref='p1_SC')
-    sprite(image='Touch/Scratch/ScratchGlowL.png' x=0 y=6 alpha='p1_SC_active')
+    #{'if'}(key='p1_scratch' value='left')
+      group
+        group(x=styles.scratch.width / 2): use(def='dxbuttons')
+        sprite(image='Touch/Scratch/ScratchAreaL.png' x=0 y=8 ref='p1_SC')
+        sprite(image='Touch/Scratch/ScratchGlowL.png' x=0 y=6 alpha='p1_SC_active')
+    #{'if'}(key='p1_scratch' value='right')
+      group
+        group(x=-styles.scratch.width / 2): use(def='dxbuttons')
+        sprite(image='Touch/Scratch/ScratchAreaR.png' x=674 y=8 ref='p1_SC')
+        sprite(image='Touch/Scratch/ScratchGlowR.png' x=674 y=6 alpha='p1_SC_active')
+    #{'if'}(key='p1_scratch' value='off')
+      group
+        mixin button(col, n)
+          - var x = 27 + col * 120
+          - var y = 32
+          group(x=x y=y)
+            sprite(image='Touch/Buttons/KNormal.png' x='0' y='0' ref='p1_' + n)
+            block
+            sprite(image='Touch/Buttons/KActive.png' x='-1' y='-1' alpha='p1_' + n + '_active')
+        +button(0, 1)
+        +button(1, 2)
+        +button(2, 3)
+        +button(3, 5)
+        +button(4, 6)
+        +button(5, 7)
+        group(x=147 y=180)
+          sprite(image='Touch/Buttons/SNormal.png' x='0' y='0' ref='p1_4')
+          sprite(image='Touch/Buttons/SActive.png' x='-1' y='-1' alpha='p1_4_active')
