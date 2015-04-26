@@ -5,7 +5,7 @@ describe('Notechart', function() {
 
   describe('.fromBMSChart', function() {
     it('should work', function() {
-      var subject = notechart('#00111:01\n#00101:02')
+      var subject = notechart('#00116:01\n#00101:02')
       expect(subject.notes).to.have.length(1)
       expect(subject.autos).to.have.length(1)
       expect(subject.notes[0].beat).to.equal(4)
@@ -15,6 +15,14 @@ describe('Notechart', function() {
       expect(subject.notes).to.have.length(1)
       expect(subject.notes[0].beat).to.equal(4)
       expect(subject.notes[0].end.beat).to.equal(6)
+    })
+  })
+
+  describe('scratch off', function() {
+    it('should move scratch to autokeysounds', function() {
+      var subject = notechart('#00116:01\n#00101:02', { scratch: 'off' })
+      expect(subject.notes).to.have.length(0)
+      expect(subject.autos).to.have.length(2)
     })
   })
 
