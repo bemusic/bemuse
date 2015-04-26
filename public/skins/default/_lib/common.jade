@@ -95,19 +95,20 @@ mixin note-area(modeObject)
     +notes(modeObject)
   group(y='556')
     +note-hints(modeObject)
-  +press-start
-  group(y='400')
-    +judgments
   group(x='1' y='550')
     +explosions(modeObject.columns)
 
 mixin all-note-area
-  #{'if'}(key='p1_scratch' value='left')
-    group: +note-area(mode.iidx_l)
-  #{'if'}(key='p1_scratch' value='right')
-    group: +note-area(mode.iidx_r)
-  #{'if'}(key='p1_scratch' value='off')
-    group: +note-area(mode.kb)
+  group&attributes(attributes)
+    #{'if'}(key='p1_scratch' value='left')
+      group: +note-area(mode.iidx_l)
+    #{'if'}(key='p1_scratch' value='right')
+      group: +note-area(mode.iidx_r)
+    #{'if'}(key='p1_scratch' value='off')
+      group: +note-area(mode.kb)
+    +press-start
+    group(y='400')
+      +judgments
 
 mixin press-start
   group(x='140' y='400' alpha='1')

@@ -3,6 +3,9 @@ include _lib/common
 
 +media('screen', 1280, 720)
 
+  defs
+    +all-note-area(id='note-area')
+
   // note panel (Left)
   #{'if'}(key='p1_placement' value='left')
     group
@@ -11,7 +14,7 @@ include _lib/common
         keyframe(t='0.6' x='0' ease='quadOut')
       sprite(image='NotePanel/Left.png' x='0' y='0')
       group(x='34' y='0')
-        +all-note-area
+        use(def='note-area')
 
   // note panel (Center)
   #{'if'}(key='p1_placement' value='center')
@@ -21,7 +24,7 @@ include _lib/common
         keyframe(t='0.6' alpha='1' ease='quadOut')
       sprite(image='NotePanel/Middle.png' x='0' y='0')
       group(x='42' y='0')
-        +all-note-area
+        use(def='note-area')
 
   // note panel (Right)
   #{'if'}(key='p1_placement' value='right')
@@ -31,7 +34,7 @@ include _lib/common
         keyframe(t='0.6' x='919' ease='quadOut')
       sprite(image='NotePanel/Right.png' x='0' y='0')
       group(x='42' y='0')
-        +all-note-area
+        use(def='note-area')
         
   // info panel
   group(y='616')
