@@ -8,6 +8,7 @@ function GameKeyboardPlugin(game) {
   .keydown(e => data[e.which] = 1)
   .keyup(e => data[e.which] = 0)
   return {
+    name: 'GameKBPlugin',
     get() {
       return {
         'p1_1':  data[kbm['1'] || 83],

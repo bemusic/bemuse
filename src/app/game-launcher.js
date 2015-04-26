@@ -53,9 +53,10 @@ export function launch({ server, song, chart, scene: originalScene }) {
     let state = yield controller.promise
     if (state.finished) {
       // TODO: display evaluation result
+      void 0
     }
-    yield SCENE_MANAGER.display(originalScene)
     controller.destroy()
+    yield SCENE_MANAGER.display(originalScene)
 
   })
 }

@@ -26,6 +26,7 @@ export class Context {
   destroy() {
     this._instance.destroy()
     this._instance = null
+    this._teardownInteractivity()
   }
   get input() {
     return this._input.get()
@@ -40,27 +41,48 @@ export class Context {
     set.delete(object)
   }
   _setupInteractivity() {
-    let stage = this.stage
-    let im    = stage.interactionManager
-    let mouseDown = false
-    stage.interactive = true
-    stage.mousedown       = () => { mouseDown = true }
-    stage.mouseup         = () => { mouseDown = false }
-    stage.mouseupoutside  = () => { mouseDown = false }
+    let mouse         = null
+    let touches       = [ ]
+    let onMouse       = (e) => { mouse = e }
+    let onUpdateMouse = (e) => { mouse = mouse && e }
+    let onNoMouse     = ()  => { mouse = null }
+    let onTouch       = (e) => { touches = [].slice.call(e.touches) }
+    let view          = this.view
+    let width         = this._skin.width
+    let height        = this._skin.height
+    view.addEventListener('mousedown', onMouse, false)
+    view.addEventListener('mousemove', onUpdateMouse, false)
+    view.addEventListener('mouseup', onNoMouse, false)
+    view.addEventListener('touchstart', onTouch, false)
+    view.addEventListener('touchmove', onTouch, false)
+    view.addEventListener('touchend', onTouch, false)
+    this._teardownInteractivity = () => {
+      view.removeEventListener('mousedown', onMouse, false)
+      view.removeEventListener('mousemove', onUpdateMouse, false)
+      view.removeEventListener('mouseup', onNoMouse, false)
+      view.removeEventListener('touchstart', onTouch, false)
+      view.removeEventListener('touchmove', onTouch, false)
+      view.removeEventListener('touchend', onTouch, false)
+    }
     this._input = {
       get: () => {
         let output = []
-        if (mouseDown) {
-          let mouse = im.mouse.global
-          output.push({ x: mouse.x, y: mouse.y, id: 'mouse' })
+        let rect = this.view.getBoundingClientRect()
+        if (mouse) {
+          output.push(point('mouse', mouse, rect))
         }
-        for (let key in im.touches) {
-          if (im.touches[key]) {
-            let touch = im.touches[key].global
-            output.push({ x: touch.x, y: touch.y, id: `touch${key}` })
-          }
+        for (let i = 0; i < touches.length; i++) {
+          let touch = touches[i]
+          output.push(point('touch' + touch.identifier, touch, rect))
         }
         return output
+      }
+    }
+    function point(id, p, rect) {
+      return {
+        x: (p.clientX - rect.left) / rect.width * width,
+        y: (p.clientY - rect.top) / rect.height * height,
+        id: id,
       }
     }
   }
