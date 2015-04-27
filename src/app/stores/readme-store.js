@@ -21,6 +21,7 @@ export default new Store({
 })
 
 function loadReadme(url) {
+  if (url === null) return Bacon.once('Information unavailable…')
   let promise = Promise.resolve($.get(url))
   .then(function(text) {
     return stripFrontMatter('' + text)
