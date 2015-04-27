@@ -4,6 +4,7 @@ import React from 'react'
 
 import * as Options          from '../options'
 import OptionsPlayerSelector from './options-player-selector'
+import OptionsButton         from './options-button'
 
 const SCRATCH_OPTIONS = [
   { value: 'left', label: 'Left', },
@@ -39,6 +40,10 @@ const OptionsPlayer = React.createClass({
             onSelect={this.handleSelectPanel}
             value={Options.get('player.P1.panel')} />
       </OptionsPlayer.Row>
+
+      <div className="options-player--buttons">
+        <OptionsButton onClick={this.props.onClose}>Save & Exit</OptionsButton>
+      </div>
 
     </div>
   },

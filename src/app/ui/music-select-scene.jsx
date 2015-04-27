@@ -48,13 +48,14 @@ export default React.createClass({
                 chart={musicSelect.chart}
                 charts={musicSelect.charts}
                 onChartClick={this.handleChartClick}
-                onOptions={this.handleOptions} />
+                onOptions={this.handleOptionsOpen} />
           </div>
       }
       <ModalPopup
           visible={this.state.optionsVisible}
-          onBackdropClick={this.handleOptionsBackdropClick}>
-        <Options />
+          onBackdropClick={this.handleOptionsClose}>
+        <Options
+            onClose={this.handleOptionsClose} />
       </ModalPopup>
     </Scene>
   },
@@ -86,10 +87,10 @@ export default React.createClass({
   handleFilter(e) {
     Actions.setFilterText(e.target.value)
   },
-  handleOptions() {
+  handleOptionsOpen() {
     this.setState({ optionsVisible: true })
   },
-  handleOptionsBackdropClick() {
+  handleOptionsClose() {
     this.setState({ optionsVisible: false })
   },
 
