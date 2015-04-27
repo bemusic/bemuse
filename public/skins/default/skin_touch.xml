@@ -34,6 +34,12 @@
           </group>
     </group>
   </defs>
+  <sprite image="Background/Space.jpg" x="-293" y="0">
+    <animation>
+      <keyframe t="0.0" y="0" alpha="0"></keyframe>
+      <keyframe t="1.0" y="-32" alpha="1" ease="quadOut"></keyframe>
+    </animation>
+  </sprite>
   <!-- note panel-->
   <group x="199">
     <animation>
