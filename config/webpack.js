@@ -94,7 +94,8 @@ function CompileProgressPlugin() {
     old = text
   })
 }
-if (process.env.SOURCE_MAPS === 'true') {
+
+if (process.env.SOURCE_MAPS === 'true' || Env.production()) {
   config.devtool = 'source-map'
 }
 
