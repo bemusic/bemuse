@@ -5,6 +5,7 @@ import GameInput from './input'
 import Clock     from './clock'
 import bench     from 'bemuse/devtools/benchmark'
 
+import GamepadPlugin      from './input/gamepad-plugin'
 import TouchPlugin        from './input/touch-plugin'
 import GameKeyboardPlugin from './input/game-keyboard-plugin'
 
@@ -20,6 +21,7 @@ export class GameController {
     this._input   = new GameInput()
     this._timer   = new GameTimer(this._clock, this._input)
     this._state   = new GameState(game)
+    this._input.use(new GamepadPlugin())
     this._input.use(new GameKeyboardPlugin(game))
     this._input.use(new TouchPlugin(this._display.context))
     this._promise = new Promise((resolve) => this._resolvePromise = resolve)
