@@ -36,13 +36,16 @@ export default React.createClass({
     let bx = p === 'left' ? 24 : p === 'right' ? 4 : 14
     let gx = p === 'left' ? 21 : p === 'right' ? 75 : null
     let sx = p === 'left' ? 11 : p === 'right' ? 85 : null
+    let off = this.props.value === 'off'
     return <svg width="96" height="54">
       <g transform={'translate(' + bx + ' 32)'}>
         {[0, 1, 2, 3, 4, 5, 6].map(i =>
             <rect key={i}
                 className="options-player-graphics--line"
-                x={i * 10} y={(1 - i % 2) * 3}
-                width={8} height={16}
+                x={off && i === 3 ? 10 : i * 10}
+                y={off ? (i === 3 ? 10 : 0) : (1 - i % 2) * 3}
+                width={off && i === 3 ? 48 : 8}
+                height={off ? 8 : 16}
                 rx={2} ry={2} />)}
       </g>
       {sx && <circle className="options-player-graphics--line"
