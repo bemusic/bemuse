@@ -18,6 +18,9 @@ export class GameState {
       if (!playerState.finished) finished = false
       void player
     }
+    // See Timer#readyFraction.
+    // We need it here so that the display can read this information.
+    this.readyFraction = timer.readyFraction
     // True if the game is started, false otherwise.
     this.started = timer.started
     // True if the game is finished, false otherwise.

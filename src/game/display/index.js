@@ -27,6 +27,7 @@ export class GameDisplay {
     let data = { }
     data.t        = time
     data.gameTime = gameTime
+    data.ready    = this._getReady(gameState)
     for (let [player, playerDisplay] of this._players) {
       let playerState = gameState.player(player)
       let playerData = playerDisplay.update(time, gameTime, playerState)
@@ -35,6 +36,10 @@ export class GameDisplay {
       }
     }
     return data
+  }
+  _getReady(gameState) {
+    let f = gameState.readyFraction
+    return f > 0.5 ? Math.pow(1 - (f - 0.5) / 0.5, 2) : 0
   }
   get context() {
     return this._context

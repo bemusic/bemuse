@@ -32,7 +32,7 @@ export function launch({ server, song, chart, scene: originalScene }) {
         audioInputLatency: +query.latency || 0,
         players: [
           {
-            speed:      +query.speed || 1,
+            speed:      +Options.get('player.P1.speed') || 1,
             autoplay:   false,
             placement:  Options.get('player.P1.panel'),
             scratch:    Options.get('player.P1.scratch'),
@@ -55,6 +55,8 @@ export function launch({ server, song, chart, scene: originalScene }) {
     controller.start()
     let state = yield controller.promise
     Analytics.gameFinish(song, chart, state)
+    let playerState = state.player(state.game.players[0])
+    Options.set('player.P1.speed', playerState.speed)
     if (state.finished) {
       // TODO: display evaluation result
       void 0

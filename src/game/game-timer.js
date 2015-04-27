@@ -1,4 +1,6 @@
 
+import now from 'bemuse/utils/now'
+
 // The game timer keeps track of song progression in-game.
 // This class should be tied to the AudioContext.
 //
@@ -6,7 +8,9 @@ export class GameTimer {
   constructor(clock, input) {
     this._clock = clock
     this._input = input
+    this._now   = now.synchronized()
     this.startTime = null
+    this.readyFraction = 0
   }
 
   // True if the game is started, false otherwise.
@@ -23,8 +27,21 @@ export class GameTimer {
 
   _checkStartGame() {
     if (!this.started && this._input.get('start').value) {
-      this.startTime = this._clock.time
+      this.startTime = this._clock.time + this._getWait()
     }
+    if (!this.started) {
+      // The number in range 0...1 representing the progression in this second.
+      // When player presses the "Start" button, the game will wait for the
+      // next second before actually starting the game.
+      // Since the clock is synchronized globally, if player presses start
+      // in the same second, the game will start at the same time.
+      //
+      this.readyFraction = 1 - this._getWait()
+    }
+  }
+  _getWait() {
+    let t = this._now() / 1000
+    return Math.ceil(t) - t
   }
 
   _calculateTime() {
