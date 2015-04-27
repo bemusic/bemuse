@@ -28,8 +28,8 @@ function GamepadPlugin() {
         'p1_4': button(7),
         'p1_5': button(1),
         'p1_6': button(4),
-        'p1_7': axis(3),
-        'p1_SC': axis(4),
+        'p1_7': axis(3) || axis(0),
+        'p1_SC': axis(4) || axis(1),
         'start': button(9),
         'select': button(8),
       }
