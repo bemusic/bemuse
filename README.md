@@ -26,18 +26,13 @@ Play on your computer or on your iPad.
 
 * Online play
   * comes with some [default selection of songs](https://github.com/bemusic/music).
-  * people can host song collections on their own servers too.
+  * people can host song collections on their own music servers too.
 * Offline play
   * downloaded simfiles can be played later offline.
-  * can also play simfiles on your computer.
-* BMS simfile support:
+  * can also play simfiles on your computer (by hosting a music server on your local host).
+* Game modes:
   * 7-keys + Scratch
   * 7-keys
-  * 14-keys
-  * However, they must be converted into ".bemuse" files first.
-* Game modes:
-  * Single player mode
-  * Two player mode — two players play on the same machine.
 * Online start time synchronization — play together with friends.
 * Fully supports keysounds.
 * Supports `#LNTYPE 1` and `#LNOBJ`.
