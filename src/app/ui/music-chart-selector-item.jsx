@@ -11,6 +11,7 @@ export default React.createClass({
     let classes = c('music-chart-selector-item', {
           'is-active': this.props.isSelected,
           'is-tutorial': this.props.isTutorial,
+          'is-insane': this.props.chart.info.difficulty >= 5,
         })
     return <li
         className={classes}

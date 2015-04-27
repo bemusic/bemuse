@@ -41,7 +41,10 @@ export function MusicSelectStoreFactory(CollectionStore) {
 
   const $visibleCharts = $charts.map(charts => _(charts)
       .filter({ keys: '7K' })
-      .sortBy(chart => chart.info.level)
+      .sortByAll(
+        chart => chart.info.difficulty >= 5 ? 1 : 0,
+        chart => chart.info.level
+      )
       .value())
 
   const $levelAnchorStrategy = $levelAnchor.map(level =>
