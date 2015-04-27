@@ -89,7 +89,7 @@ mixin note-hints(modeObject)
 
 mixin note-area(modeObject)
   sprite(image=modeObject.background x='0' y='0')
-  sprite(image='NoteArea/Flash.png' x='1' y='455' blend='screen'
+  sprite(image='NoteArea/Flash.png' x='1' y='442' blend='screen'
           alpha='1 - (p1_beat % 1)')
   group(x='1' mask='283x550+1+0')
     +notes(modeObject)
@@ -109,6 +109,7 @@ mixin all-note-area
     +press-start
     group(y='400')
       +judgments
+    sprite(image='NoteArea/Stripe.png' x='1' y='537' blend='screen')
 
 mixin press-start
   group(x='140' y='400' alpha='1')

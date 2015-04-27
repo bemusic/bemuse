@@ -5,7 +5,7 @@
       <if key="p1_scratch" value="left">
         <group>
           <sprite image="Note/DX/BackgroundLeft.png" x="0" y="0"></sprite>
-          <sprite image="NoteArea/Flash.png" x="1" y="455" blend="screen" alpha="1 - (p1_beat % 1)"></sprite>
+          <sprite image="NoteArea/Flash.png" x="1" y="442" blend="screen" alpha="1 - (p1_beat % 1)"></sprite>
           <group x="1" mask="283x550+1+0">
             <object key="p1_barlines" pool="8">
               <sprite image="NoteArea/Bar.png" x="0" y="(y*550)-1" blend="screen"></sprite>
@@ -628,7 +628,7 @@
       <if key="p1_scratch" value="right">
         <group>
           <sprite image="Note/DX/BackgroundRight.png" x="0" y="0"></sprite>
-          <sprite image="NoteArea/Flash.png" x="1" y="455" blend="screen" alpha="1 - (p1_beat % 1)"></sprite>
+          <sprite image="NoteArea/Flash.png" x="1" y="442" blend="screen" alpha="1 - (p1_beat % 1)"></sprite>
           <group x="1" mask="283x550+1+0">
             <object key="p1_barlines" pool="8">
               <sprite image="NoteArea/Bar.png" x="0" y="(y*550)-1" blend="screen"></sprite>
@@ -1251,7 +1251,7 @@
       <if key="p1_scratch" value="off">
         <group>
           <sprite image="Note/KB/Background.png" x="0" y="0"></sprite>
-          <sprite image="NoteArea/Flash.png" x="1" y="455" blend="screen" alpha="1 - (p1_beat % 1)"></sprite>
+          <sprite image="NoteArea/Flash.png" x="1" y="442" blend="screen" alpha="1 - (p1_beat % 1)"></sprite>
           <group x="1" mask="283x550+1+0">
             <object key="p1_barlines" pool="8">
               <sprite image="NoteArea/Bar.png" x="0" y="(y*550)-1" blend="screen"></sprite>
@@ -1926,6 +1926,7 @@
           <text x="141" align="center" font="BemuseDefault-Other" font-src="Fonts/BemuseDefault-Other.fnt" text="0"></text>
         </group>
       </group>
+      <sprite image="NoteArea/Stripe.png" x="1" y="537" blend="screen"></sprite>
     </group>
   </defs>
   <!-- note panel (Left)-->
