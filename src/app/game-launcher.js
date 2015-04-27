@@ -14,6 +14,7 @@ import * as GameLoader        from 'bemuse/game/loaders/game-loader'
 import GameScene              from 'bemuse/game/game-scene'
 import LoadingScene           from 'bemuse/game/ui/loading-scene.jsx'
 import * as Options           from './options'
+import * as Analytics         from './analytics'
 
 export function launch({ server, song, chart, scene: originalScene }) {
   return co(function*() {
@@ -47,11 +48,13 @@ export function launch({ server, song, chart, scene: originalScene }) {
       tasks: tasks,
       song:  chart.info,
     })
+    Analytics.gameStart(song, chart)
     yield SCENE_MANAGER.display(loadingScene)
     let controller = yield promise
     yield SCENE_MANAGER.display(new GameScene(controller.display))
     controller.start()
     let state = yield controller.promise
+    Analytics.gameFinish(song, chart, state)
     if (state.finished) {
       // TODO: display evaluation result
       void 0
