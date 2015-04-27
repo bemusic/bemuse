@@ -35,6 +35,10 @@ export default React.createClass({
       {
         musicSelect.loading
         ? <div className="music-select-scene--loading">Loading…</div>
+        : musicSelect.songs.length === 0
+        ? <div className="music-select-scene--loading">
+            Cannot Load Collection!
+          </div>
         : <div className={c('music-select-scene--main',
               { 'is-in-song': this.state.inSong })}>
             <MusicList
