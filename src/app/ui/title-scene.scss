@@ -1,0 +1,27 @@
+@import "~bemuse/ui/common";
+
+.title-scene {
+
+  @include main-bg;
+
+  font: 2.5vmin $ui-font;
+
+  &--logo {
+    @include centered;
+    background: url(~bemuse/ui/images/bg/BemuseTitleLogo.png);
+    width: (2160px / 2);
+    height: (720px / 2);
+    background-size: contain;
+  }
+
+  &--absmessage{
+    position: absolute;
+    left: 428px;
+    top: 390px;
+    color: rgba(black, 0.5);
+    font-size: 40px;
+  }
+
+
+
+}
