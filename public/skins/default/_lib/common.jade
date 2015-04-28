@@ -168,7 +168,9 @@ mixin judgment-keyframes(active)
     keyframe(t='0' alpha='0')
 
 mixin tutorial
+  - var cx = attributes.width / 2
   - var time = function(measure) { return measure * 240 / 178 }
+  - var touch = !!attributes.touch
   mixin fade(begin, end)
     animation
       keyframe(t=(time(begin)) alpha='0')
@@ -183,7 +185,7 @@ mixin tutorial
         keyframe(t=(time(start + 0.5) - 0.2) alpha='1')
         keyframe(t=(time(start + 0.5))       alpha='0' scale-x='0.8' scale-y='0.8')
     mixin ready-text(start, frame, w, h)
-      group(x='640' y='360' t='gameTime')
+      group(x=(cx) y='360' t='gameTime')
         +ready-fade(start)
         sprite(image='Tutorial/Ready.png' x=(-w / 2) y=(-h / 2) frame=frame)
     +ready-text(begin + 0.0, '661x170+0+0',     661, 170)
@@ -196,7 +198,7 @@ mixin tutorial
         +fade(-1, 0)
       sprite(image='Tutorial/Page1.png' x='64' y='64' t='gameTime')
         +fade(0, 3)
-      sprite(image='Tutorial/Page2.png' x='64' y='64' t='gameTime')
+      sprite(image=(touch ? 'Tutorial/Page2Touch.png' : 'Tutorial/Page2.png') x='64' y='64' t='gameTime')
         +fade(19, 27)
       sprite(image='Tutorial/Page3.png' x='64' y='64' t='gameTime')
         +fade(27, 33)

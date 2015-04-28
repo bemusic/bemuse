@@ -50,7 +50,7 @@ include _lib/common
     text(x='100' y='20' text='%s' data='p1_score' font='ScoreNumber' font-src='Fonts/ScoreNumber.fnt')
 
   // tutorial
-  +tutorial
+  +tutorial(width=1280)
 
 +media('touch', 768, 928)
 
@@ -131,3 +131,5 @@ include _lib/common
         group(x=147 y=180)
           sprite(image='Touch/Buttons/SNormal.png' x='0' y='0' ref='p1_4')
           sprite(image='Touch/Buttons/SActive.png' x='-1' y='-1' alpha='p1_4_active')
+
+  +tutorial(width=768 touch=true)
