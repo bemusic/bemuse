@@ -8,3 +8,7 @@ export function shouldShowOptions() {
 export function shouldEnableBenchmark() {
   return query.BEMUSE_BENCHMARK === '1'
 }
+
+export function shouldDisableFullScreen() {
+  return query.BEMUSE_NO_FULLSCREEN === '1'
+}

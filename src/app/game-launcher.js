@@ -16,9 +16,11 @@ import LoadingScene           from 'bemuse/game/ui/loading-scene.jsx'
 import * as Options           from './options'
 import * as Analytics         from './analytics'
 
+import { shouldDisableFullScreen } from 'bemuse/devtools/query-flags'
+
 export function launch({ server, song, chart, scene: originalScene }) {
   return co(function*() {
-    if (screenfull.enabled) {
+    if (screenfull.enabled && !shouldDisableFullScreen()) {
       let safari = /Safari/.test(navigator.userAgent) &&
                   !/Chrom/.test(navigator.userAgent)
       if (!safari) screenfull.request()
@@ -30,6 +32,7 @@ export function launch({ server, song, chart, scene: originalScene }) {
       assets:   new BemusePackageResources(assetsUrl),
       options:  {
         audioInputLatency: +query.latency || 0,
+        tutorial: song.tutorial,
         players: [
           {
             speed:      +Options.get('player.P1.speed') || 1,

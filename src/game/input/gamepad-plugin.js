@@ -7,11 +7,13 @@ window.addEventListener('gamepadconnected', function(e) {
 
 export function GamepadPlugin() {
   function button(i) {
-    return gamepads.some(gamepad => gamepad.buttons[i].pressed)
+    return gamepads.some(gamepad =>
+        gamepad && gamepad.buttons[i] && gamepad.buttons[i].pressed)
   }
   function axis(i) {
     for (var j = 0; j < gamepads.length; j++) {
       var gamepad = gamepads[j]
+      if (!gamepad) continue
       if (Math.abs(gamepad.axes[i]) > 0.01) return gamepad.axes[i]
     }
     return 0

@@ -6,7 +6,8 @@ import keytime  from 'keytime'
 let createKeytime = def => Object.assign({ }, def, { data: keytime(def.data) })
 
 export class Animation {
-  constructor(animations) {
+  constructor(animations, timeKey) {
+    this._timeKey     = timeKey || 't'
     this._properties  = _(animations)
         .map(animation => _.pluck(animation.data, 'name'))
         .flatten()
@@ -32,7 +33,7 @@ export class Animation {
     let event       = _(this._events)
         .filter(e => e === '' || e in data)
         .max(e => data[e] || 0)
-    let t           = data.t - (data[event] || 0)
+    let t           = data[this._timeKey] - (data[event] || 0)
     let animations  = this._animations.filter(a => a.on === event)
     let values      = animations.map(a => a.data.values(t))
     return Object.assign({}, ...values)
@@ -40,7 +41,8 @@ export class Animation {
   static compile(compiler, $el) {
     let animationElements = Array.from($el.children('animation'))
     let animations = _.map(animationElements, el => _compile($(el)))
-    return new Animation(animations)
+    let timeKey = $el.attr('t') || 't'
+    return new Animation(animations, timeKey)
   }
 }
 

@@ -280,6 +280,13 @@ describe('Scintillator', function() {
       expect(group.y).to.equal(100)
       context.destroy()
     }))
+    it('should allow animations on different value', co.wrap(function*() {
+      let skin = yield Scintillator.load(fixture('animation_timekey.xml'))
+      let context = new Scintillator.Context(skin)
+      let group = context.stage.children[0]
+      context.render({ t: 0, x: 0.5 })
+      expect(group.x).to.equal(15)
+    }))
   })
 
   describe('defs', function() {

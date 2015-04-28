@@ -1,0 +1,8 @@
+<skin width="123" height="456">
+  <group t="x">
+    <animation>
+      <keyframe t="0" x="10" />
+      <keyframe t="1" x="20" />
+    </animation>
+  </group>
+</skin>

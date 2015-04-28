@@ -7,13 +7,17 @@ function GameKeyboardPlugin(game) {
   $(window).on('keydown', onKeyDown).on('keyup', onKeyUp)
   function onKeyDown(e) {
     data[e.which] = 1
-    e.preventDefault()
-    e.stopPropagation()
+    if (!e.metaKey && !e.ctrlKey) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
   }
   function onKeyUp(e) {
     data[e.which] = 0
-    e.preventDefault()
-    e.stopPropagation()
+    if (!e.metaKey && !e.ctrlKey) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
   }
   return {
     name: 'GameKBPlugin',

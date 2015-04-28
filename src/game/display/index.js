@@ -3,10 +3,11 @@ import PlayerDisplay from './player-display'
 
 export class GameDisplay {
   constructor({ game, skin, context }) {
-    this._context = context
-    this._players = new Map(game.players.map(player =>
+    this._game      = game
+    this._context   = context
+    this._players   = new Map(game.players.map(player =>
         [player, new PlayerDisplay(player)]))
-    this._stateful = { }
+    this._stateful  = { }
     void skin
   }
   start() {
@@ -25,6 +26,7 @@ export class GameDisplay {
   }
   _getData(time, gameTime, gameState) {
     let data = { }
+    data.tutorial = this._game.options.tutorial ? 'yes' : 'no'
     data.t        = time
     data.gameTime = gameTime
     data.ready    = this._getReady(gameState)
