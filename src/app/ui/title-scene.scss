@@ -7,21 +7,54 @@
   font: 2.5vmin $ui-font;
 
   &--logo {
-    @include centered;
+    //@include centered;
+    position: absolute;
+    top:30%; left: 50%;
+    transform: translate(-50%,-50%);
     background: url(~bemuse/ui/images/bg/BemuseTitleLogo.png);
-    width: (2160px / 2);
-    height: (720px / 2);
+    width: (2160px / 2.5);
+    height: (720px / 2.5);
     background-size: contain;
   }
 
-  &--absmessage{
+  &--absmessage {
     position: absolute;
-    left: 428px;
-    top: 390px;
+    top:70%; left: 50%;
+    transform: translate(-50%,-50%);
     color: rgba(black, 0.5);
     font-size: 40px;
   }
 
+  &--about {
+    position: relative;
+    left: 20px;
+    top: 630px;
+    font-size: 20px;
+    color: rgba(black, 0.5);
+  }
 
+  &--gitHub {
+    position: relative;
+    left: 1000px;
+    top: 605px;
+    font-size: 20px;
+    color: rgba(black, 0.5);
+  }
 
-}
+  &--reddit {
+    position: relative;
+    left: 1100px;
+    top: 580px;
+    font-size: 20px;
+    color: rgba(black, 0.5);
+  }
+
+  &--gitter {
+    position: relative;
+    left: 1200px;
+    top: 555px;
+    font-size: 20px;
+    color: rgba(black, 0.5);
+  }
+
+  }
