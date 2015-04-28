@@ -12,6 +12,11 @@ export class GameDisplay {
   }
   start() {
     this._started = new Date().getTime()
+    let player    = this._game.players[0]
+    let songInfo  = player.notechart.songInfo
+    this._stateful['song_title']  = songInfo.title
+    this._stateful['song_artist'] = songInfo.artist
+    this._duration = player.notechart.duration
   }
   destroy() {
     this._context.destroy()
@@ -26,10 +31,11 @@ export class GameDisplay {
   }
   _getData(time, gameTime, gameState) {
     let data = { }
-    data.tutorial = this._game.options.tutorial ? 'yes' : 'no'
-    data.t        = time
-    data.gameTime = gameTime
-    data.ready    = this._getReady(gameState)
+    data['tutorial']  = this._game.options.tutorial ? 'yes' : 'no'
+    data['t']         = time
+    data['gameTime']  = gameTime
+    data['ready']     = this._getReady(gameState)
+    data['song_time'] = this._getSongTime(gameTime)
     for (let [player, playerDisplay] of this._players) {
       let playerState = gameState.player(player)
       let playerData = playerDisplay.update(time, gameTime, playerState)
@@ -38,6 +44,11 @@ export class GameDisplay {
       }
     }
     return data
+  }
+  _getSongTime(gameTime) {
+    return (
+        this._formatTime(Math.min(this._duration, Math.max(0, gameTime))) +
+        ' / ' + this._formatTime(this._duration))
   }
   _getReady(gameState) {
     let f = gameState.readyFraction
@@ -48,6 +59,10 @@ export class GameDisplay {
   }
   get view() {
     return this._context.view
+  }
+  _formatTime(seconds) {
+    let s = Math.floor(seconds % 60)
+    return Math.floor(seconds / 60) + ':' + (s < 10 ? '0' : '') + s
   }
 }
 

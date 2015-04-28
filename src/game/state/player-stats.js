@@ -32,6 +32,8 @@ export class PlayerStats {
     this.rawSumJudgmentWeight = 0
     this.rawTotalComboScore = this._calculateRawTotalComboScore()
     this.rawSumComboScore = 0
+    this.counts = { [Judgments.MISSED]: 0, '1': 0, '2': 0, '3': 0, '4': 0, }
+    this.numJudgments = 0
     this.poor = false
   }
   get score() {
@@ -57,12 +59,18 @@ export class PlayerStats {
     //      4 & 92 \leq c \leq 160 \\
     //      6 & 161 \leq c
     //    \end{cases}
-    let total = Judgments.weight(1) * this.totalCombo
     let accuracyScore = Math.floor(
-          this.rawSumJudgmentWeight * 500000 / total)
+          this.accuracy * 500000)
     let comboScore = Math.floor(
           this.rawSumComboScore * 55555 / this.rawTotalComboScore)
     return accuracyScore + comboScore
+  }
+  get accuracy() {
+    return this.rawSumJudgmentWeight / (Judgments.weight(1) * this.totalCombo)
+  }
+  get currentAccuracy() {
+    return (this.rawSumJudgmentWeight /
+        (Judgments.weight(1) * this.numJudgments || 1))
   }
   handleJudgment(judgment) {
     if (Judgments.breaksCombo(judgment)) {
@@ -77,6 +85,8 @@ export class PlayerStats {
     if (this.combo > this.maxCombo) {
       this.maxCombo = this.combo
     }
+    this.counts[judgment] += 1
+    this.numJudgments += 1
   }
   _calculateRawTotalComboScore() {
     var sum = 0

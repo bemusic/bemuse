@@ -30,7 +30,7 @@ function GameKeyboardPlugin(game) {
         'p1_5':  data[kbm['5'] || 74],
         'p1_6':  data[kbm['6'] || 75],
         'p1_7':  data[kbm['7'] || 76],
-        'p1_SC': data[kbm['SC'] || 65],
+        'p1_SC': data[kbm['SC'] || 65] || -data[kbm['SC2'] || 0],
         'p1_speedup': data[38],
         'p1_speeddown': data[40],
         'start': data[13],

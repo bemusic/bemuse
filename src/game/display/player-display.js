@@ -32,11 +32,29 @@ export class PlayerDisplay {
     updateInput()
     updateJudgment()
     updateExplode()
+
+    data['speed'] = (playerState.speed.toFixed(1) + 'x')
+    data['stat_1'] = getCount(1)
+    data['stat_2'] = getCount(2)
+    data['stat_3'] = getCount(3)
+    data['stat_4'] = getCount(4)
+    data['stat_missed'] = getCount(MISSED)
+    data['stat_acc'] = getAccuracy()
+    data['bpm'] = Math.round(player.notechart.bpmAtBeat(beat))
+
     Object.assign(data, stateful)
     return data
 
     function updateBeat() {
       data.beat = beat
+    }
+
+    function getCount(judgment) {
+      return playerState.stats.counts && playerState.stats.counts[judgment]
+    }
+
+    function getAccuracy() {
+      return ((playerState.stats.currentAccuracy || 0) * 100).toFixed(2) + '%'
     }
 
     function updateVisibleNotes() {

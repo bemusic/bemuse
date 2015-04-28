@@ -42,7 +42,7 @@ export function set(key, value) {
 
 export function getKeyboardMapping() {
   let out = { }
-  for (let key of ['SC', '1', '2', '3', '4', '5', '6', '7']) {
+  for (let key of ['SC', '1', '2', '3', '4', '5', '6', '7', 'SC2']) {
     out[key] = +get('input.P1.keyboard.' + key)
   }
   return out

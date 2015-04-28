@@ -12,6 +12,7 @@ export class Notechart {
     let bmsNotes    = BMS.Notes.fromBMSChart(bms).all()
     let timing      = BMS.Timing.fromBMSChart(bms)
     let keysounds   = BMS.Keysounds.fromBMSChart(bms)
+    let info        = BMS.SongInfo.fromBMSChart(bms)
     this._preTransform(bmsNotes, playerOptions)
     this._timing    = timing
     this._keysounds = keysounds
@@ -22,6 +23,7 @@ export class Notechart {
     this._samples   = this._generateKeysoundFiles(keysounds)
     this._infos     = new Map(this._notes.map(
         note => [note, this._getNoteInfo(note)]))
+    this._songInfo  = info
   }
 
   // An Array of note events.
@@ -59,6 +61,11 @@ export class Notechart {
     return this._duration
   }
 
+  // Notechart's song info
+  get songInfo() {
+    return this._songInfo
+  }
+
   // Returns the characteristic of the note as an Object.
   // The returned object includes the following properties:
   //
@@ -88,6 +95,11 @@ export class Notechart {
   // Conerts the in-song position to in-game position.
   secondsToPosition(seconds) {
     return this.beatToPosition(this.secondsToBeat(seconds))
+  }
+
+  // Converts the beat number to in-song position (seconds)
+  bpmAtBeat(beat) {
+    return this._timing.bpmAtBeat(beat)
   }
 
   _preTransform(bmsNotes, playerOptions) {

@@ -85,7 +85,7 @@
     "audio-context": "^0.1.0",
     "baconjs": "^0.7.53",
     "bluebird": "^2.9.10",
-    "bms": "^0.9.0",
+    "bms": "^0.11.1",
     "bytes": "^1.0.0",
     "chance": "^0.7.3",
     "classnames": "^1.2.0",

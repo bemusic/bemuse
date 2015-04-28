@@ -1983,7 +1983,19 @@
       <keyframe t="0.3" y="616" ease="quadOut"></keyframe>
     </animation>
     <sprite image="InfoPanel/Background.png"></sprite>
-    <text x="100" y="20" text="%s" data="p1_score" font="ScoreNumber" font-src="Fonts/ScoreNumber.fnt"></text>
+    <sprite image="InfoPanel/Template.png" y="1"></sprite>
+    <text x="176" y="22" text="%s" data="p1_score" font="ScoreNumber" font-src="Fonts/ScoreNumber.fnt" align="right"></text>
+    <text x="636" y="22" text="%s" data="p1_bpm" font="BPMNumber" font-src="Fonts/BPMNumber.fnt" align="center"></text>
+    <text x="824" y="33" alpha="0.8" text="%s" data="song_title" font="bold 16px Roboto" fill="white" align="left"></text>
+    <text x="824" y="55" alpha="0.6" text="%s" data="song_artist" font="13px Roboto" fill="white" align="left"></text>
+    <text x="824" y="70" alpha="0.6" text="%s" data="song_time" font="13px Roboto" fill="white" align="left"></text>
+    <text x="260" y="29" text="%s" data="p1_stat_1" font="StatNumber" font-src="Fonts/StatNumber.fnt" align="right"></text>
+    <text x="260" y="47" text="%s" data="p1_stat_2" font="StatNumber" font-src="Fonts/StatNumber.fnt" align="right"></text>
+    <text x="260" y="65" text="%s" data="p1_stat_3" font="StatNumber" font-src="Fonts/StatNumber.fnt" align="right"></text>
+    <text x="387" y="29" text="%s" data="p1_stat_4" font="StatNumber" font-src="Fonts/StatNumber.fnt" align="right"></text>
+    <text x="387" y="47" text="%s" data="p1_stat_missed" font="StatNumber" font-src="Fonts/StatNumber.fnt" align="right"></text>
+    <text x="387" y="65" text="%s" data="p1_stat_acc" font="StatNumber" font-src="Fonts/StatNumber.fnt" align="right"></text>
+    <text x="1160" y="22" text="%s" data="p1_speed" font="ScoreNumber" font-src="Fonts/ScoreNumber.fnt" align="left"></text>
   </group>
   <!-- tutorial-->
   <if key="tutorial" value="yes">

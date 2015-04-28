@@ -3,59 +3,64 @@ import * as Scintillator from 'bemuse/scintillator'
 
 import co from 'co'
 import $ from 'jquery'
-import Chance from 'chance'
 
-import GameNote from 'bemuse/game/data/game-note'
-import NoteArea from 'bemuse/game/display/note-area'
+import BMS          from 'bms'
+import Game         from 'bemuse/game/game'
+import GameState    from 'bemuse/game/state'
+import GameInput    from 'bemuse/game/input'
+import GameDisplay  from 'bemuse/game/display'
 
 export function main() {
   co(function*() {
+
+    let chart = BMS.Compiler.compile(`
+      #TITLE ทดสอบ Bemuse
+      #ARTIST ฟหกด
+      #00111:01
+      #00112:01
+      #00113:01
+      #00114:01
+      #00115:01
+      #00118:01
+      #00119:01
+      #00116:01
+      #00151:0001010000000000
+      #00152:0001010000000000
+      #00153:0001010000000000
+      #00154:0001010000000000
+      #00155:0001010000000000
+      #00158:0001010000000000
+      #00159:0001010000000000
+      #00156:0001010000000000`).chart
+
+    let game  = new Game(chart, {
+      players: [{ speed: 2 }]
+    })
+
     let skin      = yield Scintillator.load(Scintillator.getSkinUrl())
     let context   = new Scintillator.Context(skin)
-
-    let notes     = generateRandomNotes()
-    let area      = new NoteArea(notes, [])
-
-    let data = { }
-    let columns = ['SC', '1', '2', '3', '4', '5', '6', '7']
-
-    function updateNotes() {
-      let p = data.t * 192 / 60
-      for (let column of columns) {
-        data[`p1_note_${column}`].length = 0
-        data[`p1_longnote_${column}`].length = 0
-      }
-      let entities = area.getVisibleNotes(p, p + (5 / 2.5))
-      for (let entity of entities) {
-        let note = entity.note
-        let column = note.column
-        if (entity.height) {
-          data[`p1_longnote_${column}`].push({
-            key:    note.id,
-            y:      entity.y,
-            height: entity.height,
-            active: entity.y + entity.height > 1,
-            missed: entity.y + entity.height > 1.1 && note.id % 5 === 0,
-          })
-        } else {
-          data[`p1_note_${column}`].push({
-            key:    note.id,
-            y:      entity.y,
-          })
-        }
-      }
-    }
-
-    for (let column of columns) {
-      data[`p1_note_${column}`] = []
-      data[`p1_longnote_${column}`] = []
-    }
-
+    let display   = new GameDisplay({ game, skin, context })
+    let state     = new GameState(game)
+    let input     = new GameInput()
     let started = new Date().getTime()
+    let timer     = {
+      started: true,
+      startTime: started,
+      readyFraction: 0,
+    }
+
+    display.start()
+    display._getData = (getData => function() {
+      let result = getData.apply(display, arguments)
+      result['p1_score'] = (new Date().getTime() - started) % 555556
+      console.log(result)
+      return result
+    })(display._getData)
     let draw = () => {
-      data.t = (new Date().getTime() - started) / 1000
-      updateNotes()
-      context.render(data)
+      let t = (new Date().getTime() - started) / 1000
+      timer.time = t
+      state.update(t, input, timer)
+      display.update(t, state)
     }
     draw()
     requestAnimationFrame(function f() {
@@ -66,32 +71,6 @@ export function main() {
   })
   .done()
 
-}
-
-function generateRandomNotes() {
-  let notes = []
-  let chance = new Chance(1234)
-  let columns = ['SC', '1', '2', '3', '4', '5', '6', '7']
-  let nextId = 1
-  for (let column of columns) {
-    let position = 4
-    for (let j = 0; j < 2000; j++) {
-      position += chance.integer({ min: 1, max: 6 }) / 4
-      let length = chance.bool({ likelihood: 10 }) ?
-                      chance.integer({ min: 1, max: 24 }) / 4 : 0
-      let id = nextId++
-      if (length > 0) {
-        let end = { position: position + length, beat: 0, time: 0 }
-        notes.push(new GameNote({ position: position, end, column, id,
-                    beat: 0, time: 0, }))
-        position = end.position
-      } else {
-        notes.push(new GameNote({ position: position, column, id,
-                    beat: 0, time: 0, end: null, }))
-      }
-    }
-  }
-  return notes
 }
 
 function showCanvas(view) {
