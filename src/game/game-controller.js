@@ -21,9 +21,6 @@ export class GameController {
     this._input   = new GameInput()
     this._timer   = new GameTimer(this._clock, this._input)
     this._state   = new GameState(game)
-    this._input.use(new GamepadPlugin())
-    this._input.use(new GameKeyboardPlugin(game))
-    this._input.use(new TouchPlugin(this._display.context))
     this._promise = new Promise((resolve) => this._resolvePromise = resolve)
     if (bench.enabled) this.enableBenchmark()
   }
@@ -42,7 +39,11 @@ export class GameController {
 
   // Initializes the game components and kickstarts the game loop.
   start() {
+    this._handleEscape()
     this._display.start()
+    this._input.use(new GamepadPlugin())
+    this._input.use(new GameKeyboardPlugin(this._game))
+    this._input.use(new TouchPlugin(this._display.context))
     if (/Mobile.*?Safari/.test(navigator.userAgent)) {
       let id = setInterval(() => this._update(), 10)
       this._endGameLoop = () => clearInterval(id)
@@ -58,10 +59,24 @@ export class GameController {
     }
   }
 
+  // Exits the game when escape is pressed.
+  _handleEscape() {
+    let onKeyDown = (e) => {
+      if (e.keyCode === 27) {
+        window.removeEventListener('keydown', onKeyDown, true)
+        e.preventDefault()
+        e.stopPropagation()
+        this._resolvePromise(this._state)
+      }
+    }
+    window.addEventListener('keydown', onKeyDown, true)
+  }
+
   // Destroy the game.
   destroy() {
     this._endGameLoop()
     this._audio.destroy()
+    this._input.destroy()
     this._display.destroy()
   }
 

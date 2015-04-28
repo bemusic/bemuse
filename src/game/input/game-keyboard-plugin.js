@@ -4,9 +4,17 @@ import $ from 'jquery'
 function GameKeyboardPlugin(game) {
   let kbm = game.players[0].options.input.keyboard
   let data = { }
-  $(window)
-  .keydown(e => data[e.which] = 1)
-  .keyup(e => data[e.which] = 0)
+  $(window).on('keydown', onKeyDown).on('keyup', onKeyUp)
+  function onKeyDown(e) {
+    data[e.which] = 1
+    e.preventDefault()
+    e.stopPropagation()
+  }
+  function onKeyUp(e) {
+    data[e.which] = 0
+    e.preventDefault()
+    e.stopPropagation()
+  }
   return {
     name: 'GameKBPlugin',
     get() {
@@ -24,7 +32,10 @@ function GameKeyboardPlugin(game) {
         'start': data[13],
         'select': data[18],
       }
-    }
+    },
+    destroy() {
+      $(window).off('keydown', onKeyDown).off('keyup', onKeyUp)
+    },
   }
 }
 

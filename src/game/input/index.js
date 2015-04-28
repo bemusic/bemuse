@@ -18,7 +18,7 @@ export class GameInput {
       control.changed = false
     }
     for (let plugin of this._plugins) {
-      for (let [name, value] of plugin()) {
+      for (let [name, value] of plugin.get()) {
         changes.set(name, value)
       }
     }
@@ -33,6 +33,11 @@ export class GameInput {
     /* jshint +W004 */
     // https://github.com/jshint/jshint/issues/2138
   }
+  destroy() {
+    for (let plugin of this._plugins) {
+      plugin.destroy()
+    }
+  }
   get(controlName) {
     if (!this._controls.has(controlName)) {
       this._controls.set(controlName, new Control())
@@ -42,17 +47,26 @@ export class GameInput {
   use(plugin) {
     let state = { }
     let name = 'input:' + plugin.name
-    this._plugins.push(bench.wrap(name, function() {
-      let out = plugin.get()
-      let diff = [ ]
-      for (let key of _.union(_.keys(out), _.keys(state))) {
-        let last    = +state[key] || 0
-        let current = +out[key]   || 0
-        if (last !== current) diff.push([key, current])
-        state[key] = current
-      }
-      return diff
-    }))
+    this._plugins.push({
+      get: bench.wrap(name, function() {
+        let out = plugin.get()
+        let diff = [ ]
+        for (let key of _.union(_.keys(out), _.keys(state))) {
+          let last    = +state[key] || 0
+          let current = +out[key]   || 0
+          if (last !== current) diff.push([key, current])
+          state[key] = current
+        }
+        return diff
+      }),
+      destroy() {
+        if (typeof plugin.destroy === 'function') {
+          return plugin.destroy()
+        } else {
+          return true
+        }
+      },
+    })
   }
 }
 
