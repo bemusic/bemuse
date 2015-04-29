@@ -24,9 +24,7 @@ export class GameDisplay {
   update(gameTime, gameState) {
     let time = (new Date().getTime() - this._started) / 1000
     let data = this._getData(time, gameTime, gameState)
-    if (this._stateful.started === undefined) {
-      if (gameState.started) this._stateful.started = time
-    }
+    this._updateStatefulData(time, gameTime, gameState)
     this._context.render(Object.assign({ }, this._stateful, data))
   }
   _getData(time, gameTime, gameState) {
@@ -44,6 +42,15 @@ export class GameDisplay {
       }
     }
     return data
+  }
+  _updateStatefulData(time, gameTime, gameState) {
+    let data = this._stateful
+    if (data['started'] === undefined && gameState.started) {
+      data['started'] = time
+    }
+    if (data['gettingStarted'] === undefined && gameState.gettingStarted) {
+      data['gettingStarted'] = time
+    }
   }
   _getSongTime(gameTime) {
     return (

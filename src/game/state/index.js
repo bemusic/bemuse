@@ -21,6 +21,9 @@ export class GameState {
     // See Timer#readyFraction.
     // We need it here so that the display can read this information.
     this.readyFraction = timer.readyFraction
+    // True if the the player is getting started (i.e. holding down the
+    // start button for the first time), false otherwise.
+    this.gettingStarted = timer.gettingStarted
     // True if the game is started, false otherwise.
     this.started = timer.started
     // True if the game is finished, false otherwise.

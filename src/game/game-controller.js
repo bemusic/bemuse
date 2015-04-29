@@ -66,7 +66,12 @@ export class GameController {
         window.removeEventListener('keydown', onKeyDown, true)
         e.preventDefault()
         e.stopPropagation()
-        this._resolvePromise(this._state)
+        try { // TODO: trying to detect some unknown bug
+          this._resolvePromise(this._state)
+        } catch (e) {
+          console.log(this, this._resolvePromise)
+          throw e
+        }
       }
     }
     window.addEventListener('keydown', onKeyDown, true)

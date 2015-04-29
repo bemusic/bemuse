@@ -12,3 +12,7 @@ export function shouldEnableBenchmark() {
 export function shouldDisableFullScreen() {
   return query.BEMUSE_NO_FULLSCREEN === '1'
 }
+
+export function shouldShowAbout() {
+  return query.BEMUSE_SHOW_ABOUT === '1'
+}

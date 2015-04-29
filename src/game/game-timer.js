@@ -26,7 +26,11 @@ export class GameTimer {
   }
 
   _checkStartGame() {
-    if (!this.started && this._input.get('start').value) {
+    if (this.started) return
+    if (this._input.get('start').value) {
+      this.gettingStarted = true
+    }
+    if (this.gettingStarted && !this._input.get('start').value) {
       this.startTime = this._clock.time + this._getWait()
     }
     if (!this.started) {

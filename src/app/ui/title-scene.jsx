@@ -6,6 +6,7 @@ import Scene            from 'bemuse/ui/scene'
 import SceneToolbar     from 'bemuse/ui/scene-toolbar'
 import SCENE_MANAGER    from 'bemuse/scene-manager'
 import MusicSelectScene from './music-select-scene'
+import AboutScene       from './about-scene'
 import version          from 'bemuse/utils/version'
 
 React.initializeTouchEvents(true)
@@ -35,10 +36,10 @@ export default React.createClass({
   },
 
   enterGame() {
-    SCENE_MANAGER.push(React.createElement(MusicSelectScene)).done()
+    SCENE_MANAGER.push(<MusicSelectScene />).done()
   },
   showAbout() {
-    alert('About')
+    SCENE_MANAGER.push(<AboutScene />).done()
   },
 
 })

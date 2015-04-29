@@ -1847,6 +1847,10 @@
             <animation>
               <keyframe t="0" alpha="1"></keyframe>
             </animation>
+            <animation on="gettingStarted">
+              <keyframe t="0" alpha="1" scale-x="1" scale-y="1"></keyframe>
+              <keyframe t="0.1" alpha="1" scale-x="0.9" scale-y="0.9"></keyframe>
+            </animation>
             <animation on="started">
               <keyframe t="0" alpha="0"></keyframe>
             </animation>

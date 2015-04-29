@@ -1,0 +1,59 @@
+
+@import "~bemuse/ui/common";
+
+.about-scene {
+  @include scene-background(url(~bemuse/ui/images/bg/c.jpg));
+
+  .scene-heading {
+    z-index: 10;
+  }
+  > section {
+    @include scrolling-y;
+    @include full-screen;
+    padding: 25vmin 5vw 3em;
+    background: rgba(black, 0.64);
+    font-size: 17px;
+  }
+  @media (orientation: landscape) {
+    > section {
+      overflow-y: hidden;
+      right: 5vw; left: 5vw;
+      padding-left: 2vw;
+      padding-right: 2vw;
+      display: flex;
+    }
+    > section > article {
+      @include scrolling-y;
+      width: 50%;
+      height: 100%;
+      box-sizing: border-box;
+      padding: 0 1em 0;
+    }
+  }
+
+  h2 {
+    font-size: 1.5em;
+    text-align: center;
+    text-shadow: 1px 1px 0 rgba(black, 0.3);
+  }
+  p {
+    text-align: justify;
+    text-shadow: 1px 1px 0 rgba(black, 0.3);
+  }
+  a {
+    color: #ffa;
+  }
+
+  &--logo {
+    text-align: center;
+    img {
+      max-width: 80%;
+    }
+  }
+  &--team-list {
+    list-style: none;
+    padding-left: 1ex;
+    margin-top: 0;
+  }
+
+}
