@@ -18,13 +18,17 @@ import * as Analytics         from './analytics'
 
 import { shouldDisableFullScreen } from 'bemuse/devtools/query-flags'
 
-export function launch({ server, song, chart, scene: originalScene }) {
+export function launch({ server, song, chart }) {
   return co(function*() {
+
+    // go fullscreen
     if (screenfull.enabled && !shouldDisableFullScreen()) {
       let safari = /Safari/.test(navigator.userAgent) &&
                   !/Chrom/.test(navigator.userAgent)
       if (!safari) screenfull.request()
     }
+
+    // prepare data necessary to load the game
     let url       = server.url + '/' + song.path + '/' + chart.file
     let assetsUrl = resolve(url, 'assets/')
     let loadSpec = {
@@ -46,26 +50,44 @@ export function launch({ server, song, chart, scene: originalScene }) {
         ],
       },
     }
+
+    // start loading the game
     let { tasks, promise } = GameLoader.load(loadSpec)
+
+    // display loading scene
     let loadingScene = React.createElement(LoadingScene, {
       tasks: tasks,
       song:  chart.info,
     })
+    yield SCENE_MANAGER.push(loadingScene)
+
+    // send data to analytics
     Analytics.gameStart(song, chart)
-    yield SCENE_MANAGER.display(loadingScene)
+
+    // wait for game to load and display the game
     let controller = yield promise
     yield SCENE_MANAGER.display(new GameScene(controller.display))
     controller.start()
+
+    // wait for final game state
     let state = yield controller.promise
+
+    // send data to analytics
     Analytics.gameFinish(song, chart, state)
+
+    // get player's state and save options
     let playerState = state.player(state.game.players[0])
     Options.set('player.P1.speed', playerState.speed)
+
+    // display evaluation
     if (state.finished) {
       // TODO: display evaluation result
       void 0
     }
     controller.destroy()
-    yield SCENE_MANAGER.display(originalScene)
+
+    // go back to previous scene
+    yield SCENE_MANAGER.pop()
 
   })
 }
