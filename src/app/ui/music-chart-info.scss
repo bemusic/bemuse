@@ -1,5 +1,8 @@
 
+@import "~bemuse/ui/common";
+
 .music-chart-info {
+  font: 2.5vmin $ui-font;
   &--title {
     font-size: 2em;
     font-weight: bold;

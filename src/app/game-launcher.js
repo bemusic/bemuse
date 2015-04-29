@@ -13,8 +13,10 @@ import BemusePackageResources from 'bemuse/resources/bemuse-package'
 import * as GameLoader        from 'bemuse/game/loaders/game-loader'
 import GameScene              from 'bemuse/game/game-scene'
 import LoadingScene           from 'bemuse/game/ui/loading-scene.jsx'
+import ResultScene            from './ui/result-scene'
 import * as Options           from './options'
 import * as Analytics         from './analytics'
+import { MISSED }             from 'bemuse/game/judgments'
 
 import { shouldDisableFullScreen } from 'bemuse/devtools/query-flags'
 
@@ -81,8 +83,7 @@ export function launch({ server, song, chart }) {
 
     // display evaluation
     if (state.finished) {
-      // TODO: display evaluation result
-      void 0
+      yield showResult(playerState, chart)
     }
     controller.destroy()
 
@@ -90,4 +91,36 @@ export function launch({ server, song, chart }) {
     yield SCENE_MANAGER.pop()
 
   })
+}
+
+function showResult(playerState, chart) {
+  return new Promise(resolve => {
+    let stats = playerState.stats
+    let props = {
+      result: {
+        '1': stats.counts['1'],
+        '2': stats.counts['2'],
+        '3': stats.counts['3'],
+        '4': stats.counts['4'],
+        'missed':   stats.counts[MISSED],
+        'score':    stats.score,
+        'maxCombo': stats.maxCombo,
+        'accuracy': stats.accuracy,
+        'grade': getGrade(stats),
+      },
+      chart: chart,
+      onExit: resolve,
+    }
+    SCENE_MANAGER.display(React.createElement(ResultScene, props)).done()
+  })
+}
+
+function getGrade(stats) {
+  let score = stats.score
+  if (score < 300000) return 'F'
+  if (score < 350000) return 'D'
+  if (score < 400000) return 'C'
+  if (score < 450000) return 'B'
+  if (score < 500000) return 'A'
+  return 'S'
 }

@@ -39,6 +39,11 @@ var modules = {
   //   Used by developers to test skin.
   testSkin:   'bemuse/devtools/test-skin',
 
+  // >>
+  // testResult
+  //   Used by developers to test skin.
+  testResult: 'bemuse/devtools/test-result',
+
 }
 
 var code = 'module.exports = {'
@@ -55,4 +60,3 @@ code += Object.keys(modules).map(function(key) {
 code += '}'
 
 module.exports = code
-

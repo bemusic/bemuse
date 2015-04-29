@@ -29,9 +29,13 @@ $link-color: #039;
   -webkit-overflow-scrolling: touch;
 }
 
-@mixin main-bg {
-  background: url(~bemuse/ui/images/bg/a.jpg) center no-repeat;
+@mixin scene-background($url) {
+  background: $url center no-repeat;
   background-size: cover;
+}
+
+@mixin main-bg {
+  @include scene-background(url(~bemuse/ui/images/bg/a.jpg));
 }
 
 @mixin soft-shadow {
