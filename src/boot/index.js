@@ -28,7 +28,7 @@ window.onerror = function(message, url, line, col, e) {
 
 
 /* isparta ignore next */
-let mode = query.mode || 'comingSoon'
+let mode = query.mode || 'app'
 
 require.ensure(['./environment'],
 function(require) {
