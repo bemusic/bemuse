@@ -94,7 +94,7 @@ export function launch({ server, song, chart }) {
 }
 
 function showResult(playerState, chart) {
-  return new Promise(resolve => {
+  return new Promise(_resolve => {
     let stats = playerState.stats
     let props = {
       result: {
@@ -109,7 +109,7 @@ function showResult(playerState, chart) {
         'grade': getGrade(stats),
       },
       chart: chart,
-      onExit: resolve,
+      onExit: _resolve,
     }
     SCENE_MANAGER.display(React.createElement(ResultScene, props)).done()
   })

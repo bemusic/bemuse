@@ -53,7 +53,7 @@ export class SceneManager {
   }
 
   // Displays the previous scene.
-  pop(scene) {
+  pop() {
     return this._transitionTo(() => {
       return this._stack.pop()
     })
@@ -61,7 +61,7 @@ export class SceneManager {
 
   _transitionTo(getNextScene) {
     return co(function*() {
-      if (this._transitioning) throw new Error("Scene is transitioning!")
+      if (this._transitioning) throw new Error('Scene is transitioning!')
       try {
         this._transitioning = true
 

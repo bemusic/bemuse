@@ -1,7 +1,6 @@
 
 import './result-grade.scss'
 import React from 'react'
-import c     from 'classnames'
 
 export default React.createClass({
   render() {

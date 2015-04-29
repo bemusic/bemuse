@@ -1,7 +1,6 @@
 
 import './result-scene.scss'
 import React            from 'react'
-import c                from 'classnames'
 import Scene            from 'bemuse/ui/scene'
 import SceneHeading     from 'bemuse/ui/scene-heading'
 import SceneToolbar     from 'bemuse/ui/scene-toolbar'

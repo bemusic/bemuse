@@ -1,7 +1,6 @@
 
 import './scene-toolbar.scss'
 import React from 'react'
-import c     from 'classnames'
 
 export const SceneToolbar = React.createClass({
   render() {
