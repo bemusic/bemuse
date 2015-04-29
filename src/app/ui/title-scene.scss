@@ -1,0 +1,41 @@
+@import "~bemuse/ui/common";
+
+.title-scene {
+
+  @include main-bg;
+
+  font: 2.5vmin $ui-font;
+
+  &--logo {
+    position: absolute;
+    top: 30%; left: 50%;
+    transform: translate(-50%,-50%);
+    background: url(~bemuse/ui/images/bg/BemuseTitleLogo.png) center no-repeat;
+    width: 120vw;
+    max-width: (2160px / 2.5);
+    height: (720px / 2.5);
+    background-size: contain;
+  }
+
+  &--enter {
+    position: absolute;
+    top: 70%; left: 50%;
+    transform: translate(-50%,-50%);
+    > a {
+      color: rgba(black, 0.9);
+      font-size: 7vmin;
+      background: rgba(#fff, 0.8);
+      padding: 0.5ex 1.2ex;
+      border-radius: 2em;
+      display: block;
+      text-decoration: none;
+      transform: scale(1);
+      transition: 0.1s transform, 0.1s background;
+      &:hover {
+        background: rgba(#fff, 1.0);
+        transform: scale(1.1);
+      }
+    }
+  }
+
+}

@@ -1,0 +1,52 @@
+
+@import "~bemuse/ui/common";
+
+.result-scene {
+  @include scene-background(url(~bemuse/ui/images/bg/b.jpg));
+  color: black;
+
+  &--report {
+    position: absolute;
+    top: 25vmin; right: 52vw; bottom: 3vmin; left: 5vw;
+  }
+
+  &--information {
+    background: rgba(white, 0.8);
+    position: absolute;
+    top: 0; right: 5vw; bottom: 0; left: 52vw;
+    padding-top: 25vmin;
+  }
+
+  .music-chart-info {
+    margin: 0 2vw;
+  }
+
+  .result-grade {
+    position: absolute;
+    bottom: 12vh; right: 52vw;
+    width: 20vh; height: 20vh;
+  }
+
+  &--chart {
+    float: right;
+    margin-right: 2vw;
+  }
+
+  .music-chart-selector-item {
+    width: 12vmin;
+  }
+
+  &--exit {
+    position: absolute;
+    right: 2vw; bottom: 12vh; left: 2vw;
+    background: #5a5;
+    border: 2px solid darken(#5a5, 5%);
+    text-align: center;
+    font-size: 5vmin;
+    color: #fff;
+    padding: 1ex;
+    cursor: pointer;
+    border-radius: 2vmin;
+  }
+
+}

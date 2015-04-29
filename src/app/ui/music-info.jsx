@@ -12,7 +12,7 @@ export default React.createClass({
     const song  = this.props.song
     const chart = this.props.chart
     return <section className="music-info">
-      <MusicChartInfo chart={chart} />
+      <MusicChartInfo info={chart.info} />
       <MusicChartSelector
           song={song}
           selectedChart={chart}

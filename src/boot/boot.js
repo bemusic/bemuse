@@ -1,7 +1,7 @@
 
 import './boot.scss'
 import template from './boot.jade'
-import version from 'val!./version.js'
+import version  from 'bemuse/utils/version'
 
 let boot = document.createElement('div')
 boot.id = 'boot'
@@ -29,4 +29,3 @@ export function setProgress(progress) {
     bar.style.width = (progress * 100).toFixed(2) + '%'
   }
 }
-

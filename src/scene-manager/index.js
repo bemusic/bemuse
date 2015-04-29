@@ -31,24 +31,66 @@ import React  from 'react'
 //
 export class SceneManager {
   constructor() {
+    this._transitioning = false
+    this._stack = []
   }
 
   // Displays the scene and returns a promise that resolves when the old
   // scene finishes exiting.
   display(scene) {
-    if (typeof scene !== 'function') scene = new ReactScene(scene)
-    return co(function*() {
-      if (this.currentScene) {
-        yield Promise.resolve(this.currentScene.teardown())
-        detach(this.currentElement)
-      }
-      var element = document.createElement('div')
-      element.className = 'scene-manager--scene'
-      document.body.appendChild(element)
-      this.currentElement = element
-      this.currentScene = scene(element)
+    return this._transitionTo(() => {
+      return scene
     })
   }
+
+  // Displays the scene, while remembering the previous scene.
+  push(scene) {
+    let previousScene = this.currentScene
+    return this._transitionTo(() => {
+      this._stack.push(previousScene)
+      return scene
+    })
+  }
+
+  // Displays the previous scene.
+  pop() {
+    return this._transitionTo(() => {
+      return this._stack.pop()
+    })
+  }
+
+  _transitionTo(getNextScene) {
+    return co(function*() {
+      if (this._transitioning) throw new Error('Scene is transitioning!')
+      try {
+        this._transitioning = true
+
+        // detach the previous scene
+        if (this.currentSceneInstance) {
+          yield Promise.resolve(this.currentSceneInstance.teardown())
+          detach(this.currentElement)
+        }
+
+        // obtain the next scene
+        let scene = getNextScene()
+
+        // coerce react elements
+        if (typeof scene !== 'function') scene = new ReactScene(scene)
+
+        // set up the next scene
+        var element = document.createElement('div')
+        element.className = 'scene-manager--scene'
+        document.body.appendChild(element)
+        this.currentElement       = element
+        this.currentScene         = scene
+        this.currentSceneInstance = scene(element)
+
+      } finally {
+        this._transitioning = false
+      }
+    }.bind(this))
+  }
+
 }
 
 function detach(element) {
