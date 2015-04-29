@@ -3,6 +3,10 @@ import './title-scene.scss'
 
 import React            from 'react'
 import Scene            from 'bemuse/ui/scene'
+import SceneToolbar     from 'bemuse/ui/scene-toolbar'
+import SCENE_MANAGER    from 'bemuse/scene-manager'
+import MusicSelectScene from './music-select-scene'
+import version          from 'bemuse/utils/version'
 
 React.initializeTouchEvents(true)
 
@@ -11,22 +15,30 @@ export default React.createClass({
   render() {
     return <Scene className="title-scene">
       <div className="title-scene--logo"></div>
-      <div className="title-scene--absmessage" >
-        ...Click to start...
+      <div className="title-scene--enter">
+        <a href="javascript://" onClick={this.enterGame}>Enter Game</a>
       </div>
-      <div className="title-scene--about">
-        About
-      </div>
-      <div className="title-scene--gitHub">
-        gitHub
-      </div>
-      <div className="title-scene--reddit">
-        reddit
-      </div>
-      <div className="title-scene--gitter">
-        gitter
-      </div>
+      <SceneToolbar>
+        <a onClick={this.showAbout} href="javascript://">About</a>
+        <span><strong>Bemuse</strong> v{version}</span>
+        <SceneToolbar.Spacer />
+        <a onClick={this.openLink} href="https://github.com/bemusic/bemuse">GitHub</a>
+        <a onClick={this.openLink} href="https://www.reddit.com/r/bemuse">Community</a>
+        <a onClick={this.openLink} href="https://gitter.im/bemusic/bemuse">Chat</a>
+      </SceneToolbar>
     </Scene>
-  }
+  },
+
+  openLink(e) {
+    e.preventDefault()
+    window.open(e.target.href, '_blank')
+  },
+
+  enterGame() {
+    SCENE_MANAGER.display(React.createElement(MusicSelectScene)).done()
+  },
+  showAbout() {
+    alert('About')
+  },
 
 })

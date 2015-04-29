@@ -3,7 +3,7 @@ import now from 'bemuse/utils/now'
 
 import SCENE_MANAGER    from 'bemuse/scene-manager'
 import React            from 'react'
-import TitleScene       from './ui/title-scene.jsx'
+import TitleScene       from './ui/title-scene'
 
 import { getMusicServer, getTimeSynchroServer } from './query-flags'
 

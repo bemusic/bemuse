@@ -7,54 +7,35 @@
   font: 2.5vmin $ui-font;
 
   &--logo {
-    //@include centered;
     position: absolute;
-    top:30%; left: 50%;
+    top: 30%; left: 50%;
     transform: translate(-50%,-50%);
-    background: url(~bemuse/ui/images/bg/BemuseTitleLogo.png);
-    width: (2160px / 2.5);
+    background: url(~bemuse/ui/images/bg/BemuseTitleLogo.png) center no-repeat;
+    width: 120vw;
+    max-width: (2160px / 2.5);
     height: (720px / 2.5);
     background-size: contain;
   }
 
-  &--absmessage {
+  &--enter {
     position: absolute;
-    top:70%; left: 50%;
+    top: 70%; left: 50%;
     transform: translate(-50%,-50%);
-    color: rgba(black, 0.5);
-    font-size: 40px;
+    > a {
+      color: rgba(black, 0.9);
+      font-size: 7vmin;
+      background: rgba(#fff, 0.8);
+      padding: 0.5ex 1.2ex;
+      border-radius: 2em;
+      display: block;
+      text-decoration: none;
+      transform: scale(1);
+      transition: 0.1s transform, 0.1s background;
+      &:hover {
+        background: rgba(#fff, 1.0);
+        transform: scale(1.1);
+      }
+    }
   }
 
-  &--about {
-    position: relative;
-    left: 20px;
-    top: 630px;
-    font-size: 20px;
-    color: rgba(black, 0.5);
-  }
-
-  &--gitHub {
-    position: relative;
-    left: 1000px;
-    top: 605px;
-    font-size: 20px;
-    color: rgba(black, 0.5);
-  }
-
-  &--reddit {
-    position: relative;
-    left: 1100px;
-    top: 580px;
-    font-size: 20px;
-    color: rgba(black, 0.5);
-  }
-
-  &--gitter {
-    position: relative;
-    left: 1200px;
-    top: 555px;
-    font-size: 20px;
-    color: rgba(black, 0.5);
-  }
-
-  }
+}
