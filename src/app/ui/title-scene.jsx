@@ -35,7 +35,7 @@ export default React.createClass({
   },
 
   enterGame() {
-    SCENE_MANAGER.display(React.createElement(MusicSelectScene)).done()
+    SCENE_MANAGER.push(React.createElement(MusicSelectScene)).done()
   },
   showAbout() {
     alert('About')

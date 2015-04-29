@@ -6,12 +6,14 @@ import c                from 'classnames'
 import { Binding }      from 'bemuse/flux'
 import Scene            from 'bemuse/ui/scene'
 import SceneHeading     from 'bemuse/ui/scene-heading'
+import SceneToolbar     from 'bemuse/ui/scene-toolbar'
 import ModalPopup       from 'bemuse/ui/modal-popup'
 import MusicList        from './music-list'
 import MusicInfo        from './music-info'
 import Options          from './options'
 import Store            from '../stores/music-select-store'
 import * as Actions     from '../actions/music-select-actions'
+import SCENE_MANAGER    from 'bemuse/scene-manager'
 
 import { shouldShowOptions } from 'bemuse/devtools/query-flags'
 
@@ -55,6 +57,9 @@ export default React.createClass({
                 onOptions={this.handleOptionsOpen} />
           </div>
       }
+      <SceneToolbar>
+        <a onClick={this.popScene} href="javascript://">Exit</a>
+      </SceneToolbar>
       <ModalPopup
           visible={this.state.optionsVisible}
           onBackdropClick={this.handleOptionsClose}>
@@ -96,6 +101,9 @@ export default React.createClass({
   },
   handleOptionsClose() {
     this.setState({ optionsVisible: false })
+  },
+  popScene() {
+    SCENE_MANAGER.pop().done()
   },
 
 })
