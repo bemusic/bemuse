@@ -23,7 +23,8 @@ export function main() {
   SCENE_MANAGER.display(getFirstScene()).done()
 
   // synchronize time
-  let timeSynchroServer = getTimeSynchroServer()
+  let timeSynchroServer = (getTimeSynchroServer() ||
+        'wss://timesynchro.herokuapp.com/')
   if (timeSynchroServer) now.synchronize(timeSynchroServer)
 
 }
