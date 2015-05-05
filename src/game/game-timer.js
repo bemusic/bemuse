@@ -55,6 +55,7 @@ export class GameTimer {
     // This is accomplished using some magic formula ;).
     //
     var delta = this.startTime === null ? 0 : this._clock.time - this.startTime
+    if (delta < 0) delta = 0
     if (delta < 1) {
       return (Math.pow(delta, 6) - 1) / 6 - 1 / 30
     } else {
