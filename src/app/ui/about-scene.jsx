@@ -49,6 +49,9 @@ export default React.createClass({
             The source code is available on <a
                 href="https://github.com/bemusic/bemuse">GitHub</a>.
           </p>
+          <div className="about-scene--djbm">
+            <img src={require('./about-scene/DJBM.png')} alt="DJ Bemuse" />
+          </div>
         </article>
         <article>
 
@@ -86,6 +89,46 @@ export default React.createClass({
           We{"'"}d also like to thank the following artists
           for letting us use their songs
           in the game: {this.renderArtists()}.</p>
+
+          <p><strong>Powered by open-source.</strong> Bemuse relies on
+          many open source projects for development to make this possible.</p>
+          <ul>
+            <li>We use <a href="http://www.pixijs.com/">Pixi.js</a>,
+              which provides a super-fast graphics engine.</li>
+            <li>We use <a href="https://facebook.github.io/react/">React</a>,
+              a library for building modular and composable user interfaces.
+              React helps us build the UI more quickly than with traditional
+              HTML and CSS.</li>
+            <li>We use <a href="http://webpack.github.io/">Webpack</a>,
+              which efficiently packages the source code modules, assets,
+              and libraries we use into standalone web packages.</li>
+            <li>We use <a href="https://babeljs.io/">Babel</a> so that we can
+              write our code in future JavaScript dialect and have it translate
+              our code for today{"'"}s browsers.</li>
+            <li>We use <a
+                href="https://www.npmjs.com/package/node-sass">node-sass</a> to
+              be able to write our CSS more efficiently.</li>
+            <li>We use <a href="http://gulpjs.com/">Gulp</a> to help automate
+              our workflow.</li>
+            <li>And we use a lot more, which you can find on <a
+                href="https://david-dm.org/bemusic/bemuse">david-dm</a>.</li>
+          </ul>
+
+          <p>We would also like to thank these services for letting us
+              use them for free:</p>
+          <ul>
+            <li><a href="https://pages.github.com/">GitHub Pages</a> provides
+              free hosting for this project.</li>
+            <li><a href="https://github.com/">GitHub</a> hosts our
+              source code repository.</li>
+            <li><a href="https://travis-ci.org/">Travis CI</a> and <a
+                href="https://circleci.com/">CircleCI</a> continuously runs
+                our automated tests and notifies us when our new code breaks
+                existing features. CircleCI also builds and deploys new version
+                of the game automatically for us.</li>
+            <li><a href="https://waffle.io/">Waffle.io</a> helps us manage
+              the project.</li>
+          </ul>
 
         </article>
       </section>
