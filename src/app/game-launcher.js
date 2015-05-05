@@ -115,6 +115,7 @@ function showResult(playerState, chart) {
   })
 }
 
+//#region grade
 function getGrade(stats) {
   let score = stats.score
   if (score < 300000) return 'F'
@@ -124,3 +125,4 @@ function getGrade(stats) {
   if (score < 500000) return 'A'
   return 'S'
 }
+//#endregion

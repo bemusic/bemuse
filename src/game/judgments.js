@@ -1,30 +1,17 @@
 
 import _ from 'lodash'
 
-// >> game/judgments
-//
-// When hitting the note, the accuracy of your button press will be judged
-// according to this table:
-//
-// ============== ===================== ================
-//      Name        Maximum Offset (ms)   Accuracy Score
-// ============== ===================== ================
-//   METICULOUS!                     20             100%
-//     PRECISE!                      50              80%
-//      GOOD!                       100              50%
-//     OFFBEAT!                     200               0%
-//     MISSED!                       --               0%
-// ============== ===================== ================
-
 export const UNJUDGED = 0
 export const MISSED = -1
 
+//#region judgment timegate
 export const JUDGMENTS = [
   { value: 1, timegate: 0.020, endTimegate: 0.040 },
   { value: 2, timegate: 0.050, endTimegate: 0.100 },
   { value: 3, timegate: 0.100, endTimegate: 0.200 },
   { value: 4, timegate: 0.200, endTimegate: 0.200 },
 ]
+//#endregion
 
 /**
  * Takes a gameTime and noteTime and returns the appropriate judgment.
@@ -57,9 +44,11 @@ export function breaksCombo(judgment) {
   return judgment === MISSED || isBad(judgment)
 }
 
+//#region judgment weight
 export function weight(judgment) {
   if (judgment === 1) return 100
   if (judgment === 2) return 80
   if (judgment === 3) return 50
   return 0
 }
+//#endregion

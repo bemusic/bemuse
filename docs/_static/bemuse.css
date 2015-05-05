@@ -1,0 +1,42 @@
+
+.rst-content .srcref {
+  background: #eee;
+  font-size: 0.9em;
+  color: #777;
+  padding: 12px;
+  margin-bottom: 24px;
+}
+.rst-content .srcref.outdated {
+  background: #c55;
+  color: #fff;
+}
+.rst-content .srcref .admonition-title {
+  background: #ccc;
+  color: #666;
+}
+.rst-content .srcref.outdated .admonition-title {
+  background: #e99;
+  color: #fcc;
+}
+.rst-content .srcref.outdated a {
+  color: #ffa;
+}
+.rst-content .srcref .admonition-title::before {
+  content: "\f121";
+}
+.rst-content .srcref ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.rst-content .srcref ul li {
+  font-style: italic;
+  list-style: none;
+  margin: 0;
+}
+.rst-content .srcref ul li.outdated {
+  text-shadow: 0 0 1px red, 0 0 3px red, 0 0 5px red;
+}
+.rst-content .srcref li a {
+  font-style: normal;
+}
