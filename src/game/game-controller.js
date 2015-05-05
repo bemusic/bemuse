@@ -63,18 +63,15 @@ export class GameController {
   _handleEscape() {
     let onKeyDown = (e) => {
       if (e.keyCode === 27) {
-        window.removeEventListener('keydown', onKeyDown, true)
         e.preventDefault()
         e.stopPropagation()
-        try { // TODO: trying to detect some unknown bug
-          this._resolvePromise(this._state)
-        } catch (e) {
-          console.log(this, this._resolvePromise)
-          throw e
-        }
+        this._resolvePromise(this._state)
       }
     }
     window.addEventListener('keydown', onKeyDown, true)
+    this._promise.finally(function() {
+      window.removeEventListener('keydown', onKeyDown, true)
+    }).done()
   }
 
   // Destroy the game.
