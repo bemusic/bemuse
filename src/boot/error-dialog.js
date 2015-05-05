@@ -9,9 +9,11 @@ function show(message, url, line, col, e) {
   div.innerHTML = template({ message, url, line, col, e })
   document.body.appendChild(div)
   var close = div.querySelector('.error-dialog--close')
-  if (close) close.addEventListener('click', function() {
-    div.parentNode.removeChild(div)
-  }, false)
+  if (close) {
+    close.addEventListener('click', function() {
+      div.parentNode.removeChild(div)
+    }, false)
+  }
 }
 
 export { show }
