@@ -10,6 +10,7 @@
   ],
   "rules": {
     "comma-dangle": 0,
+    "comma-spacing": 0,
     "curly": [2, "multi-line"],
     "dot-notation": 0,
     "key-spacing": 0,
