@@ -14,8 +14,10 @@ import * as GameLoader        from 'bemuse/game/loaders/game-loader'
 import GameScene              from 'bemuse/game/game-scene'
 import LoadingScene           from 'bemuse/game/ui/loading-scene.jsx'
 import ResultScene            from './ui/result-scene'
-import * as Options           from './options'
 import * as Analytics         from './analytics'
+import * as OptionsActions    from './actions/options-actions'
+import OptionsStore           from './stores/options-store'
+import OptionsInputStore      from './stores/options-input-store'
 import { MISSED }             from 'bemuse/game/judgments'
 
 import { shouldDisableFullScreen } from 'bemuse/devtools/query-flags'
@@ -33,7 +35,13 @@ export function launch({ server, song, chart }) {
     // prepare data necessary to load the game
     let url       = server.url + '/' + song.path + '/' + chart.file
     let assetsUrl = resolve(url, 'assets/')
-    let loadSpec = {
+
+    // get the options from the store
+    let optionsStoreState = OptionsStore.get()
+    let options = optionsStoreState.options
+
+    // initialize the loading specification
+    let loadSpec  = {
       bms:      new URLResource(url),
       assets:   new BemusePackageResources(assetsUrl),
       options:  {
@@ -41,13 +49,13 @@ export function launch({ server, song, chart }) {
         tutorial: song.tutorial,
         players: [
           {
-            speed:      +Options.get('player.P1.speed') || 1,
+            speed:      +options['player.P1.speed'] || 1,
             autoplay:   false,
-            placement:  Options.get('player.P1.panel'),
-            scratch:    Options.get('player.P1.scratch'),
+            placement:  options['player.P1.panel'],
+            scratch:    optionsStoreState.scratch,
             input: {
-              keyboard: Options.getKeyboardMapping(),
-            }
+              keyboard: OptionsInputStore.get().keyCodes,
+            },
           },
         ],
       },
@@ -79,7 +87,9 @@ export function launch({ server, song, chart }) {
 
     // get player's state and save options
     let playerState = state.player(state.game.players[0])
-    Options.set('player.P1.speed', playerState.speed)
+    OptionsActions.setOptions({
+      'player.P1.speed': playerState.speed,
+    })
 
     // display evaluation
     if (state.finished) {

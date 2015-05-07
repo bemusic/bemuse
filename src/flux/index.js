@@ -28,13 +28,17 @@ export function Action(transform=x => x) {
   return action
 }
 
-export function Store(store) {
+export function Store(store, options={}) {
+  let lazy = !!options.lazy
   store = toProperty(store)
   store.get = () => {
     let data
     let unsubscribe = store.onValue(_data => data = _data)
     setTimeout(unsubscribe)
     return data
+  }
+  if (!store.lazy) {
+    store.onValue(() => {})
   }
   return store
 }

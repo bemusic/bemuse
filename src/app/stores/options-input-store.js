@@ -51,6 +51,7 @@ export default new Store({
   texts:      $texts,
   editing:    $editing,
   scratch:    $scratch,
+  keyCodes:   $keyCodes,
 })
 
 function toText(keyCode) {

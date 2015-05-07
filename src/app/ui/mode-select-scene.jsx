@@ -7,6 +7,7 @@ import SceneHeading     from 'bemuse/ui/scene-heading'
 import SceneToolbar     from 'bemuse/ui/scene-toolbar'
 import SCENE_MANAGER    from 'bemuse/scene-manager'
 import MusicSelectScene from './music-select-scene'
+import { setMode }      from '../actions/options-actions'
 
 export default React.createClass({
 
@@ -67,9 +68,11 @@ export default React.createClass({
   },
 
   handleKB() {
+    setMode('KB')
     SCENE_MANAGER.display(<MusicSelectScene />).done()
   },
   handleBM() {
+    setMode('BM')
     SCENE_MANAGER.display(<MusicSelectScene />).done()
   },
   handleBack() {

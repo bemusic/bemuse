@@ -18,7 +18,7 @@ const $readme = $url.skipDuplicates().flatMapLatest(loadReadme).toProperty('')
 
 export default new Store({
   text: $readme
-})
+}, { lazy: true })
 
 function loadReadme(url) {
   if (url === null) return Bacon.once('Information unavailable…')
