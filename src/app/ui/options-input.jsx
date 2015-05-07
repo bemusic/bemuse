@@ -1,6 +1,7 @@
 
 import './options-input.scss'
 import React                from 'react'
+import c                    from 'classnames'
 import { Binding }          from 'bemuse/flux'
 import Store                from '../stores/options-input-store'
 import * as Actions         from '../actions/options-input-actions'
@@ -9,21 +10,27 @@ import OptionsInputKeys     from './options-input-keys'
 
 export default React.createClass({
   render() {
-    return <div className="options-input">
+    return <div className={c('options-input', {
+        'is-reverse': this.state.scratch === 'right' })}>
       <Binding store={Store} onChange={this.handleState} />
-      <div className="options-input--zone is-scratch">
-        <div className="options-input--control">
-          <OptionsInputScratch text={this.state.texts['SC']}
-              isEditing={this.state.editing === 'SC'}
-              onEdit={this.handleEdit} />
-        </div>
-        <div className="options-input--title">
-          Scratch
-        </div>
-      </div>
+      {
+        this.state.scratch !== 'off'
+        ? <div className="options-input--zone is-scratch">
+            <div className="options-input--control">
+              <OptionsInputScratch text={this.state.texts['SC']}
+                  isEditing={this.state.editing === 'SC'}
+                  onEdit={this.handleEdit} />
+            </div>
+            <div className="options-input--title">
+              Scratch
+            </div>
+          </div>
+        : null
+      }
       <div className="options-input--zone">
         <div className="options-input--control">
           <OptionsInputKeys
+              keyboardMode={this.state.scratch === 'off'}
               texts={this.state.texts}
               editing={this.state.editing}
               onEdit={this.handleEdit} />
@@ -57,7 +64,7 @@ export default React.createClass({
     if (this.state.editing) {
       e.stopPropagation()
       e.preventDefault()
-      Actions.setKeyCode(this.state.editing, e.keyCode)
+      Actions.setKeyCode(this.state.mode, this.state.editing, e.keyCode)
     }
   },
 })

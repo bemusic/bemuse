@@ -3,20 +3,39 @@ import _            from 'lodash'
 import Bacon        from 'baconjs'
 import { Store }    from 'bemuse/flux'
 import keycode      from 'keycode'
-import * as Options from '../options'
+
+import OptionsStore from './options-store'
 import * as Actions from '../actions/options-input-actions'
 
-const $order    = Bacon.constant(['SC', '1', '2', '3', '4', '5', '6', '7'])
-const $keyCodes = Bacon.update(Options.getKeyboardMapping(),
-    [Actions.setKeyCode.bus], (prev, { key, keyCode }) => {
-      return Object.assign({ }, prev, { [key]: keyCode })
-    })
+const $order    = OptionsStore.map(getControls)
+const $keyCodes = OptionsStore.combine($order, getKeyboardMapping).log()
 
+function getControls(state) {
+  if (state.scratch === 'left') {
+    return ['SC', '1', '2', '3', '4', '5', '6', '7']
+  } else if (state.scratch === 'right') {
+    return ['1', '2', '3', '4', '5', '6', '7', 'SC']
+  } else {
+    return ['1', '2', '3', '4', '5', '6', '7']
+  }
+}
+
+function getKeyboardMapping(state, order) {
+  let mapping = { }
+  for (let control of order) {
+    let key = 'input.P1.keyboard.' + state.mode + '.' + control
+    mapping[control] = +state.options[key] || 0
+  }
+  return mapping
+}
+
+const $mode     = OptionsStore.map(state => state.mode)
+const $scratch  = OptionsStore.map(state => state.scratch)
 const $texts    = $keyCodes.map((keyCodes) => _.mapValues(keyCodes, toText))
 const $editing  = Bacon.update(null,
     [Actions.selectKey.bus],    (prev, key) => key,
     [Actions.deselectKey.bus],  () => null,
-    [Actions.setKeyCode.bus, $order], (prev, { key, keyCode }, order) => {
+    [Actions.selectNextKey.bus, $order], (prev, key, order) => {
       let index = order.indexOf(key)
       if (index + 1 >= order.length) {
         return null
@@ -26,8 +45,11 @@ const $editing  = Bacon.update(null,
     })
 
 export default new Store({
-  texts:    $texts,
-  editing:  $editing,
+  mode:       $mode,
+  texts:      $texts,
+  editing:    $editing,
+  scratch:    $scratch,
+  keyCodes:   $keyCodes,
 })
 
 function toText(keyCode) {

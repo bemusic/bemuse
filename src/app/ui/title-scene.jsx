@@ -5,7 +5,7 @@ import React            from 'react'
 import Scene            from 'bemuse/ui/scene'
 import SceneToolbar     from 'bemuse/ui/scene-toolbar'
 import SCENE_MANAGER    from 'bemuse/scene-manager'
-import MusicSelectScene from './music-select-scene'
+import ModeSelectScene  from './mode-select-scene'
 import AboutScene       from './about-scene'
 import version          from 'bemuse/utils/version'
 
@@ -36,7 +36,7 @@ export default React.createClass({
   },
 
   enterGame() {
-    SCENE_MANAGER.push(<MusicSelectScene />).done()
+    SCENE_MANAGER.push(<ModeSelectScene />).done()
   },
   showAbout() {
     SCENE_MANAGER.push(<AboutScene />).done()

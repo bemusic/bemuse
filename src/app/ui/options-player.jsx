@@ -2,7 +2,9 @@
 import './options-player.scss'
 import React from 'react'
 
-import * as Options          from '../options'
+import { Binding }           from 'bemuse/flux'
+import Store                 from '../stores/options-store'
+import * as Actions         from '../actions/options-actions'
 import OptionsPlayerSelector from './options-player-selector'
 import OptionsButton         from './options-button'
 
@@ -22,6 +24,8 @@ const OptionsPlayer = React.createClass({
   render() {
     return <div className="options-player">
 
+      <Binding store={Store} onChange={this.handleState} />
+
       <OptionsPlayer.Row label="Speed">
         For now, set the speed in-game<br />
         using Up and Down arrow.
@@ -31,14 +35,14 @@ const OptionsPlayer = React.createClass({
         <OptionsPlayerSelector type="scratch"
             options={SCRATCH_OPTIONS}
             onSelect={this.handleSelectScratch}
-            value={Options.get('player.P1.scratch')} />
+            value={this.state.scratch} />
       </OptionsPlayer.Row>
 
       <OptionsPlayer.Row label="Panel">
         <OptionsPlayerSelector type="panel"
             options={PANEL_OPTIONS}
             onSelect={this.handleSelectPanel}
-            value={Options.get('player.P1.panel')} />
+            value={this.state.options['player.P1.panel']} />
       </OptionsPlayer.Row>
 
       <div className="options-player--buttons">
@@ -47,13 +51,17 @@ const OptionsPlayer = React.createClass({
 
     </div>
   },
+  getInitialState() {
+    return Store.get()
+  },
+  handleState(state) {
+    this.setState(state)
+  },
   handleSelectPanel(value) {
-    Options.set('player.P1.panel', value)
-    this.forceUpdate()
+    Actions.setOptions({ 'player.P1.panel': value })
   },
   handleSelectScratch(value) {
-    Options.set('player.P1.scratch', value)
-    this.forceUpdate()
+    Actions.setScratch(value)
   },
 })
 

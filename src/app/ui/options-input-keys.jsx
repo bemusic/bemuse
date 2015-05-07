@@ -14,7 +14,8 @@ export default React.createClass({
           isEditing={'' + i === '' + this.props.editing}
           onEdit={this.props.onEdit} />)
     }
-    return <div className="options-input-keys">
+    return <div className="options-input-keys"
+        data-arrangement={this.props.keyboardMode ? 'kb' : 'bm'}>
       <div className="options-input-keys--keys">
         {keys}
       </div>

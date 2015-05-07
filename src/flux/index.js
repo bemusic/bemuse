@@ -13,8 +13,9 @@ export function Action(transform=x => x) {
       throw new Error('An action should not fire another action!')
     }
     try {
+      let payload = transform.apply(null, arguments)
       lock = true
-      bus.push(transform.apply(null, arguments))
+      bus.push(payload)
     } finally {
       lock = false
     }
@@ -27,13 +28,17 @@ export function Action(transform=x => x) {
   return action
 }
 
-export function Store(store) {
+export function Store(store, options={}) {
+  let lazy = !!options.lazy
   store = toProperty(store)
   store.get = () => {
     let data
     let unsubscribe = store.onValue(_data => data = _data)
     setTimeout(unsubscribe)
     return data
+  }
+  if (!lazy) {
+    store.onValue(() => {})
   }
   return store
 }
