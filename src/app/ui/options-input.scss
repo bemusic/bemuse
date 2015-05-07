@@ -5,13 +5,14 @@
   display: flex;
   align-items: stretch;
   padding: 2em;
+  &.is-reverse {
+    flex-direction: row-reverse;
+  }
   &--zone {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    &.is-scratch {
-      margin-right: 24px;
-    }
+    margin: 0 12px;
   }
   &--control {
     flex: 1;

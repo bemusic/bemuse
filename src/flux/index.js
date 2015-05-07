@@ -13,8 +13,9 @@ export function Action(transform=x => x) {
       throw new Error('An action should not fire another action!')
     }
     try {
+      let payload = transform.apply(null, arguments)
       lock = true
-      bus.push(transform.apply(null, arguments))
+      bus.push(payload)
     } finally {
       lock = false
     }

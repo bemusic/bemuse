@@ -1,10 +1,12 @@
 
 import { Action }     from 'bemuse/flux'
-import * as Options   from '../options'
+import { setOptions } from './options-actions'
 
-export const selectKey    = new Action()
-export const deselectKey  = new Action()
-export const setKeyCode   = new Action((key, keyCode) => {
-  Options.set('input.P1.keyboard.' + key, keyCode)
-  return { key, keyCode }
-})
+export const selectKey      = new Action()
+export const deselectKey    = new Action()
+export const selectNextKey  = new Action()
+
+export function setKeyCode(mode, key, keyCode) {
+  setOptions({ ['input.P1.keyboard.' + mode + '.' + key]: keyCode })
+  selectNextKey(key)
+}
