@@ -5,12 +5,15 @@ import SCENE_MANAGER    from 'bemuse/scene-manager'
 import React            from 'react'
 import TitleScene       from './ui/title-scene'
 import AboutScene       from './ui/about-scene'
+import ModeSelectScene  from './ui/mode-select-scene'
 
 import { isBrowserSupported }     from './browser-support'
 import BrowserSupportWarningScene from './ui/browser-support-warning-scene'
 
-import { getMusicServer, getTimeSynchroServer } from './query-flags'
-import { shouldShowAbout } from 'bemuse/devtools/query-flags'
+import { getMusicServer, getTimeSynchroServer }
+    from './query-flags'
+import { shouldShowAbout, shouldShowModeSelect }
+    from 'bemuse/devtools/query-flags'
 
 import * as CollectionActions from './actions/collection-actions'
 
@@ -32,6 +35,8 @@ export function main() {
 function getFirstScene() {
   if (shouldShowAbout()) {
     return React.createElement(AboutScene)
+  } else if (shouldShowModeSelect()) {
+    return React.createElement(ModeSelectScene)
   } else {
     let scene = React.createElement(TitleScene)
     if (!isBrowserSupported()) {

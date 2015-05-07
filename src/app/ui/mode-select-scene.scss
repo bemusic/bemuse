@@ -1,0 +1,59 @@
+
+@import "~bemuse/ui/common";
+
+.mode-select-scene {
+  @include main-bg;
+  .scene-heading {
+    z-index: 10;
+  }
+  &--main {
+    @include full-screen;
+    @include scrolling-y;
+    padding: 24vmin 10vw 5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  &--content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  &--item {
+    color: #444;
+    margin: 1em;
+    width: 22em;
+    text-align: center;
+    font-size: 16px;
+    padding: 1.5em;
+    border-radius: 2vmin;
+    background: rgba(#fff, 0);
+    transition: 0.1s background-color;
+    cursor: pointer;
+    &:hover {
+      background: rgba(#fff, 0.7);
+    }
+    > h2 {
+      margin: 0.5em 0 0;
+    }
+    > p {
+      margin: 0.75em 0 0;
+    }
+    > p + p {
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
+  }
+  &--graphics {
+    border: 2px solid rgba(#000, 0.5);
+    border-radius: 1em;
+    background: rgba(#fff, 0.8);
+    width: 22em;
+    height: 22em * 9 / 16;
+    rect, circle {
+      fill: rgba(#fff, 0.8);
+      stroke: rgba(#000, 0.4);
+      stroke-width: 0.6;
+    }
+  }
+}

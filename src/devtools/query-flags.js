@@ -16,3 +16,7 @@ export function shouldDisableFullScreen() {
 export function shouldShowAbout() {
   return query.BEMUSE_SHOW_ABOUT === '1'
 }
+
+export function shouldShowModeSelect() {
+  return query.BEMUSE_SHOW_MODE_SELECT === '1'
+}
