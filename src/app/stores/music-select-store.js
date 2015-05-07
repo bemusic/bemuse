@@ -17,6 +17,15 @@ export function MusicSelectStoreFactory(CollectionStore) {
       _((collection && collection.songs) || [])
           .sortByAll([
             song => song.tutorial ? 0 : 1,
+            song => {
+              return _(song.charts)
+                .filter({ keys: '7K' })
+                .filter(chart => chart.info.difficulty < 5)
+                .filter(chart => chart.info.level > 0)
+                .map(chart => chart.info.level)
+                .min()
+            },
+            song => song.bpm,
             song => song.title.toLowerCase(),
           ])
           .value())
