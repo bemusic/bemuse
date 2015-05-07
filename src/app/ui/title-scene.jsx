@@ -23,6 +23,7 @@ export default React.createClass({
         <a onClick={this.showAbout} href="javascript://">About</a>
         <span><strong>Bemuse</strong> v{version}</span>
         <SceneToolbar.Spacer />
+        <a onClick={this.openLink} href="https://www.facebook.com/bemusegame">Facebook</a>
         <a onClick={this.openLink} href="https://github.com/bemusic/bemuse">GitHub</a>
         <a onClick={this.openLink} href="https://www.reddit.com/r/bemuse">Community</a>
         <a onClick={this.openLink} href="https://gitter.im/bemusic/bemuse">Chat</a>
