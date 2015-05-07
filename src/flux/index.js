@@ -37,7 +37,7 @@ export function Store(store, options={}) {
     setTimeout(unsubscribe)
     return data
   }
-  if (!store.lazy) {
+  if (!lazy) {
     store.onValue(() => {})
   }
   return store

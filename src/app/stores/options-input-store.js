@@ -5,8 +5,6 @@ import { Store }    from 'bemuse/flux'
 import keycode      from 'keycode'
 
 import OptionsStore from './options-store'
-
-import * as Options from '../options'
 import * as Actions from '../actions/options-input-actions'
 
 const $order    = OptionsStore.map(getControls)

@@ -40,7 +40,7 @@ export default React.createClass({
   },
   renderKBGraphics() {
     let children = []
-    for (let i = 0; i < 7; i ++) {
+    for (let i = 0; i < 7; i++) {
       if (i === 3) {
         children.push(<rect key={i}
             x={13 + 3.5} y="31" width="63" height="11" rx="2" ry="2" />)
@@ -54,7 +54,7 @@ export default React.createClass({
   },
   renderBMGraphics() {
     let children = []
-    for (let i = 0; i < 7; i ++) {
+    for (let i = 0; i < 7; i++) {
       children.push(<rect key={i}
           x={6.5 * i + 41.5}
           y={i % 2 === 0 ? 28 : 12}
