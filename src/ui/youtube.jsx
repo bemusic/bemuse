@@ -16,7 +16,7 @@ export default React.createClass({
     this.handleResize()
   },
   componentWillUnmount() {
-    window.addEventListener('resize', this.handleResize)
+    window.removeEventListener('resize', this.handleResize)
   },
   handleResize() {
     let el = this.getDOMNode()
