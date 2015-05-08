@@ -13,10 +13,17 @@ export function MusicSelectStoreFactory(CollectionStore) {
   const $collection   = CollectionStore.map(state => state.collection)
   const $loading      = $collection.map(({ loading }) => loading)
 
-  const $songs        = $collection.map(({ collection }) =>
-      _((collection && collection.songs) || [])
+  const $grouping     = Bacon.constant([
+    { title: 'Tutorial', criteria: song => song.tutorial },
+    { title: 'New Songs', criteria: song => song.added &&
+        Date.now() - Date.parse(song.added) < 7 * 86400000 },
+    { title: '☆', criteria: () => true },
+  ])
+  const $filterText   = Bacon.update('',
+      [Actions.setFilterText.bus], (prev, filterText) => filterText)
+  const $songList     = $collection
+      .map(({ collection }) => _((collection && collection.songs) || [])
           .sortByAll([
-            song => song.tutorial ? 0 : 1,
             song => {
               return _(song.charts)
                 .filter({ keys: '7K' })
@@ -29,22 +36,21 @@ export function MusicSelectStoreFactory(CollectionStore) {
             song => song.title.toLowerCase(),
           ])
           .value())
+      .combine($filterText, (songs, filterText) =>
+          songs.filter(song => matches(song, filterText)))
+  const $groups       = $songList.combine($grouping,
+      (songs, grouping) => groupBy(songs, grouping))
+  const $songs        = $groups.map(groups =>
+      _(groups).map('songs').flatten().value())
 
   const $levelAnchor  = Bacon.update(
       0,
       [Actions.selectChart.bus], (prev, chart) => chart.info.level)
 
-  const $filterText = Bacon.update(
-      '',
-      [Actions.setFilterText.bus], (prev, filterText) => filterText)
-
-  const $visibleSongs = $songs.combine($filterText, (songs, filterText) =>
-      songs.filter(song => matches(song, filterText)))
-
   const $song = Bacon.update(
       null,
       [Actions.selectSong.bus], (prev, song) => song,
-      [$visibleSongs.changes()], ensureSelectedPresent)
+      [$songs.changes()], ensureSelectedPresent)
 
   const $charts = $song.map(song => (song && song.charts) || [ ])
 
@@ -73,7 +79,8 @@ export function MusicSelectStoreFactory(CollectionStore) {
   return new Store({
     loading:    $loading,
     server:     $server,
-    songs:      $visibleSongs,
+    songs:      $songs,
+    groups:     $groups,
     song:       $song,
     charts:     $visibleCharts,
     chart:      $chart,
@@ -101,4 +108,17 @@ function ensureSelectedPresent(previous, items, strategy) {
   } else {
     return previous
   }
+}
+
+function groupBy(songs, grouping) {
+  let groups = grouping.map(group => ({ title: group.title, songs: [ ] }))
+  for (let song of songs) {
+    for (let i = 0; i < grouping.length; i++) {
+      if (grouping[i].criteria(song)) {
+        groups[i].songs.push(song)
+        break
+      }
+    }
+  }
+  return groups.filter(group => group.songs.length > 0)
 }

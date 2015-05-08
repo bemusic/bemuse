@@ -44,7 +44,7 @@ export default React.createClass({
         : <div className={c('music-select-scene--main',
               { 'is-in-song': this.state.inSong })}>
             <MusicList
-                songs={musicSelect.songs}
+                groups={musicSelect.groups}
                 highlight={musicSelect.filterText}
                 selectedSong={musicSelect.song}
                 onSelect={this.handleSongSelect}

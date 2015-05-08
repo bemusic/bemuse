@@ -43,11 +43,16 @@ describe('MusicSelectStore', function() {
     it('loading should be false', function() {
       void expect(Store.get().loading).to.be.false
     })
-    it('songs should be empty array', function() {
-      expect(Store.get().songs).to.have.length(collection.songs.length)
-    })
-    it('selected song should be tutorial', function() {
-      void expect(!!Store.get().songs[0].tutorial).to.be.true
+    describe('songs', function() {
+      it('should be list of all songs', function() {
+        expect(Store.get().songs).to.have.length(collection.songs.length)
+      })
+      it('first song should be tutorial', function() {
+        void expect(!!Store.get().songs[0].tutorial).to.be.true
+      })
+      it('selected song should be tutorial', function() {
+        void expect(!!Store.get().song.tutorial).to.be.true
+      })
     })
     it('should select first matching song+chart when filtered', function() {
       Actions.setFilterText('toki')
@@ -67,6 +72,19 @@ describe('MusicSelectStore', function() {
       expect(Store.get().chart.info.level).to.equal(12)
       Actions.selectSong(_.find(Store.get().songs, { title: 'L' }))
       expect(Store.get().chart.file).to.equal('L_[SPA](XEIR).bme')
+    })
+    describe('groups', function() {
+      it('there should be more than 1 group', function() {
+        expect(Store.get().groups.length).to.be.at.least(2)
+      })
+      it('first group should be tutorial, having only one song', function() {
+        expect(Store.get().groups[0].title).to.equal('Tutorial')
+        expect(Store.get().groups[0].songs).to.have.length(1)
+      })
+      it('should eliminate empty groups', function() {
+        Actions.setFilterText('wowwwwwwww')
+        void expect(Store.get().groups).to.be.empty
+      })
     })
   })
 
