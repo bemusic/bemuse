@@ -9,6 +9,7 @@ const DEFAULTS = {
 
   // Keyboard mapping
   'input.P1.keyboard.BM.SC':    '16',
+  'input.P1.keyboard.BM.SC2':   '-1',
   'input.P1.keyboard.BM.1':     '90',
   'input.P1.keyboard.BM.2':     '83',
   'input.P1.keyboard.BM.3':     '88',

@@ -7,6 +7,7 @@ import { Binding } from 'bemuse/flux'
 import ReadmeStore from '../stores/readme-store'
 
 import Markdown from 'bemuse/ui/markdown'
+import YouTube  from 'bemuse/ui/youtube'
 
 export default React.createClass({
 
@@ -19,6 +20,7 @@ export default React.createClass({
         <span>Artist:</span>
         <strong>{link(song.artist, song.artist_url)}</strong>
       </p>
+      {song.youtube_url ? <YouTube url={song.youtube_url} /> : null}
       <section className="music-info-tab-information--readme">
         <Markdown source={this.state.readme.text} />
       </section>

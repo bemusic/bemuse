@@ -15,7 +15,7 @@
       background: rgba(#aaa, 0.3);
       border: 1px solid rgba(#aaa, 0);
       transition: 0.3s color, 0.3s background-color, 0.3s border-color;
-      margin-right: 0.3em;
+      margin-left: 0.3em;
       &:hover {
         background: #fff;
         color: $link-color;
@@ -34,6 +34,9 @@
     > strong {
       font-size: 1.3em;
     }
+  }
+  .youtube {
+    margin-top: 1ex;
   }
   &--readme {
     clear: both;

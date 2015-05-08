@@ -8,7 +8,7 @@ import OptionsStore from './options-store'
 import * as Actions from '../actions/options-input-actions'
 
 const $order    = OptionsStore.map(getControls)
-const $keyCodes = OptionsStore.combine($order, getKeyboardMapping).log()
+const $keyCodes = OptionsStore.map(getKeyboardMapping)
 
 function getControls(state) {
   if (state.scratch === 'left') {
@@ -20,11 +20,11 @@ function getControls(state) {
   }
 }
 
-function getKeyboardMapping(state, order) {
+function getKeyboardMapping(state) {
   let mapping = { }
-  for (let control of order) {
+  for (let control of ['1', '2', '3', '4', '5', '6', '7', 'SC', 'SC2']) {
     let key = 'input.P1.keyboard.' + state.mode + '.' + control
-    mapping[control] = +state.options[key] || 0
+    mapping[control] = +state.options[key] || -1
   }
   return mapping
 }
