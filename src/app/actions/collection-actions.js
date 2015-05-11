@@ -1,7 +1,7 @@
 
 import Bacon      from 'baconjs'
 import { Action } from 'bemuse/flux'
-import $          from 'jquery'
+import download   from 'bemuse/utils/download'
 
 export const startLoading   = new Action()
 export const finishLoading  = new Action()
@@ -17,7 +17,8 @@ loadCollectionBus
   let bus = new Bacon.Bus()
   setTimeout(function() {
     bus.push(() => startLoading(server))
-    Promise.resolve($.get(server.url + '/index.json'))
+    Promise.resolve(download(server.url + '/index.json').as('text'))
+    .then(JSON.parse)
     .then(function(collection) {
       bus.push(() => finishLoading(collection))
     })
