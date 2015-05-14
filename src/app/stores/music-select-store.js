@@ -15,8 +15,11 @@ export function MusicSelectStoreFactory(CollectionStore) {
 
   const $grouping     = Bacon.constant([
     { title: 'Tutorial', criteria: song => song.tutorial },
-    { title: 'New Songs', criteria: song => song.added &&
-        Date.now() - Date.parse(song.added) < 7 * 86400000 },
+    { title: 'New Songs',
+      criteria: song => song.added &&
+          Date.now() - Date.parse(song.added) < 14 * 86400000,
+      sort: song => song.added,
+      reverse: true, },
     { title: '☆', criteria: () => true },
   ])
   const $filterText   = Bacon.update('',
@@ -111,14 +114,24 @@ function ensureSelectedPresent(previous, items, strategy) {
 }
 
 function groupBy(songs, grouping) {
-  let groups = grouping.map(group => ({ title: group.title, songs: [ ] }))
+  let groups = grouping.map(group => ({
+    input:  group,
+    output: { title: group.title, songs: [ ] },
+  }))
   for (let song of songs) {
-    for (let i = 0; i < grouping.length; i++) {
-      if (grouping[i].criteria(song)) {
-        groups[i].songs.push(song)
+    for (let { input, output } of groups) {
+      if (input.criteria(song)) {
+        output.songs.push(song)
         break
       }
     }
   }
-  return groups.filter(group => group.songs.length > 0)
+  for (let { input, output } of groups) {
+    if (input.sort)     output.songs = _.sortBy(output.songs, input.sort)
+    if (input.reverse)  output.songs.reverse()
+  }
+  return _(groups)
+      .pluck('output')
+      .filter(group => group.songs.length > 0)
+      .value()
 }
