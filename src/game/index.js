@@ -41,24 +41,25 @@ export function main() {
     let options = {
       url: query.bms || '/music/[snack]dddd/dddd_sph.bme',
       game: {
-        audioInputLatency: +query.audioInputLatency || 0,
+        audioInputLatency: +query.latency || 0,
       },
       players: [
         {
-          speed:      +query.speed || 3.5,
+          speed:      +query.speed || 3,
           autoplay:   !!query.autoplay,
           placement:  'center',
           scratch:    query.scratch || 'left',
           input: {
             keyboard: {
-              '1':  kbm[0] || 83,
-              '2':  kbm[1] || 68,
-              '3':  kbm[2] || 70,
-              '4':  kbm[3] || 32,
-              '5':  kbm[4] || 74,
-              '6':  kbm[5] || 75,
-              '7':  kbm[6] || 76,
-              'SC': kbm[7] || 65,
+              '1':    kbm[0] || 83,
+              '2':    kbm[1] || 68,
+              '3':    kbm[2] || 70,
+              '4':    kbm[3] || 32,
+              '5':    kbm[4] || 74,
+              '6':    kbm[5] || 75,
+              '7':    kbm[6] || 76,
+              'SC':   kbm[7] || 65,
+              'SC2':  kbm[8] || 16,
             },
           },
         }
