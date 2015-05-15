@@ -30,19 +30,9 @@ var modules = {
   game:       'bemuse/game',
 
   // >>
-  // testFont
-  //   Used by developers to test fonts.
-  testFont:   'bemuse/devtools/test-font',
-
-  // >>
-  // testSkin
-  //   Used by developers to test skin.
-  testSkin:   'bemuse/devtools/test-skin',
-
-  // >>
-  // testResult
-  //   Used by developers to test skin.
-  testResult: 'bemuse/devtools/test-result',
+  // playground
+  //   Various playgrounds...
+  playground: 'bemuse/devtools/playground',
 
 }
 

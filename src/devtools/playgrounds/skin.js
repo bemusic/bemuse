@@ -9,6 +9,7 @@ import Game         from 'bemuse/game/game'
 import GameState    from 'bemuse/game/state'
 import GameInput    from 'bemuse/game/input'
 import GameDisplay  from 'bemuse/game/display'
+import MAIN         from 'bemuse/utils/main-element'
 
 export function main() {
   co(function*() {
@@ -80,7 +81,7 @@ function showCanvas(view) {
   view.style.display = 'block'
   view.style.margin = '0 auto'
 
-  document.body.appendChild(view)
+  MAIN.appendChild(view)
   resize()
   $(window).on('resize', resize)
 

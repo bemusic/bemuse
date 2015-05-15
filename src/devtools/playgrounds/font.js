@@ -1,5 +1,6 @@
 
 import PIXI from 'pixi.js'
+import MAIN from 'bemuse/utils/main-element'
 
 export function main() {
   let renderer = new PIXI.autoDetectRenderer(640, 480)
@@ -25,7 +26,6 @@ export function main() {
   function render() {
     renderer.render(stage)
   }
-  document.body.appendChild(renderer.view)
+  MAIN.appendChild(renderer.view)
   render()
 }
-
