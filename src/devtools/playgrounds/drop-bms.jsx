@@ -1,10 +1,13 @@
 
 import React from 'react'
 import MAIN  from 'bemuse/utils/main-element'
+import CustomBMS from 'bemuse/app/ui/custom-bms'
 
 const DropBMSScene = React.createClass({
   render() {
-    return <div>meow</div>
+    return <div>
+      <CustomBMS />
+    </div>
   }
 })
 

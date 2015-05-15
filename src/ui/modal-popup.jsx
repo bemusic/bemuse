@@ -5,6 +5,7 @@ import c     from 'classnames'
 
 export default React.createClass({
   render() {
+    if (!this.props.visible) return null
     return <div className={c('modal-popup',
         { 'is-visible': this.props.visible })}>
       <div className="modal-popup--backdrop"

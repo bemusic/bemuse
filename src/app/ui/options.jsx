@@ -1,26 +1,26 @@
 import './options.scss'
 import React        from 'react'
-import OptionsPanel   from './options-panel'
+import Panel          from 'bemuse/ui/panel'
 import OptionsPlayer  from './options-player'
 import OptionsInput   from './options-input'
 
 export default React.createClass({
   render() {
     return <div className="options">
-      <OptionsPanel title="Player Settings">
+      <Panel title="Player Settings">
         <OptionsPlayer
             onClose={this.props.onClose} />
-      </OptionsPanel>
+      </Panel>
       <div className="options--vgroup">
-        <OptionsPanel title="Input Settings">
+        <Panel title="Input Settings">
           <OptionsInput />
-        </OptionsPanel>
-        <OptionsPanel title="Advanced Settings">
+        </Panel>
+        <Panel title="Advanced Settings">
           <div style={{
               padding: '10px', textAlign: 'center', color: '#8b8685' }}>
             (coming soon)
           </div>
-        </OptionsPanel>
+        </Panel>
       </div>
     </div>
   }

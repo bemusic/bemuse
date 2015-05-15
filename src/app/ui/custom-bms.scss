@@ -1,0 +1,25 @@
+
+@import "~bemuse/ui/common";
+
+.custom-bms {
+  &--wrapper {
+    padding: 1em;
+  }
+  &--instruction {
+    margin-bottom: 1ex;
+    font-weight: bold;
+  }
+  &--remark {
+    &::before { content: "※ "; }
+    color: #8b8685;
+  }
+  &--dropzone {
+    @include center-content;
+    border: 3px dashed #7b7675;
+    height: 160px;
+    margin-top: 1ex;
+    font-size: 1.8em;
+    color: #8b8685;
+    text-transform: uppercase;
+  }
+}
