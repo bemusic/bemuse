@@ -59,6 +59,9 @@ export default React.createClass({
       }
       <SceneToolbar>
         <a onClick={this.popScene} href="javascript://">Exit</a>
+        <a href="javascript://">Play Custom BMS</a>
+        <SceneToolbar.Spacer />
+        <a onClick={this.handleOptionsOpen} href="javascript://">Options</a>
       </SceneToolbar>
       <ModalPopup
           visible={this.state.optionsVisible}
