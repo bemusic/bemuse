@@ -79,11 +79,13 @@
     "web-audio-test-api": "^0.2.1",
     "webpack": "^1.4.13",
     "webpack-dev-server": "^1.6.6",
+    "worker-loader": "^0.6.0",
     "yadda": "^0.11.5"
   },
   "dependencies": {
     "audio-context": "^0.1.0",
     "baconjs": "^0.7.53",
+    "bemuse-indexer": "^1.1.1",
     "bluebird": "^2.9.10",
     "bms": "^0.11.1",
     "bytes": "^1.0.0",
