@@ -1,7 +1,7 @@
 
 import Worker from 'worker!./worker.js'
 
-export function loadSongFromResoures(resources, options={}) {
+export function loadSongFromResources(resources, options={}) {
   var onMessage = options.onMessage || () => {}
   onMessage('Finding BMS files...')
   return resources.fileList.then(fileList => {

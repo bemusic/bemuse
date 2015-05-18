@@ -29,7 +29,7 @@ describe('SongLoader', function() {
   let song
   before(function() {
     let options = { onMessage: msg => console.log(msg) }
-    return Promise.resolve(loadSongFromResoures(resources, options))
+    return Promise.resolve(loadSongFromResources(resources, options))
     .tap(x => song = x)
   })
   it('should have correct title', function() {
