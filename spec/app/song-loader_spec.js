@@ -38,4 +38,7 @@ describe('SongLoader', function() {
   it('should have correct number of charts', function() {
     expect(song.charts).to.have.length(3)
   })
+  it('should have resources key pointing to the resources', function() {
+    expect(song.resources).to.equal(resources)
+  })
 })

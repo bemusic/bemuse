@@ -32,33 +32,35 @@ export function launch({ server, song, chart }) {
       if (!safari) screenfull.request()
     }
 
-    // prepare data necessary to load the game
-    let url       = server.url + '/' + song.path + '/' + chart.file
-    let assetsUrl = resolve(url, 'assets/')
-
     // get the options from the store
     let optionsStoreState = OptionsStore.get()
     let options = optionsStoreState.options
 
     // initialize the loading specification
-    let loadSpec  = {
-      bms:      new URLResource(url),
-      assets:   new BemusePackageResources(assetsUrl),
-      options:  {
-        audioInputLatency: +query.latency || 0,
-        tutorial: song.tutorial,
-        players: [
-          {
-            speed:      +options['player.P1.speed'] || 1,
-            autoplay:   false,
-            placement:  options['player.P1.panel'],
-            scratch:    optionsStoreState.scratch,
-            input: {
-              keyboard: OptionsInputStore.get().keyCodes,
-            },
+    let loadSpec  = { }
+    if (song.resources) {
+      loadSpec.assets = song.resources
+      loadSpec.bms    = yield song.resources.file(chart.file)
+    } else {
+      let url         = server.url + '/' + song.path + '/' + chart.file
+      let assetsUrl   = resolve(url, 'assets/')
+      loadSpec.bms    = new URLResource(url)
+      loadSpec.assets = new BemusePackageResources(assetsUrl)
+    }
+    loadSpec.options = {
+      audioInputLatency: +query.latency || 0,
+      tutorial: song.tutorial,
+      players: [
+        {
+          speed:      +options['player.P1.speed'] || 1,
+          autoplay:   false,
+          placement:  options['player.P1.panel'],
+          scratch:    optionsStoreState.scratch,
+          input: {
+            keyboard: OptionsInputStore.get().keyCodes,
           },
-        ],
-      },
+        },
+      ],
     }
 
     // start loading the game

@@ -19,6 +19,8 @@ function handleDrop({ event, callback }) {
     },
   })
   .tap(song => {
+    song.id = '__custom_' + Date.now()
+    song.custom = true
     if (callback) callback(song)
   })
   .done()

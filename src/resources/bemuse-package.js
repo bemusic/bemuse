@@ -59,9 +59,10 @@ class BemusePackageFileResource {
     this._ref = ref
     this._name = name
   }
-  read() {
-    return this._resources.getBlob(this._ref)
-      .then(blob => readBlob(blob).as('arraybuffer'))
+  read(progress) {
+    return ProgressUtils.atomic(progress,
+        this._resources.getBlob(this._ref)
+        .then(blob => readBlob(blob).as('arraybuffer')))
   }
   get name() {
     return this._name

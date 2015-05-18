@@ -122,7 +122,8 @@ export default React.createClass({
     this.setState({ customBMSVisible: false })
   },
   handleCustomSong(song) {
-    alert(song.title)
+    Actions.setCustomSong(song)
+    this.setState({ customBMSVisible: false })
   },
   popScene() {
     SCENE_MANAGER.pop().done()
