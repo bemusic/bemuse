@@ -128,7 +128,8 @@ function percentile(data) {
 
 function hasScratch(chart) {
   var objects = chart.objects.all()
-  for (var object of objects) {
+  for (var i = 0; i < objects.length; i ++) {
+    var object = objects[i]
     var channel = +object.channel
     if (50 <= channel && channel <= 69) channel -= 20
     if (channel === 16 || channel === 26) return true
@@ -139,7 +140,8 @@ function hasScratch(chart) {
 function detect(chart) {
   var objects = chart.objects.all()
   var stat = { }
-  for (var object of objects) {
+  for (var i = 0; i < objects.length; i ++) {
+    var object = objects[i]
     var channel = +object.channel
     if (50 <= channel && channel <= 69) channel -= 40
     if (channel < 10) continue
