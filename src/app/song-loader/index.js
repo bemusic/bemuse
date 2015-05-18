@@ -29,7 +29,7 @@ export function loadSongFromResources(resources, options={}) {
           onMessage('Analyzing BMS files...')
         } else if (data.type === 'progress') {
           onMessage('Loaded ' + data.file + ' ' +
-              '('+ data.current + '/' + data.total + ').')
+              '(' + data.current + '/' + data.total + ').')
         }
       }
       worker.onerror = function(e) {
