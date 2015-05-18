@@ -65,7 +65,7 @@ function getSongInfo(files, options) {
       processed += 1
       report(processed, files.length, name)
     })
-  })
+  }, { concurrency: 2 })
   .then(_.flatten)
   .then(function(charts) {
     if (charts.length === 0) {
