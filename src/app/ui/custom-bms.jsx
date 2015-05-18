@@ -16,7 +16,7 @@ export default React.createClass({
           Please drag and drop a BMS folder into the drop zone below.
         </div>
         <div className="custom-bms--remark">
-          This feature only works in Google Chrome.
+          This feature is only supported in Google Chrome.
         </div>
         <div className="custom-bms--remark">
           Please don’t play unauthorized / illegally obtained BMS files.
