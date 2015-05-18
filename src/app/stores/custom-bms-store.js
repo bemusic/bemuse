@@ -7,7 +7,10 @@ import DndResources from 'bemuse/resources/dnd-resources'
 import { loadSongFromResources } from '../song-loader'
 
 const $operation = Actions.drop.bus.map(handleDrop)
-const $log       = $operation.flatMapLatest(op => op.log).toProperty(null)
+const $clears    = Actions.clear.bus.map(() => (
+    { log: Bacon.constant(null) }))
+const $log       = $operation.merge($clears)
+    .flatMapLatest(op => op.log).toProperty(null)
 
 function handleDrop({ event, callback }) {
   let resources = new DndResources(event)

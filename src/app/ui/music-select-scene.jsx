@@ -16,6 +16,7 @@ import Store            from '../stores/music-select-store'
 import * as Actions     from '../actions/music-select-actions'
 import SCENE_MANAGER    from 'bemuse/scene-manager'
 
+import * as CustomBMSActions from '../actions/custom-bms-actions'
 import { shouldShowOptions } from 'bemuse/devtools/query-flags'
 
 React.initializeTouchEvents(true)
@@ -116,6 +117,7 @@ export default React.createClass({
     this.setState({ optionsVisible: false })
   },
   handleCustomBMSOpen() {
+    CustomBMSActions.clear()
     this.setState({ customBMSVisible: true })
   },
   handleCustomBMSClose() {
