@@ -8,4 +8,5 @@ User Documentation
    gameplay
    scoring-and-judgment
    music-server
+   bms-support
    bms-extensions
