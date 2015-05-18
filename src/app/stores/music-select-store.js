@@ -14,6 +14,7 @@ export function MusicSelectStoreFactory(CollectionStore) {
   const $loading      = $collection.map(({ loading }) => loading)
 
   const $grouping     = Bacon.constant([
+    { title: 'Custom Song', criteria: song => song.custom },
     { title: 'Tutorial', criteria: song => song.tutorial },
     { title: 'New Songs',
       criteria: song => song.added &&
@@ -24,6 +25,8 @@ export function MusicSelectStoreFactory(CollectionStore) {
   ])
   const $filterText   = Bacon.update('',
       [Actions.setFilterText.bus], (prev, filterText) => filterText)
+  const $customSongs  = Bacon.update([],
+      [Actions.setCustomSong.bus], (prev, song) => [song])
   const $songList     = $collection
       .map(({ collection }) => _((collection && collection.songs) || [])
           .sortByAll([
@@ -39,6 +42,7 @@ export function MusicSelectStoreFactory(CollectionStore) {
             song => song.title.toLowerCase(),
           ])
           .value())
+      .combine($customSongs, (songs, custom) => [...custom, ...songs])
       .combine($filterText, (songs, filterText) =>
           songs.filter(song => matches(song, filterText)))
   const $groups       = $songList.combine($grouping,
@@ -53,6 +57,7 @@ export function MusicSelectStoreFactory(CollectionStore) {
   const $song = Bacon.update(
       null,
       [Actions.selectSong.bus], (prev, song) => song,
+      [Actions.setCustomSong.bus], (prev, song) => song,
       [$songs.changes()], ensureSelectedPresent)
 
   const $charts = $song.map(song => (song && song.charts) || [ ])

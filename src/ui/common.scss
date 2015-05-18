@@ -29,6 +29,12 @@ $link-color: #039;
   -webkit-overflow-scrolling: touch;
 }
 
+@mixin center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @mixin scene-background($url) {
   background: $url center no-repeat;
   background-size: cover;

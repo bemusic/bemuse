@@ -138,15 +138,22 @@ export class PlayerState {
           judgment: judgment,
         })
       } else {
-        let closestNote = this._getClosestNote(notes)
-        if (closestNote) {
-          this.notifications.sounds.push({ note: closestNote, type: 'free' })
+        let freestyleNote = this._getFreestyleNote(notes)
+        if (freestyleNote) {
+          this.notifications.sounds.push({ note: freestyleNote, type: 'free' })
         }
       }
     }
   }
   _getClosestNote(notes) {
     return _.min(notes, note => Math.abs(this._gameTime - note.time))
+  }
+  _getFreestyleNote(notes) {
+    return _.min(notes, note => {
+      let distance = Math.abs(this._gameTime - note.time)
+      let penalty = (this._gameTime < note.time - 1) ? 1000000 : 0
+      return distance + penalty
+    })
   }
   _shouldJudge(note, control, buffer) {
     let status = this.getNoteStatus(note)

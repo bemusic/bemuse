@@ -1,6 +1,7 @@
 
 import co     from 'co'
 import React  from 'react'
+import MAIN   from 'bemuse/utils/main-element'
 
 // The SceneManager takes care of managing the scenes in this game.
 // Only a single scene may be displayed at any given time, but a scene may
@@ -80,7 +81,7 @@ export class SceneManager {
         // set up the next scene
         var element = document.createElement('div')
         element.className = 'scene-manager--scene'
-        document.body.appendChild(element)
+        MAIN.appendChild(element)
         this.currentElement       = element
         this.currentScene         = scene
         this.currentSceneInstance = scene(element)
@@ -94,8 +95,8 @@ export class SceneManager {
 }
 
 function detach(element) {
-  if (element && element.parentNode === document.body) {
-    document.body.removeChild(element)
+  if (element && element.parentNode === MAIN) {
+    MAIN.removeChild(element)
   }
 }
 

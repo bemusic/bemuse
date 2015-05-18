@@ -86,6 +86,40 @@ describe('MusicSelectStore', function() {
         void expect(Store.get().groups).to.be.empty
       })
     })
+    describe('custom songs', function() {
+      beforeEach(function() {
+        Actions.setCustomSong({
+          id: 'meow',
+          title: 'meow!',
+          artist: 'lol',
+          genre: 'keyboard cat',
+          bpm: 123,
+          custom: true,
+          charts: [
+            {
+              file: '01.bme',
+              md5: 'd41d8cd98f00b204e9800998ecf8427e',
+              info: {
+                title: 'meow!',
+                artist: 'lol',
+                genre: 'keyboard cat',
+                difficulty: 2,
+                level: 1,
+              },
+              noteCount: 1,
+              scratch: true,
+              keys: '7K'
+            }
+          ]
+        })
+      })
+      it('should select the custom song', function() {
+        expect(Store.get().song.id).to.equal('meow')
+      })
+      it('should display custom song at the top', function() {
+        expect(Store.get().songs[0].id).to.equal('meow')
+      })
+    })
   })
 
 })

@@ -260,8 +260,13 @@ describe('PlayerState', function() {
           // release the button
           advance(5, { 'p1_1': 0 })
 
+          // wait and try again.
+          advance(6.5, { 'p1_1': 1 })
+          expect(state.notifications.sounds[0].note).to.equal(chart.notes[0])
+          advance(6.5, { 'p1_1': 0 })
+
           // wait and try again. this time keysound should change
-          advance(7, { 'p1_1': 1 })
+          advance(7.5, { 'p1_1': 1 })
           expect(state.notifications.sounds[0].note).to.equal(chart.notes[1])
         })
       })

@@ -11,10 +11,12 @@ import ModalPopup       from 'bemuse/ui/modal-popup'
 import MusicList        from './music-list'
 import MusicInfo        from './music-info'
 import Options          from './options'
+import CustomBMS        from './custom-bms'
 import Store            from '../stores/music-select-store'
 import * as Actions     from '../actions/music-select-actions'
 import SCENE_MANAGER    from 'bemuse/scene-manager'
 
+import * as CustomBMSActions from '../actions/custom-bms-actions'
 import { shouldShowOptions } from 'bemuse/devtools/query-flags'
 
 React.initializeTouchEvents(true)
@@ -59,12 +61,23 @@ export default React.createClass({
       }
       <SceneToolbar>
         <a onClick={this.popScene} href="javascript://">Exit</a>
+        <a onClick={this.handleCustomBMSOpen} href="javascript://">
+          Play Custom BMS
+        </a>
+        <SceneToolbar.Spacer />
+        <a onClick={this.handleOptionsOpen} href="javascript://">Options</a>
       </SceneToolbar>
       <ModalPopup
           visible={this.state.optionsVisible}
           onBackdropClick={this.handleOptionsClose}>
         <Options
             onClose={this.handleOptionsClose} />
+      </ModalPopup>
+      <ModalPopup
+          visible={this.state.customBMSVisible}
+          onBackdropClick={this.handleCustomBMSClose}>
+        <CustomBMS
+            onSongLoaded={this.handleCustomSong} />
       </ModalPopup>
     </Scene>
   },
@@ -73,6 +86,7 @@ export default React.createClass({
     return {
       musicSelect: Store.get(),
       optionsVisible: shouldShowOptions(),
+      customBMSVisible: false,
       inSong: false,
     }
   },
@@ -101,6 +115,17 @@ export default React.createClass({
   },
   handleOptionsClose() {
     this.setState({ optionsVisible: false })
+  },
+  handleCustomBMSOpen() {
+    CustomBMSActions.clear()
+    this.setState({ customBMSVisible: true })
+  },
+  handleCustomBMSClose() {
+    this.setState({ customBMSVisible: false })
+  },
+  handleCustomSong(song) {
+    Actions.setCustomSong(song)
+    this.setState({ customBMSVisible: false })
   },
   popScene() {
     SCENE_MANAGER.pop().done()

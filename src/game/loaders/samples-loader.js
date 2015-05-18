@@ -28,7 +28,10 @@ export class SamplesLoader {
           console.error('Unable to decode: ' + name, e)
           return null
         }),
-      () => null
+      (e) => {
+        console.error('Unable to read: ' + name, e)
+        return null
+      }
     )
   }
   _decode(buffer) {
