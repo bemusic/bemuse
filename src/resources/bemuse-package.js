@@ -13,11 +13,19 @@ export class BemusePackageResources {
     let lazy = addLazyProperty.bind(null, this)
     this._url = url
     lazy('metadata', () =>
-      download(resolve(this._url, 'metadata.json')).as('text')
-        .then(str => JSON.parse(str)))
+        download(resolve(this._url, 'metadata.json')).as('text')
+            .then(str => JSON.parse(str)))
     lazy('refs', () =>
-      this.metadata.then(
-        metadata => metadata.refs.map(spec => new Ref(this, spec))))
+        this.metadata.then(metadata =>
+            metadata.refs.map(spec => new Ref(this, spec))))
+    lazy('_fileMap', () =>
+        this.metadata.then(metadata => {
+          let files = new Map()
+          for (let file of metadata.files) {
+            files.set(file.name.toLowerCase(), file)
+          }
+          return files
+        }))
     this.progress = {
       all:      new Progress(),
       current:  new Progress(),
@@ -32,8 +40,8 @@ export class BemusePackageResources {
     return this._url
   }
   file(name) {
-    return this.metadata.then(metadata => {
-      let file = _.find(metadata.files, { name: name })
+    return this._fileMap.then(fileMap => {
+      let file = fileMap.get(name.toLowerCase())
       if (!file) throw new Error('Unable to find: ' + name)
       return new BemusePackageFileResource(this, file.ref, file.name)
     })
