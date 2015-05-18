@@ -4,6 +4,7 @@ import Promise from 'bluebird'
 
 addEventListener('message', function({ data }) {
   let files = data.files.map(convertBuffer)
+  postMessage({ type: 'started' })
   function onProgress(current, total, file) {
     postMessage({ type: 'progress', current, total, file })
   }

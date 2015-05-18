@@ -1,7 +1,6 @@
 
 import { resolve }        from 'url'
 import addLazyProperty    from 'lazy-property'
-import _                  from 'lodash'
 import download           from 'bemuse/utils/download'
 import readBlob           from 'bemuse/utils/read-blob'
 import throat             from 'throat'

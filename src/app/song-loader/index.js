@@ -2,13 +2,13 @@
 import Worker from 'worker!./worker.js'
 
 export function loadSongFromResources(resources, options={}) {
-  var onMessage = options.onMessage || () => {}
-  onMessage('Finding BMS files...')
+  var onMessage = options.onMessage || (() => {})
+  onMessage('Examining dropped items...')
   return resources.fileList.then(fileList => {
     return fileList.filter(filename => /\.(bms|bme|bml)$/i.test(filename))
   })
   .then(bmsFileList => {
-    onMessage(bmsFileList.length + ' file(s) found.')
+    onMessage(bmsFileList.length + ' file(s) found. Reading them...')
     return Promise.map(bmsFileList, filename => {
       return resources.file(filename)
       .then(file => file.read())
@@ -25,6 +25,8 @@ export function loadSongFromResources(resources, options={}) {
         if (data.type === 'result') {
           resolve(data.song)
           worker.terminate()
+        } else if (data.type === 'started') {
+          onMessage('Analyzing BMS files...')
         } else if (data.type === 'progress') {
           onMessage('Loaded ' + data.file + ' ' +
               '('+ data.current + '/' + data.total + ').')

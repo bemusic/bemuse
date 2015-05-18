@@ -65,7 +65,9 @@ export default React.createClass({
   },
   handleDrop(e) {
     this.setState({ hover: false })
-    Actions.drop(e.nativeEvent, function() { })
+    Actions.drop(e.nativeEvent, (song) => {
+      if (this.props.onSongLoaded) this.props.onSongLoaded(song)
+    })
     e.preventDefault()
   },
 })

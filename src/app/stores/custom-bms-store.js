@@ -17,7 +17,11 @@ function handleDrop({ event, callback }) {
     onMessage(message) {
       $message.push(message)
     },
-  }).done()
+  })
+  .tap(song => {
+    if (callback) callback(song)
+  })
+  .done()
   return {
     log: $$log,
   }

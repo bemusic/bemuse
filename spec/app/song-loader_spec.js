@@ -1,5 +1,5 @@
 
-import { loadSongFromResoures } from 'bemuse/app/song-loader'
+import { loadSongFromResources } from 'bemuse/app/song-loader'
 
 describe('SongLoader', function() {
   function buffer(text) {

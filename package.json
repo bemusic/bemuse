@@ -85,7 +85,7 @@
   "dependencies": {
     "audio-context": "^0.1.0",
     "baconjs": "^0.7.53",
-    "bemuse-indexer": "^1.1.1",
+    "bemuse-indexer": "^1.1.2",
     "bluebird": "^2.9.10",
     "bms": "^0.11.1",
     "bytes": "^1.0.0",
