@@ -3,6 +3,7 @@ var expect = require('chai').expect
 var indexer = require('./')
 
 require('chai').use(require('chai-as-promised'))
+require('./lcs_spec')
 
 describe('getChartInfo', function() {
 
@@ -193,3 +194,4 @@ describe('getSongInfo', function() {
   })
 
 })
+
