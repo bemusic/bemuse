@@ -190,6 +190,18 @@ describe('getSongInfo', function() {
         expect(song.charts[0].file).to.match(/\.bms/)
       })
     })
+    describe('progress report', function() {
+      it('should report progress', function() {
+        var options = { onProgress: onProgress }
+        var callCount = 0
+        function onProgress() {
+          callCount += 1
+        }
+        return indexer.getSongInfo(files, options).then(function() {
+          expect(callCount).to.equal(3)
+        })
+      })
+    })
 
   })
 
