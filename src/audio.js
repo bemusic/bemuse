@@ -39,8 +39,12 @@ export class AudioConvertor {
         let wavPath = prefix + '.wav'
         let m4aPath = prefix + '.m4a'
         yield writeFile(wavPath, wav)
-        yield execFile('afconvert', [wavPath, m4aPath, '-f', 'm4af',
-                '-b', '128000', '-q', '127', '-s', '2'])
+        if (process.platform.match(/^win/)) {
+          yield execFile('qaac', ['-o', m4aPath, '-c', '128', wavPath])
+        } else {
+          yield execFile('afconvert', [wavPath, m4aPath, '-f', 'm4af',
+                  '-b', '128000', '-q', '127', '-s', '2'])
+        }
         return yield readFile(m4aPath)
       }.bind(this))
     } else {

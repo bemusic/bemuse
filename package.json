@@ -6,6 +6,9 @@
   "scripts": {
     "test": "mocha -r ./spec/support/es6 spec/*_spec.js"
   },
+  "bin": {
+    "bemusepack": "./bin/bemusepack"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/bemusic/pack.git"
