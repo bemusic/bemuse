@@ -15,7 +15,6 @@ function getChartInfo(source) {
     var notes   = bms.Notes.fromBMSChart(chart)
     var timing  = bms.Timing.fromBMSChart(chart)
     var count   = notes.all().filter(noteIsPlayable).length
-    var bpm     = bpmInfo(notes, timing)
     var hash    = createHash('md5')
     hash.update(source)
     return {
@@ -23,8 +22,9 @@ function getChartInfo(source) {
       info:       info,
       noteCount:  count,
       scratch:    hasScratch(chart),
-      keys:       detect(chart),
-      bpm:        bpm,
+      keys:       getKeys(chart),
+      bpm:        getBpmInfo(notes, timing),
+      duration:   getDuration(notes, timing),
     }
   })
 }
@@ -90,7 +90,7 @@ function noteIsPlayable(note) {
   return note.column !== undefined
 }
 
-function bpmInfo(notes, timing) {
+function getBpmInfo(notes, timing) {
   var maxBeat = _(notes.all()).pluck('beat').max()
   var beats   = _(timing.getEventBeats())
                   .concat([0, maxBeat])
@@ -112,6 +112,11 @@ function bpmInfo(notes, timing) {
     median: perc(50),
     max:    perc(98),
   }
+}
+
+function getDuration(notes, timing) {
+  var maxBeat = _(notes.all()).pluck('beat').max()
+  return timing.beatToSeconds(maxBeat)
 }
 
 function percentile(data) {
@@ -137,7 +142,7 @@ function hasScratch(chart) {
   return false
 }
 
-function detect(chart) {
+function getKeys(chart) {
   var objects = chart.objects.all()
   var stat = { }
   for (var i = 0; i < objects.length; i ++) {

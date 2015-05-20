@@ -91,6 +91,18 @@ describe('getChartInfo', function() {
     })
   })
 
+  describe('.duration', function() {
+
+    it('should be correct', function() {
+      var source = [
+        '#BPM 120',
+        '#00111:0101',
+      ].join('\n')
+      return expect(info(source).get('duration')).to.eventually.equal(3)
+    })
+
+  })
+
   describe('.bpm', function() {
 
     var source = [
