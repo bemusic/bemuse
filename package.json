@@ -1,24 +1,24 @@
 {
-  "name": "bemusepack",
+  "name": "bemuse-tools",
   "version": "0.0.0",
-  "description": "Web-friendly BMS packer for BE☆MU☆SE.",
+  "description": "Tools for Bemuse.",
   "main": "index.js",
   "scripts": {
     "test": "mocha -r ./spec/support/es6 spec/*_spec.js"
   },
   "bin": {
-    "bemusepack": "./bin/bemusepack"
+    "bemuse-tools": "./bin/bemuse-tools"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bemusic/pack.git"
+    "url": "https://github.com/bemusic/bemuse-tools.git"
   },
   "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bemusic/pack/issues"
+    "url": "https://github.com/bemusic/bemuse-tools/issues"
   },
-  "homepage": "https://github.com/bemusic/pack",
+  "homepage": "https://github.com/bemusic/bemuse-tools",
   "dependencies": {
     "babel": "^5.4.3",
     "bemuse-indexer": "^1.1.0",
