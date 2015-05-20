@@ -1,96 +1,47 @@
 
-import Promise    from 'bluebird'
-import program    from 'commander'
-import co         from 'co'
-import fs         from 'fs'
+import Promise from 'bluebird'
+import meow from 'meow'
+import { packIntoBemuse } from './packer'
+import { index }          from './indexer'
 
-import { join } from 'path'
+let commands = [
+  {
+    name: 'index',
+    hints: '[-r]',
+    description: 'Index BMS files in current directory',
+    handle(args) {
+      let recursive = args.flags['r']
+      return index('.', { recursive })
+    },
+  },
+  {
+    name: 'pack',
+    hints: '<path>',
+    description: 'Packs sounds and BGAs into assets folder',
+    handle(args) {
+      let dir = args.input[0]
+      if (!dir) throw new Error('Please specify the directory!')
+      return packIntoBemuse(dir)
+    },
+  },
+]
 
-import bmp2png          from './bmp2png'
-import AudioConvertor   from './audio'
-import Directory        from './directory'
-import BemusePacker     from './bemuse-packer'
-import { index }        from './indexer'
-
-let mkdirp    = Promise.promisify(require('mkdirp'))
-let fileStat  = Promise.promisify(fs.stat, fs)
-
-program
-.version(require('../package.json').version)
-
-program.command('pack <dir>')
-  .description('generate bemuse package assets')
-  .action(dir => { handle(packIntoBemuse(dir)) })
-
-program.command('index')
-  .description('index BMS songs into index.json')
-  .option('-r, --recursive', 'find songs recursively!')
-  .action((opts) => { handle(index('.', { recursive: opts.recursive })) })
-
-program.parse(process.argv)
-
-if (process.argv.length <= 2) {
-  program.outputHelp()
+function main(args) {
+  let targetCommand = args.input.shift()
+  for (let command of commands) {
+    if (command.name === targetCommand) {
+      return command.handle(args)
+    }
+  }
+  console.error('Error: Unrecognized command.')
+  return args.showHelp()
 }
 
-function handle(promise) {
-  Promise.resolve(promise).done()
+function getHelpText(command) {
+  return command.name + ' ' + command.hints + ' — ' + command.description
 }
 
-function packIntoBemuse(path) {
-  return co(function*() {
-
-    let stat = yield fileStat(path)
-    if (!stat.isDirectory()) throw new Error('Not a directory: ' + path)
-
-    let directory = new Directory(path)
-    let packer    = new BemusePacker(directory)
-
-    console.log('-> Loading audios')
-    let audio     = yield directory.files('*.{mp3,wav,ogg}')
-
-    console.log('-> Loading movies')
-    let webms     = yield directory.files('*.webm')
-
-    console.log('-> Loading and converting images')
-    let imgs      = [].concat(
-      yield directory.files('*.{jpg,png}'),
-      yield dotMap(directory.files('*.bmp'), bmp2png)
-    )
-
-    console.log('-> Converting audio to ogg [better audio performance]')
-    let oggc      = new AudioConvertor('ogg', '-C', '3')
-    oggc.force    = true
-    let oggs      = yield dotMap(audio, file => oggc.convert(file))
-
-    /*
-    console.log('-> Converting audio to mp3 [for iOS and Safari]')
-    let mp3c      = new AudioConvertor('mp3')
-    let mp3s      = yield dotMap(audio, file => mp3c.convert(file))
-    */
-
-    console.log('-> Converting audio to m4a [for iOS and Safari]')
-    let m4ac      = new AudioConvertor('m4a')
-    let m4as      = yield dotMap(audio, file => m4ac.convert(file))
-
-    // packer.pack('mp3',  mp3s)
-    packer.pack('m4a',  m4as)
-    packer.pack('bga',  imgs)
-    packer.pack('bgv',  webms)
-    packer.pack('ogg',  oggs)
-
-    console.log('-> Writing...')
-    let out = join(path, 'assets')
-    yield mkdirp(out)
-    yield packer.write(out)
-
-  })
-}
-
-
-function dotMap(array, map) {
-  return Promise.map(array, item =>
-            Promise.resolve(map(item)).tap(() => process.stdout.write('.')))
-    .tap(() => process.stdout.write('\n'))
-}
-
+Promise.resolve(main(meow({
+  help: commands.map(getHelpText).join('\n'),
+  pkg: require('../package.json')
+}))).done()

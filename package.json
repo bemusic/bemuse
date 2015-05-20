@@ -1,7 +1,7 @@
 {
   "name": "bemuse-tools",
   "version": "0.0.0",
-  "description": "Tools for Bemuse.",
+  "description": "bemuse-tools: Tools for Bemuse",
   "main": "index.js",
   "scripts": {
     "test": "mocha -r ./spec/support/es6 spec/*_spec.js"
@@ -26,13 +26,13 @@
     "bytes": "^1.0.0",
     "chalk": "^1.0.0",
     "co": "^4.0.2",
-    "commander": "^2.5.1",
     "endpoint": "^0.4.2",
     "format-json": "^1.0.3",
     "glob": "^4.3.5",
     "gulp-util": "^3.0.1",
     "js-yaml": "^3.2.7",
     "lodash": "^3.6.0",
+    "meow": "^3.1.0",
     "mime": "^1.2.11",
     "mkdirp": "^0.5.0",
     "temp": "^0.8.1",
