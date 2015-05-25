@@ -21,7 +21,7 @@
   "homepage": "https://github.com/bemusic/bemuse-tools",
   "dependencies": {
     "babel": "^5.4.3",
-    "bemuse-indexer": "^1.1.0",
+    "bemuse-indexer": "^1.2.0",
     "bluebird": "^2.9.9",
     "bytes": "^1.0.0",
     "chalk": "^1.0.0",
