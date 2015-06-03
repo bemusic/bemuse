@@ -8,7 +8,7 @@ They are noted here.
 
 -  BGA is not supported yet.
 -  Free-zone not supported.
--  Invisible objects not supported.
+-  Invisible objects `not yet <https://github.com/bemusic/bemuse/issues/186>`_ supported.
 
 **BML**
 
@@ -62,9 +62,9 @@ Not supported (in the future, it will display as fake note).
 -  Supports OGG, M4A, MP3, WAV samples.
 -  Polyphony of #WAV is 1, consistent with major BMS implementations.
 -  However, it does not apply to sounds played when player hits the
-   button without note.
+   button without note (freestyle sound).
 
-   -  Sound of the closest note will play with no polyphony limit.
+   -  Sound of the nearby note will play with no polyphony limit.
 
 -  If player gets OFFBEAT (bad) judgment, the sound will play in wrong
    pitch.
