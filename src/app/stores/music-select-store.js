@@ -11,6 +11,7 @@ export function MusicSelectStoreFactory(CollectionStore) {
 
   const $server       = CollectionStore.map(state => state.server)
   const $collection   = CollectionStore.map(state => state.collection)
+  const $unofficial   = CollectionStore.map(state => state.unofficial)
   const $loading      = $collection.map(({ loading }) => loading)
 
   const $grouping     = Bacon.constant([
@@ -93,6 +94,7 @@ export function MusicSelectStoreFactory(CollectionStore) {
     charts:     $visibleCharts,
     chart:      $chart,
     filterText: $filterText,
+    unofficial: $unofficial,
   })
 
 }

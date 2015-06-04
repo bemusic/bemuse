@@ -7,6 +7,7 @@ import TitleScene       from './ui/title-scene'
 import AboutScene       from './ui/about-scene'
 import ModeSelectScene  from './ui/mode-select-scene'
 
+import { OFFICIAL_SERVER_URL }    from './constants'
 import { isBrowserSupported }     from './browser-support'
 import BrowserSupportWarningScene from './ui/browser-support-warning-scene'
 
@@ -20,7 +21,7 @@ import * as CollectionActions from './actions/collection-actions'
 export function main() {
 
   // load the music collection
-  CollectionActions.loadCollection(getMusicServer() || '/music')
+  CollectionActions.loadCollection(getMusicServer() || OFFICIAL_SERVER_URL)
 
   // show the title scene
   SCENE_MANAGER.display(getFirstScene()).done()

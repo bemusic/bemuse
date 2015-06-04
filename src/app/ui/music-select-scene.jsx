@@ -8,6 +8,7 @@ import Scene            from 'bemuse/ui/scene'
 import SceneHeading     from 'bemuse/ui/scene-heading'
 import SceneToolbar     from 'bemuse/ui/scene-toolbar'
 import ModalPopup       from 'bemuse/ui/modal-popup'
+import UnofficialPanel  from './unofficial-panel'
 import MusicList        from './music-list'
 import MusicInfo        from './music-info'
 import Options          from './options'
@@ -36,6 +37,14 @@ export default React.createClass({
             onChange={this.handleFilter}
             value={musicSelect.filterText} />
       </SceneHeading>
+      {
+        musicSelect.unofficial
+        ? <div className="music-select-scene--unofficial-label"
+              onClick={this.handleUnofficialClick}>
+            <b>Disclaimer:</b> Unofficial Server
+          </div>
+        : null
+      }
       {
         musicSelect.loading
         ? <div className="music-select-scene--loading">Loading…</div>
@@ -78,6 +87,12 @@ export default React.createClass({
           onBackdropClick={this.handleCustomBMSClose}>
         <CustomBMS
             onSongLoaded={this.handleCustomSong} />
+      </ModalPopup>
+      <ModalPopup
+          visible={this.state.unofficialDisclaimerVisible}
+          onBackdropClick={this.handleUnofficialClose}>
+        <UnofficialPanel
+            onClose={this.handleUnofficialClose} />
       </ModalPopup>
     </Scene>
   },
@@ -126,6 +141,12 @@ export default React.createClass({
   handleCustomSong(song) {
     Actions.setCustomSong(song)
     this.setState({ customBMSVisible: false })
+  },
+  handleUnofficialClick() {
+    this.setState({ unofficialDisclaimerVisible: true })
+  },
+  handleUnofficialClose() {
+    this.setState({ unofficialDisclaimerVisible: false })
   },
   popScene() {
     SCENE_MANAGER.pop().done()
