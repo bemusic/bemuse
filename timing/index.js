@@ -3,7 +3,7 @@
 // They are created from a notechart.
 
 var Speedcore = require('../speedcore')
-var _ = require('lodash')
+var _ = require('../util/lodash')
 
 /**
  * @module timing
@@ -101,4 +101,3 @@ Timing.fromBMSChart = function(chart) {
   })
   return new Timing(+chart.headers.get('bpm') || 60, actions)
 }
-

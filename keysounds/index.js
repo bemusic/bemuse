@@ -1,5 +1,5 @@
 
-var _ = require('lodash')
+var _ = require('../util/lodash')
 
 function Keysounds(map) {
   this._map = map

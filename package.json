@@ -13,6 +13,9 @@
   "keywords": [
     "BMS"
   ],
+  "browser": {
+    "./reader/index.js": "./reader/index.web.js"
+  },
   "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
   "license": "MIT",
   "bugs": {
@@ -36,6 +39,8 @@
     "bemuse-chardet": "0.0.8",
     "data-structure": "^1.2.0",
     "iconv-lite": "^0.4.5",
-    "lodash": "^3.2.0"
+    "lodash.pluck": "^3.1.2",
+    "lodash.uniq": "^3.2.1",
+    "lodash.values": "^3.0.0"
   }
 }
