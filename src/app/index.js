@@ -6,6 +6,8 @@ import React            from 'react'
 import TitleScene       from './ui/title-scene'
 import AboutScene       from './ui/about-scene'
 import ModeSelectScene  from './ui/mode-select-scene'
+import ServiceWorkerRegistrationScene
+    from './ui/service-worker-registration-scene'
 
 import { OFFICIAL_SERVER_URL }    from './constants'
 import { isBrowserSupported }     from './browser-support'
@@ -17,20 +19,31 @@ import { shouldShowAbout, shouldShowModeSelect }
     from 'bemuse/devtools/query-flags'
 
 import * as CollectionActions from './actions/collection-actions'
+import workerPath from
+  'bemuse/hacks/service-worker-url!serviceworker!./service-worker.js'
 
 export function main() {
 
   // load the music collection
   CollectionActions.loadCollection(getMusicServer() || OFFICIAL_SERVER_URL)
 
-  // show the title scene
-  SCENE_MANAGER.display(getFirstScene()).done()
+  // setup service worker
+  let promise = setupServiceWorker()
+  if (promise && promise.then) {
+    Promise.resolve(promise).finally(displayFirstScene).done()
+  } else {
+    displayFirstScene()
+  }
 
   // synchronize time
   let timeSynchroServer = (getTimeSynchroServer() ||
         'wss://timesynchro.herokuapp.com/')
   if (timeSynchroServer) now.synchronize(timeSynchroServer)
 
+}
+
+function displayFirstScene() {
+  SCENE_MANAGER.display(getFirstScene()).done()
 }
 
 function getFirstScene() {
@@ -45,4 +58,32 @@ function getFirstScene() {
     }
     return scene
   }
+}
+
+function setupServiceWorker() {
+  if (!('serviceWorker' in navigator)) return false
+  if (location.host !== 'bemuse.dev' && location.host !== 'bemuse.ninja') {
+    return false
+  }
+  if (location.protocol !== 'https:') return false
+  if (navigator.serviceWorker.controller) {
+    registerServiceWorker()
+    return true
+  } else {
+    var cutscene = React.createElement(ServiceWorkerRegistrationScene)
+    return SCENE_MANAGER.display(cutscene)
+    .then(function() {
+      return registerServiceWorker()
+    })
+    .then(function() {
+      return new Promise(function() {
+        location.reload()
+      })
+    })
+  }
+}
+
+function registerServiceWorker() {
+  return navigator.serviceWorker.register('/sw-loader.js?path=' +
+    encodeURIComponent(workerPath))
 }
