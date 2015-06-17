@@ -42,7 +42,7 @@ export function launch({ server, song, chart }) {
       loadSpec.assets = song.resources
       loadSpec.bms    = yield song.resources.file(chart.file)
     } else {
-      let url         = server.url + '/' + song.path + '/' + chart.file
+      let url         = server.url + '/' + song.path + '/' + encodeURIComponent(chart.file)
       let assetsUrl   = resolve(url, 'assets/')
       loadSpec.bms    = new URLResource(url)
       loadSpec.assets = new BemusePackageResources(assetsUrl)
