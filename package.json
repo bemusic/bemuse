@@ -70,6 +70,7 @@
     "sass-loader": "^0.4.2",
     "script-loader": "^0.6.1",
     "selenium-webdriver": "^2.45.1",
+    "serviceworker-loader": "^0.1.0",
     "sinon": "git://github.com/cjohansen/Sinon.JS#sinon-2.0",
     "sinon-chai": "^2.7.0",
     "style-loader": "^0.9.0",
@@ -110,6 +111,7 @@
     "react-fa": "^3.2.0",
     "remarkable": "^1.6.0",
     "screenfull": "^2.0.0",
+    "serviceworker-cache-polyfill": "^3.0.0",
     "throat": "^2.0.2",
     "timesynchro": "^1.0.1"
   }
