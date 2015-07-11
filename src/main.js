@@ -3,6 +3,7 @@ import Promise from 'bluebird'
 import meow from 'meow'
 import { packIntoBemuse } from './packer'
 import { index }          from './indexer'
+import * as Server        from './server'
 
 let commands = [
   {
@@ -22,6 +23,16 @@ let commands = [
       let dir = args.input[0]
       if (!dir) throw new Error('Please specify the directory!')
       return packIntoBemuse(dir)
+    },
+  },
+  {
+    name: 'server',
+    hints: '<path>',
+    description: 'Serves a Bemuse server (no indexing or conversion)',
+    handle(args) {
+      let dir = args.input[0]
+      if (!dir) throw new Error('Please specify the directory!')
+      return Server.start(dir, args.flags.port || args.flags.p)
     },
   },
 ]
