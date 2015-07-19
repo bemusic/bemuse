@@ -28,7 +28,10 @@ function setupMocha() {
 }
 
 function loadSpecs() {
-  require('val!./load.js')
+  let context = require.context('../../spec', true, /_spec\.js$/)
+  for (let key of context.keys()) {
+    context(key)
+  }
 }
 
 function runMocha() {
