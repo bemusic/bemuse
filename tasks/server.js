@@ -1,7 +1,7 @@
 
-import gulp             from 'gulp'
+import gulp from 'gulp'
 
-import * as server      from './support/dev-server'
+import * as server from './support/dev-server'
 
 gulp.task('server', function(_callback) {
   void _callback
