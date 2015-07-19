@@ -6,7 +6,7 @@ import invariant  from 'invariant'
 export function Online() {
 
   const user口 = new Bacon.Bus()
-  const user川 = user口.toProperty(null).map(unwrapUser)
+  const user川 = user口.toProperty(Parse.User.current()).map(unwrapUser)
 
   function wrapPromise(promise) {
     return Promise.resolve(promise).catch(function(error) {
@@ -36,9 +36,27 @@ export function Online() {
     )
   }
 
+  function logIn({ username, password }) {
+    invariant(typeof username === 'string', 'username must be a string')
+    invariant(typeof password === 'string', 'password must be a string')
+    return (
+      wrapPromise(Parse.User.logIn(username, password))
+      .tap(user => user口.push(user))
+    )
+  }
+
+  function logOut() {
+    return (
+      Promise.resolve(Parse.User.logOut()).then(() => {})
+      .tap(() => user口.push(null))
+    )
+  }
+
   return {
     user川,
-    signUp
+    signUp,
+    logIn,
+    logOut,
   }
 }
 

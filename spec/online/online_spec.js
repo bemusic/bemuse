@@ -49,31 +49,58 @@ function tests(APP_ID, JS_KEY) {
       })
     })
 
-    describe('user川', function() {
-
-      describe('initially', function() {
+    describe('initially', function() {
+      beforeEach(function() {
+        online.logOut()
+      })
+      beforeEach(function() {
+        online = new Online()
+      })
+      describe('user川', function() {
         it('should be null', function() {
           return expect(online.user川.first().toPromise()).to.eventually.be.null
         })
       })
+    })
 
-      describe('when signed up', function() {
-        let info
-        beforeEach(function() {
-          info = createAccountInfo()
-          Promise.resolve(online.signUp(info)).done()
-        })
-        it('should have the signed up value', function() {
+    describe('when signed up', function() {
+      describe('user川', function() {
+        it('should change to signed-up user, and also start with it', function() {
+          let info = createAccountInfo()
           let promise = (
             online.user川.take(2).toPromise()
             .then(user => {
               expect(user.username).to.equal(info.username)
             })
+            .tap(() => {
+              return new Online().user川.first().toPromise().then(user => {
+                expect(user.username).to.equal(info.username)
+              })
+            })
           )
+          Promise.resolve(online.signUp(info)).done()
           return promise
         })
       })
+    })
 
+    describe('with an active user', function() {
+      let info = createAccountInfo()
+      before(function() {
+        return online.signUp(info)
+      })
+      beforeEach(function() {
+        return online.logIn(info)
+      })
+      describe('when log out', function() {
+        it('should change user川 back to null', function() {
+          let promise = online.user川.take(2).toPromise().then(user => {
+            void expect(user).to.be.null
+          })
+          Promise.resolve(online.logOut()).done()
+          return promise
+        })
+      })
     })
 
   })
