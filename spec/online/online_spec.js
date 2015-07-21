@@ -111,22 +111,18 @@ function tests(APP_ID, JS_KEY) {
       steps(step => {
         let lastRecordedAt
         step('sign up...', function() {
-          return Promise.try(function() {
-            return online.signUp(user1)
-          })
+          return online.signUp(user1)
         })
         step('records data successfully', function() {
-          return Promise.try(function() {
-            return online.submitScore({
-              md5: prefix + 'song',
-              playMode: 'BM',
-              score: 123456,
-              combo: 123,
-              total: 456,
-              count: [122, 1, 0, 0, 333],
-              log: ''
-            })
-          })
+          return Promise.resolve(online.submitScore({
+            md5: prefix + 'song',
+            playMode: 'BM',
+            score: 123456,
+            combo: 123,
+            total: 456,
+            count: [122, 1, 0, 0, 333],
+            log: ''
+          }))
           .tap(function(record) {
             expect(record.playNumber).to.equal(1)
             expect(record.playCount).to.equal(1)
@@ -135,17 +131,15 @@ function tests(APP_ID, JS_KEY) {
           })
         })
         step('does not update if new score is better, but update play count', function() {
-          return Promise.try(function() {
-            return online.submitScore({
-              md5: prefix + 'song',
-              playMode: 'BM',
-              score: 123210,
-              combo: 124,
-              total: 456,
-              count: [123, 1, 0, 0, 332],
-              log: ''
-            })
-          })
+          return Promise.resolve(online.submitScore({
+            md5: prefix + 'song',
+            playMode: 'BM',
+            score: 123210,
+            combo: 124,
+            total: 456,
+            count: [123, 1, 0, 0, 332],
+            log: ''
+          }))
           .tap(function(record) {
             expect(record.score).to.equal(123456)
             expect(record.combo).to.equal(123)
@@ -156,17 +150,15 @@ function tests(APP_ID, JS_KEY) {
           })
         })
         step('updates data if new score is better', function() {
-          return Promise.try(function() {
-            return online.submitScore({
-              md5: prefix + 'song',
-              playMode: 'BM',
-              score: 555555,
-              combo: 456,
-              total: 456,
-              count: [456, 0, 0, 0, 0],
-              log: ''
-            })
-          })
+          return Promise.resolve(online.submitScore({
+            md5: prefix + 'song',
+            playMode: 'BM',
+            score: 555555,
+            combo: 456,
+            total: 456,
+            count: [456, 0, 0, 0, 0],
+            log: ''
+          }))
           .tap(function(record) {
             expect(record.score).to.equal(555555)
             expect(record.combo).to.equal(456)
@@ -174,6 +166,54 @@ function tests(APP_ID, JS_KEY) {
             expect(record.playCount).to.equal(3)
             expect(record.recordedAt).to.be.above(lastRecordedAt)
             lastRecordedAt = record.recordedAt
+          })
+        })
+      })
+
+    })
+
+    xdescribe('the scoreboard', function() {
+
+      var prefix = 'bemusetest' + new Date().getTime() + '_'
+      var user1 = createAccountInfo()
+      var user2 = createAccountInfo()
+
+      steps(step => {
+        step('sign up user1...', function() {
+          return online.signUp(user1)
+        })
+        step('submit score1...', function() {
+          return online.submitScore({
+            md5: prefix + 'song1',
+            playMode: 'BM',
+            score: 222222,
+            combo: 456,
+            total: 456,
+            count: [0, 0, 456, 0, 0],
+            log: ''
+          })
+        })
+        step('sign up user2...', function() {
+          return online.signUp(user2)
+        })
+        step('submit score2...', function() {
+          return online.submitScore({
+            md5: prefix + 'song1',
+            playMode: 'BM',
+            score: 555555,
+            combo: 456,
+            total: 456,
+            count: [456, 0, 0, 0, 0],
+            log: ''
+          })
+        })
+        step('scoreboard should return the top score', function() {
+          return Promise.resolve(online.getScoreboard({
+            md5: prefix + 'song',
+            playMode: 'BM',
+          }))
+          .tap(function(result) {
+            expect(result.data).to.have.length(2)
           })
         })
       })
