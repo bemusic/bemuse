@@ -45,6 +45,7 @@ Parse.Cloud.define('submitScore', function(request, response) {
       gameScore.set('playNumber', gameScore.get('playCount') + 1)
     }
     gameScore.increment('playCount')
+    gameScore.set('playerName', user.get('username'))
     return gameScore.save()
   })
   .then(
@@ -65,7 +66,7 @@ Parse.Cloud.define('submitScore', function(request, response) {
         )
         .then(function(rank) {
           response.success({
-            meta: { rank: rank },
+            meta: { rank: rank, user: user },
             data: gameScore
           })
         })

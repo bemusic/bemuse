@@ -199,6 +199,7 @@ function tests(APP_ID, JS_KEY) {
             expect(record.playNumber).to.equal(3)
             expect(record.playCount).to.equal(3)
             expect(record.recordedAt).to.be.above(lastRecordedAt)
+            expect(record.playerName).to.equal(user1.username)
             lastRecordedAt = record.recordedAt
           })
         })
