@@ -38,6 +38,9 @@ export default React.createClass({
           </div>
         </div>
       </div>
+      <div className="result-scene--mode">
+        {this.props.gameMode === 'KB' ? 'Keyboard' : 'BMS'} Mode
+      </div>
       <SceneToolbar>
         <SceneToolbar.Spacer />
         <a onClick={this.props.onExit} href="javascript://">Continue</a>

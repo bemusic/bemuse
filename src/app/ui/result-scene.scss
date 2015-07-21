@@ -52,6 +52,17 @@
   &--chart {
     float: right;
     margin-right: 2vw;
+    text-align: center;
+  }
+
+  &--mode {
+    opacity: 0.5;
+    position: absolute;
+    right: 8vw;
+    top: 5vmin;
+    line-height: 16vmin;
+    font-size: 5vmin;
+    text-align: right;
   }
 
   .music-chart-selector-item {
