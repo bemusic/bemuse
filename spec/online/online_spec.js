@@ -4,6 +4,19 @@ import { Parse } from 'parse'
 import query  from 'bemuse/utils/query'
 import Online from 'bemuse/online'
 
+var uid = (function() {
+  var session = Math.floor(Math.random() * 65536).toString(16)
+  var index = 0
+  return function() {
+    var random = Math.floor(Math.random() * 65536).toString(16)
+    var time = Date.now().toString(16)
+    return (
+      'bemuse.' + time + '.' + session + '.' + random +
+      '.' + (++index).toString(16)
+    )
+  }
+})()
+
 if (query.PARSE_APP_ID && query.PARSE_API_KEY) {
   tests(query.PARSE_APP_ID, query.PARSE_API_KEY)
 } else {
@@ -18,9 +31,9 @@ function tests(APP_ID, JS_KEY) {
 
     function createAccountInfo() {
       return {
-        username: 'bemuse_test_' + new Date().getTime(),
+        username: uid(),
         password: 'wow_bemuse_test',
-        email: 'test+' + new Date().getTime() + '@bemuse.ninja',
+        email: 'test+' + uid() + '@bemuse.ninja',
       }
     }
 
@@ -105,8 +118,9 @@ function tests(APP_ID, JS_KEY) {
 
     describe('submitting high scores', function() {
 
-      var prefix = 'bemusetest' + new Date().getTime() + '_'
+      var prefix = uid() + '_'
       var user1 = createAccountInfo()
+      var user2 = createAccountInfo()
 
       steps(step => {
         let lastRecordedAt
@@ -123,14 +137,16 @@ function tests(APP_ID, JS_KEY) {
             count: [122, 1, 0, 0, 333],
             log: ''
           }))
-          .tap(function(record) {
+          .tap(function(result) {
+            var record = result.data
             expect(record.playNumber).to.equal(1)
             expect(record.playCount).to.equal(1)
             expect(record.recordedAt).to.be.an.instanceof(Date)
+            expect(result.meta.rank).to.equal(1)
             lastRecordedAt = record.recordedAt
           })
         })
-        step('does not update if new score is better, but update play count', function() {
+        step('does not update if old score is better, but update play count', function() {
           return Promise.resolve(online.submitScore({
             md5: prefix + 'song',
             playMode: 'BM',
@@ -140,7 +156,8 @@ function tests(APP_ID, JS_KEY) {
             count: [123, 1, 0, 0, 332],
             log: ''
           }))
-          .tap(function(record) {
+          .tap(function(result) {
+            var record = result.data
             expect(record.score).to.equal(123456)
             expect(record.combo).to.equal(123)
             expect(record.playNumber).to.equal(1)
@@ -159,7 +176,8 @@ function tests(APP_ID, JS_KEY) {
             count: [456, 0, 0, 0, 0],
             log: ''
           }))
-          .tap(function(record) {
+          .tap(function(result) {
+            var record = result.data
             expect(record.score).to.equal(555555)
             expect(record.combo).to.equal(456)
             expect(record.playNumber).to.equal(3)
@@ -168,13 +186,50 @@ function tests(APP_ID, JS_KEY) {
             lastRecordedAt = record.recordedAt
           })
         })
+        step('different mode have different score board', function() {
+          return Promise.resolve(online.submitScore({
+            md5: prefix + 'song',
+            playMode: 'KB',
+            score: 123210,
+            combo: 124,
+            total: 456,
+            count: [123, 1, 0, 0, 332],
+            log: ''
+          }))
+          .tap(function(result) {
+            var record = result.data
+            expect(record.score).to.equal(123210)
+            expect(result.meta.rank).to.equal(1)
+          })
+        })
+        step('as another user...', function() {
+          return online.signUp(user2)
+        })
+        step('saves a separate data', function() {
+          return Promise.resolve(online.submitScore({
+            md5: prefix + 'song',
+            playMode: 'BM',
+            score: 123210,
+            combo: 124,
+            total: 456,
+            count: [123, 1, 0, 0, 332],
+            log: ''
+          }))
+          .tap(function(result) {
+            var record = result.data
+            expect(record.score).to.equal(123210)
+            expect(record.playNumber).to.equal(1)
+            expect(record.playCount).to.equal(1)
+            expect(result.meta.rank).to.equal(2)
+          })
+        })
       })
 
     })
 
-    xdescribe('the scoreboard', function() {
+    describe('the scoreboard', function() {
 
-      var prefix = 'bemusetest' + new Date().getTime() + '_'
+      var prefix = uid() + '_'
       var user1 = createAccountInfo()
       var user2 = createAccountInfo()
 
@@ -208,14 +263,18 @@ function tests(APP_ID, JS_KEY) {
           })
         })
         step('scoreboard should return the top score', function() {
-          return Promise.resolve(online.getScoreboard({
-            md5: prefix + 'song',
+          return Promise.resolve(online.scoreboard({
+            md5: prefix + 'song1',
             playMode: 'BM',
           }))
           .tap(function(result) {
             expect(result.data).to.have.length(2)
           })
         })
+        step('log out...', function() {
+          return online.logOut(user2)
+        })
+
       })
 
     })

@@ -26,6 +26,10 @@ export function Online() {
     }
   }
 
+  function toObject(物) {
+    return Object.assign({ }, 物.attributes, { id: 物.id })
+  }
+
   function signUp({ username, password, email }) {
     invariant(typeof username === 'string', 'username must be a string')
     invariant(typeof password === 'string', 'password must be a string')
@@ -55,8 +59,27 @@ export function Online() {
   function submitScore(info) {
     return (
       wrapPromise(Parse.Cloud.run('submitScore', info))
-      .then(gameScore => {
-        return Object.assign({ }, gameScore.attributes, { id: gameScore.id })
+      .then(({ data, meta }) => {
+        return {
+          data: toObject(data),
+          meta: meta
+        }
+      })
+    )
+  }
+
+  function scoreboard({ md5, playMode }) {
+    var query = new Parse.Query('GameScore')
+    query.equalTo('md5', md5)
+    query.equalTo('playMode', playMode)
+    query.descending('score')
+    query.limit(100)
+    return (
+      wrapPromise(query.find())
+      .then(results => {
+        return {
+          data: results.map(toObject)
+        }
       })
     )
   }
@@ -67,6 +90,7 @@ export function Online() {
     logIn,
     logOut,
     submitScore,
+    scoreboard,
   }
 }
 

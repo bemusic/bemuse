@@ -49,7 +49,27 @@ Parse.Cloud.define('submitScore', function(request, response) {
   })
   .then(
     function(gameScore) {
-      response.success(gameScore)
+      var countQuery = new Parse.Query(GameScore)
+      countQuery.equalTo('md5',       params.md5)
+      countQuery.equalTo('playMode',  params.playMode)
+      countQuery.greaterThan('score', gameScore.get('score'))
+      return (
+        countQuery.count()
+        .then(
+          function(count) {
+            return count + 1
+          },
+          function() {
+            return null
+          }
+        )
+        .then(function(rank) {
+          response.success({
+            meta: { rank: rank },
+            data: gameScore
+          })
+        })
+      )
     },
     function(error) {
       if (error && error.code && error.message) {
