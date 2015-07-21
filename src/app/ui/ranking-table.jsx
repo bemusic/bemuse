@@ -1,7 +1,6 @@
 
 import './ranking-table.scss'
 import React from 'react'
-import c     from 'classnames'
 
 export const RankingTable = React.createClass({
   render() {
@@ -17,7 +16,7 @@ export const Row = React.createClass({
   render() {
     return <tr>
       <td className="ranking-table--rank">
-        {this.props.rank}
+        {this.props.rank || <span title="Unable to determine your rank">??</span>}
       </td>
       <td className="ranking-table--name">
         {this.props.record.playerName}
@@ -36,6 +35,17 @@ export const Row = React.createClass({
   }
 })
 
+export const Message = React.createClass({
+  render() {
+    return <tr>
+      <td colSpan={4} className="ranking-table--message">
+        {this.props.children}
+      </td>
+    </tr>
+  },
+})
+
 RankingTable.Row = Row
+RankingTable.Message = Message
 
 export default RankingTable

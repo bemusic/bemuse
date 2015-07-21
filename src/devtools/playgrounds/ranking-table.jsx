@@ -24,7 +24,46 @@ const RankingTablePlayground = React.createClass({
             }
           }
         }}
-      />
+    />
+    <Ranking
+        state={{
+          data: null,
+          meta: {
+            scoreboard: {
+              status: 'completed',
+            },
+            submission: {
+              status: 'unauthenticated',
+            }
+          }
+        }}
+    />
+    <Ranking
+        state={{
+          data: null,
+          meta: {
+            scoreboard: {
+              status: 'loading',
+            },
+            submission: {
+              status: 'loading',
+            }
+          }
+        }}
+    />
+    <Ranking
+        state={{
+          data: null,
+          meta: {
+            scoreboard: {
+              status: 'error',
+            },
+            submission: {
+              status: 'error',
+            }
+          }
+        }}
+    />
     </div>
   }
 })
