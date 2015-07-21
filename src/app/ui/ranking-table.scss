@@ -1,0 +1,26 @@
+
+@import "~bemuse/ui/common";
+
+.ranking-table {
+  width: 100%;
+  border-spacing: 0;
+  td {
+    padding: 3px 5px;
+    border-bottom: 1px solid rgba(black, 0.1);
+  }
+  &--rank {
+    width: 2em;
+    text-align: right;
+  }
+  td.ranking-table--name {
+    padding-left: 1em;
+  }
+  &--score {
+    width: 6em;
+    text-align: right;
+  }
+  &--accuracy {
+    width: 5em;
+    text-align: right;
+  }
+}

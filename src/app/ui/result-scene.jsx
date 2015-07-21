@@ -8,6 +8,7 @@ import MusicChartInfo   from './music-chart-info'
 import MusicChartSelectorItem from './music-chart-selector-item'
 import ResultTable      from './result-table'
 import ResultGrade      from './result-grade'
+import RankingTableContainer  from './ranking-table-container'
 
 export default React.createClass({
   render() {
@@ -28,9 +29,7 @@ export default React.createClass({
           <MusicChartInfo info={this.props.chart.info} />
         </div>
         <div className="result-scene--information-body">
-          <p style={{ textAlign: 'center' }}>
-            Ranking is coming in later version...
-          </p>
+          <RankingTableContainer />
         </div>
         <div className="result-scene--information-footer">
           <div className="result-scene--exit" onClick={this.props.onExit}>

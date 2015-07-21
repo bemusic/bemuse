@@ -1,0 +1,10 @@
+
+@import "~bemuse/ui/common";
+
+.ranking {
+  color: #111;
+  &--title {
+    padding: 3px 5px 0;
+    font-weight: bold;
+  }
+}
