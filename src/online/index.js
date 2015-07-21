@@ -47,8 +47,17 @@ export function Online() {
 
   function logOut() {
     return (
-      Promise.resolve(Parse.User.logOut()).then(() => {})
+      wrapPromise(Parse.User.logOut()).then(() => {})
       .tap(() => user口.push(null))
+    )
+  }
+
+  function submitScore(info) {
+    return (
+      wrapPromise(Parse.Cloud.run('submitScore', info))
+      .then(gameScore => {
+        return Object.assign({ }, gameScore.attributes, { id: gameScore.id })
+      })
     )
   }
 
@@ -57,6 +66,7 @@ export function Online() {
     signUp,
     logIn,
     logOut,
+    submitScore,
   }
 }
 

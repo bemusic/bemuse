@@ -103,5 +103,100 @@ function tests(APP_ID, JS_KEY) {
       })
     })
 
+    describe('submitting high scores', function() {
+
+      var prefix = 'bemusetest' + new Date().getTime() + '_'
+      var user1 = createAccountInfo()
+
+      steps(step => {
+        let lastRecordedAt
+        step('sign up...', function() {
+          return Promise.try(function() {
+            return online.signUp(user1)
+          })
+        })
+        step('records data successfully', function() {
+          return Promise.try(function() {
+            return online.submitScore({
+              md5: prefix + 'song',
+              playMode: 'BM',
+              score: 123456,
+              combo: 123,
+              total: 456,
+              count: [122, 1, 0, 0, 333],
+              log: ''
+            })
+          })
+          .tap(function(record) {
+            expect(record.playNumber).to.equal(1)
+            expect(record.playCount).to.equal(1)
+            expect(record.recordedAt).to.be.an.instanceof(Date)
+            lastRecordedAt = record.recordedAt
+          })
+        })
+        step('does not update if new score is better, but update play count', function() {
+          return Promise.try(function() {
+            return online.submitScore({
+              md5: prefix + 'song',
+              playMode: 'BM',
+              score: 123210,
+              combo: 124,
+              total: 456,
+              count: [123, 1, 0, 0, 332],
+              log: ''
+            })
+          })
+          .tap(function(record) {
+            expect(record.score).to.equal(123456)
+            expect(record.combo).to.equal(123)
+            expect(record.playNumber).to.equal(1)
+            expect(record.playCount).to.equal(2)
+            expect(record.recordedAt).not.to.be.above(lastRecordedAt)
+            lastRecordedAt = record.recordedAt
+          })
+        })
+        step('updates data if new score is better', function() {
+          return Promise.try(function() {
+            return online.submitScore({
+              md5: prefix + 'song',
+              playMode: 'BM',
+              score: 555555,
+              combo: 456,
+              total: 456,
+              count: [456, 0, 0, 0, 0],
+              log: ''
+            })
+          })
+          .tap(function(record) {
+            expect(record.score).to.equal(555555)
+            expect(record.combo).to.equal(456)
+            expect(record.playNumber).to.equal(3)
+            expect(record.playCount).to.equal(3)
+            expect(record.recordedAt).to.be.above(lastRecordedAt)
+            lastRecordedAt = record.recordedAt
+          })
+        })
+      })
+
+    })
+
+  })
+}
+
+function steps(callback) {
+  var resolve
+  var promise = new Promise(_resolve => resolve = _resolve)
+  var i = 0
+  before(() => void resolve())
+  return callback((name, fn) => {
+    promise = (
+      promise
+      .then(
+        fn,
+        () => { throw new Error('Previous steps errored') }
+      )
+    )
+    let current = promise
+    it(`${++i}. ${name}`, () => current)
   })
 }
