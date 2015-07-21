@@ -297,10 +297,11 @@ function tests(APP_ID, JS_KEY) {
           return online.logOut()
         })
 
+        var ranking
         var ranking川
         var dispose
         step('subscribe to scoreboard...', function() {
-          ranking川 = online.ranking川({
+          ranking = online.Ranking({
             md5: prefix + 'song1',
             playMode: 'BM',
             score: 111111,
@@ -309,7 +310,8 @@ function tests(APP_ID, JS_KEY) {
             count: [0, 123, 0, 0, 333],
             log: ''
           })
-          dispose = ranking川.subscribe(() => {})
+          ranking川 = ranking.state川
+          dispose   = ranking川.subscribe(() => {})
         })
         step('should have scoreboard loading status', function() {
           return Promise.resolve(

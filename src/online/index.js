@@ -88,14 +88,19 @@ export function Online() {
     )
   }
 
-  function ranking川(data) {
+  function Ranking(data) {
 
+    const resubmit口     = new Bacon.Bus()
     const shouldSubmit川 = user川.map(user => !!user).skipDuplicates()
 
-    const submit川       = shouldSubmit川.flatMap(yes => yes ? Bacon.once() : Bacon.never())
-    const notSubmit川    = shouldSubmit川.flatMap(yes => yes ? Bacon.never() : Bacon.once())
+    const submit川       = (
+      shouldSubmit川.flatMap(yes => yes ? Bacon.once() : Bacon.never()).merge(resubmit口)
+    )
+    const notSubmit川    = (
+      shouldSubmit川.flatMap(yes => yes ? Bacon.never() : Bacon.once())
+    )
 
-    const submitted川    = submit川.flatMapLatest(() => (
+    const submitted川        = submit川.flatMapLatest(() => (
       Bacon.fromPromise(submitScore(data))
     ))
     const submissionResult川 = (
@@ -118,7 +123,6 @@ export function Online() {
       )
     ).toProperty()
 
-
     const scoreboard川       = (
       Bacon.once().merge(submitted川).flatMap(
         () => Bacon.fromPromise(scoreboard(data))
@@ -128,7 +132,7 @@ export function Online() {
     const scoreboardData川   = scoreboardResult川.map(
       result => result && result.data
     )
-    const scoreboardStatus川   = (
+    const scoreboardStatus川 = (
       scoreboard川
       .map(() => 'completed')
       .mapError(() => 'error')
@@ -141,7 +145,8 @@ export function Online() {
       .mapError(error => error)
       .toProperty(null)
     )
-    return Bacon.combineTemplate({
+
+    const state川 = Bacon.combineTemplate({
       data: scoreboardData川,
       meta: {
         scoreboard: {
@@ -156,6 +161,13 @@ export function Online() {
         }
       }
     })
+
+    return {
+      state川,
+      resubmit() {
+        resubmit口.push()
+      }
+    }
   }
 
   return {
@@ -165,7 +177,7 @@ export function Online() {
     logOut,
     submitScore,
     scoreboard,
-    ranking川,
+    Ranking,
   }
 }
 
