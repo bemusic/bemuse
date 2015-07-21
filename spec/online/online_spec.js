@@ -39,18 +39,19 @@ function tests(APP_ID, JS_KEY) {
 
     this.timeout(10000)
 
-    let online
-
     before(function() {
       Parse.initialize(APP_ID, JS_KEY)
     })
 
-    beforeEach(function(){
-      online = new Online()
-    })
-
     describe('signup', function() {
+      let online
       let info
+      before(function() {
+        online = new Online()
+      })
+      after(function() {
+        online = null
+      })
       before(function() {
         info = createAccountInfo()
       })
@@ -63,8 +64,10 @@ function tests(APP_ID, JS_KEY) {
     })
 
     describe('initially', function() {
+      let online
       beforeEach(function() {
-        online.logOut()
+        online = new Online()
+        return online.logOut()
       })
       beforeEach(function() {
         online = new Online()
@@ -77,6 +80,10 @@ function tests(APP_ID, JS_KEY) {
     })
 
     describe('when signed up', function() {
+      let online
+      before(function() {
+        online = new Online()
+      })
       describe('user川', function() {
         it('should change to signed-up user, and also start with it', function() {
           let info = createAccountInfo()
@@ -98,7 +105,11 @@ function tests(APP_ID, JS_KEY) {
     })
 
     describe('with an active user', function() {
+      let online
       let info = createAccountInfo()
+      before(function() {
+        online = new Online()
+      })
       before(function() {
         return online.signUp(info)
       })
@@ -117,6 +128,11 @@ function tests(APP_ID, JS_KEY) {
     })
 
     describe('submitting high scores', function() {
+
+      let online
+      before(function() {
+        online = new Online()
+      })
 
       var prefix = uid() + '_'
       var user1 = createAccountInfo()
@@ -229,9 +245,15 @@ function tests(APP_ID, JS_KEY) {
 
     describe('the scoreboard', function() {
 
+      let online
+      before(function() {
+        online = new Online()
+      })
+
       var prefix = uid() + '_'
       var user1 = createAccountInfo()
       var user2 = createAccountInfo()
+      var user3 = createAccountInfo()
 
       steps(step => {
         step('sign up user1...', function() {
@@ -272,9 +294,74 @@ function tests(APP_ID, JS_KEY) {
           })
         })
         step('log out...', function() {
-          return online.logOut(user2)
+          return online.logOut()
         })
 
+        var ranking川
+        var dispose
+        step('subscribe to scoreboard...', function() {
+          ranking川 = online.ranking川({
+            md5: prefix + 'song1',
+            playMode: 'BM',
+            score: 111111,
+            combo: 123,
+            total: 456,
+            count: [0, 123, 0, 0, 333],
+            log: ''
+          })
+          dispose = ranking川.subscribe(() => {})
+        })
+        step('should have scoreboard loading status', function() {
+          return Promise.resolve(
+            ranking川.first().toPromise()
+          )
+          .then(function(state) {
+            expect(state.meta.scoreboard.status).to.equal('loading')
+          })
+        })
+        step('no new score should be submitted', function() {
+          return Promise.resolve(
+            ranking川.take(2).toPromise()
+          )
+          .then(function(state) {
+            expect(state.meta.scoreboard.status).to.equal('completed')
+            expect(state.data).to.have.length(2)
+            expect(state.meta.submission.status).to.equal('unauthenticated')
+          })
+        })
+        step('sign up user3...', function() {
+          return online.signUp(user3)
+        })
+        step('should start sending score', function() {
+          return Promise.resolve(
+            ranking川.first().toPromise()
+          )
+          .then(function(state) {
+            expect(state.meta.submission.status).to.equal('loading')
+          })
+        })
+        step('should finish sending score', function() {
+          return Promise.resolve(
+            ranking川.take(2).toPromise()
+          )
+          .then(function(state) {
+            expect(state.meta.submission.status).to.equal('completed')
+            expect(state.meta.scoreboard.status).to.equal('loading')
+            expect(state.meta.submission.rank).to.equal(3)
+          })
+        })
+        step('should finish reloading scoreboard', function() {
+          return Promise.resolve(
+            ranking川.take(2).toPromise()
+          )
+          .then(function(state) {
+            expect(state.meta.scoreboard.status).to.equal('completed')
+            expect(state.data).to.have.length(3)
+          })
+        })
+        after(function() {
+          if (dispose) dispose()
+        })
       })
 
     })
