@@ -20,16 +20,22 @@ export default React.createClass({
       </div>
       <ResultGrade grade={this.props.result.grade} />
       <div className="result-scene--information">
-        <div className="result-scene--chart">
-          <MusicChartSelectorItem chart={this.props.chart}
-            onChartClick={this.noop} />
+        <div className="result-scene--information-header">
+          <div className="result-scene--chart">
+            <MusicChartSelectorItem chart={this.props.chart}
+              onChartClick={this.noop} />
+          </div>
+          <MusicChartInfo info={this.props.chart.info} />
         </div>
-        <MusicChartInfo info={this.props.chart.info} />
-        <p style={{ textAlign: 'center' }}>
-          Ranking is coming in later version...
-        </p>
-        <div className="result-scene--exit" onClick={this.props.onExit}>
-          Continue
+        <div className="result-scene--information-body">
+          <p style={{ textAlign: 'center' }}>
+            Ranking is coming in later version...
+          </p>
+        </div>
+        <div className="result-scene--information-footer">
+          <div className="result-scene--exit" onClick={this.props.onExit}>
+            Continue
+          </div>
         </div>
       </div>
       <SceneToolbar>
