@@ -74,6 +74,12 @@ export default React.createClass({
       if (formData.password.length < 6) {
         throw new Error('Password must be at least 6 characters long.')
       }
+      if (!formData.passwordConfirmation) {
+        throw new Error('Please confirm your password.')
+      }
+      if (formData.password !== formData.passwordConfirmation) {
+        throw new Error('Passwords do not match.')
+      }
       return online.signUp(formData).then(() => {
         if (this.props.onFinish) this.props.onFinish()
         return 'Welcome to Bemuse!'
