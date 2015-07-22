@@ -75,7 +75,8 @@ export default React.createClass({
       }
       <SceneToolbar>
         <a onClick={this.popScene} href="javascript://">Exit</a>
-        <a onClick={this.handleCustomBMSOpen} href="javascript://">
+        <a onClick={this.handleCustomBMSOpen} href="javascript://"
+            onDragEnter={this.handleCustomBMSOpen}>
           Play Custom BMS
         </a>
         <SceneToolbar.Spacer />
