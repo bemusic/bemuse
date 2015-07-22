@@ -6,6 +6,10 @@
 $ui-font: "Source Sans Pro", "Segoe UI", "Helvetica Neue", sans-serif;
 $link-color: #039;
 
+body {
+  font-family: $ui-font;
+}
+
 @mixin full-screen {
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;

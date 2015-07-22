@@ -15,6 +15,7 @@ export class PlayerStats {
     this.counts = { [Judgments.MISSED]: 0, '1': 0, '2': 0, '3': 0, '4': 0, }
     this.numJudgments = 0
     this.poor = false
+    this._log = []
   }
   get score() {
     //#region score
@@ -32,6 +33,14 @@ export class PlayerStats {
     return (this.rawSumJudgmentWeight /
         (Judgments.weight(1) * this.numJudgments || 1))
   }
+  get log() {
+    return (
+      this._log.map(({ character, count }) =>
+        `${count > 1 ? count : ''}${character}`
+      )
+      .join('')
+    )
+  }
   handleJudgment(judgment) {
     if (Judgments.breaksCombo(judgment)) {
       this.combo = 0
@@ -47,6 +56,7 @@ export class PlayerStats {
     }
     this.counts[judgment] += 1
     this.numJudgments += 1
+    this._recordLog(judgment)
   }
   _calculateRawTotalComboScore() {
     var sum = 0
@@ -64,6 +74,28 @@ export class PlayerStats {
     if (i < 161) return 4
     return 5
     //#endregion
+  }
+  _recordLog(judgment) {
+    let character = this._getLogCharacter(judgment)
+    if (character) {
+      if (
+        this._log.length === 0 ||
+        this._log[this._log.length - 1].character !== character
+      ) {
+        this._log.push({ character, count: 1 })
+      } else {
+        this._log[this._log.length - 1].count += 1
+      }
+    }
+  }
+  _getLogCharacter(judgment) {
+    switch (judgment) {
+      case 1: return 'A'
+      case 2: return 'B'
+      case 3: return 'C'
+      case 4: return 'D'
+      case Judgments.MISSED: return 'M'
+    }
   }
 }
 

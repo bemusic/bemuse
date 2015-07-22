@@ -3,12 +3,14 @@ import query from 'bemuse/utils/query'
 import MAIN  from 'bemuse/utils/main-element'
 import React from 'react'
 
-const availablePlaygrounds = {
-  font:     require('./playgrounds/font'),
-  result:   require('./playgrounds/result'),
-  skin:     require('./playgrounds/skin'),
-  dropBMS:  require('./playgrounds/drop-bms'),
-}
+const availablePlaygrounds = (function (context) {
+  let playgrounds = { }
+  for (let key of context.keys()) {
+    let name = key.match(/\w[^\.]+/)[0]
+    playgrounds[name] = context(key)
+  }
+  return playgrounds
+})(require.context('./playgrounds', false, /\.jsx?$/))
 
 const DefaultPlayground = React.createClass({
   statics: {

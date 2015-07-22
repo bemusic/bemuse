@@ -107,21 +107,25 @@ export function launch({ server, song, chart }) {
 
 function showResult(playerState, chart) {
   return new Promise(_resolve => {
-    let stats = playerState.stats
+    let stats     = playerState.stats
+    let playMode  = playerState.player.options.scratch === 'off' ? 'KB' : 'BM'
     let props = {
       result: {
-        '1': stats.counts['1'],
-        '2': stats.counts['2'],
-        '3': stats.counts['3'],
-        '4': stats.counts['4'],
-        'missed':   stats.counts[MISSED],
-        'score':    stats.score,
-        'maxCombo': stats.maxCombo,
-        'accuracy': stats.accuracy,
-        'grade': getGrade(stats),
+        '1':          stats.counts['1'],
+        '2':          stats.counts['2'],
+        '3':          stats.counts['3'],
+        '4':          stats.counts['4'],
+        'missed':     stats.counts[MISSED],
+        'score':      stats.score,
+        'maxCombo':   stats.maxCombo,
+        'accuracy':   stats.accuracy,
+        'totalCombo': stats.totalCombo,
+        'log':        stats.log,
+        'grade':      getGrade(stats),
       },
-      chart: chart,
-      onExit: _resolve,
+      chart:    chart,
+      playMode: playMode,
+      onExit:   _resolve,
     }
     SCENE_MANAGER.display(React.createElement(ResultScene, props)).done()
   })

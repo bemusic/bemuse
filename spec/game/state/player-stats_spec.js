@@ -17,5 +17,18 @@ describe('PlayerStats', function() {
     })
   })
 
+  describe('#log', function() {
+    it('returns the log', function() {
+      let stats = new PlayerStats(notechart('#00111:11111111111111'))
+      expect(stats.score).to.equal(0)
+      stats.handleJudgment(1)
+      stats.handleJudgment(1)
+      stats.handleJudgment(1)
+      stats.handleJudgment(2)
+      stats.handleJudgment(3)
+      stats.handleJudgment(-1)
+      stats.handleJudgment(-1)
+      expect(stats.log).to.equal('3ABC2M')
+    })
+  })
 })
-

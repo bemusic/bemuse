@@ -11,9 +11,10 @@ export function main() {
       '3': 99,
       '4': 9,
       'missed': 123,
-      'score': 456789,
+      'score': 543210,
       'maxCombo': 5555,
       'accuracy': 0.97,
+      'totalCombo': 11106,
       'grade': 'A',
     },
     chart: {
@@ -25,8 +26,10 @@ export function main() {
         genre: 'Frantic Hardcore',
         level: 17,
       },
+      md5: '12345670123456789abcdef89abemuse',
     },
     onExit: () => alert('Exit!'),
+    playMode: 'BM',
   }
   SCENE_MANAGER.display(React.createElement(ResultScene, props)).done()
 }
