@@ -1,7 +1,6 @@
 
 import './ranking.scss'
 import React from 'react'
-import c     from 'classnames'
 import RankingTable from './ranking-table'
 import AuthenticationPopup from 'bemuse/online/ui/authentication-popup'
 
