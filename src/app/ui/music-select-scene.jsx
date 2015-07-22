@@ -4,10 +4,15 @@ import './music-select-scene.scss'
 import React            from 'react'
 import c                from 'classnames'
 import { Binding }      from 'bemuse/flux'
+import SCENE_MANAGER    from 'bemuse/scene-manager'
+import online           from 'bemuse/online/instance'
 import Scene            from 'bemuse/ui/scene'
 import SceneHeading     from 'bemuse/ui/scene-heading'
 import SceneToolbar     from 'bemuse/ui/scene-toolbar'
 import ModalPopup       from 'bemuse/ui/modal-popup'
+
+import AuthenticationPopup from 'bemuse/online/ui/authentication-popup'
+
 import UnofficialPanel  from './unofficial-panel'
 import MusicList        from './music-list'
 import MusicInfo        from './music-info'
@@ -15,7 +20,6 @@ import Options          from './options'
 import CustomBMS        from './custom-bms'
 import Store            from '../stores/music-select-store'
 import * as Actions     from '../actions/music-select-actions'
-import SCENE_MANAGER    from 'bemuse/scene-manager'
 
 import * as CustomBMSActions from '../actions/custom-bms-actions'
 import { shouldShowOptions } from 'bemuse/devtools/query-flags'
@@ -28,6 +32,7 @@ export default React.createClass({
     let musicSelect = this.state.musicSelect
     return <Scene className="music-select-scene">
       <Binding store={Store} onChange={this.handleState} />
+      {online ? <Binding store={online.user川} onChange={this.handleUser} /> : null}
       <SceneHeading>
         Select Music
         <input
@@ -74,6 +79,7 @@ export default React.createClass({
           Play Custom BMS
         </a>
         <SceneToolbar.Spacer />
+        {this.renderOnlineToolbarButtons()}
         <a onClick={this.handleOptionsOpen} href="javascript://">Options</a>
       </SceneToolbar>
       <ModalPopup
@@ -96,19 +102,48 @@ export default React.createClass({
         <UnofficialPanel
             onClose={this.handleUnofficialClose} />
       </ModalPopup>
+      <AuthenticationPopup
+          visible={this.state.authenticationPopupVisible}
+          onFinish={this.handleAuthenticationFinish}
+          onBackdropClick={this.handleAuthenticationClose} />
     </Scene>
+  },
+  renderOnlineToolbarButtons() {
+    if (!online) return null
+    let buttons = []
+    if (this.state.user) {
+      buttons.push(
+        <a onClick={this.handleLogout} href="javascript://online/logout" key="logout">
+          Log Out
+          ({this.state.user.username})
+        </a>
+      )
+    } else {
+      buttons.push(
+        <a onClick={this.handleAuthenticate} href="javascript://online/logout" key="auth">
+          Log In / Create an Account
+        </a>
+      )
+    }
+    return buttons
   },
 
   getInitialState() {
     return {
-      musicSelect: Store.get(),
-      optionsVisible: shouldShowOptions(),
-      customBMSVisible: false,
-      inSong: false,
+      musicSelect:                  Store.get(),
+      optionsVisible:               shouldShowOptions(),
+      customBMSVisible:             false,
+      unofficialDisclaimerVisible:  false,
+      inSong:                       false,
+      user:                         null,
+      authenticationPopupVisible:   false,
     }
   },
   handleState(state) {
     this.setState({ musicSelect: state })
+  },
+  handleUser(user) {
+    this.setState({ user: user })
   },
   handleSongSelect(song) {
     Actions.selectSong(song)
@@ -149,6 +184,20 @@ export default React.createClass({
   },
   handleUnofficialClose() {
     this.setState({ unofficialDisclaimerVisible: false })
+  },
+  handleLogout() {
+    if (confirm('Do you really want to log out?')) {
+      Promise.resolve(online.logOut()).done()
+    }
+  },
+  handleAuthenticate() {
+    this.setState({ authenticationPopupVisible: true })
+  },
+  handleAuthenticationClose() {
+    this.setState({ authenticationPopupVisible: false })
+  },
+  handleAuthenticationFinish() {
+    this.setState({ authenticationPopupVisible: false })
   },
   popScene() {
     SCENE_MANAGER.pop().done()
