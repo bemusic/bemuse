@@ -8,7 +8,7 @@ import MusicChartInfo   from './music-chart-info'
 import MusicChartSelectorItem from './music-chart-selector-item'
 import ResultTable      from './result-table'
 import ResultGrade      from './result-grade'
-import RankingTableContainer  from './ranking-table-container'
+import RankingContainer from './ranking-container'
 
 export default React.createClass({
   render() {
@@ -29,7 +29,10 @@ export default React.createClass({
           <MusicChartInfo info={this.props.chart.info} />
         </div>
         <div className="result-scene--information-body">
-          <RankingTableContainer />
+          <RankingContainer
+              result={this.props.result}
+              chart={this.props.chart}
+              playMode={this.props.playMode} />
         </div>
         <div className="result-scene--information-footer">
           <div className="result-scene--exit" onClick={this.props.onExit}>
@@ -38,7 +41,7 @@ export default React.createClass({
         </div>
       </div>
       <div className="result-scene--mode">
-        {this.props.gameMode === 'KB' ? 'Keyboard' : 'BMS'} Mode
+        {this.props.playMode === 'KB' ? 'Keyboard' : 'BMS'} Mode
       </div>
       <SceneToolbar>
         <SceneToolbar.Spacer />

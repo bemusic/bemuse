@@ -33,10 +33,14 @@ export default React.createClass({
             : (
               submission.status === 'error'
               ? <RankingTable.Message>
-                  Failed to submit (retry)
+                  {this.renderError(
+                    'Unable to submit score',
+                    submission.error,
+                    this.props.onResubmitScoreRequest
+                  )}
                 </RankingTable.Message>
               : <RankingTable.Message>
-                  Submitting score...
+                  Submitting score... Please wait!
                 </RankingTable.Message>
             )
           )
@@ -65,12 +69,39 @@ export default React.createClass({
             ? <RankingTable.Message>Loading...</RankingTable.Message>
             : (
               state.meta.scoreboard.status === 'error'
-              ? <RankingTable.Message>Error...</RankingTable.Message>
-              : <RankingTable.Message>No Data</RankingTable.Message>
+              ? <RankingTable.Message>
+                  {this.renderError(
+                    'Sorry, we are unable to fetch the scoreboard.',
+                    state.meta.scoreboard.error,
+                    this.props.onReloadScoreboardRequest
+                  )}
+                </RankingTable.Message>
+              : <RankingTable.Message>
+                  No Data
+                </RankingTable.Message>
             )
           )
         }
       </RankingTable>
     </div>
+  },
+  renderError(text, error, retry) {
+    return <span className="ranking--error">
+      <strong>
+        {text}
+        {' '}
+        <a onClick={retry} className="ranking--error-retry" href="javascript://retry">
+          (click to retry)
+        </a>
+      </strong>
+      <br />
+      <span className="ranking--error-description">
+        {
+          error && error.message
+          ? '' + error.message
+          : '(unknown error)'
+        }
+      </span>
+    </span>
   }
 })

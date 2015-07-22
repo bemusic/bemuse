@@ -73,6 +73,8 @@ export function Online() {
   }
 
   function scoreboard({ md5, playMode }) {
+    invariant(typeof md5      === 'string', 'md5 must be a string')
+    invariant(typeof playMode === 'string', 'playMode must be a string')
     var query = new Parse.Query('GameScore')
     query.equalTo('md5', md5)
     query.equalTo('playMode', playMode)
@@ -91,6 +93,7 @@ export function Online() {
   function Ranking(data) {
 
     const resubmit口     = new Bacon.Bus()
+    const reload口       = new Bacon.Bus()
     const shouldSubmit川 = user川.map(user => !!user).skipDuplicates()
 
     const submit川       = (
@@ -124,7 +127,7 @@ export function Online() {
     ).toProperty()
 
     const scoreboard川       = (
-      Bacon.once().merge(submitted川).flatMap(
+      Bacon.once().merge(submitted川).merge(reload口).flatMap(
         () => Bacon.fromPromise(scoreboard(data))
       )
     )
@@ -136,7 +139,7 @@ export function Online() {
       scoreboard川
       .map(() => 'completed')
       .mapError(() => 'error')
-      .merge(submitted川.map(() => 'loading'))
+      .merge(submitted川.merge(reload口).map(() => 'loading'))
       .toProperty('loading')
     )
     const scoreboardError川  = (
@@ -166,7 +169,10 @@ export function Online() {
       state川,
       resubmit() {
         resubmit口.push()
-      }
+      },
+      reloadScoreboard() {
+        reload口.push()
+      },
     }
   }
 

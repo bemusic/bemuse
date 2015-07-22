@@ -25,8 +25,10 @@ export function main() {
         genre: 'Frantic Hardcore',
         level: 17,
       },
+      md5: '12345670123456789abcdef89abemuse',
     },
     onExit: () => alert('Exit!'),
+    playMode: 'BM',
   }
   SCENE_MANAGER.display(React.createElement(ResultScene, props)).done()
 }
