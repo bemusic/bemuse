@@ -3,10 +3,29 @@ import './ranking.scss'
 import React from 'react'
 import c     from 'classnames'
 import RankingTable from './ranking-table'
+import AuthenticationPopup from 'bemuse/online/ui/authentication-popup'
 
 export default React.createClass({
+  getInitialState() {
+    return {
+      authenticationPopupVisible: false,
+    }
+  },
+  handleAuthenticate() {
+    this.setState({ authenticationPopupVisible: true })
+  },
+  handleAuthenticationClose() {
+    this.setState({ authenticationPopupVisible: false })
+  },
+  handleAuthenticationFinish() {
+    this.setState({ authenticationPopupVisible: false })
+  },
   render() {
     return <div className="ranking">
+      <AuthenticationPopup
+          visible={this.state.authenticationPopupVisible}
+          onFinish={this.handleAuthenticationFinish}
+          onBackdropClick={this.handleAuthenticationClose} />
       {this.renderYours()}
       {this.renderLeaderboard()}
     </div>
@@ -16,7 +35,7 @@ export default React.createClass({
     const submission = state.meta.submission
     return <div className="ranking--yours">
       <div className="ranking--title">
-        Your ranking
+        Your Ranking
       </div>
       <RankingTable>
         {
@@ -28,7 +47,7 @@ export default React.createClass({
           : (
             submission.status === 'unauthenticated'
             ? <RankingTable.Message>
-                Please log in
+                Please <a href="javascript://online/auth" onClick={this.handleAuthenticate}>log in or create an account</a> to submit scores.
               </RankingTable.Message>
             : (
               submission.status === 'error'
