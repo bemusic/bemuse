@@ -111,6 +111,7 @@
     "pixi.js": "^2.2.3",
     "react": "^0.13.2",
     "react-fa": "^3.2.0",
+    "react-overlay-popup": "^1.0.2",
     "remarkable": "^1.6.0",
     "screenfull": "^2.0.0",
     "serviceworker-cache-polyfill": "^3.0.0",

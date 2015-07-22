@@ -85,8 +85,10 @@ export default React.createClass({
       <ModalPopup
           visible={this.state.customBMSVisible}
           onBackdropClick={this.handleCustomBMSClose}>
-        <CustomBMS
-            onSongLoaded={this.handleCustomSong} />
+        <div className="music-select-scene--custom-bms">
+          <CustomBMS
+              onSongLoaded={this.handleCustomSong} />
+        </div>
       </ModalPopup>
       <ModalPopup
           visible={this.state.unofficialDisclaimerVisible}
