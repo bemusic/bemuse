@@ -46,3 +46,5 @@ Icon
 .Trashes
 
 /public/jspm_packages/
+
+/.env
