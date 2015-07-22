@@ -120,6 +120,7 @@ function showResult(playerState, chart) {
         'maxCombo':   stats.maxCombo,
         'accuracy':   stats.accuracy,
         'totalCombo': stats.totalCombo,
+        'log':        stats.log,
         'grade':      getGrade(stats),
       },
       chart:    chart,

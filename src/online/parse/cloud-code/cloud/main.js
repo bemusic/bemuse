@@ -41,12 +41,22 @@ Parse.Cloud.define('submitScore', function(request, response) {
         +params.count[3] || 0,
         +params.count[4] || 0,
       ])
-      gameScore.set('log', params.log)
+      gameScore.set('log', params.log.length <= 2048 ? params.log : '!')
       gameScore.set('playNumber', gameScore.get('playCount') + 1)
     }
     gameScore.increment('playCount')
     gameScore.set('playerName', user.get('username'))
     return gameScore.save()
+  })
+  .then(function(gameScore) {
+    if (params.md5 === '12345670123456789abcdef89abemuse') {
+      return gameScore
+    }
+    user.increment('playCount')
+    user.increment('grandTotalScore', gameScore.get('score'))
+    return user.save().then(function() {
+      return gameScore
+    })
   })
   .then(
     function(gameScore) {

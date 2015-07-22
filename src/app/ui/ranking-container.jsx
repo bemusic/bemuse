@@ -24,7 +24,7 @@ export default React.createClass({
       combo:    result.maxCombo,
       total:    result.totalCombo,
       count:    [result['1'], result['2'], result['3'], result['4'], result.missed],
-      log:      result.log || '',
+      log:      result.log,
     })
     this.unsubscribe  = this.model.state川.onValue(this.onStoreTrigger)
   },
