@@ -6,10 +6,10 @@ import { Overlay }  from 'react-overlay-popup'
 
 export default React.createClass({
   render() {
-    if (!this.props.visible) return null
+    if (this.props.visible === false) return null
     return <Overlay>
       <div className={c('modal-popup',
-        { 'is-visible': this.props.visible })}>
+        { 'is-visible': this.props.visible !== false })}>
         <div className="modal-popup--backdrop"
             onClick={this.props.onBackdropClick}></div>
         <div className="modal-popup--contents">
