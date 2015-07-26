@@ -6,6 +6,7 @@ import { Store }  from 'bemuse/flux'
 import * as GameLauncher      from '../game-launcher'
 import * as Actions           from '../actions/music-select-actions'
 import DefaultCollectionStore from './collection-store'
+import OptionsStore           from './options-store'
 
 export function MusicSelectStoreFactory(CollectionStore) {
 
@@ -79,6 +80,8 @@ export function MusicSelectStoreFactory(CollectionStore) {
       [Actions.selectChart.bus], (prev, chart) => chart,
       [$visibleCharts.changes(), $levelAnchorStrategy], ensureSelectedPresent)
 
+  const $mode = OptionsStore.map(state => state.mode)
+
   Bacon.when(
       [Actions.launchGame.bus,
           $server, $song, $chart], (e, server, song, chart) => (
@@ -95,6 +98,7 @@ export function MusicSelectStoreFactory(CollectionStore) {
     chart:      $chart,
     filterText: $filterText,
     unofficial: $unofficial,
+    playMode:   $mode,
   })
 
 }

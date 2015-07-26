@@ -5,7 +5,7 @@
   width: 100%;
   border-spacing: 0;
   td {
-    padding: 3px 5px;
+    padding: 0.36em 0.5em;
     border-bottom: 1px solid rgba(black, 0.1);
   }
   &--rank {
@@ -15,15 +15,16 @@
   td.ranking-table--name {
     padding-left: 1em;
   }
-  &--score {
+  td.ranking-table--score {
     width: 6em;
     text-align: right;
   }
-  &--accuracy {
+  td.ranking-table--accuracy {
     width: 5em;
     text-align: right;
+    padding-right: 1em;
   }
-  &--message {
+  td.ranking-table--message {
     text-align: center;
   }
 }

@@ -27,9 +27,11 @@
   }
 
   &--information-body {
-    flex: 1 0 auto;
+    flex: 1 1 auto;
     margin: 4vh 0 4vh;
     background: rgba(white, 0.6);
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   &--information-footer {
@@ -41,6 +43,10 @@
 
   .music-chart-info {
     margin: 0 2vw;
+  }
+
+  .ranking {
+    font-size: 2.5vmin;
   }
 
   .result-grade {

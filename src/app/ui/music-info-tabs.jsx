@@ -7,6 +7,7 @@ import Icon   from 'react-fa'
 
 import MusicInfoTabStats        from './music-info-tab-stats.jsx'
 import MusicInfoTabInformation  from './music-info-tab-information.jsx'
+import RankingContainer         from './ranking-container'
 
 export default React.createClass({
 
@@ -20,7 +21,9 @@ export default React.createClass({
         {this.renderTab(1, 'Ranking')}
         {this.renderTab(2, 'Information')}
       </ul>
-      <div className="music-info-tabs--panel">
+      <div
+          className={c('music-info-tabs--panel',
+              { 'is-without-padding': this.state.selectedTab === 1 })}>
         {this.renderCurrentTab()}
       </div>
     </section>
@@ -40,12 +43,16 @@ export default React.createClass({
       return <MusicInfoTabStats
           song={this.props.song}
           chart={this.props.chart} />
+    case 1:
+      return <RankingContainer
+          chart={this.props.chart}
+          playMode={this.props.playMode} />
     case 2:
       return <MusicInfoTabInformation
           song={this.props.song}
           chart={this.props.chart} />
     default:
-      return '(Unimplemented)'
+      return 'Unknown tab'
     }
   },
 

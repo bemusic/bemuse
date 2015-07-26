@@ -34,5 +34,8 @@
   &--panel {
     background: $active-bg;
     padding: 0.8em 2vw;
+    &.is-without-padding {
+      padding: 0;
+    }
   }
 }
