@@ -77,10 +77,39 @@ export function Online() {
     )
   }
 
-  function Reloadable(promiseFactory) {
-    let execute口 = new Bacon.Bus()
+  function retrieveRecord({ md5, playMode }) {
+    invariant(typeof md5      === 'string', 'md5 must be a string')
+    invariant(typeof playMode === 'string', 'playMode must be a string')
+    var query = new Parse.Query('GameScore')
+    query.equalTo('md5',      md5)
+    query.equalTo('playMode', playMode)
+    query.equalTo('user',     Parse.User.current())
+    return (
+      wrapPromise(query.first())
+      .then(gameScore => {
+        if (gameScore) {
+          var countQuery = new Parse.Query('GameScore')
+          countQuery.equalTo('md5',       md5)
+          countQuery.equalTo('playMode',  playMode)
+          countQuery.greaterThan('score', gameScore.get('score'))
+          return (
+            wrapPromise(countQuery.count())
+            .then(x => x + 1, () => null)
+            .then(rank => ({ data: toObject(gameScore), meta: { rank } }))
+          )
+        } else {
+          return {
+            data: null,
+            meta: { rank: null }
+          }
+        }
+      })
+    )
+  }
+
+  function reloadable川(promiseFactory, execute川) {
     let state川 = (
-      Bacon.once().merge(execute口)
+      execute川
       .flatMapLatest(() => {
         return (
           Bacon.fromPromise(Promise.resolve(promiseFactory()))
@@ -94,13 +123,7 @@ export function Online() {
         (prev, next) => next(prev)
       )
     )
-    makeEager(state川)
-    return {
-      state川,
-      execute() {
-        execute口.push()
-      },
-    }
+    return state川
   }
 
   function getScoreboard({ md5, playMode }) {
@@ -114,54 +137,48 @@ export function Online() {
     return (
       wrapPromise(query.find())
       .then(results => {
-        return results.map(toObject)
+        return {
+          data: results.map(toObject)
+        }
       })
     )
   }
 
   function submitOrRetrieveRecord(data) {
-    return Promise.resolve(user川.first().toPromise()).then(function(user) {
-      if (user) {
+    if (Parse.User.current()) {
+      if (data.score) {
         return submitScore(data)
       } else {
-        let error = new Error('Unauthenticated!')
-        error.isUnauthenticated = true
-        throw error
+        return retrieveRecord(data)
       }
-    })
+    } else {
+      let error = new Error('Unauthenticated!')
+      error.isUnauthenticated = true
+      return Promise.reject(error)
+    }
   }
 
   function Ranking(data) {
 
-    const submission物 = new Reloadable(() => submitOrRetrieveRecord(data))
-    const scoreboard物 = new Reloadable(() => getScoreboard(data))
+    const resubmit口   = new Bacon.Bus()
+    const reload口     = new Bacon.Bus()
 
-    submission物.execute()
-
-    submission物.state川
-    .filter(state => state.status === 'error' || state.status === 'completed')
-    .onValue(() => scoreboard物.execute())
-
-    const state川 = Bacon.combineWith(
-      function(submission, scoreboard) {
-        return {
-          data: scoreboard.value,
-          meta: {
-            scoreboard: {
-              status: scoreboard.status,
-              error:  scoreboard.error
-            },
-            submission: submission,
-          },
-        }
-      },
-      submission物.state川.map(state => {
+    const submission川 = (
+      reloadable川(
+        () => submitOrRetrieveRecord(data),
+        (
+          Bacon.once()
+          .merge(resubmit口)
+          .merge(user川.changes().filter(user => !!user).first())
+        )
+      )
+      .map(state => {
         if (state.status === 'completed') {
           return {
             status: 'completed',
             error:  null,
             record: state.value.data,
-            rank:   state.meta.rank,
+            rank:   state.value.meta.rank,
           }
         } else if (state.status === 'error' && state.error.isUnauthenticated) {
           return {
@@ -178,8 +195,29 @@ export function Online() {
             rank:   null,
           }
         }
-      }),
-      scoreboard物.state川
+      })
+    )
+
+    const scoreboard川 = reloadable川(
+      () => getScoreboard(data),
+      submission川.filter(({ status }) => status === 'unauthenticated' || status === 'completed')
+    )
+
+    const state川 = Bacon.combineWith(
+      function(submission, scoreboard) {
+        return {
+          data: scoreboard.value && scoreboard.value.data,
+          meta: {
+            scoreboard: {
+              status: scoreboard.status,
+              error:  scoreboard.error
+            },
+            submission: submission,
+          },
+        }
+      },
+      submission川,
+      scoreboard川
     )
 
     return {
