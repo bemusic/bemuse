@@ -94,3 +94,18 @@ Parse.Cloud.define('submitScore', function(request, response) {
   )
 
 })
+
+Parse.Cloud.afterSave(Parse.User, function(request) {
+
+  Parse.Cloud.useMasterKey()
+
+  var user = request.user
+
+  if (!user.existed()) {
+    var userACL = new Parse.ACL(user)
+    userACL.setPublicReadAccess(false)
+    user.setACL(userACL)
+    user.save()
+  }
+
+})
