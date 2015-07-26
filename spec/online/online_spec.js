@@ -249,6 +249,7 @@ function tests(APP_ID, JS_KEY) {
       let online
       before(function() {
         online = new Online()
+        return online.logOut()
       })
 
       var prefix = uid() + '_'
@@ -363,6 +364,7 @@ function tests(APP_ID, JS_KEY) {
           })
         })
         after(function() {
+          online.logOut()
           if (dispose) dispose()
         })
       })

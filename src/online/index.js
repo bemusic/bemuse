@@ -3,14 +3,19 @@ import Bacon      from 'baconjs'
 import { Parse }  from 'parse'
 import invariant  from 'invariant'
 
+// https://github.com/baconjs/bacon.js/issues/536
+function makeEager(川) {
+  return 川.subscribe(() => {})
+}
+
 export function Online() {
 
   const user口 = new Bacon.Bus()
   const user川 = user口.toProperty(Parse.User.current()).map(unwrapUser)
 
-  // We need to keep at least one subscriber to user川 to prevent the value
-  // from reverting to the initial vale when Online is constructed.
-  user川.subscribe(() => {})
+  // user川 needs to be eager, so that when someone subscribes, they always
+  // get the latest user value.
+  makeEager(user川)
 
   function wrapPromise(promise) {
     return Promise.resolve(promise).catch(function(error) {
@@ -72,7 +77,33 @@ export function Online() {
     )
   }
 
-  function scoreboard({ md5, playMode }) {
+  function Reloadable(promiseFactory) {
+    let execute口 = new Bacon.Bus()
+    let state川 = (
+      Bacon.once().merge(execute口)
+      .flatMapLatest(() => {
+        return (
+          Bacon.fromPromise(Promise.resolve(promiseFactory()))
+          .map(    value  => prev => _.assign({ }, prev, { status: 'completed', value, error: null }))
+          .mapError(error => prev => _.assign({ }, prev, { status: 'error', error }))
+          .startWith(        prev => _.assign({ }, prev, { status: 'loading', error: null }))
+        )
+      })
+      .scan(
+        { status: 'loading', value: null, error: null },
+        (prev, next) => next(prev)
+      )
+    )
+    makeEager(state川)
+    return {
+      state川,
+      execute() {
+        execute口.push()
+      },
+    }
+  }
+
+  function getScoreboard({ md5, playMode }) {
     invariant(typeof md5      === 'string', 'md5 must be a string')
     invariant(typeof playMode === 'string', 'playMode must be a string')
     var query = new Parse.Query('GameScore')
@@ -83,87 +114,73 @@ export function Online() {
     return (
       wrapPromise(query.find())
       .then(results => {
-        return {
-          data: results.map(toObject)
-        }
+        return results.map(toObject)
       })
     )
   }
 
-  function Ranking(data) {
-
-    const resubmit口     = new Bacon.Bus()
-    const reload口       = new Bacon.Bus()
-    const shouldSubmit川 = user川.map(user => !!user).skipDuplicates()
-
-    const submit川       = (
-      shouldSubmit川.flatMap(yes => yes ? Bacon.once() : Bacon.never()).merge(resubmit口)
-    )
-    const notSubmit川    = (
-      shouldSubmit川.flatMap(yes => yes ? Bacon.never() : Bacon.once())
-    )
-
-    const submitted川        = submit川.flatMapLatest(() => (
-      Bacon.fromPromise(submitScore(data))
-    ))
-    const submissionResult川 = (
-      submitted川.skipErrors().toProperty(null)
-    )
-    const submissionData川   = submissionResult川.map(
-      result => result && result.data
-    )
-    const submissionRank川   = submissionResult川.map(
-      result => result && result.meta && result.meta.rank
-    )
-    const submissionError川  = (
-      submitted川.errors().mapError(error => error).toProperty(null)
-    )
-    const submissionStatus川 = (
-      notSubmit川.map(() => 'unauthenticated').merge(
-        submit川.map(() => 'loading').merge(
-          submitted川.map(() => 'completed').mapError(() => 'error')
-        )
-      )
-    ).toProperty()
-
-    const scoreboard川       = (
-      Bacon.once().merge(submitted川).merge(reload口).flatMap(
-        () => Bacon.fromPromise(scoreboard(data))
-      )
-    )
-    const scoreboardResult川 = scoreboard川.toProperty(null)
-    const scoreboardData川   = scoreboardResult川.map(
-      result => result && result.data
-    )
-    const scoreboardStatus川 = (
-      scoreboard川
-      .map(() => 'completed')
-      .mapError(() => 'error')
-      .merge(submitted川.merge(reload口).map(() => 'loading'))
-      .toProperty('loading')
-    )
-    const scoreboardError川  = (
-      scoreboard川
-      .errors()
-      .mapError(error => error)
-      .toProperty(null)
-    )
-
-    const state川 = Bacon.combineTemplate({
-      data: scoreboardData川,
-      meta: {
-        scoreboard: {
-          status: scoreboardStatus川,
-          error: scoreboardError川,
-        },
-        submission: {
-          status: submissionStatus川,
-          error:  submissionError川,
-          record: submissionData川,
-          rank:   submissionRank川,
-        }
+  function submitOrRetrieveRecord(data) {
+    return Promise.resolve(user川.first().toPromise()).then(function(user) {
+      if (user) {
+        return submitScore(data)
+      } else {
+        let error = new Error('Unauthenticated!')
+        error.isUnauthenticated = true
+        throw error
       }
     })
+  }
+
+  function Ranking(data) {
+
+    const submission物 = new Reloadable(() => submitOrRetrieveRecord(data))
+    const scoreboard物 = new Reloadable(() => getScoreboard(data))
+
+    submission物.execute()
+
+    submission物.state川
+    .filter(state => state.status === 'error' || state.status === 'completed')
+    .onValue(() => scoreboard物.execute())
+
+    const state川 = Bacon.combineWith(
+      function(submission, scoreboard) {
+        return {
+          data: scoreboard.value,
+          meta: {
+            scoreboard: {
+              status: scoreboard.status,
+              error:  scoreboard.error
+            },
+            submission: submission,
+          },
+        }
+      },
+      submission物.state川.map(state => {
+        if (state.status === 'completed') {
+          return {
+            status: 'completed',
+            error:  null,
+            record: state.value.data,
+            rank:   state.meta.rank,
+          }
+        } else if (state.status === 'error' && state.error.isUnauthenticated) {
+          return {
+            status: 'unauthenticated',
+            error:  null,
+            record: null,
+            rank:   null,
+          }
+        } else {
+          return {
+            status: state.status,
+            error:  state.error,
+            record: null,
+            rank:   null,
+          }
+        }
+      }),
+      scoreboard物.state川
+    )
 
     return {
       state川,
@@ -182,7 +199,7 @@ export function Online() {
     logIn,
     logOut,
     submitScore,
-    scoreboard,
+    scoreboard: getScoreboard,
     Ranking,
   }
 }
