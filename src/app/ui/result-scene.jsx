@@ -63,7 +63,7 @@ export default React.createClass({
       if (match) subtitle = match[1]
     }
     subtitle = subtitle.trim()
-    if (!/^[\[\(]/.test(subtitle)) subtitle = `[${subtitle}]`
+    if (subtitle !== '' && !/^[\[\(]/.test(subtitle)) subtitle = `[${subtitle}]`
     if (subtitle !== '') subtitle = ` ${subtitle}`
     let text = `Played:「 ${title}${subtitle} 」on #Bemuse (Score:${score})` + '\n' + `→ https://bemuse.ninja/`
     return 'https://twitter.com/intent/tweet?related=bemusegame&text=' + encodeURIComponent(text)
