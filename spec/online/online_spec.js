@@ -326,12 +326,16 @@ function tests(APP_ID, JS_KEY) {
         })
         step('no new score should be submitted', function() {
           return Promise.resolve(
-            ranking川.take(2).toPromise()
+            ranking川
+            .filter(state =>
+              state.meta.scoreboard.status === 'completed' &&
+              state.meta.submission.status === 'unauthenticated'
+            )
+            .first()
+            .toPromise()
           )
           .then(function(state) {
-            expect(state.meta.scoreboard.status).to.equal('completed')
             expect(state.data).to.have.length(2)
-            expect(state.meta.submission.status).to.equal('unauthenticated')
           })
         })
         step('sign up user3...', function() {

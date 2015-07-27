@@ -2,6 +2,7 @@
 import indexer from 'bemuse-indexer'
 import Promise from 'bluebird'
 
+/*global FileReaderSync*/
 if (typeof FileReader === 'undefined' &&
     typeof FileReaderSync !== 'undefined') {
   global.FileReader = function FileReaderShim() {

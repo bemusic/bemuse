@@ -1,4 +1,5 @@
 
+/*global Parse*/
 var GameScore = Parse.Object.extend('GameScore')
 
 Parse.Cloud.define('submitScore', function(request, response) {

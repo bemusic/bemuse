@@ -1,4 +1,5 @@
 
+/*global caches*/
 import version from 'bemuse/utils/version'
 import 'serviceworker-cache-polyfill'
 
