@@ -75,16 +75,24 @@
     width: 12vmin;
   }
 
-  &--exit {
-    display: inline-block;
-    background: #5a5;
-    border: 2px solid darken(#5a5, 5%);
+  @mixin button($face) {
+    display: block;
+    background: $face;
+    border: 2px solid darken($face, 5%);
     text-align: center;
     font-size: 3vmin;
     color: #fff;
     padding: 1ex 2ex;
     cursor: pointer;
     border-radius: 2vmin;
+  }
+
+  &--exit {
+    @include button(#5a5);
+  }
+
+  &--tweet {
+    @include button(#54abee);
   }
 
 }
