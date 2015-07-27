@@ -60,7 +60,7 @@ export default React.createClass({
     let score = this.props.result.score
     if (subtitle === '') {
       let match = this.props.chart.info.genre.match(/\[([^\]]+)\]$/)
-      subtitle = match[1]
+      if (match) subtitle = match[1]
     }
     subtitle = subtitle.trim()
     if (!/^[\[\(]/.test(subtitle)) subtitle = `[${subtitle}]`
