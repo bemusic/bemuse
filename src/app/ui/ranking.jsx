@@ -57,9 +57,15 @@ export default React.createClass({
                     this.props.onResubmitScoreRequest
                   )}
                 </RankingTable.Message>
-              : <RankingTable.Message>
-                  Submitting score... Please wait!
-                </RankingTable.Message>
+              : (
+                submission.status === 'loading'
+                ? <RankingTable.Message>
+                    Please wait...
+                  </RankingTable.Message>
+                : <RankingTable.Message>
+                    No record. Let’s play!
+                  </RankingTable.Message>
+              )
             )
           )
         }

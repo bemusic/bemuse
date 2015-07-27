@@ -249,6 +249,7 @@ function tests(APP_ID, JS_KEY) {
       let online
       before(function() {
         online = new Online()
+        return online.logOut()
       })
 
       var prefix = uid() + '_'
@@ -291,6 +292,7 @@ function tests(APP_ID, JS_KEY) {
             playMode: 'BM',
           }))
           .tap(function(result) {
+            console.log(result)
             expect(result.data).to.have.length(2)
           })
         })
@@ -324,12 +326,16 @@ function tests(APP_ID, JS_KEY) {
         })
         step('no new score should be submitted', function() {
           return Promise.resolve(
-            ranking川.take(2).toPromise()
+            ranking川
+            .filter(state =>
+              state.meta.scoreboard.status === 'completed' &&
+              state.meta.submission.status === 'unauthenticated'
+            )
+            .first()
+            .toPromise()
           )
           .then(function(state) {
-            expect(state.meta.scoreboard.status).to.equal('completed')
             expect(state.data).to.have.length(2)
-            expect(state.meta.submission.status).to.equal('unauthenticated')
           })
         })
         step('sign up user3...', function() {
@@ -337,11 +343,11 @@ function tests(APP_ID, JS_KEY) {
         })
         step('should start sending score', function() {
           return Promise.resolve(
-            ranking川.first().toPromise()
+            ranking川
+            .filter(state => state.meta.submission.status === 'loading')
+            .first()
+            .toPromise()
           )
-          .then(function(state) {
-            expect(state.meta.submission.status).to.equal('loading')
-          })
         })
         step('should finish sending score', function() {
           return Promise.resolve(
@@ -362,7 +368,32 @@ function tests(APP_ID, JS_KEY) {
             expect(state.data).to.have.length(3)
           })
         })
+        step('resubscribe with read only', function() {
+          if (dispose) dispose()
+          ranking = online.Ranking({
+            md5: prefix + 'song1',
+            playMode: 'BM'
+          })
+          ranking川 = ranking.state川
+          dispose   = ranking川.subscribe(() => {})
+        })
+        step('should not submit new score', function() {
+          return Promise.resolve(
+            ranking川
+            .filter(
+              ({ meta: { scoreboard: { status: status1 }, submission: { status: status2 } } }) => (
+                status1 === 'completed' && status2 === 'completed'
+              )
+            )
+            .first().toPromise()
+          )
+          .then(function(state) {
+            expect(state.data).to.have.length(3)
+            expect(state.meta.submission.record.playCount).to.equal(1)
+          })
+        })
         after(function() {
+          online.logOut()
           if (dispose) dispose()
         })
       })

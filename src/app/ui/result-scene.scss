@@ -27,9 +27,11 @@
   }
 
   &--information-body {
-    flex: 1 0 auto;
+    flex: 1 1 auto;
     margin: 4vh 0 4vh;
     background: rgba(white, 0.6);
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   &--information-footer {
@@ -41,6 +43,10 @@
 
   .music-chart-info {
     margin: 0 2vw;
+  }
+
+  .ranking {
+    font-size: 2.5vmin;
   }
 
   .result-grade {
@@ -69,16 +75,24 @@
     width: 12vmin;
   }
 
-  &--exit {
-    display: inline-block;
-    background: #5a5;
-    border: 2px solid darken(#5a5, 5%);
+  @mixin button($face) {
+    display: block;
+    background: $face;
+    border: 2px solid darken($face, 5%);
     text-align: center;
     font-size: 3vmin;
     color: #fff;
     padding: 1ex 2ex;
     cursor: pointer;
     border-radius: 2vmin;
+  }
+
+  &--exit {
+    @include button(#5a5);
+  }
+
+  &--tweet {
+    @include button(#54abee);
   }
 
 }

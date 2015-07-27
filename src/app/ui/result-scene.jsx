@@ -9,6 +9,7 @@ import MusicChartSelectorItem from './music-chart-selector-item'
 import ResultTable      from './result-table'
 import ResultGrade      from './result-grade'
 import RankingContainer from './ranking-container'
+import Flex             from 'bemuse/ui/flex'
 
 export default React.createClass({
   render() {
@@ -35,6 +36,10 @@ export default React.createClass({
               playMode={this.props.playMode} />
         </div>
         <div className="result-scene--information-footer">
+          <a href={this.getTweetLink()} className="result-scene--tweet" onClick={this.onTweet}>
+            <i className="fa fa-twitter" />
+          </a>
+          <Flex grow={1} />
           <div className="result-scene--exit" onClick={this.props.onExit}>
             Continue
           </div>
@@ -48,6 +53,25 @@ export default React.createClass({
         <a onClick={this.props.onExit} href="javascript://">Continue</a>
       </SceneToolbar>
     </Scene>
+  },
+  getTweetLink() {
+    let title = this.props.chart.info.title
+    let subtitle = this.props.chart.info.subtitles[0] || ''
+    let score = this.props.result.score
+    if (subtitle === '') {
+      let match = this.props.chart.info.genre.match(/\[([^\]]+)\]$/)
+      subtitle = match[1]
+    }
+    subtitle = subtitle.trim()
+    if (!/^[\[\(]/.test(subtitle)) subtitle = `[${subtitle}]`
+    if (subtitle !== '') subtitle = ` ${subtitle}`
+    let text = `Played:「 ${title}${subtitle} 」on #Bemuse (Score:${score})` + '\n' + `→ https://bemuse.ninja/`
+    return 'https://twitter.com/intent/tweet?related=bemusegame&text=' + encodeURIComponent(text)
+  },
+  onTweet(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    window.open(this.getTweetLink(), 'intent', 'width=550,height=420')
   },
   noop() {
   },

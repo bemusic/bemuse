@@ -21,6 +21,7 @@ export default React.createClass({
       <MusicInfoTabs
           song={song}
           chart={chart}
+          playMode={this.props.playMode}
           onOptions={this.props.onOptions} />
     </section>
   }

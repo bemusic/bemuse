@@ -4,6 +4,19 @@
     "node": true,
     "es6": true
   },
+  "globals": {
+    "mocha": false,
+    "describe": false,
+    "it": false,
+    "expect": false,
+    "beforeEach": false,
+    "afterEach": false,
+    "before": false,
+    "after": false,
+    "xdescribe": false,
+    "xit": false,
+    "sinon": false
+  },
   "parser": "babel-eslint",
   "plugins": [
     "react"
@@ -21,7 +34,7 @@
     "no-multi-spaces": 0,
     "no-process-exit": 0,
     "no-script-url": 0,
-    "no-undef": 0,
+    "no-undef": 2,
     "no-underscore-dangle": 0,
     "no-use-before-define": 0,
     "quotes": [2, "single", "avoid-escape"],

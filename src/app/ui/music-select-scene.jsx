@@ -69,6 +69,7 @@ export default React.createClass({
                 song={musicSelect.song}
                 chart={musicSelect.chart}
                 charts={musicSelect.charts}
+                playMode={musicSelect.playMode}
                 onChartClick={this.handleChartClick}
                 onOptions={this.handleOptionsOpen} />
           </div>

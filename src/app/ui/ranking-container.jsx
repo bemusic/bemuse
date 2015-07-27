@@ -15,18 +15,36 @@ export default React.createClass({
     }
   },
 
-  componentDidMount() {
-    let result = this.props.result
-    this.model        = online.Ranking({
-      md5:      this.props.chart.md5,
-      playMode: this.props.playMode,
-      score:    result.score,
-      combo:    result.maxCombo,
-      total:    result.totalCombo,
-      count:    [result['1'], result['2'], result['3'], result['4'], result.missed],
-      log:      result.log,
+  getParams(props) {
+    let params = { }
+    Object.assign(params, {
+      md5:      props.chart.md5,
+      playMode: props.playMode,
     })
+    let result = props.result
+    if (result) {
+      Object.assign(params, {
+        score:    result.score,
+        combo:    result.maxCombo,
+        total:    result.totalCombo,
+        count:    [result['1'], result['2'], result['3'], result['4'], result.missed],
+        log:      result.log,
+      })
+    }
+    return params
+  },
+
+  componentDidMount() {
+    this.model        = online.Ranking(this.getParams(this.props))
     this.unsubscribe  = this.model.state川.onValue(this.onStoreTrigger)
+  },
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.chart.md5 !== nextProps.chart.md5 || this.props.playMode !== nextProps.playMode) {
+      this.unsubscribe()
+      this.model        = online.Ranking(this.getParams(nextProps))
+      this.unsubscribe  = this.model.state川.onValue(this.onStoreTrigger)
+    }
   },
 
   onStoreTrigger(state) {

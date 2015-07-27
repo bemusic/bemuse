@@ -1,4 +1,5 @@
 
+/*global AudioContext, WebAudioTestAPI*/
 import SamplingMaster from 'bemuse/sampling-master'
 import 'web-audio-test-api'
 
@@ -147,4 +148,3 @@ describe('SamplingMaster', function() {
   after(() => { WebAudioTestAPI.unuse() })
 
 })
-
