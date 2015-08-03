@@ -3,7 +3,6 @@
 
 .music-chart-selector-item {
   list-style: none;
-  border: 2px solid #8ac;
   height: 12vmin;
   line-height: 12vmin;
   font-size: 5vmin;
@@ -13,17 +12,9 @@
   cursor: pointer;
   position: relative;
   &.is-active {
-    background: #8ac;
     color: white;
-    animation: 3s music-chart-selector-item--active-animation infinite;
   }
-  &.is-insane {
-    border-color: #c66;
-    &.is-active {
-      background: #c66;
-      animation: 3s music-chart-selector-item--active-animation--insane infinite;
-    }
-  }
+
   &--level {
     opacity: 1;
     transition: 0.3s opacity;
@@ -43,20 +34,26 @@
   }
 }
 
-@keyframes music-chart-selector-item--active-animation {
-  $color: #8ac;
-  $color1: lighten($color, 10%);
-  $color2: darken($color, 10%);
-  0% { background: $color1; }
-  50% { background: $color2; }
-  100% { background: $color1; }
+@mixin music-chart-selector-item--color($color, $name, $selector) {
+  $animation-name: music-chart-selector-item--active-#{$name};
+  .music-chart-selector-item {
+    #{unquote($selector)} {
+      border: 2px solid $color;
+      &.is-active {
+        background: #8ac;
+        animation: 3s #{$animation-name} infinite;
+      }
+    }
+  }
+  @keyframes #{$animation-name} {
+    $color1: lighten($color, 10%);
+    $color2: darken($color, 10%);
+    0% { background: $color1; }
+    50% { background: $color2; }
+    100% { background: $color1; }
+  }
 }
 
-@keyframes music-chart-selector-item--active-animation--insane {
-  $color: #c66;
-  $color1: lighten($color, 10%);
-  $color2: darken($color, 10%);
-  0% { background: $color1; }
-  50% { background: $color2; }
-  100% { background: $color1; }
-}
+@include music-chart-selector-item--color(#8ac, normal, '&');
+@include music-chart-selector-item--color(#ac8, 5k, '&.is-5keys');
+@include music-chart-selector-item--color(#c66, insane, '&.is-insane');

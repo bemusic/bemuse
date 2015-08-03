@@ -2,8 +2,10 @@
 import BMS from 'bms'
 
 import _          from 'lodash'
+import invariant  from 'invariant'
 import GameEvent  from './data/event'
 import GameNote   from './data/game-note'
+import getKeys    from 'bemuse-indexer/keys'
 
 // A notechart holds every info about a single player's note chart that the
 // game will ever need.
@@ -13,7 +15,9 @@ export class Notechart {
     let timing      = BMS.Timing.fromBMSChart(bms)
     let keysounds   = BMS.Keysounds.fromBMSChart(bms)
     let info        = BMS.SongInfo.fromBMSChart(bms)
-    this._preTransform(bmsNotes, playerOptions)
+
+    bmsNotes = this._preTransform(bms, bmsNotes, playerOptions)
+
     this._timing    = timing
     this._keysounds = keysounds
     this._duration  = 0
@@ -102,14 +106,44 @@ export class Notechart {
     return this._timing.bpmAtBeat(beat)
   }
 
-  _preTransform(bmsNotes, playerOptions) {
+  _preTransform(bmsChart, bmsNotes, playerOptions) {
+    let chain = _.chain(bmsNotes)
+    let keys  = getKeys(bmsChart)
     if (playerOptions.scratch === 'off') {
-      for (let note of bmsNotes) {
+      chain = chain.map(note => {
         if (note.column && note.column.column === 'SC') {
-          note.column = null
+          return Object.assign({ }, note, { column: null })
+        } else {
+          return note
         }
+      })
+    }
+    if (keys === '5K') {
+      const columnsToShift = ['1', '2', '3', '4', '5', '6', '7']
+      const shiftNote = amount => note => {
+        if (note.column) {
+          let index = columnsToShift.indexOf(note.column.column)
+          if (index > -1) {
+            let newIndex = index + amount
+            invariant(
+              newIndex < columnsToShift.length,
+              'Weird. Columns must not shift beyond available column'
+            )
+            let newColumn = columnsToShift[newIndex]
+            return Object.assign({ }, note, {
+              column: Object.assign({ }, note.column, { column: newColumn })
+            })
+          }
+        }
+        return note
+      }
+      if (playerOptions.scratch === 'off') {
+        chain = chain.map(shiftNote(1))
+      } else if (playerOptions.scratch === 'right') {
+        chain = chain.map(shiftNote(2))
       }
     }
+    return chain.value()
   }
 
   _generatePlayableNotesFromBMS(bmsNotes) {

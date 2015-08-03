@@ -26,6 +26,51 @@ describe('Notechart', function() {
     })
   })
 
+  describe('5K', function() {
+    const src = `
+      #00116:01
+      #00111:01
+      #00112:01
+      #00113:01
+      #00114:01
+      #00115:01
+    `
+    function byColumn(column) {
+      return note => note.column === column
+    }
+    describe('scratch left', function() {
+      it('should keep notes intact', function() {
+        var subject = notechart(src, { scratch: 'left' })
+        expect(subject.notes).to.have.length(6)
+        void expect(subject.notes.filter(byColumn('1'))).not.to.be.empty
+        void expect(subject.notes.filter(byColumn('2'))).not.to.be.empty
+        void expect(subject.notes.filter(byColumn('3'))).not.to.be.empty
+        void expect(subject.notes.filter(byColumn('4'))).not.to.be.empty
+        void expect(subject.notes.filter(byColumn('5'))).not.to.be.empty
+        void expect(subject.notes.filter(byColumn('6'))).to.be.empty
+        void expect(subject.notes.filter(byColumn('7'))).to.be.empty
+      })
+    })
+    describe('scratch off', function() {
+      it('should shift columns by 1', function() {
+        var subject = notechart(src, { scratch: 'off' })
+        expect(subject.notes).to.have.length(5)
+        void expect(subject.notes.filter(byColumn('6'))).not.to.be.empty
+        void expect(subject.notes.filter(byColumn('1'))).to.be.empty
+      })
+    })
+    describe('scratch right', function() {
+      it('should shift columns by 2', function() {
+        var subject = notechart(src, { scratch: 'right' })
+        expect(subject.notes).to.have.length(6)
+        void expect(subject.notes.filter(byColumn('6'))).not.to.be.empty
+        void expect(subject.notes.filter(byColumn('7'))).not.to.be.empty
+        void expect(subject.notes.filter(byColumn('1'))).to.be.empty
+        void expect(subject.notes.filter(byColumn('2'))).to.be.empty
+      })
+    })
+  })
+
   describe('#samples', function() {
     it('should return an array of all used samples', function() {
       var subject = notechart('#WAV0X wow.wav\n#00101:0x0x')
