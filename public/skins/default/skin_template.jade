@@ -6,11 +6,6 @@ include _lib/common
   defs
     +all-note-area(id='note-area')
 
-  sprite(image='Background/Space.jpg' x='0' y='0')
-    animation
-      keyframe(t='0.0' y='0' alpha='0')
-      keyframe(t='1.0' y='-32' alpha='1' ease='quadOut')
-
   // note panel (Left)
   #{'if'}(key='p1_placement' value='left')
     group

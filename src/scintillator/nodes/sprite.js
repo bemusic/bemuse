@@ -24,7 +24,7 @@ export class SpriteNode extends SkinNode {
   }
   getTexture() {
     if (this._texture) return this._texture
-    let scaleMode = PIXI.scaleModes.NEAREST
+    let scaleMode = PIXI.SCALE_MODES.NEAREST
     let base      = PIXI.BaseTexture.fromImage(this.url, undefined, scaleMode)
     let texture   = new PIXI.Texture(base, this.frame)
     this._texture = texture

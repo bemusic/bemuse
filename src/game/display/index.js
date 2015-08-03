@@ -1,14 +1,16 @@
 
 import PlayerDisplay from './player-display'
+import './game-display.scss'
+import $ from 'jquery'
 
 export class GameDisplay {
-  constructor({ game, skin, context }) {
+  constructor({ game, context }) {
     this._game      = game
     this._context   = context
     this._players   = new Map(game.players.map(player =>
         [player, new PlayerDisplay(player)]))
     this._stateful  = { }
-    void skin
+    this._wrapper   = this._createWrapper()
   }
   start() {
     this._started = new Date().getTime()
@@ -61,11 +63,20 @@ export class GameDisplay {
     let f = gameState.readyFraction
     return f > 0.5 ? Math.pow(1 - (f - 0.5) / 0.5, 2) : 0
   }
+  _createWrapper() {
+    var $wrapper = $('<div class="game-display"></div>')
+    .append('<div class="game-display--bg"></div>')
+    .append(this.view)
+    return $wrapper[0]
+  }
   get context() {
     return this._context
   }
   get view() {
     return this._context.view
+  }
+  get wrapper() {
+    return this._wrapper
   }
   _formatTime(seconds) {
     let s = Math.floor(seconds % 60)

@@ -1935,12 +1935,6 @@
       <sprite image="NoteArea/Stripe.png" x="1" y="537" blend="screen"></sprite>
     </group>
   </defs>
-  <sprite image="Background/Space.jpg" x="0" y="0">
-    <animation>
-      <keyframe t="0.0" y="0" alpha="0"></keyframe>
-      <keyframe t="1.0" y="-32" alpha="1" ease="quadOut"></keyframe>
-    </animation>
-  </sprite>
   <!-- note panel (Left)-->
   <if key="p1_placement" value="left">
     <group>

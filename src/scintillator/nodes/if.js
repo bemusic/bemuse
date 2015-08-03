@@ -17,7 +17,7 @@ export class IfNode extends SkinNode {
     this.value    = String($el.attr('value'))
   }
   instantiate(context, container) {
-    let object    = new PIXI.DisplayObjectContainer()
+    let object    = new PIXI.Container()
     let expr      = this.key
     let value     = this.value
     let childNode = this.child

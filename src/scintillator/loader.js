@@ -6,7 +6,7 @@ import $    from 'jquery'
 import url  from 'url'
 import co   from 'co'
 import PIXI from 'pixi.js'
-import * as ProgressUtils from 'bemuse/progress/utils'
+import { PERCENTAGE_FORMATTER } from 'bemuse/progress/formatters'
 
 import Resources  from './resources'
 import Compiler   from './compiler'
@@ -32,9 +32,7 @@ export function load(xmlPath, progress) {
     }
 
     // load all images + progress reporting
-    let onload = ProgressUtils.fixed(1 + paths.size, progress)
-    onload()
-    yield loadResources(resources, onload)
+    yield loadResources(resources, progress)
 
     // compile the skin
     log('compiling')
@@ -50,16 +48,27 @@ function loadXml(xmlUrl) {
     .then(xml => $(xml.documentElement))
 }
 
-function loadResources(resources, onprogress) {
+function loadResources(resources, progress) {
   log('loading resources')
   return new Promise(function(resolve) {
     if (resources.urls.length === 0) return resolve()
-    let loader = new PIXI.AssetLoader(resources.urls)
-    loader.on('onComplete', function() {
+    let loader = new PIXI.loaders.Loader()
+    for (let url of resources.urls) {
+      loader.add(url, url)
+    }
+    loader.once('complete', function() {
       log('resources finished loading')
       resolve()
     })
-    if (onprogress) loader.on('onProgress', onprogress)
+    if (progress) {
+      progress.formatter = PERCENTAGE_FORMATTER
+      loader.once('complete', function() {
+        progress.report(100, 100)
+      })
+      loader.on('progress', function() {
+        progress.report(loader.progress, 100)
+      })
+    }
     loader.load()
   })
 }

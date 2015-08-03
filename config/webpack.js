@@ -39,6 +39,15 @@ let config = {
         loader: 'babel?modules=common&experimental=true',
       },
       {
+        test: /\.js$/,
+        include: [path('node_modules', 'pixi.js')],
+        loader: 'transform/cacheable?brfs',
+      },
+      {
+        test: /\.json$/,
+        loader: 'json',
+      },
+      {
         test: /\.pegjs$/,
         loader: 'pegjs',
       },
