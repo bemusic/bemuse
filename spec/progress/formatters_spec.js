@@ -12,7 +12,7 @@ describe('ProgressFormatters', function() {
     it('should format as human readable size', function() {
       let p = new Progress()
       p.report(1, 1024)
-      expect(Formatters.BYTES_FORMATTER(p)).to.equal('1b / 1kb')
+      expect(Formatters.BYTES_FORMATTER(p)).to.equal('1B / 1kB')
     })
   })
 
