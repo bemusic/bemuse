@@ -33,7 +33,7 @@ export class GroupNode extends SkinNode {
     if (maskFrame) this.mask = new Mask(maskFrame)
   }
   instantiate(context, container) {
-    let object = new PIXI.DisplayObjectContainer()
+    let object = new PIXI.Container()
     let concerns = [ this.display ]
     if (this.mask) {
       concerns.push(this.mask)

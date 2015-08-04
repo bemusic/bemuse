@@ -15,6 +15,8 @@ export function MusicSelectStoreFactory(CollectionStore) {
   const $unofficial   = CollectionStore.map(state => state.unofficial)
   const $loading      = $collection.map(({ loading }) => loading)
 
+  const playableChart = chart => chart.keys === '7K' || chart.keys === '5K'
+
   const $grouping     = Bacon.constant([
     { title: 'Custom Song', criteria: song => song.custom },
     { title: 'Tutorial', criteria: song => song.tutorial },
@@ -34,7 +36,7 @@ export function MusicSelectStoreFactory(CollectionStore) {
           .sortByAll([
             song => {
               return _(song.charts)
-                .filter({ keys: '7K' })
+                .filter(playableChart)
                 .filter(chart => chart.info.difficulty < 5)
                 .filter(chart => chart.info.level > 0)
                 .map(chart => chart.info.level)
@@ -65,7 +67,7 @@ export function MusicSelectStoreFactory(CollectionStore) {
   const $charts = $song.map(song => (song && song.charts) || [ ])
 
   const $visibleCharts = $charts.map(charts => _(charts)
-      .filter({ keys: '7K' })
+      .filter(playableChart)
       .sortByAll(
         chart => chart.info.difficulty >= 5 ? 1 : 0,
         chart => chart.info.level

@@ -1,0 +1,36 @@
+
+.game-display {
+  display: block;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+
+  &--bg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background: url(./background/default.jpg) center no-repeat;
+    background-size: cover;
+    animation: 1.5s game-display--bg-default;
+    animation-fill-mode: both;
+  }
+
+  > canvas {
+    position: relative;
+    z-index: 100;
+  }
+}
+
+@keyframes game-display--bg-default {
+  from {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate(0, -35px);
+    opacity: 1;
+  }
+}

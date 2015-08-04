@@ -57,8 +57,8 @@ export class DisplayObject extends SkinNode {
 }
 
 function parseBlendMode(text) {
-  if (text === 'normal') return PIXI.blendModes.NORMAL
-  if (text === 'screen') return PIXI.blendModes.SCREEN
+  if (text === 'normal') return PIXI.BLEND_MODES.NORMAL
+  if (text === 'screen') return PIXI.BLEND_MODES.SCREEN
   throw new Error('Invalid blend mode: ' + text)
 }
 

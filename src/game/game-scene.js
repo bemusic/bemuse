@@ -5,7 +5,7 @@ export default function GameScene(display) {
   return function(container) {
     let handler = () => false
     $(window).on('touchstart', handler)
-    showCanvas(display.view, container)
+    showCanvas(display, container)
     return {
       teardown() {
         $(window).off('touchstart', handler)
@@ -14,14 +14,12 @@ export default function GameScene(display) {
   }
 }
 
-function showCanvas(view, container) {
+function showCanvas(display, container) {
 
+  var { view, wrapper } = display
   var { width, height } = view
+  container.appendChild(wrapper)
 
-  view.style.display = 'block'
-  view.style.margin = '0 auto'
-
-  container.appendChild(view)
   resize()
   $(window).on('resize', resize)
 
@@ -32,8 +30,12 @@ function showCanvas(view, container) {
     )
     view.style.width = Math.round(width * scale) + 'px'
     view.style.height = Math.round(height * scale) + 'px'
+    wrapper.style.width = Math.round(width * scale) + 'px'
+    wrapper.style.height = Math.round(height * scale) + 'px'
     var yOffset = (window.innerHeight - height * scale) / 2
-    view.style.marginTop = Math.round(yOffset) + 'px'
+    wrapper.style.marginTop = Math.round(yOffset) + 'px'
   }
+
+  return wrapper
 
 }

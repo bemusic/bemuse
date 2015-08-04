@@ -3,9 +3,9 @@ import PIXI from 'pixi.js'
 
 function createRenderer(w, h) {
   if (navigator.userAgent.match(/Gecko\//)) {
-    return new PIXI.autoDetectRenderer(w, h)
+    return new PIXI.autoDetectRenderer(w, h, { transparent: true })
   } else {
-    return new PIXI.CanvasRenderer(w, h)
+    return new PIXI.CanvasRenderer(w, h, { transparent: true })
   }
 }
 

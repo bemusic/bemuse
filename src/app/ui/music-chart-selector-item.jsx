@@ -12,6 +12,7 @@ export default React.createClass({
           'is-active': this.props.isSelected,
           'is-tutorial': this.props.isTutorial,
           'is-insane': this.props.chart.info.difficulty >= 5,
+          'is-5keys': this.props.chart.keys === '5K',
         })
     return <li
         className={classes}

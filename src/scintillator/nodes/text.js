@@ -30,9 +30,9 @@ export class TextNode extends SkinNode {
         fill: this.fill,
       })
     } else {
-      text = new PIXI.BitmapText(this.text, { font: this.font })
+      text = new PIXI.extras.BitmapText(this.text, { font: this.font })
     }
-    let object = new PIXI.DisplayObjectContainer()
+    let object = new PIXI.Container()
     object.addChild(text)
     return new Instance({
       context:  context,
@@ -43,7 +43,7 @@ export class TextNode extends SkinNode {
         [
           this.data,
           v => {
-            text.setText(this.text.replace('%s', v))
+            text.text = this.text.replace('%s', v)
             text.updateText()
             text.x = text.width * -this.align
           },
