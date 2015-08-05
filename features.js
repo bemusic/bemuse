@@ -14,5 +14,6 @@ module.exports = [
   'song-info/*.feature',
   'random/*.feature',
   'positioning/*.feature',
+  'spacing/*.feature',
 
 ]

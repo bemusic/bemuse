@@ -7,6 +7,7 @@ var Notes       = bms.Notes
 var SongInfo    = bms.SongInfo
 var Keysounds   = bms.Keysounds
 var Positioning = bms.Positioning
+var Spacing     = bms.Spacing
 
 module.exports = function() {
 
@@ -56,6 +57,10 @@ module.exports = function() {
 
   World.prop('positioning', function() {
     return Positioning.fromBMSChart(this.chart)
+  })
+
+  World.prop('spacing', function() {
+    return Spacing.fromBMSChart(this.chart)
   })
 
 }
