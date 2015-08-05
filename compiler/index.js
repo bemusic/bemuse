@@ -51,7 +51,7 @@ exports.compile = function(text, options) {
       result.channelSentences += 1
       if (!skipped) chart.timeSignatures.set(+m[1], +m[2])
     })
-    .when(/^#(\d\d\d)(\S\S):(\S*)$/, function(m) {
+    .when(/^#(?:EXT\s+#)?(\d\d\d)(\S\S):(\S*)$/, function(m) {
       result.channelSentences += 1
       if (!skipped) handleChannelSentence(+m[1], m[2], m[3], lineNumber)
     })
@@ -74,7 +74,7 @@ exports.compile = function(text, options) {
       var fraction = i / items
       if (value === '00') continue
       chart.objects.add({
-        measure: measure, 
+        measure: measure,
         fraction: fraction,
         value: value,
         channel: channel,
@@ -99,4 +99,3 @@ function eachLine(text, callback) {
     callback(line, index + 1)
   })
 }
-
