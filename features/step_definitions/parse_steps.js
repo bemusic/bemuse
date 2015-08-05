@@ -1,14 +1,10 @@
 
-var def = require('./def')
+var steps = require('artstep')
 
-module.exports = def(function(World, Given, When, Then) {
+module.exports = (steps()
 
-  void When
-  void Then
-
-  Given(/^a BMS file as follows$/, function (string) {
+  .Given(/^a BMS file as follows$/, function (string) {
     this.parseBMS(string)
   })
 
-})
-
+)

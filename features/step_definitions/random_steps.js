@@ -1,17 +1,13 @@
 
-var def = require('./def')
+var steps = require('artstep')
 
-module.exports = def(function(World, Given, When, Then) {
+module.exports = (steps()
 
-  void When
-  void Then
-
-  Given(/^the random number generator yields (.*?)$/, function (string) {
+  .Given(/^the random number generator yields (.*?)$/, function (string) {
     var result = string.split(', ').map(function(x) { return +x })
     this.parseOptions.rng = function() {
       return result.shift()
     }
   })
 
-})
-
+)

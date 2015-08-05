@@ -53,3 +53,7 @@ Speedcore.prototype.x = function(t) {
   return segment.x + (t - segment.t) * segment.dx
 }
 
+Speedcore.prototype.dx = function(t) {
+  var segment = this.segmentAtT(t)
+  return segment.dx
+}

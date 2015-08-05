@@ -1,15 +1,14 @@
 
-var def = require('./def')
+var steps = require('artstep')
 
-module.exports = def(function(World, Given, When, Then) {
+module.exports = (steps()
 
-  Then(/^sound (\S+) references file "(.*?)"$/, function (id, file) {
+  .Then(/^sound (\S+) references file "(.*?)"$/, function (id, file) {
     expect(this.keysounds.get(id)).to.equal(file)
   })
 
-  Then(/^sound (\S+) is a null reference$/, function (id) {
+  .Then(/^sound (\S+) is a null reference$/, function (id) {
     expect(this.keysounds.get(id)).to.be.undefined()
   })
 
-})
-
+)
