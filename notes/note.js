@@ -1,9 +1,6 @@
 
 var DataStructure = require('data-structure')
 
-var Column = new DataStructure({
-  column: String,
-})
 
 /**
  * @class Note
@@ -24,9 +21,9 @@ module.exports = new DataStructure({
 
   /**
    * @property column
-   * @type Column|undefined
+   * @type String|undefined
    */
-  column: DataStructure.maybe(Column),
+  column: DataStructure.maybe(String),
 
   /**
    * @property keysound

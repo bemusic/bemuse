@@ -1,20 +1,10 @@
 
 var Note = require('./note')
+var invariant = require('invariant')
 
 module.exports = Notes
 
-var CHANNEL_MAPPING = {
-  IIDX_P1: {
-    '11': { column: '1'  },
-    '12': { column: '2'  },
-    '13': { column: '3'  },
-    '14': { column: '4'  },
-    '15': { column: '5'  },
-    '18': { column: '6'  },
-    '19': { column: '7'  },
-    '16': { column: 'SC' },
-  },
-}
+Notes.CHANNEL_MAPPING = require('./channels')
 
 /**
  * The Notes class holds the Note objects in the game. A note object may or
@@ -58,12 +48,16 @@ Notes.prototype.all = function() {
  */
 Notes.fromBMSChart = function(chart, options) {
   options = options || { }
-  var builder = new BMSNoteBuilder(chart)
+  var mapping = options.mapping || Notes.CHANNEL_MAPPING.IIDX_P1
+  var builder = new BMSNoteBuilder(chart, { mapping: mapping })
   return builder.build()
 }
 
-function BMSNoteBuilder(chart) {
+function BMSNoteBuilder(chart, options) {
   this._chart = chart
+  invariant(options.mapping, 'Expected options.mapping')
+  invariant(typeof options.mapping === 'object', 'options.mapping must be object')
+  this._mapping = options.mapping
 }
 
 BMSNoteBuilder.prototype.build = function() {
@@ -71,7 +65,7 @@ BMSNoteBuilder.prototype.build = function() {
   this._activeLN = { }
   this._lastNote = { }
   this._lnObj = (this._chart.headers.get('lnobj') || '').toLowerCase()
-  this._channelMapping = CHANNEL_MAPPING.IIDX_P1
+  this._channelMapping = this._mapping
   this._objects = this._chart.objects.allSorted()
   this._objects.forEach(function(object) {
     this._handle(object)
@@ -141,4 +135,3 @@ BMSNoteBuilder.prototype._getColumn = function(channel) {
 BMSNoteBuilder.prototype._normalizeChannel = function(channel) {
   return channel.replace(/^5/, '1').replace(/^6/, '2')
 }
-
