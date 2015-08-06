@@ -1,6 +1,9 @@
 notify:
   webhooks:
     - url: https://webhooks.gitter.im/e/ba1b37fc12942c2430c9
+dependencies:
+  pre:
+    - npm install -g npm@3.0-latest
 test:
   override:
     - rm -rf dist
