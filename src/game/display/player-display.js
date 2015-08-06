@@ -20,11 +20,12 @@ export class PlayerDisplay {
     let stateful = this._stateful
     let beat     = player.notechart.secondsToBeat(gameTime)
     let position = player.notechart.beatToPosition(beat)
+    let spacing  = player.notechart.spacingAtBeat(beat)
     let data     = Object.assign({ }, this._defaultData)
     let push     = (key, value) => (data[key] || (data[key] = [])).push(value)
 
     this._currentSpeed += (playerState.speed - this._currentSpeed) / 3
-    let speed    = this._currentSpeed
+    let speed    = this._currentSpeed * spacing
 
     updateBeat()
     updateVisibleNotes()

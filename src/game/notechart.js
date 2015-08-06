@@ -11,23 +11,27 @@ import getKeys    from 'bemuse-indexer/keys'
 // game will ever need.
 export class Notechart {
   constructor(bms, playerNumber=1, playerOptions={ }) {
-    let bmsNotes    = BMS.Notes.fromBMSChart(bms).all()
-    let timing      = BMS.Timing.fromBMSChart(bms)
-    let keysounds   = BMS.Keysounds.fromBMSChart(bms)
-    let info        = BMS.SongInfo.fromBMSChart(bms)
+    let bmsNotes      = BMS.Notes.fromBMSChart(bms).all()
+    let timing        = BMS.Timing.fromBMSChart(bms)
+    let keysounds     = BMS.Keysounds.fromBMSChart(bms)
+    let info          = BMS.SongInfo.fromBMSChart(bms)
+    let positioning   = BMS.Positioning.fromBMSChart(bms)
+    let spacing       = BMS.Spacing.fromBMSChart(bms)
 
     bmsNotes = this._preTransform(bms, bmsNotes, playerOptions)
 
-    this._timing    = timing
-    this._keysounds = keysounds
-    this._duration  = 0
-    this._notes     = this._generatePlayableNotesFromBMS(bmsNotes)
-    this._autos     = this._generateAutoKeysoundEventsFromBMS(bmsNotes)
-    this._barLines  = this._generateBarLines(bmsNotes, bms)
-    this._samples   = this._generateKeysoundFiles(keysounds)
-    this._infos     = new Map(this._notes.map(
+    this._timing      = timing
+    this._positioning = positioning
+    this._spacing     = spacing
+    this._keysounds   = keysounds
+    this._duration    = 0
+    this._notes       = this._generatePlayableNotesFromBMS(bmsNotes)
+    this._autos       = this._generateAutoKeysoundEventsFromBMS(bmsNotes)
+    this._barLines    = this._generateBarLines(bmsNotes, bms)
+    this._samples     = this._generateKeysoundFiles(keysounds)
+    this._infos       = new Map(this._notes.map(
         note => [note, this._getNoteInfo(note)]))
-    this._songInfo  = info
+    this._songInfo    = info
   }
 
   // An Array of note events.
@@ -88,7 +92,7 @@ export class Notechart {
 
   // Converts the beat number to in-game position.
   beatToPosition(beat) {
-    return beat
+    return this._positioning.position(beat)
   }
 
   // Converts the in-song position to beat number.
@@ -106,12 +110,22 @@ export class Notechart {
     return this._timing.bpmAtBeat(beat)
   }
 
+  // Converts the beat number to in-song position (seconds)
+  scrollSpeedAtBeat(beat) {
+    return this._positioning.speed(beat)
+  }
+
+  // Returns the note spacing factor at the specified beat
+  spacingAtBeat(beat) {
+    return this._spacing.factor(beat)
+  }
+
   _preTransform(bmsChart, bmsNotes, playerOptions) {
     let chain = _.chain(bmsNotes)
     let keys  = getKeys(bmsChart)
     if (playerOptions.scratch === 'off') {
       chain = chain.map(note => {
-        if (note.column && note.column.column === 'SC') {
+        if (note.column && note.column === 'SC') {
           return Object.assign({ }, note, { column: null })
         } else {
           return note
@@ -122,7 +136,7 @@ export class Notechart {
       const columnsToShift = ['1', '2', '3', '4', '5', '6', '7']
       const shiftNote = amount => note => {
         if (note.column) {
-          let index = columnsToShift.indexOf(note.column.column)
+          let index = columnsToShift.indexOf(note.column)
           if (index > -1) {
             let newIndex = index + amount
             invariant(
@@ -130,9 +144,7 @@ export class Notechart {
               'Weird. Columns must not shift beyond available column'
             )
             let newColumn = columnsToShift[newIndex]
-            return Object.assign({ }, note, {
-              column: Object.assign({ }, note.column, { column: newColumn })
-            })
+            return Object.assign({ }, note, { column: newColumn })
           }
         }
         return note
@@ -153,7 +165,7 @@ export class Notechart {
     .map(note => {
       let spec = this._generateEvent(note.beat)
       spec.id       = nextId++
-      spec.column   = note.column.column
+      spec.column   = note.column
       spec.keysound = note.keysound
       this._updateDuration(spec)
       if (note.endBeat !== undefined) {
