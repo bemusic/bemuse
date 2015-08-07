@@ -28,6 +28,12 @@
     body { color: #e9e8e7; font: 14px Verdana, sans-serif; }
   </style>
   <!--#include file="includes/newrelic.inc"-->
+  <script>
+    // Force HTTPS
+    if (location.href === 'http://bemuse.ninja/') {
+      location.replace('https://bemuse.ninja/')
+    }
+  </script>
 </head>
 <body>
 
