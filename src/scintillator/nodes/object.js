@@ -75,7 +75,10 @@ export class ObjectNode extends SkinNode {
     this.key      = new Expression($el.attr('key'))
   }
   instantiate(context, container) {
-    let batch = new PIXI.ParticleContainer()
+    let batch = new PIXI.ParticleContainer(null, {
+      position: true,
+      alpha:    true,
+    })
     let manager = new ChildManager(this.key, this.children[0], this.pool)
     return new Instance({
       context:  context,

@@ -3,7 +3,10 @@ import PIXI from 'pixi.js'
 
 function createRenderer(w, h) {
   if (navigator.userAgent.match(/Gecko\//)) {
-    return new PIXI.autoDetectRenderer(w, h, { transparent: true })
+    // return new PIXI.autoDetectRenderer(w, h, { transparent: true })
+    // Disable WebGL for the moment because it has some problem with rendering
+    // sprite batches: https://github.com/pixijs/pixi.js/issues/1910
+    return new PIXI.CanvasRenderer(w, h, { transparent: true })
   } else {
     return new PIXI.CanvasRenderer(w, h, { transparent: true })
   }
