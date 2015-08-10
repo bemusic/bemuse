@@ -12,9 +12,9 @@ const $keyCodes = OptionsStore.map(getKeyboardMapping)
 
 function getControls(state) {
   if (state.scratch === 'left') {
-    return ['SC', '1', '2', '3', '4', '5', '6', '7']
+    return ['SC', 'SC2', '1', '2', '3', '4', '5', '6', '7']
   } else if (state.scratch === 'right') {
-    return ['1', '2', '3', '4', '5', '6', '7', 'SC']
+    return ['1', '2', '3', '4', '5', '6', '7', 'SC', 'SC2']
   } else {
     return ['1', '2', '3', '4', '5', '6', '7']
   }

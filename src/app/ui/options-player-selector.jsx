@@ -6,10 +6,12 @@ import c     from 'classnames'
 import OptionsPlayerGraphics from './options-player-graphics'
 
 const OptionsPlayerSelector = React.createClass({
+  mixins: [React.addons.PureRenderMixin],
   render() {
     return <div className="options-player-selector">
-      {this.props.options.map(item =>
+      {this.props.options.map((item, index) =>
           <OptionsPlayerSelector.Item
+              key={index}
               type={this.props.type}
               value={item.value}
               label={item.label}
@@ -20,6 +22,7 @@ const OptionsPlayerSelector = React.createClass({
 })
 
 OptionsPlayerSelector.Item = React.createClass({
+  mixins: [React.addons.PureRenderMixin],
   render() {
     return <div
         className={c('options-player-selector--item',

@@ -5,7 +5,7 @@ import React          from 'react'
 import MusicListItem  from './music-list-item.jsx'
 
 export default React.createClass({
-
+  mixins: [React.addons.PureRenderMixin],
   render() {
     return <ul className="music-list"
         onTouchStart={this.props.onTouch}>
@@ -20,5 +20,4 @@ export default React.createClass({
       ])}
     </ul>
   },
-
 })

@@ -19,5 +19,15 @@
   }
   &--text {
     @include options-input-button--text;
+    text-align: center;
+  }
+  &--key-separator {
+    font-size: 0.8em;
+    margin: 0.25ex 0;
+    &::before, &::after { content: '—'; margin: 0 0.25em; }
+  }
+  &.is-editing &--key:not(.is-editing),
+  &.is-editing &--key-separator:not(.is-editing) {
+    opacity: 0.2;
   }
 }

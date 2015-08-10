@@ -27,7 +27,7 @@ import { shouldShowOptions } from 'bemuse/devtools/query-flags'
 React.initializeTouchEvents(true)
 
 export default React.createClass({
-
+  mixins: [React.addons.PureRenderMixin],
   render() {
     let musicSelect = this.state.musicSelect
     return <Scene className="music-select-scene">
