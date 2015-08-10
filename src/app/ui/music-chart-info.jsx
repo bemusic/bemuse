@@ -10,8 +10,8 @@ export default React.createClass({
     return <section className="music-chart-info">
       <div className="music-chart-info--genre">{info.genre}</div>
       <div className="music-chart-info--title">{info.title}</div>
-      {info.subtitles.map(text =>
-        <div className="music-chart-info--subtitle">{text}</div>)}
+      {info.subtitles.map((text, index) =>
+        <div className="music-chart-info--subtitle" key={index}>{text}</div>)}
       <div className="music-chart-info--artist">
         {info.artist}
         {

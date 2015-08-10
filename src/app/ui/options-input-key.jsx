@@ -4,6 +4,7 @@ import React from 'react'
 import c     from 'classnames'
 
 export default React.createClass({
+  mixins: [React.addons.PureRenderMixin],
   render() {
     return <div className="options-input-key" data-n={this.props.n}>
       <div

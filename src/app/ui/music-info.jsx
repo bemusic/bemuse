@@ -7,7 +7,7 @@ import MusicChartSelector from './music-chart-selector.jsx'
 import MusicInfoTabs      from './music-info-tabs.jsx'
 
 export default React.createClass({
-
+  mixins: [React.addons.PureRenderMixin],
   render() {
     const song  = this.props.song
     const chart = this.props.chart
@@ -25,5 +25,4 @@ export default React.createClass({
           onOptions={this.props.onOptions} />
     </section>
   }
-
 })

@@ -5,7 +5,7 @@ import React  from 'react'
 import c      from 'classnames'
 
 export default React.createClass({
-
+  mixins: [React.addons.PureRenderMixin],
   render() {
     const song = this.props.song
     return <li

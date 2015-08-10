@@ -8,8 +8,9 @@ export default React.createClass({
 
   render() {
     return <ul className="music-chart-selector">
-      {this.props.charts.map(chart =>
+      {this.props.charts.map((chart, index) =>
         <MusicChartSelectorItem
+            key={index}
             chart={chart}
             isTutorial={this.props.song.tutorial}
             isSelected={chart.md5 === this.props.selectedChart.md5}

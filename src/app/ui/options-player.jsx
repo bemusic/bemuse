@@ -21,6 +21,7 @@ const PANEL_OPTIONS = [
 ]
 
 const OptionsPlayer = React.createClass({
+  mixins: [React.addons.PureRenderMixin],
   render() {
     return <div className="options-player">
 
@@ -66,6 +67,7 @@ const OptionsPlayer = React.createClass({
 })
 
 OptionsPlayer.Row = React.createClass({
+  mixins: [React.addons.PureRenderMixin],
   render() {
     return <div className="options-player--row">
       <label>{this.props.label}</label>
