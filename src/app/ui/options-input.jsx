@@ -17,8 +17,16 @@ export default React.createClass({
         this.state.scratch !== 'off'
         ? <div className="options-input--zone is-scratch">
             <div className="options-input--control">
-              <OptionsInputScratch text={this.state.texts['SC']}
-                  isEditing={this.state.editing === 'SC'}
+              <OptionsInputScratch
+                  text={[this.state.texts['SC'], this.state.texts['SC2']]}
+                  isEditing={
+                    this.state.editing === 'SC' ||
+                    this.state.editing === 'SC2'
+                  }
+                  editIndex={
+                    this.state.editing === 'SC' ? 0 :
+                    this.state.editing === 'SC2' ? 1 : -1
+                  }
                   onEdit={this.handleEdit} />
             </div>
             <div className="options-input--title">

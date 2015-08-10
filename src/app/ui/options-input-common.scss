@@ -13,9 +13,17 @@
   }
   &.is-editing {
     background-color: rgba($color, 0.25);
+    animation: 0.5s options-input-button--editing-animation infinite ease-in-out;
+    animation-direction: alternate;
+    animation-delay: -0.25s;
   }
 }
 
 @mixin options-input-button--text {
   position: relative;
+}
+
+@keyframes options-input-button--editing-animation {
+  from { transform: scale(1.05); }
+  to { transform: scale(0.95); }
 }
