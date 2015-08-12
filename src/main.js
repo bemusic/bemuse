@@ -44,7 +44,11 @@ function main(args) {
       return command.handle(args)
     }
   }
-  console.error('Error: Unrecognized command.')
+  if (targetCommand) {
+    console.error('Error: Unrecognized command.')
+  } else {
+    console.error('This is bemuse-tools v' + require('../package').version)
+  }
   return args.showHelp()
 }
 
