@@ -106,6 +106,8 @@ function CompileProgressPlugin() {
 
 if (process.env.SOURCE_MAPS === 'true' || Env.production()) {
   config.devtool = 'source-map'
+} else if (Env.development()) {
+  config.devtool = 'eval'
 }
 
 if (Env.test() || process.env.BEMUSE_COV === 'true') {
