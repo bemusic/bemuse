@@ -32,12 +32,22 @@ function getChartInfo(source) {
 
 exports.getChartInfo = getChartInfo
 
+
+function getFileInfo(data, meta) {
+  return getChartInfo(data)
+}
+
+exports.getFileInfo = getFileInfo
+
+
 function getSongInfo(files, options) {
+  options = options || { }
   var warnings = []
-  var cache = (options && options.cache) || undefined
-  var extra = (options && options.extra) || { }
-  var report = (options && options.onProgress) || function() { }
+  var cache = options.cache || undefined
+  var extra = options.extra || { }
+  var report = options.onProgress || function() { }
   var processed = 0
+  var infoForFile = options.getFileInfo || getFileInfo
   return Promise.map(files, function(file) {
     var name = file.name
     var data = file.data
@@ -49,7 +59,8 @@ function getSongInfo(files, options) {
       if (cached) {
         return cached
       } else {
-        return Promise.resolve(getChartInfo(data)).tap(function(info) {
+        var meta = { name: name, md5: md5 }
+        return Promise.resolve(infoForFile(data, meta)).tap(function(info) {
           if (cache) return cache.put(md5, info)
         })
       }

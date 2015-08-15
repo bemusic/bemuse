@@ -8,4 +8,9 @@ describe('lcs', function() {
     expect(lcs('wonderland', 'erlang')).to.equal('erlan')
   })
 
+  it('should return shorter one when prefix matches', function() {
+    expect(lcs('harm', 'harmony')).to.equal('harm')
+    expect(lcs('harmony', 'harm')).to.equal('harm')
+  })
+
 })
