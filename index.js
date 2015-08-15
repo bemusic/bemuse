@@ -46,6 +46,11 @@ function getSongInfo(files, options) {
   var cache = options.cache || undefined
   var extra = options.extra || { }
   var report = options.onProgress || function() { }
+  var onError = options.onError || function(e, name) {
+    if (global.console && console.error) {
+      console.error('Error while parsing ' + name, e)
+    }
+  }
   var processed = 0
   var infoForFile = options.getFileInfo || getFileInfo
   return Promise.map(files, function(file) {
@@ -70,9 +75,7 @@ function getSongInfo(files, options) {
       return [info]
     })
     .catch(function(e) {
-      if (global.console && console.error) {
-        console.error('Error while parsing ' + name, e)
-      }
+      onError(e, name)
       warnings.push('Unable to parse ' + name + ': ' + e)
       return []
     })
