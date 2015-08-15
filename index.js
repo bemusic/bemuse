@@ -70,6 +70,9 @@ function getSongInfo(files, options) {
       return [info]
     })
     .catch(function(e) {
+      if (global.console && console.error) {
+        console.error('Error while parsing ' + name, e)
+      }
       warnings.push('Unable to parse ' + name + ': ' + e)
       return []
     })
