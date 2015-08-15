@@ -5,7 +5,7 @@ export function loadSongFromResources(resources, options={}) {
   var onMessage = options.onMessage || (() => {})
   onMessage('Examining dropped items...')
   return resources.fileList.then(fileList => {
-    return fileList.filter(filename => /\.(bms|bme|bml)$/i.test(filename))
+    return fileList.filter(filename => /\.(bms|bme|bml|bmson)$/i.test(filename))
   })
   .then(bmsFileList => {
     onMessage(bmsFileList.length + ' file(s) found. Reading them...')
