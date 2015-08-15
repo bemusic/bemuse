@@ -1,6 +1,6 @@
 {
   "name": "bemuse-indexer",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Parse and index BMS notecharts",
   "main": "index.js",
   "scripts": {
