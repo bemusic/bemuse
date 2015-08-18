@@ -1,5 +1,4 @@
 
-import Notechart  from './notechart'
 import Player     from './player'
 
 // The Game model holds the game's options and the player objects.

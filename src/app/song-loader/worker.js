@@ -2,7 +2,7 @@
 import indexer  from 'bemuse-indexer'
 import Promise  from 'bluebird'
 
-import * as BMSON from './bmson'
+import * as bmson from 'bemuse/bmson'
 
 /*global FileReaderSync*/
 if (typeof FileReader === 'undefined' &&
@@ -25,7 +25,7 @@ if (typeof FileReader === 'undefined' &&
 
 function getFileInfo(buffer, metadata) {
   if (metadata.name.match(/\.bmson$/i)) {
-    return BMSON.getInfo(buffer, metadata)
+    return bmson.getInfo(buffer, metadata)
   } else {
     return indexer.getFileInfo(buffer, metadata)
   }

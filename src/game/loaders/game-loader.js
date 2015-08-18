@@ -1,14 +1,14 @@
 
 import co from 'co'
-import BMS from 'bms'
 
 import Progress         from 'bemuse/progress'
 import SamplingMaster   from 'bemuse/sampling-master'
 import LoadingContext   from 'bemuse/boot/loading-context'
 
 import SamplesLoader    from './samples-loader'
+import NotechartLoader  from './notechart-loader'
+
 import * as Multitasker from './multitasker'
-import Notechart        from '../notechart'
 import Game             from '../game'
 import GameController   from '../game-controller'
 import GameAudio        from '../audio'
@@ -55,13 +55,9 @@ export function load(spec) {
 
     task('Notechart', 'Loading ' + spec.bms.name, [],
     co.wrap(function*(progress) {
+      let loader        = new NotechartLoader()
       let arraybuffer   = yield bms.read(progress)
-      let buffer        = new Buffer(new Uint8Array(arraybuffer))
-      let source        = yield Promise.promisify(BMS.Reader.readAsync)(buffer)
-      let compileResult = BMS.Compiler.compile(source)
-      let chart         = compileResult.chart
-      let notechart     = Notechart.fromBMSChart(chart, spec.options.players[0])
-      return notechart
+      return yield loader.load(arraybuffer, spec.bms, spec.options.players[0])
     }))
 
     let audioLoadProgress   = new Progress()
