@@ -6,6 +6,7 @@ import $ from 'jquery'
 
 import BMS          from 'bms'
 import Game         from 'bemuse/game/game'
+import Notechart    from 'bemuse/game/notechart'
 import GameState    from 'bemuse/game/state'
 import GameInput    from 'bemuse/game/input'
 import GameDisplay  from 'bemuse/game/display'
@@ -34,7 +35,11 @@ export function main() {
       #00159:0001010000000000
       #00156:0001010000000000`).chart
 
-    let game  = new Game(chart, {
+    let notecharts = [
+      Notechart.fromBMSChart(chart),
+    ]
+
+    let game  = new Game(notecharts, {
       players: [{ speed: 2 }]
     })
 

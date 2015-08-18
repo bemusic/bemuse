@@ -9,7 +9,7 @@ import GameNote   from './data/game-note'
 // A notechart holds every info about a single player's note chart that the
 // game will ever need.
 export class Notechart {
-  constructor(data, playerNumber=1, playerOptions={ }) {
+  constructor(data, playerOptions={ }) {
 
     let {
       notes: bmsNotes,
@@ -232,7 +232,7 @@ export class Notechart {
   }
 
   // Returns a new Notechart from a BMSChart.
-  static fromBMSChart(bms, playerNumber, playerOptions) {
+  static fromBMSChart(bms, playerOptions) {
     let notes         = BMS.Notes.fromBMSChart(bms).all()
     let timing        = BMS.Timing.fromBMSChart(bms)
     let keysounds     = BMS.Keysounds.fromBMSChart(bms)
@@ -249,7 +249,7 @@ export class Notechart {
       spacing,
       barLines: generateBarLinesFromBMS(notes, bms),
     }
-    return new Notechart(data, playerNumber, playerOptions)
+    return new Notechart(data, playerOptions)
   }
 
 }
