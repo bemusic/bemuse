@@ -60,7 +60,7 @@ export function getTimingInfo(bmson) {
       ...(bmson.stopNotes || []).map(({ y, v }) => ({
         type: 'stop',
         beat: beatForLoc(y),
-        stopBeats: beatForLoc(v),
+        stopBeats: beatForLoc(Math.floor(v)),
       })),
     ],
   }
