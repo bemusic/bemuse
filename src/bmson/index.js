@@ -1,6 +1,8 @@
 
-import _    from 'lodash'
-import BMS  from 'bms'
+import _           from 'lodash'
+import BMS         from 'bms'
+import getDuration from 'bemuse-indexer/duration'
+import getBpmInfo  from 'bemuse-indexer/bpm-info'
 
 export function getInfo(buffer, metadata) {
   return new Promise(function(resolve, reject) {
@@ -18,30 +20,28 @@ export function getInfo(buffer, metadata) {
   })
   .then(function (bmson) {
     console.warn('BMSON implementation is experimental!')
+    let timing    = getTiming(bmson)
+    let { notes } = getMusicalScore(bmson, timing)
     return {
       md5:        metadata.md5,
       info:       getSongInfo(bmson.info),
-      noteCount:  -1,
-      scratch:    true,
+      noteCount:  notes.count(),
+      scratch:    _.any(notes.all(), note => note.column === 'SC'),
       keys:       '7K',
-      bpm:        {
-        init:     bmson.info.initBPM,
-        min:      bmson.info.initBPM,
-        median:   bmson.info.initBPM,
-        max:      bmson.info.initBPM,
-      }
+      bpm:        getBpmInfo(notes, timing),
+      duration:   getDuration(notes, timing),
     }
   })
 }
 
 export function getSongInfo(bmsonInfo) {
-  var info = new BMS.SongInfo()
+  var info = { }
   if (bmsonInfo.title)  info.title  = bmsonInfo.title
   if (bmsonInfo.artist) info.artist = bmsonInfo.artist
   if (bmsonInfo.genre)  info.genre  = bmsonInfo.genre
   if (bmsonInfo.level)  info.level  = bmsonInfo.level
   info.subtitles = ['[bmson parser alpha v0.21]']
-  return info
+  return new BMS.SongInfo(info)
 }
 
 export function getBarLines(lines) {
@@ -57,6 +57,11 @@ export function getTimingInfo(bmson) {
       }))
     ),
   }
+}
+
+export function getTiming(bmson) {
+  let { initialBPM, actions } = getTimingInfo(bmson)
+  return new BMS.Timing(initialBPM, actions)
 }
 
 export function getMusicalScore(bmson, timing) {

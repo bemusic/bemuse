@@ -1,4 +1,6 @@
 
+import 'bemuse/polyfill'
+
 import indexer  from 'bemuse-indexer'
 import Promise  from 'bluebird'
 

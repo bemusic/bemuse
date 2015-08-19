@@ -7,8 +7,7 @@ export function load(source, options) {
 
   let data        = JSON.parse(source)
   let songInfo    = bmson.getSongInfo(data.info)
-  let timingInfo  = bmson.getTimingInfo(data)
-  let timing      = new BMS.Timing(timingInfo.initialBPM, timingInfo.actions)
+  let timing      = bmson.getTiming(data)
   let score       = bmson.getMusicalScore(data, timing)
   let barLines    = bmson.getBarLines(data.lines)
 
