@@ -1,8 +1,10 @@
 
 var match = require('../util/match')
+var _     = require('../util/lodash')
+
 module.exports = SongInfo
 
-function SongInfo() {
+function SongInfo(info) {
   this.title      = 'NO TITLE'
   this.artist     = 'NO ARTIST'
   this.genre      = 'NO GENRE'
@@ -10,10 +12,11 @@ function SongInfo() {
   this.subartists = []
   this.difficulty = 0
   this.level      = 0
+  if (info) _.assign(this, info)
 }
 
 SongInfo.fromBMSChart = function(chart) {
-  var info = new SongInfo()
+  var info       = { }
   var title      = chart.headers.get('title')
   var artist     = chart.headers.get('artist')
   var genre      = chart.headers.get('genre')
@@ -40,6 +43,5 @@ SongInfo.fromBMSChart = function(chart) {
   if (subartists) info.subartists = subartists
   if (difficulty) info.difficulty = difficulty
   if (level)      info.level      = level
-  return info
+  return new SongInfo(info)
 }
-
