@@ -11,9 +11,9 @@ export function chart(code='') {
 }
 
 export function notechart(code, options={}) {
-  return Notechart.fromBMSChart(chart(code), 1, options)
+  return Notechart.fromBMSChart(chart(code), options)
 }
 
 export function playerWithBMS(code, options={}) {
-  return new Player(notechart(code, 1, options), 1, options)
+  return new Player(notechart(code, options), 1, options)
 }

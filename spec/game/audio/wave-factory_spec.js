@@ -1,6 +1,10 @@
 
 import WaveFactory from 'bemuse/game/audio/wave-factory'
 
+function k(id) {
+  return { keysound: id }
+}
+
 describe('WaveFactory', function() {
   let master
   let sample
@@ -16,27 +20,27 @@ describe('WaveFactory', function() {
   })
   describe('playAuto', function() {
     it('should play an autokeysound', function() {
-      waveFactory.playAuto('0z', 0.1)
+      waveFactory.playAuto(k('0z'), 0.1)
       expect(sample.play).to.have.been.calledWith(0.1)
     })
   })
   describe('playNote', function() {
     it('should play the keysound', function() {
-      waveFactory.playNote('0z', 0.1)
+      waveFactory.playNote(k('0z'), 0.1)
       expect(sample.play).to.have.been.calledWith(0.1)
     })
     it('should stop old sound', function() {
       let instance = { stop: sinon.spy() }
       sample.play.returns(instance)
-      waveFactory.playNote('0z', 0)
-      waveFactory.playNote('0z', 0)
+      waveFactory.playNote(k('0z'), 0)
+      waveFactory.playNote(k('0z'), 0)
       return Promise.delay(0).then(() =>
         expect(instance.stop).to.have.callCount(1))
     })
   })
   describe('playFree', function() {
     it('should play the keysound', function() {
-      waveFactory.playFree('0z')
+      waveFactory.playFree(k('0z'))
       void expect(sample.play).to.have.been.called
     })
   })

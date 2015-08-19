@@ -1,7 +1,7 @@
 
+import webpack        from 'webpack'
 import path           from './path'
 import * as Env       from './env'
-import webpack        from 'webpack'
 import ProgressPlugin from '../src/hacks/webpack-progress'
 
 let config = {
@@ -25,6 +25,8 @@ let config = {
     publicPath: 'build/',
     filename: '[name].js',
     chunkFilename: '[name]-[chunkhash].js',
+    devtoolModuleFilenameTemplate: 'file://[absolute-resource-path]',
+    devtoolFallbackModuleFilenameTemplate: 'file://[absolute-resource-path]?[hash]',
   },
   devServer: {
     contentBase: false,
@@ -104,8 +106,12 @@ function CompileProgressPlugin() {
   })
 }
 
-if (process.env.SOURCE_MAPS === 'true' || Env.production()) {
+if (process.env.SOURCE_MAPS === 'true' && Env.development()) {
+  config.devtool = 'eval-source-map'
+} else if (process.env.SOURCE_MAPS === 'true' || Env.production()) {
   config.devtool = 'source-map'
+} else if (Env.development()) {
+  config.devtool = 'eval'
 }
 
 if (Env.test() || process.env.BEMUSE_COV === 'true') {

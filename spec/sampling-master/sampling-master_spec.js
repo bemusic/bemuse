@@ -62,6 +62,14 @@ describe('SamplingMaster', function() {
         void expect(context.createBufferSource).to.have.been.called
         expect(bufferSource.start).to.have.been.calledWith(21)
       })
+      it('should play a buffer slice (without end)', function() {
+        sample.play(0, { start: 1, end: undefined })
+        expect(bufferSource.start).to.have.been.calledWith(0, 1)
+      })
+      it('should play a buffer slice (with end)', function() {
+        sample.play(0, { start: 1, end: 3 })
+        expect(bufferSource.start).to.have.been.calledWith(0, 1, 2)
+      })
 
       // HACK: only enable this test case when Event#type can be set after
       // being constructed. If this isn't true, WebAudioTestAPI will cause

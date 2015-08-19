@@ -5,20 +5,31 @@ import _          from 'lodash'
 import invariant  from 'invariant'
 import GameEvent  from './data/event'
 import GameNote   from './data/game-note'
-import getKeys    from 'bemuse-indexer/keys'
 
 // A notechart holds every info about a single player's note chart that the
 // game will ever need.
 export class Notechart {
-  constructor(bms, playerNumber=1, playerOptions={ }) {
-    let bmsNotes      = BMS.Notes.fromBMSChart(bms).all()
-    let timing        = BMS.Timing.fromBMSChart(bms)
-    let keysounds     = BMS.Keysounds.fromBMSChart(bms)
-    let info          = BMS.SongInfo.fromBMSChart(bms)
-    let positioning   = BMS.Positioning.fromBMSChart(bms)
-    let spacing       = BMS.Spacing.fromBMSChart(bms)
+  constructor(data, playerOptions={ }) {
 
-    bmsNotes = this._preTransform(bms, bmsNotes, playerOptions)
+    let {
+      notes: bmsNotes,
+      timing,
+      keysounds,
+      songInfo,
+      positioning,
+      spacing,
+      barLines,
+    } = data
+
+    invariant(bmsNotes,     'Expected "data.notes"')
+    invariant(timing,       'Expected "data.timing"')
+    invariant(keysounds,    'Expected "data.keysounds"')
+    invariant(songInfo,     'Expected "data.songInfo"')
+    invariant(positioning,  'Expected "data.positioning"')
+    invariant(spacing,      'Expected "data.spacing"')
+    invariant(barLines,     'Expected "data.barLines"')
+
+    bmsNotes = this._preTransform(bmsNotes, playerOptions)
 
     this._timing      = timing
     this._positioning = positioning
@@ -27,11 +38,11 @@ export class Notechart {
     this._duration    = 0
     this._notes       = this._generatePlayableNotesFromBMS(bmsNotes)
     this._autos       = this._generateAutoKeysoundEventsFromBMS(bmsNotes)
-    this._barLines    = this._generateBarLines(bmsNotes, bms)
+    this._barLines    = this._generateBarLineEvents(barLines)
     this._samples     = this._generateKeysoundFiles(keysounds)
     this._infos       = new Map(this._notes.map(
         note => [note, this._getNoteInfo(note)]))
-    this._songInfo    = info
+    this._songInfo    = songInfo
   }
 
   // An Array of note events.
@@ -120,9 +131,9 @@ export class Notechart {
     return this._spacing.factor(beat)
   }
 
-  _preTransform(bmsChart, bmsNotes, playerOptions) {
+  _preTransform(bmsNotes, playerOptions) {
     let chain = _.chain(bmsNotes)
-    let keys  = getKeys(bmsChart)
+    let keys  = getKeys(bmsNotes)
     if (playerOptions.scratch === 'off') {
       chain = chain.map(note => {
         if (note.column && note.column === 'SC') {
@@ -166,7 +177,9 @@ export class Notechart {
       let spec = this._generateEvent(note.beat)
       spec.id       = nextId++
       spec.column   = note.column
-      spec.keysound = note.keysound
+      spec.keysound       = note.keysound
+      spec.keysoundStart  = note.keysoundStart
+      spec.keysoundEnd    = note.keysoundEnd
       this._updateDuration(spec)
       if (note.endBeat !== undefined) {
         spec.end = this._generateEvent(note.endBeat)
@@ -187,24 +200,11 @@ export class Notechart {
     .filter(note => !note.column)
     .map(note => {
       let spec = this._generateEvent(note.beat)
-      spec.keysound = note.keysound
+      spec.keysound       = note.keysound
+      spec.keysoundStart  = note.keysoundStart
+      spec.keysoundEnd    = note.keysoundEnd
       return new GameEvent(spec)
     })
-  }
-
-  _generateBarLines(bmsNotes, bms) {
-    let max = _.max(bmsNotes.map(note => note.endBeat || note.beat))
-    let barLines = [ { beat: 0, position: 0 } ]
-    let currentBeat     = 0
-    let currentMeasure  = 0
-    let currentPosition = 0
-    do {
-      currentBeat += bms.timeSignatures.getBeats(currentMeasure)
-      currentMeasure += 1
-      currentPosition = this.beatToPosition(currentBeat)
-      barLines.push({ beat: currentBeat, position: currentPosition })
-    } while (currentBeat <= max)
-    return barLines
   }
 
   _generateKeysoundFiles(keysounds) {
@@ -216,6 +216,10 @@ export class Notechart {
       }
     }
     return Array.from(set)
+  }
+
+  _generateBarLineEvents(beats) {
+    return beats.map(beat => this._generateEvent(beat))
   }
 
   _generateEvent(beat) {
@@ -232,10 +236,49 @@ export class Notechart {
   }
 
   // Returns a new Notechart from a BMSChart.
-  static fromBMSChart(chart, playerNumber, playerOptions) {
-    return new Notechart(chart, playerNumber, playerOptions)
+  static fromBMSChart(bms, playerOptions) {
+    let notes         = BMS.Notes.fromBMSChart(bms).all()
+    let timing        = BMS.Timing.fromBMSChart(bms)
+    let keysounds     = BMS.Keysounds.fromBMSChart(bms)
+    let songInfo      = BMS.SongInfo.fromBMSChart(bms)
+    let positioning   = BMS.Positioning.fromBMSChart(bms)
+    let spacing       = BMS.Spacing.fromBMSChart(bms)
+
+    let data = {
+      notes,
+      timing,
+      keysounds,
+      songInfo,
+      positioning,
+      spacing,
+      barLines: generateBarLinesFromBMS(notes, bms),
+    }
+    return new Notechart(data, playerOptions)
   }
 
 }
 
 export default Notechart
+
+
+function getKeys(bmsNotes) {
+  for (let note of bmsNotes) {
+    if (note.column === '6' || note.column === '7') {
+      return '7K'
+    }
+  }
+  return '5K'
+}
+
+function generateBarLinesFromBMS(bmsNotes, bms) {
+  let max             = _.max(bmsNotes.map(note => note.endBeat || note.beat))
+  let barLines        = [ 0 ]
+  let currentBeat     = 0
+  let currentMeasure  = 0
+  do {
+    currentBeat += bms.timeSignatures.getBeats(currentMeasure)
+    currentMeasure += 1
+    barLines.push(currentBeat)
+  } while (currentBeat <= max)
+  return barLines
+}

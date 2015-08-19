@@ -108,18 +108,18 @@ describe('Notechart', function() {
     it('should return the list of beat with barlines', function() {
       var subject = notechart('#00111:0001\n#00102:0.75')
       expect(subject.barLines).to.deep.equal([
-        { beat: 0, position: 0 },
-        { beat: 4, position: 4 },
-        { beat: 7, position: 7 },
+        { beat: 0, position: 0, time: 0 },
+        { beat: 4, position: 4, time: 4 },
+        { beat: 7, position: 7, time: 7 },
       ])
     })
     it('should consider long notes', function() {
       var subject = notechart('#00151:0001\n#00251:0001')
       expect(subject.barLines).to.deep.equal([
-        { beat: 0, position: 0 },
-        { beat: 4, position: 4 },
-        { beat: 8, position: 8 },
-        { beat: 12, position: 12 },
+        { beat: 0, position: 0, time: 0 },
+        { beat: 4, position: 4, time: 4 },
+        { beat: 8, position: 8, time: 8 },
+        { beat: 12, position: 12, time: 12 },
       ])
     })
   })

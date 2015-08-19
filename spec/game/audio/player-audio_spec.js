@@ -36,7 +36,7 @@ describe('PlayerAudio', function() {
     expect(waveFactory.playAuto).to.have.callCount(0)
     audio.update(1)
     expect(waveFactory.playAuto).to.have.callCount(1)
-    expect(waveFactory.playAuto).to.have.been.calledWith('0x')
+    expect(waveFactory.playAuto).to.have.been.calledWithMatch({ keysound: '0x' })
     audio.update(2)
     expect(waveFactory.playAuto).to.have.callCount(3)
   })
@@ -54,7 +54,7 @@ describe('PlayerAudio', function() {
       },
     })
     audio.update(1)
-    expect(waveFactory.playNote).to.have.been.calledWith('0x')
+    expect(waveFactory.playNote).to.have.been.calledWithMatch({ keysound: '0x' })
   })
 
   it('should not play notes automatically when autosound is off', function() {
@@ -81,7 +81,7 @@ describe('PlayerAudio', function() {
       options: { },
     })
     audio.update(0.999)
-    expect(waveFactory.playAuto).to.have.been.calledWith('0x')
+    expect(waveFactory.playAuto).to.have.been.calledWithMatch({ keysound: '0x' })
     expect(waveFactory.playAuto.getCall(0).args[1]).to.be.closeTo(0.001, 1e-5)
   })
 
@@ -95,7 +95,7 @@ describe('PlayerAudio', function() {
       },
       stats: { },
     })
-    expect(waveFactory.playNote).to.have.been.calledWith('0x')
+    expect(waveFactory.playNote).to.have.been.calledWithMatch({ keysound: '0x' })
   })
 
   it('badly hit note should sound off-pitch', function() {
@@ -158,7 +158,7 @@ describe('PlayerAudio', function() {
       },
       stats: { },
     })
-    expect(waveFactory.playFree).to.have.been.calledWith('0x')
+    expect(waveFactory.playFree).to.have.been.calledWithMatch({ keysound: '0x' })
   })
 
   it('should play hit note once', function() {

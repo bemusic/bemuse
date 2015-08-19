@@ -76,7 +76,7 @@ function music(master, samples) {
         }
       } else {
         if (beat % 32 === 0) {
-          samples.intro.play(delay, filter)
+          samples.intro.play(delay, { node: filter })
         }
         if (beat % 32 === 31) {
           if (state.ok === true) {

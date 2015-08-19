@@ -1,12 +1,11 @@
 
-import Notechart  from './notechart'
 import Player     from './player'
 
 // The Game model holds the game's options and the player objects.
 // This class represents all the data needed to start a game.
 // However, it is immutable.  See :js:class:`GameState` for mutable stuff.
 export class Game {
-  constructor(chart, options) {
+  constructor(notecharts, options) {
 
     // The Game's options
     this.options = options
@@ -16,8 +15,7 @@ export class Game {
       playerOptions = Object.assign({ }, playerOptions, {
         autosound: options.audioInputLatency >= 0.01
       })
-      let notechart = Notechart.fromBMSChart(chart, index + 1, playerOptions)
-      return new Player(notechart, index + 1, playerOptions)
+      return new Player(notecharts[index], index + 1, playerOptions)
     })
 
   }

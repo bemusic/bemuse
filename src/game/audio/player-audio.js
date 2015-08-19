@@ -34,7 +34,7 @@ export class PlayerAudio {
   }
   _playAutokeysounds(time) {
     for (let auto of this._autos.next(time + 1 / 30)) {
-      this._waveFactory.playAuto(auto.keysound, auto.time - time)
+      this._waveFactory.playAuto(auto, auto.time - time)
     }
   }
   _playAutosounds(time, state) {
@@ -54,14 +54,14 @@ export class PlayerAudio {
       } else if (type === 'break') {
         this._breakNote(note)
       } else if (type === 'free') {
-        this._waveFactory.playFree(note.keysound, 0)
+        this._waveFactory.playFree(note, 0)
       }
     }
   }
   _hitNote(note, delay, judgment) {
     let instance = this._played.get(note)
     if (!instance) {
-      instance = this._waveFactory.playNote(note.keysound, delay)
+      instance = this._waveFactory.playNote(note, delay)
       this._played.set(note, instance)
     }
     if (instance) {
