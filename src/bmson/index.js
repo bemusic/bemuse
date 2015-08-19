@@ -51,11 +51,18 @@ export function getBarLines(lines) {
 export function getTimingInfo(bmson) {
   return {
     initialBPM: bmson.info.initBPM,
-    actions:    (
-      (bmson.bpmNotes || []).map(({ y, v }) => ({
-        type: 'bpm', beat: beatForLoc(y), bpm: v,
-      }))
-    ),
+    actions:    [
+      ...(bmson.bpmNotes || []).map(({ y, v }) => ({
+        type: 'bpm',
+        beat: beatForLoc(y),
+        bpm: v,
+      })),
+      ...(bmson.stopNotes || []).map(({ y, v }) => ({
+        type: 'stop',
+        beat: beatForLoc(y),
+        stopBeats: beatForLoc(v),
+      })),
+    ],
   }
 }
 

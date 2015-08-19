@@ -37,7 +37,18 @@ describe('bmson', function () {
       ])
     })
 
-    it('supports stops')
+    it('supports stops', function () {
+      let { initialBPM, actions } = bmson.getTimingInfo({
+        info: { initBPM: 120 },
+        stopNotes: [
+          { y: 2880, v: 196 }
+        ]
+      })
+      expect(initialBPM).to.equal(120)
+      expect(actions).to.deep.equal([
+        { type: 'stop', beat: 12, stopBeats: 196 / 240 }
+      ])
+    })
   })
 
   describe('getMusicalScore', function () {
