@@ -98,8 +98,8 @@ class Sample {
   }
 
   // Plays the sample and returns the new PlayInstance.
-  play(delay, node) {
-    return new PlayInstance(this._master, this._buffer, delay, node)
+  play(delay, options) {
+    return new PlayInstance(this._master, this._buffer, delay, options)
   }
 
   // Destroys this sample, thereby making it unusable.
@@ -116,8 +116,9 @@ class Sample {
 //
 // You don't invoke this constructor directly; it is invoked by `Sample#play`.
 class PlayInstance {
-  constructor(samplingMaster, buffer, delay, node) {
+  constructor(samplingMaster, buffer, delay, options) {
     delay = delay || 0
+    options = options || { }
     this._master = samplingMaster
     let context = samplingMaster.audioContext
     let source = context.createBufferSource()
@@ -125,10 +126,18 @@ class PlayInstance {
     source.onended = () => this.stop()
     let gain = context.createGain()
     source.connect(gain)
-    gain.connect(node || context.destination)
+    let node = options.node || context.destination
+    gain.connect(node)
     this._source = source
     this._gain = gain
-    source.start(!delay ? 0 : Math.max(0, context.currentTime + delay))
+    let startTime   = !delay ? 0 : Math.max(0, context.currentTime + delay)
+    let startOffset = options.start || 0
+    if (options.end !== undefined) {
+      let duration  = Math.max(options.end - startOffset, 0)
+      source.start(startTime, startOffset, duration)
+    } else {
+      source.start(startTime, startOffset)
+    }
     this._master._startPlaying(this)
   }
 

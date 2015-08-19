@@ -40,7 +40,7 @@ export function getSongInfo(bmsonInfo) {
   if (bmsonInfo.artist) info.artist = bmsonInfo.artist
   if (bmsonInfo.genre)  info.genre  = bmsonInfo.genre
   if (bmsonInfo.level)  info.level  = bmsonInfo.level
-  info.subtitles = ['[BMSON Parser BETA]']
+  info.subtitles = ['[bmson parser alpha v0.21]']
   return info
 }
 
@@ -51,7 +51,11 @@ export function getBarLines(lines) {
 export function getTimingInfo(bmson) {
   return {
     initialBPM: bmson.info.initBPM,
-    actions:    [ ],
+    actions:    (
+      (bmson.bpmNotes || []).map(({ y, v }) => ({
+        type: 'bpm', beat: beatForLoc(y), bpm: v,
+      }))
+    ),
   }
 }
 
@@ -63,7 +67,7 @@ export function getMusicalScore(bmson, timing) {
     for (let { name, notes: soundChannelNotes } of bmson.soundChannel) {
 
       let sortedNotes     = _.sortBy(soundChannelNotes, 'y')
-      let keysoundNumber  = nextKeysoundNumber
+      let keysoundNumber  = nextKeysoundNumber++
       let keysoundId      = _.padLeft('' + keysoundNumber, 4, '0')
       let slices          = getSlices(soundChannelNotes, timing)
 

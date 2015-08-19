@@ -24,7 +24,18 @@ describe('bmson', function () {
       expect(initialBPM).to.equal(180)
     })
 
-    it('supports BPM changes')
+    it('supports BPM changes', function () {
+      let { initialBPM, actions } = bmson.getTimingInfo({
+        info: { initBPM: 120 },
+        bpmNotes: [
+          { y: 2880, v: 196 }
+        ]
+      })
+      expect(initialBPM).to.equal(120)
+      expect(actions).to.deep.equal([
+        { type: 'bpm', beat: 12, bpm: 196 }
+      ])
+    })
 
     it('supports stops')
   })

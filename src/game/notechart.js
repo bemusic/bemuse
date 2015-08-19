@@ -177,7 +177,9 @@ export class Notechart {
       let spec = this._generateEvent(note.beat)
       spec.id       = nextId++
       spec.column   = note.column
-      spec.keysound = note.keysound
+      spec.keysound       = note.keysound
+      spec.keysoundStart  = note.keysoundStart
+      spec.keysoundEnd    = note.keysoundEnd
       this._updateDuration(spec)
       if (note.endBeat !== undefined) {
         spec.end = this._generateEvent(note.endBeat)
@@ -198,7 +200,9 @@ export class Notechart {
     .filter(note => !note.column)
     .map(note => {
       let spec = this._generateEvent(note.beat)
-      spec.keysound = note.keysound
+      spec.keysound       = note.keysound
+      spec.keysoundStart  = note.keysoundStart
+      spec.keysoundEnd    = note.keysoundEnd
       return new GameEvent(spec)
     })
   }

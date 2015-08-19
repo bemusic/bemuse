@@ -30,7 +30,7 @@ export class NotechartLoader {
     return co(function*() {
       let buffer        = new Buffer(new Uint8Array(arraybuffer))
       let source        = buffer.toString('utf-8')
-      return BmsonNotechartLoader.load(source)
+      return BmsonNotechartLoader.load(source, options)
     })
   }
 }

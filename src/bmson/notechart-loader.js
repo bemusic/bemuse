@@ -9,7 +9,7 @@ export function load(source, options) {
   let songInfo    = bmson.getSongInfo(data.info)
   let timingInfo  = bmson.getTimingInfo(data)
   let timing      = new BMS.Timing(timingInfo.initialBPM, timingInfo.actions)
-  let score       = bmson.getMusicalScore(data)
+  let score       = bmson.getMusicalScore(data, timing)
   let barLines    = bmson.getBarLines(data.lines)
 
   let stuff = {
@@ -17,8 +17,10 @@ export function load(source, options) {
     timing,
     keysounds:    score.keysounds,
     songInfo,
-    positioning:  new BMS.Positioning([ ]),
-    spacing:      new BMS.Positioning([ ]),
+    positioning:  new BMS.Positioning([
+      { t: 0, x: 0, dx: 1, inclusive: true }
+    ]),
+    spacing:      new BMS.Spacing([ ]),
     barLines,
   }
 
