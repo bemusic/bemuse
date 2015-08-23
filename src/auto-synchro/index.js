@@ -3,24 +3,29 @@ import * as Music       from './music'
 import React            from 'react'
 import ExperimentScene  from './ui/experiment-scene.jsx'
 import $                from 'jquery'
-import State            from 'bemuse/utils/state'
+import _                from 'lodash'
+import Bacon            from 'baconjs'
+import { Store }        from 'bemuse/flux'
 
 export function main() {
 
-  const state = new State({
+  const state口 = new Bacon.Bus()
+
+  const state川 = state口.scan({
     showLoading: true,
     showStart: false,
-    showSending: false,
     showStarted: false,
     showThank: false,
     numSamples: 0,
     showCollect: true,
     showCollection: false,
     latency: 0,
-  })
+  }, (state, change) => _.assign({ }, state, change))
+
+  const store = new Store(state川)
 
   const scene = React.createElement(ExperimentScene, {
-    state:    state,
+    store:    store,
     onStart:  () => play(),
   })
 
@@ -44,18 +49,18 @@ export function main() {
   Music.load().then(music => {
     let bound = 56
     let samples = []
-    state.set({
+    state口.push({
       showLoading: false,
       showStart: true,
     })
     play = () => {
-      state.set({
+      state口.push({
         showStart: false,
         showStarted: false,
       })
       let remote = music({
         a() {
-          state.set({
+          state口.push({
             showCollect: false,
             latency: getLatency(samples),
             showThank: true,
@@ -66,12 +71,12 @@ export function main() {
         samples.push(remote.getSample())
         remote.progress(Math.min(1, samples.length / bound))
         if (samples.length >= bound) remote.ok()
-        state.set({
+        state口.push({
           numSamples: samples.length,
         })
       }
       setTimeout(() => {
-        state.set({
+        state口.push({
           showCollection: true,
         })
         window.addEventListener('keydown', e => {

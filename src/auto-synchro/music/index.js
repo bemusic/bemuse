@@ -81,7 +81,7 @@ function music(master, samples) {
         if (beat % 32 === 31) {
           if (state.ok === true) {
             samples.snare.play(delay)
-            state.part2 = { begin: beat + 1}
+            state.part2 = { begin: beat + 1 }
             callbacks.a()
           }
         }

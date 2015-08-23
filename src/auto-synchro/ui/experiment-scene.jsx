@@ -1,10 +1,12 @@
 
 import './experiment-scene.scss'
 import React from 'react'
+import { Binding } from 'bemuse/flux'
 
 export default React.createClass({
   render() {
     return <div className="experiment-scene">
+      <Binding store={this.props.store} onChange={this.handleState} />
       <h1>
         An Experiment on Audio+Input Latency Calibration
         for Rhythm Action Games
@@ -61,9 +63,9 @@ export default React.createClass({
     </div>
   },
   getInitialState() {
-    return this.props.state.get()
+    return this.props.store.get()
   },
-  componentDidMount() {
-    this.props.state.watch(state => this.setState(state))
+  handleState(state) {
+    this.setState(state)
   },
 })
