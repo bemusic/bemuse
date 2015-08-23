@@ -6,6 +6,7 @@
   &--row {
     display: flex;
     margin-bottom: 1ex;
+    align-items: baseline;
     > label {
       width: 4em;
       text-align: right;
