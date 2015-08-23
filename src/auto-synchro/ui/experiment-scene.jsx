@@ -1,14 +1,19 @@
 
 import './experiment-scene.scss'
 import React from 'react'
+import c from 'classnames'
 import { Binding } from 'bemuse/flux'
 import Loading from 'bemuse/ui/loading'
 
 export default React.createClass({
   render() {
-    return <div className="experiment-scene">
+    return <div className={c('experiment-scene', { 'is-finished': this.state.finished })}>
       <Binding store={this.props.store} onChange={this.handleState} />
-      {this.renderContents()}
+      <div className="experiment-scene--wrapper">
+        <div className="experiment-scene--wrapper-inner">
+          {this.renderContents()}
+        </div>
+      </div>
     </div>
   },
   renderContents() {
