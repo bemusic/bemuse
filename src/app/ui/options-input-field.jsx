@@ -12,6 +12,13 @@ export default React.createClass({
     validator: React.PropTypes.object,
     value: React.PropTypes.any,
   },
+  getDefaultProps() {
+    return {
+      stringify: x => `${x}`,
+      parse:     x => x,
+      onChange: () => {},
+    }
+  },
   render() {
     return <input
         {..._.omit(this.props, ['stringify', 'parse', 'onChange', 'validator', 'value'])}
@@ -34,6 +41,7 @@ export default React.createClass({
   handleInputBlur() {
     let input = React.findDOMNode(this.refs.input)
     input.value = this.props.stringify(this.props.value)
+    input.classList.remove('is-invalid')
   },
   componentDidUpdate(previousProps, previousState) {
     let newValue = this.props.stringify(this.props.value)
