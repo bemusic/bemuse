@@ -17,6 +17,11 @@
       flex: 1;
     }
   }
+  &--speed-hint {
+    color: #8b8685;
+    font-size: 0.9em;
+    margin-top: 0.5ex;
+  }
   &--buttons {
     margin-top: 1em;
     text-align: right;
