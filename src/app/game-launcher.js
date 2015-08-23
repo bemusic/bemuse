@@ -47,8 +47,11 @@ export function launch({ server, song, chart }) {
       loadSpec.bms    = new URLResource(url)
       loadSpec.assets = new BemusePackageResources(assetsUrl)
     }
+
+    let latency = +query.latency || (+options['system.offset.audio-input'] / 1000) || 0
+
     loadSpec.options = {
-      audioInputLatency: +query.latency || 0,
+      audioInputLatency: latency,
       tutorial: song.tutorial,
       players: [
         {
