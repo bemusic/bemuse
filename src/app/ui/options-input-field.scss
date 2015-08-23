@@ -1,0 +1,10 @@
+
+@import "~bemuse/ui/common";
+
+.options-input-field {
+  @include input;
+  text-align: center;
+  &.is-invalid {
+    color: #8b8685;
+  }
+}

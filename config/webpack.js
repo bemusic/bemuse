@@ -31,7 +31,7 @@ let config = {
   devServer: {
     contentBase: false,
     publicPath: '/build/',
-    stats: { colors: true },
+    stats: { colors: true, chunkModules: false },
   },
   module: {
     loaders: [

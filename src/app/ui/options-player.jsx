@@ -4,9 +4,10 @@ import React from 'react'
 
 import { Binding }           from 'bemuse/flux'
 import Store                 from '../stores/options-store'
-import * as Actions         from '../actions/options-actions'
+import * as Actions          from '../actions/options-actions'
 import OptionsPlayerSelector from './options-player-selector'
 import OptionsButton         from './options-button'
+import OptionsSpeed          from './options-speed'
 
 const SCRATCH_OPTIONS = [
   { value: 'left', label: 'Left', },
@@ -28,8 +29,12 @@ const OptionsPlayer = React.createClass({
       <Binding store={Store} onChange={this.handleState} />
 
       <OptionsPlayer.Row label="Speed">
-        For now, set the speed in-game<br />
-        using Up and Down arrow.
+        <OptionsSpeed
+            value={this.state.options['player.P1.speed']}
+            onChange={this.handleSpeedChange} />
+        <div className="options-player--speed-hint">
+          You can also change the speed in-game<br />using the Up and Down arrow keys.
+        </div>
       </OptionsPlayer.Row>
 
       <OptionsPlayer.Row label="Scratch">
@@ -64,6 +69,9 @@ const OptionsPlayer = React.createClass({
   handleSelectScratch(value) {
     Actions.setScratch(value)
   },
+  handleSpeedChange(value) {
+    Actions.setOptions({ 'player.P1.speed': value })
+  }
 })
 
 OptionsPlayer.Row = React.createClass({

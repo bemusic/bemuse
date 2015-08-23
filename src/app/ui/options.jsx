@@ -1,8 +1,9 @@
 import './options.scss'
-import React        from 'react'
-import Panel          from 'bemuse/ui/panel'
-import OptionsPlayer  from './options-player'
-import OptionsInput   from './options-input'
+import React            from 'react'
+import Panel            from 'bemuse/ui/panel'
+import OptionsPlayer    from './options-player'
+import OptionsInput     from './options-input'
+import OptionsAdvanced  from './options-advanced'
 
 export default React.createClass({
   render() {
@@ -16,10 +17,7 @@ export default React.createClass({
           <OptionsInput />
         </Panel>
         <Panel title="Advanced Settings">
-          <div style={{
-              padding: '10px', textAlign: 'center', color: '#8b8685' }}>
-            (coming soon)
-          </div>
+          <OptionsAdvanced />
         </Panel>
       </div>
     </div>

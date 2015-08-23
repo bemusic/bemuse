@@ -15,6 +15,7 @@ export default React.createClass({
     let started = now()
     let interval = setInterval(() => {
       let progress = Math.min(1, Math.max(0, (now() - started) / 2000))
+      progress = 1 - Math.pow(1 - progress, 4)
       text.nodeValue = this._getText(this.props.value * progress)
       if (progress === 1) {
         clearInterval(interval)

@@ -51,3 +51,62 @@ body {
 @mixin soft-shadow {
   box-shadow: 0 0.1vh 3vh rgba(#000, 0.1);
 }
+
+@mixin button {
+  font: inherit;
+  background: #252423 linear-gradient(to bottom, #454443, #151413);
+  border: 1px solid #555453;
+  padding: 0.5ex 1.3ex;
+  color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(#000, 0.5);
+  &:hover {
+    border-color: #656463;
+  }
+  &:focus {
+    border-color: #8b8685;
+    outline: 0;
+  }
+  &:active {
+    background: #252423 linear-gradient(to top, #353433, #151413);
+    border-color: #454443;
+  }
+}
+
+@mixin input {
+  font: inherit;
+  background: #252423 linear-gradient(to bottom, #151413, #292827);
+  border: 1px solid #555453;
+  padding: 0.5ex 1.3ex;
+  color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(#000, 0.5);
+  &:hover {
+    border-color: #656463;
+  }
+  &:focus {
+    border-color: #8b8685;
+    outline: 0;
+  }
+  &:active {
+    border-color: #454443;
+  }
+  &::selection {
+    background: #8b8685;
+    color: #8e8;
+  }
+}
+
+@mixin input-button-zindex($nominal) {
+  position: relative;
+  z-index: $nominal;
+  &:hover {
+    z-index: 30;
+  }
+  &:focus {
+    z-index: 40;
+  }
+  &:active {
+    z-index: 10;
+  }
+}
