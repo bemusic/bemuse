@@ -5,6 +5,7 @@ import React from 'react'
 import { Binding }           from 'bemuse/flux'
 import Store                 from '../stores/options-store'
 import * as Actions          from '../actions/options-actions'
+import OptionsButton         from './options-button'
 import OptionsInputField     from './options-input-field'
 
 export default React.createClass({
@@ -30,6 +31,8 @@ export default React.createClass({
               onChange={this.handleAudioInputLatencyChange} />
           <label>audio</label>
         </div>
+        <OptionsButton
+            onClick={this.handleCalibrateButtonClick}>Calibrate</OptionsButton>
       </div>
     </div>
   },
@@ -41,5 +44,9 @@ export default React.createClass({
   },
   handleAudioInputLatencyChange(value) {
     Actions.setOptions({ 'system.offset.audio-input': `${value}` })
+  },
+  handleCalibrateButtonClick() {
+    let options = 'width=640,height=360'
+    window.open('?mode=sync', 'sync', options)
   },
 })
