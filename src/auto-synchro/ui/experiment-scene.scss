@@ -1,33 +1,33 @@
 
+@import "~bemuse/ui/common";
+
 .experiment-scene {
-  padding: 0 20px 200px;
-  margin: 0 auto;
-  max-width: 720px;
-  h1 {
-    color: #8b8685;
-    font: bold 40px Helvetica, sans-serif;
+  display: flex;
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  align-items: center;
+  justify-content: center;
+
+  &--button {
+    @include button;
+    font-size: 18px;
   }
-  button {
-    background: #666;
-    border: 3px outset #777;
-    font: bold 30px Verdana, sans-serif;
-    color: #fff;
-    padding: 15px;
-    &:disabled {
-      opacity: 0.4;
-    }
+
+  &--message {
+    text-align: center;
+    font-size: 16px;
   }
-  select {
-    background: #666;
-    border: 3px inset #777;
-    font: bold 20px Verdana, sans-serif;
-    color: #fff;
-    padding: 10px;
+
+  &--progress {
+    width: 100px;
+    margin: 1em auto;
+    border: 1px solid #8b8685;
+    padding: 1px;
   }
-  &--result {
-    position: fixed;
-    top: 10px; right: 10px; bottom: 10px; left: 10px;
-    background: #444;
-    border: 3px solid #555;
+  &--progress-bar {
+    height: 5px;
+    background: #8b8685;
+    transition: 0.5s transform linear;
+    transform-origin: left;
   }
 }

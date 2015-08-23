@@ -1,0 +1,52 @@
+
+@import "~bemuse/ui/common";
+
+.loading {
+  animation: 0.3s loading--in ease-out;
+  &--dj {
+    width: 64px;
+    height: 64px;
+    background: url(./images/loading/dj.png) center no-repeat;
+    background-size: contain;
+    animation: 2s loading--dj--spin linear infinite;
+    margin: 0 auto 0.5em;
+  }
+  &--text {
+    text-align: center;
+    color: #8b8685;
+    animation: 1s loading--text--pulse linear infinite;
+  }
+}
+
+@keyframes loading--dj--spin {
+  from {
+    transform: perspective(480px) rotateY(0deg);
+  }
+  to {
+    transform: perspective(480px) rotateY(-360deg);
+  }
+}
+
+@keyframes loading--text--pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  0% {
+    opacity: 1;
+  }
+}
+
+@keyframes loading--in {
+  0% {
+    transform: scale(0);
+  }
+  90% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
