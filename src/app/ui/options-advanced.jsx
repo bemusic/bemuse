@@ -20,6 +20,7 @@ export default React.createClass({
     let options = this.state.options
     return <div className="options-advanced">
       <Binding store={Store} onChange={this.handleState} />
+      <LatencyMessageListener onLatency={this.handleAudioInputLatencyChange} />
       <div className="options-advanced--group">
         <label>Latency</label>
         <div className="options-advanced--group-item">
@@ -48,5 +49,22 @@ export default React.createClass({
   handleCalibrateButtonClick() {
     let options = 'width=640,height=360'
     window.open('?mode=sync', 'sync', options)
+  },
+})
+
+const LatencyMessageListener = React.createClass({
+  render() {
+    return null
+  },
+  componentDidMount() {
+    window.addEventListener('message', this.handleMessage)
+  },
+  componentWillUnmount() {
+    window.removeEventListener('message', this.handleMessage)
+  },
+  handleMessage(event) {
+    if (event.data && typeof event.data.latency === 'number') {
+      this.props.onLatency(event.data.latency)
+    }
   },
 })
