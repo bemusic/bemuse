@@ -1,7 +1,7 @@
 
 @import "~bemuse/ui/common";
 
-.options-speed-input {
+.options-input-field {
   @include input;
   text-align: center;
   &.is-invalid {

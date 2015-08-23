@@ -1,7 +1,7 @@
 
 import './options-speed.scss'
 import OptionsButton from './options-button'
-import OptionsSpeedInput from './options-speed-input'
+import OptionsInputField from './options-input-field'
 import React from 'react'
 
 const OptionsSpeed = React.createClass({
@@ -30,8 +30,11 @@ const OptionsSpeed = React.createClass({
       <span className="options-speed--minus">
         <OptionsButton onClick={this.handleMinusButtonClick}>-</OptionsButton>
       </span>
-      <OptionsSpeedInput
-          value={this.props.value}
+      <OptionsInputField
+          value={this.parseSpeed(this.props.value)}
+          parse={this.parseSpeed}
+          stringify={this.stringifySpeed}
+          validator={/^\d+(?:\.\d)?$/}
           onChange={this.handleSpeedInputChange} />
       <span className="options-speed--plus">
         <OptionsButton onClick={this.handlePlusButtonClick}>+</OptionsButton>

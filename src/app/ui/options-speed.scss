@@ -9,8 +9,7 @@
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
-  .options-speed-input {
-    @include input;
+  .options-input-field {
     text-align: center;
     width: 3em;
     border-radius: 0;
@@ -21,7 +20,7 @@
     border-bottom-left-radius: 0;
     margin-left: -1px;
   }
-  .options-speed-input {
+  .options-input-field {
     @include input-button-zindex(20);
   }
   .options-button {
