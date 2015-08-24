@@ -93,6 +93,19 @@ describe('PlayerDisplay', function() {
       let info = { judgment: 1, delta: 0, combo: 123, column: 'SC' }
       update(12, 34, makeState({ notifications: { judgments: [info] } }))
       expect(data['judge_1']).to.equal(12)
+      expect(data['judge_deviation_none']).to.equal(12)
+    })
+    it('sets judgment deviation (early)', function() {
+      let info = { judgment: 2, delta: -0.03, combo: 123, column: 'SC' }
+      update(12, 34, makeState({ notifications: { judgments: [info] } }))
+      expect(data['judge_2']).to.equal(12)
+      expect(data['judge_deviation_early']).to.equal(12)
+    })
+    it('sets judgment deviation (late)', function() {
+      let info = { judgment: 2, delta: 0.03, combo: 123, column: 'SC' }
+      update(12, 34, makeState({ notifications: { judgments: [info] } }))
+      expect(data['judge_2']).to.equal(12)
+      expect(data['judge_deviation_late']).to.equal(12)
     })
     it('sets judgment missed time', function() {
       let info = { judgment: -1, delta: 0, combo: 0, column: 'SC' }
