@@ -1932,6 +1932,38 @@
           <text x="141" align="center" font="BemuseDefault-Other" font-src="Fonts/BemuseDefault-Other.fnt" text="0"></text>
         </group>
       </group>
+      <group y="440">
+        <group alpha="0">
+          <animation on="p1_judge_deviation_none">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_deviation_late">
+            <keyframe t="0" y="-16" alpha="1"></keyframe>
+            <keyframe t="0.1" y="0" ease="quadOut"></keyframe>
+            <keyframe t="0.6" alpha="1"></keyframe>
+            <keyframe t="1" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_deviation_early">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <sprite image="Deviation/Late.png" x="117"></sprite>
+        </group>
+        <group alpha="0">
+          <animation on="p1_judge_deviation_none">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_deviation_late">
+            <keyframe t="0" alpha="0"></keyframe>
+          </animation>
+          <animation on="p1_judge_deviation_early">
+            <keyframe t="0" y="-16" alpha="1"></keyframe>
+            <keyframe t="0.1" y="0" ease="quadOut"></keyframe>
+            <keyframe t="0.6" alpha="1"></keyframe>
+            <keyframe t="1" alpha="0"></keyframe>
+          </animation>
+          <sprite image="Deviation/Early.png" x="111"></sprite>
+        </group>
+      </group>
       <sprite image="NoteArea/Stripe.png" x="1" y="537" blend="screen"></sprite>
     </group>
   </defs>

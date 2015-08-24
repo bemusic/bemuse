@@ -109,6 +109,8 @@ mixin all-note-area
     +press-start
     group(y='400')
       +judgments
+    group(y='440')
+      +judgment-deviations
     sprite(image='NoteArea/Stripe.png' x='1' y='537' blend='screen')
 
 mixin press-start
@@ -160,6 +162,22 @@ mixin judgment-animation(type)
   animation(on='p1_judge_3'):       +judgment-keyframes((type == '3'))
   animation(on='p1_judge_4'):       +judgment-keyframes((type == '4'))
   animation(on='p1_judge_missed'):  +judgment-keyframes((type == 'missed'))
+
+mixin judgment-deviations
+  +judgment-deviation('late')
+    sprite(image='Deviation/Late.png' x='117')
+  +judgment-deviation('early')
+    sprite(image='Deviation/Early.png' x='111')
+
+mixin judgment-deviation(type)
+  group(alpha='0')
+    +judgment-deviation-animation(type)
+    block
+
+mixin judgment-deviation-animation(type)
+  animation(on='p1_judge_deviation_none'):  +judgment-keyframes((type == 'none'))
+  animation(on='p1_judge_deviation_late'):  +judgment-keyframes((type == 'late'))
+  animation(on='p1_judge_deviation_early'): +judgment-keyframes((type == 'early'))
 
 mixin judgment-keyframes(active)
   if active

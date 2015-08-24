@@ -110,9 +110,18 @@ export class PlayerDisplay {
       let notifications = playerState.notifications.judgments
       let notification = notifications[notifications.length - 1]
       if (notification) {
-        let name = notification.judgment === -1 ? 'missed' :
-              `${notification.judgment}`
+        let name = (
+          notification.judgment === -1
+          ? 'missed'
+          : `${notification.judgment}`
+        )
         stateful[`judge_${name}`] = time
+        let deviationMode = (
+          notification.judgment === -1 || notification.judgment === 1
+          ? 'none'
+          : (notification.delta > 0 ? 'late' : notification.delta < 0 ? 'early' : 'none')
+        )
+        stateful[`judge_deviation_${deviationMode}`] = time
         stateful[`combo`] = notification.combo
       }
       data[`score`] = playerState.stats.score
