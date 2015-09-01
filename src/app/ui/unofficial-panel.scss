@@ -1,9 +1,9 @@
 
 @import "~bemuse/ui/common";
 
-.unofficial-panel {
+.UnofficialPanel {
   max-width: 30em;
-  &--content {
+  &のcontent {
     padding: 1em;
     > p {
       margin: 0;
@@ -12,7 +12,7 @@
       }
     }
   }
-  &--buttons {
+  &のbuttons {
     text-align: right;
   }
 }

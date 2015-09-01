@@ -4,7 +4,7 @@ import React from 'react'
 
 export default React.createClass({
   render() {
-    return <button className="options-button" onClick={this.props.onClick}>
+    return <button className="OptionsButton" onClick={this.props.onClick}>
       {this.props.children}
     </button>
   }

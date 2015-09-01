@@ -7,12 +7,12 @@ import OptionsAdvanced  from './options-advanced'
 
 export default React.createClass({
   render() {
-    return <div className="options">
+    return <div className="Options">
       <Panel title="Player Settings">
         <OptionsPlayer
             onClose={this.props.onClose} />
       </Panel>
-      <div className="options--vgroup">
+      <div className="Optionsのvgroup">
         <Panel title="Input Settings">
           <OptionsInput />
         </Panel>

@@ -1,12 +1,12 @@
 
 @import "~bemuse/ui/common";
 
-.mode-select-scene {
+.ModeSelectScene {
   @include main-bg;
-  .scene-heading {
+  .SceneHeading {
     z-index: 10;
   }
-  &--main {
+  &のmain {
     @include full-screen;
     @include scrolling-y;
     padding: 24vmin 10vw 5em;
@@ -14,12 +14,12 @@
     flex-direction: column;
     justify-content: center;
   }
-  &--content {
+  &のcontent {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
   }
-  &--item {
+  &のitem {
     color: #444;
     margin: 1em;
     width: 22em;
@@ -44,7 +44,7 @@
       opacity: 0.8;
     }
   }
-  &--graphics {
+  &のgraphics {
     border: 2px solid rgba(#000, 0.5);
     border-radius: 1em;
     background: rgba(#fff, 0.8);

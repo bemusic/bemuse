@@ -1,7 +1,7 @@
-.loading-scene-progress {
+.Loading-scene-progress {
   color: #333;
   font-size: 11px;
-  .loading-scene-progress-bar {
+  .Loading-scene-progress-bar {
     display: inline-block;
     vertical-align: middle;
     width: 48px;
@@ -9,7 +9,7 @@
     position: relative;
     top: -1px;
   }
-  &--extra {
+  &のextra {
     font-size: 83%;
     opacity: 0.7;
   }

@@ -9,19 +9,19 @@ export default React.createClass({
   render() {
     const song = this.props.song
     return <li
-        className={c('music-list-item', { 'is-active': this.props.selected })}
+        className={c('MusicListItem', { 'is-active': this.props.selected })}
         onClick={this.handleClick}>
       {
         song.tutorial
-        ? <div className="music-list-item--tutorial">Tutorial</div>
-        : <div className="music-list-item--info">
-            <div className="music-list-item--title">
+        ? <div className="MusicListItemのtutorial">Tutorial</div>
+        : <div className="MusicListItemのinfo">
+            <div className="MusicListItemのtitle">
               {this.renderHighlight(song.title)}
             </div>
-            <div className="music-list-item--artist">
+            <div className="MusicListItemのartist">
               {this.renderHighlight(song.artist)}
             </div>
-            <div className="music-list-item--genre">
+            <div className="MusicListItemのgenre">
               {this.renderHighlight(song.genre)}
             </div>
           </div>
@@ -41,7 +41,7 @@ export default React.createClass({
       if (i !== segments.length - 1) {
         let highlightedText = text.substr(start, highlight.length)
         output.push(<span
-            className="music-list-item--highlight">{highlightedText}</span>)
+            className="MusicListItemのhighlight">{highlightedText}</span>)
         start += highlight.length
       }
     }

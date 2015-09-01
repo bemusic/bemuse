@@ -26,8 +26,8 @@ const OptionsSpeed = React.createClass({
     this.props.onChange(this.stringifySpeed(nextSpeed))
   },
   render() {
-    return <div className="options-speed">
-      <span className="options-speed--minus">
+    return <div className="OptionsSpeed">
+      <span className="OptionsSpeedのminus">
         <OptionsButton onClick={this.handleMinusButtonClick}>-</OptionsButton>
       </span>
       <OptionsInputField
@@ -36,7 +36,7 @@ const OptionsSpeed = React.createClass({
           stringify={this.stringifySpeed}
           validator={/^\d+(?:\.\d)?$/}
           onChange={this.handleSpeedInputChange} />
-      <span className="options-speed--plus">
+      <span className="OptionsSpeedのplus">
         <OptionsButton onClick={this.handlePlusButtonClick}>+</OptionsButton>
       </span>
     </div>

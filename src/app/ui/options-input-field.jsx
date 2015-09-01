@@ -28,7 +28,7 @@ export default React.createClass({
         onChange={this.handleInputChange}
         onKeyDown={this.handleInputKeyDown}
         onBlur={this.handleInputBlur}
-        className="options-input-field" />
+        className="OptionsInputField" />
   },
   handleInputChange(e) {
     let input = e.target

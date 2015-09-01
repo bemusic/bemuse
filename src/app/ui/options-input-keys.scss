@@ -1,15 +1,15 @@
 
 @import "~bemuse/ui/common";
 
-.options-input-keys {
+.OptionsInputKeys {
   height: 160px;
   position: relative;
   $spacing: 12px;
-  &--keys {
+  &のkeys {
     position: absolute;
     top: 0; right: -$spacing; bottom: -$spacing; left: 0;
   }
-  .options-input-key {
+  .OptionsInputKey {
     position: absolute;
     box-sizing: border-box;
     height: 50%;
@@ -18,7 +18,7 @@
   }
   &[data-arrangement="bm"] {
     width: 240px;
-    .options-input-key {
+    .OptionsInputKey {
       width: 25%;
       &[data-n="1"], &[data-n="3"], &[data-n="5"], &[data-n="7"] { top: 50%; }
       &[data-n="2"], &[data-n="4"], &[data-n="6"] { top: 0%; }
@@ -33,7 +33,7 @@
   }
   &[data-arrangement="kb"] {
     width: 420px;
-    .options-input-key {
+    .OptionsInputKey {
       width: (100% / 7);
       top: 0%;
       &[data-n="1"] { left: (100% / 7) * 0; }

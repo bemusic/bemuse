@@ -13,39 +13,39 @@ import Flex             from 'bemuse/ui/flex'
 
 export default React.createClass({
   render() {
-    return <Scene className="result-scene">
+    return <Scene className="ResultScene">
       <SceneHeading>
         Play Result
       </SceneHeading>
-      <div className="result-scene--report">
+      <div className="ResultSceneのreport">
         <ResultTable result={this.props.result} />
       </div>
       <ResultGrade grade={this.props.result.grade} />
-      <div className="result-scene--information">
-        <div className="result-scene--information-header">
-          <div className="result-scene--chart">
+      <div className="ResultSceneのinformation">
+        <div className="ResultSceneのinformationHeader">
+          <div className="ResultSceneのchart">
             <MusicChartSelectorItem chart={this.props.chart}
               onChartClick={this.noop} />
           </div>
           <MusicChartInfo info={this.props.chart.info} />
         </div>
-        <div className="result-scene--information-body">
+        <div className="ResultSceneのinformationBody">
           <RankingContainer
               result={this.props.result}
               chart={this.props.chart}
               playMode={this.props.playMode} />
         </div>
-        <div className="result-scene--information-footer">
-          <a href={this.getTweetLink()} className="result-scene--tweet" onClick={this.onTweet}>
+        <div className="ResultSceneのinformationFooter">
+          <a href={this.getTweetLink()} className="ResultSceneのtweet" onClick={this.onTweet}>
             <i className="fa fa-twitter" />
           </a>
           <Flex grow={1} />
-          <div className="result-scene--exit" onClick={this.props.onExit}>
+          <div className="ResultSceneのexit" onClick={this.props.onExit}>
             Continue
           </div>
         </div>
       </div>
-      <div className="result-scene--mode">
+      <div className="ResultSceneのmode">
         {this.props.playMode === 'KB' ? 'Keyboard' : 'BMS'} Mode
       </div>
       <SceneToolbar>

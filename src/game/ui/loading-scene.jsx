@@ -10,13 +10,13 @@ import LoadingSceneProgress from './loading-scene-progress.jsx'
 export default React.createClass({
 
   render() {
-    return <Scene className="loading-scene" ref="scene">
-      <div className="loading-scene--info">
+    return <Scene className="LoadingScene" ref="scene">
+      <div className="LoadingSceneのinfo">
         <LoadingSceneSongInfo song={this.props.song} />
       </div>
       <LoadingSceneProgress tasks={this.props.tasks} />
-      <div className="loading-scene--flash"></div>
-      <div className="loading-scene--cover"></div>
+      <div className="LoadingSceneのflash"></div>
+      <div className="LoadingSceneのcover"></div>
     </Scene>
   },
   teardown() {

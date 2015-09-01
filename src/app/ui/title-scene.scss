@@ -1,12 +1,12 @@
 @import "~bemuse/ui/common";
 
-.title-scene {
+.TitleScene {
 
   @include main-bg;
 
   font: 2.5vmin $ui-font;
 
-  &--logo {
+  &のlogo {
     position: absolute;
     top: 30%; left: 50%;
     transform: translate(-50%,-50%);
@@ -17,7 +17,7 @@
     background-size: contain;
   }
 
-  &--enter {
+  &のenter {
     position: absolute;
     top: 70%; left: 50%;
     transform: translate(-50%,-50%);

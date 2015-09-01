@@ -6,12 +6,12 @@ import c     from 'classnames'
 export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
   render() {
-    return <div className="options-input-key" data-n={this.props.n}>
+    return <div className="OptionsInputKey" data-n={this.props.n}>
       <div
-          className={c('options-input-key--contents',
+          className={c('OptionsInputKeyのcontents',
               { 'is-editing': this.props.isEditing })}
           onClick={this.handleClick}>
-        <div className="options-input-key--text">{this.props.text}</div>
+        <div className="OptionsInputKeyのtext">{this.props.text}</div>
       </div>
     </div>
   },

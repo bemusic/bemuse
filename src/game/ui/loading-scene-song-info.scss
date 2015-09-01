@@ -1,5 +1,5 @@
 
-.loading-scene-song-info {
+.Loading-scene-song-info {
 
   background: rgba(#fff, 0.96);
   color: #191817;
@@ -7,21 +7,21 @@
   padding: 25px 0px;
   box-shadow: 0 2px 18px rgba(#000, 0.2);
 
-  &--genre {
+  &のgenre {
     font-size: 3vmin;
   }
-  &--title {
+  &のtitle {
     font-size: 8vmin;
     font-weight: bold;
   }
-  &--subtitle {
+  &のsubtitle {
     font-size: 6vmin;
   }
-  &--artist {
+  &のartist {
     font-size: 4vmin;
     margin-top: 0.8ex;
   }
-  &--subartist {
+  &のsubartist {
     font-size: 2.5vmin;
   }
 

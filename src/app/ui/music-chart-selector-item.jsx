@@ -8,7 +8,7 @@ import Icon   from 'react-fa'
 export default React.createClass({
 
   render() {
-    let classes = c('music-chart-selector-item', {
+    let classes = c('MusicChartSelectorItem', {
           'is-active': this.props.isSelected,
           'is-tutorial': this.props.isTutorial,
           'is-insane': this.props.chart.info.difficulty >= 5,
@@ -20,11 +20,11 @@ export default React.createClass({
       {
         this.props.isTutorial
         ? 'Start Tutorial'
-        : <span className="music-chart-selector-item--level">
+        : <span className="MusicChartSelectorItemのlevel">
             {this.props.chart.info.level}
           </span>
       }
-      <span className="music-chart-selector-item--play">
+      <span className="MusicChartSelectorItemのplay">
         <Icon name="play" />
       </span>
     </li>

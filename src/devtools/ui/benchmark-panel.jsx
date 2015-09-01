@@ -4,7 +4,7 @@ import React from 'react'
 
 export default React.createClass({
   render() {
-    return <div className="benchmark-panel"
+    return <div className="BenchmarkPanel"
         onClick={this.handleInteraction}
         onTouchStart={this.handleInteraction}>
       {

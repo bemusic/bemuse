@@ -7,14 +7,14 @@ export default React.createClass({
 
   render() {
     const song = this.props.song
-    return <div className="loading-scene-song-info">
-      <div className="loading-scene-song-info--genre">{song.genre}</div>
-      <div className="loading-scene-song-info--title">{song.title}</div>
+    return <div className="LoadingSceneSongInfo">
+      <div className="LoadingSceneSongInfoのgenre">{song.genre}</div>
+      <div className="LoadingSceneSongInfoのtitle">{song.title}</div>
       {song.subtitles.map(text =>
-        <div className="loading-scene-song-info--subtitle">{text}</div>)}
-      <div className="loading-scene-song-info--artist">{song.artist}</div>
+        <div className="LoadingSceneSongInfoのsubtitle">{text}</div>)}
+      <div className="LoadingSceneSongInfoのartist">{song.artist}</div>
       {song.subartists.map(text =>
-        <div className="loading-scene-song-info--subartist">{text}</div>)}
+        <div className="LoadingSceneSongInfoのsubartist">{text}</div>)}
     </div>
   }
 

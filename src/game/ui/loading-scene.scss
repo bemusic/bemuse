@@ -1,25 +1,25 @@
 
 @import "~bemuse/ui/common";
 
-.loading-scene {
+.Loading-scene {
   @include main-bg;
 
-  &--info {
+  &のinfo {
     position: absolute;
     top: 40%; left: 0; right: 0;
     transform: translateY(-50%);
   }
 
-  .loading-scene-song-info {
+  .Loading-scene-song-info {
     animation: loading-scene--loading-scene-song-info--animation 1s ease;
   }
 
-  .loading-scene-progress {
+  .Loading-scene-progress {
     position: absolute;
     bottom: 10px; left: 10px;
   }
 
-  &--flash {
+  &のflash {
     position: absolute;
     top: 0; right: 0; bottom: 0; left: 0; opacity: 0;
     pointer-events: none;
@@ -28,7 +28,7 @@
     animation: loading-scene--flash-animation 0.8s ease-out;
   }
 
-  &--cover {
+  &のcover {
     position: absolute;
     top: 0; right: 0; bottom: 0; left: 0; opacity: 0;
     pointer-events: none;
@@ -36,14 +36,14 @@
     background: black;
   }
 
-  .scene.is-exiting & {
-    &--info {
+  .Scene.is-exiting & {
+    &のinfo {
       animation: loading-scene--info-exit 0.3s linear;
     }
-    &--flash {
+    &のflash {
       animation: loading-scene--flash-exit 0.3s ease;
     }
-    &--cover {
+    &のcover {
       animation: loading-scene--cover-exit 0.3s linear;
       opacity: 1;
     }

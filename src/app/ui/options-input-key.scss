@@ -2,19 +2,19 @@
 @import "~bemuse/ui/common";
 @import "options-input-common";
 
-.options-input-key {
-  &--contents {
+.OptionsInputKey {
+  &のcontents {
     width: 100%;
     height: 100%;
     background: rgba(#000, 0.1);
     border-radius: 4px;
   }
   @mixin color($color) {
-    .options-input-key--contents {
+    .OptionsInputKeyのcontents {
       @include options-input-button($color);
     }
   }
-  &--text {
+  &のtext {
     @include options-input-button--text;
   }
   @include color(#feb);

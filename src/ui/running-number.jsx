@@ -5,7 +5,7 @@ import now   from 'bemuse/utils/now'
 
 export default React.createClass({
   render() {
-    return <span className="running-number"></span>
+    return <span className="RunningNumber"></span>
   },
   componentDidMount() {
     let node = this.getDOMNode()

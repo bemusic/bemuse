@@ -1,22 +1,22 @@
 
 @import "~bemuse/ui/common";
 
-.options-player-selector {
+.OptionsPlayerSelector {
   display: flex;
-  .options-player-graphics {
+  .OptionsPlayerGraphics {
     vertical-align: top;
   }
-  &--label {
+  &のlabel {
     text-align: center;
     color: #8b8685;
   }
-  &--item.is-active .options-player-selector--label {
+  &のitem.is-active .OptionsPlayerSelectorのlabel {
     color: #bef;
   }
-  &--item:not(.is-active) {
+  &のitem:not(.is-active) {
     cursor: pointer;
   }
-  &--item:not(:first-child) {
+  &のitem:not(:first-child) {
     margin-left: 1ex;
   }
 }

@@ -7,7 +7,7 @@ import c      from 'classnames'
 export default React.createClass({
 
   render() {
-    return <div className={c('scene', this.props.className)}>
+    return <div className={c('Scene', this.props.className)}>
       {this.props.children}
     </div>
   }

@@ -1,11 +1,11 @@
 @import "~bemuse/ui/common";
 
-.music-select-scene {
+.MusicSelectScene {
 
   @include main-bg;
   font: 2.5vmin $ui-font;
 
-  &--loading {
+  &のloading {
     @include centered;
     font-size: 5vmin;
     text-align: center;
@@ -13,11 +13,11 @@
     text-shadow: 0 2px 0 rgba(white, 0.3);
   }
 
-  &--main {
+  &のmain {
     @include full-screen;
   }
 
-  &--unofficial-label {
+  &のunofficialLabel {
     $color: #f4f3b8;
     position: absolute;
     top: -3px;
@@ -41,7 +41,7 @@
     }
   }
 
-  &--search {
+  &のsearch {
     position: absolute;
     top: 50%; right: 5vw;
     transform: translateY(-50%);
@@ -54,17 +54,17 @@
     text-indent: 1ex;
   }
 
-  .scene-heading {
+  .SceneHeading {
     z-index: 10;
   }
 
-  .music-list {
+  .MusicList {
     @include full-screen;
     @include scrolling-y;
     padding: 25vmin 52vw 3vmin 5vw;
   }
 
-  .music-info {
+  .MusicInfo {
     @include scrolling-y;
     position: absolute;
     top: 0; right: 5vw; bottom: 0; left: 52vw;
@@ -73,23 +73,23 @@
   }
 
   @media (orientation: portrait) {
-    &--main {
+    &のmain {
       transform: translateX(0);
       transition: 0.3s transform;
       &.is-in-song {
         transform: translateX(-70vw);
       }
     }
-    .music-list {
+    .MusicList {
       padding: 25vmin 10vw 3vmin;
     }
-    .music-info {
+    .MusicInfo {
       right: auto;
       left: 100vw; width: 70vw;
     }
   }
 
-  &--custom-bms .custom-bms {
+  &のcustomBms .CustomBMS {
     width: 640px;
     max-width: 95vw;
   }

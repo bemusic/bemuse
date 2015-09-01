@@ -9,19 +9,19 @@ import * as Actions from '../actions/custom-bms-actions'
 
 export default React.createClass({
   render() {
-    return <Panel className="custom-bms" title="Load Custom BMS">
+    return <Panel className="CustomBMS" title="Load Custom BMS">
       <Binding store={Store} onChange={this.handleState} />
-      <div className="custom-bms--wrapper">
-        <div className="custom-bms--instruction">
+      <div className="CustomBMSのwrapper">
+        <div className="CustomBMSのinstruction">
           Please drag and drop a BMS folder into the drop zone below.
         </div>
-        <div className="custom-bms--remark">
+        <div className="CustomBMSのremark">
           This feature is only supported in Google Chrome.
         </div>
-        <div className="custom-bms--remark">
+        <div className="CustomBMSのremark">
           Please don’t play unauthorized / illegally obtained BMS files.
         </div>
-        <div className={c('custom-bms--dropzone',
+        <div className={c('CustomBMSのdropzone',
               { 'is-hover': this.state.hover })}
             onDragOver={this.handleDragOver}
             onDragEnter={this.handleDragEnter}
@@ -31,14 +31,14 @@ export default React.createClass({
             this.state.store.log
             ? (
                 this.state.store.log.length
-                ? <div className="custom-bms--log">
+                ? <div className="CustomBMSのlog">
                     {this.state.store.log.map(text => <p>{text}</p>)}
                   </div>
-                : <div className="custom-bms--log">
+                : <div className="CustomBMSのlog">
                     <p>Omachi kudasai...</p>
                   </div>
               )
-            : <div className="custom-bms--dropzone-hint">
+            : <div className="CustomBMSのdropzoneHint">
                 Drop BMS folder here.
               </div>
           }

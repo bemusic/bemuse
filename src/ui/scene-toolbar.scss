@@ -1,7 +1,7 @@
 
 @import "~bemuse/ui/common";
 
-.scene-toolbar {
+.SceneToolbar {
   background: rgba(black, 0.7);
   overflow: hidden;
   display: flex;
@@ -27,7 +27,7 @@
   > span {
     color: rgba(white, 0.6);
   }
-  &--spacer {
+  &のspacer {
     flex: 1;
   }
 }

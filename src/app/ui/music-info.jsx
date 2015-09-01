@@ -11,7 +11,7 @@ export default React.createClass({
   render() {
     const song  = this.props.song
     const chart = this.props.chart
-    return <section className="music-info">
+    return <section className="MusicInfo">
       <MusicChartInfo info={chart.info} />
       <MusicChartSelector
           song={song}

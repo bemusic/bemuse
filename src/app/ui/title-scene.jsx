@@ -14,9 +14,9 @@ React.initializeTouchEvents(true)
 export default React.createClass({
 
   render() {
-    return <Scene className="title-scene">
-      <div className="title-scene--logo"></div>
-      <div className="title-scene--enter">
+    return <Scene className="TitleScene">
+      <div className="TitleSceneのlogo"></div>
+      <div className="TitleSceneのenter">
         <a href="javascript://" onClick={this.enterGame}>Enter Game</a>
       </div>
       <SceneToolbar>

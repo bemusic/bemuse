@@ -4,7 +4,7 @@ import React from 'react'
 
 export default React.createClass({
   render() {
-    return <iframe width='100%' className='youtube'
+    return <iframe width='100%' className='YouTube'
         src={this.getUrl()} frameBorder='0' allowfullscreen></iframe>
   },
   getUrl() {

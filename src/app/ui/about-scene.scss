@@ -1,10 +1,10 @@
 
 @import "~bemuse/ui/common";
 
-.about-scene {
+.AboutScene {
   @include scene-background(url(~bemuse/ui/images/bg/c.jpg));
 
-  .scene-heading {
+  .SceneHeading {
     z-index: 10;
   }
   > section {
@@ -44,20 +44,20 @@
     color: #ffa;
   }
 
-  &--logo {
+  &のlogo {
     text-align: center;
     img {
       max-width: 80%;
     }
   }
-  &--djbm {
+  &のdjbm {
     text-align: center;
     img {
       width: 64%;
       max-width: 215px;
     }
   }
-  &--team-list {
+  &のteamList {
     list-style: none;
     padding-left: 1ex;
     margin-top: 0;

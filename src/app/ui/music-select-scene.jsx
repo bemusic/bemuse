@@ -30,7 +30,7 @@ export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
   render() {
     let musicSelect = this.state.musicSelect
-    return <Scene className="music-select-scene">
+    return <Scene className="MusicSelectScene">
       <Binding store={Store} onChange={this.handleState} />
       {online ? <Binding store={online.user川} onChange={this.handleUser} /> : null}
       <SceneHeading>
@@ -38,13 +38,13 @@ export default React.createClass({
         <input
             type="text"
             placeholder="Filter…"
-            className="music-select-scene--search"
+            className="MusicSelectSceneのsearch"
             onChange={this.handleFilter}
             value={musicSelect.filterText} />
       </SceneHeading>
       {
         musicSelect.unofficial
-        ? <div className="music-select-scene--unofficial-label"
+        ? <div className="MusicSelectSceneのunofficialLabel"
               onClick={this.handleUnofficialClick}>
             <b>Disclaimer:</b> Unofficial Server
           </div>
@@ -52,12 +52,12 @@ export default React.createClass({
       }
       {
         musicSelect.loading
-        ? <div className="music-select-scene--loading">Loading…</div>
+        ? <div className="MusicSelectSceneのloading">Loading…</div>
         : musicSelect.songs.length === 0
-        ? <div className="music-select-scene--loading">
+        ? <div className="MusicSelectSceneのloading">
             Cannot Load Collection!
           </div>
-        : <div className={c('music-select-scene--main',
+        : <div className={c('MusicSelectSceneのmain',
               { 'is-in-song': this.state.inSong })}>
             <MusicList
                 groups={musicSelect.groups}
@@ -93,7 +93,7 @@ export default React.createClass({
       <ModalPopup
           visible={this.state.customBMSVisible}
           onBackdropClick={this.handleCustomBMSClose}>
-        <div className="music-select-scene--custom-bms">
+        <div className="MusicSelectSceneのcustomBms">
           <CustomBMS
               onSongLoaded={this.handleCustomSong} />
         </div>

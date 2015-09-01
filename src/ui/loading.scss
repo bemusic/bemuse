@@ -1,9 +1,9 @@
 
 @import "~bemuse/ui/common";
 
-.loading {
+.Loading {
   animation: 0.3s loading--in ease-out;
-  &--dj {
+  &のdj {
     width: 64px;
     height: 64px;
     background: url(./images/loading/dj.png) center no-repeat;
@@ -11,7 +11,7 @@
     animation: 2s loading--dj--spin linear infinite;
     margin: 0 auto 0.5em;
   }
-  &--text {
+  &のtext {
     text-align: center;
     color: #8b8685;
     animation: 1s loading--text--pulse linear infinite;

@@ -20,33 +20,33 @@ export default React.createClass({
     })
   },
   render() {
-    return <form className="authentication-form">
-      <div className="authentication-form--group">
+    return <form className="AuthenticationForm">
+      <div className="AuthenticationFormのgroup">
         <label>
-          <span className="authentication-form--label">Username</span>
-          <span className="authentication-form--control">
+          <span className="AuthenticationFormのlabel">Username</span>
+          <span className="AuthenticationFormのcontrol">
             <input type="text" defaultValue="" ref="username" />
           </span>
         </label>
         <label hidden={this.props.mode !== 'signUp'}>
-          <span className="authentication-form--label">Email</span>
-          <span className="authentication-form--control">
+          <span className="AuthenticationFormのlabel">Email</span>
+          <span className="AuthenticationFormのcontrol">
             <input type="email" defaultValue="" ref="email" />
           </span>
         </label>
         <label>
-          <span className="authentication-form--label">Password</span>
-          <span className="authentication-form--control">
+          <span className="AuthenticationFormのlabel">Password</span>
+          <span className="AuthenticationFormのcontrol">
             <input type="password" defaultValue="" ref="password" />
           </span>
         </label>
         <label hidden={this.props.mode !== 'signUp'}>
-          <span className="authentication-form--label">Confirm Password</span>
-          <span className="authentication-form--control">
+          <span className="AuthenticationFormのlabel">Confirm Password</span>
+          <span className="AuthenticationFormのcontrol">
             <input type="password" defaultValue="" ref="passwordConfirmation" />
           </span>
         </label>
-        <div className="authentication-form--buttons">
+        <div className="AuthenticationFormのbuttons">
           <OptionsButton onClick={this.onButtonClick}>{this.renderSubmitText()}</OptionsButton>
         </div>
       </div>

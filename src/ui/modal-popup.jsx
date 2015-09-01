@@ -8,11 +8,11 @@ export default React.createClass({
   render() {
     if (this.props.visible === false) return null
     return <Overlay>
-      <div className={c('modal-popup',
+      <div className={c('ModalPopup',
         { 'is-visible': this.props.visible !== false })}>
-        <div className="modal-popup--backdrop"
+        <div className="ModalPopupのbackdrop"
             onClick={this.props.onBackdropClick}></div>
-        <div className="modal-popup--contents">
+        <div className="ModalPopupのcontents">
           {this.props.children}
         </div>
       </div>

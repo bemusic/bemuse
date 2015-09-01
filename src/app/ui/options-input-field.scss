@@ -1,7 +1,7 @@
 
 @import "~bemuse/ui/common";
 
-.options-input-field {
+.OptionsInputField {
   @include input;
   text-align: center;
   &.is-invalid {

@@ -9,7 +9,7 @@ import SCENE_MANAGER from 'bemuse/scene-manager'
 
 export default React.createClass({
   render() {
-    return <Scene className="browser-support-warning-scene">
+    return <Scene className="BrowserSupportWarningScene">
       <h1>Warning: Unsupported Browser</h1>
       <p>
         It seems that you are using an unsupported browser.<br />

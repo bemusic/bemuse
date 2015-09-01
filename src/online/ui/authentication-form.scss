@@ -1,7 +1,7 @@
 
 @import "~bemuse/ui/common";
 
-.authentication-form {
+.AuthenticationForm {
   label {
     display: flex;
     align-items: center;
@@ -10,11 +10,11 @@
   label[hidden] {
     display: none;
   }
-  &--label {
+  &のlabel {
     width: 120px;
     text-align: right;
   }
-  &--control {
+  &のcontrol {
     margin-left: 12px;
   }
   input {
@@ -27,11 +27,11 @@
     box-shadow: 0 1px 3px rgba(#000, 0.5);
     width: 12em;
   }
-  &--buttons {
+  &のbuttons {
     margin-top: 24px;
     text-align: center;
   }
-  .options-button {
+  .OptionsButton {
     font-size: 1.4em;
   }
 }

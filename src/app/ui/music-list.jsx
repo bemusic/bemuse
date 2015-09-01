@@ -7,10 +7,10 @@ import MusicListItem  from './music-list-item.jsx'
 export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
   render() {
-    return <ul className="music-list"
+    return <ul className="MusicList"
         onTouchStart={this.props.onTouch}>
       {this.props.groups.map(({ title, songs }) => [
-        <li className="music-list--group-title">{title}</li>,
+        <li className="MusicListのgroupTitle">{title}</li>,
         songs.map(song => <MusicListItem
             key={song.id}
             song={song}

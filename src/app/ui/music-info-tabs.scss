@@ -1,21 +1,21 @@
 
 @import "~bemuse/ui/common";
 
-.music-info-tabs {
+.MusicInfoTabs {
   $inactive-bg: rgba(#aaa, 0.3);
   $active-bg: rgba(#fff, 0.6);
-  &--tabs {
+  &のtabs {
     margin: 0;
     padding: 0 2vw;
     list-style: none;
   }
-  &--options {
+  &のoptions {
     float: right;
     line-height: 2em;
     cursor: pointer;
     color: #666;
   }
-  &--tab {
+  &のtab {
     display: inline-block;
     padding: 0 0.5em;
     line-height: 2em;
@@ -31,7 +31,7 @@
       cursor: default;
     }
   }
-  &--panel {
+  &のpanel {
     background: $active-bg;
     padding: 0.8em 2vw;
     &.is-without-padding {

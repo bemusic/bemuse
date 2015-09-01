@@ -107,17 +107,17 @@ export default React.createClass({
     this.setState({ mode: 'signUp' })
   },
   render() {
-    return <div className="authentication-panel">
+    return <div className="AuthenticationPanel">
       <Panel title="Bemuse Online Ranking">
-        <div className="authentication-panel--layout">
-          <div className="authentication-panel--title">
+        <div className="AuthenticationPanelのlayout">
+          <div className="AuthenticationPanelのtitle">
             <img src={require('bemuse/app/ui/about-scene/DJBM.png')} alt="DJ Bemuse" />
-            <div className="authentication-panel--identification">
+            <div className="AuthenticationPanelのidentification">
               Bemuse<br />Online<br />Ranking
             </div>
           </div>
-          <div className="authentication-panel--content">
-            <div className="authentication-panel--mode-switcher">
+          <div className="AuthenticationPanelのcontent">
+            <div className="AuthenticationPanelのmodeSwitcher">
               <a
                   href="javascript://online/logIn"
                   onClick={this.onSwitchToLogin}
@@ -144,7 +144,7 @@ export default React.createClass({
   renderMessage() {
     let state = this.state.authentication
     if (state.status === 'idle' || !state.message) return null
-    return <div className={c('authentication-panel--message', 'is-' + state.status)}>
+    return <div className={c('AuthenticationPanelのmessage', 'is-' + state.status)}>
       {state.message}
     </div>
   },

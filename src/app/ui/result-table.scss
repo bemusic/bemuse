@@ -1,7 +1,7 @@
 
 @import "~bemuse/ui/common";
 
-.result-table {
+.ResultTable {
   table {
     width: 100%;
     margin-bottom: 1ex;
@@ -21,7 +21,7 @@
     padding-left: 1ex;
     color: rgba(white, 0.7);
   }
-  table.result-table--total {
+  table.ResultTableのtotal {
     th, td { font-weight: bold; }
   }
 }

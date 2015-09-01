@@ -1,37 +1,37 @@
 
 @import "~bemuse/ui/common";
 
-.custom-bms {
-  &--wrapper {
+.CustomBMS {
+  &のwrapper {
     padding: 1em;
   }
-  &--instruction {
+  &のinstruction {
     margin-bottom: 1ex;
     font-weight: bold;
   }
-  &--remark {
+  &のremark {
     &::before { content: "※ "; }
     color: #8b8685;
   }
-  &--dropzone {
+  &のdropzone {
     @include center-content;
     border: 3px dashed #7b7675;
     height: 240px;
     margin-top: 1ex;
     &.is-hover {
       background: rgba(white, 0.1);
-      .custom-bms--dropzone-hint {
+      .CustomBMSのdropzoneHint {
         color: #ff8;
         text-shadow: 0 0 8px #ff0;
       }
     }
   }
-  &--dropzone-hint {
+  &のdropzoneHint {
     font-size: 1.8em;
     text-transform: uppercase;
     color: #8b8685;
   }
-  &--log {
+  &のlog {
     @include scrolling-y;
     width: 100%; height: 100%;
     box-sizing: border-box;

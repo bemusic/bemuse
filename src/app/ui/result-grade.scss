@@ -1,20 +1,20 @@
 
 @import "~bemuse/ui/common";
 
-.result-grade {
+.ResultGrade {
   display: flex;
   position: relative;
   border: 2px dashed rgba(white, 0.5);
   border-radius: 1em;
   align-items: center;
   justify-content: center;
-  &--label {
+  &のlabel {
     position: absolute;
     right: 0; bottom: 0; left: 0;
     color: rgba(white, 0.5);
     text-align: center;
   }
-  &--grade {
+  &のgrade {
     font-weight: bold;
     font-size: 18vh;
     color: #ff9;

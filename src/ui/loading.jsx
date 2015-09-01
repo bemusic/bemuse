@@ -4,9 +4,9 @@ import React from 'react'
 
 export default React.createClass({
   render() {
-    return <div className="loading">
-      <div className="loading--dj"></div>
-      <div className="loading--text">Loading</div>
+    return <div className="Loading">
+      <div className="Loadingのdj"></div>
+      <div className="Loadingのtext">Loading</div>
     </div>
   }
 })

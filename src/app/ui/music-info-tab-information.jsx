@@ -13,15 +13,15 @@ export default React.createClass({
 
   render() {
     const song = this.props.song
-    return <div className="music-info-tab-information">
+    return <div className="MusicInfoTabInformation">
       <Binding store={ReadmeStore} onChange={this.handleReadme} />
       {this.renderButtons()}
-      <p className="music-info-tab-information--artist">
+      <p className="MusicInfoTabInformationのartist">
         <span>Artist:</span>
         <strong>{link(song.artist, song.artist_url)}</strong>
       </p>
       {song.youtube_url ? <YouTube url={song.youtube_url} /> : null}
-      <section className="music-info-tab-information--readme">
+      <section className="MusicInfoTabInformationのreadme">
         <Markdown source={this.state.readme.text} />
       </section>
     </div>
@@ -43,7 +43,7 @@ export default React.createClass({
     if (buttons.length === 0) {
       return null
     } else {
-      return <p className="music-info-tab-information--buttons">{buttons}</p>
+      return <p className="MusicInfoTabInformationのbuttons">{buttons}</p>
     }
   },
   getInitialState() {

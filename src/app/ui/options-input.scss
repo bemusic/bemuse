@@ -1,23 +1,23 @@
 
 @import "~bemuse/ui/common";
 
-.options-input {
+.OptionsInput {
   display: flex;
   align-items: stretch;
   padding: 2em;
   &.is-reverse {
     flex-direction: row-reverse;
   }
-  &--zone {
+  &のzone {
     display: flex;
     flex-direction: column;
     align-items: stretch;
     margin: 0 12px;
   }
-  &--control {
+  &のcontrol {
     flex: 1;
   }
-  &--title {
+  &のtitle {
     text-align: center;
     padding-top: 1ex;
     color: #8b8685;

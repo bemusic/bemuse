@@ -7,12 +7,12 @@ export default React.createClass({
 
   render() {
     const info = this.props.info
-    return <section className="music-chart-info">
-      <div className="music-chart-info--genre">{info.genre}</div>
-      <div className="music-chart-info--title">{info.title}</div>
+    return <section className="MusicChartInfo">
+      <div className="MusicChartInfoのgenre">{info.genre}</div>
+      <div className="MusicChartInfoのtitle">{info.title}</div>
       {info.subtitles.map((text, index) =>
-        <div className="music-chart-info--subtitle" key={index}>{text}</div>)}
-      <div className="music-chart-info--artist">
+        <div className="MusicChartInfoのsubtitle" key={index}>{text}</div>)}
+      <div className="MusicChartInfoのartist">
         {info.artist}
         {
           info.subartists.length

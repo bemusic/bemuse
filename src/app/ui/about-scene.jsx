@@ -21,13 +21,13 @@ export default React.createClass({
     artists.then(a => this.setState({ artists: a }))
   },
   render() {
-    return <Scene className="about-scene">
+    return <Scene className="AboutScene">
       <SceneHeading>
         About
       </SceneHeading>
       <section>
         <article>
-          <div className="about-scene--logo">
+          <div className="AboutSceneのlogo">
             <img src="/res/logo.png" alt="Bemuse" />
           </div>
           <p>
@@ -49,7 +49,7 @@ export default React.createClass({
             The source code is available on <a
                 href="https://github.com/bemusic/bemuse">GitHub</a>.
           </p>
-          <div className="about-scene--djbm">
+          <div className="AboutSceneのdjbm">
             <img src={require('./about-scene/DJBM.png')} alt="DJ Bemuse" />
           </div>
         </article>
@@ -57,7 +57,7 @@ export default React.createClass({
 
           <h2>Credits and Acknowledgements</h2>
           <strong>Development Team</strong>
-          <ul className="about-scene--team-list">
+          <ul className="AboutSceneのteamList">
             <li>
               <a href="https://github.com/dtinth">@dtinth</a>
               {' '}(Thai Pangsakulyanont)
@@ -69,7 +69,7 @@ export default React.createClass({
           </ul>
 
           <strong>Project Advisor</strong>
-          <ul className="about-scene--team-list">
+          <ul className="AboutSceneのteamList">
             <li>
               <a href="https://github.com/jittat">@jittat</a>
               {' '}(Asst.Prof.Dr. Jittat Fakcharoenphol)

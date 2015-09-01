@@ -6,7 +6,7 @@ import RunningNumber  from 'bemuse/ui/running-number'
 export default React.createClass({
   render() {
     let result = this.props.result
-    return <div className="result-table">
+    return <div className="ResultTable">
       <table>
         <tr>
           <td><RunningNumber value={result['1']} /></td>
@@ -41,7 +41,7 @@ export default React.createClass({
           <th>Accurate</th>
         </tr>
       </table>
-      <table className="result-table--total">
+      <table className="ResultTableのtotal">
         <tr>
           <td><RunningNumber value={result['score']} /></td>
           <th>Total Score</th>

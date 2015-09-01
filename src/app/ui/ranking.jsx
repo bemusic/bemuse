@@ -20,7 +20,7 @@ export default React.createClass({
     this.setState({ authenticationPopupVisible: false })
   },
   render() {
-    return <div className="ranking">
+    return <div className="Ranking">
       <AuthenticationPopup
           visible={this.state.authenticationPopupVisible}
           onFinish={this.handleAuthenticationFinish}
@@ -32,8 +32,8 @@ export default React.createClass({
   renderYours() {
     const state = this.props.state
     const submission = state.meta.submission
-    return <div className="ranking--yours">
-      <div className="ranking--title">
+    return <div className="Rankingのyours">
+      <div className="Rankingのtitle">
         Your Ranking
       </div>
       <RankingTable>
@@ -74,8 +74,8 @@ export default React.createClass({
   },
   renderLeaderboard() {
     const state = this.props.state
-    return <div className="ranking--leaderboard">
-      <div className="ranking--title">
+    return <div className="Rankingのleaderboard">
+      <div className="Rankingのtitle">
         Leaderboard
       </div>
       <RankingTable>
@@ -110,16 +110,16 @@ export default React.createClass({
     </div>
   },
   renderError(text, error, retry) {
-    return <span className="ranking--error">
+    return <span className="Rankingのerror">
       <strong>
         {text}
         {' '}
-        <a onClick={retry} className="ranking--error-retry" href="javascript://retry">
+        <a onClick={retry} className="RankingのerrorRetry" href="javascript://retry">
           (click to retry)
         </a>
       </strong>
       <br />
-      <span className="ranking--error-description">
+      <span className="RankingのerrorDescription">
         {
           error && error.message
           ? '' + error.message

@@ -10,13 +10,13 @@ import OptionsInputKeys     from './options-input-keys'
 
 export default React.createClass({
   render() {
-    return <div className={c('options-input', {
+    return <div className={c('OptionsInput', {
         'is-reverse': this.state.scratch === 'right' })}>
       <Binding store={Store} onChange={this.handleState} />
       {
         this.state.scratch !== 'off'
-        ? <div className="options-input--zone is-scratch">
-            <div className="options-input--control">
+        ? <div className="OptionsInputのzone is-scratch">
+            <div className="OptionsInputのcontrol">
               <OptionsInputScratch
                   text={[this.state.texts['SC'], this.state.texts['SC2']]}
                   isEditing={
@@ -29,21 +29,21 @@ export default React.createClass({
                   }
                   onEdit={this.handleEdit} />
             </div>
-            <div className="options-input--title">
+            <div className="OptionsInputのtitle">
               Scratch
             </div>
           </div>
         : null
       }
-      <div className="options-input--zone">
-        <div className="options-input--control">
+      <div className="OptionsInputのzone">
+        <div className="OptionsInputのcontrol">
           <OptionsInputKeys
               keyboardMode={this.state.scratch === 'off'}
               texts={this.state.texts}
               editing={this.state.editing}
               onEdit={this.handleEdit} />
         </div>
-        <div className="options-input--title">
+        <div className="OptionsInputのtitle">
           Keys
         </div>
       </div>

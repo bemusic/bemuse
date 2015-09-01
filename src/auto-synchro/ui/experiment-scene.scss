@@ -1,40 +1,40 @@
 
 @import "~bemuse/ui/common";
 
-.experiment-scene {
+.ExperimentScene {
   display: flex;
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
   align-items: center;
   justify-content: center;
 
-  &--button {
+  &のbutton {
     @include button;
     font-size: 18px;
   }
 
-  &--message {
+  &のmessage {
     text-align: center;
     font-size: 16px;
   }
 
-  &--progress {
+  &のprogress {
     width: 100px;
     margin: 1em auto;
     border: 1px solid #8b8685;
     padding: 1px;
   }
-  &--progress-bar {
+  &のprogressBar {
     height: 5px;
     background: #8b8685;
     transition: 0.5s transform linear;
     transform-origin: left;
   }
 
-  &.is-finished &--wrapper {
+  &.is-finished &のwrapper {
     animation: 3.243243243s experiment-scene--auto-synchro linear infinite;
   }
-  &.is-finished &--wrapper-inner {
+  &.is-finished &のwrapperInner {
     animation: 3s experiment-scene--spin linear infinite;
     animation-delay: 13.378378377s;
   }

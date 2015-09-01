@@ -1,9 +1,9 @@
 
 @import "~bemuse/ui/common";
 
-.music-info-tab-information {
+.MusicInfoTabInformation {
   overflow: hidden;
-  &--buttons {
+  &のbuttons {
     margin: 0;
     float: right;
     > a {
@@ -23,7 +23,7 @@
       }
     }
   }
-  &--artist {
+  &のartist {
     margin: 0;
     span {
       color: #666;
@@ -35,10 +35,10 @@
       font-size: 1.3em;
     }
   }
-  .youtube {
+  .YouTube {
     margin-top: 1ex;
   }
-  &--readme {
+  &のreadme {
     clear: both;
     font-size: 0.9em;
     @include scrolling-x;

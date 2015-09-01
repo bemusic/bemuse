@@ -4,9 +4,9 @@ import React from 'react'
 
 export default React.createClass({
   render() {
-    return <div className="loading-scene-progress-bar">
+    return <div className="LoadingSceneProgressBar">
       <div
-          className="loading-scene-progress-bar--bar"
+          className="LoadingSceneProgressBarのbar"
           style={{ width: this.props.width }}></div>
     </div>
   }

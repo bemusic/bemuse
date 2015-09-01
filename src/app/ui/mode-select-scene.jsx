@@ -12,18 +12,18 @@ import { setMode }      from '../actions/options-actions'
 export default React.createClass({
 
   render() {
-    return <Scene className="mode-select-scene">
+    return <Scene className="ModeSelectScene">
       <SceneHeading>Select Mode</SceneHeading>
-      <div className="mode-select-scene--main">
-        <div className="mode-select-scene--content">
-          <div className="mode-select-scene--item" onClick={this.handleKB}>
+      <div className="ModeSelectSceneのmain">
+        <div className="ModeSelectSceneのcontent">
+          <div className="ModeSelectSceneのitem" onClick={this.handleKB}>
             {this.renderKBGraphics()}
             <h2>Keyboard Mode</h2>
             <p>Keys are arranged like computer keyboard. <strong>
                 Recommended for new players.</strong></p>
             <p>This mode is similar to O2Jam.</p>
           </div>
-          <div className="mode-select-scene--item" onClick={this.handleBM}>
+          <div className="ModeSelectSceneのitem" onClick={this.handleBM}>
             {this.renderBMGraphics()}
             <h2>BMS Mode</h2>
             <p>Keys are arranged like piano keyboard
@@ -50,7 +50,7 @@ export default React.createClass({
       }
     }
     return <svg width="96" height="54" viewBox="0 0 96 54"
-        className="mode-select-scene--graphics">{children}</svg>
+        className="ModeSelectSceneのgraphics">{children}</svg>
   },
   renderBMGraphics() {
     let children = []
@@ -61,7 +61,7 @@ export default React.createClass({
           width="11" height="14" rx="2" ry="2" />)
     }
     return <svg width="96" height="54" viewBox="0 0 96 54"
-        className="mode-select-scene--graphics">
+        className="ModeSelectSceneのgraphics">
       <circle cx="21" cy="27" r="16" />
       {children}
     </svg>

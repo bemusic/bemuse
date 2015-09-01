@@ -1,5 +1,5 @@
 
-import Markdown   from 'markdown-it'
+import Markdown   from 'Markdown-it'
 import React      from 'react'
 
 const markdown = new Markdown({
@@ -10,7 +10,7 @@ const markdown = new Markdown({
 
 export default React.createClass({
   render() {
-    return <article className="markdown"></article>
+    return <article className="Markdown"></article>
   },
   componentDidMount() {
     this.update()

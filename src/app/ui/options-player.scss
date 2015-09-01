@@ -1,9 +1,9 @@
 
 @import "~bemuse/ui/common";
 
-.options-player {
+.OptionsPlayer {
   padding: 1em;
-  &--row {
+  &のrow {
     display: flex;
     margin-bottom: 1ex;
     align-items: baseline;
@@ -18,12 +18,12 @@
       flex: 1;
     }
   }
-  &--speed-hint {
+  &のspeedHint {
     color: #8b8685;
     font-size: 0.9em;
     margin-top: 0.5ex;
   }
-  &--buttons {
+  &のbuttons {
     margin-top: 1em;
     text-align: right;
     font-size: 1.2em;

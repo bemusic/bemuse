@@ -4,7 +4,7 @@ import React from 'react'
 
 export const RankingTable = React.createClass({
   render() {
-    return <table className="ranking-table">
+    return <table className="RankingTable">
       <tbody>
         {this.props.children}
       </tbody>
@@ -15,16 +15,16 @@ export const RankingTable = React.createClass({
 export const Row = React.createClass({
   render() {
     return <tr>
-      <td className="ranking-table--rank">
+      <td className="RankingTableのrank">
         {this.props.rank || <span title="Unable to determine your rank">??</span>}
       </td>
-      <td className="ranking-table--name">
+      <td className="RankingTableのname">
         {this.props.record.playerName}
       </td>
-      <td className="ranking-table--score">
+      <td className="RankingTableのscore">
         {this.props.record.score}
       </td>
-      <td className="ranking-table--accuracy">
+      <td className="RankingTableのaccuracy">
         {this.renderAccuracy(this.props.record.count, this.props.record.total)}%
       </td>
     </tr>
@@ -38,7 +38,7 @@ export const Row = React.createClass({
 export const Message = React.createClass({
   render() {
     return <tr>
-      <td colSpan={4} className="ranking-table--message">
+      <td colSpan={4} className="RankingTableのmessage">
         {this.props.children}
       </td>
     </tr>

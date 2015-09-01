@@ -1,7 +1,7 @@
 
 @import "~bemuse/ui/common";
 
-.music-chart-selector-item {
+.MusicChartSelectorItem {
   list-style: none;
   height: 12vmin;
   line-height: 12vmin;
@@ -15,20 +15,20 @@
     color: white;
   }
 
-  &--level {
+  &のlevel {
     opacity: 1;
     transition: 0.3s opacity;
   }
-  &--play {
+  &のplay {
     @include centered;
     opacity: 0;
     transition: 0.3s opacity;
   }
   &:not(.is-tutorial).is-active:hover {
-    .music-chart-selector-item--play {
+    .MusicChartSelectorItemのplay {
       opacity: 1;
     }
-    .music-chart-selector-item--level {
+    .MusicChartSelectorItemのlevel {
       opacity: 0;
     }
   }
@@ -36,7 +36,7 @@
 
 @mixin music-chart-selector-item--color($color, $name, $selector) {
   $animation-name: music-chart-selector-item--active-#{$name};
-  .music-chart-selector-item {
+  .MusicChartSelectorItem {
     #{unquote($selector)} {
       border: 2px solid $color;
       &.is-active {

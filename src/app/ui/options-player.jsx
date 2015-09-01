@@ -24,7 +24,7 @@ const PANEL_OPTIONS = [
 const OptionsPlayer = React.createClass({
   mixins: [React.addons.PureRenderMixin],
   render() {
-    return <div className="options-player">
+    return <div className="OptionsPlayer">
 
       <Binding store={Store} onChange={this.handleState} />
 
@@ -32,7 +32,7 @@ const OptionsPlayer = React.createClass({
         <OptionsSpeed
             value={this.state.options['player.P1.speed']}
             onChange={this.handleSpeedChange} />
-        <div className="options-player--speed-hint">
+        <div className="OptionsPlayerのspeedHint">
           You can also change the speed in-game<br />using the Up and Down arrow keys.
         </div>
       </OptionsPlayer.Row>
@@ -51,7 +51,7 @@ const OptionsPlayer = React.createClass({
             value={this.state.options['player.P1.panel']} />
       </OptionsPlayer.Row>
 
-      <div className="options-player--buttons">
+      <div className="OptionsPlayerのbuttons">
         <OptionsButton onClick={this.props.onClose}>Save & Exit</OptionsButton>
       </div>
 
@@ -77,7 +77,7 @@ const OptionsPlayer = React.createClass({
 OptionsPlayer.Row = React.createClass({
   mixins: [React.addons.PureRenderMixin],
   render() {
-    return <div className="options-player--row">
+    return <div className="OptionsPlayerのrow">
       <label>{this.props.label}</label>
       <div>{this.props.children}</div>
     </div>

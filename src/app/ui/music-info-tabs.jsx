@@ -12,9 +12,9 @@ import RankingContainer         from './ranking-container'
 export default React.createClass({
 
   render() {
-    return <section className="music-info-tabs">
-      <ul className="music-info-tabs--tabs">
-        <li className="music-info-tabs--options" onClick={this.props.onOptions}>
+    return <section className="MusicInfoTabs">
+      <ul className="MusicInfoTabsのtabs">
+        <li className="MusicInfoTabsのoptions" onClick={this.props.onOptions}>
           <Icon name="gear" /> Options
         </li>
         {this.renderTab(0, 'Stats')}
@@ -22,7 +22,7 @@ export default React.createClass({
         {this.renderTab(2, 'Information')}
       </ul>
       <div
-          className={c('music-info-tabs--panel',
+          className={c('MusicInfoTabsのpanel',
               { 'is-without-padding': this.state.selectedTab === 1 })}>
         {this.renderCurrentTab()}
       </div>
@@ -31,7 +31,7 @@ export default React.createClass({
 
   renderTab(index, title) {
     return <li
-        className={c('music-info-tabs--tab',
+        className={c('MusicInfoTabsのtab',
             { 'is-active': index === this.state.selectedTab })}
         onClick={() => this.setState({ selectedTab: index })}>
       {title}

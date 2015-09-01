@@ -7,21 +7,21 @@ export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
   render() {
     return <div
-        className={c('options-input-scratch',
+        className={c('OptionsInputScratch',
             { 'is-editing': this.props.isEditing })}
         onClick={this.handleClick}>
       <svg viewBox="-100 -100 200 200">
-        <path d={star()} className="options-input-scratch--star" />
+        <path d={star()} className="OptionsInputScratchのstar" />
       </svg>
-      <div className="options-input-scratch--text">
+      <div className="OptionsInputScratchのtext">
         <div className={this.renderKeyClass(0)}>{this.props.text[0]}</div>
-        <div className="options-input-scratch--key-separator">or</div>
+        <div className="OptionsInputScratchのkeySeparator">or</div>
         <div className={this.renderKeyClass(1)}>{this.props.text[1]}</div>
       </div>
     </div>
   },
   renderKeyClass(index) {
-    return c('options-input-scratch--key', {
+    return c('OptionsInputScratchのkey', {
       'is-editing': this.props.editIndex === index
     })
   },

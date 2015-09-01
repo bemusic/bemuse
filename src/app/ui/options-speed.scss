@@ -1,29 +1,29 @@
 
 @import "~bemuse/ui/common";
 
-.options-speed {
-  .options-button {
+.OptionsSpeed {
+  .OptionsButton {
     width: 2em;
   }
-  &--minus .options-button {
+  &のminus .OptionsButton {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
-  .options-input-field {
+  .OptionsInputField {
     text-align: center;
     width: 3em;
     border-radius: 0;
     margin-left: -1px;
   }
-  &--plus .options-button {
+  &のplus .OptionsButton {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     margin-left: -1px;
   }
-  .options-input-field {
+  .OptionsInputField {
     @include input-button-zindex(20);
   }
-  .options-button {
+  .OptionsButton {
     @include input-button-zindex(21);
   }
 }

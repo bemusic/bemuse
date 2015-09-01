@@ -79,7 +79,7 @@ export default React.createClass({
   render() {
     let options = this.state.options
     return <div
-        className="game-shell-scene"
+        className="GameShellScene"
         onDragOver={this.handleDragOver}
         onDrop={this.handleDrop}>
       <h1>Bemuse Game Shell</h1>

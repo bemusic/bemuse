@@ -1,18 +1,18 @@
 
 @import "~bemuse/ui/common";
 
-.result-scene {
+.ResultScene {
   @include scene-background(url(~bemuse/ui/images/bg/b.jpg));
   $bottom-padding: calc(32px + 4vh);
 
   color: black;
 
-  &--report {
+  &のreport {
     position: absolute;
     top: 25vmin; right: 52vw; bottom: 3vmin; left: 5vw;
   }
 
-  &--information {
+  &のinformation {
     background: rgba(white, 0.8);
     position: absolute;
     top: 0; right: 5vw; bottom: 0; left: 52vw;
@@ -22,11 +22,11 @@
     flex-direction: column;
   }
 
-  &--information-header {
+  &のinformationHeader {
     flex: 0 0 auto;
   }
 
-  &--information-body {
+  &のinformationBody {
     flex: 1 1 auto;
     margin: 4vh 0 4vh;
     background: rgba(white, 0.6);
@@ -34,34 +34,34 @@
     overflow-x: hidden;
   }
 
-  &--information-footer {
+  &のinformationFooter {
     flex: 0 0 auto;
     padding: 0 2vw;
     display: flex;
     justify-content: flex-end;
   }
 
-  .music-chart-info {
+  .MusicChartInfo {
     margin: 0 2vw;
   }
 
-  .ranking {
+  .Ranking {
     font-size: 2.5vmin;
   }
 
-  .result-grade {
+  .ResultGrade {
     position: absolute;
     bottom: $bottom-padding; right: 52vw;
     width: 20vh; height: 20vh;
   }
 
-  &--chart {
+  &のchart {
     float: right;
     margin-right: 2vw;
     text-align: center;
   }
 
-  &--mode {
+  &のmode {
     opacity: 0.5;
     position: absolute;
     right: 8vw;
@@ -71,7 +71,7 @@
     text-align: right;
   }
 
-  .music-chart-selector-item {
+  .MusicChartSelectorItem {
     width: 12vmin;
   }
 
@@ -87,11 +87,11 @@
     border-radius: 2vmin;
   }
 
-  &--exit {
+  &のexit {
     @include button(#5a5);
   }
 
-  &--tweet {
+  &のtweet {
     @include button(#54abee);
   }
 

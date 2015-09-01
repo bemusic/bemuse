@@ -18,12 +18,12 @@ export default React.createClass({
   },
   render() {
     let options = this.state.options
-    return <div className="options-advanced">
+    return <div className="OptionsAdvanced">
       <Binding store={Store} onChange={this.handleState} />
       <LatencyMessageListener onLatency={this.handleAudioInputLatencyChange} />
-      <div className="options-advanced--group">
+      <div className="OptionsAdvancedのgroup">
         <label>Latency</label>
-        <div className="options-advanced--group-item">
+        <div className="OptionsAdvancedのgroupItem">
           <OptionsInputField
               value={+options['system.offset.audio-input']}
               parse={this.parseLatency}
