@@ -1,8 +1,12 @@
 
-import Remarkable from 'remarkable'
+import Markdown   from 'markdown-it'
 import React      from 'react'
 
-const markdown = new Remarkable({ linkify: true })
+const markdown = new Markdown({
+  linkify: true,
+  breaks: true,
+  typographer: true,
+})
 
 export default React.createClass({
   render() {
