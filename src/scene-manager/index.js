@@ -22,7 +22,7 @@ import MAIN   from 'bemuse/utils/main-element'
 // To use the SceneManager, get the instance and use it::
 //
 //    import SCENE_MANAGER from 'bemuse/scene-manager'
-//    import TitleScene from './title-scene'
+//    import TitleScene from './TitleScene'
 //    SCENE_MANAGER.display(<TitleScene />)
 //
 // Non-React Scene

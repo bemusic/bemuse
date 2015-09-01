@@ -1,7 +1,7 @@
 
 import React    from 'react'
 import MAIN     from 'bemuse/utils/main-element'
-import Ranking  from 'bemuse/app/ui/ranking'
+import Ranking  from 'bemuse/app/ui/Ranking'
 import './ranking-table-playground.scss'
 
 const RankingTablePlayground = React.createClass({

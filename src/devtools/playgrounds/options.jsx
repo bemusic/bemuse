@@ -1,8 +1,8 @@
 
 import React      from 'react'
 import MAIN       from 'bemuse/utils/main-element'
-import ModalPopup from 'bemuse/ui/modal-popup'
-import Options    from 'bemuse/app/ui/options'
+import ModalPopup from 'bemuse/ui/ModalPopup'
+import Options    from 'bemuse/app/ui/Options'
 
 const OptionsPlayground = React.createClass({
   render() {

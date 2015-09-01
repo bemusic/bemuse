@@ -1,7 +1,7 @@
 
 import * as Music       from './music'
 import React            from 'react'
-import ExperimentScene  from './ui/experiment-scene.jsx'
+import ExperimentScene  from './ui/ExperimentScene.jsx'
 import $                from 'jquery'
 import _                from 'lodash'
 import Bacon            from 'baconjs'
