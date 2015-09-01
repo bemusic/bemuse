@@ -1,7 +1,7 @@
 
 @import "~bemuse/ui/common";
 
-.Loading-scene {
+.LoadingScene {
   @include main-bg;
 
   &のinfo {
@@ -10,11 +10,11 @@
     transform: translateY(-50%);
   }
 
-  .Loading-scene-song-info {
+  .LoadingSceneSongInfo {
     animation: loading-scene--loading-scene-song-info--animation 1s ease;
   }
 
-  .Loading-scene-progress {
+  .LoadingSceneProgress {
     position: absolute;
     bottom: 10px; left: 10px;
   }

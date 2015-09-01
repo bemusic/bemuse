@@ -1,5 +1,5 @@
 
-.error-dialog {
+.ErrorDialog {
 
   background: #533;
   color: #edd;
@@ -32,12 +32,12 @@
     opacity: 0.7;
   }
 
-  &--where {
+  &のwhere {
     font-size: 0.8em;
     color: #faa;
   }
 
-  &--close {
+  &のclose {
     position: absolute;
     top: 1ex; right: 1ex; background: lighten(#633, 0.1);
     width: 1.3em; height: 1.3em; line-height: 1.3em; text-align: center;

@@ -1,11 +1,11 @@
 
-import './boot.scss'
-import template from './boot.jade'
+import './Boot.scss'
+import template from './Boot.jade'
 import version  from 'bemuse/utils/version'
 
 let boot = document.createElement('div')
 boot.id = 'boot'
-boot.className = 'bemuse-boot'
+boot.className = 'Boot'
 boot.innerHTML = template()
 
 let bar = boot.querySelector('.js-progress-bar')

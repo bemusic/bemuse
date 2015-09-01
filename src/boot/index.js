@@ -12,8 +12,8 @@ import Progress         from 'bemuse/progress'
 import query            from 'bemuse/utils/query'
 
 import LoadingContext   from './loading-context'
-import * as boot        from './boot'
-import * as ErrorDialog from './error-dialog'
+import * as Boot        from './ui/Boot'
+import * as ErrorDialog from './ui/ErrorDialog'
 
 /* isparta ignore next */
 window.onerror = function(message, url, line, col, e) {
@@ -40,7 +40,7 @@ function(require) {
   if (loadModule[mode]) {
     let progress = new Progress()
     let context = new LoadingContext(progress)
-    progress.watch(() => boot.setProgress(progress.progress))
+    progress.watch(() => Boot.setProgress(progress.progress))
     context.use(function() {
       // >>
       // The main script is then loaded and imported into the environment,
@@ -53,7 +53,7 @@ function(require) {
       // .. codedoc:: boot/modes
       //
       loadModule[mode](function(loadedModule) {
-        boot.hide()
+        Boot.hide()
         loadedModule.main()
       })
     })

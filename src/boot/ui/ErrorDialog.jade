@@ -1,0 +1,7 @@
+
+h1 An error has occured!
+p= message
+p(class='ErrorDialogのwhere')= url + ':' + line + ':' + col
+
+pre(wrap)= (e && e.stack) || 'No stack trace available'
+div(class='ErrorDialogのclose') &times;

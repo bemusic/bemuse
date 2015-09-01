@@ -1,5 +1,5 @@
 
-.bemuse-boot {
+.Boot {
 
   position: fixed;
   top: 50%;
@@ -7,29 +7,29 @@
   transform: translate(-50%, -50%);
   text-align: center;
 
-  &--title {
+  &のtitle {
     color: #8b8685;
   }
 
-  &--text {
+  &のtext {
     letter-spacing: 0.5ex;
     &:not(:first-child) {
       margin-left: 0.5ex;
     }
   }
 
-  &--star {
+  &のstar {
     display: inline-block;
   }
 
-  &--progress {
+  &のprogress {
     width: 100px;
     margin: 10px auto 3px;
     padding: 1px;
     border: 1px solid #8b8685;
   }
 
-  &--progress-bar {
+  &のprogress-bar {
     $a: rgba(#8b8685, 0.7);
     $b: rgba(#8b8685, 0);
     width: 100%;
@@ -42,11 +42,11 @@
         $a 50%, $a 75%,
         $b 75%, $b 100%);
       background-size: 7px 7px;
-      animation: 1s bemuse-boot--indeterminate linear infinite;
+      animation: 1s Bootのindeterminate linear infinite;
     }
   }
 
-  &--description {
+  &のdescription {
     font-size: 10px;
     color: #8b8685;
     text-transform: uppercase;
@@ -54,7 +54,7 @@
     padding-left: 1.5ex;
   }
 
-  &--version {
+  &のversion {
     margin-top: 10px;
     font-size: 9px;
     font-weight: bold;
@@ -63,7 +63,7 @@
 
 }
 
-@keyframes bemuse-boot--indeterminate {
+@keyframes Bootのindeterminate {
   from { background-position: 0 0; }
   to { background-position: 7px 0; }
 }
