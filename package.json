@@ -1,6 +1,6 @@
 {
   "name": "bemuse-tools",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "bemuse-tools: Tools for Bemuse",
   "main": "index.js",
   "scripts": {
