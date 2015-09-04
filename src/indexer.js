@@ -61,7 +61,7 @@ export function index(path, { recursive }) {
 
     console.log('-> Scanning files...')
     let dirs = new Map()
-    let pattern = (recursive ? '**/' : '') + '*/*.{bms,bme,bml}'
+    let pattern = (recursive ? '**/' : '') + '*/*.{bms,bme,bml,bmson}'
     for (var name of yield glob(pattern, { cwd: path })) {
       let bmsPath = join(path, name)
       put(dirs, dirname(bmsPath), () => []).push(basename(bmsPath))
