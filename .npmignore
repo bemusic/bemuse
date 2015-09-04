@@ -1,5 +1,4 @@
 *.bemuse
-/lib/*.js
 
 # created by git-ignore
 # Windows image file caches

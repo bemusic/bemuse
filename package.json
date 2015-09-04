@@ -4,7 +4,8 @@
   "description": "bemuse-tools: Tools for Bemuse",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -r ./spec/support/es6 spec/*_spec.js"
+    "test": "mocha -r ./spec/support/es6 spec/*_spec.js",
+    "prepublish": "gulp compile"
   },
   "bin": {
     "bemuse-tools": "./bin/bemuse-tools"
@@ -40,6 +41,8 @@
   },
   "devDependencies": {
     "chai": "^1.10.0",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
     "jscs": "^1.9.0",
     "jshint": "^2.6.3",
     "mocha": "^2.1.0"
