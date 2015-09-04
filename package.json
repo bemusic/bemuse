@@ -1,0 +1,38 @@
+{
+  "name": "bmson",
+  "version": "0.21.0",
+  "description": "BMSON support for Bemuse",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp compile compile-spec && mocha",
+    "prepublish": "gulp compile"
+  },
+  "keywords": [
+    "bmson",
+    "BMS",
+    "Bemuse"
+  ],
+  "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dtinth/bmson.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dtinth/bmson/issues"
+  },
+  "homepage": "https://github.com/dtinth/bmson#readme",
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
+    "mocha": "^2.3.0"
+  },
+  "peerDependencies": {
+    "bms": "^v2.0.0-beta.3"
+  },
+  "dependencies": {
+    "babel": "^5.8.23",
+    "lodash": "^3.10.1"
+  }
+}
