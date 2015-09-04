@@ -4,8 +4,6 @@ import 'bemuse/polyfill'
 import indexer  from 'bemuse-indexer'
 import Promise  from 'bluebird'
 
-import * as bmson from 'bemuse/bmson'
-
 /*global FileReaderSync*/
 if (typeof FileReader === 'undefined' &&
     typeof FileReaderSync !== 'undefined') {
@@ -25,14 +23,6 @@ if (typeof FileReader === 'undefined' &&
   }
 }
 
-function getFileInfo(buffer, metadata) {
-  if (metadata.name.match(/\.bmson$/i)) {
-    return bmson.getInfo(buffer, metadata)
-  } else {
-    return indexer.getFileInfo(buffer, metadata)
-  }
-}
-
 addEventListener('message', function({ data }) {
   let files = data.files.map(convertBuffer)
   postMessage({ type: 'started' })
@@ -40,7 +30,7 @@ addEventListener('message', function({ data }) {
     postMessage({ type: 'progress', current, total, file })
   }
   Promise.try(function () {
-    return indexer.getSongInfo(files, { onProgress, getFileInfo })
+    return indexer.getSongInfo(files, { onProgress })
   })
   .then(function(song) {
     song.warnings.forEach(function(warning) {

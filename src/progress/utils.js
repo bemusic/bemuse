@@ -35,3 +35,36 @@ export function wrapPromise(progress, f) {
 export function bind(from, to) {
   return from.watch(() => to.report(from.current, from.total, from.extra))
 }
+
+export function simultaneous(target) {
+  let queue = [ ]
+  let current
+  let unsubscribe
+  function update () {
+    if (current) {
+      target.report(current.current, current.total, current.extra)
+    }
+    if (queue.length > 0 && (!current || current.progress >= 1)) {
+      bind(queue.shift())
+    }
+  }
+  function bind (progress) {
+    if (current === progress) {
+      return
+    }
+    if (unsubscribe) {
+      unsubscribe()
+      unsubscribe = null
+    }
+    current = progress
+    if (current) {
+      unsubscribe = current.watch(update)
+    }
+  }
+  return {
+    add (progress) {
+      queue.push(progress)
+      update()
+    }
+  }
+}
