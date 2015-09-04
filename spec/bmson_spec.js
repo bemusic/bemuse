@@ -147,4 +147,31 @@ describe('bmson', function () {
       check(1680, 0.6, undefined)
     })
   })
+
+  describe('hasScratch', function () {
+    it('should return true if there is a scratch in 1P', function () {
+      void expect(bmson.hasScratch({
+        soundChannel: [
+          { notes: [ { x: 1 } ] },
+          { notes: [ { x: 3 }, { x: 8 } ] },
+        ]
+      })).to.be.true
+    })
+    it('should return true if there is a scratch in 2P', function () {
+      void expect(bmson.hasScratch({
+        soundChannel: [
+          { notes: [ { x: 1 } ] },
+          { notes: [ { x: 13 }, { x: 18 } ] },
+        ]
+      })).to.be.true
+    })
+    it('should return false if scratch not found', function () {
+      void expect(bmson.hasScratch({
+        soundChannel: [
+          { notes: [ { x: 1 } ] },
+          { notes: [ { x: 3 }, { x: 7 } ] },
+        ]
+      })).to.be.false
+    })
+  })
 })

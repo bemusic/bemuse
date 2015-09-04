@@ -194,3 +194,14 @@ export function getColumn(x) {
   }
   return undefined
 }
+
+// Public: Checks if there is a scratch in a bmson file
+//
+export function hasScratch(bmson) {
+  for (let { notes } of bmson.soundChannel) {
+    for (let { x } of notes) {
+      if (x === 8 || x === 18) return true
+    }
+  }
+  return false
+}
