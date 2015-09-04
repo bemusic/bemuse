@@ -1,6 +1,7 @@
 
 var createHash  = require('crypto').createHash
 var bms         = require('bms')
+var bmson       = require('bmson')
 var Promise     = require('bluebird')
 var _           = require('lodash')
 var assign      = require('object-assign')
@@ -31,6 +32,30 @@ exports.extensions['.bms'] = function (source) {
       keys:       getKeys(chart),
     }
   })
+}
+
+exports.extensions['.bmson'] = function (source) {
+  return (
+    Promise.try(function () {
+      return new Buffer(source).toString('utf8')
+    })
+    .then(function (string) {
+      return JSON.parse(string)
+    })
+    .then(function(object) {
+      var info    = bmson.getSongInfo(object.info)
+      var timing  = bmson.getTiming(object)
+      var ms      = bmson.getMusicalScore(object, timing)
+      var notes   = ms.notes
+      return {
+        info:       info,
+        notes:      notes,
+        timing:     timing,
+        scratch:    bmson.hasScratch(object),
+        keys:       bmson.getKeys(object),
+      }
+    })
+  )
 }
 
 

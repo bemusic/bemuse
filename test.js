@@ -139,6 +139,28 @@ describe('getFileInfo (bms)', function() {
 })
 
 
+describe('getFileInfo (bmson)', function() {
+
+  function info(bmson) {
+    var source = JSON.stringify(bmson)
+    return indexer.getFileInfo(new Buffer(source), { name: 'meow.bmson' })
+  }
+
+  describe('.info', function() {
+    it('should return song info', function() {
+      return (
+        expect(info({ info: { title: 'Running Out' } })
+          .get('info')
+          .get('title')
+        )
+        .to.eventually.equal('Running Out')
+      )
+    })
+  })
+
+})
+
+
 describe('getSongInfo', function() {
 
   describe('with multiple files', function() {
