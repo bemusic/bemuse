@@ -10,19 +10,18 @@ module.exports = new DataStructure({
    * @property t
    * @type Number
    */
-  t: Number,
+  t: 'number',
 
   /**
    * @property x
    * @type Number
    */
-  x: Number,
+  x: 'number',
 
   /**
    * @property dx
    * @type Number
    */
-  dx: Number,
+  dx: 'number',
 
 })
-

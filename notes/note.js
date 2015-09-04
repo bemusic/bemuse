@@ -11,24 +11,24 @@ module.exports = new DataStructure({
    * @property beat
    * @type Number
    */
-  beat: Number,
+  beat: 'number',
 
   /**
    * @property endBeat
    * @type Number|undefined
    */
-  endBeat: DataStructure.maybe(Number),
+  endBeat: DataStructure.maybe('number'),
 
   /**
    * @property column
    * @type String|undefined
    */
-  column: DataStructure.maybe(String),
+  column: DataStructure.maybe('string'),
 
   /**
    * @property keysound
    * @type String
    */
-  keysound: String,
+  keysound: 'string',
 
 })
