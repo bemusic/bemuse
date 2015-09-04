@@ -1,0 +1,16 @@
+
+.MusicChartSelector {
+  list-style: none;
+  padding: 0;
+  .MusicChartSelectorItem {
+    display: inline-block;
+    width: 12vmin;
+    box-sizing: border-box;
+    margin: 0.6vmin 1.2vmin 0.6vmin 0;
+    &.is-tutorial {
+      display: block;
+      width: auto;
+      margin-right: 0;
+    }
+  }
+}

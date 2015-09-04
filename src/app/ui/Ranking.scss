@@ -1,0 +1,21 @@
+
+@import "~bemuse/ui/common";
+
+.Ranking {
+  color: #111;
+  &のtitle {
+    padding: 0.4em 1em 0;
+    font-weight: bold;
+  }
+  &のerror {
+    color: #d55;
+  }
+  &のerrorRetry {
+    font-weight: normal;
+    color: #369;
+    text-decoration: none;
+  }
+  &のerrorDescription {
+    color: #888;
+  }
+}

@@ -1,0 +1,59 @@
+
+@import "~bemuse/ui/common";
+
+.MusicChartSelectorItem {
+  list-style: none;
+  height: 12vmin;
+  line-height: 12vmin;
+  font-size: 5vmin;
+  text-align: center;
+  background: rgba(#fff, 0.8);
+  border-radius: 2vmin;
+  cursor: pointer;
+  position: relative;
+  &.is-active {
+    color: white;
+  }
+
+  &のlevel {
+    opacity: 1;
+    transition: 0.3s opacity;
+  }
+  &のplay {
+    @include centered;
+    opacity: 0;
+    transition: 0.3s opacity;
+  }
+  &:not(.is-tutorial).is-active:hover {
+    .MusicChartSelectorItemのplay {
+      opacity: 1;
+    }
+    .MusicChartSelectorItemのlevel {
+      opacity: 0;
+    }
+  }
+}
+
+@mixin music-chart-selector-item--color($color, $name, $selector) {
+  $animation-name: music-chart-selector-item--active-#{$name};
+  .MusicChartSelectorItem {
+    #{unquote($selector)} {
+      border: 2px solid $color;
+      &.is-active {
+        background: #8ac;
+        animation: 3s #{$animation-name} infinite;
+      }
+    }
+  }
+  @keyframes #{$animation-name} {
+    $color1: lighten($color, 10%);
+    $color2: darken($color, 10%);
+    0% { background: $color1; }
+    50% { background: $color2; }
+    100% { background: $color1; }
+  }
+}
+
+@include music-chart-selector-item--color(#8ac, normal, '&');
+@include music-chart-selector-item--color(#ac8, 5k, '&.is-5keys');
+@include music-chart-selector-item--color(#c66, insane, '&.is-insane');

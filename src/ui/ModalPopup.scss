@@ -1,0 +1,22 @@
+
+@import "common";
+
+.ModalPopup {
+  @include full-screen;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  &のbackdrop {
+    @include full-screen;
+    background: rgba(#111, 0.5);
+    z-index: 1;
+  }
+  &のcontents {
+    position: relative;
+    z-index: 2;
+  }
+  &:not(.is-visible) {
+    display: none;
+  }
+}

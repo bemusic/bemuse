@@ -3,15 +3,15 @@ import now from 'bemuse/utils/now'
 
 import SCENE_MANAGER    from 'bemuse/scene-manager'
 import React            from 'react'
-import TitleScene       from './ui/title-scene'
-import AboutScene       from './ui/about-scene'
-import ModeSelectScene  from './ui/mode-select-scene'
+import TitleScene       from './ui/TitleScene'
+import AboutScene       from './ui/AboutScene'
+import ModeSelectScene  from './ui/ModeSelectScene'
 import ServiceWorkerRegistrationScene
-    from './ui/service-worker-registration-scene'
+    from './ui/ServiceWorkerRegistrationScene'
 
 import { OFFICIAL_SERVER_URL }    from './constants'
 import { isBrowserSupported }     from './browser-support'
-import BrowserSupportWarningScene from './ui/browser-support-warning-scene'
+import BrowserSupportWarningScene from './ui/BrowserSupportWarningScene'
 
 import { getMusicServer, getTimeSynchroServer }
     from './query-flags'

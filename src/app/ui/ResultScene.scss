@@ -1,0 +1,98 @@
+
+@import "~bemuse/ui/common";
+
+.ResultScene {
+  @include scene-background(url(~bemuse/ui/images/bg/b.jpg));
+  $bottom-padding: calc(32px + 4vh);
+
+  color: black;
+
+  &のreport {
+    position: absolute;
+    top: 25vmin; right: 52vw; bottom: 3vmin; left: 5vw;
+  }
+
+  &のinformation {
+    background: rgba(white, 0.8);
+    position: absolute;
+    top: 0; right: 5vw; bottom: 0; left: 52vw;
+    padding-top: 25vmin;
+    padding-bottom: $bottom-padding;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &のinformationHeader {
+    flex: 0 0 auto;
+  }
+
+  &のinformationBody {
+    flex: 1 1 auto;
+    margin: 4vh 0 4vh;
+    background: rgba(white, 0.6);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  &のinformationFooter {
+    flex: 0 0 auto;
+    padding: 0 2vw;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .MusicChartInfo {
+    margin: 0 2vw;
+  }
+
+  .Ranking {
+    font-size: 2.5vmin;
+  }
+
+  .ResultGrade {
+    position: absolute;
+    bottom: $bottom-padding; right: 52vw;
+    width: 20vh; height: 20vh;
+  }
+
+  &のchart {
+    float: right;
+    margin-right: 2vw;
+    text-align: center;
+  }
+
+  &のmode {
+    opacity: 0.5;
+    position: absolute;
+    right: 8vw;
+    top: 5vmin;
+    line-height: 16vmin;
+    font-size: 5vmin;
+    text-align: right;
+  }
+
+  .MusicChartSelectorItem {
+    width: 12vmin;
+  }
+
+  @mixin button($face) {
+    display: block;
+    background: $face;
+    border: 2px solid darken($face, 5%);
+    text-align: center;
+    font-size: 3vmin;
+    color: #fff;
+    padding: 1ex 2ex;
+    cursor: pointer;
+    border-radius: 2vmin;
+  }
+
+  &のexit {
+    @include button(#5a5);
+  }
+
+  &のtweet {
+    @include button(#54abee);
+  }
+
+}

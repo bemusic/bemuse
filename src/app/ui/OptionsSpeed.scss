@@ -1,0 +1,29 @@
+
+@import "~bemuse/ui/common";
+
+.OptionsSpeed {
+  .OptionsButton {
+    width: 2em;
+  }
+  &のminus .OptionsButton {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .OptionsInputField {
+    text-align: center;
+    width: 3em;
+    border-radius: 0;
+    margin-left: -1px;
+  }
+  &のplus .OptionsButton {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-left: -1px;
+  }
+  .OptionsInputField {
+    @include input-button-zindex(20);
+  }
+  .OptionsButton {
+    @include input-button-zindex(21);
+  }
+}

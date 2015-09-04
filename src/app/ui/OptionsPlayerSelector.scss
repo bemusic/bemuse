@@ -1,0 +1,22 @@
+
+@import "~bemuse/ui/common";
+
+.OptionsPlayerSelector {
+  display: flex;
+  .OptionsPlayerGraphics {
+    vertical-align: top;
+  }
+  &のlabel {
+    text-align: center;
+    color: #8b8685;
+  }
+  &のitem.is-active .OptionsPlayerSelectorのlabel {
+    color: #bef;
+  }
+  &のitem:not(.is-active) {
+    cursor: pointer;
+  }
+  &のitem:not(:first-child) {
+    margin-left: 1ex;
+  }
+}

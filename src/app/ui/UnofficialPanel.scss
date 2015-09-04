@@ -1,0 +1,18 @@
+
+@import "~bemuse/ui/common";
+
+.UnofficialPanel {
+  max-width: 30em;
+  &のcontent {
+    padding: 1em;
+    > p {
+      margin: 0;
+      &:not(:first-child) {
+        margin-top: 1em;
+      }
+    }
+  }
+  &のbuttons {
+    text-align: right;
+  }
+}

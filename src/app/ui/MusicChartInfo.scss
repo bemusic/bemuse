@@ -1,0 +1,17 @@
+
+@import "~bemuse/ui/common";
+
+.MusicChartInfo {
+  font: 2.5vmin $ui-font;
+  &のtitle {
+    font-size: 2em;
+    font-weight: bold;
+  }
+  &のsubtitle {
+    font-size: 1.5em; color: rgba(black, 0.6);
+    font-weight: bold;
+  }
+  &のartist {
+    > small { font-size: 1em; color: rgba(black, 0.6); }
+  }
+}

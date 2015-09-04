@@ -1,0 +1,47 @@
+
+@import "~bemuse/ui/common";
+
+.AuthenticationPanel {
+  &のlayout {
+    display: flex;
+    align-items: stretch;
+  }
+  &のtitle {
+    padding: 12px 12px 24px;
+    img {
+      width: 143px;
+      height: 143px;
+    }
+  }
+  &のidentification {
+    color: #8b8685;
+    font-size: 32px;
+    padding-left: 10px;
+  }
+  &のcontent {
+    padding: 16px 26px 16px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &のmodeSwitcher {
+    text-align: center;
+    margin-bottom: 16px;
+    color: #8b8685;
+    a {
+      color: #8b8685;
+    }
+    a.is-active {
+      color: #bef;
+      font-weight: bold;
+      cursor: default;
+      text-decoration: none;
+    }
+  }
+  &のmessage {
+    color: #ff6;
+    &.is-error {
+      color: #f88;
+    }
+  }
+}

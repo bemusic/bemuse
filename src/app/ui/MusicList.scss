@@ -1,0 +1,21 @@
+@import "~bemuse/ui/common";
+
+.MusicList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  &のgroupTitle {
+    margin: 3vmin 0 2vmin;
+    text-align: center;
+    color: rgba(black, 0.6);
+    font-weight: bold;
+    text-shadow: 0 1px 0 rgba(white, 0.5);
+  }
+  .MusicListItem {
+    margin: 2vmin 0;
+  }
+  > li:first-child {
+    margin-top: 0;
+  }
+}

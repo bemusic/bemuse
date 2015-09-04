@@ -1,0 +1,39 @@
+@import "~bemuse/ui/common";
+
+.MusicListItem {
+  @include soft-shadow;
+  background: rgba(#fff, 0.9);
+  border: 5px solid rgba(#fff, 0);
+  border-radius: 2vmin;
+  color: black;
+  padding: 1.5vmin 2vmin;
+  position: relative;
+  cursor: pointer;
+
+  &のtitle {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 0.5ex;
+  }
+
+  &のgenre {
+    position: absolute;
+    bottom: 1.5vmin; right: 2vmin;
+    opacity: 0.6;
+  }
+
+  &のtutorial {
+    font-size: 2.5em;
+    font-weight: bold;
+  }
+
+  &のhighlight {
+    background: #ffa;
+    color: #a00;
+  }
+
+  &.is-active {
+    background: rgba(#fff, 0.95);
+    border: 5px solid rgba(#000, 0.2);
+  }
+}

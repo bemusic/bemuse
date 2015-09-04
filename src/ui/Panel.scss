@@ -1,0 +1,18 @@
+
+@import "~bemuse/ui/common";
+
+.Panel {
+  border: 1px solid #151413;
+  border-radius: 4px 4px 0 0;
+  box-shadow: 0 2px 20px rgba(black, 0.3);
+  background: #353433;
+
+  &のtitle {
+    background: #252423 linear-gradient(to bottom,
+      #353433 0%, #252423 50%, #151413 50%, #252423 100%);
+    border-bottom: 0;
+    text-align: center;
+    color: #8b8685;
+    padding: 0.5ex 1em;
+  }
+}

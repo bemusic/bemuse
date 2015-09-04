@@ -1,0 +1,91 @@
+
+@import "~bemuse/ui/common";
+
+.ExperimentScene {
+  display: flex;
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  align-items: center;
+  justify-content: center;
+
+  &のbutton {
+    @include button;
+    font-size: 18px;
+  }
+
+  &のmessage {
+    text-align: center;
+    font-size: 16px;
+  }
+
+  &のprogress {
+    width: 100px;
+    margin: 1em auto;
+    border: 1px solid #8b8685;
+    padding: 1px;
+  }
+  &のprogressBar {
+    height: 5px;
+    background: #8b8685;
+    transition: 0.5s transform linear;
+    transform-origin: left;
+  }
+
+  &.is-finished &のwrapper {
+    animation: 3.243243243s experiment-scene--auto-synchro linear infinite;
+  }
+  &.is-finished &のwrapperInner {
+    animation: 3s experiment-scene--spin linear infinite;
+    animation-delay: 13.378378377s;
+  }
+}
+
+@keyframes experiment-scene--auto-synchro {
+  $small: 0.95;
+  $large: 1.05;
+  0.00% { transform: scale(1); }
+  11.88% { transform: scale($small); }
+  13.13% { transform: scale($large); }
+  24.38% { transform: scale($small); }
+  25.63% { transform: scale($large); }
+  36.88% { transform: scale($small); }
+  38.13% { transform: scale($large); }
+  49.38% { transform: scale($small); }
+  50.63% { transform: scale($large); }
+  61.88% { transform: scale($small); }
+  63.13% { transform: scale($large); }
+  74.38% { transform: scale($small); }
+  75.63% { transform: scale($large); }
+  86.88% { transform: scale($small); }
+  88.13% { transform: scale($large); }
+  100.00% { transform: scale(1); }
+}
+
+@keyframes experiment-scene--spin {
+  0% { transform: rotate(0.00deg); }
+  4% { transform: rotate(1.99deg); }
+  8% { transform: rotate(3.85deg); }
+  12% { transform: rotate(5.48deg); }
+  16% { transform: rotate(6.75deg); }
+  20% { transform: rotate(7.61deg); }
+  24% { transform: rotate(7.98deg); }
+  28% { transform: rotate(7.86deg); }
+  32% { transform: rotate(7.24deg); }
+  36% { transform: rotate(6.16deg); }
+  40% { transform: rotate(4.70deg); }
+  44% { transform: rotate(2.94deg); }
+  48% { transform: rotate(1.00deg); }
+  52% { transform: rotate(-1.00deg); }
+  56% { transform: rotate(-2.94deg); }
+  60% { transform: rotate(-4.70deg); }
+  64% { transform: rotate(-6.16deg); }
+  68% { transform: rotate(-7.24deg); }
+  72% { transform: rotate(-7.86deg); }
+  76% { transform: rotate(-7.98deg); }
+  80% { transform: rotate(-7.61deg); }
+  84% { transform: rotate(-6.75deg); }
+  88% { transform: rotate(-5.48deg); }
+  92% { transform: rotate(-3.85deg); }
+  96% { transform: rotate(-1.99deg); }
+  100% { transform: rotate(0.00deg); }
+}

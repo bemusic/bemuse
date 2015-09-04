@@ -1,0 +1,77 @@
+
+.GameShellScene {
+  margin: 20px auto;
+  background: #353433;
+  border: 1px solid #555453;
+  padding: 15px;
+  max-width: 720px;
+  .drop-zone {
+    border: 2px dashed #555453;
+    padding: 5px;
+    a.is-active {
+      font-weight: bold;
+    }
+  }
+  .drop-zone-hint {
+    padding: 10px;
+    text-align: center;
+    color: #8b8685;
+  }
+  @mixin option-label {
+    display: block;
+    color: #8b8685;
+    font-weight: bold;
+    font-size: 0.8em;
+    margin: 0;
+    margin-bottom: 0.5ex;
+  }
+  form > div {
+    margin-bottom: 1em;
+    &.text {
+      .label {
+        @include option-label;
+      }
+      input {
+        font: inherit;
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px inset #555453;
+        background: #252423;
+        color: #bfb;
+      }
+      input:disabled {
+        opacity: 0.2;
+      }
+    }
+    &.checkbox {
+      input {
+        margin-right: 1ex;
+      }
+    }
+    &.radio {
+      > h3 {
+        @include option-label;
+      }
+      > label {
+        display: block;
+      }
+      input {
+        margin-right: 1ex;
+      }
+    }
+  }
+  button {
+    background: #8b8685;
+    border: 1px outset #aba6a5;
+    font: inherit;
+    font-size: 1.5em;
+    color: #e9e8e7;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  a {
+    color: #fed;
+  }
+}

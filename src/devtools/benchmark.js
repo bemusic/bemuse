@@ -2,7 +2,7 @@
 import now from 'bemuse/utils/now'
 import { shouldEnableBenchmark } from './query-flags'
 import React from 'react'
-import BenchmarkPanel from './ui/benchmark-panel'
+import BenchmarkPanel from './ui/BenchmarkPanel'
 
 function Stat() {
   let sum = 0

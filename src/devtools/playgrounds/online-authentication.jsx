@@ -1,7 +1,7 @@
 
 import React from 'react'
 import MAIN  from 'bemuse/utils/main-element'
-import AuthenticationPopup from 'bemuse/online/ui/authentication-popup'
+import AuthenticationPopup from 'bemuse/online/ui/AuthenticationPopup'
 
 const OnlineAuthenticationTestScene = React.createClass({
   render() {

@@ -1,0 +1,33 @@
+
+@import "~bemuse/ui/common";
+
+.SceneToolbar {
+  background: rgba(black, 0.7);
+  overflow: hidden;
+  display: flex;
+  padding: 0 1vw;
+  font-size: 15px;
+  > a, > span {
+    display: block;
+    padding: 0.8ex 1.3ex;
+  }
+  > a {
+    color: rgba(white, 0.8);
+    text-decoration: none;
+    background: rgba(black, 0);
+    transition: 0.1s background, 0.1s color;
+    &:hover {
+      background: rgba(black, 0.5);
+      color: white;
+    }
+  }
+  > a[data-position="right"] {
+    float: right;
+  }
+  > span {
+    color: rgba(white, 0.6);
+  }
+  &のspacer {
+    flex: 1;
+  }
+}

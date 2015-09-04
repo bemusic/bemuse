@@ -1,0 +1,16 @@
+.LoadingSceneProgress {
+  color: #333;
+  font-size: 11px;
+  .LoadingSceneProgressBar {
+    display: inline-block;
+    vertical-align: middle;
+    width: 48px;
+    margin-right: 4px;
+    position: relative;
+    top: -1px;
+  }
+  &のextra {
+    font-size: 83%;
+    opacity: 0.7;
+  }
+}

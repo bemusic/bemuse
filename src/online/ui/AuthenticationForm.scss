@@ -1,0 +1,37 @@
+
+@import "~bemuse/ui/common";
+
+.AuthenticationForm {
+  label {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+  }
+  label[hidden] {
+    display: none;
+  }
+  &のlabel {
+    width: 120px;
+    text-align: right;
+  }
+  &のcontrol {
+    margin-left: 12px;
+  }
+  input {
+    font: inherit;
+    background: #252423 linear-gradient(to top, #454443, #151413);
+    border: 1px solid #555453;
+    padding: 0.5ex 1.3ex;
+    color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(#000, 0.5);
+    width: 12em;
+  }
+  &のbuttons {
+    margin-top: 24px;
+    text-align: center;
+  }
+  .OptionsButton {
+    font-size: 1.4em;
+  }
+}

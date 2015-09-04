@@ -1,0 +1,18 @@
+
+@import "~bemuse/ui/common";
+
+.Options {
+  display: flex;
+  flex-direction: row-reverse;
+  font-size: 15px;
+  @media (orientation: portrait) {
+    flex-direction: column;
+  }
+  &のvgroup {
+    display: flex;
+    flex-direction: column;
+  }
+  .Panel {
+    margin: 0.8em;
+  }
+}

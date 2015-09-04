@@ -1,0 +1,28 @@
+
+.LoadingSceneSongInfo {
+
+  background: rgba(#fff, 0.96);
+  color: #191817;
+  text-align: center;
+  padding: 25px 0px;
+  box-shadow: 0 2px 18px rgba(#000, 0.2);
+
+  &のgenre {
+    font-size: 3vmin;
+  }
+  &のtitle {
+    font-size: 8vmin;
+    font-weight: bold;
+  }
+  &のsubtitle {
+    font-size: 6vmin;
+  }
+  &のartist {
+    font-size: 4vmin;
+    margin-top: 0.8ex;
+  }
+  &のsubartist {
+    font-size: 2.5vmin;
+  }
+
+}
