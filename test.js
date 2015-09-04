@@ -5,10 +5,10 @@ var indexer = require('./')
 require('chai').use(require('chai-as-promised'))
 require('./lcs_spec')
 
-describe('getChartInfo', function() {
+describe('getFileInfo (bms)', function() {
 
   function info(source) {
-    return indexer.getChartInfo(new Buffer(source))
+    return indexer.getFileInfo(new Buffer(source), { name: 'meow.bms' })
   }
 
   describe('.md5', function() {
@@ -140,7 +140,7 @@ describe('getChartInfo', function() {
 
 
 describe('getSongInfo', function() {
-  
+
   describe('with multiple files', function() {
 
     var files = [
@@ -218,4 +218,3 @@ describe('getSongInfo', function() {
   })
 
 })
-

@@ -4,6 +4,8 @@ var bms         = require('bms')
 var Promise     = require('bluebird')
 var _           = require('lodash')
 var assign      = require('object-assign')
+var extname     = require('path').extname
+var invariant   = require('invariant')
 
 var lcs         = require('./lcs')
 var getKeys     = require('./keys')
@@ -12,32 +14,66 @@ var getDuration = require('./duration')
 
 var readBMS     = Promise.promisify(bms.Reader.readAsync, bms.Reader)
 
-function getChartInfo(source) {
+
+exports.extensions = { }
+
+exports.extensions['.bms'] = function (source) {
   return readBMS(source).then(function(str) {
     var chart   = bms.Compiler.compile(str).chart
     var info    = bms.SongInfo.fromBMSChart(chart)
     var notes   = bms.Notes.fromBMSChart(chart)
     var timing  = bms.Timing.fromBMSChart(chart)
-    var count   = notes.all().filter(noteIsPlayable).length
-    var hash    = createHash('md5')
-    hash.update(source)
     return {
-      md5:        hash.digest('hex'),
       info:       info,
-      noteCount:  count,
+      notes:      notes,
+      timing:     timing,
       scratch:    hasScratch(chart),
       keys:       getKeys(chart),
-      bpm:        getBpmInfo(notes, timing),
-      duration:   getDuration(notes, timing),
     }
   })
 }
 
-exports.getChartInfo = getChartInfo
 
+function getFileInfo(data, meta, options) {
 
-function getFileInfo(data, meta) {
-  return getChartInfo(data)
+  options = options || { }
+  invariant(typeof meta.name === 'string', 'meta.name must be a string')
+
+  var extensions = options.extensions || exports.extensions
+  var extension = extensions[extname(meta.name).toLowerCase()] || extensions['.bms']
+
+  var md5 = meta.md5 || (function () {
+    var hash    = createHash('md5')
+    hash.update(data)
+    return hash.digest('hex')
+  }())
+
+  return (
+    extension(data, meta, options)
+    .then(function (basis) {
+
+      invariant(basis.info, 'basis.info must be a BMS.SongInfo')
+      invariant(basis.notes, 'basis.notes must be a BMS.Notes')
+      invariant(basis.timing, 'basis.timing must be a BMS.Timing')
+      invariant(typeof basis.scratch === 'boolean', 'basis.scratch must be a boolean')
+      invariant(typeof basis.keys === 'string', 'basis.scratch must be a string')
+
+      var info    = basis.info
+      var notes   = basis.notes
+      var timing  = basis.timing
+      var count   = notes.all().filter(noteIsPlayable).length
+
+      return {
+        md5:        md5,
+        info:       info,
+        noteCount:  count,
+        bpm:        getBpmInfo(notes, timing),
+        duration:   getDuration(notes, timing),
+        scratch:    basis.scratch,
+        keys:       basis.keys,
+      }
+    })
+  )
 }
 
 exports.getFileInfo = getFileInfo
@@ -55,7 +91,7 @@ function getSongInfo(files, options) {
     }
   }
   var processed = 0
-  var infoForFile = options.getFileInfo || getFileInfo
+  var doGetFileInfo = options.getFileInfo || getFileInfo
   return Promise.map(files, function(file) {
     var name = file.name
     var data = file.data
@@ -68,7 +104,7 @@ function getSongInfo(files, options) {
         return cached
       } else {
         var meta = { name: name, md5: md5 }
-        return Promise.resolve(infoForFile(data, meta)).tap(function(info) {
+        return Promise.resolve(doGetFileInfo(data, meta, options)).tap(function(info) {
           if (cache) return cache.put(md5, info)
         })
       }
