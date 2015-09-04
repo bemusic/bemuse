@@ -1,6 +1,6 @@
 {
   "name": "bmson",
-  "version": "0.21.0",
+  "version": "0.22.0",
   "description": "BMSON support for Bemuse",
   "main": "index.js",
   "scripts": {
