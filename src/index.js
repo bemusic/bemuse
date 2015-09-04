@@ -198,9 +198,11 @@ export function getColumn(x) {
 // Public: Checks if there is a scratch in a bmson file
 //
 export function hasScratch(bmson) {
-  for (let { notes } of bmson.soundChannel) {
-    for (let { x } of notes) {
-      if (x === 8 || x === 18) return true
+  if (bmson.soundChannel) {
+    for (let { notes } of bmson.soundChannel) {
+      for (let { x } of notes) {
+        if (x === 8 || x === 18) return true
+      }
     }
   }
   return false
@@ -212,11 +214,13 @@ export function getKeys(bmson) {
   let hasKeys = false
   let hasSecondPlayer = false
   let hasDeluxeKeys = false
-  for (let { notes } of bmson.soundChannel) {
-    for (let { x } of notes) {
-      hasKeys = true
-      if (x >= 11 && x <= 20) hasSecondPlayer = true
-      if (x === 6 || x === 7 || x === 16 || x === 17) hasDeluxeKeys = true
+  if (bmson.soundChannel) {
+    for (let { notes } of bmson.soundChannel) {
+      for (let { x } of notes) {
+        hasKeys = true
+        if (x >= 11 && x <= 20) hasSecondPlayer = true
+        if (x === 6 || x === 7 || x === 16 || x === 17) hasDeluxeKeys = true
+      }
     }
   }
   if (!hasKeys) return 'empty'
