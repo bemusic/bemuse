@@ -205,3 +205,24 @@ export function hasScratch(bmson) {
   }
   return false
 }
+
+// Public: Checks if there is a scratch in a bmson file
+//
+export function getKeys(bmson) {
+  let hasKeys = false
+  let hasSecondPlayer = false
+  let hasDeluxeKeys = false
+  for (let { notes } of bmson.soundChannel) {
+    for (let { x } of notes) {
+      hasKeys = true
+      if (x >= 11 && x <= 20) hasSecondPlayer = true
+      if (x === 6 || x === 7 || x === 16 || x === 17) hasDeluxeKeys = true
+    }
+  }
+  if (!hasKeys) return 'empty'
+  if (hasSecondPlayer) {
+    return hasDeluxeKeys ? '14K' : '10K'
+  } else {
+    return hasDeluxeKeys ? '7K' : '5K'
+  }
+}

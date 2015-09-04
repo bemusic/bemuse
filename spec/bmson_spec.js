@@ -174,4 +174,21 @@ describe('bmson', function () {
       })).to.be.false
     })
   })
+
+  describe('getKeys', function () {
+    function testcase(xs, keys) {
+      it('should work with ' + keys, function () {
+        expect(bmson.getKeys({
+          soundChannel: xs.map(x => ({
+            notes: [ { x } ]
+          }))
+        })).to.equal(keys)
+      })
+    }
+    testcase([1, 3, 5, 7], '7K')
+    testcase([1, 3, 5, 8], '5K')
+    testcase([1, 3, 5, 8, 12, 14, 18], '10K')
+    testcase([1, 3, 5, 8, 12, 14, 16, 18], '14K')
+    testcase([], 'empty')
+  })
 })
