@@ -98,7 +98,6 @@
     "data-structure": "^1.2.0",
     "debug": "^2.1.1",
     "fastclick": "^1.0.6",
-    "gulp-cucumber": "0.0.12",
     "invariant": "^2.1.0",
     "isparta": "^3.0.4",
     "isparta-instrumenter-loader": "^0.2.1",
