@@ -1,5 +1,5 @@
 
-import * as bmson from './index'
+import * as bmson from 'bmson'
 import Notechart  from 'bemuse/game/notechart'
 import BMS        from 'bms'
 

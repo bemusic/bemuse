@@ -48,4 +48,28 @@ describe('ProgressUtils', function() {
     })
   })
 
+  describe('.simultaneous', function () {
+    it('should report in fifo manner', function () {
+      let out = new Progress()
+      let simultaneous = ProgressUtils.simultaneous(out)
+      let a = new Progress()
+      let b = new Progress()
+      simultaneous.add(a)
+      a.report(10, 20)
+      expect(out.current).to.equal(10)
+      simultaneous.add(b)
+      b.report(11, 30)
+      expect(out.current).to.equal(10)
+      a.report(15, 20)
+      expect(out.current).to.equal(15)
+      a.report(20, 20)
+      expect(out.current).to.equal(11)
+      b.report(21, 30)
+      expect(out.current).to.equal(21)
+      b.report(30, 30)
+      expect(out.current).to.equal(30)
+      expect(out.total).to.equal(30)
+    })
+  })
+
 })

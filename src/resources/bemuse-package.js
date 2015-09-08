@@ -29,9 +29,15 @@ export class BemusePackageResources {
       all:      new Progress(),
       current:  new Progress(),
     }
+    let simultaneous = ProgressUtils.simultaneous(this.progress.current)
+    let nextProgress = () => {
+      let progress = new Progress()
+      simultaneous.add(progress)
+      return progress
+    }
     this._loadPayload = ProgressUtils.wrapPromise(this.progress.all,
-      throat(1, (payloadUrl) =>
-        download(payloadUrl).as('blob', this.progress.current).then(getPayload)
+      throat(2, (payloadUrl) =>
+        download(payloadUrl).as('blob', nextProgress()).then(getPayload)
       )
     )
   }
