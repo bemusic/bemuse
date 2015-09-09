@@ -1,5 +1,5 @@
 
-import Markdown   from 'Markdown-it'
+import Markdown   from 'markdown-it'
 import React      from 'react'
 
 const markdown = new Markdown({
