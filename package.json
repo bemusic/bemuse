@@ -1,10 +1,11 @@
 {
   "name": "bemuse-tools",
-  "version": "1.1.0-beta.1",
+  "version": "1.3.0",
   "description": "bemuse-tools: Tools for Bemuse",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -r ./spec/support/es6 spec/*_spec.js"
+    "test": "mocha -r ./spec/support/es6 spec/*_spec.js",
+    "prepublish": "gulp compile"
   },
   "bin": {
     "bemuse-tools": "./bin/bemuse-tools"
@@ -21,7 +22,7 @@
   "homepage": "https://github.com/bemusic/bemuse-tools",
   "dependencies": {
     "babel": "^5.4.3",
-    "bemuse-indexer": "^1.2.0",
+    "bemuse-indexer": "^2.0.1",
     "bluebird": "^2.9.9",
     "bytes": "^1.0.0",
     "chalk": "^1.0.0",
@@ -43,6 +44,8 @@
   },
   "devDependencies": {
     "chai": "^1.10.0",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
     "jscs": "^1.9.0",
     "jshint": "^2.6.3",
     "mocha": "^2.1.0"

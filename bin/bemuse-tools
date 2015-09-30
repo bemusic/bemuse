@@ -1,9 +1,4 @@
 #!/usr/bin/env node
 
-var resolve = require('path').resolve
-var nodeModulesFolder = resolve(__dirname, '../node_modules')
-
-require('babel/register')({
-  ignore: nodeModulesFolder
-})
-require('../src/main')
+require('babel/polyfill')
+require('../lib/main')
