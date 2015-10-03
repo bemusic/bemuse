@@ -1,3 +1,6 @@
+machine:
+  node:
+    version: '4'
 notify:
   webhooks:
     - url: https://webhooks.gitter.im/e/ba1b37fc12942c2430c9
