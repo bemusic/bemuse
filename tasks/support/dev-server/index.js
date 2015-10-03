@@ -8,6 +8,7 @@ import notifier         from 'node-notifier'
 import config           from '../../../config/webpack'
 import routes           from '../../../config/routes'
 import path             from '../../../config/path'
+import * as Env         from '../../../config/env'
 
 import * as CoverageReport  from '../coverage-report'
 
@@ -16,6 +17,7 @@ import testStat             from '../test-middleware/stat'
 
 export function start() {
 
+  let port = Env.serverPort()
   var compiler = webpack(config)
   var server = new WebpackDevServer(compiler, config.devServer)
 
@@ -49,10 +51,9 @@ export function start() {
   server.use('/music', express.static(path('..', 'music')))
   server.use('/coverage', express.static(path('coverage', 'lcov-report')))
 
-  server.listen(8080, '0.0.0.0', function(err) {
+  server.listen(port, '0.0.0.0', function(err) {
     if (err) throw new gutil.PluginError('webpack-dev-server', err)
-    gutil.log('[webpack-dev-server]', 'http://localhost:8080/')
+    gutil.log('[webpack-dev-server]', 'http://localhost:' + port + '/')
   })
 
 }
-

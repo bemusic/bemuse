@@ -9,7 +9,7 @@
     "code-review": "gulp code-review",
     "lint": "gulp lint",
     "pre-commit": "gulp pre-commit",
-    "start": "gulp server",
+    "start": "bash -c \"HOT=true gulp server\"",
     "test": "bash -c \"BEMUSE_COV=true gulp build && BEMUSE_COV=true gulp test:exit\"",
     "travis": "gulp travis"
   },
@@ -99,6 +99,7 @@
     "debug": "^2.1.1",
     "fastclick": "^1.0.6",
     "invariant": "^2.1.0",
+    "is-true-ish": "0.0.1",
     "isparta": "^3.0.4",
     "isparta-instrumenter-loader": "^0.2.1",
     "jquery": "^2.1.3",
