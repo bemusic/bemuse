@@ -1,8 +1,9 @@
 
 import Bacon      from 'baconjs'
-import { Parse }  from 'parse'
 import invariant  from 'invariant'
 import Cache      from 'lru-cache'
+
+import OnlineService from './online-service'
 
 // https://github.com/baconjs/bacon.js/issues/536
 function makeEager(川) {
@@ -26,9 +27,11 @@ class Descriptor {
 
 export function Online() {
 
+  const service = new OnlineService()
+
   const cache = new Cache()
   const user口 = new Bacon.Bus()
-  const user川 = user口.toProperty(Parse.User.current()).map(unwrapUser)
+  const user川 = user口.toProperty(service.getCurrentUser())
 
   // user川 needs to be eager, so that when someone subscribes, they always
   // get the latest user value.
@@ -39,84 +42,26 @@ export function Online() {
     cache.reset()
   })
 
-  function wrapPromise(promise) {
-    return Promise.resolve(promise).catch(function(error) {
-      if (error instanceof Error) {
-        throw error
-      } else {
-        throw new Error('Parse Error ' + error.code + ': ' + error.message)
-      }
-    })
-  }
-
-  function unwrapUser(parseUser) {
-    if (!parseUser) return null
-    return {
-      username: parseUser.get('username'),
-      email:    parseUser.get('email'),
-    }
-  }
-
-  function toObject(物) {
-    return Object.assign({ }, 物.attributes, { id: 物.id })
-  }
-
-  function signUp({ username, password, email }) {
-    invariant(typeof username === 'string', 'username must be a string')
-    invariant(typeof password === 'string', 'password must be a string')
-    invariant(typeof email === 'string',    'email must be a string')
-    return (
-      wrapPromise(Parse.User.signUp(username, password, { email }))
+  function signUp(options) {
+    return (service.signUp(options)
       .tap(user => user口.push(user))
     )
   }
 
-  function logIn({ username, password }) {
-    invariant(typeof username === 'string', 'username must be a string')
-    invariant(typeof password === 'string', 'password must be a string')
-    return (
-      wrapPromise(Parse.User.logIn(username, password))
+  function logIn(options) {
+    return (service.logIn(options)
       .tap(user => user口.push(user))
     )
   }
 
   function logOut() {
-    return (
-      wrapPromise(Parse.User.logOut()).then(() => {})
+    return (service.logOut()
       .tap(() => user口.push(null))
     )
   }
 
   function submitScore(info) {
-    return (
-      wrapPromise(Parse.Cloud.run('submitScore', info))
-      .then(({ data, meta }) => {
-        return {
-          data: toObject(data),
-          meta: meta
-        }
-      })
-    )
-  }
-
-  function parseRetrieveRecord(descriptor) {
-    let { md5, playMode } = descriptor
-    let query = new Parse.Query('GameScore')
-    query.equalTo('md5',      md5)
-    query.equalTo('playMode', playMode)
-    query.equalTo('user',     Parse.User.current())
-    return wrapPromise(query.first()).tap(record => {
-      cache.set(descriptor.recordCacheKey(), record)
-    })
-  }
-
-  function parseRetrieveRank(descriptor, gameScore) {
-    let { md5, playMode } = descriptor
-    let countQuery = new Parse.Query('GameScore')
-    countQuery.equalTo('md5',       md5)
-    countQuery.equalTo('playMode',  playMode)
-    countQuery.greaterThan('score', gameScore.get('score'))
-    return wrapPromise(countQuery.count())
+    return service.submitScore(info)
   }
 
   function retrieveRecord(descriptor) {
@@ -126,21 +71,7 @@ export function Online() {
       return Promise.resolve(cached)
     }
     return (
-      parseRetrieveRecord(descriptor)
-      .then(gameScore => {
-        if (gameScore) {
-          return (
-            parseRetrieveRank(descriptor, gameScore)
-            .then(x => x + 1, () => null)
-            .then(rank => ({ data: toObject(gameScore), meta: { rank } }))
-          )
-        } else {
-          return {
-            data: null,
-            meta: { rank: null }
-          }
-        }
-      })
+      service.retrieveRecord(descriptor)
       .tap(result => {
         cache.set(cacheKey, result)
       })
@@ -172,19 +103,8 @@ export function Online() {
     if (cached) {
       return Promise.resolve(cached)
     }
-    let { md5, playMode } = descriptor
-    var query = new Parse.Query('GameScore')
-    query.equalTo('md5',      md5)
-    query.equalTo('playMode', playMode)
-    query.descending('score')
-    query.limit(100)
     return (
-      wrapPromise(query.find())
-      .then(results => {
-        return {
-          data: results.map(toObject)
-        }
-      })
+      service.retrieveScoreboard(descriptor)
       .tap(result => {
         cache.set(cacheKey, result)
       })
@@ -192,7 +112,7 @@ export function Online() {
   }
 
   function submitOrRetrieveRecord(data) {
-    if (Parse.User.current()) {
+    if (service.isLoggedIn()) {
       if (data.score) {
         cache.reset()
         return submitScore(data)
