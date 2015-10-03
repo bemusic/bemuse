@@ -1,8 +1,9 @@
 
 import webpack        from 'webpack'
+import ProgressPlugin from '../src/hacks/webpack-progress'
 import path           from './path'
 import * as Env       from './env'
-import ProgressPlugin from '../src/hacks/webpack-progress'
+
 
 let config = {
   context: path('src'),
@@ -18,7 +19,7 @@ let config = {
     },
   },
   entry: {
-    boot: './boot'
+    boot: [ './boot' ]
   },
   output: {
     path: path('dist', 'build'),
@@ -56,8 +57,7 @@ let config = {
       {
         test: /\.scss$/,
         loader: 'style!css!autoprefixer?browsers=last 2 version' +
-                '!sass?outputStyle=expanded' +
-                '!bemuse/hacks/sass-import-rewriter',
+                '!sass?outputStyle=expanded'
       },
       {
         test: /\.css$/,
@@ -93,6 +93,7 @@ let config = {
   ],
 }
 
+
 function CompileProgressPlugin() {
   var old = ''
   return new webpack.ProgressPlugin(function(percentage, message) {
@@ -106,15 +107,16 @@ function CompileProgressPlugin() {
   })
 }
 
-if (process.env.SOURCE_MAPS === 'true' && Env.development()) {
+if (Env.sourceMapsEnabled() && Env.development()) {
   config.devtool = 'eval-source-map'
-} else if (process.env.SOURCE_MAPS === 'true' || Env.production()) {
+} else if (Env.sourceMapsEnabled() || Env.production()) {
   config.devtool = 'source-map'
 } else if (Env.development()) {
   config.devtool = 'eval'
 }
 
-if (Env.test() || process.env.BEMUSE_COV === 'true') {
+
+if (Env.test() || Env.coverageEnabled()) {
   config.module.preLoaders.push({
     test: /\.js$/,
     include: [path('src')],
@@ -126,6 +128,14 @@ if (Env.test() || process.env.BEMUSE_COV === 'true') {
     loader: 'isparta-instrumenter',
   })
 }
+
+
+if (Env.hotModeEnabled()) {
+  config.devServer.hot = true
+  config.plugins.push(new webpack.HotModuleReplacementPlugin())
+  config.entry.boot.unshift('webpack/hot/dev-server')
+}
+
 
 if (Env.production()) {
   config.plugins.push(
