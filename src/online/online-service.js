@@ -37,7 +37,7 @@ export class OnlineService {
     return (
       wrapPromise(Parse.Cloud.run('submitScore', info))
       .then(({ data, meta: { rank } }) => {
-        return { data: Object.assign(toObject(data), { rank }) }
+        return Object.assign(toObject(data), { rank })
       })
     )
   }
@@ -72,10 +72,10 @@ export class OnlineService {
       .then(record => {
         if (record) {
           return (this._retrieveRank(options, record.get('score'))
-            .then(rank => ({ data: Object.assign(toObject(record), { rank }) }))
+            .then(rank => Object.assign(toObject(record), { rank }))
           )
         } else {
-          return { data: null }
+          return null
         }
       })
     )
@@ -89,7 +89,9 @@ export class OnlineService {
     query.descending('score')
     query.limit(100)
     return wrapPromise(query.find()).then(results => ({
-      data: results.map(toObject)
+      data: results.map((record, index) =>
+        Object.assign(toObject(record), { rank: index + 1 })
+      )
     }))
   }
 

@@ -153,8 +153,7 @@ function tests(APP_ID, JS_KEY) {
             count: [122, 1, 0, 0, 333],
             log: ''
           }))
-          .tap(function(result) {
-            var record = result.data
+          .tap(function(record) {
             expect(record.playNumber).to.equal(1)
             expect(record.playCount).to.equal(1)
             expect(record.recordedAt).to.be.an.instanceof(Date)
@@ -172,8 +171,7 @@ function tests(APP_ID, JS_KEY) {
             count: [123, 1, 0, 0, 332],
             log: ''
           }))
-          .tap(function(result) {
-            var record = result.data
+          .tap(function(record) {
             expect(record.score).to.equal(123456)
             expect(record.combo).to.equal(123)
             expect(record.playNumber).to.equal(1)
@@ -192,8 +190,7 @@ function tests(APP_ID, JS_KEY) {
             count: [456, 0, 0, 0, 0],
             log: ''
           }))
-          .tap(function(result) {
-            var record = result.data
+          .tap(function(record) {
             expect(record.score).to.equal(555555)
             expect(record.combo).to.equal(456)
             expect(record.playNumber).to.equal(3)
@@ -213,8 +210,7 @@ function tests(APP_ID, JS_KEY) {
             count: [123, 1, 0, 0, 332],
             log: ''
           }))
-          .tap(function(result) {
-            var record = result.data
+          .tap(function(record) {
             expect(record.score).to.equal(123210)
             expect(record.rank).to.equal(1)
           })
@@ -232,8 +228,7 @@ function tests(APP_ID, JS_KEY) {
             count: [123, 1, 0, 0, 332],
             log: ''
           }))
-          .tap(function(result) {
-            var record = result.data
+          .tap(function(record) {
             expect(record.score).to.equal(123210)
             expect(record.playNumber).to.equal(1)
             expect(record.playCount).to.equal(1)
@@ -292,8 +287,9 @@ function tests(APP_ID, JS_KEY) {
             playMode: 'BM',
           }))
           .tap(function(result) {
-            console.log(result)
             expect(result.data).to.have.length(2)
+            expect(result.data[0].rank).to.eq(1)
+            expect(result.data[1].rank).to.eq(2)
           })
         })
         step('log out...', function() {

@@ -146,7 +146,7 @@ export function Online() {
           return {
             status: 'completed',
             error:  null,
-            record: state.value.data,
+            record: state.value,
           }
         } else if (state.status === 'error' && state.error.isUnauthenticated) {
           return {
