@@ -40,9 +40,7 @@ export default React.createClass({
         {
           submission.record
           ? <RankingTable.Row
-                record={submission.record}
-                rank={submission.rank}
-            />
+                record={submission.record} />
           : (
             submission.status === 'unauthenticated'
             ? <RankingTable.Message>
@@ -84,9 +82,7 @@ export default React.createClass({
           ? state.data.map((record, index) =>
               <RankingTable.Row
                   key={index}
-                  record={record}
-                  rank={index + 1}
-              />
+                  record={record} />
             )
           : (
             state.meta.scoreboard.status === 'loading'

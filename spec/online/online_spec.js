@@ -158,7 +158,7 @@ function tests(APP_ID, JS_KEY) {
             expect(record.playNumber).to.equal(1)
             expect(record.playCount).to.equal(1)
             expect(record.recordedAt).to.be.an.instanceof(Date)
-            expect(result.meta.rank).to.equal(1)
+            expect(record.rank).to.equal(1)
             lastRecordedAt = record.recordedAt
           })
         })
@@ -216,7 +216,7 @@ function tests(APP_ID, JS_KEY) {
           .tap(function(result) {
             var record = result.data
             expect(record.score).to.equal(123210)
-            expect(result.meta.rank).to.equal(1)
+            expect(record.rank).to.equal(1)
           })
         })
         step('as another user...', function() {
@@ -237,7 +237,7 @@ function tests(APP_ID, JS_KEY) {
             expect(record.score).to.equal(123210)
             expect(record.playNumber).to.equal(1)
             expect(record.playCount).to.equal(1)
-            expect(result.meta.rank).to.equal(2)
+            expect(record.rank).to.equal(2)
           })
         })
       })
@@ -356,7 +356,7 @@ function tests(APP_ID, JS_KEY) {
           .then(function(state) {
             expect(state.meta.submission.status).to.equal('completed')
             expect(state.meta.scoreboard.status).to.equal('loading')
-            expect(state.meta.submission.rank).to.equal(3)
+            expect(state.meta.submission.record.rank).to.equal(3)
           })
         })
         step('should finish reloading scoreboard', function() {

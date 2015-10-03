@@ -147,21 +147,18 @@ export function Online() {
             status: 'completed',
             error:  null,
             record: state.value.data,
-            rank:   state.value.meta.rank,
           }
         } else if (state.status === 'error' && state.error.isUnauthenticated) {
           return {
             status: 'unauthenticated',
             error:  null,
             record: null,
-            rank:   null,
           }
         } else {
           return {
             status: state.status,
             error:  state.error,
             record: null,
-            rank:   null,
           }
         }
       })

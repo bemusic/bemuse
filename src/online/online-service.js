@@ -36,9 +36,8 @@ export class OnlineService {
   submitScore (info) {
     return (
       wrapPromise(Parse.Cloud.run('submitScore', info))
-      .then(({ data, meta }) => {
-        // XXX: merge them into single object
-        return { data: toObject(data), meta }
+      .then(({ data, meta: { rank } }) => {
+        return { data: Object.assign(toObject(data), { rank }) }
       })
     )
   }
@@ -73,12 +72,10 @@ export class OnlineService {
       .then(record => {
         if (record) {
           return (this._retrieveRank(options, record.get('score'))
-            // XXX: merge them into single object
-            .then(rank => ({ data: toObject(record), meta: { rank } }))
+            .then(rank => ({ data: Object.assign(toObject(record), { rank }) }))
           )
         } else {
-          // XXX: merge them into single object
-          return { data: null, meta: null }
+          return { data: null }
         }
       })
     )

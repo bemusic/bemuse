@@ -16,7 +16,7 @@ export const Row = React.createClass({
   render() {
     return <tr>
       <td className="RankingTableのrank">
-        {this.props.rank || <span title="Unable to determine your rank">??</span>}
+        {this.props.record.rank || <span title="Unable to determine your rank">??</span>}
       </td>
       <td className="RankingTableのname">
         {this.props.record.playerName}
