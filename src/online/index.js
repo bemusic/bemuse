@@ -6,11 +6,6 @@ import Cache      from 'lru-cache'
 import OnlineService    from './online-service'
 import { withOutcome }  from './utils'
 
-// https://github.com/baconjs/bacon.js/issues/536
-function makeEager(川) {
-  return 川.subscribe(() => {})
-}
-
 class Descriptor {
   constructor({ md5, playMode }) {
     invariant(typeof md5      === 'string', 'md5 must be a string')
@@ -31,12 +26,14 @@ export function Online() {
   const service = new OnlineService()
 
   const cache = new Cache()
-  const user口 = new Bacon.Bus()
-  const user川 = user口.toProperty(service.getCurrentUser())
 
-  // user川 needs to be eager, so that when someone subscribes, they always
-  // get the latest user value.
-  makeEager(user川)
+  const user口 = new Bacon.Bus()
+  const user川 = (
+    user口
+    // https://github.com/baconjs/bacon.js/issues/536
+    .toProperty(null)
+    .map(user => user || service.getCurrentUser())
+  )
 
   // Make sure to clear cache every time user logs in.
   user川.onValue(() => {
@@ -44,21 +41,15 @@ export function Online() {
   })
 
   function signUp(options) {
-    return (service.signUp(options)
-      .tap(user => user口.push(user))
-    )
+    return service.signUp(options).tap(user => user口.push(user))
   }
 
   function logIn(options) {
-    return (service.logIn(options)
-      .tap(user => user口.push(user))
-    )
+    return service.logIn(options).tap(user => user口.push(user))
   }
 
   function logOut() {
-    return (service.logOut()
-      .tap(() => user口.push(null))
-    )
+    return service.logOut().tap(() => user口.push(null))
   }
 
   function submitScore(info) {
