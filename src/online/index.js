@@ -3,7 +3,8 @@ import Bacon      from 'baconjs'
 import invariant  from 'invariant'
 import Cache      from 'lru-cache'
 
-import OnlineService from './online-service'
+import OnlineService    from './online-service'
+import { withOutcome }  from './utils'
 
 // https://github.com/baconjs/bacon.js/issues/536
 function makeEager(川) {
@@ -78,25 +79,6 @@ export function Online() {
     )
   }
 
-  function reloadable川(promiseFactory, execute川) {
-    let state川 = (
-      execute川
-      .flatMapLatest(() => {
-        return (
-          Bacon.fromPromise(Promise.resolve(promiseFactory()))
-          .map(    value  => prev => Object.assign({ }, prev, { status: 'completed', value, error: null }))
-          .mapError(error => prev => Object.assign({ }, prev, { status: 'error', error }))
-          .startWith(        prev => Object.assign({ }, prev, { status: 'loading', error: null }))
-        )
-      })
-      .scan(
-        { status: 'loading', value: null, error: null },
-        (prev, next) => next(prev)
-      )
-    )
-    return state川
-  }
-
   function getScoreboard(descriptor) {
     let cacheKey  = descriptor.scoreboardCacheKey()
     let cached    = cache.get(cacheKey)
@@ -133,13 +115,10 @@ export function Online() {
     const reload口     = new Bacon.Bus()
 
     const submission川 = (
-      reloadable川(
-        () => submitOrRetrieveRecord(data),
-        (
-          Bacon.once()
-          .merge(resubmit口)
-          .merge(user川.changes().filter(user => !!user).first())
-        )
+      withOutcome(() => submitOrRetrieveRecord(data))(
+        Bacon.once()
+        .merge(resubmit口)
+        .merge(user川.changes().filter(user => !!user).first())
       )
       .map(state => {
         if (state.status === 'completed') {
@@ -164,9 +143,10 @@ export function Online() {
       })
     )
 
-    const scoreboard川 = reloadable川(
-      () => getScoreboard(descriptor),
-      submission川.filter(({ status }) => status === 'unauthenticated' || status === 'completed')
+    const scoreboard川 = withOutcome(() => getScoreboard(descriptor))(
+      submission川.filter(({ status }) =>
+        status === 'unauthenticated' || status === 'completed'
+      )
     )
 
     const state川 = Bacon.combineWith(
