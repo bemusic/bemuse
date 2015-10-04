@@ -312,60 +312,54 @@ function tests(APP_ID, JS_KEY) {
           ranking川 = ranking.state川
           dispose   = ranking川.subscribe(() => {})
         })
+
+        function waitFor(predicate) {
+          return Promise.resolve(ranking川.filter(predicate).first().toPromise())
+        }
+
         step('should have scoreboard loading status', function() {
-          return Promise.resolve(
-            ranking川.first().toPromise()
+          return (waitFor(() => true)
+            .then(state => {
+              expect(state.meta.scoreboard.status).to.equal('loading')
+            })
           )
-          .then(function(state) {
-            expect(state.meta.scoreboard.status).to.equal('loading')
-          })
         })
         step('no new score should be submitted', function() {
-          return Promise.resolve(
-            ranking川
-            .filter(state =>
+          return (
+            waitFor(state =>
               state.meta.scoreboard.status === 'completed' &&
               state.meta.submission.status === 'unauthenticated'
             )
-            .first()
-            .toPromise()
+            .then(state => {
+              expect(state.data).to.have.length(2)
+            })
           )
-          .then(function(state) {
-            expect(state.data).to.have.length(2)
-          })
         })
         step('sign up user3...', function() {
           return online.signUp(user3)
         })
         step('should start sending score', function() {
-          return Promise.resolve(
-            ranking川
-            .filter(state => state.meta.submission.status === 'loading')
-            .first()
-            .toPromise()
-          )
+          return waitFor(state => state.meta.submission.status === 'loading')
         })
         step('should finish sending score', function() {
-          return Promise.resolve(
-            ranking川.take(2).toPromise()
+          return (waitFor(state => state.meta.submission.status === 'completed')
+            .then(state => {
+              expect(state.meta.submission.record.rank).to.equal(3)
+            })
           )
-          .then(function(state) {
-            expect(state.meta.submission.status).to.equal('completed')
-            expect(state.meta.scoreboard.status).to.equal('loading')
-            expect(state.meta.submission.record.rank).to.equal(3)
-          })
+        })
+        step('should start loading scoreboard', function () {
+          return waitFor(state => state.meta.scoreboard.status === 'loading')
         })
         step('should finish reloading scoreboard', function() {
-          return Promise.resolve(
-            ranking川.take(2).toPromise()
+          return (waitFor(state => state.meta.scoreboard.status === 'completed')
+            .then(state => {
+              expect(state.data).to.have.length(3)
+            })
           )
-          .then(function(state) {
-            expect(state.meta.scoreboard.status).to.equal('completed')
-            expect(state.data).to.have.length(3)
-          })
         })
         step('resubscribe with read only', function() {
-          if (dispose) dispose()
+          dispose()
           ranking = online.Ranking({
             md5: prefix + 'song1',
             playMode: 'BM'
@@ -374,19 +368,16 @@ function tests(APP_ID, JS_KEY) {
           dispose   = ranking川.subscribe(() => {})
         })
         step('should not submit new score', function() {
-          return Promise.resolve(
-            ranking川
-            .filter(
-              ({ meta: { scoreboard: { status: status1 }, submission: { status: status2 } } }) => (
-                status1 === 'completed' && status2 === 'completed'
-              )
+          return (
+            waitFor(state =>
+              state.meta.scoreboard.status === 'completed' &&
+              state.meta.submission.status === 'completed'
             )
-            .first().toPromise()
+            .then(function(state) {
+              expect(state.data).to.have.length(3)
+              expect(state.meta.submission.record.playCount).to.equal(1)
+            })
           )
-          .then(function(state) {
-            expect(state.data).to.have.length(3)
-            expect(state.meta.submission.record.playCount).to.equal(1)
-          })
         })
         after(function() {
           online.logOut()
