@@ -313,12 +313,12 @@ function tests(APP_ID, JS_KEY) {
           dispose   = ranking川.subscribe(() => {})
         })
 
-        function waitFor(predicate) {
+        function when(predicate) {
           return Promise.resolve(ranking川.filter(predicate).first().toPromise())
         }
 
         step('should have scoreboard loading status', function() {
-          return (waitFor(() => true)
+          return (when(() => true)
             .then(state => {
               expect(state.meta.scoreboard.status).to.equal('loading')
             })
@@ -326,7 +326,7 @@ function tests(APP_ID, JS_KEY) {
         })
         step('no new score should be submitted', function() {
           return (
-            waitFor(state =>
+            when(state =>
               state.meta.scoreboard.status === 'completed' &&
               state.meta.submission.status === 'unauthenticated'
             )
@@ -339,20 +339,20 @@ function tests(APP_ID, JS_KEY) {
           return online.signUp(user3)
         })
         step('should start sending score', function() {
-          return waitFor(state => state.meta.submission.status === 'loading')
+          return when(state => state.meta.submission.status === 'loading')
         })
         step('should finish sending score', function() {
-          return (waitFor(state => state.meta.submission.status === 'completed')
+          return (when(state => state.meta.submission.status === 'completed')
             .then(state => {
               expect(state.meta.submission.record.rank).to.equal(3)
             })
           )
         })
         step('should start loading scoreboard', function () {
-          return waitFor(state => state.meta.scoreboard.status === 'loading')
+          return when(state => state.meta.scoreboard.status === 'loading')
         })
         step('should finish reloading scoreboard', function() {
-          return (waitFor(state => state.meta.scoreboard.status === 'completed')
+          return (when(state => state.meta.scoreboard.status === 'completed')
             .then(state => {
               expect(state.data).to.have.length(3)
             })
@@ -369,7 +369,7 @@ function tests(APP_ID, JS_KEY) {
         })
         step('should not submit new score', function() {
           return (
-            waitFor(state =>
+            when(state =>
               state.meta.scoreboard.status === 'completed' &&
               state.meta.submission.status === 'completed'
             )
