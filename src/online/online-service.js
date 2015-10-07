@@ -2,7 +2,7 @@
 // The OnlineService module wraps the Parse API.
 
 import { Parse } from 'parse'
-import { wrapPromise, unwrapUser, toObject } from './utils'
+import { wrapPromise, unwrapUser, toObject } from './parse-utils'
 
 import invariant from 'invariant'
 
@@ -93,6 +93,7 @@ export class OnlineService {
         Object.assign(toObject(record), { rank: index + 1 })
       )
     }))
+    .delay(1000).then(x => { throw new Error('meow')})
   }
 
 }

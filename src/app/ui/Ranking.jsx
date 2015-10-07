@@ -3,6 +3,7 @@ import './Ranking.scss'
 import React from 'react'
 import RankingTable from './RankingTable'
 import AuthenticationPopup from 'bemuse/online/ui/AuthenticationPopup'
+import { isWaiting } from 'bemuse/online/operations'
 
 export default React.createClass({
   getInitialState() {
@@ -38,9 +39,9 @@ export default React.createClass({
       </div>
       <RankingTable>
         {
-          submission.record
+          submission.value
           ? <RankingTable.Row
-                record={submission.record} />
+                record={submission.value} />
           : (
             submission.status === 'unauthenticated'
             ? <RankingTable.Message>
@@ -56,7 +57,7 @@ export default React.createClass({
                   )}
                 </RankingTable.Message>
               : (
-                submission.status === 'loading'
+                isWaiting(submission)
                 ? <RankingTable.Message>
                     Please wait...
                   </RankingTable.Message>
@@ -85,7 +86,7 @@ export default React.createClass({
                   record={record} />
             )
           : (
-            state.meta.scoreboard.status === 'loading'
+            isWaiting(state.meta.scoreboard)
             ? <RankingTable.Message>Loading...</RankingTable.Message>
             : (
               state.meta.scoreboard.status === 'error'

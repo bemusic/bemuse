@@ -310,7 +310,7 @@ function tests(APP_ID, JS_KEY) {
             log: ''
           })
           ranking川 = ranking.state川
-          dispose   = ranking川.subscribe(() => {})
+          dispose   = ranking川.onValue(() => {})
         })
 
         function when(predicate) {
@@ -318,11 +318,7 @@ function tests(APP_ID, JS_KEY) {
         }
 
         step('should have scoreboard loading status', function() {
-          return (when(() => true)
-            .then(state => {
-              expect(state.meta.scoreboard.status).to.equal('loading')
-            })
-          )
+          return when(state => state.meta.scoreboard.status === 'loading')
         })
         step('no new score should be submitted', function() {
           return (
@@ -344,7 +340,7 @@ function tests(APP_ID, JS_KEY) {
         step('should finish sending score', function() {
           return (when(state => state.meta.submission.status === 'completed')
             .then(state => {
-              expect(state.meta.submission.record.rank).to.equal(3)
+              expect(state.meta.submission.value.rank).to.equal(3)
             })
           )
         })
@@ -375,13 +371,13 @@ function tests(APP_ID, JS_KEY) {
             )
             .then(function(state) {
               expect(state.data).to.have.length(3)
-              expect(state.meta.submission.record.playCount).to.equal(1)
+              expect(state.meta.submission.value.playCount).to.equal(1)
             })
           )
         })
         after(function() {
           online.logOut()
-          if (dispose) dispose()
+          dispose()
         })
       })
 
