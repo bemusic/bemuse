@@ -39,7 +39,7 @@ let config = {
       {
         test: /\.jsx?$/,
         include: [path('src'), path('spec')],
-        loader: 'babel?modules=common&experimental=true',
+        loader: 'babel',
       },
       {
         test: /\.js$/,
