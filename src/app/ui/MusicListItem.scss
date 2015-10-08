@@ -10,15 +10,28 @@
   position: relative;
   cursor: pointer;
 
+  &のinfo-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  &のinfo-bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
   &のtitle {
     font-size: 1.5em;
     font-weight: bold;
     margin-bottom: 0.5ex;
+    flex: 1;
   }
 
   &のgenre {
-    position: absolute;
-    bottom: 1.5vmin; right: 2vmin;
     opacity: 0.6;
   }
 
@@ -30,10 +43,6 @@
   &のhighlight {
     background: #ffa;
     color: #a00;
-  }
-
-  &のcharts {
-    float: right;
   }
 
   &.is-active {

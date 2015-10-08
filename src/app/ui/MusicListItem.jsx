@@ -19,17 +19,21 @@ export default React.createClass({
         song.tutorial
         ? <div className="MusicListItemのtutorial">Tutorial</div>
         : <div className="MusicListItemのinfo">
-            <div className="MusicListItemのcharts">
-              {this.renderChartlist(song.charts)}
+            <div className="MusicListItemのinfo-top">
+              <div className="MusicListItemのtitle">
+                {this.renderHighlight(song.title)}
+              </div>
+              <div className="MusicListItemのcharts">
+                {this.renderChartlist(song.charts)}
+              </div>
             </div>
-            <div className="MusicListItemのtitle">
-              {this.renderHighlight(song.title)}
-            </div>
-            <div className="MusicListItemのartist">
-              {this.renderHighlight(song.artist)}
-            </div>
-            <div className="MusicListItemのgenre">
-              {this.renderHighlight(song.genre)}
+            <div className="MusicListItemのinfo-bottom">
+              <div className="MusicListItemのartist">
+                {this.renderHighlight(song.artist)}
+              </div>
+              <div className="MusicListItemのgenre">
+                {this.renderHighlight(song.genre)}
+              </div>
             </div>
           </div>
       }
