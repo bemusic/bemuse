@@ -93,7 +93,18 @@ export class OnlineService {
         Object.assign(toObject(record), { rank: index + 1 })
       )
     }))
-    .delay(1000).then(x => { throw new Error('meow')})
+  }
+
+  // Retrieve multiple records!
+  retrieveMultipleRecords (items) {
+    let query = new Parse.Query('GameScore')
+    query.containedIn('md5',  items.map(item => item.md5))
+    query.equalTo('user',     Parse.User.current())
+    query.limit(1000)
+    return (wrapPromise(query.find())
+      .then(results => results.map(toObject))
+      .tap(x => console.log(x))
+    )
   }
 
 }

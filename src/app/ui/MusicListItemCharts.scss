@@ -1,0 +1,10 @@
+
+@import "~bemuse/ui/common";
+
+.MusicListItemCharts {
+  display: flex;
+  .MusicListItemChart {
+    margin-left: 0.5vmin;
+    flex: none;
+  }
+}

@@ -5,6 +5,7 @@ import { Store }  from 'bemuse/flux'
 
 import * as GameLauncher      from '../game-launcher'
 import * as Actions           from '../actions/music-select-actions'
+import { visibleCharts, isChartPlayable } from '../utils/music-select-utils'
 import DefaultCollectionStore from './collection-store'
 import OptionsStore           from './options-store'
 
@@ -14,8 +15,6 @@ export function MusicSelectStoreFactory(CollectionStore) {
   const $collection   = CollectionStore.map(state => state.collection)
   const $unofficial   = CollectionStore.map(state => state.unofficial)
   const $loading      = $collection.map(({ loading }) => loading)
-
-  const playableChart = chart => chart.keys === '7K' || chart.keys === '5K'
 
   const $grouping     = Bacon.constant([
     { title: 'Custom Song', criteria: song => song.custom },
@@ -36,7 +35,7 @@ export function MusicSelectStoreFactory(CollectionStore) {
           .sortByAll([
             song => {
               return _(song.charts)
-                .filter(playableChart)
+                .filter(isChartPlayable)
                 .filter(chart => chart.info.difficulty < 5)
                 .filter(chart => chart.info.level > 0)
                 .map(chart => chart.info.level)
@@ -66,13 +65,7 @@ export function MusicSelectStoreFactory(CollectionStore) {
 
   const $charts = $song.map(song => (song && song.charts) || [ ])
 
-  const $visibleCharts = $charts.map(charts => _(charts)
-      .filter(playableChart)
-      .sortByAll(
-        chart => chart.info.difficulty >= 5 ? 1 : 0,
-        chart => chart.info.level
-      )
-      .value())
+  const $visibleCharts = $charts.map(visibleCharts)
 
   const $levelAnchorStrategy = $levelAnchor.map(level =>
       charts => _.min(charts, chart => Math.abs(chart.info.level - level)))

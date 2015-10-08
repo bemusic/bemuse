@@ -1,0 +1,26 @@
+
+@import "~bemuse/ui/common";
+
+.MusicListItemChart {
+  $size: 5vmin;
+  font-size: 2.5vmin;
+  border-radius: $size / 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  border: 1px solid rgba(#000, 0.3);
+  color: rgba(#000, 0.6);
+  box-sizing: border-box;
+  width: $size;
+  height: $size;
+  text-align: center;
+  &.is-played {
+    background: rgba(#000, 0.3);
+    color: white;
+    border: 0;
+  }
+  &.is-grade {
+    font-weight: bold;
+  }
+}

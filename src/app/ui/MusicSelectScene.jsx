@@ -63,6 +63,7 @@ export default React.createClass({
                 groups={musicSelect.groups}
                 highlight={musicSelect.filterText}
                 selectedSong={musicSelect.song}
+                playMode={musicSelect.playMode}
                 onSelect={this.handleSongSelect}
                 onTouch={this.handleMusicListTouch} />
             <MusicInfo

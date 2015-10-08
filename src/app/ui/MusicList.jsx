@@ -15,6 +15,7 @@ export default React.createClass({
             key={song.id}
             song={song}
             selected={song.id === this.props.selectedSong.id}
+            playMode={this.props.playMode}
             onSelect={this.props.onSelect}
             highlight={this.props.highlight} />),
       ])}

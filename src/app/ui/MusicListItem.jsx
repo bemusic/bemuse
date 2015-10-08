@@ -4,6 +4,10 @@ import './MusicListItem.scss'
 import React  from 'react'
 import c      from 'classnames'
 
+import { visibleCharts } from '../utils/music-select-utils'
+
+import MusicListItemCharts from './MusicListItemCharts'
+
 export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
   render() {
@@ -15,6 +19,9 @@ export default React.createClass({
         song.tutorial
         ? <div className="MusicListItemのtutorial">Tutorial</div>
         : <div className="MusicListItemのinfo">
+            <div className="MusicListItemのcharts">
+              {this.renderChartlist(song.charts)}
+            </div>
             <div className="MusicListItemのtitle">
               {this.renderHighlight(song.title)}
             </div>
@@ -27,6 +34,11 @@ export default React.createClass({
           </div>
       }
     </li>
+  },
+  renderChartlist(charts) {
+    return <MusicListItemCharts
+      playMode={this.props.playMode}
+      charts={visibleCharts(charts)} />
   },
   renderHighlight(text) {
     if (!this.props.highlight) return text

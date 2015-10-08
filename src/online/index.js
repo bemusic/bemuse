@@ -2,9 +2,11 @@
 import Bacon from 'baconjs'
 import _     from 'lodash'
 
+import id from './id'
 import OnlineService from './online-service'
-import { DataStore, put, hasState } from './data-store'
+import { DataStore, put, multiPutBuilder, hasState } from './data-store'
 import { transition川FromPromise, operationState川 } from './operations'
+import { loadingStateTransition, completedStateTransition, errorStateTransition, INITIAL_OPERATION_STATE } from './operations'
 
 export function Online() {
 
@@ -38,12 +40,9 @@ export function Online() {
     return service.retrieveScoreboard(descriptor)
   }
 
-  function id({ md5, playMode }) {
-    return `${md5}-${playMode}`
-  }
-
   const putRecord口  = new Bacon.Bus()
   const wantRecord口 = new Bacon.Bus()
+  const seen口       = new Bacon.Bus()
   const records     = new DataStore(putRecord口)
 
   const putScoreboard口  = new Bacon.Bus()
@@ -54,9 +53,12 @@ export function Online() {
 
   function fetch川() {
 
-    return Bacon.mergeAll(
-      fetchWhen(wantRecord口, records, fetchRecord),
-      fetchWhen(wantScoreboard口, scoreboards, fetchScoreboard)
+    return (
+      Bacon.mergeAll(
+        fetchWhen(wantRecord口, records, fetchRecord),
+        fetchWhen(wantScoreboard口, scoreboards, fetchScoreboard),
+        fetchSeen(),
+      ).filter(f => !!f)
     )
 
     function fetchWhen(want川, dataStore, fetch) {
@@ -64,7 +66,6 @@ export function Online() {
         Bacon.when([want川, dataStore.data川], (info, data) =>
           !hasState(data, id(info)) && fetch(info)
         )
-        .filter(f => !!f)
       )
     }
 
@@ -74,6 +75,40 @@ export function Online() {
 
     function fetchScoreboard(info) {
       return () => fetchInto(putScoreboard口, service.retrieveScoreboard(info), info)
+    }
+
+    function fetchSeen() {
+      let seen川 = seen口.bufferWithTime(138)
+      return Bacon.when([seen川, records.data川], (infos, data) => {
+        let unseen = infos.filter(info => !hasState(data, id(info)))
+        return fetchMultipleRecords(unseen)
+      })
+    }
+
+    function fetchMultipleRecords(infos) {
+      return () => {
+        let promise = service.retrieveMultipleRecords(infos)
+        putRecord口.push(multiPutBuilder()
+          .with(infos, id, () => loadingStateTransition())
+          .build()
+        )
+        promise.then(
+          records => {
+            putRecord口.push(multiPutBuilder()
+              .with(infos,   id, () => INITIAL_OPERATION_STATE)
+              .with(records, id, completedStateTransition)
+              .build()
+            )
+          },
+          error => {
+            putRecord口.push(multiPutBuilder()
+              .with(infos,   id, () => errorStateTransition(error))
+              .build()
+            )
+          },
+        )
+        .done()
+      }
     }
   }
 
@@ -212,14 +247,20 @@ export function Online() {
     })
   }
 
+  function seen({ md5, playMode }) {
+    return seen口.push({ md5, playMode })
+  }
+
   return {
     user川,
+    records川: records.data川,
     signUp,
     logIn,
     logOut,
     submitScore,
     scoreboard: getScoreboard,
     Ranking,
+    seen,
     dispose,
   }
 }
