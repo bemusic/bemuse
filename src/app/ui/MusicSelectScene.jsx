@@ -61,7 +61,7 @@ export default React.createClass({
               { 'is-in-song': this.state.inSong })}>
             <MusicList
                 groups={musicSelect.groups}
-                highlight={musicSelect.filterText}
+                highlight={musicSelect.highlight}
                 selectedSong={musicSelect.song}
                 playMode={musicSelect.playMode}
                 onSelect={this.handleSongSelect}

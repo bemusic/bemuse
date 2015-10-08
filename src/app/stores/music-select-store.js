@@ -28,6 +28,7 @@ export function MusicSelectStoreFactory(CollectionStore) {
   ])
   const $filterText   = Bacon.update('',
       [Actions.setFilterText.bus], (prev, filterText) => filterText)
+  const $filterTextDebounced = $filterText.debounce(138)
   const $customSongs  = Bacon.update([],
       [Actions.setCustomSong.bus], (prev, song) => [song])
   const $songList     = $collection
@@ -46,7 +47,7 @@ export function MusicSelectStoreFactory(CollectionStore) {
           ])
           .value())
       .combine($customSongs, (songs, custom) => [...custom, ...songs])
-      .combine($filterText, (songs, filterText) =>
+      .combine($filterTextDebounced, (songs, filterText) =>
           songs.filter(song => matches(song, filterText)))
   const $groups       = $songList.combine($grouping,
       (songs, grouping) => groupBy(songs, grouping))
@@ -92,6 +93,7 @@ export function MusicSelectStoreFactory(CollectionStore) {
     charts:     $visibleCharts,
     chart:      $chart,
     filterText: $filterText,
+    highlight:  $filterTextDebounced,
     unofficial: $unofficial,
     playMode:   $mode,
   })
