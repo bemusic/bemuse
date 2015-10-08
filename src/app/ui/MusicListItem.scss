@@ -10,11 +10,10 @@
   position: relative;
   cursor: pointer;
 
-  &のinfo-top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-    flex-wrap: wrap;
+  &のinfo-top::after {
+    clear: both;
+    display: block;
+    content: '';
   }
 
   &のinfo-bottom {
@@ -28,7 +27,11 @@
     font-size: 1.5em;
     font-weight: bold;
     margin-bottom: 0.5ex;
-    flex: 1;
+    float: left;
+  }
+
+  &のcharts {
+    float: right;
   }
 
   &のgenre {
