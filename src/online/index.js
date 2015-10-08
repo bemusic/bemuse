@@ -121,8 +121,21 @@ export function Online() {
 
     function construct() {
 
-      let record     = getRecordPart()
-      let scoreboard = getScoreboardPart(getScoreboardIntents(record))
+      let userStream川         = user川.toEventStream().delay(0)
+      let unauthenticated川    = userStream川.filter(user => !user)
+      let submitOrGetRecord川  = userStream川.filter(user => !!user).merge(resubmit口)
+      let submit川             = submitOrGetRecord川.filter(() => !!data.score)
+      let getRecord川          = submitOrGetRecord川.filter(() => !data.score)
+
+      let record = getRecordPart({ submit川, getRecord川, unauthenticated川 })
+
+      let getScoreboard川  = Bacon.mergeAll(getRecord川, unauthenticated川)
+      let loadScoreboard川 = record.submitted川.merge(reload口)
+
+      let scoreboard = getScoreboardPart({
+        get川:   getScoreboard川,
+        load川:  loadScoreboard川,
+      })
 
       let state川 = (
         Bacon.combineTemplate({
@@ -151,66 +164,50 @@ export function Online() {
       }
     }
 
-    function getRecordPart() {
+    function getRecordPart({ submit川, getRecord川, unauthenticated川 }) {
 
-      let operation川            = (
-        // We need to have it trigger on `resubmit口`, but cannot simply use
-        // `Bacon.when`, because of a weird issue: https://github.com/baconjs/bacon.js/issues/640
-        user川.combine(resubmit口.toProperty(null), user => user)
-        .map(getOperationFunction)
+      let operation川            = Bacon.when(
+        [submit川],          () => doSubmit川,
+        [getRecord川],       () => doGetRecord川,
+        [unauthenticated川], () => doGetUnauthenticated川
       )
       let operationTransition川  = operation川.flatMapLatest(performWithOperation)
-      let notSubmitting川        = operation川.filter(f => f !== submit川)
       let submitted川            = operationTransition川.filter(isFinishedSubmitting)
-
       let transition川           = operationTransition川.map(({ transition }) => transition)
       let state川                = operationState川(transition川)
 
-      return { state川, notSubmitting川, submitted川 }
+      return { state川, submitted川 }
 
-      function getOperationFunction(user) {
-        if (user) {
-          if (data.score) {
-            return submit川
-          } else {
-            return getRecord川
-          }
-        } else {
-          return getUnauthenticated川
-        }
-      }
-
-      function submit川() {
+      function doSubmit川() {
         return fetchInto(putRecord口, submitScore(data), data)
       }
 
-      function getRecord川() {
+      function doGetRecord川() {
         wantRecord口.push(data)
         return records.state川(id(data))
       }
 
-      function getUnauthenticated川() {
+      function doGetUnauthenticated川() {
         return Bacon.once({
           status: 'unauthenticated',
           error:  null,
           record: null,
         })
+        .delay(0)
       }
 
       function isFinishedSubmitting({ operation, transition }) {
-        return operation === submit川 && (
+        return operation === doSubmit川 && (
           transition.status !== 'loading' && transition.status !== 'unauthenticated'
         )
       }
     }
 
-    function getScoreboardPart(intents) {
+    function getScoreboardPart({ get川, load川 }) {
 
-      let { get川, load川 } = intents
-
-      let operation川 = Bacon.mergeAll(
-        get川.map(() => getScoreboard川),
-        load川.map(() => loadScoreboard川)
+      let operation川 = Bacon.when(
+        [get川], () => getScoreboard川,
+        [load川], () => loadScoreboard川
       )
 
       let transition川 = operation川.flatMapLatest(f => f())
@@ -227,13 +224,6 @@ export function Online() {
         return fetchInto(putScoreboard口, getScoreboard(data), data)
       }
 
-    }
-
-    function getScoreboardIntents(recordPart) {
-      return {
-        get川:   recordPart.notSubmitting川,
-        load川:  recordPart.submitted川.merge(reload口),
-      }
     }
 
     function performWithOperation(operation) {
