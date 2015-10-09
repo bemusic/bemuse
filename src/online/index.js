@@ -166,15 +166,14 @@ export function Online() {
 
     function getRecordPart({ submit川, getRecord川, unauthenticated川 }) {
 
-      let operation川            = Bacon.when(
-        [submit川],          () => doSubmit川,
-        [getRecord川],       () => doGetRecord川,
-        [unauthenticated川], () => doGetUnauthenticated川
+      let submission川     = submit川.map(() => doSubmit川())
+      let nonSubmission川  = Bacon.when(
+        [getRecord川],       () => doGetRecord川(),
+        [unauthenticated川], () => doGetUnauthenticated川()
       )
-      let operationTransition川  = operation川.flatMapLatest(performWithOperation)
-      let submitted川            = operationTransition川.filter(isFinishedSubmitting)
-      let transition川           = operationTransition川.map(({ transition }) => transition)
-      let state川                = operationState川(transition川)
+      let transition川     = Bacon.mergeAll(submission川, nonSubmission川).flatMapLatest(川 => 川)
+      let submitted川      = submission川.flatMapLatest(川 => 川).filter(isFinishedSubmitting)
+      let state川          = operationState川(transition川)
 
       return { state川, submitted川 }
 
@@ -196,10 +195,8 @@ export function Online() {
         .delay(0)
       }
 
-      function isFinishedSubmitting({ operation, transition }) {
-        return operation === doSubmit川 && (
-          transition.status !== 'loading' && transition.status !== 'unauthenticated'
-        )
+      function isFinishedSubmitting(transition) {
+        return transition.status !== 'loading' && transition.status !== 'unauthenticated'
       }
     }
 
@@ -224,10 +221,6 @@ export function Online() {
         return fetchInto(putScoreboard口, getScoreboard(data), data)
       }
 
-    }
-
-    function performWithOperation(operation) {
-      return operation().map(transition => ({ operation, transition }))
     }
   }
 
