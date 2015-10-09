@@ -4,9 +4,16 @@ import _     from 'lodash'
 
 import id from './id'
 import OnlineService from './online-service'
-import { DataStore, put, multiPutBuilder, hasState } from './data-store'
-import { transition川FromPromise, operationState川 } from './operations'
-import { loadingStateTransition, completedStateTransition, errorStateTransition, INITIAL_OPERATION_STATE } from './operations'
+import * as DataStore from './data-store'
+
+import {
+  loadingStateTransition,
+  completedStateTransition,
+  errorStateTransition,
+  INITIAL_OPERATION_STATE,
+  transition川FromPromise,
+  operationState川,
+} from './operations'
 
 export function Online() {
 
@@ -43,11 +50,11 @@ export function Online() {
   const putRecord口  = new Bacon.Bus()
   const wantRecord口 = new Bacon.Bus()
   const seen口       = new Bacon.Bus()
-  const records     = new DataStore(putRecord口)
+  const records川    = DataStore.store川(putRecord口)
 
   const putScoreboard口  = new Bacon.Bus()
   const wantScoreboard口 = new Bacon.Bus()
-  const scoreboards     = new DataStore(putScoreboard口)
+  const scoreboards川    = DataStore.store川(putScoreboard口)
 
   const dispose = fetch川().flatMap(f => f()).onValue(() => {})
 
@@ -55,16 +62,16 @@ export function Online() {
 
     return (
       Bacon.mergeAll(
-        fetchWhen(wantRecord口, records, fetchRecord),
-        fetchWhen(wantScoreboard口, scoreboards, fetchScoreboard),
+        fetchWhen(wantRecord口, records川, fetchRecord),
+        fetchWhen(wantScoreboard口, scoreboards川, fetchScoreboard),
         fetchSeen(),
       ).filter(f => !!f)
     )
 
-    function fetchWhen(want川, dataStore, fetch) {
+    function fetchWhen(want川, dataStore川, fetch) {
       return (
-        Bacon.when([want川, dataStore.data川], (info, data) =>
-          !hasState(data, id(info)) && fetch(info)
+        Bacon.when([want川, dataStore川], (info, data) =>
+          !DataStore.has(data, id(info)) && fetch(info)
         )
       )
     }
@@ -79,10 +86,23 @@ export function Online() {
 
     function fetchSeen() {
       let seen川 = seen口.bufferWithTime(138)
-      return Bacon.when([seen川, records.data川], (infos, data) => {
-        let unseen = infos.filter(info => !hasState(data, id(info)))
+      return Bacon.when([seen川, records川], (infos, data) => {
+        let unseen = infos.filter(info => !DataStore.has(data, id(info)))
         return fetchMultipleRecords(unseen)
       })
+    }
+
+    function multiPutBuilder() {
+      let changes = { }
+      return {
+        with(elements, id, toTransition) {
+          for (let element of elements) changes[id(element)] = toTransition(element)
+          return this
+        },
+        build() {
+          return DataStore.putMultiple(changes)
+        }
+      }
     }
 
     function fetchMultipleRecords(infos) {
@@ -183,7 +203,7 @@ export function Online() {
 
       function doGetRecord川() {
         wantRecord口.push(data)
-        return records.state川(id(data))
+        return DataStore.item川(records川, id(data))
       }
 
       function doGetUnauthenticated川() {
@@ -214,7 +234,7 @@ export function Online() {
 
       function getScoreboard川() {
         wantScoreboard口.push(data)
-        return scoreboards.state川(id(data))
+        return DataStore.item川(scoreboards川, id(data))
       }
 
       function loadScoreboard川() {
@@ -226,7 +246,7 @@ export function Online() {
 
   function fetchInto(口, promise, info) {
     return transition川FromPromise(promise).doAction(transition => {
-      口.push(put(id(info), transition))
+      口.push(DataStore.put(id(info), transition))
     })
   }
 
@@ -236,7 +256,7 @@ export function Online() {
 
   return {
     user川,
-    records川: records.data川,
+    records川,
     signUp,
     logIn,
     logOut,

@@ -1,52 +1,56 @@
 
+import _ from 'lodash'
+
 import { INITIAL_OPERATION_STATE, transitionState } from './operations'
 
-export function DataStore(action川) {
+const PUT   = 'PUT'
+const CLEAR = 'CLEAR'
 
-  let data川 = action川.scan({ }, (data, object) => {
-    let clone = Object.assign({ }, data)
-    for (let id in object) {
-      if (object.hasOwnProperty(id)) {
-        clone[id] = transitionState(getState(data, id), object[id])
-      }
+export const INITIAL_STATE = { }
+
+export function store川(action川) {
+  return action川.scan(INITIAL_STATE, reduce)
+}
+
+export function item川(state川, id) {
+  return state川.map(state => get(state, id)).skipDuplicates()
+}
+
+export function reduce(state=INITIAL_STATE, action) {
+  switch (action.type) {
+    case PUT: {
+      let stateChanges = _.mapValues(action.data, performTransition(state))
+      return Object.assign({ }, state, stateChanges)
     }
-    return clone
-  })
-
-  return {
-    data川,
-    state川(id) {
-      return data川.map(data => getState(data, id)).skipDuplicates()
-    },
+    case CLEAR: {
+      return INITIAL_STATE
+    }
+    default: {
+      return state
+    }
   }
-
 }
 
-export function getState (data, id) {
-  return data[id] || INITIAL_OPERATION_STATE
+function performTransition(state) {
+  return (transition, id) => transitionState(get(state, id), transition)
 }
 
-export function hasState (data, id) {
-  return data.hasOwnProperty(id)
+export function get(state, id) {
+  return state[id] || INITIAL_OPERATION_STATE
+}
+
+export function has(state, id) {
+  return state.hasOwnProperty(id)
 }
 
 export function put(id, transition) {
-  return { [id]: transition }
+  return putMultiple({ [id]: transition })
 }
 
-export function multiPutBuilder() {
-  let changes = { }
-  return {
-    with(items, id, f) {
-      for (let item of items) {
-        changes[id(item)] = f(item)
-      }
-      return this
-    },
-    build() {
-      return changes
-    },
-  }
+export function putMultiple(transitions) {
+  return { type: PUT, data: transitions }
 }
 
-export default DataStore
+export function clear() {
+  return { type: CLEAR }
+}
