@@ -92,43 +92,8 @@ export function Online() {
       })
     }
 
-    function multiPutBuilder() {
-      let changes = { }
-      return {
-        with(elements, id, toTransition) {
-          for (let element of elements) changes[id(element)] = toTransition(element)
-          return this
-        },
-        build() {
-          return DataStore.putMultiple(changes)
-        }
-      }
-    }
-
     function fetchMultipleRecords(infos) {
-      return () => {
-        let promise = service.retrieveMultipleRecords(infos)
-        putRecord口.push(multiPutBuilder()
-          .with(infos, id, () => loadingStateTransition())
-          .build()
-        )
-        promise.then(
-          records => {
-            putRecord口.push(multiPutBuilder()
-              .with(infos,   id, () => INITIAL_OPERATION_STATE)
-              .with(records, id, completedStateTransition)
-              .build()
-            )
-          },
-          error => {
-            putRecord口.push(multiPutBuilder()
-              .with(infos,   id, () => errorStateTransition(error))
-              .build()
-            )
-          },
-        )
-        .done()
-      }
+      return () => fetchIntoMultiple(putRecord口, service.retrieveMultipleRecords(infos), infos)
     }
   }
 
@@ -248,6 +213,34 @@ export function Online() {
     return transition川FromPromise(promise).doAction(transition => {
       口.push(DataStore.put(id(info), transition))
     })
+  }
+
+  function fetchIntoMultiple(口, promise, infos) {
+
+    口.push(DataStore.putMultiple(
+      transitions(infos, loadingStateTransition)
+    ))
+
+    promise.then(
+      records => {
+        口.push(DataStore.putMultiple(Object.assign({ },
+          transitions(infos, () => INITIAL_OPERATION_STATE),
+          transitions(records, completedStateTransition),
+        )))
+      },
+      error => {
+        口.push(DataStore.putMultiple(Object.assign({ },
+          transitions(infos, () => errorStateTransition(error)),
+        )))
+      },
+    )
+    .done()
+
+    function transitions(items, toTransition) {
+      let changes = { }
+      for (let item of items) changes[id(item)] = toTransition(item)
+      return changes
+    }
   }
 
   function seen({ md5, playMode }) {
