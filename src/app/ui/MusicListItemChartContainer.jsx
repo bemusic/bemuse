@@ -3,7 +3,7 @@ import React from 'react'
 
 import id from 'bemuse/online/id'
 import online from 'bemuse/online/instance'
-import { getState } from 'bemuse/online/data-store'
+import * as DataStore from 'bemuse/online/data-store'
 import { getGrade } from 'bemuse/rules/grade'
 
 import MusicListItemChart from './MusicListItemChart'
@@ -25,6 +25,7 @@ export default React.createClass({
 
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.chart !== nextProps.chart) return true
+    if (this.props.selected !== nextProps.selected) return true
     if (this.props.playMode !== nextProps.playMode) return true
     if (this.getRecord(this.state) !== this.getRecord(nextState)) return true
     return false
@@ -32,7 +33,7 @@ export default React.createClass({
   },
 
   getRecord(state) {
-    return getState(state.data, id(this.getDescriptor())).value
+    return DataStore.get(state.data, id(this.getDescriptor())).value
   },
 
   getDescriptor() {

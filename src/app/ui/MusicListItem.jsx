@@ -24,7 +24,7 @@ export default React.createClass({
                 {this.renderHighlight(song.title)}
               </div>
               <div className="MusicListItemのcharts">
-                {this.renderChartlist(song.charts)}
+                {this.renderChartlist()}
               </div>
             </div>
             <div className="MusicListItemのinfo-bottom">
@@ -39,10 +39,12 @@ export default React.createClass({
       }
     </li>
   },
-  renderChartlist(charts) {
+  renderChartlist() {
     return <MusicListItemCharts
-      playMode={this.props.playMode}
-      charts={visibleCharts(charts)} />
+      charts={visibleCharts(this.props.song.charts)}
+      selectedChart={this.props.selectedChart}
+      onChartClick={this.handleChartClick}
+      playMode={this.props.playMode} />
   },
   renderHighlight(text) {
     if (!this.props.highlight) return text
@@ -66,6 +68,10 @@ export default React.createClass({
 
   handleClick() {
     this.props.onSelect(this.props.song)
-  }
+  },
+  handleChartClick(chart, e) {
+    e.stopPropagation()
+    this.props.onSelect(this.props.song, chart)
+  },
 
 })

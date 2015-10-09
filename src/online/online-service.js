@@ -103,7 +103,6 @@ export class OnlineService {
     query.limit(1000)
     return (wrapPromise(query.find())
       .then(results => results.map(toObject))
-      .tap(x => console.log(x))
     )
   }
 
