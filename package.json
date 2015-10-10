@@ -101,6 +101,7 @@
     "data-structure": "^1.2.0",
     "debug": "^2.1.1",
     "fastclick": "^1.0.6",
+    "immutable": "^3.7.5",
     "invariant": "^2.1.0",
     "is-true-ish": "0.0.1",
     "isparta": "^3.0.4",
