@@ -1,27 +1,24 @@
 
-/**
- * @module bms/objects
- */
+// Public: A module that exposes {BMSObjects}.
+/* module */
+
 module.exports = BMSObjects
 
-/**
- * Holds a collection of objects inside a BMS notechart.
- *
- * @class BMSObjects
- * @constructor
- */
+// Public: A BMSObjects holds a collection of objects inside a BMS notechart.
+/* class BMSObjects */
+
+// Public: Constructs an empty BMSObjects.
 function BMSObjects() {
   this._objects = []
 }
 
-/**
- * Adds a new object to the collection. If an object already exists on the
- * same channel and position, the object is replaced (except for autokeysound
- * tracks).
- *
- * @method add
- * @param {BMSObject} object
- */
+// Public: Adds a new object to this collection.
+//
+// If an object already exists on the same channel and position,
+// the object is replaced (except for autokeysound tracks).
+//
+// * `object` {BMSObject} to add
+//
 BMSObjects.prototype.add = function(object) {
   if (object.channel !== '01') {
     for (var i = 0; i < this._objects.length; i ++) {
@@ -37,22 +34,18 @@ BMSObjects.prototype.add = function(object) {
   this._objects.push(object)
 }
 
-/**
- * Returns a list of all objects.
- *
- * @method all
- * @return {BMSObject[]}
- */
+// Public: Returns an array of all objects.
+//
+// Returns an {Array} of {BMSObject} objects
+//
 BMSObjects.prototype.all = function() {
   return this._objects.slice()
 }
 
-/**
- * Returns a sorted list of all objects.
- *
- * @method all
- * @return {BMSObject[]}
- */
+// Public: Returns a sorted array of all objects.
+//
+// Returns an {Array} of {BMSObject} objects
+//
 BMSObjects.prototype.allSorted = function() {
   var list = this.all()
   list.sort(function(a, b) {
@@ -61,33 +54,16 @@ BMSObjects.prototype.allSorted = function() {
   return list
 }
 
-
-/**
- * @class BMSObject
- */
-/**
- * The raw two-character BMS channel of this object.
- *
- * @property channel
- * @type String
- */
-/**
- * The measure number, starting at 0 (corresponds to `#000`)
- *
- * @property measure
- * @type Number
- */
-/**
- * The fractional position inside the measure, ranging from 0 (inclusive)
- * to 1 (exclusive). 0 means that the object is at the start of the measure,
- * where 1 means that the object is at the end of the measure.
- *
- * @property fraction
- * @type Number
- */
-/**
- * The raw value of the BMS object — a two-character string.
- *
- * @property value
- * @type String
- */
+// Public: A BMSObject data structure represents an object inside a {BMSChart}.
+//
+// It is a plain object with the following fields:
+//
+// * `channel` A {String} representing the raw two-character BMS channel of this object
+// * `measure` A {Number} representing the measure number, starting at 0 (corresponds to `#000`)
+// * `fraction` A {Number} representing the fractional position inside the measure,
+//   ranging from 0 (inclusive) to 1 (exclusive).
+//   0 means that the object is at the start of the measure,
+//   whereas 1 means that the object is at the end of the measure.
+// * `value` A {String} representing the raw value of the BMS object.
+//
+/* data BMSObject */

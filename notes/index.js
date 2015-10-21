@@ -1,4 +1,6 @@
 
+// Public: This module exposes the {Notes} class.
+
 var Note = require('./note')
 var invariant = require('invariant')
 
@@ -6,46 +8,43 @@ module.exports = Notes
 
 Notes.CHANNEL_MAPPING = require('./channels')
 
-/**
- * The Notes class holds the Note objects in the game. A note object may or
- * may not be playable.
- *
- * @class Notes
- * @constructor
- */
+// Public: A Notes holds the {Note} objects in the game.
+// A note object may or may not be playable.
+//
+
+// Public: Constructs a Notes object.
+//
+// * `notes` {Array} containing the {Note} objects
+//
 function Notes(notes) {
   notes.forEach(Note.validate)
   this._notes = notes
 }
 
-/**
- * Returns the number of notes in this object.
- *
- * @method count
- * @return {Number}
- */
+// Public: Returns the number of notes in this object, counting both playable
+// and non-playable notes.
+//
+// Returns a {Number} representing the note count
+//
 Notes.prototype.count = function() {
   return this._notes.length
 }
 
-/**
- * Returns an Array of all notes.
- *
- * @method all
- * @return {Note[]}
- */
+// Public: Returns an Array of all notes.
+//
+// Returns an {Array} of all notes
+//
 Notes.prototype.all = function() {
   return this._notes.slice()
 }
 
-/**
- * Creates a Notes object from a BMSChart.
- *
- * @static
- * @method fromBMSChart
- * @param {BMSChart} chart    the chart to process
- * @param {Object}   options  the note options
- */
+// Public: Creates a Notes object from a BMSChart.
+//
+// * `chart` {BMSChart} to process
+// * `options` {Object} representing the processing options
+//   * `mapping` (optional) {Object} representing the mapping from BMS channel
+//     to game channel. Default value is the IIDX_P1 mapping.
+//
 Notes.fromBMSChart = function(chart, options) {
   options = options || { }
   var mapping = options.mapping || Notes.CHANNEL_MAPPING.IIDX_P1

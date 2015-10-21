@@ -1,7 +1,27 @@
 
+// Public: A module that takes a string representing the BMS notechart,
+// parses it, and compiles into a {BMSChart}.
+/* module */
+
 var match = require('../util/match')
 var BMSChart = require('../bms/chart')
 
+// Public: Reads the string representing the BMS notechart, parses it,
+// and compiles into a {BMSChart}.
+//
+// * `text` {String} representing the BMS notechart
+// * `options` (optional) {Object} representing additional parser options
+//   * `rng` (option) {Function} that generates a random number.
+//     It is used when processing `#RANDOM n` directive.
+//     This function should return an integer number between 1 and `n`.
+//     * `max` {Number} representing the maximum value.
+//
+// Returns an {Object} with these keys:
+//   * `chart` {BMSChart} representing the resulting chart
+//   * `warnings` {Array} of warnings. Each warning is an {Object} with these keys:
+//     * `lineNumber` {Number} representing the line number where this warning occurred
+//     * `message` {String} representing the warning message
+//
 exports.compile = function(text, options) {
 
   options = options || { }
