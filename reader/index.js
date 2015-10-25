@@ -4,6 +4,8 @@
 //
 // The Reader follows [ruv-it!’s algorithm](http://hitkey.nekokan.dyndns.info/cmds.htm#CHARSET)
 // for detecting the character set.
+//
+/* module */
 
 var chardet = require('bemuse-chardet/bemuse-chardet')
 var iconv = require('iconv-lite')

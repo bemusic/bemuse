@@ -22,7 +22,7 @@ module.exports = Positioning
 //   * `x` {Number} representing the total elapsed amount of scrolling at beat `t`
 //   * `dx` {Number} representing the amount of scrolling per beat
 //   * `inclusive` {Boolean} representing whether or not to include the
-//     starting beat `t` as part of the segment.
+//     starting beat `t` as part of the segment
 //
 function Positioning(segments) {
   this._speedcore = new Speedcore(segments)

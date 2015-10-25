@@ -11,6 +11,27 @@ Notes.CHANNEL_MAPPING = require('./channels')
 // Public: A Notes holds the {Note} objects in the game.
 // A note object may or may not be playable.
 //
+// ## Example
+//
+// If you have a BMS like this:
+//
+// ```
+// #00111:AA
+// ```
+//
+// Having parsed it using a {Compiler} into a {BMSChart},
+// you can create a {Notes} using `fromBMSChart()`:
+//
+// ```js
+// var notes = Notes.fromBMSChart(bmsChart)
+// ```
+//
+// Then you can get all notes using `.all()` method
+//
+// ```js
+// notes.all()
+// ```
+//
 
 // Public: Constructs a Notes object.
 //
