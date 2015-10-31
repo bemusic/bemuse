@@ -11,7 +11,7 @@ import MusicListItemChart from './MusicListItemChart'
 export default React.createClass({
 
   getInitialState() {
-    return { data: { } }
+    return { data: DataStore.INITIAL_STATE }
   },
 
   componentDidMount() {

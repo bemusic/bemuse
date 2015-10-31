@@ -11,7 +11,7 @@ export default React.createClass({
         <MusicListItemChartContainer
           key={index}
           chart={chart}
-          selected={chart.md5 === this.props.selectedChart.md5}
+          selected={this.props.selectedChart && chart.md5 === this.props.selectedChart.md5}
           onClick={this.props.onChartClick}
           playMode={this.props.playMode} />
       )}
