@@ -44,9 +44,11 @@ export class OnlineService {
 
   _setQueryUser (query, user) {
     if (user) {
-      query.equalTo('user',   Parse.Object.createWithoutData('_User', user.id))
+      let parseUser = new Parse.User()
+      parseUser.id = user.id
+      query.equalTo('user', parseUser)
     } else {
-      query.equalTo('user',   Parse.User.current())
+      query.equalTo('user', Parse.User.current())
     }
   }
 

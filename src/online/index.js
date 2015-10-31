@@ -1,6 +1,6 @@
 
-import Bacon from 'baconjs'
-import _     from 'lodash'
+import Bacon      from 'baconjs'
+import _          from 'lodash'
 
 import id from './id'
 import OnlineService from './online-service'
@@ -8,10 +8,8 @@ import * as Level     from './level'
 import * as DataStore from './data-store'
 
 import {
-  loadingStateTransition,
-  completedStateTransition,
-  errorStateTransition,
   INITIAL_OPERATION_STATE,
+  completedStateTransition,
   transition川FromPromise,
   operationState川,
   isWaiting,
@@ -45,57 +43,39 @@ export function Online() {
     return service.submitScore(info)
   }
 
-  function getScoreboard(descriptor) {
-    return service.retrieveScoreboard(descriptor)
+  function getScoreboard(level) {
+    return service.retrieveScoreboard(level)
   }
 
-  const putRecord口  = new Bacon.Bus()
-  const wantRecord口 = new Bacon.Bus()
   const seen口       = new Bacon.Bus()
-  const records川    = DataStore.store川(putRecord口)
+  const records川    = user川.flatMapLatest(records川ForUser)
 
-  const putScoreboard口  = new Bacon.Bus()
-  const wantScoreboard口 = new Bacon.Bus()
-  const scoreboards川    = DataStore.store川(putScoreboard口)
+  function records川ForUser(user) {
+    let seen = { }
 
-  const dispose = fetch川().flatMap(f => f()).onValue(() => {})
+    {
+      const bufferedSeen川 = seen口.bufferWithTime(138)
+      const action川 = bufferedSeen川.flatMap(fetch)
+      return DataStore.store川(action川)
+    }
 
-  function fetch川() {
-
-    return (
-      Bacon.mergeAll(
-        fetchWhen(wantRecord口, records川, fetchRecord),
-        fetchWhen(wantScoreboard口, scoreboards川, fetchScoreboard),
-        fetchSeen(),
-      ).filter(f => !!f)
-    )
-
-    function fetchWhen(want川, dataStore川, fetch) {
-      return (
-        Bacon.when([want川, dataStore川], (info, data) =>
-          !DataStore.has(data, id(info)) && fetch(info)
-        )
+    function fetch (levels) {
+      let levelsToFetch = levels.filter(level => !seen[id(level)])
+      for (let level of levelsToFetch) {
+        seen[id(level)] = true
+      }
+      return Bacon.fromPromise(service.retrieveMultipleRecords(levels)
+        .then(function (results) {
+          let recordsToPut = { }
+          for (let record of results) {
+            recordsToPut[id(record)] = completedStateTransition(record)
+          }
+          return DataStore.putMultiple(recordsToPut)
+        })
+        .catch(function () {
+          return DataStore.putMultiple({ })
+        })
       )
-    }
-
-    function fetchRecord(info) {
-      return () => fetchInto(putRecord口, service.retrieveRecord(info), info)
-    }
-
-    function fetchScoreboard(info) {
-      return () => fetchInto(putScoreboard口, service.retrieveScoreboard(info), info)
-    }
-
-    function fetchSeen() {
-      let seen川 = seen口.bufferWithTime(138)
-      return Bacon.when([seen川, records川], (infos, data) => {
-        let unseen = infos.filter(info => !DataStore.has(data, id(info)))
-        return fetchMultipleRecords(unseen)
-      })
-    }
-
-    function fetchMultipleRecords(infos) {
-      return () => fetchIntoMultiple(putRecord口, service.retrieveMultipleRecords(infos), infos)
     }
   }
 
@@ -200,46 +180,12 @@ export function Online() {
     }
   }
 
+  function seen (level) {
+    return seen口.push(level)
+  }
+
   function asap川 (value) {
     return Bacon.later(0, value)
-  }
-
-  function fetchInto(口, promise, info) {
-    return transition川FromPromise(promise).doAction(transition => {
-      口.push(DataStore.put(id(info), transition))
-    })
-  }
-
-  function fetchIntoMultiple(口, promise, infos) {
-
-    口.push(DataStore.putMultiple(
-      transitions(infos, loadingStateTransition)
-    ))
-
-    promise.then(
-      records => {
-        口.push(DataStore.putMultiple(Object.assign({ },
-          transitions(infos, () => INITIAL_OPERATION_STATE),
-          transitions(records, completedStateTransition),
-        )))
-      },
-      error => {
-        口.push(DataStore.putMultiple(Object.assign({ },
-          transitions(infos, () => errorStateTransition(error)),
-        )))
-      },
-    )
-    .done()
-
-    function transitions(items, toTransition) {
-      let changes = { }
-      for (let item of items) changes[id(item)] = toTransition(item)
-      return changes
-    }
-  }
-
-  function seen({ md5, playMode }) {
-    return seen口.push({ md5, playMode })
   }
 
   return {
@@ -252,7 +198,6 @@ export function Online() {
     scoreboard: getScoreboard,
     Ranking,
     seen,
-    dispose,
   }
 }
 

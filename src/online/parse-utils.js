@@ -17,6 +17,7 @@ export function unwrapUser(parseUser) {
   return {
     username: parseUser.get('username'),
     email:    parseUser.get('email'),
+    id:       parseUser.id,
   }
 }
 
