@@ -4,6 +4,7 @@ import _     from 'lodash'
 
 import id from './id'
 import OnlineService from './online-service'
+import * as Level     from './level'
 import * as DataStore from './data-store'
 
 import {
@@ -13,6 +14,7 @@ import {
   INITIAL_OPERATION_STATE,
   transition川FromPromise,
   operationState川,
+  isWaiting,
 } from './operations'
 
 export function Online() {
@@ -99,43 +101,32 @@ export function Online() {
 
   function Ranking(data) {
 
-    const resubmit口 = new Bacon.Bus()
-    const reload口   = new Bacon.Bus()
+    const level = Level.fromObject(data)
+    const retrySelf口 = new Bacon.Bus()
+    const retryScoreboard口 = new Bacon.Bus()
 
-    return construct()
-
-    function construct() {
-
-      let userStream川         = user川.toEventStream().delay(0)
-      let unauthenticated川    = userStream川.filter(user => !user)
-      let submitOrGetRecord川  = userStream川.filter(user => !!user).merge(resubmit口)
-      let submit川             = submitOrGetRecord川.filter(() => !!data.score)
-      let getRecord川          = submitOrGetRecord川.filter(() => !data.score)
-
-      let record = getRecordPart({ submit川, getRecord川, unauthenticated川 })
-
-      let getScoreboard川  = Bacon.mergeAll(getRecord川, unauthenticated川)
-      let loadScoreboard川 = record.submitted川.merge(reload口)
-
-      let scoreboard = getScoreboardPart({
-        get川:   getScoreboard川,
-        load川:  loadScoreboard川,
-      })
-
-      let state川 = (
+    {
+      const rankingModel川 = user川.map(rankingModelForUser)
+      const self川 = (rankingModel川
+        .flatMapLatest(model => model.self川)
+        .toProperty(INITIAL_OPERATION_STATE)
+      )
+      const scoreboardTrigger川 = (rankingModel川
+        .flatMapLatest(model => model.scoreboardTrigger川)
+      )
+      const scoreboard川 = getScoreboardState川(scoreboardTrigger川)
+      const state川 = (
         Bacon.combineTemplate({
-          submission: record.state川,
-          scoreboard: scoreboard.state川,
+          self: self川,
+          scoreboard: scoreboard川,
         })
         .map(conformState)
       )
-
       return {
         state川,
-        resubmit:         () => resubmit口.push(),
-        reloadScoreboard: () => reload口.push(),
+        resubmit:         () => retrySelf口.push(),
+        reloadScoreboard: () => retryScoreboard口.push(),
       }
-
     }
 
     // Make the state conform the old API. We should remove this in the future.
@@ -144,69 +135,73 @@ export function Online() {
         data: state.scoreboard.value && state.scoreboard.value.data,
         meta: {
           scoreboard: _.omit(state.scoreboard, 'value'),
-          submission: state.submission,
+          submission: state.self,
         },
       }
     }
 
-    function getRecordPart({ submit川, getRecord川, unauthenticated川 }) {
-
-      let submission川     = submit川.map(() => doSubmit川())
-      let nonSubmission川  = Bacon.when(
-        [getRecord川],       () => doGetRecord川(),
-        [unauthenticated川], () => doGetUnauthenticated川()
+    function rankingModelForUser (user) {
+      if (!user) return unauthenticatedRankingModel()
+      return (data.score
+        ? submissionModel(user)
+        : viewRecordModel(user)
       )
-      let transition川     = Bacon.mergeAll(submission川, nonSubmission川).flatMapLatest(川 => 川)
-      let submitted川      = submission川.flatMapLatest(川 => 川).filter(isFinishedSubmitting)
-      let state川          = operationState川(transition川)
+    }
 
-      return { state川, submitted川 }
-
-      function doSubmit川() {
-        return fetchInto(putRecord口, submitScore(data), data)
-      }
-
-      function doGetRecord川() {
-        wantRecord口.push(data)
-        return DataStore.item川(records川, id(data))
-      }
-
-      function doGetUnauthenticated川() {
-        return Bacon.once({
+    function unauthenticatedRankingModel () {
+      return {
+        self川: Bacon.constant({
           status: 'unauthenticated',
           error:  null,
           record: null,
-        })
-        .delay(0)
-      }
-
-      function isFinishedSubmitting(transition) {
-        return transition.status !== 'loading' && transition.status !== 'unauthenticated'
+        }),
+        scoreboardTrigger川: Bacon.once({ force: false })
       }
     }
 
-    function getScoreboardPart({ get川, load川 }) {
+    function submissionModel (user) {
+      const self川     = submitScoreState川(user)
+      const selfDone川 = self川.toEventStream().filter(state => !isWaiting(state))
+      return {
+        self川,
+        scoreboardTrigger川: selfDone川.map(() => ({ force: true }))
+      }
+    }
 
-      let operation川 = Bacon.when(
-        [get川], () => getScoreboard川,
-        [load川], () => loadScoreboard川
+    function viewRecordModel (user) {
+      return {
+        self川: getRecordState川(user),
+        scoreboardTrigger川: asap川({ force: false })
+      }
+    }
+
+    function getScoreboardState川 (trigger川) {
+      return operationState川(
+        trigger川.merge(retryScoreboard口).flatMapLatest(
+          () => transition川FromPromise(getScoreboard(level))
+        )
       )
-
-      let transition川 = operation川.flatMapLatest(f => f())
-      let state川      = operationState川(transition川)
-
-      return { state川 }
-
-      function getScoreboard川() {
-        wantScoreboard口.push(data)
-        return DataStore.item川(scoreboards川, id(data))
-      }
-
-      function loadScoreboard川() {
-        return fetchInto(putScoreboard口, getScoreboard(data), data)
-      }
-
     }
+
+    function getRecordState川 (user) {
+      return operationState川(
+        asap川().merge(retrySelf口).flatMapLatest(
+          () => transition川FromPromise(service.retrieveRecord(level, user))
+        )
+      )
+    }
+
+    function submitScoreState川 (user) {
+      return operationState川(
+        asap川().merge(retrySelf口).flatMapLatest(
+          () => transition川FromPromise(submitScore(data))
+        )
+      )
+    }
+  }
+
+  function asap川 (value) {
+    return Bacon.later(0, value)
   }
 
   function fetchInto(口, promise, info) {

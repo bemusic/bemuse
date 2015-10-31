@@ -42,14 +42,22 @@ export class OnlineService {
     )
   }
 
+  _setQueryUser (query, user) {
+    if (user) {
+      query.equalTo('user',   Parse.Object.createWithoutData('_User', user.id))
+    } else {
+      query.equalTo('user',   Parse.User.current())
+    }
+  }
+
   // Retrieves the record.
   //
   // Returns a {Parse.Object}.
-  _retrieveRecord ({ md5, playMode }) {
+  _retrieveRecord ({ md5, playMode }, user) {
     let query = new Parse.Query('GameScore')
     query.equalTo('md5',      md5)
     query.equalTo('playMode', playMode)
-    query.equalTo('user',     Parse.User.current())
+    this._setQueryUser(query, user)
     return wrapPromise(query.first())
   }
 
@@ -58,8 +66,8 @@ export class OnlineService {
   // Returns a {Number} representing rank.
   _retrieveRank ({ md5, playMode }, score) {
     let countQuery = new Parse.Query('GameScore')
-    countQuery.equalTo('md5',       md5)
-    countQuery.equalTo('playMode',  playMode)
+    countQuery.equalTo('md5', md5)
+    countQuery.equalTo('playMode', playMode)
     countQuery.greaterThan('score', score)
     return wrapPromise(countQuery.count()).then(x => x + 1, () => null)
   }
@@ -67,11 +75,11 @@ export class OnlineService {
   // Retrieves a record.
   //
   // Returns a record object.
-  retrieveRecord (options) {
-    return (this._retrieveRecord(options)
+  retrieveRecord (level, user) {
+    return (this._retrieveRecord(level, user)
       .then(record => {
         if (record) {
-          return (this._retrieveRank(options, record.get('score'))
+          return (this._retrieveRank(level, record.get('score'))
             .then(rank => Object.assign(toObject(record), { rank }))
           )
         } else {
@@ -84,7 +92,7 @@ export class OnlineService {
   // Retrieves the scoreboard
   retrieveScoreboard ({ md5, playMode }) {
     var query = new Parse.Query('GameScore')
-    query.equalTo('md5',      md5)
+    query.equalTo('md5', md5)
     query.equalTo('playMode', playMode)
     query.descending('score')
     query.limit(100)
@@ -96,10 +104,10 @@ export class OnlineService {
   }
 
   // Retrieve multiple records!
-  retrieveMultipleRecords (items) {
+  retrieveMultipleRecords (items, user) {
     let query = new Parse.Query('GameScore')
-    query.containedIn('md5',  items.map(item => item.md5))
-    query.equalTo('user',     Parse.User.current())
+    query.containedIn('md5', items.map(item => item.md5))
+    this._setQueryUser(query, user)
     query.limit(1000)
     return (wrapPromise(query.find())
       .then(results => results.map(toObject))
