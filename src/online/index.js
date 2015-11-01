@@ -1,9 +1,10 @@
 
 import Bacon      from 'baconjs'
 import _          from 'lodash'
+import Immutable  from 'immutable'
 
-import id from './id'
-import OnlineService from './online-service'
+import id             from './id'
+import OnlineService  from './online-service'
 import * as Level     from './level'
 import * as DataStore from './data-store'
 
@@ -48,14 +49,30 @@ export function Online() {
   }
 
   const seen口       = new Bacon.Bus()
+  const allSeen川    = allSeen川ForJustSeen川(seen口)
   const records川    = user川.flatMapLatest(records川ForUser)
+
+  function allSeen川ForJustSeen川 (justSeen川) {
+    return (justSeen川
+      .bufferWithTime(138)
+      .scan(new Immutable.Map(),
+        (allSeen, justSeen) => {
+          return allSeen.withMutations(allSeenʹ => {
+            for (let level of justSeen) {
+              allSeenʹ.set(id(level), level)
+            }
+          })
+        }
+      )
+      .map(map => map.valueSeq())
+    )
+  }
 
   function records川ForUser(user) {
     let seen = { }
 
     {
-      const bufferedSeen川 = seen口.bufferWithTime(138)
-      const action川 = bufferedSeen川.flatMap(fetch)
+      const action川 = allSeen川.flatMap(fetch)
       return DataStore.store川(action川)
     }
 
