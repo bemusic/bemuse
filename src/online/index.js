@@ -56,15 +56,9 @@ export function Online() {
     return (justSeen川
       .bufferWithTime(138)
       .scan(new Immutable.Map(),
-        (allSeen, justSeen) => {
-          return allSeen.withMutations(allSeenʹ => {
-            for (let level of justSeen) {
-              allSeenʹ.set(id(level), level)
-            }
-          })
-        }
+        (map, seen) => map.merge(_.zipObject(seen.map(id), seen))
       )
-      .map(map => map.valueSeq())
+      .map(map => map.valueSeq().toJS())
     )
   }
 
@@ -83,10 +77,9 @@ export function Online() {
       }
       return Bacon.fromPromise(service.retrieveMultipleRecords(levels)
         .then(function (results) {
-          let recordsToPut = { }
-          for (let record of results) {
-            recordsToPut[id(record)] = completedStateTransition(record)
-          }
+          let recordsToPut = _.zipObject(
+            results.map(id), results.map(completedStateTransition)
+          )
           return DataStore.putMultiple(recordsToPut)
         })
         .catch(function () {
