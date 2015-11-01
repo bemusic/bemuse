@@ -21,6 +21,9 @@ export function Online() {
   const service = new OnlineService()
 
   const user口 = new Bacon.Bus()
+  const seen口 = new Bacon.Bus()
+  const submitted口 = new Bacon.Bus()
+
   const user川 = (
     user口
     // https://github.com/baconjs/bacon.js/issues/536
@@ -41,16 +44,20 @@ export function Online() {
   }
 
   function submitScore(info) {
-    return service.submitScore(info)
+    return service.submitScore(info).tap(record => submitted口.push(record))
   }
 
   function getScoreboard(level) {
     return service.retrieveScoreboard(level)
   }
 
-  const seen口       = new Bacon.Bus()
-  const allSeen川    = allSeen川ForJustSeen川(seen口)
-  const records川    = user川.flatMapLatest(records川ForUser)
+  const allSeen川 = allSeen川ForJustSeen川(seen口)
+  const records川 = (user川
+    .flatMapLatest(records川ForUser)
+    .toProperty(DataStore.INITIAL_STATE)
+  )
+
+  const dispose = records川.onValue(() => {})
 
   function allSeen川ForJustSeen川 (justSeen川) {
     return (justSeen川
@@ -58,7 +65,9 @@ export function Online() {
       .scan(new Immutable.Map(),
         (map, seen) => map.merge(_.zipObject(seen.map(id), seen))
       )
-      .map(map => map.valueSeq().toJS())
+      .map(map => map.valueSeq())
+      .skipDuplicates(Immutable.is)
+      .map(seq => seq.toJS())
     )
   }
 
@@ -66,7 +75,12 @@ export function Online() {
     let seen = { }
 
     {
-      const action川 = allSeen川.flatMap(fetch)
+      const action川 = Bacon.mergeAll(
+        allSeen川.flatMap(fetch),
+        submitted口.map(record =>
+          DataStore.put(id(record), completedStateTransition(record))
+        )
+      )
       return DataStore.store川(action川)
     }
 
@@ -208,6 +222,7 @@ export function Online() {
     scoreboard: getScoreboard,
     Ranking,
     seen,
+    dispose,
   }
 }
 
