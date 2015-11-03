@@ -7,11 +7,10 @@ env:
     - BROWSER=firefox
     - NODE_ENV=test
 node_js:
-  - "4"
+  - "5"
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - 'npm install -g npm@latest'
   - 'npm install -g gulp'
 script:
   - npm run ci:code-review
