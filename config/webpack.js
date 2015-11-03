@@ -39,7 +39,7 @@ let config = {
       {
         test: /\.jsx?$/,
         include: [path('src'), path('spec')],
-        loader: 'babel?modules=common&experimental=true',
+        loader: 'babel',
       },
       {
         test: /\.js$/,
@@ -133,6 +133,7 @@ if (Env.test() || Env.coverageEnabled()) {
 if (Env.hotModeEnabled()) {
   config.devServer.hot = true
   config.plugins.push(new webpack.HotModuleReplacementPlugin())
+  config.entry.boot.unshift('webpack-dev-server/client?http://localhost:' + Env.serverPort())
   config.entry.boot.unshift('webpack/hot/dev-server')
 }
 

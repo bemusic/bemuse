@@ -61,8 +61,10 @@ export default React.createClass({
               { 'is-in-song': this.state.inSong })}>
             <MusicList
                 groups={musicSelect.groups}
-                highlight={musicSelect.filterText}
+                highlight={musicSelect.highlight}
                 selectedSong={musicSelect.song}
+                selectedChart={musicSelect.chart}
+                playMode={musicSelect.playMode}
                 onSelect={this.handleSongSelect}
                 onTouch={this.handleMusicListTouch} />
             <MusicInfo
@@ -147,8 +149,9 @@ export default React.createClass({
   handleUser(user) {
     this.setState({ user: user })
   },
-  handleSongSelect(song) {
+  handleSongSelect(song, chart) {
     Actions.selectSong(song)
+    if (chart) Actions.selectChart(chart)
     this.setState({ inSong: true })
   },
   handleMusicListTouch() {

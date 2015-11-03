@@ -10,8 +10,8 @@ const RankingTablePlayground = React.createClass({
       <Ranking
         state={{
           data: [
-            { playerName: 'One', score: '543210', count: [5, 4, 3, 2, 1], total: 15 },
-            { playerName: 'Two', score: '123456', count: [1, 2, 3, 4, 5], total: 15 },
+            { playerName: 'One', score: '543210', count: [5, 4, 3, 2, 1], total: 15, rank: 1 },
+            { playerName: 'Two', score: '123456', count: [1, 2, 3, 4, 5], total: 15, rank: 2 },
           ],
           meta: {
             scoreboard: {
@@ -19,8 +19,7 @@ const RankingTablePlayground = React.createClass({
             },
             submission: {
               status: 'completed',
-              rank:   1,
-              record: { playerName: 'One', score: '543210', count: [5, 4, 3, 2, 1], total: 15 },
+              record: { playerName: 'One', score: '543210', count: [5, 4, 3, 2, 1], total: 15, rank: 1 },
             }
           }
         }}
@@ -28,8 +27,8 @@ const RankingTablePlayground = React.createClass({
       <Ranking
         state={{
           data: [
-            { playerName: 'One', score: '543210', count: [5, 4, 3, 2, 1], total: 15 },
-            { playerName: 'Two', score: '123456', count: [1, 2, 3, 4, 5], total: 15 },
+            { playerName: 'One', score: '543210', count: [5, 4, 3, 2, 1], total: 15, rank: 1 },
+            { playerName: 'Two', score: '123456', count: [1, 2, 3, 4, 5], total: 15, rank: 2 },
           ],
           meta: {
             scoreboard: {
@@ -37,7 +36,6 @@ const RankingTablePlayground = React.createClass({
             },
             submission: {
               status: 'completed',
-              rank:   null,
               record: null,
             }
           }

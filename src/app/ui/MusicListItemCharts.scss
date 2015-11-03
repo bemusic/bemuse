@@ -1,0 +1,15 @@
+
+@import "~bemuse/ui/common";
+
+.MusicListItemCharts {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  margin-top: -0.5vmin;
+  flex-wrap: wrap;
+  .MusicListItemChart {
+    margin-left: 0.5vmin;
+    margin-top: 0.5vmin;
+    flex: none;
+  }
+}

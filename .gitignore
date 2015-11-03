@@ -48,3 +48,5 @@ Icon
 /public/jspm_packages/
 
 /.env
+
+/.otto/

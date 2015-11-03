@@ -4,6 +4,10 @@ import './MusicListItem.scss'
 import React  from 'react'
 import c      from 'classnames'
 
+import { visibleCharts } from '../utils/music-select-utils'
+
+import MusicListItemCharts from './MusicListItemCharts'
+
 export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
   render() {
@@ -15,18 +19,32 @@ export default React.createClass({
         song.tutorial
         ? <div className="MusicListItemのtutorial">Tutorial</div>
         : <div className="MusicListItemのinfo">
-            <div className="MusicListItemのtitle">
-              {this.renderHighlight(song.title)}
+            <div className="MusicListItemのinfo-top">
+              <div className="MusicListItemのtitle">
+                {this.renderHighlight(song.title)}
+              </div>
+              <div className="MusicListItemのcharts">
+                {this.renderChartlist()}
+              </div>
             </div>
-            <div className="MusicListItemのartist">
-              {this.renderHighlight(song.artist)}
-            </div>
-            <div className="MusicListItemのgenre">
-              {this.renderHighlight(song.genre)}
+            <div className="MusicListItemのinfo-bottom">
+              <div className="MusicListItemのartist">
+                {this.renderHighlight(song.artist)}
+              </div>
+              <div className="MusicListItemのgenre">
+                {this.renderHighlight(song.genre)}
+              </div>
             </div>
           </div>
       }
     </li>
+  },
+  renderChartlist() {
+    return <MusicListItemCharts
+      charts={visibleCharts(this.props.song.charts)}
+      selectedChart={this.props.selectedChart}
+      onChartClick={this.handleChartClick}
+      playMode={this.props.playMode} />
   },
   renderHighlight(text) {
     if (!this.props.highlight) return text
@@ -50,6 +68,10 @@ export default React.createClass({
 
   handleClick() {
     this.props.onSelect(this.props.song)
-  }
+  },
+  handleChartClick(chart, e) {
+    e.stopPropagation()
+    this.props.onSelect(this.props.song, chart)
+  },
 
 })

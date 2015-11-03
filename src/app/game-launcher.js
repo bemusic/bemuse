@@ -6,6 +6,7 @@ import React        from 'react'
 
 // TODO: remove this dependency and use Options
 import query                  from 'bemuse/utils/query'
+import { getGrade }           from 'bemuse/rules/grade'
 
 import SCENE_MANAGER          from 'bemuse/scene-manager'
 import URLResource            from 'bemuse/resources/url'
@@ -133,15 +134,3 @@ function showResult(playerState, chart) {
     SCENE_MANAGER.display(React.createElement(ResultScene, props)).done()
   })
 }
-
-//#region grade
-function getGrade(stats) {
-  let score = stats.score
-  if (score < 300000) return 'F'
-  if (score < 350000) return 'D'
-  if (score < 400000) return 'C'
-  if (score < 450000) return 'B'
-  if (score < 500000) return 'A'
-  return 'S'
-}
-//#endregion

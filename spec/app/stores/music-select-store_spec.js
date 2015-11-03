@@ -20,7 +20,7 @@ describe('MusicSelectStore', function() {
   }))
 
   beforeEach(function() {
-    Store = MusicSelectStoreFactory(CollectionStore)
+    Store = MusicSelectStoreFactory(CollectionStore, { debounce: false })
   })
 
   describe('during loading', function() {

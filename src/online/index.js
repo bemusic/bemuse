@@ -1,295 +1,228 @@
 
 import Bacon      from 'baconjs'
-import { Parse }  from 'parse'
-import invariant  from 'invariant'
-import Cache      from 'lru-cache'
+import _          from 'lodash'
+import Immutable  from 'immutable'
 
-// https://github.com/baconjs/bacon.js/issues/536
-function makeEager(川) {
-  return 川.subscribe(() => {})
-}
+import id             from './id'
+import OnlineService  from './online-service'
+import * as Level     from './level'
+import * as DataStore from './data-store'
 
-class Descriptor {
-  constructor({ md5, playMode }) {
-    invariant(typeof md5      === 'string', 'md5 must be a string')
-    invariant(typeof playMode === 'string', 'playMode must be a string')
-    this.md5      = md5
-    this.playMode = playMode
-  }
-  recordCacheKey() {
-    return `record/${this.md5}/${this.playMode}`
-  }
-  scoreboardCacheKey() {
-    return `scoreboard/${this.md5}/${this.playMode}`
-  }
-}
+import {
+  INITIAL_OPERATION_STATE,
+  completedStateTransition,
+  transition川FromPromise,
+  operationState川,
+  isWaiting,
+} from './operations'
 
 export function Online() {
 
-  const cache = new Cache()
+  const service = new OnlineService()
+
   const user口 = new Bacon.Bus()
-  const user川 = user口.toProperty(Parse.User.current()).map(unwrapUser)
+  const seen口 = new Bacon.Bus()
+  const submitted口 = new Bacon.Bus()
 
-  // user川 needs to be eager, so that when someone subscribes, they always
-  // get the latest user value.
-  makeEager(user川)
+  const user川 = (
+    user口
+    // https://github.com/baconjs/bacon.js/issues/536
+    .toProperty(null)
+    .map(user => user || service.getCurrentUser())
+  )
 
-  // Make sure to clear cache every time user logs in.
-  user川.onValue(() => {
-    cache.reset()
-  })
-
-  function wrapPromise(promise) {
-    return Promise.resolve(promise).catch(function(error) {
-      if (error instanceof Error) {
-        throw error
-      } else {
-        throw new Error('Parse Error ' + error.code + ': ' + error.message)
-      }
-    })
+  function signUp(options) {
+    return service.signUp(options).tap(user => user口.push(user))
   }
 
-  function unwrapUser(parseUser) {
-    if (!parseUser) return null
-    return {
-      username: parseUser.get('username'),
-      email:    parseUser.get('email'),
-    }
-  }
-
-  function toObject(物) {
-    return Object.assign({ }, 物.attributes, { id: 物.id })
-  }
-
-  function signUp({ username, password, email }) {
-    invariant(typeof username === 'string', 'username must be a string')
-    invariant(typeof password === 'string', 'password must be a string')
-    invariant(typeof email === 'string',    'email must be a string')
-    return (
-      wrapPromise(Parse.User.signUp(username, password, { email }))
-      .tap(user => user口.push(user))
-    )
-  }
-
-  function logIn({ username, password }) {
-    invariant(typeof username === 'string', 'username must be a string')
-    invariant(typeof password === 'string', 'password must be a string')
-    return (
-      wrapPromise(Parse.User.logIn(username, password))
-      .tap(user => user口.push(user))
-    )
+  function logIn(options) {
+    return service.logIn(options).tap(user => user口.push(user))
   }
 
   function logOut() {
-    return (
-      wrapPromise(Parse.User.logOut()).then(() => {})
-      .tap(() => user口.push(null))
-    )
+    return service.logOut().tap(() => user口.push(null))
   }
 
   function submitScore(info) {
-    return (
-      wrapPromise(Parse.Cloud.run('submitScore', info))
-      .then(({ data, meta }) => {
-        return {
-          data: toObject(data),
-          meta: meta
-        }
-      })
-    )
+    return service.submitScore(info).tap(record => submitted口.push(record))
   }
 
-  function parseRetrieveRecord(descriptor) {
-    let { md5, playMode } = descriptor
-    let query = new Parse.Query('GameScore')
-    query.equalTo('md5',      md5)
-    query.equalTo('playMode', playMode)
-    query.equalTo('user',     Parse.User.current())
-    return wrapPromise(query.first()).tap(record => {
-      cache.set(descriptor.recordCacheKey(), record)
-    })
+  function getScoreboard(level) {
+    return service.retrieveScoreboard(level)
   }
 
-  function parseRetrieveRank(descriptor, gameScore) {
-    let { md5, playMode } = descriptor
-    let countQuery = new Parse.Query('GameScore')
-    countQuery.equalTo('md5',       md5)
-    countQuery.equalTo('playMode',  playMode)
-    countQuery.greaterThan('score', gameScore.get('score'))
-    return wrapPromise(countQuery.count())
-  }
+  const allSeen川 = allSeen川ForJustSeen川(seen口)
+  const records川 = (user川
+    .flatMapLatest(records川ForUser)
+    .toProperty(DataStore.INITIAL_STATE)
+  )
 
-  function retrieveRecord(descriptor) {
-    let cacheKey  = descriptor.recordCacheKey()
-    let cached    = cache.get(cacheKey)
-    if (cached) {
-      return Promise.resolve(cached)
-    }
-    return (
-      parseRetrieveRecord(descriptor)
-      .then(gameScore => {
-        if (gameScore) {
-          return (
-            parseRetrieveRank(descriptor, gameScore)
-            .then(x => x + 1, () => null)
-            .then(rank => ({ data: toObject(gameScore), meta: { rank } }))
-          )
-        } else {
-          return {
-            data: null,
-            meta: { rank: null }
-          }
-        }
-      })
-      .tap(result => {
-        cache.set(cacheKey, result)
-      })
-    )
-  }
+  const dispose = records川.onValue(() => {})
 
-  function reloadable川(promiseFactory, execute川) {
-    let state川 = (
-      execute川
-      .flatMapLatest(() => {
-        return (
-          Bacon.fromPromise(Promise.resolve(promiseFactory()))
-          .map(    value  => prev => Object.assign({ }, prev, { status: 'completed', value, error: null }))
-          .mapError(error => prev => Object.assign({ }, prev, { status: 'error', error }))
-          .startWith(        prev => Object.assign({ }, prev, { status: 'loading', error: null }))
-        )
-      })
-      .scan(
-        { status: 'loading', value: null, error: null },
-        (prev, next) => next(prev)
+  function allSeen川ForJustSeen川 (justSeen川) {
+    return (justSeen川
+      .bufferWithTime(138)
+      .scan(new Immutable.Map(),
+        (map, seen) => map.merge(_.zipObject(seen.map(id), seen))
       )
+      .map(map => map.valueSeq())
+      .skipDuplicates(Immutable.is)
+      .map(seq => seq.toJS())
     )
-    return state川
   }
 
-  function getScoreboard(descriptor) {
-    let cacheKey  = descriptor.scoreboardCacheKey()
-    let cached    = cache.get(cacheKey)
-    if (cached) {
-      return Promise.resolve(cached)
+  function records川ForUser(user) {
+    let seen = { }
+
+    {
+      const action川 = Bacon.mergeAll(
+        allSeen川.flatMap(fetch),
+        submitted口.map(record =>
+          DataStore.put(id(record), completedStateTransition(record))
+        )
+      )
+      return DataStore.store川(action川)
     }
-    let { md5, playMode } = descriptor
-    var query = new Parse.Query('GameScore')
-    query.equalTo('md5',      md5)
-    query.equalTo('playMode', playMode)
-    query.descending('score')
-    query.limit(100)
-    return (
-      wrapPromise(query.find())
-      .then(results => {
-        return {
-          data: results.map(toObject)
-        }
-      })
-      .tap(result => {
-        cache.set(cacheKey, result)
-      })
-    )
-  }
 
-  function submitOrRetrieveRecord(data) {
-    if (Parse.User.current()) {
-      if (data.score) {
-        cache.reset()
-        return submitScore(data)
-      } else {
-        return retrieveRecord(new Descriptor(data))
+    function fetch (levels) {
+      let levelsToFetch = levels.filter(level => !seen[id(level)])
+      for (let level of levelsToFetch) {
+        seen[id(level)] = true
       }
-    } else {
-      let error = new Error('Unauthenticated!')
-      error.isUnauthenticated = true
-      return Promise.reject(error)
+      return Bacon.fromPromise(service.retrieveMultipleRecords(levels)
+        .then(function (results) {
+          let recordsToPut = _.zipObject(
+            results.map(id), results.map(completedStateTransition)
+          )
+          return DataStore.putMultiple(recordsToPut)
+        })
+        .catch(function () {
+          return DataStore.putMultiple({ })
+        })
+      )
     }
   }
 
   function Ranking(data) {
 
-    const descriptor   = new Descriptor(data)
-    const resubmit口   = new Bacon.Bus()
-    const reload口     = new Bacon.Bus()
+    const level = Level.fromObject(data)
+    const retrySelf口 = new Bacon.Bus()
+    const retryScoreboard口 = new Bacon.Bus()
 
-    const submission川 = (
-      reloadable川(
-        () => submitOrRetrieveRecord(data),
-        (
-          Bacon.once()
-          .merge(resubmit口)
-          .merge(user川.changes().filter(user => !!user).first())
+    {
+      const rankingModel川 = user川.map(rankingModelForUser)
+      const self川 = (rankingModel川
+        .flatMapLatest(model => model.self川)
+        .toProperty(INITIAL_OPERATION_STATE)
+      )
+      const scoreboardTrigger川 = (rankingModel川
+        .flatMapLatest(model => model.scoreboardTrigger川)
+      )
+      const scoreboard川 = getScoreboardState川(scoreboardTrigger川)
+      const state川 = (
+        Bacon.combineTemplate({
+          self: self川,
+          scoreboard: scoreboard川,
+        })
+        .map(conformState)
+      )
+      return {
+        state川,
+        resubmit:         () => retrySelf口.push(),
+        reloadScoreboard: () => retryScoreboard口.push(),
+      }
+    }
+
+    // Make the state conform the old API. We should remove this in the future.
+    function conformState(state) {
+      return {
+        data: state.scoreboard.value && state.scoreboard.value.data,
+        meta: {
+          scoreboard: _.omit(state.scoreboard, 'value'),
+          submission: state.self,
+        },
+      }
+    }
+
+    function rankingModelForUser (user) {
+      if (!user) return unauthenticatedRankingModel()
+      return (data.score
+        ? submissionModel(user)
+        : viewRecordModel(user)
+      )
+    }
+
+    function unauthenticatedRankingModel () {
+      return {
+        self川: Bacon.constant({
+          status: 'unauthenticated',
+          error:  null,
+          record: null,
+        }),
+        scoreboardTrigger川: Bacon.once({ force: false })
+      }
+    }
+
+    function submissionModel (user) {
+      const self川     = submitScoreState川(user)
+      const selfDone川 = self川.toEventStream().filter(state => !isWaiting(state))
+      return {
+        self川,
+        scoreboardTrigger川: selfDone川.map(() => ({ force: true }))
+      }
+    }
+
+    function viewRecordModel (user) {
+      return {
+        self川: getRecordState川(user),
+        scoreboardTrigger川: asap川({ force: false })
+      }
+    }
+
+    function getScoreboardState川 (trigger川) {
+      return operationState川(
+        trigger川.merge(retryScoreboard口).flatMapLatest(
+          () => transition川FromPromise(getScoreboard(level))
         )
       )
-      .map(state => {
-        if (state.status === 'completed') {
-          return {
-            status: 'completed',
-            error:  null,
-            record: state.value.data,
-            rank:   state.value.meta.rank,
-          }
-        } else if (state.status === 'error' && state.error.isUnauthenticated) {
-          return {
-            status: 'unauthenticated',
-            error:  null,
-            record: null,
-            rank:   null,
-          }
-        } else {
-          return {
-            status: state.status,
-            error:  state.error,
-            record: null,
-            rank:   null,
-          }
-        }
-      })
-    )
-
-    const scoreboard川 = reloadable川(
-      () => getScoreboard(descriptor),
-      submission川.filter(({ status }) => status === 'unauthenticated' || status === 'completed')
-    )
-
-    const state川 = Bacon.combineWith(
-      function(submission, scoreboard) {
-        return {
-          data: scoreboard.value && scoreboard.value.data,
-          meta: {
-            scoreboard: {
-              status: scoreboard.status,
-              error:  scoreboard.error
-            },
-            submission: submission,
-          },
-        }
-      },
-      submission川,
-      scoreboard川
-    )
-
-    return {
-      state川,
-      resubmit() {
-        resubmit口.push()
-      },
-      reloadScoreboard() {
-        reload口.push()
-      },
     }
+
+    function getRecordState川 (user) {
+      return operationState川(
+        asap川().merge(retrySelf口).flatMapLatest(
+          () => transition川FromPromise(service.retrieveRecord(level, user))
+        )
+      )
+    }
+
+    function submitScoreState川 (user) {
+      return operationState川(
+        asap川().merge(retrySelf口).flatMapLatest(
+          () => transition川FromPromise(submitScore(data))
+        )
+      )
+    }
+  }
+
+  function seen (level) {
+    return seen口.push(level)
+  }
+
+  function asap川 (value) {
+    return Bacon.later(0, value)
   }
 
   return {
     user川,
+    records川,
     signUp,
     logIn,
     logOut,
     submitScore,
-    scoreboard(options) {
-      return getScoreboard(new Descriptor(options))
-    },
+    scoreboard: getScoreboard,
     Ranking,
+    seen,
+    dispose,
   }
 }
 

@@ -153,12 +153,11 @@ function tests(APP_ID, JS_KEY) {
             count: [122, 1, 0, 0, 333],
             log: ''
           }))
-          .tap(function(result) {
-            var record = result.data
+          .tap(function(record) {
             expect(record.playNumber).to.equal(1)
             expect(record.playCount).to.equal(1)
             expect(record.recordedAt).to.be.an.instanceof(Date)
-            expect(result.meta.rank).to.equal(1)
+            expect(record.rank).to.equal(1)
             lastRecordedAt = record.recordedAt
           })
         })
@@ -172,8 +171,7 @@ function tests(APP_ID, JS_KEY) {
             count: [123, 1, 0, 0, 332],
             log: ''
           }))
-          .tap(function(result) {
-            var record = result.data
+          .tap(function(record) {
             expect(record.score).to.equal(123456)
             expect(record.combo).to.equal(123)
             expect(record.playNumber).to.equal(1)
@@ -192,8 +190,7 @@ function tests(APP_ID, JS_KEY) {
             count: [456, 0, 0, 0, 0],
             log: ''
           }))
-          .tap(function(result) {
-            var record = result.data
+          .tap(function(record) {
             expect(record.score).to.equal(555555)
             expect(record.combo).to.equal(456)
             expect(record.playNumber).to.equal(3)
@@ -213,10 +210,9 @@ function tests(APP_ID, JS_KEY) {
             count: [123, 1, 0, 0, 332],
             log: ''
           }))
-          .tap(function(result) {
-            var record = result.data
+          .tap(function(record) {
             expect(record.score).to.equal(123210)
-            expect(result.meta.rank).to.equal(1)
+            expect(record.rank).to.equal(1)
           })
         })
         step('as another user...', function() {
@@ -232,12 +228,11 @@ function tests(APP_ID, JS_KEY) {
             count: [123, 1, 0, 0, 332],
             log: ''
           }))
-          .tap(function(result) {
-            var record = result.data
+          .tap(function(record) {
             expect(record.score).to.equal(123210)
             expect(record.playNumber).to.equal(1)
             expect(record.playCount).to.equal(1)
-            expect(result.meta.rank).to.equal(2)
+            expect(record.rank).to.equal(2)
           })
         })
       })
@@ -292,8 +287,9 @@ function tests(APP_ID, JS_KEY) {
             playMode: 'BM',
           }))
           .tap(function(result) {
-            console.log(result)
             expect(result.data).to.have.length(2)
+            expect(result.data[0].rank).to.eq(1)
+            expect(result.data[1].rank).to.eq(2)
           })
         })
         step('log out...', function() {
@@ -314,62 +310,52 @@ function tests(APP_ID, JS_KEY) {
             log: ''
           })
           ranking川 = ranking.state川
-          dispose   = ranking川.subscribe(() => {})
+          dispose   = ranking川.onValue(() => {})
         })
+
+        function when(predicate) {
+          return Promise.resolve(ranking川.filter(predicate).first().toPromise())
+        }
+
         step('should have scoreboard loading status', function() {
-          return Promise.resolve(
-            ranking川.first().toPromise()
-          )
-          .then(function(state) {
-            expect(state.meta.scoreboard.status).to.equal('loading')
-          })
+          return when(state => state.meta.scoreboard.status === 'loading')
         })
         step('no new score should be submitted', function() {
-          return Promise.resolve(
-            ranking川
-            .filter(state =>
+          return (
+            when(state =>
               state.meta.scoreboard.status === 'completed' &&
               state.meta.submission.status === 'unauthenticated'
             )
-            .first()
-            .toPromise()
+            .then(state => {
+              expect(state.data).to.have.length(2)
+            })
           )
-          .then(function(state) {
-            expect(state.data).to.have.length(2)
-          })
         })
         step('sign up user3...', function() {
           return online.signUp(user3)
         })
         step('should start sending score', function() {
-          return Promise.resolve(
-            ranking川
-            .filter(state => state.meta.submission.status === 'loading')
-            .first()
-            .toPromise()
-          )
+          return when(state => state.meta.submission.status === 'loading')
         })
         step('should finish sending score', function() {
-          return Promise.resolve(
-            ranking川.take(2).toPromise()
+          return (when(state => state.meta.submission.status === 'completed')
+            .then(state => {
+              expect(state.meta.submission.value.rank).to.equal(3)
+            })
           )
-          .then(function(state) {
-            expect(state.meta.submission.status).to.equal('completed')
-            expect(state.meta.scoreboard.status).to.equal('loading')
-            expect(state.meta.submission.rank).to.equal(3)
-          })
+        })
+        step('should start loading scoreboard', function () {
+          return when(state => state.meta.scoreboard.status === 'loading')
         })
         step('should finish reloading scoreboard', function() {
-          return Promise.resolve(
-            ranking川.take(2).toPromise()
+          return (when(state => state.meta.scoreboard.status === 'completed')
+            .then(state => {
+              expect(state.data).to.have.length(3)
+            })
           )
-          .then(function(state) {
-            expect(state.meta.scoreboard.status).to.equal('completed')
-            expect(state.data).to.have.length(3)
-          })
         })
         step('resubscribe with read only', function() {
-          if (dispose) dispose()
+          dispose()
           ranking = online.Ranking({
             md5: prefix + 'song1',
             playMode: 'BM'
@@ -378,23 +364,20 @@ function tests(APP_ID, JS_KEY) {
           dispose   = ranking川.subscribe(() => {})
         })
         step('should not submit new score', function() {
-          return Promise.resolve(
-            ranking川
-            .filter(
-              ({ meta: { scoreboard: { status: status1 }, submission: { status: status2 } } }) => (
-                status1 === 'completed' && status2 === 'completed'
-              )
+          return (
+            when(state =>
+              state.meta.scoreboard.status === 'completed' &&
+              state.meta.submission.status === 'completed'
             )
-            .first().toPromise()
+            .then(function(state) {
+              expect(state.data).to.have.length(3)
+              expect(state.meta.submission.value.playCount).to.equal(1)
+            })
           )
-          .then(function(state) {
-            expect(state.data).to.have.length(3)
-            expect(state.meta.submission.record.playCount).to.equal(1)
-          })
         })
         after(function() {
           online.logOut()
-          if (dispose) dispose()
+          dispose()
         })
       })
 

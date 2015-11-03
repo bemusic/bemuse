@@ -5,17 +5,21 @@ import { Store }  from 'bemuse/flux'
 
 import * as GameLauncher      from '../game-launcher'
 import * as Actions           from '../actions/music-select-actions'
+import { visibleCharts, isChartPlayable } from '../utils/music-select-utils'
 import DefaultCollectionStore from './collection-store'
 import OptionsStore           from './options-store'
 
-export function MusicSelectStoreFactory(CollectionStore) {
+export function MusicSelectStoreFactory(CollectionStore, options={ }) {
+
+  const debounce      = (typeof options.debounce === 'undefined'
+    ? true
+    : options.debounce
+  )
 
   const $server       = CollectionStore.map(state => state.server)
   const $collection   = CollectionStore.map(state => state.collection)
   const $unofficial   = CollectionStore.map(state => state.unofficial)
   const $loading      = $collection.map(({ loading }) => loading)
-
-  const playableChart = chart => chart.keys === '7K' || chart.keys === '5K'
 
   const $grouping     = Bacon.constant([
     { title: 'Custom Song', criteria: song => song.custom },
@@ -27,16 +31,24 @@ export function MusicSelectStoreFactory(CollectionStore) {
       reverse: true, },
     { title: '☆', criteria: () => true },
   ])
+
   const $filterText   = Bacon.update('',
       [Actions.setFilterText.bus], (prev, filterText) => filterText)
+
+  const $filterTextDebounced = (debounce
+    ? $filterText.debounce(138)
+    : $filterText
+  )
+
   const $customSongs  = Bacon.update([],
       [Actions.setCustomSong.bus], (prev, song) => [song])
+
   const $songList     = $collection
       .map(({ collection }) => _((collection && collection.songs) || [])
           .sortByAll([
             song => {
               return _(song.charts)
-                .filter(playableChart)
+                .filter(isChartPlayable)
                 .filter(chart => chart.info.difficulty < 5)
                 .filter(chart => chart.info.level > 0)
                 .map(chart => chart.info.level)
@@ -47,10 +59,12 @@ export function MusicSelectStoreFactory(CollectionStore) {
           ])
           .value())
       .combine($customSongs, (songs, custom) => [...custom, ...songs])
-      .combine($filterText, (songs, filterText) =>
+      .combine($filterTextDebounced, (songs, filterText) =>
           songs.filter(song => matches(song, filterText)))
+
   const $groups       = $songList.combine($grouping,
       (songs, grouping) => groupBy(songs, grouping))
+
   const $songs        = $groups.map(groups =>
       _(groups).map('songs').flatten().value())
 
@@ -66,13 +80,7 @@ export function MusicSelectStoreFactory(CollectionStore) {
 
   const $charts = $song.map(song => (song && song.charts) || [ ])
 
-  const $visibleCharts = $charts.map(charts => _(charts)
-      .filter(playableChart)
-      .sortByAll(
-        chart => chart.info.difficulty >= 5 ? 1 : 0,
-        chart => chart.info.level
-      )
-      .value())
+  const $visibleCharts = $charts.map(visibleCharts)
 
   const $levelAnchorStrategy = $levelAnchor.map(level =>
       charts => _.min(charts, chart => Math.abs(chart.info.level - level)))
@@ -99,6 +107,7 @@ export function MusicSelectStoreFactory(CollectionStore) {
     charts:     $visibleCharts,
     chart:      $chart,
     filterText: $filterText,
+    highlight:  $filterTextDebounced,
     unofficial: $unofficial,
     playMode:   $mode,
   })
