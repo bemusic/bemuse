@@ -4,13 +4,13 @@ import MAIN  from 'bemuse/utils/main-element'
 import CustomBMS from 'bemuse/app/ui/CustomBMS'
 
 const DropBMSScene = React.createClass({
-  render() {
+  render () {
     return <div>
       <CustomBMS />
     </div>
   }
 })
 
-export function main() {
+export function main () {
   React.render(<DropBMSScene />, MAIN)
 }

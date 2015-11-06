@@ -9,7 +9,7 @@ import { visibleCharts, isChartPlayable } from '../utils/music-select-utils'
 import DefaultCollectionStore from './collection-store'
 import OptionsStore           from './options-store'
 
-export function MusicSelectStoreFactory(CollectionStore, options={ }) {
+export function MusicSelectStoreFactory (CollectionStore, options = { }) {
 
   const debounce      = (typeof options.debounce === 'undefined'
     ? true
@@ -116,18 +116,18 @@ export function MusicSelectStoreFactory(CollectionStore, options={ }) {
 
 export default MusicSelectStoreFactory(DefaultCollectionStore)
 
-function matches(song, filterText) {
+function matches (song, filterText) {
   if (!filterText) return true
   return contains(song.title, filterText) ||
       contains(song.artist, filterText) ||
       contains(song.genre, filterText)
 }
 
-function contains(haystack, needle) {
+function contains (haystack, needle) {
   return String(haystack.toLowerCase()).indexOf(needle.toLowerCase()) >= 0
 }
 
-function ensureSelectedPresent(previous, items, strategy) {
+function ensureSelectedPresent (previous, items, strategy) {
   if (items && items.length && items.indexOf(previous) === -1) {
     return strategy ? strategy(items) : items[0]
   } else {
@@ -135,7 +135,7 @@ function ensureSelectedPresent(previous, items, strategy) {
   }
 }
 
-function groupBy(songs, grouping) {
+function groupBy (songs, grouping) {
   let groups = grouping.map(group => ({
     input:  group,
     output: { title: group.title, songs: [ ] },

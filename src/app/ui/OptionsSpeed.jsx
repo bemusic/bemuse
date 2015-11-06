@@ -6,26 +6,26 @@ import React from 'react'
 
 const OptionsSpeed = React.createClass({
   mixins: [React.addons.PureRenderMixin],
-  parseSpeed(speedString) {
+  parseSpeed (speedString) {
     return +(+speedString || 1.0).toFixed(1)
   },
-  stringifySpeed(speed) {
+  stringifySpeed (speed) {
     return speed.toFixed(1)
   },
-  handleMinusButtonClick() {
+  handleMinusButtonClick () {
     let speed = this.parseSpeed(this.props.value)
     let nextSpeed = speed - (speed > 0.5 ? 0.5 : speed > 0.2 ? 0.3 : 0)
     this.props.onChange(this.stringifySpeed(nextSpeed))
   },
-  handlePlusButtonClick() {
+  handlePlusButtonClick () {
     let speed = this.parseSpeed(this.props.value)
     let nextSpeed = speed + (speed < 0.5 ? 0.3 : 0.5)
     this.props.onChange(this.stringifySpeed(nextSpeed))
   },
-  handleSpeedInputChange(nextSpeed) {
+  handleSpeedInputChange (nextSpeed) {
     this.props.onChange(this.stringifySpeed(nextSpeed))
   },
-  render() {
+  render () {
     return <div className="OptionsSpeed">
       <span className="OptionsSpeedのminus">
         <OptionsButton onClick={this.handleMinusButtonClick}>-</OptionsButton>

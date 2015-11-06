@@ -7,7 +7,7 @@ import Icon   from 'react-fa'
 
 export default React.createClass({
 
-  render() {
+  render () {
     let classes = c('MusicChartSelectorItem', {
           'is-active': this.props.isSelected,
           'is-tutorial': this.props.isTutorial,
@@ -30,7 +30,7 @@ export default React.createClass({
     </li>
   },
 
-  handleClick() {
+  handleClick () {
     this.props.onChartClick(this.props.chart)
   },
 

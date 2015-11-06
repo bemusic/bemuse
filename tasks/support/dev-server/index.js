@@ -15,13 +15,13 @@ import * as CoverageReport  from '../coverage-report'
 import testMiddleware       from '../test-middleware'
 import testStat             from '../test-middleware/stat'
 
-export function start() {
+export function start () {
 
   let port = Env.serverPort()
   var compiler = webpack(config)
   var server = new WebpackDevServer(compiler, config.devServer)
 
-  server.use('/api/test', testMiddleware(function(result) {
+  server.use('/api/test', testMiddleware(function (result) {
     let { total, failed, passed, _pending } = testStat(result.specs)
     void _pending
 
@@ -51,7 +51,7 @@ export function start() {
   server.use('/music', express.static(path('..', 'music')))
   server.use('/coverage', express.static(path('coverage', 'lcov-report')))
 
-  server.listen(port, '0.0.0.0', function(err) {
+  server.listen(port, '0.0.0.0', function (err) {
     if (err) throw new gutil.PluginError('webpack-dev-server', err)
     gutil.log('[webpack-dev-server]', 'http://localhost:' + port + '/')
   })

@@ -7,7 +7,7 @@ import _                from 'lodash'
 import Bacon            from 'baconjs'
 import { Store }        from 'bemuse/flux'
 
-export function main() {
+export function main () {
 
   const state口 = new Bacon.Bus()
 
@@ -31,7 +31,7 @@ export function main() {
 
   let play
 
-  function getLatency(samples) {
+  function getLatency (samples) {
     let data = samples.map(d => d[1])
     data.sort((a, b) => a - b)
     let count = 0
@@ -51,7 +51,7 @@ export function main() {
     play = () => {
       state口.push({ started: true })
       let remote = music({
-        a() {
+        a () {
           let latency = Math.max(0, getLatency(samples))
           state口.push({ finished: true, latency })
           if (window.opener) {

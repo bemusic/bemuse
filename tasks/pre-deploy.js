@@ -14,7 +14,7 @@ gulp.task('pre-deploy', co.wrap(function*() {
   check('Google Analytics inlined', () => /GoogleAnalyticsObject/.test(data))
 }))
 
-function check(title, condition) {
+function check (title, condition) {
   if (condition()) {
     console.log('[OK!!]', title)
   } else {

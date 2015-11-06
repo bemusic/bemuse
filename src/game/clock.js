@@ -13,7 +13,7 @@ import now from 'bemuse/utils/now'
 // and the audio time to compute a high-precision-and-accuracy time.
 //
 export class Clock {
-  constructor(audio) {
+  constructor (audio) {
     audio.unmute() // kick start the currentTime of audio context
 
     this._context = audio.context
@@ -23,7 +23,7 @@ export class Clock {
   }
 
   // Updates the clock. This method should be called every frame.
-  update() {
+  update () {
     let realTime  = now() / 1000
     let delta     = realTime - this._context.currentTime
     this._offset.push(delta)

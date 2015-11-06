@@ -11,7 +11,7 @@ import YouTube  from 'bemuse/ui/YouTube'
 
 export default React.createClass({
 
-  render() {
+  render () {
     const song = this.props.song
     return <div className="MusicInfoTabInformation">
       <Binding store={ReadmeStore} onChange={this.handleReadme} />
@@ -26,7 +26,7 @@ export default React.createClass({
       </section>
     </div>
   },
-  renderButtons() {
+  renderButtons () {
     let buttons = []
     let song = this.props.song
     if (song.bms_url) {
@@ -46,16 +46,16 @@ export default React.createClass({
       return <p className="MusicInfoTabInformationのbuttons">{buttons}</p>
     }
   },
-  getInitialState() {
+  getInitialState () {
     return { readme: ReadmeStore.get() }
   },
-  handleReadme(readme) {
+  handleReadme (readme) {
     this.setState({ readme: readme })
   },
 
 })
 
-function link(text, url) {
+function link (text, url) {
   return (
     url
     ? <a href={url} target="_blank">{text}</a>

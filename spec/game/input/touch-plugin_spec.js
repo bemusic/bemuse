@@ -2,8 +2,8 @@
 import PIXI from 'pixi.js'
 import TouchPlugin from 'bemuse/game/input/touch-plugin'
 
-describe('TouchPlugin', function() {
-  it('should get value when touching', function() {
+describe('TouchPlugin', function () {
+  it('should get value when touching', function () {
     let instance = new TouchPlugin({
       refs: {
         'p1_1': new Set([

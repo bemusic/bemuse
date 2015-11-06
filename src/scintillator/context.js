@@ -1,7 +1,7 @@
 
 import PIXI from 'pixi.js'
 
-function createRenderer(w, h) {
+function createRenderer (w, h) {
   if (navigator.userAgent.match(/Gecko\//)) {
     // return new PIXI.autoDetectRenderer(w, h, { transparent: true })
     // Disable WebGL for the moment because it has some problem with rendering
@@ -13,7 +13,7 @@ function createRenderer(w, h) {
 }
 
 export class Context {
-  constructor(skin) {
+  constructor (skin) {
     this.refs       = { }
     this._skin      = skin
     this._instance  = skin.instantiate(this)
@@ -22,28 +22,28 @@ export class Context {
     this.view       = this._renderer.view
     this._setupInteractivity()
   }
-  render(data) {
+  render (data) {
     this._instance.push(data)
     this._renderer.render(this.stage)
   }
-  destroy() {
+  destroy () {
     this._instance.destroy()
     this._instance = null
     this._teardownInteractivity()
   }
-  get input() {
+  get input () {
     return this._input.get()
   }
-  ref(key, object) {
+  ref (key, object) {
     let set = this.refs[key] || (this.refs[key] = new Set())
     set.add(object)
   }
-  unref(key, object) {
+  unref (key, object) {
     let set = this.refs[key]
     if (!set) return
     set.delete(object)
   }
-  _setupInteractivity() {
+  _setupInteractivity () {
     let mouse         = null
     let touches       = [ ]
     let onMouse       = (e) => { mouse = e }
@@ -81,7 +81,7 @@ export class Context {
         return output
       }
     }
-    function point(id, p, rect) {
+    function point (id, p, rect) {
       return {
         x: (p.clientX - rect.left) / rect.width * width,
         y: (p.clientY - rect.top) / rect.height * height,

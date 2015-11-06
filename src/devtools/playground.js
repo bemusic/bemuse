@@ -14,11 +14,11 @@ const availablePlaygrounds = (function (context) {
 
 const DefaultPlayground = React.createClass({
   statics: {
-    main() {
+    main () {
       React.render(<DefaultPlayground />, MAIN)
     }
   },
-  render() {
+  render () {
     const linkStyle = { color: '#abc' }
     return <div>
       <h1>Bemuse Playground</h1>
@@ -34,6 +34,6 @@ const DefaultPlayground = React.createClass({
   }
 })
 
-export function main() {
+export function main () {
   void (availablePlaygrounds[query.playground] || DefaultPlayground).main()
 }

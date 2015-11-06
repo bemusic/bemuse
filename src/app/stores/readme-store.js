@@ -20,18 +20,18 @@ export default new Store({
   text: $readme
 }, { lazy: true })
 
-function loadReadme(url) {
+function loadReadme (url) {
   if (url === null) return Bacon.once('Information unavailable…')
   let promise = Promise.resolve($.get(url))
-  .then(function(text) {
+  .then(function (text) {
     return stripFrontMatter('' + text)
   })
-  .catch(function() {
+  .catch(function () {
     return 'Unable to download ' + url
   })
   return Bacon.once('Loading...').merge(Bacon.fromPromise(promise))
 }
 
-function stripFrontMatter(text) {
+function stripFrontMatter (text) {
   return text.replace(/\r\n|\r|\n/g, '\n').replace(/^---\n[\s\S]*?\n---/, '')
 }

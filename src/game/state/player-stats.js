@@ -3,7 +3,7 @@ import _ from 'lodash'
 import * as Judgments from '../judgments'
 
 export class PlayerStats {
-  constructor(notechart) {
+  constructor (notechart) {
     this.totalCombo = _(notechart.notes)
         .map(note => notechart.info(note).combos)
         .sum()
@@ -17,7 +17,7 @@ export class PlayerStats {
     this.poor = false
     this._log = []
   }
-  get score() {
+  get score () {
     //#region score
     let accuracyScore = Math.floor(
           this.accuracy * 500000)
@@ -26,14 +26,14 @@ export class PlayerStats {
     return accuracyScore + comboScore
     //#endregion
   }
-  get accuracy() {
+  get accuracy () {
     return this.rawSumJudgmentWeight / (Judgments.weight(1) * this.totalCombo)
   }
-  get currentAccuracy() {
+  get currentAccuracy () {
     return (this.rawSumJudgmentWeight /
         (Judgments.weight(1) * this.numJudgments || 1))
   }
-  get log() {
+  get log () {
     return (
       this._log.map(({ character, count }) =>
         `${count > 1 ? count : ''}${character}`
@@ -41,7 +41,7 @@ export class PlayerStats {
       .join('')
     )
   }
-  handleJudgment(judgment) {
+  handleJudgment (judgment) {
     if (Judgments.breaksCombo(judgment)) {
       this.combo = 0
       this.poor = true
@@ -58,14 +58,14 @@ export class PlayerStats {
     this.numJudgments += 1
     this._recordLog(judgment)
   }
-  _calculateRawTotalComboScore() {
+  _calculateRawTotalComboScore () {
     var sum = 0
     for (var i = 1; i <= this.totalCombo; i++) {
       sum += this._calculateRawComboScore(i)
     }
     return sum
   }
-  _calculateRawComboScore(i) {
+  _calculateRawComboScore (i) {
     //#region combo
     if (i === 0) return 0
     if (i < 23) return 1
@@ -75,7 +75,7 @@ export class PlayerStats {
     return 5
     //#endregion
   }
-  _recordLog(judgment) {
+  _recordLog (judgment) {
     let character = this._getLogCharacter(judgment)
     if (character) {
       if (
@@ -88,7 +88,7 @@ export class PlayerStats {
       }
     }
   }
-  _getLogCharacter(judgment) {
+  _getLogCharacter (judgment) {
     switch (judgment) {
       case 1: return 'A'
       case 2: return 'B'

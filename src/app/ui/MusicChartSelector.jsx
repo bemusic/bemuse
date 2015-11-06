@@ -6,7 +6,7 @@ import MusicChartSelectorItem from './MusicChartSelectorItem.jsx'
 
 export default React.createClass({
 
-  render() {
+  render () {
     return <ul className="MusicChartSelector">
       {this.props.charts.map((chart, index) =>
         <MusicChartSelectorItem

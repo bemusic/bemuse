@@ -94,9 +94,9 @@ let config = {
 }
 
 
-function CompileProgressPlugin() {
+function CompileProgressPlugin () {
   var old = ''
-  return new webpack.ProgressPlugin(function(percentage, message) {
+  return new webpack.ProgressPlugin(function (percentage, message) {
     var text = '['
     for (var i = 0; i < 20; i++) text += percentage >= i / 20 ? '=' : ' '
     text += '] ' + message

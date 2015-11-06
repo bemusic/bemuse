@@ -14,14 +14,14 @@ export const SUPPORTED = [
   },
 ]
 
-function checkUserAgent(pattern, num) {
+function checkUserAgent (pattern, num) {
   let match = navigator.userAgent.match(pattern)
   if (!match) return false
   if (+match[1] >= num) return true
   return false
 }
 
-export function isBrowserSupported() {
+export function isBrowserSupported () {
   for (let browser of SUPPORTED) if (browser.test()) return true
   return false
 }

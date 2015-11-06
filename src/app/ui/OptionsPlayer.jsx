@@ -23,7 +23,7 @@ const PANEL_OPTIONS = [
 
 const OptionsPlayer = React.createClass({
   mixins: [React.addons.PureRenderMixin],
-  render() {
+  render () {
     return <div className="OptionsPlayer">
 
       <Binding store={Store} onChange={this.handleState} />
@@ -57,26 +57,26 @@ const OptionsPlayer = React.createClass({
 
     </div>
   },
-  getInitialState() {
+  getInitialState () {
     return Store.get()
   },
-  handleState(state) {
+  handleState (state) {
     this.setState(state)
   },
-  handleSelectPanel(value) {
+  handleSelectPanel (value) {
     Actions.setOptions({ 'player.P1.panel': value })
   },
-  handleSelectScratch(value) {
+  handleSelectScratch (value) {
     Actions.setScratch(value)
   },
-  handleSpeedChange(value) {
+  handleSpeedChange (value) {
     Actions.setOptions({ 'player.P1.speed': value })
   }
 })
 
 OptionsPlayer.Row = React.createClass({
   mixins: [React.addons.PureRenderMixin],
-  render() {
+  render () {
     return <div className="OptionsPlayerのrow">
       <label>{this.props.label}</label>
       <div>{this.props.children}</div>

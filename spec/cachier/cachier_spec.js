@@ -1,7 +1,7 @@
 
 import { Cachier } from 'bemuse/cachier'
 
-describe('Cachier', function() {
+describe('Cachier', function () {
 
   let cachier
   let databaseNumber = 0
@@ -22,7 +22,7 @@ describe('Cachier', function() {
 
   describe('.connection', () => {
     it('should be a promise which fullfill with the db connection', () => {
-      return cachier.connection.then(function(db) {
+      return cachier.connection.then(function (db) {
         expect(db.constructor + '').to.match(/DBDatabase/)
       })
     })
@@ -46,29 +46,29 @@ describe('Cachier', function() {
       return cachier.save('wow2', blob, { name: 'example1' }).delay(10)
     })
 
-    describe('#load', function() {
+    describe('#load', function () {
       it('should return the blob value', () => {
-        return cachier.load('wow2').then(function({ blob, metadata }) {
+        return cachier.load('wow2').then(function ({ blob, metadata }) {
           expect(blob.size).to.equal(5)
           expect(metadata).to.deep.equal({ name: 'example1' })
         })
       })
     })
 
-    describe('#save', function() {
+    describe('#save', function () {
       it('should replace content with a new blob', () => {
         let blob2 = new Blob(['world!'])
         return cachier.save('wow2', blob2)
           .delay(10) // chrome needs this delay
           .then(() => cachier.load('wow2'))
-          .then(function({ blob, metadata }) {
+          .then(function ({ blob, metadata }) {
             expect(blob.size).to.equal(6)
             expect(metadata).to.equal(undefined)
           })
       })
     })
 
-    describe('#delete', function() {
+    describe('#delete', function () {
       it('should remove the blob', () => {
         return cachier.delete('wow3')
           .then(() => expect(cachier.load('wow3')).to.be.rejected)
@@ -77,7 +77,7 @@ describe('Cachier', function() {
 
   })
 
-  describe('#destroyDatabase', function() {
+  describe('#destroyDatabase', function () {
     it('may be called twice', () => {
       return cachier.destroyDatabase()
     })
@@ -90,7 +90,7 @@ describe('Cachier', function() {
       return cachier.save('wow4', blob)
         .delay(10)
         .then(() => cachier.load('wow4'))
-        .then(function({ blob: retrievedBlob }) {
+        .then(function ({ blob: retrievedBlob }) {
           expect(retrievedBlob.size).to.equal(5)
           expect(retrievedBlob.type).to.equal('text/plain')
         })

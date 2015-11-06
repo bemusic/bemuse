@@ -25,18 +25,18 @@ let NODES = {
  * A Compiler compiles the $xml theme file into SkinNode.
  */
 class Compiler {
-  constructor(env) {
+  constructor (env) {
     Object.assign(this, env)
     this._defs = new Map()
   }
-  compile($el) {
+  compile ($el) {
     let nodeName = $el[0].nodeName
     log('compiling', $el[0])
     let Node = Compiler.getNodeClass(nodeName)
     if (!Node) throw new Error('Invalid node name: ' + nodeName)
     return Node.compile(this, $el)
   }
-  compileChildren($el) {
+  compileChildren ($el) {
     let output = []
     for (let child of Array.from($el.children())) {
       let nodeName = child.nodeName
@@ -51,20 +51,20 @@ class Compiler {
     }
     return output
   }
-  compileDefs($el) {
+  compileDefs ($el) {
     for (let child of Array.from($el.children())) {
       let id = child.getAttribute('id')
       if (!id) throw new Error('A def should have an id: ' + child.nodeName)
       this._defs.set(id, this.compile($(child)))
     }
   }
-  getDef(id) {
+  getDef (id) {
     let node = this._defs.get(id)
     if (!node) throw new Error('Cannot find def: ' + id)
     return node
   }
 
-  static getNodeClass(nodeName) {
+  static getNodeClass (nodeName) {
     return NODES[nodeName]
   }
 }

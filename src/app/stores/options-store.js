@@ -22,7 +22,7 @@ const $scratch = $options.map(options => {
   }
 })
 
-function getInitialOptions() {
+function getInitialOptions () {
   let options = { }
   for (let key of keys()) options[key] = get(key)
   return options

@@ -4,10 +4,10 @@ import React from 'react'
 import now   from 'bemuse/utils/now'
 
 export default React.createClass({
-  render() {
+  render () {
     return <span className="RunningNumber"></span>
   },
-  componentDidMount() {
+  componentDidMount () {
     let node = this.getDOMNode()
     let text = document.createTextNode('')
     node.appendChild(text)
@@ -22,7 +22,7 @@ export default React.createClass({
       }
     }, 16)
   },
-  _getText(value) {
+  _getText (value) {
     if (this.props.formatter) return this.props.formatter(value)
     return value.toFixed(0)
   },

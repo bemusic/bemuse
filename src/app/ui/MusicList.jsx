@@ -7,7 +7,7 @@ import MusicListItem  from './MusicListItem.jsx'
 
 export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
-  render() {
+  render () {
     return <ul className="MusicList"
         onTouchStart={this.props.onTouch}>
       {this.props.groups.map(({ title, songs }) => [
@@ -23,7 +23,7 @@ export default React.createClass({
       ])}
     </ul>
   },
-  getSelectedChart(song) {
+  getSelectedChart (song) {
     // Performance issue:
     //
     // We cannot just send `this.props.selectedChart` into every MusicListItem,

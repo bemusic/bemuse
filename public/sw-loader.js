@@ -1,7 +1,7 @@
 
 // Script to load the service worker.
 
-void (function() {
+void (function () {
   var match = location.search.match(/^\?path=([^&]+)/)
   if (!match) return
   var path = decodeURIComponent(match[1])

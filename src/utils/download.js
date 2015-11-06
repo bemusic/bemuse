@@ -9,9 +9,9 @@ import { BYTES_FORMATTER } from 'bemuse/progress/formatters'
 //
 //    Initiates the download as ``type``. The ``type`` is a string such as
 //    "arraybuffer" or "blob".
-export function download(url) {
+export function download (url) {
   return {
-    as(type, progress) {
+    as (type, progress) {
       return new Promise((resolve, reject) => {
         var xh = new XMLHttpRequest()
         xh.open('GET', url, true)

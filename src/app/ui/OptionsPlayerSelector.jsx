@@ -7,7 +7,7 @@ import OptionsPlayerGraphics from './OptionsPlayerGraphics'
 
 const OptionsPlayerSelector = React.createClass({
   mixins: [React.addons.PureRenderMixin],
-  render() {
+  render () {
     return <div className="OptionsPlayerSelector">
       {this.props.options.map((item, index) =>
           <OptionsPlayerSelector.Item
@@ -23,7 +23,7 @@ const OptionsPlayerSelector = React.createClass({
 
 OptionsPlayerSelector.Item = React.createClass({
   mixins: [React.addons.PureRenderMixin],
-  render() {
+  render () {
     return <div
         className={c('OptionsPlayerSelectorのitem',
             { 'is-active': this.props.active })}
@@ -37,7 +37,7 @@ OptionsPlayerSelector.Item = React.createClass({
       </div>
     </div>
   },
-  handleClick() {
+  handleClick () {
     this.props.onSelect(this.props.value)
   },
 })

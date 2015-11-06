@@ -1,4 +1,5 @@
 {
+  "extends": "bemuse",
   "env": {
     "browser": true,
     "node": true,
@@ -20,31 +21,5 @@
   "parser": "babel-eslint",
   "plugins": [
     "react"
-  ],
-  "rules": {
-    "comma-dangle": 0,
-    "comma-spacing": 0,
-    "curly": [2, "multi-line"],
-    "dot-notation": 0,
-    "key-spacing": 0,
-    "new-cap": 0,
-    "no-alert": 0,
-    "no-eval": 0,
-    "no-loop-func": 0,
-    "no-multi-spaces": 0,
-    "no-process-exit": 0,
-    "no-script-url": 0,
-    "no-undef": 2,
-    "no-underscore-dangle": 0,
-    "no-use-before-define": 0,
-    "no-unused-vars": [2, { "vars": "all", "args": "none" }],
-    "quotes": [2, "single", "avoid-escape"],
-    "semi": [2, "never"],
-    "yoda": 0,
-    "react/jsx-uses-vars": 1
-  },
-  "ecmaFeatures": {
-    "modules": true,
-    "jsx": true
-  }
+  ]
 }

@@ -23,8 +23,8 @@ export const JUDGMENTS = [
  *  0 - (not judge)
  * -1 - MISSED
  */
-export function judgeTimeWith(f) {
-  return function judgeTimeWithF(gameTime, noteTime) {
+export function judgeTimeWith (f) {
+  return function judgeTimeWithF (gameTime, noteTime) {
     let delta = Math.abs(gameTime - noteTime)
     for (let i = 0; i < JUDGMENTS.length; i++) {
       if (delta < f(JUDGMENTS[i])) return JUDGMENTS[i].value
@@ -36,16 +36,16 @@ export function judgeTimeWith(f) {
 export const judgeTime    = judgeTimeWith(_.property('timegate'))
 export const judgeEndTime = judgeTimeWith(_.property('endTimegate'))
 
-export function isBad(judgment) {
+export function isBad (judgment) {
   return judgment >= 4
 }
 
-export function breaksCombo(judgment) {
+export function breaksCombo (judgment) {
   return judgment === MISSED || isBad(judgment)
 }
 
 //#region judgment weight
-export function weight(judgment) {
+export function weight (judgment) {
   if (judgment === 1) return 100
   if (judgment === 2) return 80
   if (judgment === 3) return 50

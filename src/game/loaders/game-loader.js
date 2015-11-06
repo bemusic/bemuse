@@ -14,17 +14,17 @@ import GameController   from '../game-controller'
 import GameAudio        from '../audio'
 import GameDisplay      from '../display'
 
-export function load(spec) {
+export function load (spec) {
 
   let assets = spec.assets
   let bms    = spec.bms
 
-  return Multitasker.start(function(task, run) {
+  return Multitasker.start(function (task, run) {
 
-    task('Scintillator', 'Loading game engine', [], function(progress) {
+    task('Scintillator', 'Loading game engine', [], function (progress) {
       return new Promise((resolve) => {
         let context = new LoadingContext(progress)
-        context.use(function() {
+        context.use(function () {
           require.ensure(
             ['bemuse/scintillator'],
             (require) => resolve(require('bemuse/scintillator')),
@@ -35,12 +35,12 @@ export function load(spec) {
     })
 
     task('Skin', 'Loading skin', ['Scintillator'],
-    function(Scintillator, progress) {
+    function (Scintillator, progress) {
       return Scintillator.load(Scintillator.getSkinUrl(), progress)
     })
 
     task('SkinContext', null, ['Scintillator', 'Skin'],
-    function(Scintillator, skin) {
+    function (Scintillator, skin) {
       return new Scintillator.Context(skin)
     })
 
@@ -66,34 +66,34 @@ export function load(spec) {
     task.bar('Loading audio',  audioLoadProgress)
     task.bar('Decoding audio', audioDecodeProgress)
 
-    task('SamplingMaster', null, [], function() {
+    task('SamplingMaster', null, [], function () {
       return new SamplingMaster()
     })
 
     task('Game', null, ['Notechart'],
-    function(notechart) {
+    function (notechart) {
       return new Game([notechart], spec.options)
     })
 
     task('GameDisplay', null, ['Game', 'Skin', 'SkinContext'],
-    function(game, skin, context) {
+    function (game, skin, context) {
       return new GameDisplay({ game, skin, context })
     })
 
     task('Samples', null, ['SamplingMaster', 'Game'],
-    function(master, game) {
+    function (master, game) {
       let samplesLoader = new SamplesLoader(assets, master)
       return samplesLoader.loadFiles(game.samples,
           audioLoadProgress, audioDecodeProgress)
     })
 
     task('GameAudio', null, ['Game', 'Samples', 'SamplingMaster'],
-    function(game, samples, master) {
+    function (game, samples, master) {
       return new GameAudio({ game, samples, master })
     })
 
     task('GameController', null, ['Game', 'GameDisplay', 'GameAudio'],
-    function(game, display, audio) {
+    function (game, display, audio) {
       return new GameController({ game, display, audio })
     })
 

@@ -5,28 +5,28 @@ import * as Scintillator from 'bemuse/scintillator'
 
 let fixture = file => `/spec/scintillator/fixtures/${file}`
 
-describe('Scintillator', function() {
+describe('Scintillator', function () {
 
-  describe('#load', function() {
+  describe('#load', function () {
     it('should load skin and return skin node', co.wrap(function*() {
       let skin = yield Scintillator.load(fixture('bare.xml'))
       expect(skin.width).to.equal(123)
       expect(skin.height).to.equal(456)
     }))
-    it('should reject if invalid', function() {
+    it('should reject if invalid', function () {
       return expect(Scintillator.load(fixture('invalid_tag.xml')))
           .to.be.rejected
     })
   })
 
-  describe('Context', function() {
+  describe('Context', function () {
     it('should instantiate and able to destroy', co.wrap(function*() {
       let skin = yield Scintillator.load(fixture('bare.xml'))
       let context = new Scintillator.Context(skin)
       context.render({})
       context.destroy()
     }))
-    describe('#input', function() {
+    describe('#input', function () {
       let skin
       let context
       beforeEach(co.wrap(function*() {
@@ -38,17 +38,17 @@ describe('Scintillator', function() {
         context.view.style.left = '0'
         document.body.appendChild(context.view)
       }))
-      afterEach(function() {
+      afterEach(function () {
         context.destroy()
         document.body.removeChild(context.view)
       })
-      function mouse(type, x, y) {
+      function mouse (type, x, y) {
         context.view.dispatchEvent(new MouseEvent(`mouse${type}`, {
           clientX: x,
           clientY: y,
         }))
       }
-      function touch(type, touches, changedTouches) {
+      function touch (type, touches, changedTouches) {
         // since TouchEvent is damn complicated, we resort to using a custom
         // event that imitates a touch event.
         let event = new Event(`touch${type}`)
@@ -56,7 +56,7 @@ describe('Scintillator', function() {
         event.changedTouches = changedTouches
         context.view.dispatchEvent(event)
       }
-      it('should report touches/mouse inside the region', function() {
+      it('should report touches/mouse inside the region', function () {
         mouse('move', 10, 10)
         mouse('down', 10, 10)
         expect(context.input).to.deep.equal([
@@ -81,7 +81,7 @@ describe('Scintillator', function() {
         expect(context.input).to.deep.equal([])
       })
     })
-    describe('#refs', function() {
+    describe('#refs', function () {
       it('should be a set of refs to the display object', co.wrap(function*() {
         let skin = yield Scintillator.load(fixture('refs.xml'))
         let context = new Scintillator.Context(skin)
@@ -93,7 +93,7 @@ describe('Scintillator', function() {
     })
   })
 
-  describe('Expressions', function() {
+  describe('Expressions', function () {
     it('should be parsed and processed', co.wrap(function*() {
       let skin = yield Scintillator.load(fixture('expr_basic.xml'))
       let context = new Scintillator.Context(skin)
@@ -117,7 +117,7 @@ describe('Scintillator', function() {
     }))
   })
 
-  describe('SpriteNode', function() {
+  describe('SpriteNode', function () {
     it('should allow setting sprite frame', co.wrap(function*() {
       let skin = yield Scintillator.load(fixture('sprite_attrs.xml'))
       let context = new Scintillator.Context(skin)
@@ -141,13 +141,13 @@ describe('Scintillator', function() {
       expect(sprite.visible).to.equal(false)
       context.destroy()
     }))
-    it('should reject if blend mode is invalid', function() {
+    it('should reject if blend mode is invalid', function () {
       return expect(Scintillator.load(fixture('sprite_invalid_blend.xml')))
                 .to.be.rejected
     })
   })
 
-  describe('TextNode', function() {
+  describe('TextNode', function () {
     it('should display text', co.wrap(function*() {
       let skin = yield Scintillator.load(fixture('text.xml'))
       let context = new Scintillator.Context(skin)
@@ -177,7 +177,7 @@ describe('Scintillator', function() {
     }))
   })
 
-  describe('IfNode', function() {
+  describe('IfNode', function () {
     it('should display child when correct value', co.wrap(function*() {
       let skin = yield Scintillator.load(fixture('expr_if.xml'))
       let context = new Scintillator.Context(skin)
@@ -196,7 +196,7 @@ describe('Scintillator', function() {
     }))
   })
 
-  describe('ObjectNode', function() {
+  describe('ObjectNode', function () {
     it('should display children', co.wrap(function*() {
       let skin = yield Scintillator.load(fixture('expr_object.xml'))
       let context = new Scintillator.Context(skin)
@@ -238,7 +238,7 @@ describe('Scintillator', function() {
     }))
   })
 
-  describe('GroupNode', function() {
+  describe('GroupNode', function () {
     it('should allow masking', co.wrap(function*() {
       let skin = yield Scintillator.load(fixture('group_mask.xml'))
       let context = new Scintillator.Context(skin)
@@ -249,7 +249,7 @@ describe('Scintillator', function() {
     }))
   })
 
-  describe('AnimationNode', function() {
+  describe('AnimationNode', function () {
     it('should allow animations', co.wrap(function*() {
       let skin = yield Scintillator.load(fixture('animation.xml'))
       let context = new Scintillator.Context(skin)
@@ -289,7 +289,7 @@ describe('Scintillator', function() {
     }))
   })
 
-  describe('defs', function() {
+  describe('defs', function () {
     it('should allow reuse of skin nodes', co.wrap(function*() {
       let skin = yield Scintillator.load(fixture('defs.xml'))
       let context = new Scintillator.Context(skin)

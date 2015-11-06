@@ -3,7 +3,7 @@ import './BenchmarkPanel.scss'
 import React from 'react'
 
 export default React.createClass({
-  render() {
+  render () {
     return <div className="BenchmarkPanel"
         onClick={this.handleInteraction}
         onTouchStart={this.handleInteraction}>
@@ -17,10 +17,10 @@ export default React.createClass({
       }
     </div>
   },
-  componentDidMount() {
+  componentDidMount () {
     setInterval(() => this.forceUpdate(), 1000)
   },
-  renderTable() {
+  renderTable () {
     let stats = this.props.bench.stats
     return <table>
       <tbody>
@@ -34,13 +34,13 @@ export default React.createClass({
       </tbody>
     </table>
   },
-  getInitialState() {
+  getInitialState () {
     return {
       show: false,
       text: 'wow',
     }
   },
-  handleInteraction(e) {
+  handleInteraction (e) {
     e.preventDefault()
     e.stopPropagation()
     this.setState({ show: !this.state.show })

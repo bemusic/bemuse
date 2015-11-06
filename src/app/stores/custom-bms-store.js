@@ -12,12 +12,12 @@ const $clears    = Actions.clear.bus.map(() => (
 const $log       = $operation.merge($clears)
     .flatMapLatest(op => op.log).toProperty(null)
 
-function handleDrop({ event, callback }) {
+function handleDrop ({ event, callback }) {
   let resources = new DndResources(event)
   let $message  = new Bacon.Bus()
   let $$log     = $message.scan([], (array, message) => array.concat([message]))
   loadSongFromResources(resources, {
-    onMessage(message) {
+    onMessage (message) {
       $message.push(message)
     },
   })

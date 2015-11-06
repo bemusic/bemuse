@@ -1,16 +1,16 @@
 
 let gamepads = []
 
-window.addEventListener('gamepadconnected', function(e) {
+window.addEventListener('gamepadconnected', function (e) {
   gamepads.push(e.gamepad)
 })
 
-export function GamepadPlugin() {
-  function button(i) {
+export function GamepadPlugin () {
+  function button (i) {
     return gamepads.some(gamepad =>
         gamepad && gamepad.buttons[i] && gamepad.buttons[i].pressed)
   }
-  function axis(i) {
+  function axis (i) {
     for (var j = 0; j < gamepads.length; j++) {
       var gamepad = gamepads[j]
       if (!gamepad) continue
@@ -20,7 +20,7 @@ export function GamepadPlugin() {
   }
   return {
     name: 'GamepadPlugin',
-    get() {
+    get () {
       var out = {
         'p1_1': button(3),
         'p1_2': button(6),

@@ -14,11 +14,11 @@ let driver = new webdriver.Builder()
   .forBrowser('firefox')
   .build()
 
-function $(css, parent) {
+function $ (css, parent) {
   return (parent || driver).findElement(By.css(css))
 }
 
-function $$(css, parent) {
+function $$ (css, parent) {
   return (parent || driver).findElements(By.css(css))
 }
 

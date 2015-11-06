@@ -11,7 +11,7 @@ import RankingContainer         from './RankingContainer'
 
 export default React.createClass({
 
-  render() {
+  render () {
     return <section className="MusicInfoTabs">
       <ul className="MusicInfoTabsのtabs">
         <li className="MusicInfoTabsのoptions" onClick={this.props.onOptions}>
@@ -29,7 +29,7 @@ export default React.createClass({
     </section>
   },
 
-  renderTab(index, title) {
+  renderTab (index, title) {
     return <li
         className={c('MusicInfoTabsのtab',
             { 'is-active': index === this.state.selectedTab })}
@@ -37,7 +37,7 @@ export default React.createClass({
       {title}
     </li>
   },
-  renderCurrentTab() {
+  renderCurrentTab () {
     switch (this.state.selectedTab) {
     case 0:
       return <MusicInfoTabStats
@@ -56,7 +56,7 @@ export default React.createClass({
     }
   },
 
-  getInitialState() {
+  getInitialState () {
     return {
       selectedTab: 0,
     }

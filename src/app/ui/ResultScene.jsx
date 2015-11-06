@@ -12,7 +12,7 @@ import RankingContainer from './RankingContainer'
 import Flex             from 'bemuse/ui/Flex'
 
 export default React.createClass({
-  render() {
+  render () {
     return <Scene className="ResultScene">
       <SceneHeading>
         Play Result
@@ -54,7 +54,7 @@ export default React.createClass({
       </SceneToolbar>
     </Scene>
   },
-  getTweetLink() {
+  getTweetLink () {
     let title = this.props.chart.info.title
     let subtitle = this.props.chart.info.subtitles[0] || ''
     let score = this.props.result.score
@@ -68,11 +68,11 @@ export default React.createClass({
     let text = `Played:「 ${title}${subtitle} 」on #Bemuse (Score:${score})` + '\n' + `→ https://bemuse.ninja/`
     return 'https://twitter.com/intent/tweet?related=bemusegame&text=' + encodeURIComponent(text)
   },
-  onTweet(e) {
+  onTweet (e) {
     e.preventDefault()
     e.stopPropagation()
     window.open(this.getTweetLink(), 'intent', 'width=550,height=420')
   },
-  noop() {
+  noop () {
   },
 })

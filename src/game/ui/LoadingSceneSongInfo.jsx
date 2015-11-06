@@ -5,7 +5,7 @@ import React from 'react'
 
 export default React.createClass({
 
-  render() {
+  render () {
     const song = this.props.song
     return <div className="LoadingSceneSongInfo">
       <div className="LoadingSceneSongInfoのgenre">{song.genre}</div>

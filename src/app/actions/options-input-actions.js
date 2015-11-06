@@ -6,7 +6,7 @@ export const selectKey      = new Action()
 export const deselectKey    = new Action()
 export const selectNextKey  = new Action()
 
-export function setKeyCode(mode, key, keyCode) {
+export function setKeyCode (mode, key, keyCode) {
   setOptions({ ['input.P1.keyboard.' + mode + '.' + key]: keyCode })
   selectNextKey(key)
 }

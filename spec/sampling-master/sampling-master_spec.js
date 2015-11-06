@@ -3,7 +3,7 @@
 import SamplingMaster from 'bemuse/sampling-master'
 import 'web-audio-test-api'
 
-describe('SamplingMaster', function() {
+describe('SamplingMaster', function () {
 
   let context
   let master
@@ -13,8 +13,8 @@ describe('SamplingMaster', function() {
     master  = new SamplingMaster(context)
   })
 
-  describe('#unmute', function() {
-    it('unmutes the audio', function() {
+  describe('#unmute', function () {
+    it('unmutes the audio', function () {
       let gain = context.createGain()
       sinon.stub(context, 'createGain').returns(gain)
       sinon.spy(gain, 'connect')
@@ -26,24 +26,24 @@ describe('SamplingMaster', function() {
     })
   })
 
-  describe('#sample', function() {
-    it('should coerce blob', function() {
+  describe('#sample', function () {
+    it('should coerce blob', function () {
       return master.sample(new Blob([]))
     })
-    it('should coerce array buffer', function() {
+    it('should coerce array buffer', function () {
       return master.sample(new ArrayBuffer(0))
     })
-    it('should reject when decoding failed', function() {
+    it('should reject when decoding failed', function () {
       context.DECODE_AUDIO_DATA_FAILED = true
       return expect(master.sample(new ArrayBuffer(0))
         .finally(() => context.DECODE_AUDIO_DATA_FAILED = false))
           .to.be.rejected
     })
-    describe('#play', function() {
+    describe('#play', function () {
       let sample
       let bufferSource
       let buffer
-      beforeEach(function() {
+      beforeEach(function () {
         bufferSource = context.createBufferSource()
         buffer = context.createBuffer(1, 44100, 44100)
         bufferSource.buffer = buffer
@@ -51,22 +51,22 @@ describe('SamplingMaster', function() {
         sinon.spy(bufferSource, 'start')
         return master.sample(new Blob([])).then(s => sample = s)
       })
-      it('should play a buffer source', function() {
+      it('should play a buffer source', function () {
         sample.play()
         void expect(context.createBufferSource).to.have.been.called
         expect(bufferSource.start).to.have.been.calledWith(0)
       })
-      it('should play a buffer source with delay', function() {
+      it('should play a buffer source with delay', function () {
         context.$processTo(1)
         sample.play(20)
         void expect(context.createBufferSource).to.have.been.called
         expect(bufferSource.start).to.have.been.calledWith(21)
       })
-      it('should play a buffer slice (without end)', function() {
+      it('should play a buffer slice (without end)', function () {
         sample.play(0, { start: 1, end: undefined })
         expect(bufferSource.start).to.have.been.calledWith(0, 1)
       })
-      it('should play a buffer slice (with end)', function() {
+      it('should play a buffer slice (with end)', function () {
         sample.play(0, { start: 1, end: 3 })
         expect(bufferSource.start).to.have.been.calledWith(0, 1, 2)
       })
@@ -75,7 +75,7 @@ describe('SamplingMaster', function() {
       // being constructed. If this isn't true, WebAudioTestAPI will cause
       // an error due to how its own Event is implemented.
       // https://github.com/mohayonao/web-audio-test-api/issues/18
-      void (function() {
+      void (function () {
         try {
           new Event('wat').type = 'customevent'
           return it
@@ -83,21 +83,21 @@ describe('SamplingMaster', function() {
           void e
           return it.skip
         }
-      }())('should call #stop when playing finished', function() {
+      }())('should call #stop when playing finished', function () {
         let instance = sample.play()
         sinon.spy(instance, 'stop')
         context.$processTo(1.5)
         void expect(instance.stop).to.have.been.called
       })
 
-      describe('#stop', function() {
-        it('should stop the buffer source', function() {
+      describe('#stop', function () {
+        it('should stop the buffer source', function () {
           let instance = sample.play()
           sinon.spy(bufferSource, 'stop')
           instance.stop()
           void expect(bufferSource.stop).to.have.been.called
         })
-        it('can be called multiple times', function() {
+        it('can be called multiple times', function () {
           let instance = sample.play()
           sinon.spy(bufferSource, 'stop')
           instance.stop()
@@ -105,7 +105,7 @@ describe('SamplingMaster', function() {
           instance.stop()
           void expect(bufferSource.stop).to.have.been.calledOnce
         })
-        it('should call #onstop', function() {
+        it('should call #onstop', function () {
           let instance = sample.play()
           instance.onstop = sinon.spy()
           instance.stop()
@@ -113,8 +113,8 @@ describe('SamplingMaster', function() {
         })
       })
 
-      describe('#bad', function() {
-        it('should change pitch of sound', function() {
+      describe('#bad', function () {
+        it('should change pitch of sound', function () {
           let instance = sample.play()
           instance.bad()
           expect(bufferSource.playbackRate.value).not.to.equal(1)
@@ -123,12 +123,12 @@ describe('SamplingMaster', function() {
     })
   })
 
-  describe('#destroy', function() {
+  describe('#destroy', function () {
     let sample
-    beforeEach(function() {
+    beforeEach(function () {
       return master.sample(new Blob([])).then(s => sample = s)
     })
-    it('should stop all samples', function() {
+    it('should stop all samples', function () {
       let a = sample.play()
       let b = sample.play()
       let c = sample.play()
@@ -140,11 +140,11 @@ describe('SamplingMaster', function() {
       void expect(b.stop).to.have.been.called
       void expect(c.stop).to.have.been.called
     })
-    it('can no longer create samples', function() {
+    it('can no longer create samples', function () {
       master.destroy()
       return expect(master.sample(new Blob([]))).to.be.rejected
     })
-    it('only destroys once', function() {
+    it('only destroys once', function () {
       let a = sample.play()
       sinon.spy(a, 'destroy')
       master.destroy()

@@ -11,7 +11,7 @@ import { setMode }      from '../actions/options-actions'
 
 export default React.createClass({
 
-  render() {
+  render () {
     return <Scene className="ModeSelectScene">
       <SceneHeading>Select Mode</SceneHeading>
       <div className="ModeSelectSceneのmain">
@@ -38,7 +38,7 @@ export default React.createClass({
       </SceneToolbar>
     </Scene>
   },
-  renderKBGraphics() {
+  renderKBGraphics () {
     let children = []
     for (let i = 0; i < 7; i++) {
       if (i === 3) {
@@ -52,7 +52,7 @@ export default React.createClass({
     return <svg width="96" height="54" viewBox="0 0 96 54"
         className="ModeSelectSceneのgraphics">{children}</svg>
   },
-  renderBMGraphics() {
+  renderBMGraphics () {
     let children = []
     for (let i = 0; i < 7; i++) {
       children.push(<rect key={i}
@@ -67,15 +67,15 @@ export default React.createClass({
     </svg>
   },
 
-  handleKB() {
+  handleKB () {
     setMode('KB')
     SCENE_MANAGER.display(<MusicSelectScene />).done()
   },
-  handleBM() {
+  handleBM () {
     setMode('BM')
     SCENE_MANAGER.display(<MusicSelectScene />).done()
   },
-  handleBack() {
+  handleBack () {
     SCENE_MANAGER.pop().done()
   },
 

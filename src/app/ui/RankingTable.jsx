@@ -3,7 +3,7 @@ import './RankingTable.scss'
 import React from 'react'
 
 export const RankingTable = React.createClass({
-  render() {
+  render () {
     return <table className="RankingTable">
       <tbody>
         {this.props.children}
@@ -13,7 +13,7 @@ export const RankingTable = React.createClass({
 })
 
 export const Row = React.createClass({
-  render() {
+  render () {
     return <tr>
       <td className="RankingTableのrank">
         {this.props.record.rank || <span title="Unable to determine your rank">??</span>}
@@ -29,14 +29,14 @@ export const Row = React.createClass({
       </td>
     </tr>
   },
-  renderAccuracy(count, total) {
+  renderAccuracy (count, total) {
     var accuracy = (count[0] + count[1] * 0.8 + count[2] * 0.5) / total
     return (accuracy * 100).toFixed(2)
   }
 })
 
 export const Message = React.createClass({
-  render() {
+  render () {
     return <tr>
       <td colSpan={4} className="RankingTableのmessage">
         {this.props.children}

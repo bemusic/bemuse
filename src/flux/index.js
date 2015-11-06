@@ -6,9 +6,9 @@ export { Bacon }
 
 let lock = false
 
-export function Action(transform=x => x) {
+export function Action (transform = x => x) {
   var bus = new Bacon.Bus()
-  var action = function() {
+  var action = function () {
     if (lock) {
       throw new Error('An action should not fire another action!')
     }
@@ -21,14 +21,14 @@ export function Action(transform=x => x) {
     }
   }
   action.bus = bus
-  action.debug = function(prefix) {
+  action.debug = function (prefix) {
     bus.map(value => [prefix, value]).log()
     return action
   }
   return action
 }
 
-export function Store(store, options={}) {
+export function Store (store, options = {}) {
   let lazy = !!options.lazy
   store = toProperty(store)
   store.get = () => {
@@ -43,7 +43,7 @@ export function Store(store, options={}) {
   return store
 }
 
-function toProperty(store) {
+function toProperty (store) {
   if (store instanceof Bacon.Property) {
     return store
   } else if (store instanceof Bacon.EventStream) {
@@ -56,14 +56,14 @@ function toProperty(store) {
 }
 
 export class Binding extends React.Component {
-  render() {
+  render () {
     return null
   }
-  componentDidMount() {
+  componentDidMount () {
     this._unsubscribe = this.props.store.onValue(value =>
         this.props.onChange(value))
   }
-  componentWillUnmount() {
+  componentWillUnmount () {
     this._unsubscribe()
   }
 }

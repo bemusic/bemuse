@@ -6,7 +6,7 @@ import { Binding } from 'bemuse/flux'
 import Loading from 'bemuse/ui/Loading'
 
 export default React.createClass({
-  render() {
+  render () {
     return <div className={c('ExperimentScene', { 'is-finished': this.state.finished })}>
       <Binding store={this.props.store} onChange={this.handleState} />
       <div className="ExperimentSceneのwrapper">
@@ -16,7 +16,7 @@ export default React.createClass({
       </div>
     </div>
   },
-  renderContents() {
+  renderContents () {
     if (this.state.loading) {
       return this.renderLoading()
     } else if (!this.state.started) {
@@ -27,23 +27,23 @@ export default React.createClass({
       return this.renderCollection()
     }
   },
-  renderLoading() {
+  renderLoading () {
     return <div className="ExperimentSceneのloading">
       <Loading />
     </div>
   },
-  renderReady() {
+  renderReady () {
     return <div className="ExperimentSceneのready">
       <button className="ExperimentSceneのbutton"
           onClick={this.props.onStart}>Start Calibration</button>
     </div>
   },
-  renderMessage(text) {
+  renderMessage (text) {
     return <div className="ExperimentSceneのmessage">
       {text}
     </div>
   },
-  renderCollection() {
+  renderCollection () {
     let scale = (
       this.state.finished
       ? 1
@@ -65,14 +65,14 @@ export default React.createClass({
       </div>
     </div>
   },
-  getInitialState() {
+  getInitialState () {
     return this.props.store.get()
   },
-  handleState(state) {
+  handleState (state) {
     this.setState(state)
   },
 })
 
-function easeOut(x) {
+function easeOut (x) {
   return 1 - Math.pow(1 - x, 2)
 }

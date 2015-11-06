@@ -5,22 +5,22 @@ import http       from 'http'
 import path             from '../../../config/path'
 import testMiddleware   from '../test-middleware'
 
-export function start() {
+export function start () {
 
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
 
     let app = express()
     let server = http.createServer(app)
 
-    server.testResult = new Promise(function(_resolve) {
-      app.use('/api/test', testMiddleware(function(result) {
+    server.testResult = new Promise(function (_resolve) {
+      app.use('/api/test', testMiddleware(function (result) {
         _resolve(result)
       }))
     })
 
     app.use(express.static(path('dist')))
 
-    server.listen(0, function(err) {
+    server.listen(0, function (err) {
       if (err) return reject(err)
       resolve(server)
     })

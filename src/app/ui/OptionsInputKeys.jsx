@@ -6,7 +6,7 @@ import OptionsInputKey from './OptionsInputKey'
 
 export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
-  render() {
+  render () {
     let keys = []
     for (let i = 1; i <= 7; i++) {
       keys.push(<OptionsInputKey

@@ -1,11 +1,11 @@
 
 import Observable from 'bemuse/utils/observable'
 
-describe('Observable', function() {
+describe('Observable', function () {
 
-  describe('stateless mode', function() {
+  describe('stateless mode', function () {
 
-    it('should call watchers', function() {
+    it('should call watchers', function () {
       let s1 = sinon.spy()
       let s2 = sinon.spy()
       let o = new Observable()
@@ -26,14 +26,14 @@ describe('Observable', function() {
 
   })
 
-  describe('stateful mode', function() {
+  describe('stateful mode', function () {
 
-    it('should have value', function() {
+    it('should have value', function () {
       let o = new Observable('0')
       expect(o.value).to.equal('0')
     })
 
-    it('should call watchers', function() {
+    it('should call watchers', function () {
       let s1 = sinon.spy()
       let s2 = sinon.spy()
       let o = new Observable('0')

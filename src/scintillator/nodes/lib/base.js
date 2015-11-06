@@ -10,7 +10,7 @@
  * Node#instantiate :: (instantiator)   -> PIXI.DisplayObject
  */
 export class SkinNode {
-  static compile(compiler, $el) {
+  static compile (compiler, $el) {
     let node = new this()
     node.compile(compiler, $el)
     return node

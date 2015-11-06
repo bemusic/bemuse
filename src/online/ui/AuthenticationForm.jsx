@@ -5,7 +5,7 @@ import OptionsButton from 'bemuse/app/ui/OptionsButton'
 import $ from 'jquery'
 
 export default React.createClass({
-  onButtonClick(e) {
+  onButtonClick (e) {
     e.preventDefault()
     this.props.onSubmit({
       username:             React.findDOMNode(this.refs.username).value,
@@ -14,12 +14,12 @@ export default React.createClass({
       email:                React.findDOMNode(this.refs.email).value,
     })
   },
-  componentDidMount() {
+  componentDidMount () {
     $(React.findDOMNode(this)).on('keydown keyup keypress', (e) => {
       e.stopPropagation()
     })
   },
-  render() {
+  render () {
     return <form className="AuthenticationForm">
       <div className="AuthenticationFormのgroup">
         <label>
@@ -52,7 +52,7 @@ export default React.createClass({
       </div>
     </form>
   },
-  renderSubmitText() {
+  renderSubmitText () {
     return this.props.mode === 'signUp' ? 'Sign Me Up' : 'Log In'
   },
 })

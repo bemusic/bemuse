@@ -5,7 +5,7 @@ import now from 'bemuse/utils/now'
 // This class should be tied to the AudioContext.
 //
 export class GameTimer {
-  constructor(clock, input) {
+  constructor (clock, input) {
     this._clock = clock
     this._input = input
     this._now   = now.synchronized()
@@ -14,18 +14,18 @@ export class GameTimer {
   }
 
   // True if the game is started, false otherwise.
-  get started() {
+  get started () {
     return this.startTime !== null
   }
 
   // Updates the timer. This method should be called once in the game loop.
-  update() {
+  update () {
     this._checkStartGame()
     // The time, in seconds, since the start of the game.
     this.time = this._calculateTime()
   }
 
-  _checkStartGame() {
+  _checkStartGame () {
     if (this.started) return
     if (this._input.get('start').value) {
       this.gettingStarted = true
@@ -43,12 +43,12 @@ export class GameTimer {
       this.readyFraction = 1 - this._getWait()
     }
   }
-  _getWait() {
+  _getWait () {
     let t = this._now() / 1000
     return Math.ceil(t) - t
   }
 
-  _calculateTime() {
+  _calculateTime () {
     // When initializing the game, we suspend the timer at -0.333 seconds.
     // Then, when the player starts the game, we slowly accelerate such that
     // after 1 second, the timer approaches 0 seconds at normal speed.

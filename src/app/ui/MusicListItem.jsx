@@ -10,7 +10,7 @@ import MusicListItemCharts from './MusicListItemCharts'
 
 export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
-  render() {
+  render () {
     const song = this.props.song
     return <li
         className={c('MusicListItem', { 'is-active': this.props.selected })}
@@ -39,14 +39,14 @@ export default React.createClass({
       }
     </li>
   },
-  renderChartlist() {
+  renderChartlist () {
     return <MusicListItemCharts
       charts={visibleCharts(this.props.song.charts)}
       selectedChart={this.props.selectedChart}
       onChartClick={this.handleChartClick}
       playMode={this.props.playMode} />
   },
-  renderHighlight(text) {
+  renderHighlight (text) {
     if (!this.props.highlight) return text
     let highlight = this.props.highlight
     let segments = text.toLowerCase().split(highlight.toLowerCase())
@@ -66,10 +66,10 @@ export default React.createClass({
     return output
   },
 
-  handleClick() {
+  handleClick () {
     this.props.onSelect(this.props.song)
   },
-  handleChartClick(chart, e) {
+  handleChartClick (chart, e) {
     e.stopPropagation()
     this.props.onSelect(this.props.song, chart)
   },

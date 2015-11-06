@@ -5,7 +5,7 @@ import React from 'react'
 
 export default React.createClass({
 
-  render() {
+  render () {
     const info = this.props.info
     return <section className="MusicChartInfo">
       <div className="MusicChartInfoのgenre">{info.genre}</div>

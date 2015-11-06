@@ -3,7 +3,7 @@
 
 // A utility class to hold a collection of callbacks.
 export class Callbacks {
-  constructor(init) {
+  constructor (init) {
     this._callbacks = { }
     this._nextId = 1
     if (typeof init === 'function') {
@@ -14,7 +14,7 @@ export class Callbacks {
   }
 
   // Calls the callback.
-  call() {
+  call () {
     var callbacks = this._callbacks
     for (var id in callbacks) {
       callbacks[id].apply(null, arguments)
@@ -24,7 +24,7 @@ export class Callbacks {
   // Adds a ``callback`` Function to this Callbacks collection.
   // Returns a function that, when invoked, removes the inserted ``callback``
   // from the collection.
-  add(callback) {
+  add (callback) {
     var id = this._nextId++
     this._callbacks[id] = callback
     return () => delete this._callbacks[id]

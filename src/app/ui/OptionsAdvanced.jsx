@@ -10,13 +10,13 @@ import OptionsInputField     from './OptionsInputField'
 
 export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
-  stringifyLatency(latency) {
+  stringifyLatency (latency) {
     return Math.round(latency) + 'ms'
   },
-  parseLatency(latencyText) {
+  parseLatency (latencyText) {
     return parseInt(latencyText, 10)
   },
-  render() {
+  render () {
     let options = this.state.options
     return <div className="OptionsAdvanced">
       <Binding store={Store} onChange={this.handleState} />
@@ -37,32 +37,32 @@ export default React.createClass({
       </div>
     </div>
   },
-  getInitialState() {
+  getInitialState () {
     return Store.get()
   },
-  handleState(state) {
+  handleState (state) {
     this.setState(state)
   },
-  handleAudioInputLatencyChange(value) {
+  handleAudioInputLatencyChange (value) {
     Actions.setOptions({ 'system.offset.audio-input': `${value}` })
   },
-  handleCalibrateButtonClick() {
+  handleCalibrateButtonClick () {
     let options = 'width=640,height=360'
     window.open('?mode=sync', 'sync', options)
   },
 })
 
 const LatencyMessageListener = React.createClass({
-  render() {
+  render () {
     return null
   },
-  componentDidMount() {
+  componentDidMount () {
     window.addEventListener('message', this.handleMessage)
   },
-  componentWillUnmount() {
+  componentWillUnmount () {
     window.removeEventListener('message', this.handleMessage)
   },
-  handleMessage(event) {
+  handleMessage (event) {
     if (event.data && typeof event.data.latency === 'number') {
       this.props.onLatency(event.data.latency)
     }

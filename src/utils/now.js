@@ -14,15 +14,15 @@ if (window.performance && typeof window.performance.now === 'function') {
   now = () => Date.now()
 }
 
-now.synchronize = function(server) {
+now.synchronize = function (server) {
   sync(server, onFinish, onResult)
-  function onResult(result) {
+  function onResult (result) {
     // result + Date.now() = real time = now() + offset
     // result + Date.now() = now() + offset
     // offset = result + Date.now() - now()
     offset = result + Date.now() - now()
   }
-  function onFinish(err, result) {
+  function onFinish (err, result) {
     if (err) {
       console.error('Cannot synchronize time!', err)
     } else {
@@ -32,7 +32,7 @@ now.synchronize = function(server) {
   }
 }
 
-now.synchronized = function() {
+now.synchronized = function () {
   let o = offset
   return () => now() + o
 }

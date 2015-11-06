@@ -8,21 +8,21 @@ export const finishLoading  = new Action()
 export const errorLoading   = new Action()
 
 let loadCollectionBus = new Bacon.Bus()
-export function loadCollection(url) {
+export function loadCollection (url) {
   loadCollectionBus.push({ url })
 }
 
 loadCollectionBus
 .flatMapLatest(server => {
   let bus = new Bacon.Bus()
-  setTimeout(function() {
+  setTimeout(function () {
     bus.push(() => startLoading(server))
     Promise.resolve(download(server.url + '/index.json').as('text'))
     .then(JSON.parse)
-    .then(function(collection) {
+    .then(function (collection) {
       bus.push(() => finishLoading(collection))
     })
-    .catch(function(e) {
+    .catch(function (e) {
       bus.push(() => errorLoading(e))
     })
   })

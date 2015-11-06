@@ -16,7 +16,7 @@ import {
   isWaiting,
 } from './operations'
 
-export function Online() {
+export function Online () {
 
   const service = new OnlineService()
 
@@ -31,23 +31,23 @@ export function Online() {
     .map(user => user || service.getCurrentUser())
   )
 
-  function signUp(options) {
+  function signUp (options) {
     return service.signUp(options).tap(user => user口.push(user))
   }
 
-  function logIn(options) {
+  function logIn (options) {
     return service.logIn(options).tap(user => user口.push(user))
   }
 
-  function logOut() {
+  function logOut () {
     return service.logOut().tap(() => user口.push(null))
   }
 
-  function submitScore(info) {
+  function submitScore (info) {
     return service.submitScore(info).tap(record => submitted口.push(record))
   }
 
-  function getScoreboard(level) {
+  function getScoreboard (level) {
     return service.retrieveScoreboard(level)
   }
 
@@ -71,7 +71,7 @@ export function Online() {
     )
   }
 
-  function records川ForUser(user) {
+  function records川ForUser (user) {
     let seen = { }
 
     {
@@ -103,7 +103,7 @@ export function Online() {
     }
   }
 
-  function Ranking(data) {
+  function Ranking (data) {
 
     const level = Level.fromObject(data)
     const retrySelf口 = new Bacon.Bus()
@@ -134,7 +134,7 @@ export function Online() {
     }
 
     // Make the state conform the old API. We should remove this in the future.
-    function conformState(state) {
+    function conformState (state) {
       return {
         data: state.scoreboard.value && state.scoreboard.value.data,
         meta: {

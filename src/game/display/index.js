@@ -4,7 +4,7 @@ import './game-display.scss'
 import $ from 'jquery'
 
 export class GameDisplay {
-  constructor({ game, context }) {
+  constructor ({ game, context }) {
     this._game      = game
     this._context   = context
     this._players   = new Map(game.players.map(player =>
@@ -12,7 +12,7 @@ export class GameDisplay {
     this._stateful  = { }
     this._wrapper   = this._createWrapper()
   }
-  start() {
+  start () {
     this._started = new Date().getTime()
     let player    = this._game.players[0]
     let songInfo  = player.notechart.songInfo
@@ -20,16 +20,16 @@ export class GameDisplay {
     this._stateful['song_artist'] = songInfo.artist
     this._duration = player.notechart.duration
   }
-  destroy() {
+  destroy () {
     this._context.destroy()
   }
-  update(gameTime, gameState) {
+  update (gameTime, gameState) {
     let time = (new Date().getTime() - this._started) / 1000
     let data = this._getData(time, gameTime, gameState)
     this._updateStatefulData(time, gameTime, gameState)
     this._context.render(Object.assign({ }, this._stateful, data))
   }
-  _getData(time, gameTime, gameState) {
+  _getData (time, gameTime, gameState) {
     let data = { }
     data['tutorial']  = this._game.options.tutorial ? 'yes' : 'no'
     data['t']         = time
@@ -45,7 +45,7 @@ export class GameDisplay {
     }
     return data
   }
-  _updateStatefulData(time, gameTime, gameState) {
+  _updateStatefulData (time, gameTime, gameState) {
     let data = this._stateful
     if (data['started'] === undefined && gameState.started) {
       data['started'] = time
@@ -54,31 +54,31 @@ export class GameDisplay {
       data['gettingStarted'] = time
     }
   }
-  _getSongTime(gameTime) {
+  _getSongTime (gameTime) {
     return (
         this._formatTime(Math.min(this._duration, Math.max(0, gameTime))) +
         ' / ' + this._formatTime(this._duration))
   }
-  _getReady(gameState) {
+  _getReady (gameState) {
     let f = gameState.readyFraction
     return f > 0.5 ? Math.pow(1 - (f - 0.5) / 0.5, 2) : 0
   }
-  _createWrapper() {
+  _createWrapper () {
     var $wrapper = $('<div class="game-display"></div>')
     .append('<div class="game-display--bg"></div>')
     .append(this.view)
     return $wrapper[0]
   }
-  get context() {
+  get context () {
     return this._context
   }
-  get view() {
+  get view () {
     return this._context.view
   }
-  get wrapper() {
+  get wrapper () {
     return this._wrapper
   }
-  _formatTime(seconds) {
+  _formatTime (seconds) {
     let s = Math.floor(seconds % 60)
     return Math.floor(seconds / 60) + ':' + (s < 10 ? '0' : '') + s
   }

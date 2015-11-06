@@ -11,16 +11,16 @@ import SCENE_MANAGER    from 'bemuse/scene-manager'
 let artists
 
 export default React.createClass({
-  getInitialState() {
+  getInitialState () {
     return { artists: [] }
   },
-  componentDidMount() {
+  componentDidMount () {
     if (!artists) {
       artists = Promise.resolve($.get('/music/artists.json'))
     }
     artists.then(a => this.setState({ artists: a }))
   },
-  render() {
+  render () {
     return <Scene className="AboutScene">
       <SceneHeading>
         About
@@ -137,7 +137,7 @@ export default React.createClass({
       </SceneToolbar>
     </Scene>
   },
-  renderArtists() {
+  renderArtists () {
     if (this.state.artists.length === 0) {
       return <span>loading...</span>
     }
@@ -145,7 +145,7 @@ export default React.createClass({
       return [index ? ', ' : '', <a href={artist.url}>{artist.name}</a>]
     })
   },
-  handleBack() {
+  handleBack () {
     SCENE_MANAGER.pop().done()
   },
 })

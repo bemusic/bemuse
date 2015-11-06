@@ -5,11 +5,11 @@ import { EXTRA_FORMATTER }  from 'bemuse/progress/formatters'
 import { canPlay }          from 'bemuse/sampling-master'
 
 export class SamplesLoader {
-  constructor(assets, master) {
+  constructor (assets, master) {
     this._assets = assets
     this._master = master
   }
-  loadFiles(files, loadProgress, decodeProgress) {
+  loadFiles (files, loadProgress, decodeProgress) {
     let onload    = ProgressUtils.fixed(files.length, loadProgress)
     let ondecode  = ProgressUtils.fixed(files.length, decodeProgress)
     let load      = name => this._loadSample(name, onload, ondecode)
@@ -17,7 +17,7 @@ export class SamplesLoader {
     return Promise.map(files, load)
         .then(arr => _(arr).filter().object().value())
   }
-  _loadSample(name, onload, ondecode) {
+  _loadSample (name, onload, ondecode) {
     return this._getFile(name).then(
       file => file.read()
         .tap(() => onload(name))
@@ -34,10 +34,10 @@ export class SamplesLoader {
       }
     )
   }
-  _decode(buffer) {
+  _decode (buffer) {
     return this._master.sample(buffer)
   }
-  _getFile(name) {
+  _getFile (name) {
     return Promise.try(() => {
       if (!canPlay('audio/ogg; codecs="vorbis"')) {
         throw new Error('cannot play OGG')

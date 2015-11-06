@@ -16,7 +16,7 @@ import * as Boot        from './ui/Boot'
 import * as ErrorDialog from './ui/ErrorDialog'
 
 /* isparta ignore next */
-window.onerror = function(message, url, line, col, e) {
+window.onerror = function (message, url, line, col, e) {
   ErrorDialog.show(message, url, line, col, e)
 }
 
@@ -31,7 +31,7 @@ window.onerror = function(message, url, line, col, e) {
 let mode = query.mode || 'app'
 
 require.ensure(['./environment'],
-function(require) {
+function (require) {
 
   require('./environment')
   var loadModule = require('val!./loader.js')
@@ -41,7 +41,7 @@ function(require) {
     let progress = new Progress()
     let context = new LoadingContext(progress)
     progress.watch(() => Boot.setProgress(progress.progress))
-    context.use(function() {
+    context.use(function () {
       // >>
       // The main script is then loaded and imported into the environment,
       // and its ``main()`` method is invoked.
@@ -52,7 +52,7 @@ function(require) {
       //
       // .. codedoc:: boot/modes
       //
-      loadModule[mode](function(loadedModule) {
+      loadModule[mode](function (loadedModule) {
         Boot.hide()
         loadedModule.main()
       })

@@ -8,7 +8,7 @@ import Progress           from 'bemuse/progress'
 import * as ProgressUtils from 'bemuse/progress/utils'
 
 export class BemusePackageResources {
-  constructor(url) {
+  constructor (url) {
     let lazy = addLazyProperty.bind(null, this)
     this._url = url
     lazy('metadata', () =>
@@ -41,17 +41,17 @@ export class BemusePackageResources {
       )
     )
   }
-  get url() {
+  get url () {
     return this._url
   }
-  file(name) {
+  file (name) {
     return this._fileMap.then(fileMap => {
       let file = fileMap.get(name.toLowerCase())
       if (!file) throw new Error('Unable to find: ' + name)
       return new BemusePackageFileResource(this, file.ref, file.name)
     })
   }
-  getBlob([index, start, end]) {
+  getBlob ([index, start, end]) {
     return this.refs
       .then(refs => refs[index])
       .then(ref => ref.load())
@@ -60,27 +60,27 @@ export class BemusePackageResources {
 }
 
 class BemusePackageFileResource {
-  constructor(resources, ref, name) {
+  constructor (resources, ref, name) {
     this._resources = resources
     this._ref = ref
     this._name = name
   }
-  read(progress) {
+  read (progress) {
     return ProgressUtils.atomic(progress,
         this._resources.getBlob(this._ref)
         .then(blob => readBlob(blob).as('arraybuffer')))
   }
-  get name() {
+  get name () {
     return this._name
   }
 }
 
 class Ref {
-  constructor(resources, spec) {
+  constructor (resources, spec) {
     this._resources = resources
     this._url = resolve(resources.url, spec.path)
   }
-  load() {
+  load () {
     return this._promise || (this._promise =
       this._resources._loadPayload(this._url))
   }
@@ -88,7 +88,7 @@ class Ref {
 
 export default BemusePackageResources
 
-function getPayload(blob) {
+function getPayload (blob) {
   return readBlob(blob.slice(0, 10)).as('text')
     .then(magic => {
       if (magic !== 'BEMUSEPACK') {

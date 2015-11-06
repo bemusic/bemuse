@@ -10,7 +10,7 @@ import * as Actions from '../actions/options-input-actions'
 const $order    = OptionsStore.map(getControls)
 const $keyCodes = OptionsStore.map(getKeyboardMapping)
 
-function getControls(state) {
+function getControls (state) {
   if (state.scratch === 'left') {
     return ['SC', 'SC2', '1', '2', '3', '4', '5', '6', '7']
   } else if (state.scratch === 'right') {
@@ -20,7 +20,7 @@ function getControls(state) {
   }
 }
 
-function getKeyboardMapping(state) {
+function getKeyboardMapping (state) {
   let mapping = { }
   for (let control of ['1', '2', '3', '4', '5', '6', '7', 'SC', 'SC2']) {
     let key = 'input.P1.keyboard.' + state.mode + '.' + control
@@ -52,6 +52,6 @@ export default new Store({
   keyCodes:   $keyCodes,
 })
 
-function toText(keyCode) {
+function toText (keyCode) {
   return _.capitalize(keycode(keyCode))
 }

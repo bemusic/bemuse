@@ -2,13 +2,13 @@
 import PlayerAudio  from 'bemuse/game/audio/player-audio'
 import { playerWithBMS } from '../spec_helper'
 
-describe('PlayerAudio', function() {
+describe('PlayerAudio', function () {
 
   let player
   let audio
   let waveFactory
 
-  function setup(_player) {
+  function setup (_player) {
     player      = _player
     waveFactory = {
       playAuto: sinon.stub().returns({}),
@@ -18,7 +18,7 @@ describe('PlayerAudio', function() {
     audio       = new PlayerAudio({ player, waveFactory })
   }
 
-  it('should play autokeysounds on correct time', function() {
+  it('should play autokeysounds on correct time', function () {
     setup({
       notechart: {
         autos: [
@@ -41,7 +41,7 @@ describe('PlayerAudio', function() {
     expect(waveFactory.playAuto).to.have.callCount(3)
   })
 
-  it('should play notes automatically when autosound is on', function() {
+  it('should play notes automatically when autosound is on', function () {
     setup({
       notechart: {
         autos: [ ],
@@ -57,7 +57,7 @@ describe('PlayerAudio', function() {
     expect(waveFactory.playNote).to.have.been.calledWithMatch({ keysound: '0x' })
   })
 
-  it('should not play notes automatically when autosound is off', function() {
+  it('should not play notes automatically when autosound is off', function () {
     setup({
       notechart: {
         autos: [ ],
@@ -72,7 +72,7 @@ describe('PlayerAudio', function() {
     void expect(waveFactory.playNote).to.not.have.been.called
   })
 
-  it('should play notes ahead of time', function() {
+  it('should play notes ahead of time', function () {
     setup({
       notechart: {
         autos: [ { time: 1, keysound: '0x', }, ],
@@ -85,7 +85,7 @@ describe('PlayerAudio', function() {
     expect(waveFactory.playAuto.getCall(0).args[1]).to.be.closeTo(0.001, 1e-5)
   })
 
-  it('should play hit notes', function() {
+  it('should play hit notes', function () {
     setup(playerWithBMS())
     audio.update(0.999, {
       notifications: {
@@ -98,7 +98,7 @@ describe('PlayerAudio', function() {
     expect(waveFactory.playNote).to.have.been.calledWithMatch({ keysound: '0x' })
   })
 
-  it('badly hit note should sound off-pitch', function() {
+  it('badly hit note should sound off-pitch', function () {
     setup(playerWithBMS())
     let instance = {
       bad: sinon.stub()
@@ -115,7 +115,7 @@ describe('PlayerAudio', function() {
     void expect(instance.bad).to.have.been.called
   })
 
-  it('should work even without audio', function() {
+  it('should work even without audio', function () {
     setup(playerWithBMS())
     waveFactory.playNote.returns(null)
     audio.update(0.999, {
@@ -128,7 +128,7 @@ describe('PlayerAudio', function() {
     })
   })
 
-  it('should stop sound when broken', function() {
+  it('should stop sound when broken', function () {
     setup(playerWithBMS())
     let note = { keysound: '0x' }
     let instance = { stop: sinon.spy() }
@@ -148,7 +148,7 @@ describe('PlayerAudio', function() {
     void expect(instance.stop).to.have.been.called
   })
 
-  it('should play sounds when hitting blank space', function() {
+  it('should play sounds when hitting blank space', function () {
     setup(playerWithBMS())
     audio.update(0.999, {
       notifications: {
@@ -161,7 +161,7 @@ describe('PlayerAudio', function() {
     expect(waveFactory.playFree).to.have.been.calledWithMatch({ keysound: '0x' })
   })
 
-  it('should play hit note once', function() {
+  it('should play hit note once', function () {
     setup(playerWithBMS())
     let note = { keysound: '0x' }
     audio.update(0.999, {

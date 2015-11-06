@@ -1,18 +1,18 @@
 
 import $ from 'jquery'
 
-function GameKeyboardPlugin(game) {
+function GameKeyboardPlugin (game) {
   let kbm = game.players[0].options.input.keyboard
   let data = { }
   $(window).on('keydown', onKeyDown).on('keyup', onKeyUp)
-  function onKeyDown(e) {
+  function onKeyDown (e) {
     data[e.which] = 1
     if (!e.metaKey && !e.ctrlKey) {
       e.preventDefault()
       e.stopPropagation()
     }
   }
-  function onKeyUp(e) {
+  function onKeyUp (e) {
     data[e.which] = 0
     if (!e.metaKey && !e.ctrlKey) {
       e.preventDefault()
@@ -21,7 +21,7 @@ function GameKeyboardPlugin(game) {
   }
   return {
     name: 'GameKBPlugin',
-    get() {
+    get () {
       return {
         'p1_1':  data[kbm['1'] || 83],
         'p1_2':  data[kbm['2'] || 68],
@@ -37,7 +37,7 @@ function GameKeyboardPlugin(game) {
         'select': data[18],
       }
     },
-    destroy() {
+    destroy () {
       $(window).off('keydown', onKeyDown).off('keyup', onKeyUp)
     },
   }

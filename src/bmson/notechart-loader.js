@@ -3,7 +3,7 @@ import * as bmson from 'bmson'
 import Notechart  from 'bemuse/game/notechart'
 import BMS        from 'bms'
 
-export function load(source, options) {
+export function load (source, options) {
 
   let data        = JSON.parse(source)
   let songInfo    = bmson.getSongInfo(data.info)

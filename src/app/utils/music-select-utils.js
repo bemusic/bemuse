@@ -1,11 +1,11 @@
 
 import _ from 'lodash'
 
-export function isChartPlayable(chart) {
+export function isChartPlayable (chart) {
   return chart.keys === '7K' || chart.keys === '5K'
 }
 
-export function visibleCharts(charts) {
+export function visibleCharts (charts) {
   return (_(charts)
     .filter(isChartPlayable)
     .sortByAll(

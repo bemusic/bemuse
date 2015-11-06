@@ -5,7 +5,7 @@ import React  from 'react'
 
 export default React.createClass({
 
-  render() {
+  render () {
     const chart = this.props.chart
     return <div className="MusicInfoTabStats">
       <dl className="MusicInfoTabStatsのcolumn is-left">

@@ -8,12 +8,12 @@ import { parseFrame } from './lib/utils'
 import DisplayObject  from './concerns/display-object'
 
 export class SpriteNode extends SkinNode {
-  compile(compiler, $el) {
+  compile (compiler, $el) {
     this.url      = compiler.resources.get($el.attr('image'))
     this.display  = DisplayObject.compile(compiler, $el)
     this.frame    = parseFrame($el.attr('frame') || '')
   }
-  instantiate(context, container) {
+  instantiate (context, container) {
     let sprite = new PIXI.Sprite(this.getTexture())
     return new Instance({
       context:  context,
@@ -22,7 +22,7 @@ export class SpriteNode extends SkinNode {
       concerns: [this.display],
     })
   }
-  getTexture() {
+  getTexture () {
     if (this._texture) return this._texture
     let scaleMode = PIXI.SCALE_MODES.NEAREST
     let base      = PIXI.BaseTexture.fromImage(this.url, undefined, scaleMode)

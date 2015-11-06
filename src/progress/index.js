@@ -8,7 +8,7 @@ import Observable from 'bemuse/utils/observable'
 //
 // .. _C#'s IProgress: http://blogs.msdn.com/b/dotnet/archive/2012/06/06/async-in-4-5-enabling-progress-and-cancellation-in-async-apis.aspx
 export class Progress {
-  constructor() {
+  constructor () {
 
     // The current progress (out of `Progress#total`) as a Number.
     this.current      = undefined
@@ -28,7 +28,7 @@ export class Progress {
   }
 
   // Updates the progress.
-  report(current, total, extra) {
+  report (current, total, extra) {
     this.current    = current
     this.total      = total
     this.extra      = extra
@@ -40,13 +40,13 @@ export class Progress {
   // watching, and will be called when the progress value is updated.
   //
   // Returns a function that, when called, unsubscribes this listener.
-  watch(f) {
+  watch (f) {
     f(this)
     return this._observable.watch(() => f(this))
   }
 
   // The current progress as a fraction (out of 1).
-  get progress() {
+  get progress () {
     if (this.total && this.current !== undefined && this.current !== null) {
       return this.current / this.total
     } else {
@@ -56,7 +56,7 @@ export class Progress {
 
   // Returns a string representation of this progress instance.
   // This method is used for displaying the progress as a text.
-  toString() {
+  toString () {
     if (this.formatter !== undefined) {
       return this.formatter(this)
     } else if (this.progress !== null) {

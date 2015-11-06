@@ -4,11 +4,11 @@ import readBlob from 'bemuse/utils/read-blob'
 import * as ProgressUtils from 'bemuse/progress/utils'
 
 export class DndResources {
-  constructor(event) {
+  constructor (event) {
     this._files = getFilesFromEvent(event)
   }
-  file(name) {
-    return this._files.then(function(files) {
+  file (name) {
+    return this._files.then(function (files) {
       for (let file of files) {
         if (file.name.toLowerCase() === name.toLowerCase()) {
           return new FileResource(file.file)
@@ -17,27 +17,27 @@ export class DndResources {
       throw new Error('unable to find ' + name)
     })
   }
-  get fileList() {
+  get fileList () {
     return Promise.resolve(this._files.map(f => f.name))
   }
 }
 
 export class FileResource {
-  constructor(file) {
+  constructor (file) {
     this._file = file
   }
-  read(progress) {
+  read (progress) {
     return ProgressUtils.atomic(progress,
         readBlob(this._file).as('arraybuffer'))
   }
-  get name() {
+  get name () {
     return this._file.name
   }
 }
 
 export default DndResources
 
-function getFilesFromEvent(event) {
+function getFilesFromEvent (event) {
 
   let out = []
 
@@ -54,7 +54,7 @@ function getFilesFromEvent(event) {
     return out
   })
 
-  function readItem(item) {
+  function readItem (item) {
     return co(function*() {
       let entry = item.webkitGetAsEntry && item.webkitGetAsEntry()
       if (entry) {
@@ -66,7 +66,7 @@ function getFilesFromEvent(event) {
     })
   }
 
-  function readEntry(entry) {
+  function readEntry (entry) {
     if (entry.isFile) {
       return readFile(entry)
     } else if (entry.isDirectory) {
@@ -74,7 +74,7 @@ function getFilesFromEvent(event) {
     }
   }
 
-  function readFile(entry) {
+  function readFile (entry) {
     return new Promise((resolve, reject) => {
       entry.file(resolve, reject)
     })
@@ -83,7 +83,7 @@ function getFilesFromEvent(event) {
     })
   }
 
-  function readDirectory(dir) {
+  function readDirectory (dir) {
     return co(function*() {
       let entries = []
       let reader = dir.createReader()
@@ -101,7 +101,7 @@ function getFilesFromEvent(event) {
     })
   }
 
-  function addFile(file) {
+  function addFile (file) {
     if (file) {
       out.push({ name: file.name, file })
     }

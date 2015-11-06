@@ -5,7 +5,7 @@ import Ranking  from 'bemuse/app/ui/Ranking'
 import './ranking-table-playground.scss'
 
 const RankingTablePlayground = React.createClass({
-  render() {
+  render () {
     return <div className="ranking-table-playground">
       <Ranking
         state={{
@@ -84,6 +84,6 @@ const RankingTablePlayground = React.createClass({
   }
 })
 
-export function main() {
+export function main () {
   React.render(<RankingTablePlayground />, MAIN)
 }

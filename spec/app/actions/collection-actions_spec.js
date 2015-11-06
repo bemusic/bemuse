@@ -3,8 +3,8 @@ import co from 'co'
 
 import * as Actions from 'bemuse/app/actions/collection-actions'
 
-describe('CollectionActions', function() {
-  describe('loadCollection(url)', function() {
+describe('CollectionActions', function () {
+  describe('loadCollection(url)', function () {
     it('should load the collection', co.wrap(function*() {
       Actions.loadCollection('/spec/app/fixtures')
       let onStartLoading = waitForAction(Actions.startLoading)
@@ -21,7 +21,7 @@ describe('CollectionActions', function() {
   })
 })
 
-function waitForAction(action) {
+function waitForAction (action) {
   return new Promise((resolve) => {
     let unsubscribe = action.bus.onValue((value) => {
       unsubscribe()

@@ -9,10 +9,10 @@ const markdown = new Markdown({
 })
 
 export default React.createClass({
-  render() {
+  render () {
     return <article className="Markdown"></article>
   },
-  componentDidMount() {
+  componentDidMount () {
     this.update()
     this.getDOMNode().addEventListener('click', e => {
       e.preventDefault()
@@ -21,10 +21,10 @@ export default React.createClass({
       }
     })
   },
-  componentDidUpdate() {
+  componentDidUpdate () {
     this.update()
   },
-  update() {
+  update () {
     let html = markdown.render(this.props.source)
     this.getDOMNode().innerHTML = html
   },
