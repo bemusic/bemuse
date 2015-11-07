@@ -22,13 +22,13 @@ var BMSChart = require('../bms/chart')
 //     * `lineNumber` {Number} representing the line number where this warning occurred
 //     * `message` {String} representing the warning message
 //
-exports.compile = function(text, options) {
+exports.compile = function (text, options) {
 
   options = options || { }
 
   var chart = new BMSChart()
 
-  var rng = options.rng || function(max) {
+  var rng = options.rng || function (max) {
     return 1 + Math.floor(Math.random() * max)
   }
 
@@ -45,51 +45,51 @@ exports.compile = function(text, options) {
     warnings: []
   }
 
-  eachLine(text, function(text, lineNumber) {
+  eachLine(text, function (text, lineNumber) {
     var flow = true
     if (text.charAt(0) !== '#') return
     match(text)
-    .when(/^#RANDOM\s+(\d+)$/i, function(m) {
+    .when(/^#RANDOM\s+(\d+)$/i, function (m) {
       result.controlSentences += 1
       randomStack.push(rng(+m[1]))
     })
-    .when(/^#IF\s+(\d+)$/i, function(m) {
+    .when(/^#IF\s+(\d+)$/i, function (m) {
       result.controlSentences += 1
       skipStack.push(randomStack[randomStack.length - 1] !== +m[1])
     })
-    .when(/^#ENDIF$/i, function(m) {
+    .when(/^#ENDIF$/i, function (m) {
       result.controlSentences += 1
       skipStack.pop()
     })
-    .else(function() {
+    .else(function () {
       flow = false
     })
     if (flow) return
     var skipped = skipStack[skipStack.length - 1]
     match(text)
-    .when(/^#(\d\d\d)02:(\S*)$/, function(m) {
+    .when(/^#(\d\d\d)02:(\S*)$/, function (m) {
       result.channelSentences += 1
       if (!skipped) chart.timeSignatures.set(+m[1], +m[2])
     })
-    .when(/^#(?:EXT\s+#)?(\d\d\d)(\S\S):(\S*)$/, function(m) {
+    .when(/^#(?:EXT\s+#)?(\d\d\d)(\S\S):(\S*)$/, function (m) {
       result.channelSentences += 1
       if (!skipped) handleChannelSentence(+m[1], m[2], m[3], lineNumber)
     })
-    .when(/^#(\w+)(?:\s+(\S.*))?$/, function(m) {
+    .when(/^#(\w+)(?:\s+(\S.*))?$/, function (m) {
       result.headerSentences += 1
       if (!skipped) chart.headers.set(m[1], m[2])
     })
-    .else(function() {
+    .else(function () {
       warn(lineNumber, 'Invalid command')
     })
   })
 
   return result
 
-  function handleChannelSentence(measure, channel, string, lineNumber) {
+  function handleChannelSentence (measure, channel, string, lineNumber) {
     var items = Math.floor(string.length / 2)
     if (items === 0) return
-    for (var i = 0; i < items; i ++) {
+    for (var i = 0; i < items; i++) {
       var value = string.substr(i * 2, 2)
       var fraction = i / items
       if (value === '00') continue
@@ -103,7 +103,7 @@ exports.compile = function(text, options) {
     }
   }
 
-  function warn(lineNumber, message) {
+  function warn (lineNumber, message) {
     result.warnings.push({
       lineNumber: lineNumber,
       message: message,
@@ -112,10 +112,10 @@ exports.compile = function(text, options) {
 
 }
 
-function eachLine(text, callback) {
+function eachLine (text, callback) {
   text.split(/\r\n|\r|\n/)
-      .map(function(line) { return line.trim() })
-      .forEach(function(line, index) {
+      .map(function (line) { return line.trim() })
+      .forEach(function (line, index) {
     callback(line, index + 1)
   })
 }

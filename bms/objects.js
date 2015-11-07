@@ -8,7 +8,7 @@ module.exports = BMSObjects
 /* class BMSObjects */
 
 // Public: Constructs an empty BMSObjects.
-function BMSObjects() {
+function BMSObjects () {
   this._objects = []
 }
 
@@ -19,9 +19,9 @@ function BMSObjects() {
 //
 // * `object` {BMSObject} to add
 //
-BMSObjects.prototype.add = function(object) {
+BMSObjects.prototype.add = function (object) {
   if (object.channel !== '01') {
-    for (var i = 0; i < this._objects.length; i ++) {
+    for (var i = 0; i < this._objects.length; i++) {
       var test = this._objects[i]
       if (test.channel === object.channel &&
           test.measure === object.measure &&
@@ -38,7 +38,7 @@ BMSObjects.prototype.add = function(object) {
 //
 // Returns an {Array} of {BMSObject} objects
 //
-BMSObjects.prototype.all = function() {
+BMSObjects.prototype.all = function () {
   return this._objects.slice()
 }
 
@@ -46,9 +46,9 @@ BMSObjects.prototype.all = function() {
 //
 // Returns an {Array} of {BMSObject} objects
 //
-BMSObjects.prototype.allSorted = function() {
+BMSObjects.prototype.allSorted = function () {
   var list = this.all()
-  list.sort(function(a, b) {
+  list.sort(function (a, b) {
     return (a.measure + a.fraction) - (b.measure + b.fraction)
   })
   return list

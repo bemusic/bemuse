@@ -37,7 +37,7 @@ module.exports = SongInfo
 //
 // * `info` {Object} representing the properties to set on this new instance
 //
-function SongInfo(info) {
+function SongInfo (info) {
 
   // Public: {String} representing the song title
   this.title      = 'NO TITLE'
@@ -83,7 +83,7 @@ function SongInfo(info) {
 //
 // Returns a {SongInfo} object
 //
-SongInfo.fromBMSChart = function(chart) {
+SongInfo.fromBMSChart = function (chart) {
   var info       = { }
   var title      = chart.headers.get('title')
   var artist     = chart.headers.get('artist')
@@ -93,7 +93,7 @@ SongInfo.fromBMSChart = function(chart) {
   var subtitles  = chart.headers.getAll('subtitle')
   var subartists = chart.headers.getAll('subartist')
   if (typeof title === 'string' && !subtitles) {
-    var extractSubtitle = function(m) {
+    var extractSubtitle = function (m) {
       title = m[1]
       subtitles = [m[2]]
     }

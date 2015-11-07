@@ -11,7 +11,6 @@
 /* class Positioning */
 
 var Speedcore = require('../speedcore')
-var _ = require('../util/lodash')
 
 module.exports = Positioning
 
@@ -24,7 +23,7 @@ module.exports = Positioning
 //   * `inclusive` {Boolean} representing whether or not to include the
 //     starting beat `t` as part of the segment
 //
-function Positioning(segments) {
+function Positioning (segments) {
   this._speedcore = new Speedcore(segments)
 }
 
@@ -34,7 +33,7 @@ function Positioning(segments) {
 //
 // Returns a {Number} representing the amount of scrolling per beat
 //
-Positioning.prototype.speed = function(beat) {
+Positioning.prototype.speed = function (beat) {
   return this._speedcore.dx(beat)
 }
 
@@ -44,7 +43,7 @@ Positioning.prototype.speed = function(beat) {
 //
 // Returns a {Number} representing the total elapsed scrolling amount
 //
-Positioning.prototype.position = function(beat) {
+Positioning.prototype.position = function (beat) {
   return this._speedcore.x(beat)
 }
 
@@ -54,7 +53,7 @@ Positioning.prototype.position = function(beat) {
 //
 // Returns a {Positioning} object
 //
-Positioning.fromBMSChart = function(chart) {
+Positioning.fromBMSChart = function (chart) {
   var segments = [ ]
   var x = 0
   segments.push({
@@ -64,7 +63,7 @@ Positioning.fromBMSChart = function(chart) {
     inclusive: true,
   })
 
-  chart.objects.allSorted().forEach(function(object) {
+  chart.objects.allSorted().forEach(function (object) {
     if (object.channel === 'SC') {
       var beat = chart.measureToBeat(object.measure, object.fraction)
       var dx = +chart.headers.get('scroll' + object.value)

@@ -1,10 +1,10 @@
 
 var Keysounds = require('../keysounds')
 
-describe('Keysounds', function() {
+describe('Keysounds', function () {
 
-  describe('#files', function() {
-    it('should get list of all files', function() {
+  describe('#files', function () {
+    it('should get list of all files', function () {
       expect(new Keysounds({
         'AA': 'a.wav',
         'BB': 'a.ogg',
@@ -13,8 +13,8 @@ describe('Keysounds', function() {
     })
   })
 
-  describe('#all', function() {
-    it('should return the keysound map', function() {
+  describe('#all', function () {
+    it('should return the keysound map', function () {
       expect(new Keysounds({
         'AA': 'a.wav',
         'BB': 'a.ogg',

@@ -34,7 +34,7 @@ var precedence = { bpm: 1, stop: 2 }
 //   * `bpm` {Number} representing BPM to change to (only for `bpm` type)
 //   * `stopBeats` {Number} of beats to stop (only for `stop` type)
 //
-function Timing(initialBPM, actions) {
+function Timing (initialBPM, actions) {
   var state = { bpm: initialBPM, beat: 0, seconds: 0 }
   var segments = [ ]
   segments.push({
@@ -45,10 +45,10 @@ function Timing(initialBPM, actions) {
     inclusive: true,
   })
   actions = actions.slice()
-  actions.sort(function(a, b) {
+  actions.sort(function (a, b) {
     return a.beat - b.beat || precedence[a.type] - precedence[b.type]
   })
-  actions.forEach(function(action) {
+  actions.forEach(function (action) {
     var beat    = action.beat
     var seconds = state.seconds + (beat - state.beat) * 60 / state.bpm
     switch (action.type) {
@@ -80,7 +80,7 @@ function Timing(initialBPM, actions) {
       })
       break
     default:
-      throw new Error("Unrecognized segment object!")
+      throw new Error('Unrecognized segment object!')
     }
     state.beat    = beat
     state.seconds = seconds
@@ -91,33 +91,33 @@ function Timing(initialBPM, actions) {
 
 // Public: Convert the given beat into seconds.
 //
-Timing.prototype.beatToSeconds = function(beat) {
+Timing.prototype.beatToSeconds = function (beat) {
   return this._speedcore.t(beat)
 }
 
 // Public: Convert the given second into beats.
 //
-Timing.prototype.secondsToBeat = function(seconds) {
+Timing.prototype.secondsToBeat = function (seconds) {
   return this._speedcore.x(seconds)
 }
 
 // Public: Returns the BPM at the specified beat.
 //
-Timing.prototype.bpmAtBeat = function(beat) {
+Timing.prototype.bpmAtBeat = function (beat) {
   return this._speedcore.segmentAtX(beat).bpm
 }
 
 // Public: Returns an array representing the beats where there are events.
 //
-Timing.prototype.getEventBeats = function(beat) {
+Timing.prototype.getEventBeats = function (beat) {
   return this._eventBeats
 }
 
 // Public: Creates a Timing instance from a BMSChart.
 //
-Timing.fromBMSChart = function(chart) {
+Timing.fromBMSChart = function (chart) {
   var actions = []
-  chart.objects.all().forEach(function(object) {
+  chart.objects.all().forEach(function (object) {
     var bpm
     var beat = chart.measureToBeat(object.measure, object.fraction)
     if (object.channel === '03') {

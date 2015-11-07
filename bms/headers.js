@@ -22,7 +22,7 @@ module.exports = BMSHeaders
 /* class BMSHeaders */
 
 // Public: Constructs an empty BMSHeader
-function BMSHeaders() {
+function BMSHeaders () {
   this._data = { }
   this._dataAll = { }
 }
@@ -33,7 +33,7 @@ function BMSHeaders() {
 //   * `key` {String} representing the field’s name
 //   * `value` {String} representing the field’s value
 //
-BMSHeaders.prototype.each = function(callback) {
+BMSHeaders.prototype.each = function (callback) {
   for (var i in this._data) {
     callback(i, this._data[i])
   }
@@ -45,7 +45,7 @@ BMSHeaders.prototype.each = function(callback) {
 //
 // Returns a {String} representing the field’s value
 //
-BMSHeaders.prototype.get = function(name) {
+BMSHeaders.prototype.get = function (name) {
   return this._data[name.toLowerCase()]
 }
 
@@ -56,7 +56,7 @@ BMSHeaders.prototype.get = function(name) {
 //
 // Returns an {Array} of {String} values
 //
-BMSHeaders.prototype.getAll = function(name) {
+BMSHeaders.prototype.getAll = function (name) {
   return this._dataAll[name.toLowerCase()]
 }
 
@@ -65,7 +65,7 @@ BMSHeaders.prototype.getAll = function(name) {
 // * `name` A {String} representing field’s name
 // * `value` A {String} representing field’s value
 //
-BMSHeaders.prototype.set = function(name, value) {
+BMSHeaders.prototype.set = function (name, value) {
   var key = name.toLowerCase()
   this._data[key] = value
   ;(this._dataAll[key] || (this._dataAll[key] = [])).push(value)

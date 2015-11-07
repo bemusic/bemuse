@@ -30,7 +30,7 @@ var _ = require('../util/lodash')
 /* class Keysounds */
 
 // Public: Constructs an empty {Keysounds} object.
-function Keysounds(map) {
+function Keysounds (map) {
   this._map = map
 }
 
@@ -41,7 +41,7 @@ function Keysounds(map) {
 // Returns {String} representing the filename
 // Returns undefined if not found
 //
-Keysounds.prototype.get = function(id) {
+Keysounds.prototype.get = function (id) {
   return this._map[id.toLowerCase()]
 }
 
@@ -49,7 +49,7 @@ Keysounds.prototype.get = function(id) {
 //
 // Returns an {Array} of {String} representing a list of filenames
 //
-Keysounds.prototype.files = function() {
+Keysounds.prototype.files = function () {
   return _.uniq(_.values(this._map))
 }
 
@@ -60,7 +60,7 @@ Keysounds.prototype.files = function() {
 //
 // Returns an {Object} that maps from keysound ID to keysound filename
 //
-Keysounds.prototype.all = function() {
+Keysounds.prototype.all = function () {
   return this._map
 }
 
@@ -70,9 +70,9 @@ Keysounds.prototype.all = function() {
 //
 // Returns a {Keysounds} object
 //
-Keysounds.fromBMSChart = function(chart) {
+Keysounds.fromBMSChart = function (chart) {
   var map = {}
-  chart.headers.each(function(name, value) {
+  chart.headers.each(function (name, value) {
     var match = name.match(/^wav(\S\S)$/i)
     if (!match) return
     map[match[1].toLowerCase()] = value

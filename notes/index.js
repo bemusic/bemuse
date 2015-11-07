@@ -38,7 +38,7 @@ Notes.CHANNEL_MAPPING = require('./channels')
 //
 // * `notes` {Array} containing the {Note} objects
 //
-function Notes(notes) {
+function Notes (notes) {
   notes.forEach(Note.validate)
   this._notes = notes
 }
@@ -48,7 +48,7 @@ function Notes(notes) {
 //
 // Returns a {Number} representing the note count
 //
-Notes.prototype.count = function() {
+Notes.prototype.count = function () {
   return this._notes.length
 }
 
@@ -56,7 +56,7 @@ Notes.prototype.count = function() {
 //
 // Returns an {Array} of all notes
 //
-Notes.prototype.all = function() {
+Notes.prototype.all = function () {
   return this._notes.slice()
 }
 
@@ -67,34 +67,34 @@ Notes.prototype.all = function() {
 //   * `mapping` (optional) {Object} representing the mapping from BMS channel
 //     to game channel. Default value is the IIDX_P1 mapping.
 //
-Notes.fromBMSChart = function(chart, options) {
+Notes.fromBMSChart = function (chart, options) {
   options = options || { }
   var mapping = options.mapping || Notes.CHANNEL_MAPPING.IIDX_P1
   var builder = new BMSNoteBuilder(chart, { mapping: mapping })
   return builder.build()
 }
 
-function BMSNoteBuilder(chart, options) {
+function BMSNoteBuilder (chart, options) {
   this._chart = chart
   invariant(options.mapping, 'Expected options.mapping')
   invariant(typeof options.mapping === 'object', 'options.mapping must be object')
   this._mapping = options.mapping
 }
 
-BMSNoteBuilder.prototype.build = function() {
+BMSNoteBuilder.prototype.build = function () {
   this._notes = []
   this._activeLN = { }
   this._lastNote = { }
   this._lnObj = (this._chart.headers.get('lnobj') || '').toLowerCase()
   this._channelMapping = this._mapping
   this._objects = this._chart.objects.allSorted()
-  this._objects.forEach(function(object) {
+  this._objects.forEach(function (object) {
     this._handle(object)
   }.bind(this))
   return new Notes(this._notes)
 }
 
-BMSNoteBuilder.prototype._handle = function(object) {
+BMSNoteBuilder.prototype._handle = function (object) {
   if (object.channel === '01') {
     this._handleNormalNote(object)
   } else {
@@ -109,7 +109,7 @@ BMSNoteBuilder.prototype._handle = function(object) {
   }
 }
 
-BMSNoteBuilder.prototype._handleNormalNote = function(object) {
+BMSNoteBuilder.prototype._handleNormalNote = function (object) {
   var channel = this._normalizeChannel(object.channel)
   var beat = this._getBeat(object)
   if (object.value.toLowerCase() === this._lnObj) {
@@ -128,7 +128,7 @@ BMSNoteBuilder.prototype._handleNormalNote = function(object) {
   }
 }
 
-BMSNoteBuilder.prototype._handleLongNote = function(object) {
+BMSNoteBuilder.prototype._handleLongNote = function (object) {
   var channel = this._normalizeChannel(object.channel)
   var beat = this._getBeat(object)
   if (this._activeLN[channel]) {
@@ -145,14 +145,14 @@ BMSNoteBuilder.prototype._handleLongNote = function(object) {
   }
 }
 
-BMSNoteBuilder.prototype._getBeat = function(object) {
+BMSNoteBuilder.prototype._getBeat = function (object) {
   return this._chart.measureToBeat(object.measure, object.fraction)
 }
 
-BMSNoteBuilder.prototype._getColumn = function(channel) {
+BMSNoteBuilder.prototype._getColumn = function (channel) {
   return this._channelMapping[channel]
 }
 
-BMSNoteBuilder.prototype._normalizeChannel = function(channel) {
+BMSNoteBuilder.prototype._normalizeChannel = function (channel) {
   return channel.replace(/^5/, '1').replace(/^6/, '2')
 }

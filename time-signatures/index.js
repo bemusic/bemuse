@@ -47,7 +47,7 @@ module.exports = TimeSignatures
 
 // Public: Constructs an empty TimeSignatures.
 //
-function TimeSignatures() {
+function TimeSignatures () {
   this._values = { }
 }
 
@@ -58,7 +58,7 @@ function TimeSignatures() {
 //   For example, a size of 1.0 represents a common 4/4 time signature,
 //   whereas a size of 0.75 represents the 3/4 or 6/8 time signature.
 //
-TimeSignatures.prototype.set = function(measure, value) {
+TimeSignatures.prototype.set = function (measure, value) {
   this._values[measure] = value
 }
 
@@ -69,7 +69,7 @@ TimeSignatures.prototype.set = function(measure, value) {
 // Returns a {Number} representing the size of the measure.
 // By default, a measure has a size of 1.
 //
-TimeSignatures.prototype.get = function(measure) {
+TimeSignatures.prototype.get = function (measure) {
   return this._values[measure] || 1
 }
 
@@ -82,7 +82,7 @@ TimeSignatures.prototype.get = function(measure) {
 //
 // Returns a {Number} representing the size of the measure in beats.
 //
-TimeSignatures.prototype.getBeats = function(measure) {
+TimeSignatures.prototype.getBeats = function (measure) {
   return this.get(measure) * 4
 }
 
@@ -95,8 +95,8 @@ TimeSignatures.prototype.getBeats = function(measure) {
 //
 // Returns a {Number} representing the number of beats since measure 0.
 //
-TimeSignatures.prototype.measureToBeat = function(measure, fraction) {
+TimeSignatures.prototype.measureToBeat = function (measure, fraction) {
   var sum = 0
-  for (var i = 0; i < measure; i ++) sum += this.getBeats(i)
+  for (var i = 0; i < measure; i++) sum += this.getBeats(i)
   return sum + this.getBeats(measure) * fraction
 }

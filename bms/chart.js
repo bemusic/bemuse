@@ -23,7 +23,7 @@ module.exports = BMSChart
 
 // Public: Constructs an empty {BMSChart}
 //
-function BMSChart() {
+function BMSChart () {
 
   // Public: {BMSHeaders} representing the BMS-specific headers of this notechart
   this.headers = new BMSHeaders()
@@ -43,6 +43,6 @@ function BMSChart() {
 //
 // Returns the {Number} representing the beat number, starting from 0
 //
-BMSChart.prototype.measureToBeat = function(measure, fraction) {
+BMSChart.prototype.measureToBeat = function (measure, fraction) {
   return this.timeSignatures.measureToBeat(measure, fraction)
 }

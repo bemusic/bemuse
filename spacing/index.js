@@ -12,7 +12,6 @@
 /* class Spacing */
 
 var Speedcore = require('../speedcore')
-var _ = require('../util/lodash')
 
 module.exports = Spacing
 
@@ -26,7 +25,7 @@ module.exports = Spacing
 //   * `inclusive` {Boolean} representing whether or not to include the
 //     starting beat `t` as part of the segment
 //
-function Spacing(segments) {
+function Spacing (segments) {
   if (segments.length > 0) {
     this._speedcore = new Speedcore(segments)
   }
@@ -38,7 +37,7 @@ function Spacing(segments) {
 //
 // Returns the note spacing factor at the specified beat
 //
-Spacing.prototype.factor = function(beat) {
+Spacing.prototype.factor = function (beat) {
   if (this._speedcore) {
     return this._speedcore.x(beat)
   } else {
@@ -66,10 +65,10 @@ Spacing.prototype.factor = function(beat) {
 //
 // Returns a {Spacing} object
 //
-Spacing.fromBMSChart = function(chart) {
+Spacing.fromBMSChart = function (chart) {
   var segments = [ ]
 
-  chart.objects.allSorted().forEach(function(object) {
+  chart.objects.allSorted().forEach(function (object) {
     if (object.channel === 'SP') {
       var beat = chart.measureToBeat(object.measure, object.fraction)
       var factor = +chart.headers.get('speed' + object.value)

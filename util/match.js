@@ -1,10 +1,10 @@
 
 module.exports = match
 
-function match(text) {
+function match (text) {
   var matched = false
   return {
-    when: function(pattern, callback) {
+    when: function (pattern, callback) {
       if (matched) return this
       var match = text.match(pattern)
       if (match) {
@@ -13,7 +13,7 @@ function match(text) {
       }
       return this
     },
-    else: function(callback) {
+    else: function (callback) {
       if (matched) return this
       callback()
     }
