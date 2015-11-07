@@ -23,7 +23,7 @@ import { MISSED }             from 'bemuse/game/judgments'
 
 import { shouldDisableFullScreen } from 'bemuse/devtools/query-flags'
 
-export function launch({ server, song, chart }) {
+export function launch ({ server, song, chart }) {
   return co(function*() {
 
     // go fullscreen
@@ -109,7 +109,7 @@ export function launch({ server, song, chart }) {
   })
 }
 
-function showResult(playerState, chart) {
+function showResult (playerState, chart) {
   return new Promise(_resolve => {
     let stats     = playerState.stats
     let playMode  = playerState.player.options.scratch === 'off' ? 'KB' : 'BM'

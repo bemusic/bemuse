@@ -3,7 +3,7 @@ import './OptionsPlayerGraphics.scss'
 import React from 'react'
 import c     from 'classnames'
 
-const PANEL_PATH = (function() {
+const PANEL_PATH = (function () {
   const x = 48
   const w = 14
   const y = 20
@@ -21,7 +21,7 @@ const PANEL_PATH = (function() {
 })()
 
 export default React.createClass({
-  render() {
+  render () {
     let svg =
       this.props.type === 'scratch'
       ? this.renderScratch()
@@ -31,7 +31,7 @@ export default React.createClass({
       {svg}
     </div>
   },
-  renderScratch() {
+  renderScratch () {
     let p = this.props.value
     let bx = p === 'left' ? 24 : p === 'right' ? 4 : 14
     let gx = p === 'left' ? 21 : p === 'right' ? 75 : null
@@ -57,7 +57,7 @@ export default React.createClass({
           x1="1" x2="95" y1="29" y2="29" />
     </svg>
   },
-  renderPanel() {
+  renderPanel () {
     let p = this.props.value
     let tx = p === 'left' ? -35 : p === 'right' ? 35 : 0
     return <svg width="96" height="54">

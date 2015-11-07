@@ -2,10 +2,10 @@
 import PlayerStats    from 'bemuse/game/state/player-stats'
 import { notechart }  from '../spec_helper'
 
-describe('PlayerStats', function() {
+describe('PlayerStats', function () {
 
-  describe('#score', function() {
-    it('returns the score', function() {
+  describe('#score', function () {
+    it('returns the score', function () {
       let stats = new PlayerStats(notechart('#00111:1111111111'))
       expect(stats.score).to.equal(0)
       stats.handleJudgment(1)
@@ -17,8 +17,8 @@ describe('PlayerStats', function() {
     })
   })
 
-  describe('#log', function() {
-    it('returns the log', function() {
+  describe('#log', function () {
+    it('returns the log', function () {
       let stats = new PlayerStats(notechart('#00111:11111111111111'))
       expect(stats.score).to.equal(0)
       stats.handleJudgment(1)

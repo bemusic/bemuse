@@ -4,21 +4,21 @@
 import Callbacks from 'bemuse/utils/callbacks'
 
 export class Observable {
-  constructor(value=undefined) {
+  constructor (value = undefined) {
     this._callbacks = new Callbacks()
     this._value = value
   }
-  get value() {
+  get value () {
     return this._value
   }
-  set value(value) {
+  set value (value) {
     this._value = value
     this.notify(value)
   }
-  notify(value) {
+  notify (value) {
     this._callbacks.call(value)
   }
-  watch(f) {
+  watch (f) {
     if (this._value !== undefined) f(this._value)
     return this._callbacks.add(f)
   }

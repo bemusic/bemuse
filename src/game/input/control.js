@@ -1,10 +1,10 @@
 
 export class Control {
-  constructor() {
+  constructor () {
     this.value = 0
     this.changed = false
   }
-  get justPressed() {
+  get justPressed () {
     return this.changed && this.value
   }
 }

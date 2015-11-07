@@ -12,7 +12,7 @@ import GameInput    from 'bemuse/game/input'
 import GameDisplay  from 'bemuse/game/display'
 import MAIN         from 'bemuse/utils/main-element'
 
-export function main() {
+export function main () {
   co(function*() {
 
     let chart = BMS.Compiler.compile(`
@@ -56,7 +56,7 @@ export function main() {
     }
 
     display.start()
-    display._getData = (getData => function() {
+    display._getData = (getData => function () {
       let result = getData.apply(display, arguments)
       result['p1_score'] = (new Date().getTime() - started) % 555556
       console.log(result)
@@ -69,7 +69,7 @@ export function main() {
       display.update(t, state)
     }
     draw()
-    requestAnimationFrame(function f() {
+    requestAnimationFrame(function f () {
       draw()
       requestAnimationFrame(f)
     })
@@ -79,7 +79,7 @@ export function main() {
 
 }
 
-function showCanvas(view) {
+function showCanvas (view) {
 
   var { width, height } = view
 
@@ -90,7 +90,7 @@ function showCanvas(view) {
   resize()
   $(window).on('resize', resize)
 
-  function resize() {
+  function resize () {
     var scale = Math.min(
       window.innerWidth / width,
       window.innerHeight / height

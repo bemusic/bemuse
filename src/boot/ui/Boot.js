@@ -16,11 +16,11 @@ boot.querySelector('.js-version').appendChild(
 
 document.body.appendChild(boot)
 
-export function hide() {
+export function hide () {
   boot.style.display = 'none'
 }
 
-export function setProgress(progress) {
+export function setProgress (progress) {
   if (progress === null) {
     bar.classList.add('is-indeterminate')
     bar.style.width = ''

@@ -5,7 +5,7 @@ import DndResources from 'bemuse/resources/dnd-resources'
 import c            from 'classnames'
 
 const CustomChartSelector = React.createClass({
-  render() {
+  render () {
     let files = this.state.files
     return <div className="drop-zone">
       {
@@ -40,12 +40,12 @@ const CustomChartSelector = React.createClass({
       }
     </div>
   },
-  getInitialState() {
+  getInitialState () {
     return {
       files: [],
     }
   },
-  handleDrop(e) {
+  handleDrop (e) {
     e.preventDefault()
     let event = e.nativeEvent
     let resources = new DndResources(event)
@@ -65,18 +65,18 @@ const CustomChartSelector = React.createClass({
     })
     .done()
   },
-  handleItemClick(file) {
+  handleItemClick (file) {
     return () => {
       this.props.onSelect(this.state.resources, file.resource)
     }
   },
-  handleClear() {
+  handleClear () {
     this.props.onSelect(null, null)
   },
 })
 
 export default React.createClass({
-  render() {
+  render () {
     let options = this.state.options
     return <div
         className="GameShellScene"
@@ -134,29 +134,29 @@ export default React.createClass({
       </form>
     </div>
   },
-  submit(e) {
+  submit (e) {
     e.preventDefault()
     this.props.play(this.state.options)
   },
-  getInitialState() {
+  getInitialState () {
     return {
       options: this.props.options,
     }
   },
-  bindOption(binder) {
+  bindOption (binder) {
     return (event) => {
       binder(this.state.options, event.target.value)
       this.forceUpdate()
     }
   },
-  handleDragOver(e) {
+  handleDragOver (e) {
     e.preventDefault()
   },
-  handleDrop(e) {
+  handleDrop (e) {
     e.preventDefault()
     this.refs.dropzone.handleDrop(e)
   },
-  handleSelectFile(resources, resource) {
+  handleSelectFile (resources, resource) {
     this.setState({
       options: Object.assign(this.state.options, { resources, resource })
     })

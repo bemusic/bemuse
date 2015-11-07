@@ -9,7 +9,7 @@ import LoadingSceneProgress from './LoadingSceneProgress.jsx'
 
 export default React.createClass({
 
-  render() {
+  render () {
     return <Scene className="LoadingScene" ref="scene">
       <div className="LoadingSceneのinfo">
         <LoadingSceneSongInfo song={this.props.song} />
@@ -19,7 +19,7 @@ export default React.createClass({
       <div className="LoadingSceneのcover"></div>
     </Scene>
   },
-  teardown() {
+  teardown () {
     React.findDOMNode(this.refs.scene).classList.add('is-exiting')
     return Promise.delay(500)
   },

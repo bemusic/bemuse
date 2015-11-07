@@ -2,16 +2,16 @@
 import PlayerState from './player-state'
 
 export class GameState {
-  constructor(game) {
+  constructor (game) {
     this._game    = game
     this._players = new Map(game.players.map(player =>
         [player, new PlayerState(player)]))
   }
   // The `Game` object associated with this `GameState`.
-  get game() {
+  get game () {
     return this._game
   }
-  update(gameTime, input, timer) {
+  update (gameTime, input, timer) {
     let finished = true
     for (let [player, playerState] of this._players) {
       playerState.update(gameTime, input)
@@ -29,7 +29,7 @@ export class GameState {
     // True if the game is finished, false otherwise.
     this.finished = finished
   }
-  player(p) {
+  player (p) {
     return this._players.get(p)
   }
 }

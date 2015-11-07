@@ -5,7 +5,7 @@ import c     from 'classnames'
 
 export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
-  render() {
+  render () {
     return <div
         className={c('OptionsInputScratch',
             { 'is-editing': this.props.isEditing })}
@@ -20,17 +20,17 @@ export default React.createClass({
       </div>
     </div>
   },
-  renderKeyClass(index) {
+  renderKeyClass (index) {
     return c('OptionsInputScratchのkey', {
       'is-editing': this.props.editIndex === index
     })
   },
-  handleClick() {
+  handleClick () {
     this.props.onEdit('SC')
   },
 })
 
-function star() {
+function star () {
   let out = ''
   for (let i = 0; i < 10; i++) {
     let r = i % 2 === 0 ? 40 : 90

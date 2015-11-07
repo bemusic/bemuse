@@ -6,17 +6,17 @@ import _ from 'lodash'
  * image "url."
  */
 export class Resources {
-  constructor() {
+  constructor () {
     this._map = { }
   }
-  add(src, url) {
+  add (src, url) {
     this._map[src] = url
   }
-  get(src) {
+  get (src) {
     if (!(src in this._map)) throw new Error('Not registered: ' + src)
     return this._map[src]
   }
-  get urls() {
+  get urls () {
     return _.values(this._map)
   }
 }

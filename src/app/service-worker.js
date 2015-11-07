@@ -3,7 +3,7 @@
 import version from 'bemuse/utils/version'
 import 'serviceworker-cache-polyfill'
 
-function log(...args){
+function log (...args) {
   console.log('[serviceworker]', ...args)
 }
 
@@ -15,19 +15,19 @@ var RES_CACHE_KEY = 'site-v' + version
 var SKIN_CACHE_KEY = 'skin-v' + version
 var SONG_CACHE_KEY = 'songs'
 
-self.addEventListener('install', function(event) {
+self.addEventListener('install', function (event) {
   event.waitUntil(
-    caches.open(SITE_CACHE_KEY).then(function(cache) {
+    caches.open(SITE_CACHE_KEY).then(function (cache) {
       return cache.addAll(['/'])
     })
   )
 })
 
-self.addEventListener('activate', function() {
+self.addEventListener('activate', function () {
   log('Service worker activated!')
 })
 
-self.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', function (event) {
   var build = location.origin + '/build/'
   var skin = location.origin + '/skins/'
   var res = location.origin + '/res/'
@@ -53,7 +53,7 @@ self.addEventListener('fetch', function(event) {
   if (request.url.startsWith(skin)) {
     return staleWhileRevalidate(event, SKIN_CACHE_KEY)
   }
-  if (request.url.startsWith(res)){
+  if (request.url.startsWith(res)) {
     return staleWhileRevalidate(event, RES_CACHE_KEY)
   }
   if (request.url.startsWith(site)) {
@@ -64,11 +64,11 @@ self.addEventListener('fetch', function(event) {
   }
 })
 
-function cacheForever(event, cacheName) {
+function cacheForever (event, cacheName) {
   event.respondWith(
-    caches.open(cacheName).then(function(cache) {
-      return cache.match(event.request).then(function(cached) {
-        return cached || fetch(event.request).then(function(response) {
+    caches.open(cacheName).then(function (cache) {
+      return cache.match(event.request).then(function (cached) {
+        return cached || fetch(event.request).then(function (response) {
           log('[caching forever]', event.request.url)
           cache.put(event.request, response.clone())
           return response
@@ -78,10 +78,10 @@ function cacheForever(event, cacheName) {
   )
 }
 
-function fetchThenCache(event, cacheName) {
+function fetchThenCache (event, cacheName) {
   event.respondWith(
-    caches.open(cacheName).then(function(cache) {
-      return fetch(event.request).then(function(response) {
+    caches.open(cacheName).then(function (cache) {
+      return fetch(event.request).then(function (response) {
         if (response && response.ok) {
           log('[cached]', event.request.url)
           cache.put(event.request, response.clone())
@@ -89,18 +89,18 @@ function fetchThenCache(event, cacheName) {
         } else {
           return cache.match(event.request)
         }
-      }).catch(function() {
+      }).catch(function () {
         return cache.match(event.request)
       })
     })
   )
 }
 
-function staleWhileRevalidate(event, cacheName) {
+function staleWhileRevalidate (event, cacheName) {
   event.respondWith(
-    caches.open(cacheName).then(function(cache) {
-      return cache.match(event.request).then(function(cached) {
-        var promise = fetch(event.request).then(function(response) {
+    caches.open(cacheName).then(function (cache) {
+      return cache.match(event.request).then(function (cached) {
+        var promise = fetch(event.request).then(function (response) {
           if (response && response.ok) {
             log('[updated]', event.request.url)
             cache.put(event.request, response.clone())

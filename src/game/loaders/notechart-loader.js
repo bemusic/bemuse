@@ -7,7 +7,7 @@ import * as BmsonNotechartLoader  from 'bemuse/bmson/notechart-loader'
 
 export class NotechartLoader {
 
-  load(arraybuffer, resource, options) {
+  load (arraybuffer, resource, options) {
     if (resource.name.match(/\.bmson$/i)) {
       return this.loadBmson(arraybuffer, resource, options)
     } else {
@@ -15,7 +15,7 @@ export class NotechartLoader {
     }
   }
 
-  loadBMS(arraybuffer, resource, options) {
+  loadBMS (arraybuffer, resource, options) {
     return co(function*() {
       let buffer        = new Buffer(new Uint8Array(arraybuffer))
       let source        = yield Promise.promisify(BMS.Reader.readAsync)(buffer)
@@ -26,7 +26,7 @@ export class NotechartLoader {
     })
   }
 
-  loadBmson(arraybuffer, resource, options) {
+  loadBmson (arraybuffer, resource, options) {
     return co(function*() {
       let buffer        = new Buffer(new Uint8Array(arraybuffer))
       let source        = buffer.toString('utf-8')

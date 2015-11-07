@@ -13,7 +13,7 @@ React.initializeTouchEvents(true)
 
 export default React.createClass({
 
-  render() {
+  render () {
     return <Scene className="TitleScene">
       <div className="TitleSceneのlogo"></div>
       <div className="TitleSceneのenter">
@@ -33,15 +33,15 @@ export default React.createClass({
     </Scene>
   },
 
-  openLink(e) {
+  openLink (e) {
     e.preventDefault()
     window.open(e.target.href, '_blank')
   },
 
-  enterGame() {
+  enterGame () {
     SCENE_MANAGER.push(<ModeSelectScene />).done()
   },
-  showAbout() {
+  showAbout () {
     SCENE_MANAGER.push(<AboutScene />).done()
   },
 

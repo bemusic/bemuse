@@ -4,13 +4,13 @@ import MAIN  from 'bemuse/utils/main-element'
 import AuthenticationPopup from 'bemuse/online/ui/AuthenticationPopup'
 
 const OnlineAuthenticationTestScene = React.createClass({
-  render() {
+  render () {
     return <div>
       <AuthenticationPopup />
     </div>
   }
 })
 
-export function main() {
+export function main () {
   React.render(<OnlineAuthenticationTestScene />, MAIN)
 }

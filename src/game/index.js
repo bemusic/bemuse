@@ -16,19 +16,19 @@ import { resolve } from 'url'
 
 import * as GameLoader from './loaders/game-loader'
 
-export function main() {
+export function main () {
 
   // iOS
-  window.addEventListener('touchstart', function unmute() {
+  window.addEventListener('touchstart', function unmute () {
     unmuteAudio(audioContext)
     window.removeEventListener('touchstart', unmute)
   })
 
-  let displayShell = function(options) {
-    return new Promise(function(_resolve) {
+  let displayShell = function (options) {
+    return new Promise(function (_resolve) {
       let scene = React.createElement(GameShellScene, {
         options: options,
-        play: function(data) {
+        play: function (data) {
           _resolve(data)
         },
       })

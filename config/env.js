@@ -2,30 +2,30 @@
 import NODE_ENV from 'node-env'
 import enabled  from 'is-true-ish'
 
-export function production() {
+export function production () {
   return NODE_ENV === 'production'
 }
 
-export function test() {
+export function test () {
   return NODE_ENV === 'test'
 }
 
-export function development() {
+export function development () {
   return !production() && !test()
 }
 
-export function sourceMapsEnabled() {
+export function sourceMapsEnabled () {
   return enabled(process.env.SOURCE_MAPS)
 }
 
-export function coverageEnabled() {
+export function coverageEnabled () {
   return enabled(process.env.BEMUSE_COV)
 }
 
-export function hotModeEnabled() {
+export function hotModeEnabled () {
   return enabled(process.env.HOT)
 }
 
-export function serverPort() {
+export function serverPort () {
   return +process.env.PORT || 8080
 }

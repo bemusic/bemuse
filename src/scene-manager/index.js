@@ -31,21 +31,21 @@ import MAIN   from 'bemuse/utils/main-element'
 //   ``teardown()`` method.
 //
 export class SceneManager {
-  constructor() {
+  constructor () {
     this._transitioning = false
     this._stack = []
   }
 
   // Displays the scene and returns a promise that resolves when the old
   // scene finishes exiting.
-  display(scene) {
+  display (scene) {
     return this._transitionTo(() => {
       return scene
     })
   }
 
   // Displays the scene, while remembering the previous scene.
-  push(scene) {
+  push (scene) {
     let previousScene = this.currentScene
     return this._transitionTo(() => {
       this._stack.push(previousScene)
@@ -54,13 +54,13 @@ export class SceneManager {
   }
 
   // Displays the previous scene.
-  pop() {
+  pop () {
     return this._transitionTo(() => {
       return this._stack.pop()
     })
   }
 
-  _transitionTo(getNextScene) {
+  _transitionTo (getNextScene) {
     return co(function*() {
       if (this._transitioning) throw new Error('Scene is transitioning!')
       try {
@@ -94,7 +94,7 @@ export class SceneManager {
 
 }
 
-function detach(element) {
+function detach (element) {
   if (element && element.parentNode === MAIN) {
     MAIN.removeChild(element)
   }
@@ -105,12 +105,12 @@ export let instance = new SceneManager()
 
 export default instance
 
-function ReactScene(element) {
-  return function instantiate(container) {
+function ReactScene (element) {
+  return function instantiate (container) {
     let component = React.render(element, container)
     component.setProps({ scene: element })
     return {
-      teardown() {
+      teardown () {
         return Promise.try(() => {
           if (component.teardown) return component.teardown()
         }).then(() => {

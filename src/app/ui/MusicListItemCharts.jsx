@@ -5,7 +5,7 @@ import React from 'react'
 import MusicListItemChartContainer from './MusicListItemChartContainer'
 
 export default React.createClass({
-  render() {
+  render () {
     return <div className="MusicListItemCharts">
       {this.props.charts.map((chart, index) =>
         <MusicListItemChartContainer

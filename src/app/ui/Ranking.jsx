@@ -6,21 +6,21 @@ import AuthenticationPopup from 'bemuse/online/ui/AuthenticationPopup'
 import { isWaiting } from 'bemuse/online/operations'
 
 export default React.createClass({
-  getInitialState() {
+  getInitialState () {
     return {
       authenticationPopupVisible: false,
     }
   },
-  handleAuthenticate() {
+  handleAuthenticate () {
     this.setState({ authenticationPopupVisible: true })
   },
-  handleAuthenticationClose() {
+  handleAuthenticationClose () {
     this.setState({ authenticationPopupVisible: false })
   },
-  handleAuthenticationFinish() {
+  handleAuthenticationFinish () {
     this.setState({ authenticationPopupVisible: false })
   },
-  render() {
+  render () {
     return <div className="Ranking">
       <AuthenticationPopup
           visible={this.state.authenticationPopupVisible}
@@ -30,7 +30,7 @@ export default React.createClass({
       {this.renderLeaderboard()}
     </div>
   },
-  renderYours() {
+  renderYours () {
     const state = this.props.state
     const submission = state.meta.submission
     return <div className="Rankingのyours">
@@ -71,7 +71,7 @@ export default React.createClass({
       </RankingTable>
     </div>
   },
-  renderLeaderboard() {
+  renderLeaderboard () {
     const state = this.props.state
     return <div className="Rankingのleaderboard">
       <div className="Rankingのtitle">
@@ -106,7 +106,7 @@ export default React.createClass({
       </RankingTable>
     </div>
   },
-  renderError(text, error, retry) {
+  renderError (text, error, retry) {
     return <span className="Rankingのerror">
       <strong>
         {text}

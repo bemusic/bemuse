@@ -8,7 +8,7 @@ import * as CoverageReport  from '../coverage-report'
 
 let log = gutil.log.bind(gutil, '[test-runner]')
 
-export function run() {
+export function run () {
 
   return co(function*() {
 

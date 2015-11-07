@@ -5,7 +5,7 @@ import c            from 'classnames'
 import { Overlay }  from 'react-overlay-popup'
 
 export default React.createClass({
-  render() {
+  render () {
     if (this.props.visible === false) return null
     return <Overlay>
       <div className={c('ModalPopup',

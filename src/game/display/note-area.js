@@ -2,19 +2,20 @@
 import _ from 'lodash'
 
 export class NoteArea {
-  constructor(notes, barLines) {
+  constructor (notes, barLines) {
     this._notes     = _.sortBy(notes, position)
     this._barLines  = _(barLines).pluck('position').sortBy().value()
   }
-  getVisibleNotes(lower, upper, headroom) {
+  getVisibleNotes (lower, upper, headroom) {
     let out = []
     let notes = this._notes
     if (!headroom) headroom = 0
     for (let i = 0; i < notes.length; i++) {
       let note = notes[i]
-      let visible = note.end ?
-            !(note.position > upper || note.end.position < lower - headroom) :
-            !(note.position > upper || note.position < lower - headroom)
+      let visible = (note.end
+        ? !(note.position > upper || note.end.position < lower - headroom)
+        : !(note.position > upper || note.position < lower - headroom)
+      )
       if (visible) {
         let entity = { note: note }
         if (!note.end) {
@@ -30,7 +31,7 @@ export class NoteArea {
     }
     return out
   }
-  getVisibleBarLines(lower, upper, headroom) {
+  getVisibleBarLines (lower, upper, headroom) {
     if (!headroom) headroom = 0
     return this._barLines
         .filter(pos => (lower - headroom <= pos && pos <= upper))
@@ -40,10 +41,10 @@ export class NoteArea {
 
 export default NoteArea
 
-function y(lower, upper, pos) {
+function y (lower, upper, pos) {
   return 1 - (pos - lower) / (upper - lower)
 }
 
-function position(event) {
+function position (event) {
   return event.position
 }

@@ -5,9 +5,9 @@ import SkinNode       from './lib/base'
 import Instance       from './lib/instance'
 import Expression     from '../expression'
 
-function ChildManager(expr, child, poolSize) {
+function ChildManager (expr, child, poolSize) {
   return {
-    instantiate(context, subject) {
+    instantiate (context, subject) {
       let instances = new Map()
       let pool      = []
       initPool()
@@ -17,7 +17,7 @@ function ChildManager(expr, child, poolSize) {
           update(expr(data))
         },
       })
-      function initPool() {
+      function initPool () {
         var instance
         console.log('init i' + poolSize)
         for (var i = 0; i < poolSize; i++) {
@@ -26,7 +26,7 @@ function ChildManager(expr, child, poolSize) {
           pool.push(instance)
         }
       }
-      function update(array) {
+      function update (array) {
         var unused = new Set(instances.keys())
         var key
         var item
@@ -51,7 +51,7 @@ function ChildManager(expr, child, poolSize) {
           pool.push(instance)
         }
       }
-      function createInstance() {
+      function createInstance () {
         var instance = pool.pop()
         if (instance) {
           instance.attachTo(subject.object)
@@ -65,7 +65,7 @@ function ChildManager(expr, child, poolSize) {
 }
 
 export class ObjectNode extends SkinNode {
-  compile(compiler, $el) {
+  compile (compiler, $el) {
     this.children = compiler.compileChildren($el)
     if (this.children.length !== 1) {
       throw new Error('Expected exactly 1 children, ' +
@@ -74,7 +74,7 @@ export class ObjectNode extends SkinNode {
     this.pool     = +$el.attr('pool') || 1
     this.key      = new Expression($el.attr('key'))
   }
-  instantiate(context, container) {
+  instantiate (context, container) {
     let batch = new PIXI.ParticleContainer(null, {
       position: true,
       alpha:    true,

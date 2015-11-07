@@ -2,7 +2,7 @@
 import Callbacks from 'bemuse/utils/callbacks'
 
 export class Instance {
-  constructor(options) {
+  constructor (options) {
     this._context   = options.context
     this._object    = options.object
     this._children  = options.children
@@ -32,7 +32,7 @@ export class Instance {
       this.attachTo(options.parent)
     }
   }
-  bind(...pipeline) {
+  bind (...pipeline) {
     let sideEffect = onChange(pipeline.pop())
     if (pipeline.length === 1 && pipeline[0].constant) {
       // optimize: don't add binding when expression is constant --
@@ -47,17 +47,17 @@ export class Instance {
       })
     }
   }
-  attachTo(parent) {
+  attachTo (parent) {
     this._parent    = parent
     this._parent.addChild(this._object)
   }
-  detach() {
+  detach () {
     if (this._parent) {
       this._parent.removeChild(this._object)
       this._parent = null
     }
   }
-  push(value) {
+  push (value) {
     var i
     for (i = 0; i < this._bindings.length; i++) {
       this._bindings[i](value)
@@ -67,7 +67,7 @@ export class Instance {
     }
     this.onData.call(value)
   }
-  destroy() {
+  destroy () {
     this.detach()
     for (var i = 0; i < this._concerns.length; i++) {
       this._concerns[i].destroy()
@@ -78,17 +78,17 @@ export class Instance {
     this._parent    = null
     this._object    = null
   }
-  get object() {
+  get object () {
     return this._object
   }
-  get parent() {
+  get parent () {
     return this._parent
   }
 }
 
-function onChange(f) {
+function onChange (f) {
   let value
-  return function receiveNewValue(v) {
+  return function receiveNewValue (v) {
     if (value !== v) {
       value = v
       f(v)

@@ -1,7 +1,7 @@
 
 import Worker from 'worker!./worker.js'
 
-export function loadSongFromResources(resources, options={}) {
+export function loadSongFromResources (resources, options = {}) {
   var onMessage = options.onMessage || (() => {})
   onMessage('Examining dropped items...')
   return resources.fileList.then(fileList => {
@@ -21,7 +21,7 @@ export function loadSongFromResources(resources, options={}) {
   .then(files => {
     return new Promise((resolve, reject) => {
       let worker = new Worker()
-      worker.onmessage = function({ data }) {
+      worker.onmessage = function ({ data }) {
         if (data.type === 'result') {
           resolve(data.song)
           worker.terminate()
@@ -32,7 +32,7 @@ export function loadSongFromResources(resources, options={}) {
               '(' + data.current + '/' + data.total + ').')
         }
       }
-      worker.onerror = function(e) {
+      worker.onerror = function (e) {
         reject(e)
       }
       worker.postMessage({ files })

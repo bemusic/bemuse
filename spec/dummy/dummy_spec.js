@@ -1,7 +1,7 @@
 
-describe('The specs', function() {
+describe('The specs', function () {
 
-  it('runs', function() {
+  it('runs', function () {
     expect({ runs: true }.runs).to.equal(true)
   })
 

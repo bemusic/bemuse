@@ -5,13 +5,13 @@ import ModalPopup from 'bemuse/ui/ModalPopup'
 import Options    from 'bemuse/app/ui/Options'
 
 const OptionsPlayground = React.createClass({
-  render() {
+  render () {
     return <ModalPopup visible onBackdropClick={() => {}}>
       <Options onClose={() => {}} />
     </ModalPopup>
   }
 })
 
-export function main() {
+export function main () {
   React.render(<OptionsPlayground />, MAIN)
 }

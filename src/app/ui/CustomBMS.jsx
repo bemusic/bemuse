@@ -8,7 +8,7 @@ import Store        from '../stores/custom-bms-store'
 import * as Actions from '../actions/custom-bms-actions'
 
 export default React.createClass({
-  render() {
+  render () {
     return <Panel className="CustomBMS" title="Load Custom BMS">
       <Binding store={Store} onChange={this.handleState} />
       <div className="CustomBMSのwrapper">
@@ -46,24 +46,24 @@ export default React.createClass({
       </div>
     </Panel>
   },
-  getInitialState() {
+  getInitialState () {
     return { hover: false, store: Store.get() }
   },
-  handleState(newState) {
+  handleState (newState) {
     this.setState({ store: newState })
   },
-  handleDragEnter(e) {
+  handleDragEnter (e) {
     e.preventDefault()
   },
-  handleDragOver(e) {
+  handleDragOver (e) {
     this.setState({ hover: true })
     e.preventDefault()
   },
-  handleDragLeave(e) {
+  handleDragLeave (e) {
     this.setState({ hover: false })
     e.preventDefault()
   },
-  handleDrop(e) {
+  handleDrop (e) {
     this.setState({ hover: false })
     Actions.drop(e.nativeEvent, (song) => {
       if (this.props.onSongLoaded) this.props.onSongLoaded(song)

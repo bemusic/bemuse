@@ -48,22 +48,22 @@ const DEFAULTS = {
 }
 
 // Returns all the available options.
-export function keys() {
+export function keys () {
   return Object.keys(DEFAULTS)
 }
 
 // Gets the options value by a specified key.
-export function get(key) {
+export function get (key) {
   return storage.getItem(key) || DEFAULTS[key]
 }
 
 // Saves the options value by a specified key.
-export function set(key, value) {
+export function set (key, value) {
   storage.setItem(key, value)
 }
 
 // Gets the options Storage engine.
-export function getStorage() {
+export function getStorage () {
   return storage
 }
 
@@ -71,7 +71,7 @@ export function getStorage() {
 // Useful for injecting a mock storage from tests. A storage engine should have
 // ``getItem`` and ``setItem`` methods. An example of a storage engine
 // that implements this interface is the ``localStorage``.
-export function setStorage(_storage) {
+export function setStorage (_storage) {
   storage = _storage
 }
 

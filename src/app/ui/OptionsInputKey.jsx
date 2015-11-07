@@ -5,7 +5,7 @@ import c     from 'classnames'
 
 export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
-  render() {
+  render () {
     return <div className="OptionsInputKey" data-n={this.props.n}>
       <div
           className={c('OptionsInputKeyのcontents',
@@ -15,7 +15,7 @@ export default React.createClass({
       </div>
     </div>
   },
-  handleClick() {
+  handleClick () {
     this.props.onEdit('' + this.props.n)
   },
 })

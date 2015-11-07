@@ -1,5 +1,5 @@
 
-export default function calculateStat(specs) {
+export default function calculateStat (specs) {
   let stat = { passed: 0, pending: 0, failed: 0, total: 0 }
   for (let spec of specs) {
     stat.total += 1

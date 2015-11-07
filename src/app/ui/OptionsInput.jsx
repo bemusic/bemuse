@@ -9,12 +9,11 @@ import OptionsInputScratch  from './OptionsInputScratch'
 import OptionsInputKeys     from './OptionsInputKeys'
 
 export default React.createClass({
-  render() {
+  render () {
     return <div className={c('OptionsInput', {
         'is-reverse': this.state.scratch === 'right' })}>
       <Binding store={Store} onChange={this.handleState} />
-      {
-        this.state.scratch !== 'off'
+      {this.state.scratch !== 'off'
         ? <div className="OptionsInputのzone is-scratch">
             <div className="OptionsInputのcontrol">
               <OptionsInputScratch
@@ -23,9 +22,9 @@ export default React.createClass({
                     this.state.editing === 'SC' ||
                     this.state.editing === 'SC2'
                   }
-                  editIndex={
-                    this.state.editing === 'SC' ? 0 :
-                    this.state.editing === 'SC2' ? 1 : -1
+                  editIndex={this.state.editing === 'SC'
+                    ? 0
+                    : this.state.editing === 'SC2' ? 1 : -1
                   }
                   onEdit={this.handleEdit} />
             </div>
@@ -49,26 +48,26 @@ export default React.createClass({
       </div>
     </div>
   },
-  getInitialState() {
+  getInitialState () {
     return Store.get()
   },
-  handleState(state) {
+  handleState (state) {
     this.setState(state)
   },
-  handleEdit(key) {
+  handleEdit (key) {
     if (this.state.editing === key) {
       Actions.deselectKey()
     } else {
       Actions.selectKey(key)
     }
   },
-  componentDidMount() {
+  componentDidMount () {
     window.addEventListener('keydown', this.handleKey, true)
   },
-  componentWillUnmount() {
+  componentWillUnmount () {
     window.removeEventListener('keydown', this.handleKey, true)
   },
-  handleKey(e) {
+  handleKey (e) {
     if (this.state.editing) {
       e.stopPropagation()
       e.preventDefault()

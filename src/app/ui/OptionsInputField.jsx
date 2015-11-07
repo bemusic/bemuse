@@ -12,14 +12,14 @@ export default React.createClass({
     validator: React.PropTypes.object,
     value: React.PropTypes.any,
   },
-  getDefaultProps() {
+  getDefaultProps () {
     return {
       stringify: x => `${x}`,
       parse:     x => x,
       onChange: () => {},
     }
   },
-  render() {
+  render () {
     return <input
         {..._.omit(this.props, ['stringify', 'parse', 'onChange', 'validator', 'value'])}
         type="text"
@@ -30,7 +30,7 @@ export default React.createClass({
         onBlur={this.handleInputBlur}
         className="OptionsInputField" />
   },
-  handleInputChange(e) {
+  handleInputChange (e) {
     let input = e.target
     let valid = this.props.validator.test(input.value)
     input.classList[valid ? 'remove' : 'add']('is-invalid')
@@ -38,12 +38,12 @@ export default React.createClass({
       this.props.onChange(this.props.parse(input.value))
     }
   },
-  handleInputBlur() {
+  handleInputBlur () {
     let input = React.findDOMNode(this.refs.input)
     input.value = this.props.stringify(this.props.value)
     input.classList.remove('is-invalid')
   },
-  componentDidUpdate(previousProps, previousState) {
+  componentDidUpdate (previousProps, previousState) {
     let newValue = this.props.stringify(this.props.value)
     if (this.props.stringify(previousProps.value) !== newValue) {
       let input = React.findDOMNode(this.refs.input)

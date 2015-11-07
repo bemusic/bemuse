@@ -8,7 +8,7 @@ import { SUPPORTED } from '../browser-support'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 
 export default React.createClass({
-  render() {
+  render () {
     return <Scene className="BrowserSupportWarningScene">
       <h1>Warning: Unsupported Browser</h1>
       <p>
@@ -29,7 +29,7 @@ export default React.createClass({
       </p>
     </Scene>
   },
-  handleContinue() {
+  handleContinue () {
     SCENE_MANAGER.display(this.props.next)
   },
 })

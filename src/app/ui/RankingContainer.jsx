@@ -5,7 +5,7 @@ import online   from 'bemuse/online/instance'
 
 export default React.createClass({
 
-  getInitialState() {
+  getInitialState () {
     return {
       data: null,
       meta: {
@@ -15,7 +15,7 @@ export default React.createClass({
     }
   },
 
-  getParams(props) {
+  getParams (props) {
     let params = { }
     Object.assign(params, {
       md5:      props.chart.md5,
@@ -34,12 +34,12 @@ export default React.createClass({
     return params
   },
 
-  componentDidMount() {
+  componentDidMount () {
     this.model        = online.Ranking(this.getParams(this.props))
     this.unsubscribe  = this.model.state川.onValue(this.onStoreTrigger)
   },
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (this.props.chart.md5 !== nextProps.chart.md5 || this.props.playMode !== nextProps.playMode) {
       this.unsubscribe()
       this.model        = online.Ranking(this.getParams(nextProps))
@@ -47,19 +47,19 @@ export default React.createClass({
     }
   },
 
-  onStoreTrigger(state) {
+  onStoreTrigger (state) {
     this.setState(state)
   },
 
-  onReloadScoreboardRequest() {
+  onReloadScoreboardRequest () {
     this.model.reloadScoreboard()
   },
 
-  onResubmitScoreRequest() {
+  onResubmitScoreRequest () {
     this.model.resubmit()
   },
 
-  render() {
+  render () {
     return <Ranking
         state={this.state}
         onReloadScoreboardRequest={this.onReloadScoreboardRequest}

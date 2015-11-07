@@ -6,7 +6,7 @@ import keytime  from 'keytime'
 let createKeytime = def => Object.assign({ }, def, { data: keytime(def.data) })
 
 export class Animation {
-  constructor(animations, timeKey) {
+  constructor (animations, timeKey) {
     this._timeKey     = timeKey || 't'
     this._properties  = _(animations)
         .map(animation => _.pluck(animation.data, 'name'))
@@ -16,7 +16,7 @@ export class Animation {
     this._animations  = _.map(animations, createKeytime)
     this._events      = _.uniq(_.pluck(animations, 'on'))
   }
-  prop(name, fallback) {
+  prop (name, fallback) {
     if (!this._properties.has(name)) {
       return fallback
     }
@@ -29,7 +29,7 @@ export class Animation {
       }
     }
   }
-  _getAnimation(data) {
+  _getAnimation (data) {
     let event       = _(this._events)
         .filter(e => e === '' || e in data)
         .max(e => data[e] || 0)
@@ -38,7 +38,7 @@ export class Animation {
     let values      = animations.map(a => a.data.values(t))
     return Object.assign({}, ...values)
   }
-  static compile(compiler, $el) {
+  static compile (compiler, $el) {
     let animationElements = Array.from($el.children('animation'))
     let animations = _.map(animationElements, el => _compile($(el)))
     let timeKey = $el.attr('t') || 't'
@@ -46,7 +46,7 @@ export class Animation {
   }
 }
 
-export function _compile($el) {
+export function _compile ($el) {
   let keyframes = _.map(Array.from($el.children('keyframe')), _attrs)
   let attrs = { }
   for (let keyframe of keyframes) {
@@ -66,11 +66,11 @@ export function _compile($el) {
   }
 }
 
-function _createKeyframes(name) {
+function _createKeyframes (name) {
   return { name, keyframes: [] }
 }
 
-export function _attrs(el) {
+export function _attrs (el) {
   return _(el.attributes)
       .map(n => [n.name.toLowerCase(), n.value])
       .object()

@@ -7,7 +7,7 @@ import DisplayObject  from './concerns/display-object'
 import Expression     from '../expression'
 
 export class TextNode extends SkinNode {
-  compile(compiler, $el) {
+  compile (compiler, $el) {
     this.font     = $el.attr('font')
     this.text     = $el.attr('text')
     this.data     = new Expression($el.attr('data') || '0')
@@ -22,7 +22,7 @@ export class TextNode extends SkinNode {
       : 0.5
     )
   }
-  instantiate(context, container) {
+  instantiate (context, container) {
     let text
     if (this.ttf) {
       text = new PIXI.Text(this.text, {

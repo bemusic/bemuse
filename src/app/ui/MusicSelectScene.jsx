@@ -28,7 +28,7 @@ React.initializeTouchEvents(true)
 
 export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
-  render() {
+  render () {
     let musicSelect = this.state.musicSelect
     return <Scene className="MusicSelectScene">
       <Binding store={Store} onChange={this.handleState} />
@@ -112,7 +112,7 @@ export default React.createClass({
           onBackdropClick={this.handleAuthenticationClose} />
     </Scene>
   },
-  renderOnlineToolbarButtons() {
+  renderOnlineToolbarButtons () {
     if (!online) return null
     let buttons = []
     if (this.state.user) {
@@ -132,7 +132,7 @@ export default React.createClass({
     return buttons
   },
 
-  getInitialState() {
+  getInitialState () {
     return {
       musicSelect:                  Store.get(),
       optionsVisible:               shouldShowOptions(),
@@ -143,68 +143,68 @@ export default React.createClass({
       authenticationPopupVisible:   false,
     }
   },
-  handleState(state) {
+  handleState (state) {
     this.setState({ musicSelect: state })
   },
-  handleUser(user) {
+  handleUser (user) {
     this.setState({ user: user })
   },
-  handleSongSelect(song, chart) {
+  handleSongSelect (song, chart) {
     Actions.selectSong(song)
     if (chart) Actions.selectChart(chart)
     this.setState({ inSong: true })
   },
-  handleMusicListTouch() {
+  handleMusicListTouch () {
     this.setState({ inSong: false })
   },
-  handleChartClick(chart) {
+  handleChartClick (chart) {
     if (this.state.musicSelect.chart.md5 === chart.md5) {
       Actions.launchGame()
     } else {
       Actions.selectChart(chart)
     }
   },
-  handleFilter(e) {
+  handleFilter (e) {
     Actions.setFilterText(e.target.value)
   },
-  handleOptionsOpen() {
+  handleOptionsOpen () {
     this.setState({ optionsVisible: true })
   },
-  handleOptionsClose() {
+  handleOptionsClose () {
     this.setState({ optionsVisible: false })
   },
-  handleCustomBMSOpen() {
+  handleCustomBMSOpen () {
     CustomBMSActions.clear()
     this.setState({ customBMSVisible: true })
   },
-  handleCustomBMSClose() {
+  handleCustomBMSClose () {
     this.setState({ customBMSVisible: false })
   },
-  handleCustomSong(song) {
+  handleCustomSong (song) {
     Actions.setCustomSong(song)
     this.setState({ customBMSVisible: false })
   },
-  handleUnofficialClick() {
+  handleUnofficialClick () {
     this.setState({ unofficialDisclaimerVisible: true })
   },
-  handleUnofficialClose() {
+  handleUnofficialClose () {
     this.setState({ unofficialDisclaimerVisible: false })
   },
-  handleLogout() {
+  handleLogout () {
     if (confirm('Do you really want to log out?')) {
       Promise.resolve(online.logOut()).done()
     }
   },
-  handleAuthenticate() {
+  handleAuthenticate () {
     this.setState({ authenticationPopupVisible: true })
   },
-  handleAuthenticationClose() {
+  handleAuthenticationClose () {
     this.setState({ authenticationPopupVisible: false })
   },
-  handleAuthenticationFinish() {
+  handleAuthenticationFinish () {
     this.setState({ authenticationPopupVisible: false })
   },
-  popScene() {
+  popScene () {
     SCENE_MANAGER.pop().done()
   },
 

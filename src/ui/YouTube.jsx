@@ -3,22 +3,22 @@ import './YouTube.scss'
 import React from 'react'
 
 export default React.createClass({
-  render() {
+  render () {
     return <iframe width='100%' className='YouTube'
         src={this.getUrl()} frameBorder='0' allowfullscreen></iframe>
   },
-  getUrl() {
+  getUrl () {
     return 'https://www.youtube.com/embed/' +
         this.props.url.match(/v=([^&]+)/)[1]
   },
-  componentDidMount() {
+  componentDidMount () {
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
   },
-  componentWillUnmount() {
+  componentWillUnmount () {
     window.removeEventListener('resize', this.handleResize)
   },
-  handleResize() {
+  handleResize () {
     let el = this.getDOMNode()
     el.style.height = el.offsetWidth * 9 / 16 + 'px'
   },

@@ -31,7 +31,7 @@ let ASSET_URLS = {
 /**
  * Loads the files and create a music instance.
  */
-export function load() {
+export function load () {
   return co(function*() {
     let master  = new SamplingMaster(context)
     let sample  =
@@ -49,8 +49,8 @@ export function load() {
 /**
  * Takes the sample and sequences a music
  */
-function music(master, samples) {
-  return function play(callbacks) {
+function music (master, samples) {
+  return function play (callbacks) {
 
     master.unmute()
 
@@ -91,13 +91,13 @@ function music(master, samples) {
     setInterval(() => sequence(time.t), 33)
 
     return {
-      ok() {
+      ok () {
         state.ok = true
       },
-      progress(p) {
+      progress (p) {
         filter.frequency.value = 20000 * p * p * p
       },
-      getSample() {
+      getSample () {
         let nearestBeat = Math.round(time.t * BPM / 60)
         let nearestBeatTime = nearestBeat * 60 / BPM
         return [nearestBeat, time.t - nearestBeatTime]
@@ -107,7 +107,7 @@ function music(master, samples) {
   }
 }
 
-function beatSequencer(bpm, f) {
+function beatSequencer (bpm, f) {
   let beat = -1
   return (time) => {
     let nowBeat = Math.floor((time + 0.1) * bpm / 60)
@@ -120,12 +120,12 @@ function beatSequencer(bpm, f) {
 }
 
 class AudioTime {
-  constructor(audioContext, leadTime) {
+  constructor (audioContext, leadTime) {
     this._context = audioContext
     this._start = audioContext.currentTime
     this._startTime = leadTime
   }
-  get t() {
+  get t () {
     return this._context.currentTime - this._start + this._startTime
   }
 }

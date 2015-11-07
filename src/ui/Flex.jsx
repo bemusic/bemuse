@@ -2,7 +2,7 @@
 import React from 'react'
 
 export default React.createClass({
-  render() {
+  render () {
     let style = { }
     if (this.props.grow !== undefined) style.flex = this.props.grow
     return <div style={style}></div>

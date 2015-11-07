@@ -7,7 +7,7 @@ import path       from '../../../config/path'
 
 let log = gutil.log.bind(gutil, '[coverage-report]')
 
-export function generate(coverage) {
+export function generate (coverage) {
   return co(function*() {
     if (!fs.existsSync(path('coverage'))) {
       fs.mkdirSync(path('coverage'))
@@ -24,6 +24,6 @@ export function generate(coverage) {
   })
 }
 
-function generateIstanbulReport() {
+function generateIstanbulReport () {
   return Promise.promisify(exec)('istanbul report')
 }

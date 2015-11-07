@@ -2,10 +2,10 @@
 import Progress from 'bemuse/progress'
 import * as ProgressUtils from 'bemuse/progress/utils'
 
-describe('ProgressUtils', function() {
+describe('ProgressUtils', function () {
 
-  describe('.fixed', function() {
-    it('should report for fixed number of items', function() {
+  describe('.fixed', function () {
+    it('should report for fixed number of items', function () {
       let progress = new Progress()
       let advance = ProgressUtils.fixed(10, progress)
       expect(progress.current).to.equal(0)
@@ -17,8 +17,8 @@ describe('ProgressUtils', function() {
     })
   })
 
-  describe('.wrapPromise', function() {
-    it('should report number of fulfilled promises', function() {
+  describe('.wrapPromise', function () {
+    it('should report number of fulfilled promises', function () {
       let progress = new Progress()
       let f = ProgressUtils.wrapPromise(progress, promise => promise)
       let a = f(new Promise(() => {}))
@@ -34,8 +34,8 @@ describe('ProgressUtils', function() {
     })
   })
 
-  describe('.bind', function() {
-    it('should bind from one progress to another', function() {
+  describe('.bind', function () {
+    it('should bind from one progress to another', function () {
       let a = new Progress()
       let b = new Progress()
       a.report(10, 20)

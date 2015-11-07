@@ -3,7 +3,7 @@ import NoteArea from './note-area'
 import { MISSED, breaksCombo } from '../judgments'
 
 export class PlayerDisplay {
-  constructor(player) {
+  constructor (player) {
     let notechart = player.notechart
     this._currentSpeed  = 1
     this._player        = player
@@ -14,7 +14,7 @@ export class PlayerDisplay {
       scratch:   player.options.scratch,
     }
   }
-  update(time, gameTime, playerState) {
+  update (time, gameTime, playerState) {
     let player   = this._player
     let noteArea = this._noteArea
     let stateful = this._stateful
@@ -46,19 +46,19 @@ export class PlayerDisplay {
     Object.assign(data, stateful)
     return data
 
-    function updateBeat() {
+    function updateBeat () {
       data.beat = beat
     }
 
-    function getCount(judgment) {
+    function getCount (judgment) {
       return playerState.stats.counts && playerState.stats.counts[judgment]
     }
 
-    function getAccuracy() {
+    function getAccuracy () {
       return ((playerState.stats.currentAccuracy || 0) * 100).toFixed(2) + '%'
     }
 
-    function updateVisibleNotes() {
+    function updateVisibleNotes () {
       let entities = noteArea.getVisibleNotes(position, getUpperBound(), 1)
       for (let entity of entities) {
         let note    = entity.note
@@ -84,14 +84,14 @@ export class PlayerDisplay {
       }
     }
 
-    function updateBarLines() {
+    function updateBarLines () {
       let entities = noteArea.getVisibleBarLines(position, getUpperBound(), 1)
       for (let entity of entities) {
         push(`barlines`, { key: entity.id, y: entity.y })
       }
     }
 
-    function updateInput() {
+    function updateInput () {
       let input = playerState.input
       for (let column of player.columns) {
         let control = input.get(column)
@@ -106,7 +106,7 @@ export class PlayerDisplay {
       }
     }
 
-    function updateJudgment() {
+    function updateJudgment () {
       let notifications = playerState.notifications.judgments
       let notification = notifications[notifications.length - 1]
       if (notification) {
@@ -127,7 +127,7 @@ export class PlayerDisplay {
       data[`score`] = playerState.stats.score
     }
 
-    function updateExplode() {
+    function updateExplode () {
       let notifications = playerState.notifications.judgments
       for (let i = 0; i < notifications.length; i++) {
         let notification = notifications[i]
@@ -137,7 +137,7 @@ export class PlayerDisplay {
       }
     }
 
-    function getUpperBound() {
+    function getUpperBound () {
       return position + (5 / speed)
     }
 

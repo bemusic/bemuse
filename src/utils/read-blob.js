@@ -8,15 +8,15 @@ export default readBlob
 //
 //    Starts reading the blob as ``type``. The ``type`` is a String such as
 //    "arraybuffer" or "text".
-export function readBlob(blob) {
+export function readBlob (blob) {
   return {
-    as(type) {
-      return new Promise(function(resolve, reject) {
+    as (type) {
+      return new Promise(function (resolve, reject) {
         let reader = new FileReader()
-        reader.onload = function() {
+        reader.onload = function () {
           resolve(reader.result)
         }
-        reader.onerror = function() {
+        reader.onerror = function () {
           reject(new Error('Unable to read from Blob'))
         }
         switch (type) {

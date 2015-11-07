@@ -5,7 +5,7 @@ import Panel from 'bemuse/ui/Panel'
 import OptionsButton from './OptionsButton'
 
 export default React.createClass({
-  render() {
+  render () {
     return <div className="UnofficialPanel">
       <Panel title='Unofficial Music Server'>
         <div className="UnofficialPanelのcontent">

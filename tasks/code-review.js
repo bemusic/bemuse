@@ -8,15 +8,15 @@ import { relative }     from 'path'
 import _                from 'lodash'
 import fs               from 'fs'
 
-gulp.task('code-review', function() {
+gulp.task('code-review', function () {
   gulp.src(javascripts)
     .pipe(eslint())
     .pipe(codeReview())
     .pipe(formatReviewMessage())
 })
 
-function codeReview() {
-  return through2.obj(function(file, enc, cb) {
+function codeReview () {
+  return through2.obj(function (file, enc, cb) {
     let problems = []
     if (file.eslint) reviewEslint(file.eslint, problems)
     if (problems.length > 0) {
@@ -26,7 +26,7 @@ function codeReview() {
   })
 }
 
-function formatReviewMessage() {
+function formatReviewMessage () {
   let linkTo = repoPath => (text, extra) => {
     if (!process.env.TRAVIS_REPO_SLUG) return text
     let url = [
@@ -40,7 +40,7 @@ function formatReviewMessage() {
   }
   let problems = []
   return through2.obj(
-    function(file, enc, cb) {
+    function (file, enc, cb) {
       if (!file.problems) return cb()
       let lines = []
       let filePath = relative(path(), file.path)
@@ -58,7 +58,7 @@ function formatReviewMessage() {
       problems.push(...lines)
       cb()
     },
-    function(cb) {
+    function (cb) {
       if (problems.length === 0) return cb()
       let text = [
         'Hello! Thank you for sending us patches!',
@@ -88,7 +88,7 @@ function formatReviewMessage() {
   )
 }
 
-function reviewEslint(result, problems) {
+function reviewEslint (result, problems) {
   let messages = (result && result.messages) || []
   for (let msg of messages) {
     let problem = {

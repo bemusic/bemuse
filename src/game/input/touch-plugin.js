@@ -3,7 +3,7 @@ import bench from 'bemuse/devtools/benchmark'
 
 let BUTTONS = ['p1_1', 'p1_2', 'p1_3', 'p1_4', 'p1_5', 'p1_6', 'p1_7', 'start']
 
-export function TouchPlugin(context) {
+export function TouchPlugin (context) {
   let scratchStartY = null
   let scratchY = null
   let getInput = bench.wrap('input:touch:I', _getInput)
@@ -12,7 +12,7 @@ export function TouchPlugin(context) {
   let getPinch = bench.wrap('input:touch:P', _getPinch)
   return {
     name: 'TouchPlugin',
-    get() {
+    get () {
       let input = getInput()
       let output = { }
       if (bench.enabled) bench.stats['input:touch:n'] = '' + input.length
@@ -24,10 +24,10 @@ export function TouchPlugin(context) {
       return output
     }
   }
-  function _getInput() {
+  function _getInput () {
     return context.input
   }
-  function _getButton(input, button) {
+  function _getButton (input, button) {
     let objects = context.refs[button]
     if (objects) {
       for (let object of objects) {
@@ -39,7 +39,7 @@ export function TouchPlugin(context) {
     }
     return 0
   }
-  function _getScratch(input) {
+  function _getScratch (input) {
     let objects = context.refs['p1_SC']
     if (!objects) return 0
     scratchY = null
@@ -66,12 +66,15 @@ export function TouchPlugin(context) {
     } else if (scratchY < scratchStartY - 16) {
       scratchStartY = scratchY + 16
     }
-    return (
-      scratchY > scratchStartY + 4 ? -1 :
-      scratchY < scratchStartY - 4 ? 1 : 0
+    return (scratchY > scratchStartY + 4
+      ? -1
+      : (scratchY < scratchStartY - 4
+        ? 1
+        : 0
+      )
     )
   }
-  function _getPinch(input) {
+  function _getPinch (input) {
     let a = null
     let b = null
     for (let p of input) {

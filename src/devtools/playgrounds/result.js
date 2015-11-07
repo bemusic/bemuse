@@ -3,7 +3,7 @@ import SCENE_MANAGER    from 'bemuse/scene-manager'
 import React            from 'react'
 import ResultScene      from 'bemuse/app/ui/ResultScene'
 
-export function main() {
+export function main () {
   let props = {
     result: {
       '1': 9999,

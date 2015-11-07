@@ -38,7 +38,7 @@ var modules = {
 
 var code = 'module.exports = {'
 
-code += Object.keys(modules).map(function(key) {
+code += Object.keys(modules).map(function (key) {
   var path = modules[key]
   return JSON.stringify(key) + ': function(callback) {' +
     'require.ensure(' + JSON.stringify([path]) + ', function(require) {' +

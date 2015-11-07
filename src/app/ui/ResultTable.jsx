@@ -4,7 +4,7 @@ import React          from 'react'
 import RunningNumber  from 'bemuse/ui/RunningNumber'
 
 export default React.createClass({
-  render() {
+  render () {
     let result = this.props.result
     return <div className="ResultTable">
       <table>
@@ -49,7 +49,7 @@ export default React.createClass({
       </table>
     </div>
   },
-  formatAccuracy(value) {
+  formatAccuracy (value) {
     return (value * 100).toFixed(2) + '%'
   },
 })

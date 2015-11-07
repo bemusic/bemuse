@@ -8,7 +8,7 @@ import MusicInfoTabs      from './MusicInfoTabs.jsx'
 
 export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
-  render() {
+  render () {
     const song  = this.props.song
     const chart = this.props.chart
     return <section className="MusicInfo">

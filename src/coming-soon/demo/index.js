@@ -15,18 +15,18 @@ import SongInfo from 'bms/song-info'
 import template from './template.jade'
 import './style.scss'
 
-export function main(element) {
+export function main (element) {
 
   $(element).text('Technical Demo!').on('click', handler)
 
-  function handler() {
+  function handler () {
     ui()
     $(element).off('click', handler)
     $(element).hide()
     return false
   }
 
-  function ui() {
+  function ui () {
     var el = $(template()).appendTo('body')
     el.find('.js-play').hide()
     el
@@ -41,7 +41,7 @@ export function main(element) {
 
 }
 
-function go(loader, element) {
+function go (loader, element) {
 
   let master    = new SamplingMaster(ctx)
   let $log      = element.find('.js-log')
@@ -66,7 +66,7 @@ function go(loader, element) {
     var samples = yield loadSamples(notes, chart)
     log('Click the button to play!')
     yield waitForPlay()
-    void (function() {
+    void (function () {
       master.unmute()
       for (let note of notes.all()) {
         setTimeout(() => {
@@ -80,7 +80,7 @@ function go(loader, element) {
                 .appendTo($sampler)
           let instance = sample.play()
           $sampler[0].scrollTop = $sampler[0].scrollHeight
-          instance.onstop = function() {
+          instance.onstop = function () {
             span.addClass('is-off')
           }
         }, timing.beatToSeconds(note.beat) * 1000)
@@ -89,8 +89,8 @@ function go(loader, element) {
     })()
   }).done()
 
-  function waitForPlay() {
-    return new Promise(function(resolve) {
+  function waitForPlay () {
+    return new Promise(function (resolve) {
       $play.show()
       $play.on('click', () => {
         resolve()
@@ -99,11 +99,11 @@ function go(loader, element) {
     })
   }
 
-  function log(t) {
+  function log (t) {
     $log.text(t)
   }
 
-  function loadSamples(notes, chart) {
+  function loadSamples (notes, chart) {
     var samples = {}
     var promises = []
     let completed = 0
@@ -126,7 +126,7 @@ function go(loader, element) {
     return Promise.all(promises).then(() => samples)
   }
 
-  function loadKeysound(name) {
+  function loadKeysound (name) {
     if (typeof name !== 'string') return Promise.reject(new Error('Empty name'))
     return loader.file(name)
       .catch(() => loader.file(name.replace(/\.\w+$/, '.ogg')))

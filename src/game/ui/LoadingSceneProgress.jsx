@@ -5,12 +5,12 @@ import React from 'react'
 import LoadingSceneProgressBar from './LoadingSceneProgressBar.jsx'
 
 export default React.createClass({
-  render() {
+  render () {
     return <div className="LoadingSceneProgress">
       {this.props.tasks.value.map(task => this.renderItem(task))}
     </div>
   },
-  renderItem({ text, progressText, progress }) {
+  renderItem ({ text, progressText, progress }) {
     let width = Math.round((progress * 100) || 0) + '%'
     let extra = progressText ? ` (${progressText})` : ''
     return <div className="LoadingSceneProgressのitem">
@@ -19,10 +19,10 @@ export default React.createClass({
       <span className="LoadingSceneProgressのextra">{extra}</span>
     </div>
   },
-  componentDidMount() {
+  componentDidMount () {
     this._unsubscribe = this.props.tasks.watch(() => this.forceUpdate())
   },
-  componentWillUnmount() {
+  componentWillUnmount () {
     this._unsubscribe()
   },
 })

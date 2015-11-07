@@ -22,7 +22,7 @@ import * as CollectionActions from './actions/collection-actions'
 import workerPath from
   'bemuse/hacks/service-worker-url!serviceworker!./service-worker.js'
 
-export function main() {
+export function main () {
 
   // load the music collection
   CollectionActions.loadCollection(getMusicServer() || OFFICIAL_SERVER_URL)
@@ -42,11 +42,11 @@ export function main() {
 
 }
 
-function displayFirstScene() {
+function displayFirstScene () {
   SCENE_MANAGER.display(getFirstScene()).done()
 }
 
-function getFirstScene() {
+function getFirstScene () {
   if (shouldShowAbout()) {
     return React.createElement(AboutScene)
   } else if (shouldShowModeSelect()) {
@@ -60,7 +60,7 @@ function getFirstScene() {
   }
 }
 
-function setupServiceWorker() {
+function setupServiceWorker () {
   if (!('serviceWorker' in navigator)) return false
   if (location.host !== 'bemuse.dev' && location.host !== 'bemuse.ninja') {
     return false
@@ -72,18 +72,18 @@ function setupServiceWorker() {
   } else {
     var cutscene = React.createElement(ServiceWorkerRegistrationScene)
     return SCENE_MANAGER.display(cutscene)
-    .then(function() {
+    .then(function () {
       return registerServiceWorker()
     })
-    .then(function() {
-      return new Promise(function() {
+    .then(function () {
+      return new Promise(function () {
         location.reload()
       })
     })
   }
 }
 
-function registerServiceWorker() {
+function registerServiceWorker () {
   return navigator.serviceWorker.register('/sw-loader.js?path=' +
     encodeURIComponent(workerPath))
 }

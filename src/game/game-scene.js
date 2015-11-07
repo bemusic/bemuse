@@ -1,20 +1,20 @@
 
 import $ from 'jquery'
 
-export default function GameScene(display) {
-  return function(container) {
+export default function GameScene (display) {
+  return function (container) {
     let handler = () => false
     $(window).on('touchstart', handler)
     showCanvas(display, container)
     return {
-      teardown() {
+      teardown () {
         $(window).off('touchstart', handler)
       }
     }
   }
 }
 
-function showCanvas(display, container) {
+function showCanvas (display, container) {
 
   var { view, wrapper } = display
   var { width, height } = view
@@ -23,7 +23,7 @@ function showCanvas(display, container) {
   resize()
   $(window).on('resize', resize)
 
-  function resize() {
+  function resize () {
     var scale = Math.min(
       window.innerWidth / width,
       window.innerHeight / height
