@@ -32,6 +32,7 @@ Notes.CHANNEL_MAPPING = require('./channels')
 // notes.all()
 // ```
 //
+/* class Notes */
 
 // Public: Constructs a Notes object.
 //

@@ -41,7 +41,7 @@
 // timeSignatures.measureToBeat(3, 0.000) // => 12.0
 // ```
 //
-/* class TimeSignature */
+/* class TimeSignatures */
 
 module.exports = TimeSignatures
 

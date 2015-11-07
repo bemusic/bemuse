@@ -1,30 +1,39 @@
 
-// The Timing module converts between beats and seconds.
-// They are created from a notechart.
+// Public: A module that exposes {Timing}.
+/* module */
+
+// Public: A Timing represents the timing information of a musical score.
+// A Timing object provides facilities to synchronize between
+// metric time (seconds) and musical time (beats).
+//
+// A Timing are created from a series of actions:
+//
+// - BPM changes.
+// - STOP action.
+//
+/* class Timing */
 
 var Speedcore = require('../speedcore')
 var _ = require('../util/lodash')
 
-/**
- * @module timing
- */
 module.exports = Timing
 
 var precedence = { bpm: 1, stop: 2 }
 
-/// Public: The Timing class takes care of synchronization between
-/// metric time (seconds) and musical time (beats).
-///
-/// Generally, you would use `Timing.fromBMSChart` to create an instance
-/// from a BMSChart, but the constructor may also be used in other situations
-/// unrelated to the BMS file format.
-///
-/// * `initialBPM` {Number} The initial BPM of this song
-/// * `actions` An {Array} of actions
-///   * `type` {String} representing action type. `bpm` for BPM change, and `stop` for stop
-///   * `beat` {Number} representing beat where this action occurs
-///   * `bpm` {Number} representing BPM to change to (only for `bpm` type)
-///   * `stopBeats` {Number} of beats to stop (only for `stop` type)
+// Public: Constructs a Timing from a specified actions.
+//
+// Generally, you would use `Timing.fromBMSChart` to create an instance
+// from a BMSChart, but the constructor may also be used in other situations
+// unrelated to the BMS file format.
+//
+// * `initialBPM` {Number} The initial BPM of this song
+// * `actions` An {Array} of actions objects.
+//   Each action object has these properties:
+//   * `type` {String} representing action type. `bpm` for BPM change, and `stop` for stop
+//   * `beat` {Number} representing beat where this action occurs
+//   * `bpm` {Number} representing BPM to change to (only for `bpm` type)
+//   * `stopBeats` {Number} of beats to stop (only for `stop` type)
+//
 function Timing(initialBPM, actions) {
   var state = { bpm: initialBPM, beat: 0, seconds: 0 }
   var segments = [ ]
@@ -80,27 +89,32 @@ function Timing(initialBPM, actions) {
   this._eventBeats  = _.uniq(_.pluck(actions, 'beat'), true)
 }
 
-/// Public: Convert the given beat into seconds.
+// Public: Convert the given beat into seconds.
+//
 Timing.prototype.beatToSeconds = function(beat) {
   return this._speedcore.t(beat)
 }
 
-/// Public: Convert the given second into beats.
+// Public: Convert the given second into beats.
+//
 Timing.prototype.secondsToBeat = function(seconds) {
   return this._speedcore.x(seconds)
 }
 
-/// Public: Returns the BPM at the specified beat.
+// Public: Returns the BPM at the specified beat.
+//
 Timing.prototype.bpmAtBeat = function(beat) {
   return this._speedcore.segmentAtX(beat).bpm
 }
 
-/// Public: Returns an array representing the beats where there are events.
+// Public: Returns an array representing the beats where there are events.
+//
 Timing.prototype.getEventBeats = function(beat) {
   return this._eventBeats
 }
 
-/// Public: Creates a Timing instance from a BMSChart.
+// Public: Creates a Timing instance from a BMSChart.
+//
 Timing.fromBMSChart = function(chart) {
   var actions = []
   chart.objects.all().forEach(function(object) {
