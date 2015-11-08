@@ -130,11 +130,12 @@ class PlayInstance {
     gain.connect(node)
     this._source = source
     this._gain = gain
-    let startTime   = !delay ? 0 : Math.max(0, context.currentTime + delay)
+    let startTime = !delay ? 0 : Math.max(0, context.currentTime + delay)
     let startOffset = options.start || 0
     if (options.end !== undefined) {
-      let duration  = Math.max(options.end - startOffset, 0)
+      let duration = Math.max(options.end - startOffset, 0)
       source.start(startTime, startOffset, duration)
+      gain.gain.setValueAtTime(0, context.currentTime + delay + duration)
     } else {
       source.start(startTime, startOffset)
     }
