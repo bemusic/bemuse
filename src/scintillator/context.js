@@ -2,14 +2,21 @@
 import PIXI from 'pixi.js'
 
 function createRenderer (w, h) {
-  if (navigator.userAgent.match(/Gecko\//)) {
-    // return new PIXI.autoDetectRenderer(w, h, { transparent: true })
-    // Disable WebGL for the moment because it has some problem with rendering
-    // sprite batches: https://github.com/pixijs/pixi.js/issues/1910
-    return new PIXI.CanvasRenderer(w, h, { transparent: true })
-  } else {
-    return new PIXI.CanvasRenderer(w, h, { transparent: true })
-  }
+  hackPIXIToForceNewBlendModes()
+
+  // For now, we are using CanvasRenderer instead of WebGLRenderer or
+  // autoDetectRenderer befcause of two reasons.
+  // 1. Current implementation has some problem with rendering
+  //    sprite batches: https://github.com/pixijs/pixi.js/issues/1910
+  // 2. It seems that Canvas performs better on some browsers, i.e. Chrome.
+  //    WebGLRenderer only performs better on Firefox from the experiment.
+  return new PIXI.CanvasRenderer(w, h, { transparent: true })
+}
+
+// HACK: Sometimes, when using the canvas renderer,
+// the blend mode is not properly set.
+function hackPIXIToForceNewBlendModes () {
+  PIXI.utils.canUseNewCanvasBlendModes = () => true
 }
 
 export class Context {
