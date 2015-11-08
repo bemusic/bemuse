@@ -2,6 +2,8 @@
 import readBlob from 'bemuse/utils/read-blob'
 import defaultAudioContext from 'audio-context'
 
+export const FADE_LENGTH = 0.001
+
 let dummyAudioTag = document.createElement('audio')
 
 // Checks whether an audio format is supported.
@@ -120,6 +122,8 @@ class PlayInstance {
     delay = delay || 0
     options = options || { }
     this._master = samplingMaster
+
+    // Connect all the stuff...
     let context = samplingMaster.audioContext
     let source = context.createBufferSource()
     source.buffer = buffer
@@ -130,14 +134,29 @@ class PlayInstance {
     gain.connect(node)
     this._source = source
     this._gain = gain
+
+    // Start the sound.
     let startTime = !delay ? 0 : Math.max(0, context.currentTime + delay)
     let startOffset = options.start || 0
+    let fadeIn = startOffset > 0
+    let fadeOutAt = false
+    if (fadeIn) {
+      gain.gain.setValueAtTime(0, 0)
+    }
     if (options.end !== undefined) {
       let duration = Math.max(options.end - startOffset, 0)
-      source.start(startTime, startOffset, duration)
-      gain.gain.setValueAtTime(0, context.currentTime + delay + duration)
+      source.start(startTime, startOffset, duration + FADE_LENGTH)
+      fadeOutAt = context.currentTime + delay + duration
     } else {
       source.start(startTime, startOffset)
+    }
+    if (fadeIn) {
+      gain.gain.setValueAtTime(0, context.currentTime + delay)
+      gain.gain.linearRampToValueAtTime(1, context.currentTime + delay + FADE_LENGTH)
+    }
+    if (fadeOutAt !== false) {
+      gain.gain.setValueAtTime(1, fadeOutAt)
+      gain.gain.linearRampToValueAtTime(0, fadeOutAt + FADE_LENGTH)
     }
     this._master._startPlaying(this)
   }
