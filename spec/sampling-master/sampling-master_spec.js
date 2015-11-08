@@ -1,6 +1,6 @@
 
 /*global AudioContext, WebAudioTestAPI*/
-import SamplingMaster from 'bemuse/sampling-master'
+import SamplingMaster, { FADE_LENGTH } from 'bemuse/sampling-master'
 import 'web-audio-test-api'
 
 describe('SamplingMaster', function () {
@@ -68,7 +68,7 @@ describe('SamplingMaster', function () {
       })
       it('should play a buffer slice (with end)', function () {
         sample.play(0, { start: 1, end: 3 })
-        expect(bufferSource.start).to.have.been.calledWith(0, 1, 2)
+        expect(bufferSource.start).to.have.been.calledWith(0, 1, 2 + FADE_LENGTH)
       })
 
       // HACK: only enable this test case when Event#type can be set after
