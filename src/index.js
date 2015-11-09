@@ -16,8 +16,20 @@ export function songInfoForBmson (bmson) {
   if (bmsonInfo.artist) info.artist = bmsonInfo.artist
   if (bmsonInfo.genre)  info.genre  = bmsonInfo.genre
   if (bmsonInfo.level)  info.level  = bmsonInfo.level
-  info.subtitles = []
+  info.subtitles = getSubtitles()
+  if (bmsonInfo.subartists) info.subartists = bmsonInfo.subartists
   return new BMS.SongInfo(info)
+
+  function getSubtitles () {
+    let subtitles = [ ]
+    if (typeof bmsonInfo.chart_name === 'string') {
+      subtitles.push(bmsonInfo.chart_name)
+    }
+    if (typeof bmsonInfo.subtitle === 'string') {
+      subtitles.push(...bmsonInfo.subtitle.split('\n'))
+    }
+    return subtitles
+  }
 }
 
 // Public: Returns the barlines as an array of beats.

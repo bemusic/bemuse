@@ -1,7 +1,6 @@
 
 import assert     from 'power-assert'
 import { expect } from 'chai'
-import BMS        from 'bms'
 
 import * as bmson from '../index'
 
@@ -22,6 +21,34 @@ describe('bmson v1.0.0', function () {
       assert(info.title === 'Reminiscentia')
       assert(info.artist === 'flicknote')
       assert(info.genre === 'Dramatic Trance')
+    })
+    it('should put chart_name into subtitles field', function () {
+      const info = bmson.songInfoForBmson({
+        version: '1.0.0',
+        info: {
+          chart_name: 'FOUR DIMENSIONS',
+        }
+      })
+      assert.deepEqual(info.subtitles, ['FOUR DIMENSIONS'])
+    })
+    it('should put each line of subtitle into subtitles field', function () {
+      const info = bmson.songInfoForBmson({
+        version: '1.0.0',
+        info: {
+          subtitle: 'First Episode\nreturn of the cat meow',
+        }
+      })
+      assert.deepEqual(info.subtitles, ['First Episode', 'return of the cat meow'])
+    })
+    it('should have subartists', function () {
+      const info = bmson.songInfoForBmson({
+        version: '1.0.0',
+        info: {
+          title: 'Running Out 2015',
+          subartists: ['music:flicknote', 'bga:5argon'],
+        }
+      })
+      assert.deepEqual(info.subartists, ['music:flicknote', 'bga:5argon'])
     })
   })
 
