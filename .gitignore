@@ -1,7 +1,6 @@
 
-/*.js
+/lib/*.js
 /test/*.js
-!/gulpfile.js
 
 # created by git-ignore
 # Logs

@@ -5,10 +5,11 @@ import BMS         from 'bms'
 
 // Public: Returns a BMS.SongInfo corresponding to this BMS file.
 //
-// * `bmsonInfo` The `info` field of bmson
+// * `bmson` The bmson object
 //
-export function getSongInfo(bmsonInfo) {
-  var info = { }
+export function songInfoForBmson (bmson) {
+  const bmsonInfo = bmson.info
+  let info = { }
   if (bmsonInfo.title)  info.title  = bmsonInfo.title
   if (bmsonInfo.artist) info.artist = bmsonInfo.artist
   if (bmsonInfo.genre)  info.genre  = bmsonInfo.genre
@@ -19,9 +20,10 @@ export function getSongInfo(bmsonInfo) {
 
 // Public: Returns the barlines as an array of beats.
 //
-// * `lines` The `lines` field of the bmson
+// * `bmson` The bmson object
 //
-export function getBarLines(lines) {
+export function barLinesForBmson (bmson) {
+  let lines = bmson.lines
   return _(lines).map(({ y }) => beatForLoc(y)).sortBy().value()
 }
 
@@ -30,7 +32,7 @@ export function getBarLines(lines) {
 //
 // * `bmson` The bmson object
 //
-export function getTimingInfo(bmson) {
+export function timingInfoForBmson (bmson) {
   return {
     initialBPM: bmson.info.initBPM,
     actions:    [
@@ -52,23 +54,24 @@ export function getTimingInfo(bmson) {
 //
 // * `bmson` The bmson object
 //
-export function getTiming(bmson) {
-  let { initialBPM, actions } = getTimingInfo(bmson)
+function timingForBmson (bmson) {
+  let { initialBPM, actions } = timingInfoForBmson(bmson)
   return new BMS.Timing(initialBPM, actions)
 }
 
 // Public: Returns the musical score (comprised of BMS.Notes and BMS.Keysounds).
 //
 // * `bmson` The bmson object
-// * `timing` The {BMS.Timing} object that corresponds to the bmson
 //
 // Returns an object with these properties:
 //
 // * `notes` A {BMS.Notes} representing notes inside the bmson notechart.
 // * `keysounds` A {BMS.Keysounds} representing mapping between keysound in the
 //   `notes` field to the actual keysound file name.
+// * `timing` The {BMS.Timing} object for this musical score.
 //
-export function getMusicalScore(bmson, timing) {
+export function musicalScoreForBmson (bmson) {
+  let timing              = timingForBmson(bmson)
   let notes               = [ ]
   let keysounds           = { }
   let nextKeysoundNumber  = 1
@@ -78,7 +81,7 @@ export function getMusicalScore(bmson, timing) {
       let sortedNotes     = _.sortBy(soundChannelNotes, 'y')
       let keysoundNumber  = nextKeysoundNumber++
       let keysoundId      = _.padLeft('' + keysoundNumber, 4, '0')
-      let slices          = getSlices(soundChannelNotes, timing)
+      let slices          = _slicesForNotesAndTiming(soundChannelNotes, timing)
 
       keysounds[keysoundId] = name
 
@@ -101,6 +104,7 @@ export function getMusicalScore(bmson, timing) {
     }
   }
   return {
+    timing,
     notes:      new BMS.Notes(notes),
     keysounds:  new BMS.Keysounds(keysounds),
   }
@@ -119,7 +123,7 @@ export function getMusicalScore(bmson, timing) {
 // * `keysoundEnd` The {Number} of seconds into the sound file to stop playing.
 //   This may be `undefined` to indicate that the sound file should play until the end.
 //
-export function getSlices(notes, timing) {
+export function _slicesForNotesAndTiming (notes, timing) {
 
   let all     = new Set()
   let play    = new Set()
@@ -165,23 +169,23 @@ export function getSlices(notes, timing) {
   return result
 }
 
-// Public: Takes the `y` coordinate value and returns the `beat`.
+// Private: Takes the `y` coordinate value and returns the `beat`.
 //
 // * `y` The {Number} representing the Y position in a bmson chart.
 //
 // Returns a {Number} representing the beat that corresponds to that Y value.
 //
-export function beatForLoc(y) {
+function beatForLoc (y) {
   return y / 240
 }
 
-// Public: Takes the `x` coordinate value and returns the `column`.
+// Private: Takes the `x` coordinate value and returns the `column`.
 //
 // * `x` The {Number} representing the X position in a bmson chart.
 //
 // Returns a {String} representing the column that this note should be put on.
 //
-export function getColumn(x) {
+function getColumn (x) {
   switch (x) {
     case 1: return '1'
     case 2: return '2'
@@ -197,7 +201,7 @@ export function getColumn(x) {
 
 // Public: Checks if there is a scratch in a bmson file
 //
-export function hasScratch(bmson) {
+export function hasScratch (bmson) {
   if (bmson.soundChannel) {
     for (let { notes } of bmson.soundChannel) {
       for (let { x } of notes) {
@@ -210,7 +214,7 @@ export function hasScratch(bmson) {
 
 // Public: Checks if there is a scratch in a bmson file
 //
-export function getKeys(bmson) {
+export function keysForBmson (bmson) {
   let hasKeys = false
   let hasSecondPlayer = false
   let hasDeluxeKeys = false
