@@ -2,6 +2,8 @@
 import 'babel/polyfill'
 import _           from 'lodash'
 import BMS         from 'bms'
+import * as legacy from './legacy'
+import * as utils  from './utils'
 
 // Public: Returns a BMS.SongInfo corresponding to this BMS file.
 //
@@ -23,8 +25,10 @@ export function songInfoForBmson (bmson) {
 // * `bmson` The bmson object
 //
 export function barLinesForBmson (bmson) {
+  if (!bmson.version) return legacy.barLinesForBmson(bmson)
+  let beatForPulse = beatForPulseForBmson(bmson)
   let lines = bmson.lines
-  return _(lines).map(({ y }) => beatForLoc(y)).sortBy().value()
+  return _(lines).map(({ y }) => beatForPulse(y)).sortBy().value()
 }
 
 // Public: Returns the information to be passed to BMS.Timing constructor
@@ -33,18 +37,20 @@ export function barLinesForBmson (bmson) {
 // * `bmson` The bmson object
 //
 export function timingInfoForBmson (bmson) {
+  if (!bmson.version) return legacy.timingInfoForBmson(bmson)
+  let beatForPulse = beatForPulseForBmson(bmson)
   return {
-    initialBPM: bmson.info.initBPM,
+    initialBPM: bmson.info.init_bpm,
     actions:    [
-      ...(bmson.bpmNotes || []).map(({ y, v }) => ({
+      ...(bmson.bpm_events || []).map(({ y, bpm }) => ({
         type: 'bpm',
-        beat: beatForLoc(y),
-        bpm: v,
+        beat: beatForPulse(y),
+        bpm: bpm,
       })),
-      ...(bmson.stopNotes || []).map(({ y, v }) => ({
+      ...(bmson.stop_events || []).map(({ y, duration }) => ({
         type: 'stop',
-        beat: beatForLoc(y),
-        stopBeats: beatForLoc(Math.floor(v)),
+        beat: beatForPulse(y),
+        stopBeats: beatForPulse(Math.floor(duration)),
       })),
     ],
   }
@@ -71,29 +77,48 @@ function timingForBmson (bmson) {
 // * `timing` The {BMS.Timing} object for this musical score.
 //
 export function musicalScoreForBmson (bmson) {
-  let timing              = timingForBmson(bmson)
+  let timing    = timingForBmson(bmson)
+  let { notes, keysounds } = (
+    notesDataAndKeysoundsDataForBmsonAndTiming(bmson, timing)
+  )
+  return {
+    timing,
+    notes:      new BMS.Notes(notes),
+    keysounds:  new BMS.Keysounds(keysounds),
+  }
+}
+
+function soundChannelsForBmson (bmson) {
+  return bmson.version ? bmson.sound_channels : bmson.soundChannel
+}
+
+function notesDataAndKeysoundsDataForBmsonAndTiming (bmson, timing) {
+  let nextKeysoundNumber  = 1
+  let beatForPulse        = beatForPulseForBmson(bmson)
   let notes               = [ ]
   let keysounds           = { }
-  let nextKeysoundNumber  = 1
-  if (bmson.soundChannel) {
-    for (let { name, notes: soundChannelNotes } of bmson.soundChannel) {
+  let soundChannels       = soundChannelsForBmson(bmson)
+  if (soundChannels) {
+    for (let { name, notes: soundChannelNotes } of soundChannels) {
 
       let sortedNotes     = _.sortBy(soundChannelNotes, 'y')
       let keysoundNumber  = nextKeysoundNumber++
       let keysoundId      = _.padLeft('' + keysoundNumber, 4, '0')
-      let slices          = _slicesForNotesAndTiming(soundChannelNotes, timing)
+      let slices          = utils.slicesForNotesAndTiming(soundChannelNotes, timing, {
+        beatForPulse: beatForPulse,
+      })
 
       keysounds[keysoundId] = name
 
       for (let { x, y, l } of sortedNotes) {
         let note = {
           column:     getColumn(x),
-          beat:       beatForLoc(y),
+          beat:       beatForPulse(y),
           keysound:   keysoundId,
           endBeat:    undefined,
         }
         if (l > 0) {
-          note.endBeat = beatForLoc(y + l)
+          note.endBeat = beatForPulse(y + l)
         }
         let slice = slices.get(y)
         if (slice) {
@@ -103,80 +128,15 @@ export function musicalScoreForBmson (bmson) {
       }
     }
   }
-  return {
-    timing,
-    notes:      new BMS.Notes(notes),
-    keysounds:  new BMS.Keysounds(keysounds),
-  }
+  return { notes, keysounds }
 }
 
-// Public: Takes the notes for a certain `soundChannel` and returns instructions
-// on how to slice the keysound file, given the `y` position of a note.
-//
-// * `notes` An {Array} of `notes` inside `bmson.soundChannel[i]`
-// * `timing` The {BMS.Timing} object that corresponds to the bmson
-//
-// Returns an ES6 {Map} that maps `y` position of the note to an instruction
-// object with the following properties:
-//
-// * `keysoundStart` The {Number} of seconds into the sound file to start playing
-// * `keysoundEnd` The {Number} of seconds into the sound file to stop playing.
-//   This may be `undefined` to indicate that the sound file should play until the end.
-//
-export function _slicesForNotesAndTiming (notes, timing) {
+export { _slicesForNotesAndTiming } from './legacy'
 
-  let all     = new Set()
-  let play    = new Set()
-  let restart = new Set()
-
-  for (let { x, y, c } of notes) {
-    let column = getColumn(x)
-    all.add(y)
-    if (column) {
-      play.add(y)
-    }
-    if (!c) {
-      restart.add(y)
-    }
-  }
-
-  let result    = new Map()
-  let soundTime = null
-  let mustAdd   = true
-  let tʹ
-  let lastAdded
-
-  for (let y of _.sortBy([...all])) {
-    let t = timing.beatToSeconds(beatForLoc(y))
-    if (soundTime === null || restart.has(y)) {
-      soundTime = 0
-    } else {
-      soundTime += t - tʹ
-    }
-    let shouldAdd = mustAdd || play.has(y) || restart.has(y)
-    if (shouldAdd) {
-      if (lastAdded && !restart.has(y)) {
-        lastAdded.keysoundEnd = soundTime
-      }
-      let obj = { keysoundStart: soundTime, keysoundEnd: undefined }
-      result.set(y, obj)
-      lastAdded = obj
-    }
-    mustAdd = play.has(y)
-    tʹ = t
-  }
-
-  return result
-}
-
-// Private: Takes the `y` coordinate value and returns the `beat`.
-//
-// * `y` The {Number} representing the Y position in a bmson chart.
-//
-// Returns a {Number} representing the beat that corresponds to that Y value.
-//
-function beatForLoc (y) {
-  return y / 240
+function beatForPulseForBmson (bmson) {
+  if (!bmson.version) return legacy.beatForLoc
+  const resolution = (bmson.info && bmson.info.resolution) || 240
+  return y => y / resolution
 }
 
 // Private: Takes the `x` coordinate value and returns the `column`.
@@ -202,8 +162,9 @@ function getColumn (x) {
 // Public: Checks if there is a scratch in a bmson file
 //
 export function hasScratch (bmson) {
-  if (bmson.soundChannel) {
-    for (let { notes } of bmson.soundChannel) {
+  const soundChannels = soundChannelsForBmson(bmson)
+  if (soundChannels) {
+    for (let { notes } of soundChannels) {
       for (let { x } of notes) {
         if (x === 8 || x === 18) return true
       }
@@ -215,11 +176,12 @@ export function hasScratch (bmson) {
 // Public: Checks if there is a scratch in a bmson file
 //
 export function keysForBmson (bmson) {
+  const soundChannels = soundChannelsForBmson(bmson)
   let hasKeys = false
   let hasSecondPlayer = false
   let hasDeluxeKeys = false
-  if (bmson.soundChannel) {
-    for (let { notes } of bmson.soundChannel) {
+  if (soundChannels) {
+    for (let { notes } of soundChannels) {
       for (let { x } of notes) {
         hasKeys = true
         if (x >= 11 && x <= 20) hasSecondPlayer = true
