@@ -2,45 +2,50 @@
 import './OptionsInput.scss'
 import React                from 'react'
 import c                    from 'classnames'
-import { Binding }          from 'bemuse/flux'
+import { connect }          from 'bemuse/flux'
 import Store                from '../stores/options-input-store'
 import * as Actions         from '../actions/options-input-actions'
 import OptionsInputScratch  from './OptionsInputScratch'
 import OptionsInputKeys     from './OptionsInputKeys'
 
-export default React.createClass({
+export const OptionsInput = React.createClass({
   render () {
-    return <div className={c('OptionsInput', {
-        'is-reverse': this.state.scratch === 'right' })}>
-      <Binding store={Store} onChange={this.handleState} />
-      {this.state.scratch !== 'off'
-        ? <div className="OptionsInputのzone is-scratch">
+    const className = c('OptionsInput', {
+      'is-reverse': this.props.scratch === 'right'
+    })
+    return <div className={className}>
+      {this.props.scratch !== 'off'
+        ? (
+          <div className="OptionsInputのzone is-scratch">
             <div className="OptionsInputのcontrol">
               <OptionsInputScratch
-                  text={[this.state.texts['SC'], this.state.texts['SC2']]}
-                  isEditing={
-                    this.state.editing === 'SC' ||
-                    this.state.editing === 'SC2'
-                  }
-                  editIndex={this.state.editing === 'SC'
-                    ? 0
-                    : this.state.editing === 'SC2' ? 1 : -1
-                  }
-                  onEdit={this.handleEdit} />
+                text={[this.props.texts['SC'], this.props.texts['SC2']]}
+                isEditing={
+                  this.props.editing === 'SC' ||
+                  this.props.editing === 'SC2'
+                }
+                editIndex={this.props.editing === 'SC'
+                  ? 0
+                  : this.props.editing === 'SC2' ? 1 : -1
+                }
+                onEdit={this.handleEdit}
+              />
             </div>
             <div className="OptionsInputのtitle">
               Scratch
             </div>
           </div>
+        )
         : null
       }
       <div className="OptionsInputのzone">
         <div className="OptionsInputのcontrol">
           <OptionsInputKeys
-              keyboardMode={this.state.scratch === 'off'}
-              texts={this.state.texts}
-              editing={this.state.editing}
-              onEdit={this.handleEdit} />
+            keyboardMode={this.props.scratch === 'off'}
+            texts={this.props.texts}
+            editing={this.props.editing}
+            onEdit={this.handleEdit}
+          />
         </div>
         <div className="OptionsInputのtitle">
           Keys
@@ -48,14 +53,8 @@ export default React.createClass({
       </div>
     </div>
   },
-  getInitialState () {
-    return Store.get()
-  },
-  handleState (state) {
-    this.setState(state)
-  },
   handleEdit (key) {
-    if (this.state.editing === key) {
+    if (this.props.editing === key) {
       Actions.deselectKey()
     } else {
       Actions.selectKey(key)
@@ -68,10 +67,12 @@ export default React.createClass({
     window.removeEventListener('keydown', this.handleKey, true)
   },
   handleKey (e) {
-    if (this.state.editing) {
+    if (this.props.editing) {
       e.stopPropagation()
       e.preventDefault()
-      Actions.setKeyCode(this.state.mode, this.state.editing, e.keyCode)
+      Actions.setKeyCode(this.props.mode, this.props.editing, e.keyCode)
     }
   },
 })
+
+export default connect(Store, OptionsInput)

@@ -5,7 +5,7 @@ import { Store }  from 'bemuse/flux'
 
 import MusicSelectStore from './music-select-store'
 
-const $url = MusicSelectStore.map(state => {
+const url川 = MusicSelectStore.map(state => {
   let { server, song } = state
   if (song && song.readme) {
     return server.url + '/' + song.path + '/' + song.readme
@@ -14,13 +14,13 @@ const $url = MusicSelectStore.map(state => {
   }
 })
 
-const $readme = $url.skipDuplicates().flatMapLatest(loadReadme).toProperty('')
+const readme川 = url川.skipDuplicates().flatMapLatest(readme川ForUrl).toProperty('')
 
 export default new Store({
-  text: $readme
+  text: readme川
 }, { lazy: true })
 
-function loadReadme (url) {
+function readme川ForUrl (url) {
   if (url === null) return Bacon.once('Information unavailable…')
   let promise = Promise.resolve($.get(url))
   .then(function (text) {

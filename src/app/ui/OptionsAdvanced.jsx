@@ -2,13 +2,13 @@
 import './OptionsAdvanced.scss'
 import React from 'react'
 
-import { Binding }           from 'bemuse/flux'
+import { connect }           from 'bemuse/flux'
 import Store                 from '../stores/options-store'
 import * as Actions          from '../actions/options-actions'
 import OptionsButton         from './OptionsButton'
 import OptionsInputField     from './OptionsInputField'
 
-export default React.createClass({
+export const OptionsAdvanced = React.createClass({
   mixins: [React.addons.PureRenderMixin],
   stringifyLatency (latency) {
     return Math.round(latency) + 'ms'
@@ -17,9 +17,8 @@ export default React.createClass({
     return parseInt(latencyText, 10)
   },
   render () {
-    let options = this.state.options
+    let options = this.props.options
     return <div className="OptionsAdvanced">
-      <Binding store={Store} onChange={this.handleState} />
       <LatencyMessageListener onLatency={this.handleAudioInputLatencyChange} />
       <div className="OptionsAdvancedのgroup">
         <label>Latency</label>
@@ -37,12 +36,6 @@ export default React.createClass({
       </div>
     </div>
   },
-  getInitialState () {
-    return Store.get()
-  },
-  handleState (state) {
-    this.setState(state)
-  },
   handleAudioInputLatencyChange (value) {
     Actions.setOptions({ 'system.offset.audio-input': `${value}` })
   },
@@ -51,6 +44,8 @@ export default React.createClass({
     window.open('?mode=sync', 'sync', options)
   },
 })
+
+export default connect(Store, OptionsAdvanced)
 
 const LatencyMessageListener = React.createClass({
   render () {

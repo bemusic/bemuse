@@ -11,17 +11,17 @@ import OptionsStore           from './options-store'
 
 export function MusicSelectStoreFactory (CollectionStore, options = { }) {
 
-  const debounce      = (typeof options.debounce === 'undefined'
+  const debounce = (typeof options.debounce === 'undefined'
     ? true
     : options.debounce
   )
 
-  const $server       = CollectionStore.map(state => state.server)
-  const $collection   = CollectionStore.map(state => state.collection)
-  const $unofficial   = CollectionStore.map(state => state.unofficial)
-  const $loading      = $collection.map(({ loading }) => loading)
+  const server川 = CollectionStore.map(state => state.server)
+  const collection川 = CollectionStore.map(state => state.collection)
+  const unofficial川 = CollectionStore.map(state => state.unofficial)
+  const loading川 = collection川.map(({ loading }) => loading)
 
-  const $grouping     = Bacon.constant([
+  const grouping川 = Bacon.constant([
     { title: 'Custom Song', criteria: song => song.custom },
     { title: 'Tutorial', criteria: song => song.tutorial },
     { title: 'New Songs',
@@ -32,107 +32,129 @@ export function MusicSelectStoreFactory (CollectionStore, options = { }) {
     { title: '☆', criteria: () => true },
   ])
 
-  const $filterText   = Bacon.update('',
-      [Actions.setFilterText.bus], (prev, filterText) => filterText)
-
-  const $filterTextDebounced = (debounce
-    ? $filterText.debounce(138)
-    : $filterText
+  const filterText川 = Bacon.update('',
+    [Actions.setFilterText.bus], (prev, filterText) => filterText
   )
 
-  const $customSongs  = Bacon.update([],
-      [Actions.setCustomSong.bus], (prev, song) => [song])
+  const filterTextDebounced川 = (debounce
+    ? filterText川.debounce(138)
+    : filterText川
+  )
 
-  const $songList     = $collection
-      .map(({ collection }) => _((collection && collection.songs) || [])
-          .sortByAll([
-            song => {
-              return _(song.charts)
-                .filter(isChartPlayable)
-                .filter(chart => chart.info.difficulty < 5)
-                .filter(chart => chart.info.level > 0)
-                .map(chart => chart.info.level)
-                .min()
-            },
-            song => song.bpm,
-            song => song.title.toLowerCase(),
-          ])
-          .value())
-      .combine($customSongs, (songs, custom) => [...custom, ...songs])
-      .combine($filterTextDebounced, (songs, filterText) =>
-          songs.filter(song => matches(song, filterText)))
+  const customSongs川 = Bacon.update([],
+    [Actions.setCustomSong.bus], (prev, song) => [song]
+  )
 
-  const $groups       = $songList.combine($grouping,
-      (songs, grouping) => groupBy(songs, grouping))
+  const rawSongsFromCollection川 = (collection川
+    .map(({ collection }) => (collection && collection.songs) || [])
+  )
 
-  const $songs        = $groups.map(groups =>
-      _(groups).map('songs').flatten().value())
+  const songList川 = (rawSongsFromCollection川
+    .map(sortSongs)
+    .combine(customSongs川, (songs, custom) => [...custom, ...songs])
+    .combine(filterTextDebounced川, filterSongs)
+  )
 
-  const $levelAnchor  = Bacon.update(
-      0,
-      [Actions.selectChart.bus], (prev, chart) => chart.info.level)
+  const groups川 = songList川.combine(grouping川,
+    (songs, grouping) => groupBy(songs, grouping)
+  )
 
-  const $song = Bacon.update(
-      null,
-      [Actions.selectSong.bus], (prev, song) => song,
-      [Actions.setCustomSong.bus], (prev, song) => song,
-      [$songs.changes()], ensureSelectedPresent)
+  const songs川 = groups川.map(groups =>
+    _(groups).map('songs').flatten().value()
+  )
 
-  const $charts = $song.map(song => (song && song.charts) || [ ])
+  const song川 = Bacon.update(null,
+    [Actions.selectSong.bus], (prev, song) => song,
+    [Actions.setCustomSong.bus], (prev, song) => song,
+    [songs川.changes()], ensureSelectedPresent
+  )
 
-  const $visibleCharts = $charts.map(visibleCharts)
+  const charts川 = song川.map(song => (song && song.charts) || [ ])
 
-  const $levelAnchorStrategy = $levelAnchor.map(level =>
-      charts => _.min(charts, chart => Math.abs(chart.info.level - level)))
+  const visibleCharts川 = charts川.map(visibleCharts)
 
-  const $chart = Bacon.update(
-      null,
-      [Actions.selectChart.bus], (prev, chart) => chart,
-      [$visibleCharts.changes(), $levelAnchorStrategy], ensureSelectedPresent)
+  const chart川 = Bacon.update(null,
+    [Actions.selectChart.bus], (prev, chart) => chart,
+    [visibleCharts川.changes()], ensureSelectedPresentWithStrategy(selectClosestLevel)
+  )
 
-  const $mode = OptionsStore.map(state => state.mode)
+  const mode川 = OptionsStore.map(state => state.mode)
 
   Bacon.when(
-      [Actions.launchGame.bus,
-          $server, $song, $chart], (e, server, song, chart) => (
-              { server, song, chart }))
+    [Actions.launchGame.bus, server川, song川, chart川],
+    (e, server, song, chart) => ({ server, song, chart })
+  )
   .onValue(options => GameLauncher.launch(options).done())
 
   return new Store({
-    loading:    $loading,
-    server:     $server,
-    songs:      $songs,
-    groups:     $groups,
-    song:       $song,
-    charts:     $visibleCharts,
-    chart:      $chart,
-    filterText: $filterText,
-    highlight:  $filterTextDebounced,
-    unofficial: $unofficial,
-    playMode:   $mode,
-  })
+    loading:    loading川,
+    server:     server川,
+    songs:      songs川,
+    groups:     groups川,
+    song:       song川,
+    charts:     visibleCharts川,
+    chart:      chart川,
+    filterText: filterText川,
+    highlight:  filterTextDebounced川,
+    unofficial: unofficial川,
+    playMode:   mode川,
+  }).log('MSS')
 
 }
 
 export default MusicSelectStoreFactory(DefaultCollectionStore)
 
+function sortSongs (songs) {
+  return _.sortByAll(songs, [
+    song => {
+      return (_(song.charts)
+        .filter(isChartPlayable)
+        .filter(chart => chart.info.difficulty < 5)
+        .filter(chart => chart.info.level > 0)
+        .map(chart => chart.info.level)
+        .min()
+      )
+    },
+    song => song.bpm,
+    song => song.title.toLowerCase(),
+  ])
+}
+
+function filterSongs (songs, filterText) {
+  return songs.filter(song => matches(song, filterText))
+}
+
 function matches (song, filterText) {
   if (!filterText) return true
-  return contains(song.title, filterText) ||
-      contains(song.artist, filterText) ||
-      contains(song.genre, filterText)
+  return (
+    contains(song.title, filterText) ||
+    contains(song.artist, filterText) ||
+    contains(song.genre, filterText)
+  )
 }
 
 function contains (haystack, needle) {
   return String(haystack.toLowerCase()).indexOf(needle.toLowerCase()) >= 0
 }
 
-function ensureSelectedPresent (previous, items, strategy) {
-  if (items && items.length && items.indexOf(previous) === -1) {
-    return strategy ? strategy(items) : items[0]
-  } else {
-    return previous
-  }
+function ensureSelectedPresentWithStrategy (strategy) {
+  return (previous, items) => (items && items.length && items.indexOf(previous) === -1
+    ? strategy(previous, items)
+    : previous
+  )
+}
+
+function ensureSelectedPresent (previous, items) {
+  return ensureSelectedPresentWithStrategy(selectFirstItem)(previous, items)
+}
+
+function selectFirstItem (previous, items) {
+  return items[0]
+}
+
+function selectClosestLevel (previous, charts) {
+  let level = (previous && previous.info && previous.info.level) || 0
+  return _.min(charts, chart => Math.abs(chart.info.level - level))
 }
 
 function groupBy (songs, grouping) {
@@ -152,8 +174,9 @@ function groupBy (songs, grouping) {
     if (input.sort)     output.songs = _.sortBy(output.songs, input.sort)
     if (input.reverse)  output.songs.reverse()
   }
-  return _(groups)
-      .pluck('output')
-      .filter(group => group.songs.length > 0)
-      .value()
+  return (_(groups)
+    .pluck('output')
+    .filter(group => group.songs.length > 0)
+    .value()
+  )
 }

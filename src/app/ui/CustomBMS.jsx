@@ -3,14 +3,13 @@ import './CustomBMS.scss'
 import React        from 'react'
 import c            from 'classnames'
 import Panel        from 'bemuse/ui/Panel'
-import { Binding }  from 'bemuse/flux'
+import { connect }  from 'bemuse/flux'
 import Store        from '../stores/custom-bms-store'
 import * as Actions from '../actions/custom-bms-actions'
 
-export default React.createClass({
+export const CustomBMS = React.createClass({
   render () {
     return <Panel className="CustomBMS" title="Load Custom BMS">
-      <Binding store={Store} onChange={this.handleState} />
       <div className="CustomBMSのwrapper">
         <div className="CustomBMSのinstruction">
           Please drag and drop a BMS folder into the drop zone below.
@@ -28,11 +27,11 @@ export default React.createClass({
             onDragLeave={this.handleDragLeave}
             onDrop={this.handleDrop}>
           {
-            this.state.store.log
+            this.props.data.log
             ? (
-                this.state.store.log.length
+                this.props.data.log.length
                 ? <div className="CustomBMSのlog">
-                    {this.state.store.log.map(text => <p>{text}</p>)}
+                    {this.props.data.log.map(text => <p>{text}</p>)}
                   </div>
                 : <div className="CustomBMSのlog">
                     <p>Omachi kudasai...</p>
@@ -47,10 +46,7 @@ export default React.createClass({
     </Panel>
   },
   getInitialState () {
-    return { hover: false, store: Store.get() }
-  },
-  handleState (newState) {
-    this.setState({ store: newState })
+    return { hover: false }
   },
   handleDragEnter (e) {
     e.preventDefault()
@@ -71,3 +67,5 @@ export default React.createClass({
     e.preventDefault()
   },
 })
+
+export default connect({ data: Store }, CustomBMS)

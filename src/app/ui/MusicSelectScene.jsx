@@ -3,7 +3,7 @@ import './MusicSelectScene.scss'
 
 import React            from 'react'
 import c                from 'classnames'
-import { Binding }      from 'bemuse/flux'
+import { connect }      from 'bemuse/flux'
 import SCENE_MANAGER    from 'bemuse/scene-manager'
 import online           from 'bemuse/online/instance'
 import Scene            from 'bemuse/ui/Scene'
@@ -26,13 +26,11 @@ import { shouldShowOptions } from 'bemuse/devtools/query-flags'
 
 React.initializeTouchEvents(true)
 
-export default React.createClass({
+export const MusicSelectScene = React.createClass({
   mixins: [React.addons.PureRenderMixin],
   render () {
-    let musicSelect = this.state.musicSelect
+    let musicSelect = this.props.musicSelect
     return <Scene className="MusicSelectScene">
-      <Binding store={Store} onChange={this.handleState} />
-      {online ? <Binding store={online.user川} onChange={this.handleUser} /> : null}
       <SceneHeading>
         Select Music
         <input
@@ -115,11 +113,11 @@ export default React.createClass({
   renderOnlineToolbarButtons () {
     if (!online) return null
     let buttons = []
-    if (this.state.user) {
+    if (this.props.user) {
       buttons.push(
         <a onClick={this.handleLogout} href="javascript://online/logout" key="logout">
           Log Out
-          ({this.state.user.username})
+          ({this.props.user.username})
         </a>
       )
     } else {
@@ -134,20 +132,12 @@ export default React.createClass({
 
   getInitialState () {
     return {
-      musicSelect:                  Store.get(),
       optionsVisible:               shouldShowOptions(),
       customBMSVisible:             false,
       unofficialDisclaimerVisible:  false,
       inSong:                       false,
-      user:                         null,
       authenticationPopupVisible:   false,
     }
-  },
-  handleState (state) {
-    this.setState({ musicSelect: state })
-  },
-  handleUser (user) {
-    this.setState({ user: user })
   },
   handleSongSelect (song, chart) {
     Actions.selectSong(song)
@@ -158,7 +148,7 @@ export default React.createClass({
     this.setState({ inSong: false })
   },
   handleChartClick (chart) {
-    if (this.state.musicSelect.chart.md5 === chart.md5) {
+    if (this.props.musicSelect.chart.md5 === chart.md5) {
       Actions.launchGame()
     } else {
       Actions.selectChart(chart)
@@ -209,3 +199,5 @@ export default React.createClass({
   },
 
 })
+
+export default connect({ musicSelect: Store, user: online && online.user川 }, MusicSelectScene)

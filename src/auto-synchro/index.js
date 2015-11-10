@@ -5,7 +5,7 @@ import ExperimentScene  from './ui/ExperimentScene.jsx'
 import $                from 'jquery'
 import _                from 'lodash'
 import Bacon            from 'baconjs'
-import { Store }        from 'bemuse/flux'
+import { connect }      from 'bemuse/flux'
 
 export function main () {
 
@@ -20,10 +20,9 @@ export function main () {
     latency: 0,
   }, (state, change) => _.assign({ }, state, change))
 
-  const store = new Store(state川)
+  const ConnectedExperimentScene = connect(state川, ExperimentScene)
 
-  const scene = React.createElement(ExperimentScene, {
-    store:    store,
+  const scene = React.createElement(ConnectedExperimentScene, {
     onStart:  () => play(),
   })
 

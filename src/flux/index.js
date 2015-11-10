@@ -55,15 +55,24 @@ function toProperty (store) {
   }
 }
 
-export class Binding extends React.Component {
-  render () {
-    return null
-  }
-  componentDidMount () {
-    this._unsubscribe = this.props.store.onValue(value =>
-        this.props.onChange(value))
-  }
-  componentWillUnmount () {
-    this._unsubscribe()
-  }
+export function connect (props川, Component) {
+  let propsProperty = toProperty(props川)
+  return React.createClass({
+    getInitialState () {
+      this._unsubscribe = propsProperty.onValue(this.handleValue)
+      let initialValue
+      const initialUnsubscribe = propsProperty.onValue(value => initialValue = value)
+      initialUnsubscribe()
+      return { value: initialValue }
+    },
+    componentWillUnmount () {
+      if (this._unsubscribe) this._unsubscribe()
+    },
+    handleValue (value) {
+      if (this.isMounted()) this.setState({ value })
+    },
+    render () {
+      return <Component {...(this.state.value || { })} {...this.props} />
+    }
+  })
 }

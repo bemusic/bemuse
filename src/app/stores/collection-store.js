@@ -5,21 +5,26 @@ import * as Actions from '../actions/collection-actions'
 
 import { OFFICIAL_SERVER_URL } from '../constants'
 
-const $server       = Bacon.update(null,
-    [Actions.startLoading.bus], (prev, server) => server)
+const server川 = Bacon.update(null,
+  [Actions.startLoading.bus], (prev, server) => server
+)
 
-const $unofficial   = $server.map(
-    server => server && server.url !== OFFICIAL_SERVER_URL)
+const unofficial川 = server川.map(server =>
+  server && server.url !== OFFICIAL_SERVER_URL
+)
 
-const $collection   = Bacon.update({ loading: true },
-    [Actions.startLoading.bus],  () => ({ loading: true }),
-    [Actions.finishLoading.bus], (prev, c) =>
-        ({ loading: false, collection: c }),
-    [Actions.errorLoading.bus],  (prev, e) =>
-        ({ loading: false, error: e }))
+const collection川 = Bacon.update({ loading: true },
+  [Actions.startLoading.bus], () => ({ loading: true }),
+  [Actions.finishLoading.bus], (prev, c) => (
+    { loading: false, collection: c }
+  ),
+  [Actions.errorLoading.bus], (prev, e) => (
+    { loading: false, error: e }
+  )
+)
 
 export default new Store({
-  server:     $server,
-  collection: $collection,
-  unofficial: $unofficial,
+  server:     server川,
+  collection: collection川,
+  unofficial: unofficial川,
 })
