@@ -6,19 +6,21 @@ import * as Actions from '../actions/custom-bms-actions'
 import DndResources from 'bemuse/resources/dnd-resources'
 import { loadSongFromResources } from '../song-loader'
 
-const $operation = Actions.drop.bus.map(handleDrop)
-const $clears    = Actions.clear.bus.map(() => (
-    { log: Bacon.constant(null) }))
-const $log       = $operation.merge($clears)
-    .flatMapLatest(op => op.log).toProperty(null)
+const operation川 = Actions.drop.bus.map(handleDrop)
+const clears川 = Actions.clear.bus.map(() => ({ log: Bacon.constant(null) }))
+const log川 = (operation川.merge(clears川)
+  .flatMapLatest(op => op.log)
+  .toProperty(null)
+)
 
 function handleDrop ({ event, callback }) {
   let resources = new DndResources(event)
-  let $message  = new Bacon.Bus()
-  let $$log     = $message.scan([], (array, message) => array.concat([message]))
+  let message川 = new Bacon.Bus()
+  let currentLog川 = message川.scan([], (array, message) => array.concat([message]))
+
   loadSongFromResources(resources, {
     onMessage (message) {
-      $message.push(message)
+      message川.push(message)
     },
   })
   .tap(song => {
@@ -27,11 +29,12 @@ function handleDrop ({ event, callback }) {
     if (callback) callback(song)
   })
   .done()
+
   return {
-    log: $$log,
+    log: currentLog川,
   }
 }
 
 export default new Store({
-  log: $log,
+  log: log川,
 })
