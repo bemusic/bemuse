@@ -45,26 +45,14 @@ export function MusicSelectStoreFactory (CollectionStore, options = { }) {
     [Actions.setCustomSong.bus], (prev, song) => [song]
   )
 
-  const songList川 = (collection川
-    .map(({ collection }) => _((collection && collection.songs) || [])
-      .sortByAll([
-        song => {
-          return _(song.charts)
-            .filter(isChartPlayable)
-            .filter(chart => chart.info.difficulty < 5)
-            .filter(chart => chart.info.level > 0)
-            .map(chart => chart.info.level)
-            .min()
-        },
-        song => song.bpm,
-        song => song.title.toLowerCase(),
-      ])
-      .value()
-    )
+  const rawSongsFromCollection川 = (collection川
+    .map(({ collection }) => (collection && collection.songs) || [])
+  )
+
+  const songList川 = (rawSongsFromCollection川
+    .map(sortSongs)
     .combine(customSongs川, (songs, custom) => [...custom, ...songs])
-    .combine(filterTextDebounced川, (songs, filterText) =>
-      songs.filter(song => matches(song, filterText))
-    )
+    .combine(filterTextDebounced川, filterSongs)
   )
 
   const groups川 = songList川.combine(grouping川,
@@ -73,10 +61,6 @@ export function MusicSelectStoreFactory (CollectionStore, options = { }) {
 
   const songs川 = groups川.map(groups =>
     _(groups).map('songs').flatten().value()
-  )
-
-  const levelAnchor川 = Bacon.update(0,
-    [Actions.selectChart.bus], (prev, chart) => chart.info.level
   )
 
   const song川 = Bacon.update(null,
@@ -89,13 +73,9 @@ export function MusicSelectStoreFactory (CollectionStore, options = { }) {
 
   const visibleCharts川 = charts川.map(visibleCharts)
 
-  const levelAnchorStrategy川 = levelAnchor川.map(level =>
-    charts => _.min(charts, chart => Math.abs(chart.info.level - level))
-  )
-
   const chart川 = Bacon.update(null,
     [Actions.selectChart.bus], (prev, chart) => chart,
-    [visibleCharts川.changes(), levelAnchorStrategy川], ensureSelectedPresent
+    [visibleCharts川.changes()], ensureSelectedPresentWithStrategy(selectClosestLevel)
   )
 
   const mode川 = OptionsStore.map(state => state.mode)
@@ -118,11 +98,31 @@ export function MusicSelectStoreFactory (CollectionStore, options = { }) {
     highlight:  filterTextDebounced川,
     unofficial: unofficial川,
     playMode:   mode川,
-  })
+  }).log('MSS')
 
 }
 
 export default MusicSelectStoreFactory(DefaultCollectionStore)
+
+function sortSongs (songs) {
+  return _.sortByAll(songs, [
+    song => {
+      return (_(song.charts)
+        .filter(isChartPlayable)
+        .filter(chart => chart.info.difficulty < 5)
+        .filter(chart => chart.info.level > 0)
+        .map(chart => chart.info.level)
+        .min()
+      )
+    },
+    song => song.bpm,
+    song => song.title.toLowerCase(),
+  ])
+}
+
+function filterSongs (songs, filterText) {
+  return songs.filter(song => matches(song, filterText))
+}
 
 function matches (song, filterText) {
   if (!filterText) return true
@@ -137,12 +137,24 @@ function contains (haystack, needle) {
   return String(haystack.toLowerCase()).indexOf(needle.toLowerCase()) >= 0
 }
 
-function ensureSelectedPresent (previous, items, strategy) {
-  if (items && items.length && items.indexOf(previous) === -1) {
-    return strategy ? strategy(items) : items[0]
-  } else {
-    return previous
-  }
+function ensureSelectedPresentWithStrategy (strategy) {
+  return (previous, items) => (items && items.length && items.indexOf(previous) === -1
+    ? strategy(previous, items)
+    : previous
+  )
+}
+
+function ensureSelectedPresent (previous, items) {
+  return ensureSelectedPresentWithStrategy(selectFirstItem)(previous, items)
+}
+
+function selectFirstItem (previous, items) {
+  return items[0]
+}
+
+function selectClosestLevel (previous, charts) {
+  let level = (previous && previous.info && previous.info.level) || 0
+  return _.min(charts, chart => Math.abs(chart.info.level - level))
 }
 
 function groupBy (songs, grouping) {
