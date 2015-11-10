@@ -21,11 +21,12 @@ export function songInfoForBmson (bmson) {
   return new BMS.SongInfo(info)
 
   function getSubtitles () {
+    if (!bmson.version) return [ 'Warning: legacy bmson' ]
     let subtitles = [ ]
-    if (typeof bmsonInfo.chart_name === 'string') {
+    if (bmsonInfo.chart_name && typeof bmsonInfo.chart_name === 'string') {
       subtitles.push(bmsonInfo.chart_name)
     }
-    if (typeof bmsonInfo.subtitle === 'string') {
+    if (bmsonInfo.subtitle && typeof bmsonInfo.subtitle === 'string') {
       subtitles.push(...bmsonInfo.subtitle.split('\n'))
     }
     return subtitles

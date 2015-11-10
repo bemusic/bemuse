@@ -21,6 +21,7 @@ describe('legacy bmson', function () {
       assert(info.title === 'Reminiscentia')
       assert(info.artist === 'flicknote')
       assert(info.genre === 'Dramatic Trance')
+      assert(info.subtitles[0] === 'Warning: legacy bmson')
     })
   })
 

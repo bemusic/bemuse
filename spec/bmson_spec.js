@@ -29,7 +29,7 @@ describe('bmson v1.0.0', function () {
           chart_name: 'FOUR DIMENSIONS',
         }
       })
-      assert.deepEqual(info.subtitles, ['FOUR DIMENSIONS'])
+      assert.deepEqual(info.subtitles, [ 'FOUR DIMENSIONS' ])
     })
     it('should put each line of subtitle into subtitles field', function () {
       const info = bmson.songInfoForBmson({
@@ -38,17 +38,27 @@ describe('bmson v1.0.0', function () {
           subtitle: 'First Episode\nreturn of the cat meow',
         }
       })
-      assert.deepEqual(info.subtitles, ['First Episode', 'return of the cat meow'])
+      assert.deepEqual(info.subtitles, [ 'First Episode', 'return of the cat meow' ])
+    })
+    it('should skip blank chart names and subtitle', function () {
+      const info = bmson.songInfoForBmson({
+        version: '1.0.0',
+        info: {
+          subtitle: '',
+          chart_name: '',
+        }
+      })
+      assert.deepEqual(info.subtitles, [ ])
     })
     it('should have subartists', function () {
       const info = bmson.songInfoForBmson({
         version: '1.0.0',
         info: {
           title: 'Running Out 2015',
-          subartists: ['music:flicknote', 'bga:5argon'],
+          subartists: [ 'music:flicknote', 'bga:5argon' ],
         }
       })
-      assert.deepEqual(info.subartists, ['music:flicknote', 'bga:5argon'])
+      assert.deepEqual(info.subartists, [ 'music:flicknote', 'bga:5argon' ])
     })
   })
 
