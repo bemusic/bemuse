@@ -7,8 +7,8 @@ import keycode      from 'keycode'
 import OptionsStore from './options-store'
 import * as Actions from '../actions/options-input-actions'
 
-const $order    = OptionsStore.map(getControls)
-const $keyCodes = OptionsStore.map(getKeyboardMapping)
+const order川    = OptionsStore.map(getControls)
+const keyCodes川 = OptionsStore.map(getKeyboardMapping)
 
 function getControls (state) {
   if (state.scratch === 'left') {
@@ -29,27 +29,28 @@ function getKeyboardMapping (state) {
   return mapping
 }
 
-const $mode     = OptionsStore.map(state => state.mode)
-const $scratch  = OptionsStore.map(state => state.scratch)
-const $texts    = $keyCodes.map((keyCodes) => _.mapValues(keyCodes, toText))
-const $editing  = Bacon.update(null,
-    [Actions.selectKey.bus],    (prev, key) => key,
-    [Actions.deselectKey.bus],  () => null,
-    [Actions.selectNextKey.bus, $order], (prev, key, order) => {
-      let index = order.indexOf(key)
-      if (index + 1 >= order.length) {
-        return null
-      } else {
-        return order[index + 1]
-      }
-    })
+const mode川     = OptionsStore.map(state => state.mode)
+const scratch川  = OptionsStore.map(state => state.scratch)
+const texts川    = keyCodes川.map((keyCodes) => _.mapValues(keyCodes, toText))
+const editing川  = Bacon.update(null,
+  [Actions.selectKey.bus],    (prev, key) => key,
+  [Actions.deselectKey.bus],  () => null,
+  [Actions.selectNextKey.bus, order川], (prev, key, order) => {
+    let index = order.indexOf(key)
+    if (index + 1 >= order.length) {
+      return null
+    } else {
+      return order[index + 1]
+    }
+  }
+)
 
 export default new Store({
-  mode:       $mode,
-  texts:      $texts,
-  editing:    $editing,
-  scratch:    $scratch,
-  keyCodes:   $keyCodes,
+  mode:       mode川,
+  texts:      texts川,
+  editing:    editing川,
+  scratch:    scratch川,
+  keyCodes:   keyCodes川,
 })
 
 function toText (keyCode) {
