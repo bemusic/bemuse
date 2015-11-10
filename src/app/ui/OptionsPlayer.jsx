@@ -28,7 +28,7 @@ export const OptionsPlayer = React.createClass({
 
       <OptionsPlayer.Row label="Speed">
         <OptionsSpeed
-            value={this.state.options['player.P1.speed']}
+            value={this.props.options['player.P1.speed']}
             onChange={this.handleSpeedChange} />
         <div className="OptionsPlayerのspeedHint">
           You can also change the speed in-game<br />using the Up and Down arrow keys.
@@ -39,14 +39,14 @@ export const OptionsPlayer = React.createClass({
         <OptionsPlayerSelector type="scratch"
             options={SCRATCH_OPTIONS}
             onSelect={this.handleSelectScratch}
-            value={this.state.scratch} />
+            value={this.props.scratch} />
       </OptionsPlayer.Row>
 
       <OptionsPlayer.Row label="Panel">
         <OptionsPlayerSelector type="panel"
             options={PANEL_OPTIONS}
             onSelect={this.handleSelectPanel}
-            value={this.state.options['player.P1.panel']} />
+            value={this.props.options['player.P1.panel']} />
       </OptionsPlayer.Row>
 
       <div className="OptionsPlayerのbuttons">
