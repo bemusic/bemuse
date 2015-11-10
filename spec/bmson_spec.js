@@ -1,7 +1,5 @@
 
 import assert     from 'power-assert'
-import { expect } from 'chai'
-
 import * as bmson from '../index'
 
 /* global describe, it */
@@ -224,7 +222,7 @@ describe('bmson v1.0.0', function () {
             notes: [ { x } ]
           }))
         })
-        expect(actual).to.equal(keys)
+        assert(actual === keys)
       })
     }
     testcase([1, 3, 5, 7], '7K')
