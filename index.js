@@ -43,16 +43,16 @@ exports.extensions['.bmson'] = function (source) {
       return JSON.parse(string)
     })
     .then(function(object) {
-      var info    = bmson.getSongInfo(object.info)
-      var timing  = bmson.getTiming(object)
-      var ms      = bmson.getMusicalScore(object, timing)
+      var info    = bmson.songInfoForBmson(object)
+      var ms      = bmson.musicalScoreForBmson(object)
       var notes   = ms.notes
+      var timing  = ms.timing
       return {
         info:       info,
         notes:      notes,
         timing:     timing,
         scratch:    bmson.hasScratch(object),
-        keys:       bmson.getKeys(object),
+        keys:       bmson.keysForBmson(object),
       }
     })
   )
