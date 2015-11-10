@@ -69,7 +69,7 @@ export function timingInfoForBmson (bmson) {
   }
 }
 
-// Public: Returns the timing data represented by the `bmson` object.
+// Private: Returns the timing data represented by the `bmson` object.
 //
 // * `bmson` The bmson object
 //
