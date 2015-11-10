@@ -1,0 +1,2 @@
+extends: bemuse
+parser: babel-eslint
