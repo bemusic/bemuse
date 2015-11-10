@@ -2,7 +2,7 @@
 import './OptionsPlayer.scss'
 import React from 'react'
 
-import { Binding }           from 'bemuse/flux'
+import { connect }           from 'bemuse/flux'
 import Store                 from '../stores/options-store'
 import * as Actions          from '../actions/options-actions'
 import OptionsPlayerSelector from './OptionsPlayerSelector'
@@ -21,12 +21,10 @@ const PANEL_OPTIONS = [
   { value: 'right', label: 'Right', },
 ]
 
-const OptionsPlayer = React.createClass({
+export const OptionsPlayer = React.createClass({
   mixins: [React.addons.PureRenderMixin],
   render () {
     return <div className="OptionsPlayer">
-
-      <Binding store={Store} onChange={this.handleState} />
 
       <OptionsPlayer.Row label="Speed">
         <OptionsSpeed
@@ -57,12 +55,6 @@ const OptionsPlayer = React.createClass({
 
     </div>
   },
-  getInitialState () {
-    return Store.get()
-  },
-  handleState (state) {
-    this.setState(state)
-  },
   handleSelectPanel (value) {
     Actions.setOptions({ 'player.P1.panel': value })
   },
@@ -84,4 +76,4 @@ OptionsPlayer.Row = React.createClass({
   }
 })
 
-export default OptionsPlayer
+export default connect(Store, OptionsPlayer)

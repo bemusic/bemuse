@@ -2,13 +2,11 @@
 import './ExperimentScene.scss'
 import React from 'react'
 import c from 'classnames'
-import { Binding } from 'bemuse/flux'
 import Loading from 'bemuse/ui/Loading'
 
 export default React.createClass({
   render () {
-    return <div className={c('ExperimentScene', { 'is-finished': this.state.finished })}>
-      <Binding store={this.props.store} onChange={this.handleState} />
+    return <div className={c('ExperimentScene', { 'is-finished': this.props.finished })}>
       <div className="ExperimentSceneのwrapper">
         <div className="ExperimentSceneのwrapperInner">
           {this.renderContents()}
@@ -17,11 +15,11 @@ export default React.createClass({
     </div>
   },
   renderContents () {
-    if (this.state.loading) {
+    if (this.props.loading) {
       return this.renderLoading()
-    } else if (!this.state.started) {
+    } else if (!this.props.started) {
       return this.renderReady()
-    } else if (!this.state.listening) {
+    } else if (!this.props.listening) {
       return this.renderMessage('Please listen to the beats…')
     } else {
       return this.renderCollection()
@@ -45,9 +43,9 @@ export default React.createClass({
   },
   renderCollection () {
     let scale = (
-      this.state.finished
+      this.props.finished
       ? 1
-      : easeOut(Math.min(1, this.state.numSamples / 84))
+      : easeOut(Math.min(1, this.props.numSamples / 84))
     )
     let transform = 'scaleX(' + scale + ')'
     let style = {
@@ -56,20 +54,14 @@ export default React.createClass({
     }
     return <div className="ExperimentSceneのcollection">
       {this.renderMessage(
-        this.state.finished
-        ? 'Your latency is ' + this.state.latency + 'ms. Please close this window.'
+        this.props.finished
+        ? 'Your latency is ' + this.props.latency + 'ms. Please close this window.'
         : 'Please press the space bar when you hear the kick drum.'
       )}
       <div className="ExperimentSceneのprogress">
         <div className="ExperimentSceneのprogressBar" style={style}></div>
       </div>
     </div>
-  },
-  getInitialState () {
-    return this.props.store.get()
-  },
-  handleState (state) {
-    this.setState(state)
   },
 })
 

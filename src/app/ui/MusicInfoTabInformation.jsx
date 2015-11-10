@@ -3,18 +3,17 @@ import './MusicInfoTabInformation.scss'
 
 import React  from 'react'
 
-import { Binding } from 'bemuse/flux'
+import { connect } from 'bemuse/flux'
 import ReadmeStore from '../stores/readme-store'
 
 import Markdown from 'bemuse/ui/Markdown'
 import YouTube  from 'bemuse/ui/YouTube'
 
-export default React.createClass({
+export const MusicInfoTabInformation = React.createClass({
 
   render () {
     const song = this.props.song
     return <div className="MusicInfoTabInformation">
-      <Binding store={ReadmeStore} onChange={this.handleReadme} />
       {this.renderButtons()}
       <p className="MusicInfoTabInformationのartist">
         <span>Artist:</span>
@@ -22,7 +21,7 @@ export default React.createClass({
       </p>
       {song.youtube_url ? <YouTube url={song.youtube_url} /> : null}
       <section className="MusicInfoTabInformationのreadme">
-        <Markdown source={this.state.readme.text} />
+        <Markdown source={this.props.readme.text} />
       </section>
     </div>
   },
@@ -46,14 +45,9 @@ export default React.createClass({
       return <p className="MusicInfoTabInformationのbuttons">{buttons}</p>
     }
   },
-  getInitialState () {
-    return { readme: ReadmeStore.get() }
-  },
-  handleReadme (readme) {
-    this.setState({ readme: readme })
-  },
-
 })
+
+export default connect({ readme: ReadmeStore }, MusicInfoTabInformation)
 
 function link (text, url) {
   return (
