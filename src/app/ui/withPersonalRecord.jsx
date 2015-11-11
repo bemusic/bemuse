@@ -6,6 +6,7 @@ import _                from 'lodash'
 import { connect }      from 'bemuse/flux'
 import * as DataStore   from 'bemuse/online/data-store'
 import online           from 'bemuse/online/instance'
+import { isWaiting }    from 'bemuse/online/operations'
 import id               from 'bemuse/online/id'
 import MusicSelectStore from '../stores/music-select-store'
 
@@ -15,15 +16,17 @@ export function withPersonalRecord (Component) {
       online.seen(this.getLevel())
     },
     render () {
+      const recordState = this.getRecordState()
       return (
         <Component
-          record={this.getRecord()}
+          record={recordState.value}
+          loading={isWaiting(recordState)}
           {..._.omit(this.props, 'onlineRecords')}
         />
       )
     },
-    getRecord (data) {
-      return DataStore.get(this.props.onlineRecords, id(this.getLevel())).value
+    getRecordState (data) {
+      return DataStore.get(this.props.onlineRecords, id(this.getLevel()))
     },
     getLevel () {
       return { md5: this.props.chart.md5, playMode: this.props.playMode }

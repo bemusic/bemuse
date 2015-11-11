@@ -1,7 +1,8 @@
 
 import './MusicInfoTabStats.scss'
 
-import React            from 'react'
+import React from 'react'
+import Icon  from 'react-fa'
 
 import withPersonalRecord             from './withPersonalRecord'
 import { formattedAccuracyForRecord } from 'bemuse/rules/accuracy'
@@ -19,25 +20,34 @@ export const MusicInfoTabStats = React.createClass({
         <dt>BPM</dt>
         <dd>{chart.bpm.median}</dd>
         <dt>Play Count</dt>
-        <dd>{record ? record.playCount : (this.props.user ? '0' : '-')}</dd>
+        <dd>{this.renderWhenNotLoading(() =>
+          record ? record.playCount : (this.props.user ? '0' : '-')
+        )}</dd>
       </dl>
       <dl className="MusicInfoTabStatsのcolumn is-right">
         <dt>Best Score</dt>
-        <dd>{record ? record.score : '-'}</dd>
+        <dd>{this.renderWhenNotLoading(() => record ? record.score : '-')}</dd>
 
         <dt>Accuracy</dt>
-        <dd>{record
+        <dd>{this.renderWhenNotLoading(() => record
           ? formattedAccuracyForRecord(record)
           : '-'
-        }</dd>
+        )}</dd>
 
         <dt>Max Combo</dt>
-        <dd>{record
+        <dd>{this.renderWhenNotLoading(() => record
           ? <span>{record.combo} <small>/ {record.total}</small></span>
           : '-'
-        }</dd>
+        )}</dd>
       </dl>
     </div>
+  },
+
+  renderWhenNotLoading (f) {
+    return (this.props.loading
+      ? <Icon name='spinner' spin />
+      : f()
+    )
   },
 
   renderMessage () {

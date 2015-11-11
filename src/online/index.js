@@ -76,7 +76,9 @@ export function Online () {
 
     {
       const action川 = Bacon.mergeAll(
-        allSeen川.flatMap(fetch),
+        // Need to convert a property to EventStream to work around the
+        // first-subscriber-only problem.
+        allSeen川.toEventStream().delay(0).flatMap(fetch),
         submitted口.map(record =>
           DataStore.put(id(record), completedStateTransition(record))
         )
@@ -85,16 +87,24 @@ export function Online () {
     }
 
     function fetch (levels) {
-      let levelsToFetch = levels.filter(level => !seen[id(level)])
+      const levelsToFetch = levels.filter(level => !seen[id(level)])
       for (let level of levelsToFetch) {
         seen[id(level)] = true
       }
-      return Bacon.fromPromise(service.retrieveMultipleRecords(levels)
+      const promise = (user && levelsToFetch.length > 0
+        ? service.retrieveMultipleRecords(levelsToFetch)
+        : Promise.resolve([ ])
+      )
+      return Bacon.fromPromise(promise
         .then(function (results) {
-          let recordsToPut = _.zipObject(
+          let loadedRecords = _.zipObject(
             results.map(id), results.map(completedStateTransition)
           )
-          return DataStore.putMultiple(recordsToPut)
+          let nullResults = _.zipObject(
+            levelsToFetch.map(id), levelsToFetch.map(() => completedStateTransition(null))
+          )
+          let transitions = _.defaults(loadedRecords, nullResults)
+          return DataStore.putMultiple(transitions)
         })
         .catch(function () {
           return DataStore.putMultiple({ })
