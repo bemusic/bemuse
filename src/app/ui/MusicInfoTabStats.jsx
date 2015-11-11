@@ -8,6 +8,8 @@ import online           from 'bemuse/online/instance'
 import id               from 'bemuse/online/id'
 import MusicSelectStore from '../stores/music-select-store'
 
+import { formattedAccuracyForRecord } from 'bemuse/rules/accuracy'
+
 export const MusicInfoTabStats = React.createClass({
 
   componentDidMount () {
@@ -27,6 +29,13 @@ export const MusicInfoTabStats = React.createClass({
       <dl className="MusicInfoTabStatsのcolumn is-right">
         <dt>Best Score</dt>
         <dd>{record ? record.score : '-'}</dd>
+
+        <dt>Accuracy</dt>
+        <dd>{record
+          ? formattedAccuracyForRecord(record)
+          : '-'
+        }</dd>
+
         <dt>Max Combo</dt>
         <dd>{record
           ? <span>{record.combo} <small>/ {record.total}</small></span>

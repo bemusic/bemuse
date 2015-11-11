@@ -1,6 +1,7 @@
 
 import './RankingTable.scss'
 import React from 'react'
+import { formattedAccuracyForRecord } from 'bemuse/rules/accuracy'
 
 export const RankingTable = React.createClass({
   render () {
@@ -25,14 +26,10 @@ export const Row = React.createClass({
         {this.props.record.score}
       </td>
       <td className="RankingTableのaccuracy">
-        {this.renderAccuracy(this.props.record.count, this.props.record.total)}%
+        {formattedAccuracyForRecord(this.props.record)}
       </td>
     </tr>
   },
-  renderAccuracy (count, total) {
-    var accuracy = (count[0] + count[1] * 0.8 + count[2] * 0.5) / total
-    return (accuracy * 100).toFixed(2)
-  }
 })
 
 export const Message = React.createClass({
