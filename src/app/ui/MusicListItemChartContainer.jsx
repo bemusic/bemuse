@@ -1,38 +1,30 @@
 
 import React from 'react'
 
-import id from 'bemuse/online/id'
-import online from 'bemuse/online/instance'
+import id             from 'bemuse/online/id'
+import online         from 'bemuse/online/instance'
 import * as DataStore from 'bemuse/online/data-store'
-import { getGrade } from 'bemuse/rules/grade'
+import { getGrade }   from 'bemuse/rules/grade'
+import { connect }    from 'bemuse/flux'
 
 import MusicListItemChart from './MusicListItemChart'
 
-export default React.createClass({
-
-  getInitialState () {
-    return { data: DataStore.INITIAL_STATE }
-  },
+export const MusicListItemChartContainer = React.createClass({
 
   componentDidMount () {
     online.seen(this.getDescriptor())
-    this.unsubscribe = online.records川.onValue(data => this.setState({ data }))
-  },
-
-  componentWillUnmount () {
-    if (this.unsubscribe) this.unsubscribe()
   },
 
   shouldComponentUpdate (nextProps, nextState) {
     if (this.props.chart !== nextProps.chart) return true
     if (this.props.selected !== nextProps.selected) return true
     if (this.props.playMode !== nextProps.playMode) return true
-    if (this.getRecord(this.state) !== this.getRecord(nextState)) return true
+    if (this.getRecord(this.props.data) !== this.getRecord(nextProps.data)) return true
     return false
   },
 
-  getRecord (state) {
-    return DataStore.get(state.data, id(this.getDescriptor())).value
+  getRecord (data) {
+    return DataStore.get(data, id(this.getDescriptor())).value
   },
 
   getDescriptor () {
@@ -40,7 +32,7 @@ export default React.createClass({
   },
 
   render () {
-    let record = this.getRecord(this.state)
+    let record = this.getRecord(this.props.data)
     let played = !!record
     let grade = played ? getGrade(record) : null
     if (grade === 'F') grade = null
@@ -48,3 +40,5 @@ export default React.createClass({
   }
 
 })
+
+export default connect({ data: online.records川 }, MusicListItemChartContainer)
