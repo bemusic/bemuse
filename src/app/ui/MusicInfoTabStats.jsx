@@ -2,23 +2,15 @@
 import './MusicInfoTabStats.scss'
 
 import React            from 'react'
-import { connect }      from 'bemuse/flux'
-import * as DataStore   from 'bemuse/online/data-store'
-import online           from 'bemuse/online/instance'
-import id               from 'bemuse/online/id'
-import MusicSelectStore from '../stores/music-select-store'
 
+import withPersonalRecord             from './withPersonalRecord'
 import { formattedAccuracyForRecord } from 'bemuse/rules/accuracy'
 
 export const MusicInfoTabStats = React.createClass({
 
-  componentDidMount () {
-    online.seen(this.getDescriptor())
-  },
-
   render () {
     const chart = this.props.chart
-    const record = this.getRecord(this.props.onlineRecords)
+    const record = this.props.record
     return <div className="MusicInfoTabStats">
       <dl className="MusicInfoTabStatsのcolumn is-left">
         <dt>Notes</dt>
@@ -45,21 +37,6 @@ export const MusicInfoTabStats = React.createClass({
     </div>
   },
 
-  // TODO: extract to withRecord HOC
-  getRecord (data) {
-    return DataStore.get(data, id(this.getDescriptor())).value
-  },
-
-  getDescriptor () {
-    return { md5: this.props.chart.md5, playMode: this.props.playMode }
-  },
-
 })
 
-export default connect(
-  {
-    onlineRecords: online.records川,
-    playMode:      MusicSelectStore.map(state => state.playMode),
-  },
-  MusicInfoTabStats
-)
+export default withPersonalRecord(MusicInfoTabStats)
