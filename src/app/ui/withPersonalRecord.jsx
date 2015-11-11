@@ -15,6 +15,9 @@ export function withPersonalRecord (Component) {
     componentDidMount () {
       online.seen(this.getLevel())
     },
+    componentDidUpdate () {
+      online.seen(this.getLevel())
+    },
     render () {
       const recordState = this.getRecordState()
       return (
