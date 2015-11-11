@@ -12,11 +12,14 @@ export const MusicInfoTabStats = React.createClass({
     const chart = this.props.chart
     const record = this.props.record
     return <div className="MusicInfoTabStats">
+      {this.renderMessage()}
       <dl className="MusicInfoTabStatsのcolumn is-left">
         <dt>Notes</dt>
         <dd>{chart.noteCount}</dd>
         <dt>BPM</dt>
         <dd>{chart.bpm.median}</dd>
+        <dt>Play Count</dt>
+        <dd>{record ? record.playCount : (this.props.user ? '0' : '-')}</dd>
       </dl>
       <dl className="MusicInfoTabStatsのcolumn is-right">
         <dt>Best Score</dt>
@@ -36,6 +39,19 @@ export const MusicInfoTabStats = React.createClass({
       </dl>
     </div>
   },
+
+  renderMessage () {
+
+    if (!this.props.user) {
+      return (
+        <div className="MusicInfoTabStatsのmessage">
+          Please log in or create an account to save your play statistics.
+        </div>
+      )
+    }
+
+    return null
+  }
 
 })
 

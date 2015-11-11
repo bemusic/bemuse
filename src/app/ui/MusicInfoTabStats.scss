@@ -1,6 +1,9 @@
 
 .MusicInfoTabStats {
   overflow: hidden;
+  &のmessage {
+    text-align: center;
+  }
   &のcolumn {
     width: 45%;
     margin: 0;
