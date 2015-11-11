@@ -19,6 +19,7 @@ export function MusicSelectStoreFactory (CollectionStore, options = { }) {
   const server川 = CollectionStore.map(state => state.server)
   const collection川 = CollectionStore.map(state => state.collection)
   const unofficial川 = CollectionStore.map(state => state.unofficial)
+  const error川 = collection川.map(state => state.error)
   const loading川 = collection川.map(({ loading }) => loading)
 
   const grouping川 = Bacon.constant([
@@ -88,6 +89,7 @@ export function MusicSelectStoreFactory (CollectionStore, options = { }) {
 
   return new Store({
     loading:    loading川,
+    error:      error川,
     server:     server川,
     songs:      songs川,
     groups:     groups川,
@@ -98,7 +100,7 @@ export function MusicSelectStoreFactory (CollectionStore, options = { }) {
     highlight:  filterTextDebounced川,
     unofficial: unofficial川,
     playMode:   mode川,
-  }).log('MSS')
+  })
 
 }
 

@@ -86,6 +86,10 @@ let config = {
     ],
     postLoaders: [],
     preLoaders: [],
+    noParse: [
+      /node_modules\/sinon\//,
+      /node_modules\/web-audio-test-api\//,
+    ],
   },
   plugins: [
     new CompileProgressPlugin(),

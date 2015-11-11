@@ -17,8 +17,16 @@ export default React.createClass({
         onClick={this.handleClick}>
       {
         song.tutorial
-        ? <div className="MusicListItemのtutorial">Tutorial</div>
-        : <div className="MusicListItemのinfo">
+        ? (
+          <div className="MusicListItemのtutorial">
+            <div className="MusicListItemのcharts">
+              {this.renderChartlist()}
+            </div>
+            Tutorial
+          </div>
+        )
+        : (
+          <div className="MusicListItemのinfo">
             <div className="MusicListItemのinfo-top">
               <div className="MusicListItemのtitle">
                 {this.renderHighlight(song.title)}
@@ -36,6 +44,7 @@ export default React.createClass({
               </div>
             </div>
           </div>
+        )
       }
     </li>
   },

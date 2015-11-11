@@ -34,81 +34,107 @@ export const MusicSelectScene = React.createClass({
       <SceneHeading>
         Select Music
         <input
-            type="text"
-            placeholder="Filter…"
-            className="MusicSelectSceneのsearch"
-            onChange={this.handleFilter}
-            value={musicSelect.filterText} />
+          type="text"
+          placeholder="Filter…"
+          className="MusicSelectSceneのsearch"
+          onChange={this.handleFilter}
+          value={musicSelect.filterText}
+        />
       </SceneHeading>
-      {
-        musicSelect.unofficial
-        ? <div className="MusicSelectSceneのunofficialLabel"
-              onClick={this.handleUnofficialClick}>
-            <b>Disclaimer:</b> Unofficial Server
-          </div>
-        : null
-      }
-      {
-        musicSelect.loading
-        ? <div className="MusicSelectSceneのloading">Loading…</div>
-        : musicSelect.songs.length === 0
-        ? <div className="MusicSelectSceneのloading">
-            Cannot Load Collection!
-          </div>
-        : <div className={c('MusicSelectSceneのmain',
-              { 'is-in-song': this.state.inSong })}>
-            <MusicList
-                groups={musicSelect.groups}
-                highlight={musicSelect.highlight}
-                selectedSong={musicSelect.song}
-                selectedChart={musicSelect.chart}
-                playMode={musicSelect.playMode}
-                onSelect={this.handleSongSelect}
-                onTouch={this.handleMusicListTouch} />
-            <MusicInfo
-                song={musicSelect.song}
-                chart={musicSelect.chart}
-                charts={musicSelect.charts}
-                playMode={musicSelect.playMode}
-                onChartClick={this.handleChartClick}
-                onOptions={this.handleOptionsOpen} />
-          </div>
-      }
+
+      {this.renderUnofficialDisclaimer()}
+
+      {this.renderMain()}
+
       <SceneToolbar>
         <a onClick={this.popScene} href="javascript://">Exit</a>
-        <a onClick={this.handleCustomBMSOpen} href="javascript://"
-            onDragEnter={this.handleCustomBMSOpen}>
+        <a
+          onClick={this.handleCustomBMSOpen}
+          href="javascript://"
+          onDragEnter={this.handleCustomBMSOpen}
+        >
           Play Custom BMS
         </a>
         <SceneToolbar.Spacer />
         {this.renderOnlineToolbarButtons()}
         <a onClick={this.handleOptionsOpen} href="javascript://">Options</a>
       </SceneToolbar>
+
       <ModalPopup
-          visible={this.state.optionsVisible}
-          onBackdropClick={this.handleOptionsClose}>
-        <Options
-            onClose={this.handleOptionsClose} />
+        visible={this.state.optionsVisible}
+        onBackdropClick={this.handleOptionsClose}
+      >
+        <Options onClose={this.handleOptionsClose} />
       </ModalPopup>
+
       <ModalPopup
-          visible={this.state.customBMSVisible}
-          onBackdropClick={this.handleCustomBMSClose}>
+        visible={this.state.customBMSVisible}
+        onBackdropClick={this.handleCustomBMSClose}
+      >
         <div className="MusicSelectSceneのcustomBms">
-          <CustomBMS
-              onSongLoaded={this.handleCustomSong} />
+          <CustomBMS onSongLoaded={this.handleCustomSong} />
         </div>
       </ModalPopup>
+
       <ModalPopup
-          visible={this.state.unofficialDisclaimerVisible}
-          onBackdropClick={this.handleUnofficialClose}>
-        <UnofficialPanel
-            onClose={this.handleUnofficialClose} />
+        visible={this.state.unofficialDisclaimerVisible}
+        onBackdropClick={this.handleUnofficialClose}
+      >
+        <UnofficialPanel onClose={this.handleUnofficialClose} />
       </ModalPopup>
+
       <AuthenticationPopup
-          visible={this.state.authenticationPopupVisible}
-          onFinish={this.handleAuthenticationFinish}
-          onBackdropClick={this.handleAuthenticationClose} />
+        visible={this.state.authenticationPopupVisible}
+        onFinish={this.handleAuthenticationFinish}
+        onBackdropClick={this.handleAuthenticationClose}
+      />
     </Scene>
+  },
+  renderUnofficialDisclaimer () {
+    if (!this.props.musicSelect.unofficial) return null
+    return (
+      <div
+        className="MusicSelectSceneのunofficialLabel"
+        onClick={this.handleUnofficialClick}
+      >
+        <b>Disclaimer:</b> Unofficial Server
+      </div>
+    )
+  },
+  renderMain () {
+    const musicSelect = this.props.musicSelect
+    if (musicSelect.loading) {
+      return <div className="MusicSelectSceneのloading">Loading…</div>
+    }
+    if (musicSelect.error) {
+      return <div className="MusicSelectSceneのloading">Cannot load collection!</div>
+    }
+    if (musicSelect.songs.length === 0) {
+      return <div className="MusicSelectSceneのloading">No songs found!</div>
+    }
+    return (
+      <div
+        className={c('MusicSelectSceneのmain', { 'is-in-song': this.state.inSong })}
+      >
+        <MusicList
+          groups={musicSelect.groups}
+          highlight={musicSelect.highlight}
+          selectedSong={musicSelect.song}
+          selectedChart={musicSelect.chart}
+          playMode={musicSelect.playMode}
+          onSelect={this.handleSongSelect}
+          onTouch={this.handleMusicListTouch}
+        />
+        <MusicInfo
+          song={musicSelect.song}
+          chart={musicSelect.chart}
+          charts={musicSelect.charts}
+          playMode={musicSelect.playMode}
+          onChartClick={this.handleChartClick}
+          onOptions={this.handleOptionsOpen}
+        />
+      </div>
+    )
   },
   renderOnlineToolbarButtons () {
     if (!online) return null
