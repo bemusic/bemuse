@@ -79,7 +79,7 @@
     "script-loader": "^0.6.1",
     "selenium-webdriver": "^2.45.1",
     "serviceworker-loader": "^0.1.0",
-    "sinon": "git://github.com/cjohansen/Sinon.JS#sinon-2.0",
+    "sinon": "^1.17.2",
     "sinon-chai": "^2.7.0",
     "style-loader": "^0.12.3",
     "through2": "^2.0.0",
