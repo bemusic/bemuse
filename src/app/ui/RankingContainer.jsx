@@ -41,14 +41,18 @@ export default React.createClass({
 
   componentWillReceiveProps (nextProps) {
     if (this.props.chart.md5 !== nextProps.chart.md5 || this.props.playMode !== nextProps.playMode) {
-      this.unsubscribe()
+      if (this.unsubscribe) this.unsubscribe()
       this.model        = online.Ranking(this.getParams(nextProps))
       this.unsubscribe  = this.model.state川.onValue(this.onStoreTrigger)
     }
   },
 
+  componentWillUnmount () {
+    if (this.unsubscribe) this.unsubscribe()
+  },
+
   onStoreTrigger (state) {
-    this.setState(state)
+    if (this.isMounted()) this.setState(state)
   },
 
   onReloadScoreboardRequest () {
@@ -60,14 +64,12 @@ export default React.createClass({
   },
 
   render () {
-    return <Ranking
+    return (
+      <Ranking
         state={this.state}
         onReloadScoreboardRequest={this.onReloadScoreboardRequest}
         onResubmitScoreRequest={this.onResubmitScoreRequest}
-        />
-    // void RankingTable
-    // return <div style={{ textAlign: 'center', padding: '10px' }}>
-    //   Ranking is coming soon...
-    // </div>
+      />
+    )
   },
 })
