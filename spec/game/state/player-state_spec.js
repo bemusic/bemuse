@@ -167,6 +167,11 @@ describe('PlayerState', function () {
           expect(state.getNoteStatus(note)).to.equal('judged')
           expect(state.getNoteJudgment(note)).to.equal(-1)
         })
+        it('does not end automatically', function () {
+          advance(2, { 'p1_1': 1 })
+          advance(3.1, { 'p1_1': 1 })
+          expect(state.getNoteStatus(note)).to.equal('active')
+        })
         it('judges long note lifted too slow as missed', function () {
           advance(2, { 'p1_1': 1 })
           advance(4, { 'p1_1': 1 })
@@ -191,7 +196,7 @@ describe('PlayerState', function () {
           expect(state.getNoteStatus(note)).to.equal('active')
           expect(state.getNoteJudgment(note)).to.equal(1)
           expect(state.notifications.judgments[0].judgment).to.equal(1)
-          advance(4, { 'p1_SC': 1 })
+          advance(3.1, { 'p1_SC': 1 })
           expect(state.getNoteStatus(note)).to.equal('judged')
           expect(state.getNoteJudgment(note)).to.equal(1)
           expect(state.notifications.judgments[0].judgment).to.equal(1)
