@@ -1,12 +1,15 @@
 
 @import "./common.scss";
 
-canvas { /* https://code.google.com/p/chromium/issues/detail?id=424025 */
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: -o-crisp-edges;
-  image-rendering: pixelated;
-  -ms-interpolation-mode: nearest-neighbor;
+@media (min-width: 1279px) and (max-width: 1281px) and (min-height: 719px),
+       (min-height: 719px) and (max-height: 721px) and (min-width: 1279px) {
+  canvas { /* https://code.google.com/p/chromium/issues/detail?id=424025 */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -o-crisp-edges;
+    image-rendering: pixelated;
+    -ms-interpolation-mode: nearest-neighbor;
+  }
 }
 
 a {
