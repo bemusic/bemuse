@@ -3,6 +3,7 @@ import './MusicSelectScene.scss'
 
 import React            from 'react'
 import c                from 'classnames'
+import $                from 'jquery'
 import { connect }      from 'bemuse/flux'
 import SCENE_MANAGER    from 'bemuse/scene-manager'
 import online           from 'bemuse/online/instance'
@@ -163,6 +164,24 @@ export const MusicSelectScene = React.createClass({
       unofficialDisclaimerVisible:  false,
       inSong:                       false,
       authenticationPopupVisible:   false,
+    }
+  },
+  componentDidMount () {
+    this.ensureSelectedSongInView()
+  },
+  ensureSelectedSongInView () {
+    const $this = $(React.findDOMNode(this))
+    const active = $this.find('.js-active-song')[0]
+    if (!active) return
+    const scroller = $(active).closest('.js-scrollable-view')[0]
+    if (!scroller) return
+    const scrollerRect = scroller.getBoundingClientRect()
+    const activeRect = active.getBoundingClientRect()
+    if (activeRect.bottom > scrollerRect.bottom || activeRect.top < scrollerRect.top) {
+      scroller.scrollTop += (
+        (activeRect.top + activeRect.height / 2) -
+        (scrollerRect.top + scrollerRect.height / 2)
+      )
     }
   },
   handleSongSelect (song, chart) {

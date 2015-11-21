@@ -12,8 +12,12 @@ export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
   render () {
     const song = this.props.song
+    const className = c('MusicListItem', {
+      'is-active': this.props.selected,
+      'js-active-song': this.props.selected,
+    })
     return <li
-        className={c('MusicListItem', { 'is-active': this.props.selected })}
+        className={className}
         onClick={this.handleClick}>
       {
         song.tutorial
