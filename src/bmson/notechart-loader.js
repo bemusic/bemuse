@@ -20,6 +20,10 @@ export function load (source, options) {
     ]),
     spacing:      new BMS.Spacing([ ]),
     barLines,
+    images: { // HACK: Hardcoded here, probably should belong in bmson package
+      eyecatch: data.info.eyecatch_image,
+      background: data.info.back_image,
+    }
   }
 
   return new Notechart(stuff, options)

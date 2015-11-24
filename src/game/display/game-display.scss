@@ -18,6 +18,15 @@
     animation-fill-mode: both;
   }
 
+  &--bg img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    animation: 1.2s game-display--bg-default;
+    animation-fill-mode: both;
+  }
+
   > canvas {
     position: relative;
     z-index: 100;

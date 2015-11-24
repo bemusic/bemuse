@@ -4,13 +4,13 @@ import './game-display.scss'
 import $ from 'jquery'
 
 export class GameDisplay {
-  constructor ({ game, context }) {
+  constructor ({ game, context, backgroundImagePromise }) {
     this._game      = game
     this._context   = context
     this._players   = new Map(game.players.map(player =>
         [player, new PlayerDisplay(player)]))
     this._stateful  = { }
-    this._wrapper   = this._createWrapper()
+    this._wrapper   = this._createWrapper({ backgroundImagePromise })
   }
   start () {
     this._started = new Date().getTime()
@@ -63,10 +63,15 @@ export class GameDisplay {
     let f = gameState.readyFraction
     return f > 0.5 ? Math.pow(1 - (f - 0.5) / 0.5, 2) : 0
   }
-  _createWrapper () {
+  _createWrapper ({ backgroundImagePromise }) {
     var $wrapper = $('<div class="game-display"></div>')
-    .append('<div class="game-display--bg"></div>')
+    .append('<div class="game-display--bg js-back-image"></div>')
     .append(this.view)
+    if (backgroundImagePromise) {
+      Promise.resolve(backgroundImagePromise).then(
+        image => $wrapper.find('.js-back-image').append(image)
+      )
+    }
     return $wrapper[0]
   }
   get context () {

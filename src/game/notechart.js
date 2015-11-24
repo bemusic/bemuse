@@ -19,6 +19,7 @@ export class Notechart {
       positioning,
       spacing,
       barLines,
+      images,
     } = data
 
     invariant(bmsNotes,     'Expected "data.notes"')
@@ -43,6 +44,7 @@ export class Notechart {
     this._infos       = new Map(this._notes.map(
         note => [note, this._getNoteInfo(note)]))
     this._songInfo    = songInfo
+    this._images      = images
   }
 
   // An Array of note events.
@@ -83,6 +85,16 @@ export class Notechart {
   // Notechart's song info
   get songInfo () {
     return this._songInfo
+  }
+
+  // Eyecatch image
+  get eyecatchImage () {
+    return (this._images && this._images.eyecatch) || 'eyecatch_image.png'
+  }
+
+  // Background image
+  get backgroundImage () {
+    return (this._images && this._images.background) || 'back_image.png'
   }
 
   // Returns the characteristic of the note as an Object.

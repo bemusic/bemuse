@@ -48,6 +48,6 @@ export function start (callback) {
     taskToWatch.progress.watch(update)
   }
 
-  return { tasks: status, promise: promise }
+  return { tasks: status, promise: promise, get: run }
 
 }
