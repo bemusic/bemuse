@@ -19,6 +19,8 @@ before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - "npm install -g gulp"
+before_script:
+  - "npm install"
 script:
   - npm run ci:code-review
   - BEMUSE_COV=true bash -c 'gulp build || gulp build || gulp build'
