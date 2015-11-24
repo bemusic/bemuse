@@ -42,6 +42,25 @@ describe('BemusePackageResources', function () {
         })
     })
 
+    it('supports fallback', function () {
+      resources = new BemusePackageResources('/spec/resources/fixtures/a/', {
+        fallback: '/spec/resources/fixtures/f/',
+        fallbackPattern: /\.txt$/,
+      })
+      return resources.file('meow.txt')
+        .then(file => file.read())
+        .then(buffer => new Uint8Array(buffer))
+        .then(array => {
+          expect([array[0], array[1]]).to.deep.equal([0x68, 0x69])
+        })
+    })
+    it('supports fallback only with the pattern', function () {
+      resources = new BemusePackageResources('/spec/resources/fixtures/a/', {
+        fallback: '/spec/resources/fixtures/f/',
+        fallbackPattern: /\.txt$/,
+      })
+      return expect(resources.file('meow.dat')).to.be.rejected
+    })
   })
 
 })

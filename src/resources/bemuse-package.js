@@ -7,10 +7,14 @@ import throat             from 'throat'
 import Progress           from 'bemuse/progress'
 import * as ProgressUtils from 'bemuse/progress/utils'
 
+import { URLResource }    from './url'
+
 export class BemusePackageResources {
-  constructor (url) {
+  constructor (url, options = { }) {
     let lazy = addLazyProperty.bind(null, this)
     this._url = url
+    this._fallback = options.fallback
+    this._fallbackPattern = options.fallbackPattern
     lazy('metadata', () =>
         download(resolve(this._url, 'metadata.json')).as('text')
             .then(str => JSON.parse(str)))
@@ -47,8 +51,13 @@ export class BemusePackageResources {
   file (name) {
     return this._fileMap.then(fileMap => {
       let file = fileMap.get(name.toLowerCase())
-      if (!file) throw new Error('Unable to find: ' + name)
-      return new BemusePackageFileResource(this, file.ref, file.name)
+      if (file) {
+        return new BemusePackageFileResource(this, file.ref, file.name)
+      } else if (this._fallback && this._fallbackPattern.test(name)) {
+        return new URLResource(resolve(this._fallback, name))
+      } else {
+        throw new Error('Unable to find: ' + name)
+      }
     })
   }
   getBlob ([index, start, end]) {
