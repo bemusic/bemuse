@@ -10,6 +10,7 @@ import ResultTable      from './ResultTable'
 import ResultGrade      from './ResultGrade'
 import RankingContainer from './RankingContainer'
 import Flex             from 'bemuse/ui/Flex'
+import * as QueryFlags  from '../query-flags'
 
 export default React.createClass({
   render () {
@@ -58,6 +59,7 @@ export default React.createClass({
     let title = this.props.chart.info.title
     let subtitle = this.props.chart.info.subtitles[0] || ''
     let score = this.props.result.score
+    let grade = this.props.result.grade
     if (subtitle === '') {
       let match = this.props.chart.info.genre.match(/\[([^\]]+)\]$/)
       if (match) subtitle = match[1]
@@ -65,7 +67,15 @@ export default React.createClass({
     subtitle = subtitle.trim()
     if (subtitle !== '' && !/^[\[\(]/.test(subtitle)) subtitle = `[${subtitle}]`
     if (subtitle !== '') subtitle = ` ${subtitle}`
-    let text = `Played:「 ${title}${subtitle} 」on #Bemuse (Score:${score})` + '\n' + `→ https://bemuse.ninja/`
+    let url = 'https://bemuse.ninja/'
+    let server = QueryFlags.getMusicServer()
+    if (server) {
+      url = (
+        (/^http:/.test(server) ? 'http' : 'https') +
+        '://bemuse.ninja/?server=' + encodeURIComponent(server)
+      )
+    }
+    let text = `Played:「 ${title}${subtitle} 」on #Bemuse (Score:${score} [${grade}])` + '\n' + `→ ${url}`
     return 'https://twitter.com/intent/tweet?related=bemusegame&text=' + encodeURIComponent(text)
   },
   onTweet (e) {
