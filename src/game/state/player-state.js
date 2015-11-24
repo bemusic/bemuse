@@ -171,7 +171,9 @@ export class PlayerState {
       let judgment  = judgeEndTime(this._gameTime, note.end.time)
       let missed    = judgment === MISSED
       let lifted    = control.changed
-      return missed || lifted
+      let scratch   = note.column === 'SC'
+      let passed    = this._gameTime >= note.end.time
+      return missed || lifted || (scratch && passed)
     } else {
       return false
     }

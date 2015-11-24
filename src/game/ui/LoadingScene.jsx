@@ -11,6 +11,7 @@ export default React.createClass({
 
   render () {
     return <Scene className="LoadingScene" ref="scene">
+      <div className="LoadingSceneのimage" ref="eyecatch"></div>
       <div className="LoadingSceneのinfo">
         <LoadingSceneSongInfo song={this.props.song} />
       </div>
@@ -19,6 +20,15 @@ export default React.createClass({
       <div className="LoadingSceneのcover"></div>
     </Scene>
   },
+
+  componentDidMount () {
+    if (this.props.eyecatchImagePromise) {
+      this.props.eyecatchImagePromise.then(image => {
+        React.findDOMNode(this.refs.eyecatch).appendChild(image)
+      })
+    }
+  },
+
   teardown () {
     React.findDOMNode(this.refs.scene).classList.add('is-exiting')
     return Promise.delay(500)

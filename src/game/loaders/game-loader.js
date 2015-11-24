@@ -5,10 +5,11 @@ import Progress         from 'bemuse/progress'
 import SamplingMaster   from 'bemuse/sampling-master'
 import LoadingContext   from 'bemuse/boot/loading-context'
 
+import * as Multitasker from './multitasker'
 import SamplesLoader    from './samples-loader'
 import NotechartLoader  from './notechart-loader'
+import loadImage        from './loadImage'
 
-import * as Multitasker from './multitasker'
 import Game             from '../game'
 import GameController   from '../game-controller'
 import GameAudio        from '../audio'
@@ -60,6 +61,16 @@ export function load (spec) {
       return yield loader.load(arraybuffer, spec.bms, spec.options.players[0])
     }))
 
+    task('EyecatchImage', null, ['Notechart'],
+    function (notechart) {
+      return loadImage(assets, notechart.eyecatchImage)
+    })
+
+    task('BackgroundImage', null, ['Notechart'],
+    function (notechart) {
+      return loadImage(assets, notechart.backgroundImage)
+    })
+
     let audioLoadProgress   = new Progress()
     let audioDecodeProgress = new Progress()
 
@@ -77,7 +88,7 @@ export function load (spec) {
 
     task('GameDisplay', null, ['Game', 'Skin', 'SkinContext'],
     function (game, skin, context) {
-      return new GameDisplay({ game, skin, context })
+      return new GameDisplay({ game, skin, context, backgroundImagePromise: run('BackgroundImage') })
     })
 
     task('Samples', null, ['SamplingMaster', 'Game'],
@@ -100,5 +111,4 @@ export function load (spec) {
     return run('GameController')
 
   })
-
 }

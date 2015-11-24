@@ -46,7 +46,10 @@ export function launch ({ server, song, chart }) {
       let url         = server.url + '/' + song.path + '/' + encodeURIComponent(chart.file)
       let assetsUrl   = resolve(url, 'assets/')
       loadSpec.bms    = new URLResource(url)
-      loadSpec.assets = new BemusePackageResources(assetsUrl)
+      loadSpec.assets = new BemusePackageResources(assetsUrl, {
+        fallback: url,
+        fallbackPattern: /\.(?:png|jpg)/,
+      })
     }
 
     let latency = +query.latency || (+options['system.offset.audio-input'] / 1000) || 0
@@ -68,12 +71,14 @@ export function launch ({ server, song, chart }) {
     }
 
     // start loading the game
-    let { tasks, promise } = GameLoader.load(loadSpec)
+    let loader = GameLoader.load(loadSpec)
+    let { tasks, promise } = loader
 
     // display loading scene
     let loadingScene = React.createElement(LoadingScene, {
       tasks: tasks,
-      song:  chart.info,
+      song: chart.info,
+      eyecatchImagePromise: loader.get('EyecatchImage')
     })
     yield SCENE_MANAGER.push(loadingScene)
 

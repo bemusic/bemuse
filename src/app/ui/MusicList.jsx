@@ -8,7 +8,7 @@ import MusicListItem  from './MusicListItem.jsx'
 export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
   render () {
-    return <ul className="MusicList"
+    return <ul className="MusicList js-scrollable-view"
         onTouchStart={this.props.onTouch}>
       {this.props.groups.map(({ title, songs }) => [
         <li className="MusicListのgroupTitle">{title}</li>,
