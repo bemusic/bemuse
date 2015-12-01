@@ -45,11 +45,28 @@ describe('OmniInput', function () {
 
   beforeEach(function () {
     this.window = fakeWindow()
-    this.input = new OmniInput(this.window)
+    this.midi口 = new Bacon.Bus()
+    this.input = new OmniInput(this.window, { getMidi川: () => this.midi口 })
+    this.midi = (...args) => {
+      this.midi口.push({
+        data: args,
+        target: { id: '1234' },
+      })
+    }
   })
 
   afterEach(function () {
     this.input.dispose()
+  })
+
+  it('does not fail when browser support is limited', () => {
+    const basicWindow = {
+      addEventListener () { },
+      removeEventListener () { },
+      navigator: { },
+    }
+    const input = new OmniInput(basicWindow)
+    void input
   })
 
   describe('keyboard', function () {
@@ -90,9 +107,45 @@ describe('OmniInput', function () {
       assert(data['gamepad.1.axis.2.negative'])
       assert(!data['gamepad.1.axis.2.positive'])
     })
+  })
+
+  describe('midi', function () {
+    it('handles notes', function () {
+      this.midi(0x92, 0x40, 0x7F)
+      assert(this.input.update()['midi.1234.2.note.64'], 'note on')
+      this.midi(0x82, 0x40, 0x7F)
+      assert(!this.input.update()['midi.1234.2.note.64'], 'note off')
+      this.midi(0x92, 0x40, 0x7F)
+      assert(this.input.update()['midi.1234.2.note.64'], 'note on')
+      this.midi(0x92, 0x40, 0x00)
+      assert(!this.input.update()['midi.1234.2.note.64'], 'note off with note on')
+    })
+    it('handles pitch bend', function () {
+      this.midi(0xE1, 0x7F, 0x7F)
+      assert(this.input.update()['midi.1234.1.pitch.up'])
+      assert(!this.input.update()['midi.1234.1.pitch.down'])
+      this.midi(0xE1, 0x7F, 0x1F)
+      assert(this.input.update()['midi.1234.1.pitch.down'])
+      assert(!this.input.update()['midi.1234.1.pitch.up'])
+    })
+    it('handles sustain pedal', function () {
+      this.midi(0xBC, 0x40, 0x7F)
+      assert(this.input.update()['midi.1234.12.sustain'])
+      this.midi(0xBC, 0x40, 0x00)
+      assert(!this.input.update()['midi.1234.12.sustain'])
+    })
+    it('handles modulation lever', function () {
+      this.midi(0xBC, 0x01, 0x7F)
+      assert(this.input.update()['midi.1234.12.mod'])
+      this.midi(0xBC, 0x01, 0x00)
+      assert(!this.input.update()['midi.1234.12.mod'])
+    })
     it('returns the key name', function () {
-      assert(getName('32') === 'Space')
-      assert(getName('65') === 'A')
+      assert(getName('midi.1234.12.note.60').match(/C4/))
+      assert(getName('midi.1234.12.pitch.up').match(/Pitch\+/))
+      assert(getName('midi.1234.12.pitch.down').match(/Pitch\-/))
+      assert(getName('midi.1234.12.sustain').match(/Sustain/))
+      assert(getName('midi.1234.12.mod').match(/Mod/))
     })
   })
 

@@ -1,6 +1,7 @@
 import keycode from 'keycode'
 import _ from 'lodash'
 import Bacon from 'baconjs'
+import getMidi川 from './midi'
 
 
 // Public: OmniInput is a poll-based class that handles the key-pressed state of
@@ -19,14 +20,20 @@ import Bacon from 'baconjs'
 // - `gamepad.0.button.3` A gamepad button.
 // - `gamepad.0.axis.3.positive` A gamepad axis (positive value).
 // - `gamepad.0.axis.3.negative` A gamepad axis (negative value).
-// - `midi.ID.note.60` A MIDI note.
+// - `midi.[id].[channel].note.[note]` A MIDI note.
+// - `midi.[id].[channel].sustain` Sustain pedal.
+// - `midi.[id].[channel].mod` Modulation level.
+// - `midi.[id].[channel].pitch.up` Pitch bend (up).
+// - `midi.[id].[channel].pitch.down` Pitch bend (down).
 //
 export class OmniInput {
-  constructor (win = window) {
+  constructor (win = window, options = { }) {
+    const midi川 = (options.getMidi川 || getMidi川)()
     this._window = win
     this._disposables = [
       listen(win, 'keydown', e => this._handleKeyDown(e)),
       listen(win, 'keyup',   e => this._handleKeyUp(e)),
+      midi川.onValue(e => this._handleMIDIMessage(e)),
     ]
     this._status = { }
   }
@@ -35,6 +42,33 @@ export class OmniInput {
   }
   _handleKeyUp (e) {
     this._status[`${e.which}`] = false
+  }
+  _handleMIDIMessage (e) {
+    if (!e || !e.data) return
+    const data = e.data
+    const prefix = `midi.${e.target.id}.${e.data[0] & 0x0F}`
+    const handleNote = (state) => {
+      this._status[`${prefix}.note.${data[1]}`] = state
+    }
+    if ((data[0] & 0xF0) === 0x80) { // NoteOff
+      handleNote(false)
+    } else if ((data[0] & 0xF0) === 0x90) { // NoteOn
+      if (data[2] > 0x0) { // NoteOn (really)
+        handleNote(true)
+      } else { // NoteOff disguised as NoteOn
+        handleNote(false)
+      }
+    } else if ((data[0] & 0xF0) === 0xB0) { // CC
+      if (data[1] === 0x40) { // Sustain
+        this._status[`${prefix}.sustain`] = data[2] >= 64
+      } else if (data[1] === 0x01) { // Modulation
+        this._status[`${prefix}.mod`] = data[2] >= 16
+      }
+    } else if ((data[0] & 0xF0) === 0xE0) { // Pitch Bend
+      const bend = data[1] | (data[2] << 7)
+      this._status[`${prefix}.pitch.up`] = bend >= 0x2100
+      this._status[`${prefix}.pitch.down`] = bend < 0x1F00
+    }
   }
   _updateGamepads () {
     const nav = this._window.navigator
@@ -67,8 +101,8 @@ export class OmniInput {
     return this._status
   }
   dispose () {
-    for (let disposable of this._disposables) {
-      disposable.dispose()
+    for (let dispose of this._disposables) {
+      dispose()
     }
   }
 }
@@ -100,9 +134,11 @@ export function _key川ForUpdate川 (update川) {
 export default OmniInput
 
 
+const knownMidiIds = { }
+
 export function getName (key) {
   if (+key) {
-    return textFromKeyCode(+key)
+    return _.capitalize(keycode(+key))
   }
   {
     const match = key.match(/^gamepad\.(\d+)\.axis\.(\d+)\.(\w+)/)
@@ -116,20 +152,36 @@ export function getName (key) {
       return `Joy${match[1]} Btn${match[2]}`
     }
   }
-  return `${key}?`
-}
-
-
-function textFromKeyCode (keyCode) {
-  return _.capitalize(keycode(keyCode))
+  {
+    const match = key.match(/^midi\.(.+)\.(\d+)\.(.+)$/)
+    if (match) {
+      const rest = match[3].split('.')
+      const id = match[1]
+      const midiDeviceNumber = (
+        knownMidiIds[id] || (knownMidiIds[id] = Object.keys(knownMidiIds).length + 1)
+      )
+      const prefix = `MIDI${midiDeviceNumber} Ch${+match[2] + 1}`
+      if (rest[0] === 'note') {
+        const midiNote = +rest[1]
+        const lookup = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+        const noteName = lookup[midiNote % 12]
+        const octave = Math.floor(midiNote / 12) - 1
+        return `${prefix} ${noteName}${octave}`
+      }
+      if (rest[0] === 'pitch') {
+        return `${prefix} Pitch${rest[1] === 'up' ? '+' : '-'}`
+      }
+      if (rest[0] === 'sustain') return 'Sustain'
+      if (rest[0] === 'mod') return 'Mod'
+    }
+  }
+  return `${String(key).replace(/\./g, ' ')}?`
 }
 
 
 function listen (subject, eventName, listener) {
   subject.addEventListener(eventName, listener)
-  return {
-    dispose () {
-      subject.removeEventListener(eventName, listener)
-    }
+  return function dispose () {
+    subject.removeEventListener(eventName, listener)
   }
 }
