@@ -21,6 +21,7 @@
 
 @mixin options-input-button--text {
   position: relative;
+  text-align: center;
 }
 
 @keyframes options-input-button--editing-animation {

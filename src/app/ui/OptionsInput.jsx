@@ -7,6 +7,7 @@ import Store                from '../stores/options-input-store'
 import * as Actions         from '../actions/options-input-actions'
 import OptionsInputScratch  from './OptionsInputScratch'
 import OptionsInputKeys     from './OptionsInputKeys'
+import { key川 }             from 'bemuse/omni-input'
 
 export const OptionsInput = React.createClass({
   render () {
@@ -61,18 +62,25 @@ export const OptionsInput = React.createClass({
     }
   },
   componentDidMount () {
-    window.addEventListener('keydown', this.handleKey, true)
+    // XXX: debounce is needed because some gamepad inputs trigger multiple
+    // buttons
+    this._dispose = key川().debounceImmediate(16).doLog('a').onValue(this.handleKey)
+    window.addEventListener('keydown', this.handleKeyboardEvent, true)
   },
   componentWillUnmount () {
-    window.removeEventListener('keydown', this.handleKey, true)
+    if (this._dispose) this._dispose()
+    window.removeEventListener('keydown', this.handleKeyboardEvent, true)
   },
-  handleKey (e) {
+  handleKey (key) {
     if (this.props.editing) {
-      e.stopPropagation()
-      e.preventDefault()
-      Actions.setKeyCode(this.props.mode, this.props.editing, e.keyCode)
+      Actions.setKeyCode(this.props.mode, this.props.editing, key)
     }
   },
+  handleKeyboardEvent (e) {
+    if (this.props.editing) {
+      e.preventDefault()
+    }
+  }
 })
 
 export default connect(Store, OptionsInput)

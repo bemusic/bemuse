@@ -10,11 +10,11 @@ export function Action (transform = x => x) {
   var bus = new Bacon.Bus()
   var action = function () {
     if (lock) {
-      throw new Error('An action should not fire another action!')
+      throw new Error('An action should not fire another action! (' + lock.stack + ')')
     }
     try {
       let payload = transform.apply(null, arguments)
-      lock = true
+      lock = new Error('Previous lock:')
       bus.push(payload)
     } finally {
       lock = false
