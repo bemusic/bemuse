@@ -5,9 +5,8 @@ import GameInput from './input'
 import Clock     from './clock'
 import bench     from 'bemuse/devtools/benchmark'
 
-import GamepadPlugin      from './input/gamepad-plugin'
 import TouchPlugin        from './input/touch-plugin'
-import GameKeyboardPlugin from './input/game-keyboard-plugin'
+import OmniInputPlugin    from './input/omni-input-plugin'
 
 // The GameController takes care of communications between each game
 // component, and takes care of the Game loop.
@@ -41,8 +40,7 @@ export class GameController {
   start () {
     this._handleEscape()
     this._display.start()
-    this._input.use(new GamepadPlugin())
-    this._input.use(new GameKeyboardPlugin(this._game))
+    this._input.use(new OmniInputPlugin(this._game))
     this._input.use(new TouchPlugin(this._display.context))
     if (/Mobile.*?Safari/.test(navigator.userAgent)) {
       let id = setInterval(() => this._update(), 10)

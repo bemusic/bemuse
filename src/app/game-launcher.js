@@ -21,7 +21,7 @@ import OptionsStore           from './stores/options-store'
 import OptionsInputStore      from './stores/options-input-store'
 import { MISSED }             from 'bemuse/game/judgments'
 
-import { shouldDisableFullScreen } from 'bemuse/devtools/query-flags'
+import { shouldDisableFullScreen, isTitleDisplayMode } from 'bemuse/devtools/query-flags'
 
 export function launch ({ server, song, chart }) {
   return co(function*() {
@@ -81,6 +81,9 @@ export function launch ({ server, song, chart }) {
       eyecatchImagePromise: loader.get('EyecatchImage')
     })
     yield SCENE_MANAGER.push(loadingScene)
+
+    // if in title display mode, stop
+    if (isTitleDisplayMode()) return
 
     // send data to analytics
     Analytics.gameStart(song, chart)

@@ -2,6 +2,7 @@
 import './LoadingSceneSongInfo.scss'
 
 import React from 'react'
+import { isTitleDisplayMode } from 'bemuse/devtools/query-flags'
 
 export default React.createClass({
 
@@ -10,8 +11,12 @@ export default React.createClass({
     return <div className="LoadingSceneSongInfo">
       <div className="LoadingSceneSongInfoのgenre">{song.genre}</div>
       <div className="LoadingSceneSongInfoのtitle">{song.title}</div>
-      {song.subtitles.map(text =>
-        <div className="LoadingSceneSongInfoのsubtitle">{text}</div>)}
+      {!isTitleDisplayMode
+        ? song.subtitles.map(text =>
+          <div className="LoadingSceneSongInfoのsubtitle">{text}</div>
+        )
+        : null
+      }
       <div className="LoadingSceneSongInfoのartist">{song.artist}</div>
       {song.subartists.map(text =>
         <div className="LoadingSceneSongInfoのsubartist">{text}</div>)}
