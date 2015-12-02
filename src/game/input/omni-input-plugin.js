@@ -2,7 +2,7 @@
 import { OmniInput } from 'bemuse/omni-input'
 
 function OmniInputPlugin (game) {
-  const input = new OmniInput()
+  const input = new OmniInput(window, { exclusive: true })
   let kbm = game.players[0].options.input.keyboard
   return {
     name: 'GameKBPlugin',

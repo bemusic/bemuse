@@ -30,6 +30,7 @@ export class OmniInput {
   constructor (win = window, options = { }) {
     const midi川 = (options.getMidi川 || getMidi川)()
     this._window = win
+    this._exclusive = !!options.exclusive
     this._disposables = [
       listen(win, 'keydown', e => this._handleKeyDown(e)),
       listen(win, 'keyup',   e => this._handleKeyUp(e)),
@@ -39,6 +40,7 @@ export class OmniInput {
   }
   _handleKeyDown (e) {
     this._status[`${e.which}`] = true
+    if (this._exclusive) e.preventDefault()
   }
   _handleKeyUp (e) {
     this._status[`${e.which}`] = false

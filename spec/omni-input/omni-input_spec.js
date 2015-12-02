@@ -8,6 +8,7 @@ import Bacon from 'baconjs'
 function fakeWindow () {
   const events = new EventEmitter()
   const gamepads = [ ]
+  const noop = () => { }
   return {
     addEventListener (name, callback) {
       events.on(name, callback)
@@ -23,10 +24,10 @@ function fakeWindow () {
       events.removeListener('timeout', callback)
     },
     keydown (keyCode) {
-      events.emit('keydown', { which: keyCode })
+      events.emit('keydown', { which: keyCode, preventDefault: noop })
     },
     keyup (keyCode) {
-      events.emit('keyup', { which: keyCode })
+      events.emit('keyup', { which: keyCode, preventDefault: noop })
     },
     tick () {
       events.emit('timeout')
@@ -46,7 +47,9 @@ describe('OmniInput', function () {
   beforeEach(function () {
     this.window = fakeWindow()
     this.midi口 = new Bacon.Bus()
-    this.input = new OmniInput(this.window, { getMidi川: () => this.midi口 })
+    this.input = new OmniInput(this.window, {
+      getMidi川: () => this.midi口
+    })
     this.midi = (...args) => {
       this.midi口.push({
         data: args,
