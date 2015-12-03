@@ -31,7 +31,7 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
+    browsers: [process.env.BROWSER === 'firefox' ? 'Firefox' : 'Chrome'],
     singleRun: false,
     concurrency: Infinity
   })
