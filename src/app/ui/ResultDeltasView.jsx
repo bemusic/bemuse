@@ -6,7 +6,7 @@ import variance from 'variance'
 import mean     from 'mean'
 import median   from 'median'
 
-import Panel        from 'bemuse/ui/panel'
+import Panel        from 'bemuse/ui/Panel'
 import { timegate } from 'bemuse/game/judgments'
 
 const ms = delta => `${(delta * 1000).toFixed(1)} ms`
