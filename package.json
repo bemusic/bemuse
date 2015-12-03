@@ -10,7 +10,7 @@
     "lint": "gulp lint",
     "pre-commit": "gulp pre-commit",
     "start": "bash -c \"HOT=true gulp server\"",
-    "test": "bash -c \"BEMUSE_COV=true gulp build && BEMUSE_COV=true gulp test:exit\"",
+    "test": "bash -c \"BEMUSE_COV=true gulp build && BEMUSE_COV=true gulp test\"",
     "travis": "gulp travis"
   },
   "repository": {
