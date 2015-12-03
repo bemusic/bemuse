@@ -58,12 +58,11 @@ function runMocha () {
   })
   .on('suite end', function (suite) {
     if (suite.root) {
-      let coverage = window.__coverage__ || null
-      let json = JSON.stringify({ specs, coverage })
-      let xh = new XMLHttpRequest()
-      xh.open('POST', '/api/test', true)
-      xh.setRequestHeader('Content-Type', 'application/json')
-      xh.send(json)
+      if (specs.some(spec => spec.status === 'failed')) {
+        document.documentElement.classList.add('mocha-is-failing')
+      } else {
+        document.documentElement.classList.add('mocha-is-passing')
+      }
     }
   })
 }

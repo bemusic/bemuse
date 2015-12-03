@@ -1,3 +1,25 @@
 #mocha-stats em {
   color: white;
 }
+
+.mocha-is-passing::before {
+  content: '';
+  display: block;
+  background: #0c0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 10px;
+  left: 0;
+}
+
+.mocha-is-failing::before {
+  content: '';
+  display: block;
+  background: #c00;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 10px;
+  left: 0;
+}
