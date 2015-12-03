@@ -36,6 +36,10 @@ export function judgeTimeWith (f) {
 export const judgeTime    = judgeTimeWith(_.property('timegate'))
 export const judgeEndTime = judgeTimeWith(_.property('endTimegate'))
 
+export function timegate (judgment) {
+  return _.find(JUDGMENTS, { value: judgment }).timegate
+}
+
 export function isBad (judgment) {
   return judgment >= 4
 }

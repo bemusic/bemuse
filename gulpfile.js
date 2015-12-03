@@ -1,6 +1,3 @@
 
-require('dotenv').load()
-require('babel-core/register')
-global.Promise = require('bluebird')
-
+require('./node-environment')
 require('glob').sync('./tasks/*.js').forEach(function (file) { require(file) })

@@ -11,7 +11,7 @@ export default React.createClass({
     return <div className="LoadingSceneSongInfo">
       <div className="LoadingSceneSongInfoのgenre">{song.genre}</div>
       <div className="LoadingSceneSongInfoのtitle">{song.title}</div>
-      {!isTitleDisplayMode
+      {!isTitleDisplayMode()
         ? song.subtitles.map(text =>
           <div className="LoadingSceneSongInfoのsubtitle">{text}</div>
         )

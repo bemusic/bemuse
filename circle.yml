@@ -9,7 +9,7 @@ test:
     - rm -rf dist
     - NODE_ENV=production ./node_modules/.bin/gulp build
     - ./node_modules/.bin/gulp pre-deploy
-    - ./node_modules/.bin/gulp test:exit
+    - ./node_modules/.bin/gulp test
 deployment:
   production:
     branch: master

@@ -15,7 +15,8 @@ export class PlayerStats {
     this.counts = { [Judgments.MISSED]: 0, '1': 0, '2': 0, '3': 0, '4': 0, }
     this.numJudgments = 0
     this.poor = false
-    this._log = []
+    this._log = [ ]
+    this.deltas = [ ]
   }
   get score () {
     //#region score
@@ -57,6 +58,9 @@ export class PlayerStats {
     this.counts[judgment] += 1
     this.numJudgments += 1
     this._recordLog(judgment)
+  }
+  handleDelta (delta) {
+    this.deltas.push(delta)
   }
   _calculateRawTotalComboScore () {
     var sum = 0

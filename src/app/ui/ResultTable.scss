@@ -2,26 +2,34 @@
 @import "~bemuse/ui/common";
 
 .ResultTable {
-  table {
+  &のtable {
     width: 100%;
     margin-bottom: 1ex;
     text-shadow: 2px 2px 0 rgba(black, 0.2);
   }
-  th, td {
-    font-size: 4vmin;
-    font-weight: normal;
+  &のtable > tbody > tr {
+    > th, > td {
+      font-size: 4vmin;
+      font-weight: normal;
+    }
+    > th {
+      text-align: left;
+      padding-left: 1ex;
+      color: rgba(white, 0.7);
+    }
+    > td {
+      text-align: right;
+      width: 36%;
+      color: white;
+    }
+    > td.is-clickable {
+      cursor: pointer;
+      &:hover {
+        text-shadow: 0 0 1em white;
+      }
+    }
   }
-  td {
-    text-align: right;
-    width: 36%;
-    color: white;
-  }
-  th {
-    text-align: left;
-    padding-left: 1ex;
-    color: rgba(white, 0.7);
-  }
-  table.ResultTableのtotal {
-    th, td { font-weight: bold; }
+  table.ResultTableのtotal > tbody > tr {
+    > th, > td { font-weight: bold; }
   }
 }
