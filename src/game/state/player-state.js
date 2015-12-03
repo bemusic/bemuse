@@ -182,11 +182,13 @@ export class PlayerState {
     let delta    = this._gameTime - note.time
     let judgment = judgeTime(this._gameTime, note.time)
     let result   = this._noteResult.get(note)
+    let isDown   = !result || result.status === 'unjudged'
+    let isUp     = result  && result.status === 'active'
     if (note.end) {
-      if (!result || result.status === 'unjudged') {
+      if (isDown) {
         let status = judgment === MISSED ? 'judged' : 'active'
         result = { status, judgment, delta }
-      } else if (result.status === 'active') {
+      } else if (isUp) {
         let scratch = note.column === 'SC'
         delta     = this._gameTime - note.end.time
         judgment  = judgeEndTime(this._gameTime, note.end.time) || MISSED
@@ -198,6 +200,9 @@ export class PlayerState {
     }
     if (judgment === MISSED) {
       this.notifications.sounds.push({ note, type: 'break' })
+    }
+    if (isDown && judgment !== MISSED) {
+      this.stats.handleDelta(delta)
     }
     this._noteResult.set(note, result)
     this._setJudgment(judgment, delta, note.column)

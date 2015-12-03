@@ -16,6 +16,7 @@ export function main () {
       'accuracy': 0.97,
       'totalCombo': 11106,
       'grade': 'A',
+      'deltas': [0, 0.01, 0.03, -0.03, -0.06]
     },
     chart: {
       info: {

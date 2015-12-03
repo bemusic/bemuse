@@ -137,6 +137,26 @@ describe('PlayerState', function () {
 
       })
 
+      it('records delta when pressed', function () {
+        setup(`
+          #BPM 120
+          #00111:01
+        `)
+        sinon.spy(state.stats, 'handleDelta')
+        advance(2.01, { 'p1_1': 1 })
+        expect(state.stats.handleDelta).to.have.been.calledWith(2.01 - 2)
+      })
+
+      it('does not record delta when missed', function () {
+        setup(`
+          #BPM 120
+          #00111:01
+        `)
+        sinon.spy(state.stats, 'handleDelta')
+        advance(9, { 'p1_1': 1 })
+        expect(state.stats.handleDelta).to.have.callCount(0)
+      })
+
       describe('with long note', function () {
         let note
         beforeEach(function () {
@@ -155,6 +175,12 @@ describe('PlayerState', function () {
           expect(state.getNoteStatus(note)).to.equal('judged')
           expect(state.getNoteJudgment(note)).to.equal(1)
           expect(state.notifications.judgments[0].judgment).to.equal(1)
+        })
+        it('records delta once', function () {
+          sinon.spy(state.stats, 'handleDelta')
+          advance(2, { 'p1_1': 1 })
+          advance(3, { 'p1_1': 0 })
+          expect(state.stats.handleDelta).to.have.callCount(1)
         })
         it('judges missed long note', function () {
           advance(2.3, { 'p1_1': 1 })

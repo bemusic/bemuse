@@ -17,6 +17,16 @@ describe('PlayerStats', function () {
     })
   })
 
+  describe('#deltas', function () {
+    it('returns the deltas', function () {
+      let stats = new PlayerStats(notechart('#00111:111111'))
+      stats.handleDelta(0.031)
+      stats.handleDelta(0.001)
+      stats.handleDelta(-0.031)
+      expect(stats.deltas).to.deep.equal([ 0.031, 0.001, -0.031 ])
+    })
+  })
+
   describe('#log', function () {
     it('returns the log', function () {
       let stats = new PlayerStats(notechart('#00111:11111111111111'))

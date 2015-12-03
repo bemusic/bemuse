@@ -133,6 +133,7 @@ function showResult (playerState, chart) {
         'accuracy':   stats.accuracy,
         'totalCombo': stats.totalCombo,
         'log':        stats.log,
+        'deltas':     stats.deltas,
         'grade':      getGrade(stats),
       },
       chart:    chart,

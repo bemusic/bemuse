@@ -1,0 +1,113 @@
+
+.ResultDeltasView {
+  $early-color: #66f;
+  $late-color: #f66;
+  $meticulous-color: #6e6;
+  &のcontent {
+    color: white;
+    padding: 16px;
+    position: relative;
+  }
+  &のhistogram {
+    display: flex;
+    min-width: 360px;
+    align-items: flex-end;
+    border-bottom: 1px solid rgba(white, 0.1);
+  }
+  &のhistogramBar {
+    background: white;
+    flex: 1;
+    &[data-bucket='-20'],
+    &[data-bucket='-19'],
+    &[data-bucket='-18'],
+    &[data-bucket='-17'],
+    &[data-bucket='-16'],
+    &[data-bucket='-15'],
+    &[data-bucket='-14'],
+    &[data-bucket='-13'],
+    &[data-bucket='-12'],
+    &[data-bucket='-11'] {
+      background: rgba($early-color, 0.4);
+    }
+    &[data-bucket='-10'],
+    &[data-bucket='-9'],
+    &[data-bucket='-8'],
+    &[data-bucket='-7'],
+    &[data-bucket='-6'] {
+      background: rgba($early-color, 0.8);
+    }
+    &[data-bucket='-5'],
+    &[data-bucket='-4'],
+    &[data-bucket='-3'] {
+      background: $early-color;
+    }
+    &[data-bucket='-2'],
+    &[data-bucket='-1'],
+    &[data-bucket='0'],
+    &[data-bucket='1'] {
+      background: $meticulous-color;
+    }
+    &[data-bucket='2'],
+    &[data-bucket='3'],
+    &[data-bucket='4'] {
+      background: $late-color;
+    }
+    &[data-bucket='5'],
+    &[data-bucket='6'],
+    &[data-bucket='7'],
+    &[data-bucket='8'],
+    &[data-bucket='9'] {
+      background: rgba($late-color, 0.8);
+    }
+    &[data-bucket='10'],
+    &[data-bucket='11'],
+    &[data-bucket='12'],
+    &[data-bucket='13'],
+    &[data-bucket='14'],
+    &[data-bucket='15'],
+    &[data-bucket='16'],
+    &[data-bucket='17'],
+    &[data-bucket='18'],
+    &[data-bucket='19'] {
+      background: rgba($late-color, 0.4);
+    }
+  }
+  &のnumber {
+    position: absolute;
+    top: 16px;
+    strong {
+      font-size: 2.5em;
+      display: block;
+      line-height: 1;
+    }
+    &.is-early {
+      left: 16px;
+      text-align: left;
+      color: lighten($early-color, 10%);
+    }
+    &.is-late {
+      right: 16px;
+      text-align: right;
+      color: lighten($late-color, 10%);
+    }
+  }
+  &のinfo {
+    margin: 1em auto 0;
+    > tbody > tr {
+      > th {
+        text-align: right;
+      }
+      > td {
+        text-align: center;
+      }
+      > td.is-number {
+        text-align: right;
+        padding-left: 0.3em;
+        padding-right: 0.2em;
+      }
+    }
+  }
+  pre {
+    margin: 0;
+  }
+}
