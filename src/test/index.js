@@ -5,13 +5,12 @@ import 'script!mocha/mocha.js'
 import 'style!mocha/mocha.css'
 import 'style!./support/mocha-overrides.css'
 
-import chai           from 'chai'
-import chaiAsPromised from 'chai-as-promised'
-import sinonChai      from 'sinon-chai'
-import sinon          from 'sinon/pkg/sinon'
+import prepareTestEnvironment from './prepareTestEnvironment'
+import loadSpecs from './loadSpecs'
 
 export function main () {
   setupMocha()
+  prepareTestEnvironment()
   loadSpecs()
   runMocha()
 }
@@ -20,18 +19,6 @@ function setupMocha () {
   let mochaElement = document.createElement('div')
   mochaElement.id = 'mocha'
   document.body.appendChild(mochaElement)
-  mocha.setup('bdd')
-  chai.use(chaiAsPromised)
-  chai.use(sinonChai)
-  global.expect = chai.expect
-  global.sinon  = sinon
-}
-
-function loadSpecs () {
-  let context = require.context('../../spec', true, /_spec\.js$/)
-  for (let key of context.keys()) {
-    context(key)
-  }
 }
 
 function runMocha () {
