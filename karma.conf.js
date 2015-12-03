@@ -15,13 +15,18 @@ module.exports = function (config) {
     exclude: [
     ],
     preprocessors: {
-      'src/test/karma.js': ['webpack'],
+      'src/test/karma.js': ['webpack', 'sourcemap'],
     },
     webpack: require('./config/webpack').generateKarmaConfig(),
     webpackMiddleware: {
       noInfo: true
     },
-    reporters: ['progress'],
+    reporters: ['progress', 'coverage'],
+    coverageReporter: {
+      type: 'lcov',
+      dir: 'coverage',
+      subdir: '.',
+    },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

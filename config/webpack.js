@@ -138,7 +138,6 @@ function applyWebConfig (config) {
 
 
 function applyKarmaConfig (config) {
-
   if (Env.coverageEnabled()) {
     config.module.preLoaders.push({
       test: /\.js$/,
@@ -151,6 +150,8 @@ function applyKarmaConfig (config) {
       loader: 'isparta-instrumenter',
     })
   }
+
+  config.devtool = 'inline-source-map'
 
   return config
 }
