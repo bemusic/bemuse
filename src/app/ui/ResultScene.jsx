@@ -11,6 +11,7 @@ import ResultGrade      from './ResultGrade'
 import RankingContainer from './RankingContainer'
 import Flex             from 'bemuse/ui/Flex'
 import * as QueryFlags  from '../query-flags'
+import * as Analytics   from '../analytics'
 
 export default React.createClass({
   render () {
@@ -41,7 +42,7 @@ export default React.createClass({
             <i className="fa fa-twitter" />
           </a>
           <Flex grow={1} />
-          <div className="ResultSceneのexit" onClick={this.props.onExit}>
+          <div className="ResultSceneのexit" onClick={this.handleExit}>
             Continue
           </div>
         </div>
@@ -81,7 +82,12 @@ export default React.createClass({
   onTweet (e) {
     e.preventDefault()
     e.stopPropagation()
+    Analytics.action('ResultScene:tweet')
     window.open(this.getTweetLink(), 'intent', 'width=550,height=420')
+  },
+  handleExit (e) {
+    this.props.onExit(e)
+    Analytics.action('ResultScene:exit')
   },
   noop () {
   },

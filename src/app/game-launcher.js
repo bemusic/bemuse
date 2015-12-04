@@ -107,7 +107,10 @@ export function launch ({ server, song, chart }) {
 
     // display evaluation
     if (state.finished) {
+      Analytics.action('Game:finish')
       yield showResult(playerState, chart)
+    } else {
+      Analytics.action('Game:escape')
     }
     controller.destroy()
 

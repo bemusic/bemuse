@@ -7,12 +7,13 @@ import SceneToolbar     from 'bemuse/ui/SceneToolbar'
 import ModalPopup       from 'bemuse/ui/ModalPopup'
 import SCENE_MANAGER    from 'bemuse/scene-manager'
 import version          from 'bemuse/utils/version'
+import * as Analytics   from '../analytics'
+import OptionsStore     from '../stores/options-store'
+import { setOptions }   from '../actions/options-actions'
 import ModeSelectScene  from './ModeSelectScene'
 import AboutScene       from './AboutScene'
 import ChangelogPanel   from './ChangelogPanel'
 import { connect }      from 'bemuse/flux'
-import OptionsStore     from '../stores/options-store'
-import { setOptions }   from '../actions/options-actions'
 
 React.initializeTouchEvents(true)
 
@@ -32,7 +33,7 @@ export const TitleScene = React.createClass({
       <SceneToolbar>
         <a onClick={this.showAbout} href="javascript://">About</a>
         <a onClick={this.openLink} href="https://bemuse.readthedocs.org">Docs</a>
-        <a onClick={this.onViewChangelog} href="javascript://">{this.renderVersion()}</a>
+        <a onClick={this.viewChangelog} href="javascript://">{this.renderVersion()}</a>
         <SceneToolbar.Spacer />
         <a onClick={this.openLink} href="https://www.facebook.com/bemusegame">Facebook</a>
         <a onClick={this.openLink} href="https://twitter.com/bemusegame">Twitter</a>
@@ -76,13 +77,16 @@ export const TitleScene = React.createClass({
   },
   enterGame () {
     SCENE_MANAGER.push(<ModeSelectScene />).done()
+    Analytics.action('TitleScene:enterGame')
   },
   showAbout () {
     SCENE_MANAGER.push(<AboutScene />).done()
+    Analytics.action('TitleScene:showAbout')
   },
-  onViewChangelog () {
+  viewChangelog () {
     this.toggleChangelogModal()
     this.props.markChangelogAsSeen()
+    Analytics.action('TitleScene:viewChangelog')
   },
   toggleChangelogModal () {
     this.setState({ changelogModalVisible: !this.state.changelogModalVisible })

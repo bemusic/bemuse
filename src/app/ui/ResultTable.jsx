@@ -4,6 +4,7 @@ import React            from 'react'
 import RunningNumber    from 'bemuse/ui/RunningNumber'
 import ModalPopup       from 'bemuse/ui/ModalPopup'
 import ResultDeltasView from './ResultDeltasView'
+import * as Analytics   from '../analytics'
 
 export default React.createClass({
   getInitialState () {
@@ -43,7 +44,7 @@ export default React.createClass({
             <th>Max Combo</th>
           </tr>
           <tr>
-            <td onClick={this.handleToggleDeltasModal} className="is-clickable">
+            <td onClick={this.handleViewDeltas} className="is-clickable">
               <RunningNumber
                 formatter={this.formatAccuracy}
                 value={result['accuracy']}
@@ -74,5 +75,9 @@ export default React.createClass({
   },
   handleToggleDeltasModal () {
     this.setState({ deltasModalVisible: !this.state.deltasModalVisible })
+  },
+  handleViewDeltas () {
+    this.handleToggleDeltasModal()
+    Analytics.action('ResultTable:viewDeltas')
   },
 })
