@@ -5,9 +5,10 @@ function getLabel (chart) {
   return `${chart.md5} ${[chart.info.title, ...chart.info.subtitles].join(' ')}`
 }
 
-export function gameStart (song, chart) {
+export function gameStart (song, chart, gameMode) {
   ga('send', 'event', 'song', 'play', song.title)
   ga('send', 'event', 'game', 'start', getLabel(chart), chart.info.level)
+  ga('send', 'event', 'game', 'mode', gameMode, 1)
 }
 
 export function gameFinish (song, chart, gameState) {

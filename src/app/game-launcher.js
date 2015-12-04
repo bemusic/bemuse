@@ -86,7 +86,7 @@ export function launch ({ server, song, chart }) {
     if (isTitleDisplayMode()) return
 
     // send data to analytics
-    Analytics.gameStart(song, chart)
+    Analytics.gameStart(song, chart, optionsStoreState.scratch ? 'BM' : 'KB')
 
     // wait for game to load and display the game
     let controller = yield promise
