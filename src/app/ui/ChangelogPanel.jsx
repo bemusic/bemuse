@@ -27,11 +27,15 @@ export const ChangelogPanel = React.createClass({
     )
   },
   getMarkdown () {
+    const releasesPage = '[releases page on GitHub](https://github.com/bemusic/bemuse/releases)'
     if (this.state.data.status === 'loading') {
       return 'Omachi kudasai…'
     }
     if (this.state.data.status === 'error') {
-      return 'Unable to load changelog :('
+      return (
+        '__Unable to load the change log :(__\n\n' +
+        'You can view the change log at the ' + releasesPage
+      )
     }
     const releases = (_(this.state.data.releases || [ ])
       .reject('draft')
@@ -46,7 +50,7 @@ export const ChangelogPanel = React.createClass({
     )
     const seeMore = (
       '# Older Versions\n\n' +
-      'The change log for older versions are available on [GitHub](https://github.com/bemusic/bemuse/releases)'
+      'The change log for older versions are available at the ' + releasesPage
     )
     return changelog + '\n\n' + seeMore
   },
