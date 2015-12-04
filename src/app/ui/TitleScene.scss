@@ -38,4 +38,58 @@
     }
   }
 
+  &のversion {
+    position: relative;
+    display: inline-block;
+  }
+
+  &のnewVersion {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    animation: 0.5s TitleSceneのnewVersion;
+  }
+
+  &のnewVersionContent {
+    position: relative;
+    display: block;
+    background: #B61A44;
+    padding: 8px 12px;
+    color: white;
+    white-space: nowrap;
+    border-radius: 8px;
+    font-weight: bold;
+    animation: 1.8s TitleSceneのnewVersionContent linear infinite;
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 0;
+      height: 0;
+      bottom: -8px;
+      left: 50%;
+      margin-left: -8px;
+      border-width: 8px 8px 0 8px;
+      border-style: solid;
+      border-color: transparent;
+      border-top-color: #B61A44;
+    }
+  }
+
+}
+
+@keyframes TitleSceneのnewVersion {
+  from {
+    transform: translate(-50%, -200%);
+    opacity: 0;
+  }
+}
+
+@keyframes TitleSceneのnewVersionContent {
+  0% { transform: translateY(0); animation-timing-function: ease-out; }
+  25% { transform: translateY(-3px); animation-timing-function: ease-in; }
+  50% { transform: translateY(0); animation-timing-function: ease-out; }
+  75% { transform: translateY(3px); animation-timing-function: ease-in; }
+  100% { transform: translateY(0); }
 }

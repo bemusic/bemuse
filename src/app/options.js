@@ -45,6 +45,9 @@ const DEFAULTS = {
   'system.offset.audio-input':  '0',
   'system.offset.audio-visual': '0',
 
+  // Version
+  'system.last-seen-version':   '0.0.0',
+
 }
 
 // Returns all the available options.

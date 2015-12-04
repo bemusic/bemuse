@@ -21,6 +21,7 @@ import Options          from './Options'
 import CustomBMS        from './CustomBMS'
 import Store            from '../stores/music-select-store'
 import * as Actions     from '../actions/music-select-actions'
+import * as Analytics   from '../analytics'
 
 import * as CustomBMSActions from '../actions/custom-bms-actions'
 import { shouldShowOptions } from 'bemuse/devtools/query-flags'
@@ -186,7 +187,12 @@ export const MusicSelectScene = React.createClass({
   },
   handleSongSelect (song, chart) {
     Actions.selectSong(song)
-    if (chart) Actions.selectChart(chart)
+    if (chart) {
+      Actions.selectChart(chart)
+      Analytics.action('MusicSelectScene:selectSongAndChart')
+    } else {
+      Analytics.action('MusicSelectScene:selectSong')
+    }
     this.setState({ inSong: true })
   },
   handleMusicListTouch () {
@@ -194,8 +200,10 @@ export const MusicSelectScene = React.createClass({
   },
   handleChartClick (chart) {
     if (this.props.musicSelect.chart.md5 === chart.md5) {
+      Analytics.action('MusicSelectScene:launchGame')
       Actions.launchGame()
     } else {
+      Analytics.action('MusicSelectScene:selectChart')
       Actions.selectChart(chart)
     }
   },
@@ -203,6 +211,7 @@ export const MusicSelectScene = React.createClass({
     Actions.setFilterText(e.target.value)
   },
   handleOptionsOpen () {
+    Analytics.action('MusicSelectScene:optionsOpen')
     this.setState({ optionsVisible: true })
   },
   handleOptionsClose () {
@@ -211,6 +220,7 @@ export const MusicSelectScene = React.createClass({
   handleCustomBMSOpen () {
     CustomBMSActions.clear()
     this.setState({ customBMSVisible: true })
+    Analytics.action('MusicSelectScene:customBMSOpen')
   },
   handleCustomBMSClose () {
     this.setState({ customBMSVisible: false })
@@ -221,6 +231,7 @@ export const MusicSelectScene = React.createClass({
   },
   handleUnofficialClick () {
     this.setState({ unofficialDisclaimerVisible: true })
+    Analytics.action('MusicSelectScene:unofficialClick')
   },
   handleUnofficialClose () {
     this.setState({ unofficialDisclaimerVisible: false })
@@ -228,10 +239,12 @@ export const MusicSelectScene = React.createClass({
   handleLogout () {
     if (confirm('Do you really want to log out?')) {
       Promise.resolve(online.logOut()).done()
+      Analytics.action('MusicSelectScene:logout')
     }
   },
   handleAuthenticate () {
     this.setState({ authenticationPopupVisible: true })
+    Analytics.action('MusicSelectScene:authenticate')
   },
   handleAuthenticationClose () {
     this.setState({ authenticationPopupVisible: false })
