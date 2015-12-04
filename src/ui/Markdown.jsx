@@ -8,6 +8,13 @@ const markdown = new Markdown({
   typographer: true,
 })
 
+const safeMarkdown = new Markdown({
+  html: true,
+  linkify: true,
+  breaks: true,
+  typographer: true,
+})
+
 export default React.createClass({
   render () {
     return <article className="Markdown"></article>
@@ -25,7 +32,7 @@ export default React.createClass({
     this.update()
   },
   update () {
-    let html = markdown.render(this.props.source)
+    let html = (this.props.safe ? safeMarkdown : markdown).render(this.props.source)
     this.getDOMNode().innerHTML = html
   },
 })

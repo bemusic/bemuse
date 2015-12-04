@@ -4,15 +4,25 @@ import './TitleScene.scss'
 import React            from 'react'
 import Scene            from 'bemuse/ui/Scene'
 import SceneToolbar     from 'bemuse/ui/SceneToolbar'
+import ModalPopup       from 'bemuse/ui/ModalPopup'
 import SCENE_MANAGER    from 'bemuse/scene-manager'
+import version          from 'bemuse/utils/version'
 import ModeSelectScene  from './ModeSelectScene'
 import AboutScene       from './AboutScene'
-import version          from 'bemuse/utils/version'
+import ChangelogPanel   from './ChangelogPanel'
+import { connect }      from 'bemuse/flux'
+import OptionsStore     from '../stores/options-store'
+import { setOptions }   from '../actions/options-actions'
 
 React.initializeTouchEvents(true)
 
-export default React.createClass({
+export const TitleScene = React.createClass({
 
+  getInitialState () {
+    return {
+      changelogModalVisible: false,
+    }
+  },
   render () {
     return <Scene className="TitleScene">
       <div className="TitleSceneのlogo"></div>
@@ -22,7 +32,7 @@ export default React.createClass({
       <SceneToolbar>
         <a onClick={this.showAbout} href="javascript://">About</a>
         <a onClick={this.openLink} href="https://bemuse.readthedocs.org">Docs</a>
-        <span><strong>Bemuse</strong> v{version}</span>
+        <a onClick={this.onViewChangelog} href="javascript://">{this.renderVersion()}</a>
         <SceneToolbar.Spacer />
         <a onClick={this.openLink} href="https://www.facebook.com/bemusegame">Facebook</a>
         <a onClick={this.openLink} href="https://twitter.com/bemusegame">Twitter</a>
@@ -30,19 +40,63 @@ export default React.createClass({
         <a onClick={this.openLink} href="https://github.com/bemusic/bemuse">GitHub</a>
         <a onClick={this.openLink} href="https://gitter.im/bemusic/bemuse">Chat</a>
       </SceneToolbar>
+      <ModalPopup
+        visible={this.state.changelogModalVisible}
+        onBackdropClick={this.toggleChangelogModal}
+      >
+        <ChangelogPanel />
+      </ModalPopup>
     </Scene>
+  },
+
+  renderVersion () {
+    return (
+      <span className="TitleSceneのversion">
+        <strong>Bemuse</strong> v{version}
+        {!this.props.hasSeenChangelog
+          ? this.renderNewVersionBubble()
+          : null
+        }
+      </span>
+    )
+  },
+  renderNewVersionBubble () {
+    return (
+      <span className="TitleSceneのnewVersion">
+        <span className="TitleSceneのnewVersionContent">
+          What’s new?
+        </span>
+      </span>
+    )
   },
 
   openLink (e) {
     e.preventDefault()
     window.open(e.target.href, '_blank')
   },
-
   enterGame () {
     SCENE_MANAGER.push(<ModeSelectScene />).done()
   },
   showAbout () {
     SCENE_MANAGER.push(<AboutScene />).done()
   },
+  onViewChangelog () {
+    this.toggleChangelogModal()
+    this.props.markChangelogAsSeen()
+  },
+  toggleChangelogModal () {
+    this.setState({ changelogModalVisible: !this.state.changelogModalVisible })
+  },
 
 })
+
+const titleScenePropsFromStore川 = OptionsStore.map(
+  state => ({
+    hasSeenChangelog: state.options['system.last-seen-version'] === version,
+    markChangelogAsSeen () {
+      setOptions({ 'system.last-seen-version': version })
+    }
+  })
+)
+
+export default connect(titleScenePropsFromStore川, TitleScene)

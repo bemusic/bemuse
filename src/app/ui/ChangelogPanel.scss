@@ -1,0 +1,43 @@
+
+.ChangelogPanel {
+  &のcontent {
+    width: 80vw;
+    height: 80vh;
+    max-width: 640px;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 12px;
+    box-sizing: border-box;
+  }
+  &のcontent .Markdown {
+    h1 {
+      color: #d7fc70;
+      font-size: 1.5em;
+    }
+    h1:not(:first-child) {
+      margin-top: 1.5em;
+      padding-top: 0;
+      &::before {
+        content: '';
+        display: block;
+        border-top: 1px solid #656463;
+        margin: 0 -16px 1.5em;
+      }
+    }
+    h2 {
+      font-size: 1.4em;
+      font-weight: normal;
+      color: #8b8685;
+    }
+    a {
+      color: #ffffbb;
+    }
+    > :first-child {
+      margin-top: 0;
+    }
+    img {
+      max-width: 100%;
+    }
+  }
+}
