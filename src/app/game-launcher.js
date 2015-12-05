@@ -154,10 +154,18 @@ function showResult (playerState, chart) {
   })
 }
 
+// http://qiita.com/dtinth/items/1200681c517a3fb26357
+const DEFAULT_REPLAYGAIN = -12.2 // dB
+
 function getVolume (song) {
+  const gain = replayGainFor(song)
+  return Math.pow(10, ((gain == null ? DEFAULT_REPLAYGAIN : gain) + 8) / 20)
+}
+
+function replayGainFor (song) {
   if (typeof song.replaygain !== 'string') return null
   if (!/^\S+\s+dB$/.test(song.replaygain)) return null
   const gain = parseFloat(song.replaygain)
   if (isNaN(gain)) return null
-  return Math.pow(10, (gain + 8) / 20)
+  return gain
 }
