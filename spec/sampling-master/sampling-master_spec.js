@@ -26,6 +26,21 @@ describe('SamplingMaster', function () {
     })
   })
 
+  describe('#group', function () {
+    it('has a destination with gain', function () {
+      const group = master.group({ volume: 0.5 })
+      expect(group.destination.gain.value).to.equal(0.5)
+    })
+    it('connect upon construct, disconnect upon destroy', function () {
+      const group = master.group()
+      const node = group.destination
+      void expect(node.$isConnectedTo(master.destination)).to.be.true
+      group.destroy()
+      void expect(node.$isConnectedTo(master.destination)).to.be.false
+      void expect(group.destination).to.be.null
+    })
+  })
+
   describe('#sample', function () {
     it('should coerce blob', function () {
       return master.sample(new Blob([]))
@@ -69,6 +84,11 @@ describe('SamplingMaster', function () {
       it('should play a buffer slice (with end)', function () {
         sample.play(0, { start: 1, end: 3 })
         expect(bufferSource.start).to.have.been.calledWith(0, 1, 2 + FADE_LENGTH)
+      })
+      it('should play to a group', function () {
+        const group = master.group()
+        const instance = sample.play(0, { group })
+        void expect(instance.TEST_node.$isConnectedTo(group.destination)).to.be.true
       })
 
       // HACK: only enable this test case when Event#type can be set after

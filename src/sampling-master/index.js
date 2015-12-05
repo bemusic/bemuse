@@ -20,7 +20,9 @@ export class SamplingMaster {
   constructor (audioContext) {
     this._audioContext  = audioContext || defaultAudioContext
     this._samples       = []
+    this._groups        = []
     this._instances     = new Set()
+    this._destination   = this._audioContext.destination
   }
 
   // Connects a dummy node to the audio, thereby unmuting the audio system on
@@ -33,6 +35,11 @@ export class SamplingMaster {
   // The underlying AudioContext.
   get audioContext () {
     return this._audioContext
+  }
+
+  // The audio destination.
+  get destination () {
+    return this._destination
   }
 
   // Destroys this SamplingMaster, make it unusable.
@@ -55,6 +62,12 @@ export class SamplingMaster {
       this._samples.push(sample)
       return sample
     })
+  }
+
+  group (options) {
+    const group = new SoundGroup(this, options)
+    this._groups.push(group)
+    return group
   }
 
   _coerceToArrayBuffer (blobOrArrayBuffer) {
@@ -84,6 +97,27 @@ export class SamplingMaster {
 
   _stoppedPlaying (instance) {
     this._instances.delete(instance)
+  }
+
+}
+
+// Sound group
+class SoundGroup {
+
+  constructor (samplingMaster, { volume } = { }) {
+    this._master = samplingMaster
+    this._gain = this._master.audioContext.createGain()
+    if (volume != null) this._gain.gain.value = volume
+    this._gain.connect(this._master.destination)
+  }
+
+  get destination () {
+    return this._gain
+  }
+
+  destroy () {
+    this._gain.disconnect()
+    this._gain = null
   }
 
 }
@@ -118,9 +152,8 @@ class Sample {
 //
 // You don't invoke this constructor directly; it is invoked by `Sample#play`.
 class PlayInstance {
-  constructor (samplingMaster, buffer, delay, options) {
+  constructor (samplingMaster, buffer, delay, options = { }) {
     delay = delay || 0
-    options = options || { }
     this._master = samplingMaster
 
     // Connect all the stuff...
@@ -130,10 +163,14 @@ class PlayInstance {
     source.onended = () => this.stop()
     let gain = context.createGain()
     source.connect(gain)
-    let node = options.node || context.destination
-    gain.connect(node)
+    let destination = (
+      options.node ||
+      (options.group && options.group.destination) ||
+      samplingMaster.destination
+    )
+    gain.connect(destination)
     this._source = source
-    this._gain = gain
+    this._gain = this.TEST_node = gain
 
     // Start the sound.
     let startTime = !delay ? 0 : Math.max(0, context.currentTime + delay)
@@ -192,8 +229,18 @@ class PlayInstance {
 
 export default SamplingMaster
 
-export function unmuteAudio (ctx) {
+// Enables Web Audio on iOS. By default, on iOS, audio is disabled.
+// This function must be called before audio will start working. It must be
+// called as a response to some user interaction (e.g. touchstart).
+//
+export function unmuteAudio (ctx = defaultAudioContext) {
+  // Perform some strange magic to unmute the audio on iOS devices.
+  // This code doesn’t make sense at all, you know.
   let gain = ctx.createGain()
+  let osc = ctx.createOscillator()
+  osc.frequency.value = 440
+  osc.start(ctx.currentTime + 0.1)
+  osc.stop(ctx.currentTime + 0.1)
   gain.connect(ctx.destination)
   gain.disconnect()
 }
