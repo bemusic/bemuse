@@ -1,7 +1,6 @@
 
 import readBlob from 'bemuse/utils/read-blob'
 import defaultAudioContext from 'audio-context'
-import invariant from 'invariant'
 
 export const FADE_LENGTH = 0.001
 
@@ -21,11 +20,9 @@ export class SamplingMaster {
   constructor (audioContext) {
     this._audioContext  = audioContext || defaultAudioContext
     this._samples       = []
+    this._groups        = []
     this._instances     = new Set()
-
-    // Create the destination and connect it to the DAC.
-    this._destination   = this._audioContext.createGain()
-    this._destination.connect(this._audioContext.destination)
+    this._destination   = this._audioContext.destination
   }
 
   // Connects a dummy node to the audio, thereby unmuting the audio system on
@@ -45,11 +42,6 @@ export class SamplingMaster {
     return this._destination
   }
 
-  set masterVolume (volume) {
-    invariant(typeof volume === 'number')
-    this._destination.gain.value = volume
-  }
-
   // Destroys this SamplingMaster, make it unusable.
   destroy () {
     if (this._destroyed) return
@@ -58,7 +50,6 @@ export class SamplingMaster {
     for (let instance of this._instances) instance.destroy()
     this._samples = null
     this._instances = null
-    this._destination.disconnect()
   }
 
   // Creates a `Sample` from a Blob or an ArrayBuffer.
@@ -71,6 +62,12 @@ export class SamplingMaster {
       this._samples.push(sample)
       return sample
     })
+  }
+
+  group (options) {
+    const group = new SoundGroup(this, options)
+    this._groups.push(group)
+    return group
   }
 
   _coerceToArrayBuffer (blobOrArrayBuffer) {
@@ -100,6 +97,27 @@ export class SamplingMaster {
 
   _stoppedPlaying (instance) {
     this._instances.delete(instance)
+  }
+
+}
+
+// Sound group
+class SoundGroup {
+
+  constructor (samplingMaster, { volume } = { }) {
+    this._master = samplingMaster
+    this._gain = this._master.audioContext.createGain()
+    if (volume != null) this._gain.gain.value = volume
+    this._gain.connect(this._master.destination)
+  }
+
+  get destination () {
+    return this._gain
+  }
+
+  destroy () {
+    this._gain.disconnect()
+    this._gain = null
   }
 
 }
@@ -134,9 +152,8 @@ class Sample {
 //
 // You don't invoke this constructor directly; it is invoked by `Sample#play`.
 class PlayInstance {
-  constructor (samplingMaster, buffer, delay, options) {
+  constructor (samplingMaster, buffer, delay, options = { }) {
     delay = delay || 0
-    options = options || { }
     this._master = samplingMaster
 
     // Connect all the stuff...
@@ -146,10 +163,14 @@ class PlayInstance {
     source.onended = () => this.stop()
     let gain = context.createGain()
     source.connect(gain)
-    let node = options.node || samplingMaster.destination
-    gain.connect(node)
+    let destination = (
+      options.node ||
+      (options.group && options.group.destination) ||
+      samplingMaster.destination
+    )
+    gain.connect(destination)
     this._source = source
-    this._gain = gain
+    this._gain = this.TEST_node = gain
 
     // Start the sound.
     let startTime = !delay ? 0 : Math.max(0, context.currentTime + delay)

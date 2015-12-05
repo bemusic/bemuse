@@ -12,7 +12,7 @@ describe('WaveFactory', function () {
   let map
   let waveFactory
   beforeEach(function () {
-    master  = { }
+    master  = { group: sinon.stub() }
     sample  = { play: sinon.stub() }
     samples = { 'wow.wav': sample }
     map     = { '0z': 'wow.wav' }

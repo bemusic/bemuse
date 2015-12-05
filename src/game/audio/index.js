@@ -3,13 +3,11 @@ import PlayerAudio from './player-audio'
 
 export class GameAudio {
   constructor ({ game, samples, master }) {
+    const volume = game.options.soundVolume
     this._master = master
-    if (game.options.soundVolume != null) {
-      this._master.masterVolume = game.options.soundVolume
-    }
     this._context = master.audioContext
     this._players = new Map(game.players.map(player =>
-      [player, new PlayerAudio({ player, samples, master })]))
+      [player, new PlayerAudio({ player, samples, master, volume })]))
   }
   destroy () {
     this._master.destroy()
