@@ -20,10 +20,15 @@ import * as OptionsActions    from './actions/options-actions'
 import OptionsStore           from './stores/options-store'
 import OptionsInputStore      from './stores/options-input-store'
 import { MISSED }             from 'bemuse/game/judgments'
+import { unmuteAudio }        from 'bemuse/sampling-master'
 
 import { shouldDisableFullScreen, isTitleDisplayMode } from 'bemuse/devtools/query-flags'
 
 export function launch ({ server, song, chart }) {
+
+  // Unmute audio immediately so that it sounds on iOS.
+  unmuteAudio()
+
   return co(function*() {
 
     // go fullscreen
@@ -53,9 +58,11 @@ export function launch ({ server, song, chart }) {
     }
 
     let latency = +query.latency || (+options['system.offset.audio-input'] / 1000) || 0
+    let volume = getVolume(song)
 
     loadSpec.options = {
       audioInputLatency: latency,
+      soundVolume: volume,
       tutorial: song.tutorial,
       players: [
         {
@@ -145,4 +152,12 @@ function showResult (playerState, chart) {
     }
     SCENE_MANAGER.display(React.createElement(ResultScene, props)).done()
   })
+}
+
+function getVolume (song) {
+  if (typeof song.replaygain !== 'string') return null
+  if (!/^\S+\s+dB$/.test(song.replaygain)) return null
+  const gain = parseFloat(song.replaygain)
+  if (isNaN(gain)) return null
+  return Math.pow(10, (gain + 8) / 20)
 }

@@ -1,6 +1,7 @@
 
 import readBlob from 'bemuse/utils/read-blob'
 import defaultAudioContext from 'audio-context'
+import invariant from 'invariant'
 
 export const FADE_LENGTH = 0.001
 
@@ -21,6 +22,10 @@ export class SamplingMaster {
     this._audioContext  = audioContext || defaultAudioContext
     this._samples       = []
     this._instances     = new Set()
+
+    // Create the destination and connect it to the DAC.
+    this._destination   = this._audioContext.createGain()
+    this._destination.connect(this._audioContext.destination)
   }
 
   // Connects a dummy node to the audio, thereby unmuting the audio system on
@@ -35,6 +40,16 @@ export class SamplingMaster {
     return this._audioContext
   }
 
+  // The audio destination.
+  get destination () {
+    return this._destination
+  }
+
+  set masterVolume (volume) {
+    invariant(typeof volume === 'number')
+    this._destination.gain.value = volume
+  }
+
   // Destroys this SamplingMaster, make it unusable.
   destroy () {
     if (this._destroyed) return
@@ -43,6 +58,7 @@ export class SamplingMaster {
     for (let instance of this._instances) instance.destroy()
     this._samples = null
     this._instances = null
+    this._destination.disconnect()
   }
 
   // Creates a `Sample` from a Blob or an ArrayBuffer.
@@ -130,7 +146,7 @@ class PlayInstance {
     source.onended = () => this.stop()
     let gain = context.createGain()
     source.connect(gain)
-    let node = options.node || context.destination
+    let node = options.node || samplingMaster.destination
     gain.connect(node)
     this._source = source
     this._gain = gain
@@ -192,8 +208,18 @@ class PlayInstance {
 
 export default SamplingMaster
 
-export function unmuteAudio (ctx) {
+// Enables Web Audio on iOS. By default, on iOS, audio is disabled.
+// This function must be called before audio will start working. It must be
+// called as a response to some user interaction (e.g. touchstart).
+//
+export function unmuteAudio (ctx = defaultAudioContext) {
+  // Perform some strange magic to unmute the audio on iOS devices.
+  // This code doesn’t make sense at all, you know.
   let gain = ctx.createGain()
+  let osc = ctx.createOscillator()
+  osc.frequency.value = 440
+  osc.start(ctx.currentTime + 0.1)
+  osc.stop(ctx.currentTime + 0.1)
   gain.connect(ctx.destination)
   gain.disconnect()
 }
