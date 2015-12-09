@@ -1,10 +1,10 @@
 
 import './OptionsInputScratch.scss'
 import React from 'react'
+import pure  from 'recompose/pure'
 import c     from 'classnames'
 
-export default React.createClass({
-  mixins: [React.addons.PureRenderMixin],
+export const OptionsInputScratch = React.createClass({
   render () {
     return <div
         className={c('OptionsInputScratch',
@@ -29,6 +29,8 @@ export default React.createClass({
     this.props.onEdit('SC')
   },
 })
+
+export default pure(OptionsInputScratch)
 
 function star () {
   let out = ''

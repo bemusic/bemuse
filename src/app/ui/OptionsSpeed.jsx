@@ -3,9 +3,9 @@ import './OptionsSpeed.scss'
 import OptionsButton from './OptionsButton'
 import OptionsInputField from './OptionsInputField'
 import React from 'react'
+import pure from 'recompose/pure'
 
-const OptionsSpeed = React.createClass({
-  mixins: [React.addons.PureRenderMixin],
+export const OptionsSpeed = React.createClass({
   parseSpeed (speedString) {
     return +(+speedString || 1.0).toFixed(1)
   },
@@ -43,4 +43,4 @@ const OptionsSpeed = React.createClass({
   },
 })
 
-export default OptionsSpeed
+export default pure(OptionsSpeed)

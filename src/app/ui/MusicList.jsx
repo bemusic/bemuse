@@ -4,9 +4,9 @@ import './MusicList.scss'
 import React          from 'react'
 import _              from 'lodash'
 import MusicListItem  from './MusicListItem.jsx'
+import pure           from 'recompose/pure'
 
-export default React.createClass({
-  mixins: [React.addons.PureRenderMixin],
+export const MusicList = React.createClass({
   render () {
     return <ul className="MusicList js-scrollable-view"
         onTouchStart={this.props.onTouch}>
@@ -37,3 +37,5 @@ export default React.createClass({
     return _.find(song.charts, chart => chart === selectedChart)
   }
 })
+
+export default pure(MusicList)

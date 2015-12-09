@@ -1,14 +1,15 @@
 
 import './RunningNumber.scss'
-import React from 'react'
-import now   from 'bemuse/utils/now'
+import React    from 'react'
+import ReactDOM from 'react-dom'
+import now      from 'bemuse/utils/now'
 
 export default React.createClass({
   render () {
     return <span className="RunningNumber"></span>
   },
   componentDidMount () {
-    let node = this.getDOMNode()
+    let node = ReactDOM.findDOMNode(this)
     let text = document.createTextNode('')
     node.appendChild(text)
     text.nodeValue = this._getText(0)

@@ -2,9 +2,9 @@
 import './OptionsInputKey.scss'
 import React from 'react'
 import c     from 'classnames'
+import pure  from 'recompose/pure'
 
-export default React.createClass({
-  mixins: [React.addons.PureRenderMixin],
+export const OptionsInputKey = React.createClass({
   render () {
     return <div className="OptionsInputKey" data-n={this.props.n}>
       <div
@@ -19,3 +19,5 @@ export default React.createClass({
     this.props.onEdit('' + this.props.n)
   },
 })
+
+export default pure(OptionsInputKey)

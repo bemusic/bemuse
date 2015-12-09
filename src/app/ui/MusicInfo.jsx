@@ -5,9 +5,9 @@ import React from 'react'
 import MusicChartInfo     from './MusicChartInfo.jsx'
 import MusicChartSelector from './MusicChartSelector.jsx'
 import MusicInfoTabs      from './MusicInfoTabs.jsx'
+import pure               from 'recompose/pure'
 
-export default React.createClass({
-  mixins: [React.addons.PureRenderMixin],
+export const MusicInfo = React.createClass({
   render () {
     const song  = this.props.song
     const chart = this.props.chart
@@ -26,3 +26,5 @@ export default React.createClass({
     </section>
   }
 })
+
+export default pure(MusicInfo)

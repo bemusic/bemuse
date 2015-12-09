@@ -1,6 +1,8 @@
 
 import './OptionsPlayer.scss'
-import React from 'react'
+import React   from 'react'
+import pure    from 'recompose/pure'
+import compose from 'recompose/compose'
 
 import { connect }           from 'bemuse/flux'
 import Store                 from '../stores/options-store'
@@ -22,7 +24,6 @@ const PANEL_OPTIONS = [
 ]
 
 export const OptionsPlayer = React.createClass({
-  mixins: [React.addons.PureRenderMixin],
   render () {
     return <div className="OptionsPlayer">
 
@@ -67,7 +68,6 @@ export const OptionsPlayer = React.createClass({
 })
 
 OptionsPlayer.Row = React.createClass({
-  mixins: [React.addons.PureRenderMixin],
   render () {
     return <div className="OptionsPlayerのrow">
       <label>{this.props.label}</label>
@@ -76,4 +76,7 @@ OptionsPlayer.Row = React.createClass({
   }
 })
 
-export default connect(Store, OptionsPlayer)
+export default compose(
+  connect(Store),
+  pure
+)(OptionsPlayer)

@@ -1,7 +1,8 @@
 
-import co     from 'co'
-import React  from 'react'
-import MAIN   from 'bemuse/utils/main-element'
+import co       from 'co'
+import React    from 'react'
+import ReactDOM from 'react-dom'
+import MAIN     from 'bemuse/utils/main-element'
 
 // The SceneManager takes care of managing the scenes in this game.
 // Only a single scene may be displayed at any given time, but a scene may
@@ -107,14 +108,14 @@ export default instance
 
 function ReactScene (element) {
   return function instantiate (container) {
-    let component = React.render(element, container)
-    component.setProps({ scene: element })
+    let clonedElement = React.cloneElement(element, { scene: element })
+    let component = ReactDOM.render(clonedElement, container)
     return {
       teardown () {
         return Promise.try(() => {
           if (component.teardown) return component.teardown()
         }).then(() => {
-          React.unmountComponentAtNode(container)
+          ReactDOM.unmountComponentAtNode(container)
         })
       }
     }

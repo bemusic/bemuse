@@ -1,11 +1,11 @@
 
 import './OptionsInputKeys.scss'
 import React from 'react'
+import pure  from 'recompose/pure'
 
 import OptionsInputKey from './OptionsInputKey'
 
-export default React.createClass({
-  mixins: [React.addons.PureRenderMixin],
+export const OptionsInputKeys = React.createClass({
   render () {
     let keys = []
     for (let i = 1; i <= 7; i++) {
@@ -24,3 +24,5 @@ export default React.createClass({
     </div>
   }
 })
+
+export default pure(OptionsInputKeys)

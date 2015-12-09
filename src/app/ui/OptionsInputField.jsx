@@ -2,9 +2,9 @@
 import './OptionsInputField.scss'
 import React from 'react'
 import _ from 'lodash'
+import pure from 'recompose/pure'
 
-export default React.createClass({
-  mixins: [React.addons.PureRenderMixin],
+export const OptionsInputField = React.createClass({
   propTypes: {
     stringify: React.PropTypes.func,
     parse: React.PropTypes.func,
@@ -53,3 +53,5 @@ export default React.createClass({
     }
   },
 })
+
+export default pure(OptionsInputField)

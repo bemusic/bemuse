@@ -15,8 +15,6 @@ import AboutScene       from './AboutScene'
 import ChangelogPanel   from './ChangelogPanel'
 import { connect }      from 'bemuse/flux'
 
-React.initializeTouchEvents(true)
-
 export const TitleScene = React.createClass({
 
   getInitialState () {
