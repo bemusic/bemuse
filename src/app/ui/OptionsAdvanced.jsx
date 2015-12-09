@@ -1,6 +1,8 @@
 
 import './OptionsAdvanced.scss'
-import React from 'react'
+import React   from 'react'
+import pure    from 'recompose/pure'
+import compose from 'recompose/compose'
 
 import { connect }           from 'bemuse/flux'
 import Store                 from '../stores/options-store'
@@ -9,7 +11,6 @@ import OptionsButton         from './OptionsButton'
 import OptionsInputField     from './OptionsInputField'
 
 export const OptionsAdvanced = React.createClass({
-  mixins: [React.addons.PureRenderMixin],
   stringifyLatency (latency) {
     return Math.round(latency) + 'ms'
   },
@@ -45,7 +46,10 @@ export const OptionsAdvanced = React.createClass({
   },
 })
 
-export default connect(Store, OptionsAdvanced)
+export default compose(
+  connect(Store),
+  pure
+)(OptionsAdvanced)
 
 const LatencyMessageListener = React.createClass({
   render () {

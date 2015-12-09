@@ -1,6 +1,7 @@
 
-import Bacon from 'baconjs'
-import React from 'react'
+import Bacon        from 'baconjs'
+import React        from 'react'
+import createHelper from 'recompose/createHelper'
 
 export { Bacon }
 
@@ -55,7 +56,7 @@ function toProperty (store) {
   }
 }
 
-export function connect (props川, Component) {
+function _connect (props川, Component) {
   let propsProperty = toProperty(props川)
   return React.createClass({
     getInitialState () {
@@ -66,13 +67,19 @@ export function connect (props川, Component) {
       return { value: initialValue }
     },
     componentWillUnmount () {
+      this._mounted = false
       if (this._unsubscribe) this._unsubscribe()
     },
+    componentDidMount () {
+      this._mounted = true
+    },
     handleValue (value) {
-      if (this.isMounted()) this.setState({ value })
+      if (this._mounted) this.setState({ value })
     },
     render () {
       return <Component {...(this.state.value || { })} {...this.props} />
     }
   })
 }
+
+export const connect = createHelper(_connect, 'connect')

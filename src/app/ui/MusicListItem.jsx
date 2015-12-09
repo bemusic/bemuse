@@ -3,13 +3,13 @@ import './MusicListItem.scss'
 
 import React  from 'react'
 import c      from 'classnames'
+import pure   from 'recompose/pure'
 
 import { visibleCharts } from '../utils/music-select-utils'
 
 import MusicListItemCharts from './MusicListItemCharts'
 
-export default React.createClass({
-  mixins: [React.addons.PureRenderMixin],
+export const MusicListItem = React.createClass({
   render () {
     const song = this.props.song
     const className = c('MusicListItem', {
@@ -88,3 +88,5 @@ export default React.createClass({
   },
 
 })
+
+export default pure(MusicListItem)

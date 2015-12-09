@@ -2,8 +2,12 @@
 import './MusicSelectScene.scss'
 
 import React            from 'react'
+import ReactDOM         from 'react-dom'
 import c                from 'classnames'
 import $                from 'jquery'
+import pure             from 'recompose/pure'
+import compose          from 'recompose/compose'
+
 import { connect }      from 'bemuse/flux'
 import SCENE_MANAGER    from 'bemuse/scene-manager'
 import online           from 'bemuse/online/instance'
@@ -26,10 +30,7 @@ import * as Analytics   from '../analytics'
 import * as CustomBMSActions from '../actions/custom-bms-actions'
 import { shouldShowOptions } from 'bemuse/devtools/query-flags'
 
-React.initializeTouchEvents(true)
-
 export const MusicSelectScene = React.createClass({
-  mixins: [React.addons.PureRenderMixin],
   render () {
     let musicSelect = this.props.musicSelect
     return <Scene className="MusicSelectScene">
@@ -171,7 +172,7 @@ export const MusicSelectScene = React.createClass({
     this.ensureSelectedSongInView()
   },
   ensureSelectedSongInView () {
-    const $this = $(React.findDOMNode(this))
+    const $this = $(ReactDOM.findDOMNode(this))
     const active = $this.find('.js-active-song')[0]
     if (!active) return
     const scroller = $(active).closest('.js-scrollable-view')[0]
@@ -258,4 +259,7 @@ export const MusicSelectScene = React.createClass({
 
 })
 
-export default connect({ musicSelect: Store, user: online && online.user川 }, MusicSelectScene)
+export default compose(
+  connect({ musicSelect: Store, user: online && online.user川 }),
+  pure
+)(MusicSelectScene)

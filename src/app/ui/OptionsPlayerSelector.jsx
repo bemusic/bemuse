@@ -2,11 +2,11 @@
 import './OptionsPlayerSelector.scss'
 import React from 'react'
 import c     from 'classnames'
+import pure  from 'recompose/pure'
 
 import OptionsPlayerGraphics from './OptionsPlayerGraphics'
 
 const OptionsPlayerSelector = React.createClass({
-  mixins: [React.addons.PureRenderMixin],
   render () {
     return <div className="OptionsPlayerSelector">
       {this.props.options.map((item, index) =>
@@ -21,8 +21,7 @@ const OptionsPlayerSelector = React.createClass({
   }
 })
 
-OptionsPlayerSelector.Item = React.createClass({
-  mixins: [React.addons.PureRenderMixin],
+OptionsPlayerSelector.Item = pure(React.createClass({
   render () {
     return <div
         className={c('OptionsPlayerSelectorのitem',
@@ -40,6 +39,6 @@ OptionsPlayerSelector.Item = React.createClass({
   handleClick () {
     this.props.onSelect(this.props.value)
   },
-})
+}))
 
-export default OptionsPlayerSelector
+export default pure(OptionsPlayerSelector)

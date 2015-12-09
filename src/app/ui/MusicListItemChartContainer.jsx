@@ -1,22 +1,19 @@
 
-import React from 'react'
-
 import { getGrade }       from 'bemuse/rules/grade'
 import withPersonalRecord from './withPersonalRecord'
 import MusicListItemChart from './MusicListItemChart'
+import mapPropsOnChange   from 'recompose/mapPropsOnChange'
+import pure               from 'recompose/pure'
+import compose            from 'recompose/compose'
 
-export const MusicListItemChartContainer = React.createClass({
-
-  mixins: [React.addons.PureRenderMixin],
-
-  render () {
-    let record = this.props.record
-    let played = !!record
+export default compose(
+  withPersonalRecord,
+  mapPropsOnChange(['record'], (props) => {
+    const record = props.record
+    const played = !!record
     let grade = played ? getGrade(record) : null
     if (grade === 'F') grade = null
-    return <MusicListItemChart {...this.props} played={played} grade={grade} />
-  }
-
-})
-
-export default withPersonalRecord(MusicListItemChartContainer)
+    return Object.assign({ }, props, { played, grade })
+  }),
+  pure
+)(MusicListItemChart)
