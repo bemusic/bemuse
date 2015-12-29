@@ -4,8 +4,8 @@
 .SceneHeading {
   @include soft-shadow;
   background: white;
-  margin: 0; padding: 0 5vw;
-  font: bold 9vmin $ui-font;
-  line-height: 16vmin;
+  margin: 0; padding: 0 4rem;
+  font: bold 3.6rem $ui-font;
+  line-height: 6rem;
   color: black;
 }

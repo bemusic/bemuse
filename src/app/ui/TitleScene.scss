@@ -4,8 +4,6 @@
 
   @include main-bg;
 
-  font: 2.5vmin $ui-font;
-
   &のlogo {
     position: absolute;
     top: 30%; left: 50%;
@@ -23,7 +21,7 @@
     transform: translate(-50%,-50%);
     > a {
       color: rgba(black, 0.9);
-      font-size: 7vmin;
+      font-size: 2rem;
       background: rgba(#fff, 0.8);
       padding: 0.5ex 1.2ex;
       border-radius: 2em;

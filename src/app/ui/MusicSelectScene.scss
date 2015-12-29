@@ -3,11 +3,11 @@
 .MusicSelectScene {
 
   @include main-bg;
-  font: 2.5vmin $ui-font;
+  font: 1rem $ui-font;
 
   &のloading {
     @include centered;
-    font-size: 5vmin;
+    font-size: 2rem;
     text-align: center;
     color: rgba(black, 0.5);
     text-shadow: 0 2px 0 rgba(white, 0.3);
@@ -43,7 +43,7 @@
 
   &のsearch {
     position: absolute;
-    top: 50%; right: 5vw;
+    top: 50%; right: 4rem;
     transform: translateY(-50%);
     width: 8em;
     font: 0.4em $ui-font;
@@ -61,15 +61,15 @@
   .MusicList {
     @include full-screen;
     @include scrolling-y;
-    padding: 25vmin 52vw 3vmin 5vw;
+    padding: 10rem calc(50vw + 1rem) 3rem 4rem;
   }
 
   .MusicInfo {
     @include scrolling-y;
     position: absolute;
-    top: 0; right: 5vw; bottom: 0; left: 52vw;
-    padding-top: 25vmin;
-    padding-bottom: 64px;
+    top: 0; right: 4rem; bottom: 0; left: calc(50vw + 1rem);
+    padding-top: 10rem;
+    padding-bottom: 3rem;
   }
 
   @media (orientation: portrait) {
