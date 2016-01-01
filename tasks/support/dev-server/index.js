@@ -19,7 +19,13 @@ export function start () {
     server.use('/' + route.dest.join('/'), express.static(route.src))
   }
 
-  server.use('/music', express.static(path('..', 'music')))
+  let cacheSettings = {
+    etag: true,
+    setHeaders (res) {
+      res.setHeader('Cache-Control', 'public, max-age=31536000, no-cache')
+    }
+  }
+  server.use('/music', express.static(path('..', 'music'), cacheSettings))
   server.use('/coverage', express.static(path('coverage', 'lcov-report')))
 
   server.listen(port, '0.0.0.0', function (err) {

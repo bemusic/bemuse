@@ -27,6 +27,9 @@ export default React.createClass({
           Continue Anyway
         </OptionsButton>
       </p>
+      <p className="BrowserSupportWarningSceneのuserAgent">
+        <strong>User agent:</strong> {navigator.userAgent}
+      </p>
     </Scene>
   },
   handleContinue () {

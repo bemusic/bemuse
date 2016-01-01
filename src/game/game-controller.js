@@ -42,19 +42,14 @@ export class GameController {
     this._display.start()
     this._input.use(new OmniInputPlugin(this._game))
     this._input.use(new TouchPlugin(this._display.context))
-    if (/Mobile.*?Safari/.test(navigator.userAgent)) {
-      let id = setInterval(() => this._update(), 10)
-      this._endGameLoop = () => clearInterval(id)
-    } else {
-      let stopped = false
-      let frame = () => {
-        if (stopped) return
-        this._update()
-        requestAnimationFrame(frame)
-      }
+    let stopped = false
+    let frame = () => {
+      if (stopped) return
+      this._update()
       requestAnimationFrame(frame)
-      this._endGameLoop = () => stopped = true
     }
+    requestAnimationFrame(frame)
+    this._endGameLoop = () => stopped = true
   }
 
   // Exits the game when escape is pressed.

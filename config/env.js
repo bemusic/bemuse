@@ -29,3 +29,7 @@ export function hotModeEnabled () {
 export function serverPort () {
   return +process.env.PORT || 8080
 }
+
+export function serverHost () {
+  return process.env.HOST || 'localhost'
+}

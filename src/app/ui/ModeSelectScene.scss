@@ -9,7 +9,7 @@
   &のmain {
     @include full-screen;
     @include scrolling-y;
-    padding: 24vmin 10vw 5em;
+    padding: 8rem 10vw 2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -21,10 +21,10 @@
   }
   &のitem {
     color: #444;
-    margin: 1em;
+    margin: 0 1em;
     width: 22em;
     text-align: center;
-    font-size: 16px;
+    font-size: 1rem;
     padding: 1.5em;
     border-radius: 2vmin;
     background: rgba(#fff, 0);
