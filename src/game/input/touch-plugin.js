@@ -3,6 +3,25 @@ import bench from 'bemuse/devtools/benchmark'
 
 let BUTTONS = ['p1_1', 'p1_2', 'p1_3', 'p1_4', 'p1_5', 'p1_6', 'p1_7', 'start']
 
+window.BEMUSE_TOUCH_STATS = [ ]
+
+function StatsRecorder () {
+  const stats = [ ]
+  window.BEMUSE_TOUCH_STATS.push(stats)
+  return {
+    record (input) {
+      for (let { x, y } of input) {
+        stats.push({ x: Math.round(x), y: Math.round(y) })
+      }
+    },
+    done () {
+      if (stats.length) {
+        localStorage['_stats_touch'] = JSON.stringify(window.BEMUSE_TOUCH_STATS)
+      }
+    }
+  }
+}
+
 export function TouchPlugin (context) {
   let scratchStartY = null
   let scratchY = null
@@ -10,19 +29,32 @@ export function TouchPlugin (context) {
   let getScratch = bench.wrap('input:touch:SC', _getScratch)
   let getButton = bench.wrap('input:touch:B', _getButton)
   let getPinch = bench.wrap('input:touch:P', _getPinch)
+  let statsRecorder = new StatsRecorder()
   return {
     name: 'TouchPlugin',
     get () {
       let input = getInput()
       let output = { }
       if (bench.enabled) bench.stats['input:touch:n'] = '' + input.length
+      statsRecorder.record(input)
       output['p1_SC'] = getScratch(input)
       for (let button of BUTTONS) {
         output[button] = getButton(input, button)
       }
       output['p1_pinch'] = getPinch(input)
       return output
-    }
+    },
+    destroy () {
+      statsRecorder.done()
+    },
+  }
+  function _expand (rectangle, amount = 4) {
+    const newRect = rectangle.clone()
+    newRect.x -= amount
+    newRect.y -= amount
+    newRect.width += amount * 2
+    newRect.height += amount * 2
+    return newRect
   }
   function _getInput () {
     return context.input
@@ -31,7 +63,7 @@ export function TouchPlugin (context) {
     let objects = context.refs[button]
     if (objects) {
       for (let object of objects) {
-        let bounds = object.getBounds()
+        let bounds = _expand(object.getBounds())
         for (let p of input) {
           if (bounds.contains(p.x, p.y)) return 1
         }
@@ -45,7 +77,7 @@ export function TouchPlugin (context) {
     scratchY = null
     for (let p of input) {
       for (let object of objects) {
-        if (object.getBounds().contains(p.x, p.y)) {
+        if (_expand(object.getBounds(), 32).contains(p.x, p.y)) {
           scratchY = p.y
           break
         }
@@ -61,10 +93,10 @@ export function TouchPlugin (context) {
     if (scratchStartY === null) {
       scratchStartY = scratchY
     }
-    if (scratchY > scratchStartY + 16) {
-      scratchStartY = scratchY - 16
-    } else if (scratchY < scratchStartY - 16) {
-      scratchStartY = scratchY + 16
+    if (scratchY > scratchStartY + 24) {
+      scratchStartY = scratchY - 24
+    } else if (scratchY < scratchStartY - 24) {
+      scratchStartY = scratchY + 24
     }
     return (scratchY > scratchStartY + 4
       ? -1
