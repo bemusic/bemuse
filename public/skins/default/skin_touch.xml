@@ -14,6 +14,8 @@
           </group>
           <group x="230" y="160">
             <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_3"></sprite>
+            <text x="75" y="32" text="Accuracy" align="center" font="InfoSmall" font-src="Fonts/InfoSmall.fnt"></text>
+            <text x="75" y="56" text="%s" align="center" data="p1_stat_acc" font="ScoreNumberSmall" font-src="Fonts/ScoreNumberSmall.fnt"></text>
             <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_3_active"></sprite>
           </group>
           <group x="309" y="20">
@@ -22,6 +24,8 @@
           </group>
           <group x="388" y="160">
             <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_5"></sprite>
+            <text x="75" y="32" text="Time" align="center" font="InfoSmall" font-src="Fonts/InfoSmall.fnt"></text>
+            <text x="75" y="56" text="%s" align="center" data="song_time" font="ScoreNumberSmall" font-src="Fonts/ScoreNumberSmall.fnt"></text>
             <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_5_active"></sprite>
           </group>
           <group x="467" y="20">
@@ -30,6 +34,8 @@
           </group>
           <group x="546" y="160">
             <sprite image="Touch/Buttons/Normal.png" x="0" y="0" ref="p1_7"></sprite>
+            <text x="75" y="32" text="Speed" align="center" font="InfoSmall" font-src="Fonts/InfoSmall.fnt"></text>
+            <text x="75" y="56" text="%s" align="center" data="p1_speed" font="ScoreNumberSmall" font-src="Fonts/ScoreNumberSmall.fnt"></text>
             <sprite image="Touch/Buttons/Active.png" x="-1" y="-1" alpha="p1_7_active"></sprite>
           </group>
     </group>

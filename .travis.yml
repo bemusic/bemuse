@@ -23,7 +23,6 @@ before_script:
   - "npm install"
 script:
   - npm run ci:code-review
-  - BEMUSE_COV=true bash -c 'gulp build || gulp build || gulp build'
   - BEMUSE_COV=true gulp test
 after_success:
   - 'cat coverage/lcov.info | ./node_modules/.bin/coveralls'

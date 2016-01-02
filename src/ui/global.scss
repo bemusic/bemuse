@@ -12,6 +12,27 @@
   }
 }
 
+body {
+  font-family: $ui-font;
+}
+
 a {
   color: $link-color;
+}
+
+:root {
+  @media (min-aspect-ratio: 1/1) {
+    @media (max-width: 920px) {
+      font-size: 12px;
+    }
+    @media (min-width: 920px) {
+      font-size: (12 / 920) * 100vw;
+    }
+  }
+  @media (max-aspect-ratio: 1/1) {
+    font-size: (12 / 600) * 100vw;
+  }
+  body {
+    font-size: 1rem;
+  }
 }

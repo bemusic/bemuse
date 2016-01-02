@@ -1,15 +1,21 @@
 machine:
   node:
     version: '5'
+  environment:
+    NODE_ENV: test
 notify:
   webhooks:
     - url: https://webhooks.gitter.im/e/ba1b37fc12942c2430c9
+dependencies:
+  override:
+    - npm install
+    - npm install
 test:
   override:
+    - ./node_modules/.bin/gulp test
     - rm -rf dist
     - NODE_ENV=production ./node_modules/.bin/gulp build
     - ./node_modules/.bin/gulp pre-deploy
-    - ./node_modules/.bin/gulp test
 deployment:
   production:
     branch: master

@@ -18,6 +18,9 @@ export default React.createClass({
     return <Scene className="ResultScene">
       <SceneHeading>
         Play Result
+        <div className="ResultSceneのmode">
+          {this.props.playMode === 'KB' ? 'Keyboard' : 'BMS'} Mode
+        </div>
       </SceneHeading>
       <div className="ResultSceneのreport">
         <ResultTable result={this.props.result} />
@@ -46,9 +49,6 @@ export default React.createClass({
             Continue
           </div>
         </div>
-      </div>
-      <div className="ResultSceneのmode">
-        {this.props.playMode === 'KB' ? 'Keyboard' : 'BMS'} Mode
       </div>
       <SceneToolbar>
         <SceneToolbar.Spacer />

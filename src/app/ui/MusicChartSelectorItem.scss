@@ -3,14 +3,15 @@
 
 .MusicChartSelectorItem {
   list-style: none;
-  height: 12vmin;
-  line-height: 12vmin;
-  font-size: 5vmin;
+  height: 4.5rem;
+  line-height: 4.25rem;
+  font-size: 2rem;
   text-align: center;
   background: rgba(#fff, 0.8);
   border-radius: 2vmin;
   cursor: pointer;
   position: relative;
+  box-sizing: border-box;
   &.is-active {
     color: white;
   }

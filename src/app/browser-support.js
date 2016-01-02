@@ -12,6 +12,10 @@ export const SUPPORTED = [
     name: 'Safari 8+',
     test: () => checkUserAgent(/Version\/(\d+)\.\S+ Safari\//, 8),
   },
+  {
+    name: 'iOS 9.2+ (iPad Pro)',
+    test: () => checkUserAgent(/iPad; CPU OS (\d+)/, 9),
+  },
 ]
 
 function checkUserAgent (pattern, num) {

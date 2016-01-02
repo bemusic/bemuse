@@ -85,10 +85,22 @@ include _lib/common
               font='ScoreNumberSmall' font-src='Fonts/ScoreNumberSmall.fnt')
       +button(-2, 0, 2)
       +button(-1, 1, 3)
+        text(x='75' y='32' text='Accuracy' align='center'
+              font='InfoSmall' font-src='Fonts/InfoSmall.fnt')
+        text(x='75' y='56' text='%s' align='center' data='p1_stat_acc'
+              font='ScoreNumberSmall' font-src='Fonts/ScoreNumberSmall.fnt')
       +button( 0, 0, 4)
       +button( 1, 1, 5)
+        text(x='75' y='32' text='Time' align='center'
+              font='InfoSmall' font-src='Fonts/InfoSmall.fnt')
+        text(x='75' y='56' text='%s' align='center' data='song_time'
+              font='ScoreNumberSmall' font-src='Fonts/ScoreNumberSmall.fnt')
       +button( 2, 0, 6)
       +button( 3, 1, 7)
+        text(x='75' y='32' text='Speed' align='center'
+              font='InfoSmall' font-src='Fonts/InfoSmall.fnt')
+        text(x='75' y='56' text='%s' align='center' data='p1_speed'
+              font='ScoreNumberSmall' font-src='Fonts/ScoreNumberSmall.fnt')
 
   // note panel
   group(x=(width / 2 - 185))
