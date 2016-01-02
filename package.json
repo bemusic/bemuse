@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "gulp build",
+    "build:ios": "bash -c \"NODE_ENV=ios gulp build\"",
     "ci:code-review": "npm run code-review; ./bin/upload-code-review",
     "code-review": "gulp code-review",
     "lint": "gulp lint",
