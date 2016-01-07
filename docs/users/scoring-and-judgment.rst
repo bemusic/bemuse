@@ -97,5 +97,4 @@ After playing the game, the grade is calculated according to this table:
 
 .. src::
 
-   src/app/game-launcher.js @ grade @ 06126a24
-
+   src/rules/grade.js @ grade @ a8658ca8

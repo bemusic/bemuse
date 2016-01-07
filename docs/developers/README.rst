@@ -5,7 +5,6 @@ Developer Documentation
 
    getting-started
    getting-started-windows
-   functional
    architecture
    documentation
    game-loop
