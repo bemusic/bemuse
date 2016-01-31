@@ -144,7 +144,7 @@ function applyKarmaConfig (config) {
       include: [path('src')],
       exclude: [
         path('src', 'test'),
-        path('src', 'polyfill'),
+        path('src', 'bootstrap'),
         path('src', 'boot', 'loader.js'),
       ],
       loader: 'isparta-instrumenter',

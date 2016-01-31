@@ -1,6 +1,6 @@
 
 import 'jquery'
-import 'bemuse/polyfill'
+import 'bemuse/bootstrap'
 import FastClick from 'fastclick'
 import React from 'react'
 
