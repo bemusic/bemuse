@@ -15,8 +15,6 @@ Directory Structure
   Configuration code for webpack and other things.
 :tree:`docs`
   This documentation.
-:tree:`features`
-  The functional specifications and end-to-end tests.
 :tree:`public`
   Files that will be deployed verbatim to the server,
   **except for** ``index.html``, where the boot script will be inlined.

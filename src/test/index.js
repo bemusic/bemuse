@@ -1,5 +1,5 @@
 
-// This file boots up Jasmine
+// This file boots up Mocha
 //
 import 'script!mocha/mocha.js'
 import 'style!mocha/mocha.css'

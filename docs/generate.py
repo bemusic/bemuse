@@ -153,7 +153,7 @@ class FileProcessor(object):
             # >>
             # If a method definition syntax is found directly after a block of
             # comment, then it will be used for documenting that method::
-            # 
+            #
             #     // Reports the progress.
             #     report(current, total, extra) {
             elif self.current_class and self.match(METHOD_RE):
@@ -164,7 +164,7 @@ class FileProcessor(object):
             # If a getter definition syntax or an assignment to ``this``
             # is found after a comment block, then the comment block documents
             # that attribute::
-            # 
+            #
             #   constructor() {
             #     // ``true`` if the game is started, ``false`` otherwise.
             #     this.started = false
@@ -179,7 +179,7 @@ class FileProcessor(object):
             # >>
             # If ``export let`` is found after a comment block, then the
             # comment block documents that module export::
-            # 
+            #
             #   // The global SceneManager instance.
             #   export let instance = new SceneManager()
             elif self.match(EXPORT_LET_RE):
@@ -190,7 +190,7 @@ class FileProcessor(object):
             # >>
             # If ``export function`` is found after a comment block, then the
             # comment block documents that module export::
-            # 
+            #
             #   // The global SceneManager instance.
             #   export function download() {
             elif self.match(EXPORT_FN_RE):
@@ -201,37 +201,6 @@ class FileProcessor(object):
         elif self.post_state == 'class':
             if self.match(CONSTRUCTOR_RE):
                 self.current_class.arguments = self.match(1)
-
-FEATURE_RE  = re.compile(r'^Feature:')
-SCENARIO_RE = re.compile(r'^(?:Background|Scenario):')
-STEP_RE     = re.compile(r'^(Given|When|Then)')
-
-class FeatureProcessor(object):
-
-    def __init__(self, path, root):
-        self.root = root
-        self.path = path
-
-    def process(self):
-        docstring = False
-        scenario = False
-        output = []
-        with open(self.path, 'r') as f:
-            for line in f:
-                text = line.strip()
-                if text == '"""':
-                    docstring = not docstring
-                    output.append('\n\n')
-                elif docstring:
-                    output.append(line)
-                elif FEATURE_RE.match(text):
-                    output.append(text + '\n' + '-' * len(text) + '\n\n')
-                elif SCENARIO_RE.match(text):
-                    output.append('\n\n' + text + '\n' + '~' * len(text) + '\n')
-                    scenario = True
-                elif STEP_RE.match(text):
-                    output.append('\n- ' + STEP_RE.sub(r'**\1**', text))
-        self.root.file('_codedoc/features.txt').add(''.join(output))
 
 class Node(object):
     def __init__(self, *args):
@@ -351,9 +320,6 @@ def main():
     root = RootNode()
     for path in get_source_files():
         processor = FileProcessor(path, root)
-        processor.process()
-    for path in get_feature_files():
-        processor = FeatureProcessor(path, root)
         processor.process()
     for filename in root.files:
         mkpath(os.path.dirname(filename))

@@ -21,20 +21,8 @@ There are many factors that affect the audio latency in this game
 - The browser's implementation of the Web Audio technology
 - Your sound card driver and settings on your operating system
 
-As for Bemuse, we already have a mechanism for compensating these audio delays,
-but they are not integrated into the game's user interface yet.
-This should change in later version.
+Bemuse has a mechanism for delay compensation.
+Simply open the options screen and enter your system’s audio+input latency.
+You can click on the “Calibrate” button to find out your system’s audio+input latency.
 
-1. Go to http://bemuse.ninja/?mode=sync.
-2. Perform the experiment.
-3. Take note of the result. For example, my result is 31 ms.
-4. Convert the milliseconds into seconds by dividing by 1000. My results become 0.031 s.
-5. Back to the game, append ``?latency=0.031`` to the URL. Change the number according to your result.
-   So, my URL would look like: http://bemuse.ninja/?latency=0.031
-
-
-
-
-
-
-
+From my experience, Safari has the lowest latency so far.

@@ -2046,23 +2046,23 @@
                 <sprite image="Touch/Buttons/KNormal.png" x="0" y="0" ref="p1_1"></sprite>
                 <sprite image="Touch/Buttons/KActive.png" x="-1" y="-1" alpha="p1_1_active"></sprite>
               </group>
-              <group x="147" y="32">
+              <group x="129" y="32">
                 <sprite image="Touch/Buttons/KNormal.png" x="0" y="0" ref="p1_2"></sprite>
                 <sprite image="Touch/Buttons/KActive.png" x="-1" y="-1" alpha="p1_2_active"></sprite>
               </group>
-              <group x="267" y="32">
+              <group x="231" y="32">
                 <sprite image="Touch/Buttons/KNormal.png" x="0" y="0" ref="p1_3"></sprite>
                 <sprite image="Touch/Buttons/KActive.png" x="-1" y="-1" alpha="p1_3_active"></sprite>
               </group>
-              <group x="387" y="32">
+              <group x="435" y="32">
                 <sprite image="Touch/Buttons/KNormal.png" x="0" y="0" ref="p1_5"></sprite>
                 <sprite image="Touch/Buttons/KActive.png" x="-1" y="-1" alpha="p1_5_active"></sprite>
               </group>
-              <group x="507" y="32">
+              <group x="537" y="32">
                 <sprite image="Touch/Buttons/KNormal.png" x="0" y="0" ref="p1_6"></sprite>
                 <sprite image="Touch/Buttons/KActive.png" x="-1" y="-1" alpha="p1_6_active"></sprite>
               </group>
-              <group x="627" y="32">
+              <group x="639" y="32">
                 <sprite image="Touch/Buttons/KNormal.png" x="0" y="0" ref="p1_7"></sprite>
                 <sprite image="Touch/Buttons/KActive.png" x="-1" y="-1" alpha="p1_7_active"></sprite>
               </group>

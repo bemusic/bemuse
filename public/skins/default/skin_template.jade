@@ -130,7 +130,7 @@ include _lib/common
     #{'if'}(key='p1_scratch' value='off')
       group
         mixin button(col, n)
-          - var x = 27 + col * 120
+          - var x = 27 + col * 102
           - var y = 32
           group(x=x y=y)
             sprite(image='Touch/Buttons/KNormal.png' x='0' y='0' ref='p1_' + n)
@@ -139,9 +139,9 @@ include _lib/common
         +button(0, 1)
         +button(1, 2)
         +button(2, 3)
-        +button(3, 5)
-        +button(4, 6)
-        +button(5, 7)
+        +button(4, 5)
+        +button(5, 6)
+        +button(6, 7)
         group(x=147 y=180)
           sprite(image='Touch/Buttons/SNormal.png' x='0' y='0' ref='p1_4')
           sprite(image='Touch/Buttons/SActive.png' x='-1' y='-1' alpha='p1_4_active')
