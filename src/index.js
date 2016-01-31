@@ -1,5 +1,4 @@
 
-import 'babel/polyfill'
 import _           from 'lodash'
 import BMS         from 'bms'
 import * as legacy from './legacy'
