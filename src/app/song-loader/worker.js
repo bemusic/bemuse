@@ -1,5 +1,5 @@
 
-import 'bemuse/polyfill'
+import 'bemuse/bootstrap'
 
 import indexer  from 'bemuse-indexer'
 import Promise  from 'bluebird'

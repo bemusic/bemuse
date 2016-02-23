@@ -56,7 +56,7 @@ function generateLoadersConfig () {
     {
       test: /\.jsx?$/,
       include: [path('src'), path('spec')],
-      loader: 'babel',
+      loader: 'babel?cacheDirectory',
     },
     {
       test: /\.js$/,
@@ -144,10 +144,10 @@ function applyKarmaConfig (config) {
       include: [path('src')],
       exclude: [
         path('src', 'test'),
-        path('src', 'polyfill'),
+        path('src', 'bootstrap'),
         path('src', 'boot', 'loader.js'),
       ],
-      loader: 'isparta-instrumenter',
+      loader: 'isparta',
     })
   }
 

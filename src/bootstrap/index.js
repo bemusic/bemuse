@@ -1,8 +1,8 @@
 
 // :doc:
-// Polyfills the environment with:
+// Bootstraps the environment with:
 //
-// - `ES6 Runtime`_ (provided by Babel_)
+// - `babel-polyfill`_
 // - `debug`_
 // - `Bluebird`_ (with `extended Promise API`_)
 //
@@ -12,7 +12,7 @@
 // .. _bluebird: https://github.com/petkaantonov/bluebird
 // .. _Extended Promise API: https://github.com/petkaantonov/bluebird/blob/master/API.md
 
-import 'babel-core/polyfill'
+import 'babel-polyfill'
 import debug    from 'debug'
 import Bluebird from 'bluebird'
 
