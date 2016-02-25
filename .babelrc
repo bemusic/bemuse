@@ -1,13 +1,14 @@
 {
   "presets": [
-    "es2015",
-    "react",
-    "stage-2"
+    "es2015", "react", "stage-2"
   ],
   "plugins": [
     "babel-plugin-espower"
   ],
   "env": {
+    "test": {
+      "plugins": [ "babel-plugin-__coverage__" ]
+    },
     "development": {
       "plugins": [
         [ "react-transform", {
@@ -24,9 +25,6 @@
           ]
         } ]
       ]
-    },
-    "test": {
-      "plugins": [ "babel-plugin-__coverage__" ]
     }
   }
 }
