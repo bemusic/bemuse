@@ -24,6 +24,9 @@
           ]
         } ]
       ]
+    },
+    "test": {
+      "plugins": [ "babel-plugin-__coverage__" ]
     }
   }
 }
