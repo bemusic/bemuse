@@ -15,7 +15,6 @@ import LoadingContext   from './loading-context'
 import * as Boot        from './ui/Boot'
 import * as ErrorDialog from './ui/ErrorDialog'
 
-/* isparta ignore next */
 window.onerror = function (message, url, line, col, e) {
   ErrorDialog.show(message, url, line, col, e)
 }
@@ -27,7 +26,6 @@ window.onerror = function (message, url, line, col, e) {
 // from the ``mode`` query parameter.
 
 
-/* isparta ignore next */
 let mode = query.mode || 'app'
 
 require.ensure(['./environment'],
@@ -36,7 +34,6 @@ function (require) {
   require('./environment')
   var loadModule = require('val!./loader.js')
 
-  /* isparta ignore else - we can check that by functional tests */
   if (loadModule[mode]) {
     let progress = new Progress()
     let context = new LoadingContext(progress)
