@@ -1,6 +1,6 @@
 {
   "name": "bemuse-notechart",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Bemuse notechart data structure, supports BMS and bmsons.",
   "main": "index.js",
   "scripts": {
@@ -31,6 +31,8 @@
     "lodash": "^4.5.1"
   },
   "nyc": {
-    "include": [ "/" ]
+    "include": [
+      "/"
+    ]
   }
 }
