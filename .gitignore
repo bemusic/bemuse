@@ -43,3 +43,6 @@ Icon
 .Trashes
 
 .nyc_output
+/data/
+/index.js
+/loader/

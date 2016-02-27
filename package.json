@@ -4,7 +4,8 @@
   "description": "Bemuse notechart data structure, supports BMS and bmsons.",
   "main": "index.js",
   "scripts": {
-    "test": "nyc -r text -r lcov -- mocha -r ./node-environment --reporter spec"
+    "test": "nyc -r text -r lcov -- mocha -r ./node-environment --reporter spec",
+    "prepublish": "env NODE_ENV=production babel src -d ."
   },
   "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
   "license": "MIT",
@@ -34,5 +35,10 @@
     "include": [
       "/"
     ]
-  }
+  },
+  "files": [
+    "index.js",
+    "data",
+    "loader"
+  ]
 }
