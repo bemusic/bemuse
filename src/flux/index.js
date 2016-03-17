@@ -34,7 +34,7 @@ export function Store (store, options = {}) {
   store = toProperty(store)
   store.get = () => {
     let data
-    let unsubscribe = store.onValue(_data => data = _data)
+    let unsubscribe = store.onValue(_data => (data = _data))
     setTimeout(unsubscribe)
     return data
   }
@@ -62,7 +62,7 @@ function _connect (props川, Component) {
     getInitialState () {
       this._unsubscribe = propsProperty.onValue(this.handleValue)
       let initialValue
-      const initialUnsubscribe = propsProperty.onValue(value => initialValue = value)
+      const initialUnsubscribe = propsProperty.onValue(value => (initialValue = value))
       initialUnsubscribe()
       return { value: initialValue }
     },

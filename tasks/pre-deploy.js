@@ -7,7 +7,7 @@ import co       from 'co'
 
 const readFile = Promise.promisify(fs.readFile, fs)
 
-gulp.task('pre-deploy', co.wrap(function*() {
+gulp.task('pre-deploy', co.wrap(function * () {
   let data = yield readFile(path('dist', 'index.html'), 'utf-8')
   check('New Relic inlined',        () => /NREUM/.test(data))
   check('Boot script inlined',      () => /webpackJsonp/.test(data))

@@ -9,7 +9,7 @@ describe('Scintillator::Animation', function () {
 
   describe('_attrs', function () {
     it('lists all attributes of an element', function () {
-      let xml = $xml(`<keyframe t="0" x="10" y="30" />`)[0]
+      let xml = $xml('<keyframe t="0" x="10" y="30" />')[0]
       expect(_attrs(xml)).to.deep.equal({ t: '0', x: '10', y: '30' })
     })
   })

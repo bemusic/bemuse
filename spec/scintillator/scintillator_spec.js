@@ -8,7 +8,7 @@ let fixture = file => `/spec/scintillator/fixtures/${file}`
 describe('Scintillator', function () {
 
   describe('#load', function () {
-    it('should load skin and return skin node', co.wrap(function*() {
+    it('should load skin and return skin node', co.wrap(function * () {
       let skin = yield Scintillator.load(fixture('bare.xml'))
       expect(skin.width).to.equal(123)
       expect(skin.height).to.equal(456)
@@ -20,7 +20,7 @@ describe('Scintillator', function () {
   })
 
   describe('Context', function () {
-    it('should instantiate and able to destroy', co.wrap(function*() {
+    it('should instantiate and able to destroy', co.wrap(function * () {
       let skin = yield Scintillator.load(fixture('bare.xml'))
       let context = new Scintillator.Context(skin)
       context.render({})
@@ -29,7 +29,7 @@ describe('Scintillator', function () {
     describe('#input', function () {
       let skin
       let context
-      beforeEach(co.wrap(function*() {
+      beforeEach(co.wrap(function * () {
         skin = yield Scintillator.load(fixture('bare.xml'))
         context = new Scintillator.Context(skin)
         context.render({})
@@ -82,7 +82,7 @@ describe('Scintillator', function () {
       })
     })
     describe('#refs', function () {
-      it('should be a set of refs to the display object', co.wrap(function*() {
+      it('should be a set of refs to the display object', co.wrap(function * () {
         let skin = yield Scintillator.load(fixture('refs.xml'))
         let context = new Scintillator.Context(skin)
         context.render({})
@@ -94,7 +94,7 @@ describe('Scintillator', function () {
   })
 
   describe('Expressions', function () {
-    it('should be parsed and processed', co.wrap(function*() {
+    it('should be parsed and processed', co.wrap(function * () {
       let skin = yield Scintillator.load(fixture('expr_basic.xml'))
       let context = new Scintillator.Context(skin)
       context.render({})
@@ -103,7 +103,7 @@ describe('Scintillator', function () {
       expect(stage.children[0].y).to.equal(7)
       context.destroy()
     }))
-    it('should support variables', co.wrap(function*() {
+    it('should support variables', co.wrap(function * () {
       let skin = yield Scintillator.load(fixture('expr_variables.xml'))
       let context = new Scintillator.Context(skin)
       let stage = context.stage
@@ -118,7 +118,7 @@ describe('Scintillator', function () {
   })
 
   describe('SpriteNode', function () {
-    it('should allow setting sprite frame', co.wrap(function*() {
+    it('should allow setting sprite frame', co.wrap(function * () {
       let skin = yield Scintillator.load(fixture('sprite_attrs.xml'))
       let context = new Scintillator.Context(skin)
       let stage = context.stage
@@ -130,7 +130,7 @@ describe('Scintillator', function () {
       expect(frame.y).to.equal(13)
       context.destroy()
     }))
-    it('should allow setting visibility, width, height', co.wrap(function*() {
+    it('should allow setting visibility, width, height', co.wrap(function * () {
       let skin = yield Scintillator.load(fixture('sprite_attrs.xml'))
       let context = new Scintillator.Context(skin)
       let stage = context.stage
@@ -148,7 +148,7 @@ describe('Scintillator', function () {
   })
 
   describe('TextNode', function () {
-    it('should display text', co.wrap(function*() {
+    it('should display text', co.wrap(function * () {
       let skin = yield Scintillator.load(fixture('text.xml'))
       let context = new Scintillator.Context(skin)
       let stage = context.stage
@@ -157,7 +157,7 @@ describe('Scintillator', function () {
       expect(text.text).to.equal('Hello world')
       context.destroy()
     }))
-    it('should center text', co.wrap(function*() {
+    it('should center text', co.wrap(function * () {
       let skin = yield Scintillator.load(fixture('text_center.xml'))
       let context = new Scintillator.Context(skin)
       let stage = context.stage
@@ -166,7 +166,7 @@ describe('Scintillator', function () {
       expect(text.x).to.be.lessThan(0)
       context.destroy()
     }))
-    it('should support data interpolation', co.wrap(function*() {
+    it('should support data interpolation', co.wrap(function * () {
       let skin = yield Scintillator.load(fixture('text_interpolation.xml'))
       let context = new Scintillator.Context(skin)
       let stage = context.stage
@@ -178,7 +178,7 @@ describe('Scintillator', function () {
   })
 
   describe('IfNode', function () {
-    it('should display child when correct value', co.wrap(function*() {
+    it('should display child when correct value', co.wrap(function * () {
       let skin = yield Scintillator.load(fixture('expr_if.xml'))
       let context = new Scintillator.Context(skin)
       let stage = context.stage
@@ -186,7 +186,7 @@ describe('Scintillator', function () {
       expect(stage.children[0].children).to.have.length(1)
       context.destroy()
     }))
-    it('should not display child when correct value', co.wrap(function*() {
+    it('should not display child when correct value', co.wrap(function * () {
       let skin = yield Scintillator.load(fixture('expr_if.xml'))
       let context = new Scintillator.Context(skin)
       let stage = context.stage
@@ -197,7 +197,7 @@ describe('Scintillator', function () {
   })
 
   describe('ObjectNode', function () {
-    it('should display children', co.wrap(function*() {
+    it('should display children', co.wrap(function * () {
       let skin = yield Scintillator.load(fixture('expr_object.xml'))
       let context = new Scintillator.Context(skin)
       let stage = context.stage
@@ -211,7 +211,7 @@ describe('Scintillator', function () {
       expect(stage.children[0].children).to.have.length(1)
       context.destroy()
     }))
-    it('should update same array with content changed', co.wrap(function*() {
+    it('should update same array with content changed', co.wrap(function * () {
       let skin = yield Scintillator.load(fixture('expr_object.xml'))
       let context = new Scintillator.Context(skin)
       let stage = context.stage
@@ -223,7 +223,7 @@ describe('Scintillator', function () {
       expect(stage.children[0].children).to.have.length(1)
       context.destroy()
     }))
-    it('should let children get value from item', co.wrap(function*() {
+    it('should let children get value from item', co.wrap(function * () {
       let skin = yield Scintillator.load(fixture('expr_object_var.xml'))
       let context = new Scintillator.Context(skin)
       let stage = context.stage
@@ -239,7 +239,7 @@ describe('Scintillator', function () {
   })
 
   describe('GroupNode', function () {
-    it('should allow masking', co.wrap(function*() {
+    it('should allow masking', co.wrap(function * () {
       let skin = yield Scintillator.load(fixture('group_mask.xml'))
       let context = new Scintillator.Context(skin)
       let stage = context.stage
@@ -250,7 +250,7 @@ describe('Scintillator', function () {
   })
 
   describe('AnimationNode', function () {
-    it('should allow animations', co.wrap(function*() {
+    it('should allow animations', co.wrap(function * () {
       let skin = yield Scintillator.load(fixture('animation.xml'))
       let context = new Scintillator.Context(skin)
       let group = context.stage.children[0]
@@ -265,7 +265,7 @@ describe('Scintillator', function () {
       expect(group.y).to.equal(2)
       context.destroy()
     }))
-    it('should allow animations on different events', co.wrap(function*() {
+    it('should allow animations on different events', co.wrap(function * () {
       let skin = yield Scintillator.load(fixture('animation.xml'))
       let context = new Scintillator.Context(skin)
       let group = context.stage.children[0]
@@ -280,7 +280,7 @@ describe('Scintillator', function () {
       expect(group.y).to.equal(100)
       context.destroy()
     }))
-    it('should allow animations on different value', co.wrap(function*() {
+    it('should allow animations on different value', co.wrap(function * () {
       let skin = yield Scintillator.load(fixture('animation_timekey.xml'))
       let context = new Scintillator.Context(skin)
       let group = context.stage.children[0]
@@ -290,7 +290,7 @@ describe('Scintillator', function () {
   })
 
   describe('defs', function () {
-    it('should allow reuse of skin nodes', co.wrap(function*() {
+    it('should allow reuse of skin nodes', co.wrap(function * () {
       let skin = yield Scintillator.load(fixture('defs.xml'))
       let context = new Scintillator.Context(skin)
       context.render({})

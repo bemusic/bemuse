@@ -32,7 +32,7 @@ let ASSET_URLS = {
  * Loads the files and create a music instance.
  */
 export function load () {
-  return co(function*() {
+  return co(function * () {
     let master  = new SamplingMaster(context)
     let sample  =
           name => download(ASSET_URLS[`${name}${audioExt()}`])

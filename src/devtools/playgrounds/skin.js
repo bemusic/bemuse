@@ -13,7 +13,7 @@ import GameDisplay  from 'bemuse/game/display'
 import MAIN         from 'bemuse/utils/main-element'
 
 export function main () {
-  co(function*() {
+  co(function * () {
 
     let chart = BMS.Compiler.compile(`
       #TITLE ทดสอบ Bemuse

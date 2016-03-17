@@ -155,7 +155,7 @@ describe('OmniInput', function () {
   describe('key川', function () {
     it('should return events', function () {
       let last
-      const dispose = key川(this.input, this.window).onValue(value => last = value)
+      const dispose = key川(this.input, this.window).onValue(value => (last = value))
 
       this.window.keydown(32)
       this.window.tick()

@@ -16,7 +16,7 @@ export class NotechartLoader {
   }
 
   loadBMS (arraybuffer, resource, options) {
-    return co(function*() {
+    return co(function * () {
       let buffer        = new Buffer(new Uint8Array(arraybuffer))
       let source        = yield Promise.promisify(BMS.Reader.readAsync)(buffer)
       let compileResult = BMS.Compiler.compile(source)
@@ -27,7 +27,7 @@ export class NotechartLoader {
   }
 
   loadBmson (arraybuffer, resource, options) {
-    return co(function*() {
+    return co(function * () {
       let buffer        = new Buffer(new Uint8Array(arraybuffer))
       let source        = buffer.toString('utf-8')
       return BmsonNotechartLoader.load(source, options)

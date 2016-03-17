@@ -62,7 +62,7 @@ export class SceneManager {
   }
 
   _transitionTo (getNextScene) {
-    return co(function*() {
+    return co(function * () {
       if (this._transitioning) throw new Error('Scene is transitioning!')
       try {
         this._transitioning = true

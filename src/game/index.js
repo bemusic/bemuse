@@ -12,7 +12,7 @@ import BemusePackageResources from 'bemuse/resources/bemuse-package'
 import { unmuteAudio }        from 'bemuse/sampling-master'
 import audioContext           from 'audio-context'
 
-import { resolve } from 'url'
+import { resolveUrl } from 'url'
 
 import * as GameLoader from './loaders/game-loader'
 
@@ -25,18 +25,18 @@ export function main () {
   })
 
   let displayShell = function (options) {
-    return new Promise(function (_resolve) {
+    return new Promise(function (resolve) {
       let scene = React.createElement(GameShellScene, {
         options: options,
         play: function (data) {
-          _resolve(data)
+          resolve(data)
         },
       })
       SCENE_MANAGER.display(scene).done()
     })
   }
 
-  let getSong = co.wrap(function*() {
+  let getSong = co.wrap(function * () {
     let kbm = (query.keyboard || '').split(',').map(x => +x)
     let options = {
       url: query.bms || '/music/[snack]dddd/dddd_sph.bme',
@@ -67,7 +67,7 @@ export function main () {
     }
     options = yield displayShell(options)
     let url = options.url
-    let assetsUrl = resolve(url, 'assets/')
+    let assetsUrl = resolveUrl(url, 'assets/')
     let metadata = {
       title: 'Loading',
       subtitles: [],
@@ -84,7 +84,7 @@ export function main () {
     return loadSpec
   })
 
-  co(function*() {
+  co(function * () {
     let loadSpec = yield getSong()
     let { tasks, promise } = GameLoader.load(loadSpec)
     yield SCENE_MANAGER.display(React.createElement(LoadingScene, {

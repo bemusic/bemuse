@@ -387,10 +387,10 @@ function tests (APP_ID, JS_KEY) {
 }
 
 function steps (callback) {
-  var resolve
-  var promise = new Promise(_resolve => resolve = _resolve)
+  var _resolve
+  var promise = new Promise(resolve => (_resolve = resolve))
   var i = 0
-  before(() => void resolve())
+  before(() => void _resolve())
   return callback((name, fn) => {
     promise = (
       promise

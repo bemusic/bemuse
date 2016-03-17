@@ -20,7 +20,7 @@ export class GameController {
     this._input   = new GameInput()
     this._timer   = new GameTimer(this._clock, this._input)
     this._state   = new GameState(game)
-    this._promise = new Promise((resolve) => this._resolvePromise = resolve)
+    this._promise = new Promise(resolve => (this._resolvePromise = resolve))
     if (bench.enabled) this.enableBenchmark()
   }
   get game () {
@@ -49,7 +49,7 @@ export class GameController {
       requestAnimationFrame(frame)
     }
     requestAnimationFrame(frame)
-    this._endGameLoop = () => stopped = true
+    this._endGameLoop = () => (stopped = true)
   }
 
   // Exits the game when escape is pressed.

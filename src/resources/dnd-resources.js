@@ -41,7 +41,7 @@ function getFilesFromEvent (event) {
 
   let out = []
 
-  return co(function*() {
+  return co(function * () {
     if (event.dataTransfer.items) {
       for (let item of Array.from(event.dataTransfer.items)) {
         yield readItem(item)
@@ -55,7 +55,7 @@ function getFilesFromEvent (event) {
   })
 
   function readItem (item) {
-    return co(function*() {
+    return co(function * () {
       let entry = item.webkitGetAsEntry && item.webkitGetAsEntry()
       if (entry) {
         yield readEntry(entry, '')
@@ -84,7 +84,7 @@ function getFilesFromEvent (event) {
   }
 
   function readDirectory (dir) {
-    return co(function*() {
+    return co(function * () {
       let entries = []
       let reader = dir.createReader()
       let readMore = () => new Promise((resolve, reject) => {
