@@ -1,8 +1,8 @@
 
-import co           from 'co'
-import { resolve }  from 'url'
-import screenfull   from 'screenfull'
-import React        from 'react'
+import co                        from 'co'
+import { resolve as resolveUrl } from 'url'
+import screenfull                from 'screenfull'
+import React                     from 'react'
 
 // TODO: remove this dependency and use Options
 import query                  from 'bemuse/utils/query'
@@ -29,7 +29,7 @@ export function launch ({ server, song, chart }) {
   // Unmute audio immediately so that it sounds on iOS.
   unmuteAudio()
 
-  return co(function*() {
+  return co(function * () {
 
     // go fullscreen
     if (screenfull.enabled && !shouldDisableFullScreen()) {
@@ -49,7 +49,7 @@ export function launch ({ server, song, chart }) {
       loadSpec.bms    = yield song.resources.file(chart.file)
     } else {
       let url         = server.url + '/' + song.path + '/' + encodeURIComponent(chart.file)
-      let assetsUrl   = resolve(url, 'assets/')
+      let assetsUrl   = resolveUrl(url, 'assets/')
       loadSpec.bms    = new URLResource(url)
       loadSpec.assets = new BemusePackageResources(assetsUrl, {
         fallback: url,
@@ -128,7 +128,7 @@ export function launch ({ server, song, chart }) {
 }
 
 function showResult (playerState, chart) {
-  return new Promise(_resolve => {
+  return new Promise(resolve => {
     let stats     = playerState.stats
     let playMode  = playerState.player.options.scratch === 'off' ? 'KB' : 'BM'
     let props = {
@@ -148,7 +148,7 @@ function showResult (playerState, chart) {
       },
       chart:    chart,
       playMode: playMode,
-      onExit:   _resolve,
+      onExit:   resolve,
     }
     SCENE_MANAGER.display(React.createElement(ResultScene, props)).done()
   })

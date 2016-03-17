@@ -3,8 +3,7 @@ import webpack        from 'webpack'
 import ProgressPlugin from '../src/hacks/webpack-progress'
 import path           from './path'
 import * as Env       from './env'
-import { compose }    from 'lodash'
-
+import { flowRight }  from 'lodash'
 
 function generateBaseConfig () {
   let config = {
@@ -157,9 +156,9 @@ function applyKarmaConfig (config) {
 }
 
 
-export const generateWebConfig = compose(applyWebConfig, generateBaseConfig)
+export const generateWebConfig = flowRight(applyWebConfig, generateBaseConfig)
 
-export const generateKarmaConfig = compose(applyKarmaConfig, generateBaseConfig)
+export const generateKarmaConfig = flowRight(applyKarmaConfig, generateBaseConfig)
 
 export default generateWebConfig()
 

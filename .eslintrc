@@ -1,25 +1,25 @@
-{
-  "extends": "bemuse",
-  "env": {
-    "browser": true,
-    "node": true,
-    "es6": true
-  },
-  "globals": {
-    "mocha": false,
-    "describe": false,
-    "it": false,
-    "expect": false,
-    "beforeEach": false,
-    "afterEach": false,
-    "before": false,
-    "after": false,
-    "xdescribe": false,
-    "xit": false,
-    "sinon": false
-  },
-  "parser": "babel-eslint",
-  "plugins": [
-    "react"
-  ]
-}
+extends: bemuse
+parserOptions:
+  ecmaVersion: 6
+  sourceType: module
+  ecmaFeatures:
+    jsx: true
+env:
+  browser: true
+  node: true
+  es6: true
+globals:
+  mocha: false
+  describe: false
+  it: false
+  expect: false
+  beforeEach: false
+  afterEach: false
+  before: false
+  after: false
+  xdescribe: false
+  xit: false
+  sinon: false
+parser: babel-eslint
+plugins:
+  - react
