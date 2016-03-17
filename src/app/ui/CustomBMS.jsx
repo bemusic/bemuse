@@ -29,17 +29,21 @@ export const CustomBMS = React.createClass({
           {
             this.props.data.log
             ? (
-                this.props.data.log.length
-                ? <div className="CustomBMSのlog">
-                    {this.props.data.log.map(text => <p>{text}</p>)}
-                  </div>
-                : <div className="CustomBMSのlog">
-                    <p>Omachi kudasai...</p>
-                  </div>
+              this.props.data.log.length
+              ? (
+                <div className="CustomBMSのlog">
+                  {this.props.data.log.map(text => <p>{text}</p>)}
+                </div>
               )
+              : (
+                <div className="CustomBMSのlog">
+                  <p>Omachi kudasai...</p>
+                </div>
+              )
+            )
             : <div className="CustomBMSのdropzoneHint">
-                Drop BMS folder here.
-              </div>
+              Drop BMS folder here.
+            </div>
           }
         </div>
       </div>

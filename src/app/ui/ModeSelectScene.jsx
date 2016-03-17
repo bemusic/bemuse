@@ -20,16 +20,18 @@ export default React.createClass({
           <div className="ModeSelectSceneのitem" onClick={this.handleKB}>
             {this.renderKBGraphics()}
             <h2>Keyboard Mode</h2>
-            <p>Keys are arranged like computer keyboard. <strong>
-                Recommended for new players.</strong></p>
+            <p>
+              Keys are arranged like computer keyboard. <strong>Recommended for new players.</strong>
+            </p>
             <p>This mode is similar to O2Jam.</p>
           </div>
           <div className="ModeSelectSceneのitem" onClick={this.handleBM}>
             {this.renderBMGraphics()}
             <h2>BMS Mode</h2>
-            <p>Keys are arranged like piano keyboard
-                with a special scratch lane. <strong>For advanced
-                BMS music gamers.</strong></p>
+            <p>
+              Keys are arranged like piano keyboard
+              with a special scratch lane. <strong>For advanced BMS music gamers.</strong>
+            </p>
             <p>This mode is similar to beatmaniaIIDX and LR2.</p>
           </div>
         </div>
