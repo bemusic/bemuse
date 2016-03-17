@@ -11,12 +11,12 @@ const OptionsPlayerSelector = React.createClass({
     return <div className="OptionsPlayerSelector">
       {this.props.options.map((item, index) =>
           <OptionsPlayerSelector.Item
-              key={index}
-              type={this.props.type}
-              value={item.value}
-              label={item.label}
-              active={item.value === this.props.value}
-              onSelect={this.props.onSelect} />)}
+            key={index}
+            type={this.props.type}
+            value={item.value}
+            label={item.label}
+            active={item.value === this.props.value}
+            onSelect={this.props.onSelect} />)}
     </div>
   }
 })
@@ -24,13 +24,13 @@ const OptionsPlayerSelector = React.createClass({
 OptionsPlayerSelector.Item = pure(React.createClass({
   render () {
     return <div
-        className={c('OptionsPlayerSelectorのitem',
+      className={c('OptionsPlayerSelectorのitem',
             { 'is-active': this.props.active })}
-        onClick={this.handleClick}>
+      onClick={this.handleClick}>
       <OptionsPlayerGraphics
-          type={this.props.type}
-          value={this.props.value}
-          active={this.props.active} />
+        type={this.props.type}
+        value={this.props.value}
+        active={this.props.active} />
       <div className="OptionsPlayerSelectorのlabel">
         {this.props.label}
       </div>

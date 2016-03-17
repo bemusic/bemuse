@@ -5,7 +5,7 @@ import Scene from 'bemuse/ui/Scene'
 
 export default React.createClass({
   render () {
-    return <Scene className='ServiceWorkerRegistrationScene'>
+    return <Scene className="ServiceWorkerRegistrationScene">
       <div>
         Please wait while the service worker is being installed...
       </div>

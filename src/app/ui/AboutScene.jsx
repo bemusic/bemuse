@@ -47,7 +47,7 @@ export default React.createClass({
             Bemuse is a free and open source game and is licensed under
             GNU Affero General Public License, version 3.
             The source code is available on <a
-                href="https://github.com/bemusic/bemuse">GitHub</a>.
+              href="https://github.com/bemusic/bemuse">GitHub</a>.
           </p>
           <div className="AboutSceneのdjbm">
             <img src={require('./about-scene/DJBM.png')} alt="DJ Bemuse" />
@@ -83,7 +83,7 @@ export default React.createClass({
           Kasetsart University, Thailand.</p>
 
           <p>We{"'"}d like to thank <a
-              href="http://hitkey.nekokan.dyndns.info/">hitkey</a> for
+            href="http://hitkey.nekokan.dyndns.info/">hitkey</a> for
           providing us with a comprehensive reference on the BMS file format
           and for giving us suggestions.
           We{"'"}d also like to thank the following artists
@@ -106,12 +106,12 @@ export default React.createClass({
               write our code in future JavaScript dialect and have it translate
               our code for today{"'"}s browsers.</li>
             <li>We use <a
-                href="https://www.npmjs.com/package/node-sass">node-sass</a> to
+              href="https://www.npmjs.com/package/node-sass">node-sass</a> to
               be able to write our CSS more efficiently.</li>
             <li>We use <a href="http://gulpjs.com/">Gulp</a> to help automate
               our workflow.</li>
             <li>And we use a lot more, which you can find on <a
-                href="https://david-dm.org/bemusic/bemuse">david-dm</a>.</li>
+              href="https://david-dm.org/bemusic/bemuse">david-dm</a>.</li>
           </ul>
 
           <p>We would also like to thank these services for letting us
@@ -122,7 +122,7 @@ export default React.createClass({
             <li><a href="https://github.com/">GitHub</a> hosts our
               source code repository.</li>
             <li><a href="https://travis-ci.org/">Travis CI</a> and <a
-                href="https://circleci.com/">CircleCI</a> continuously runs
+              href="https://circleci.com/">CircleCI</a> continuously runs
                 our automated tests and notifies us when our new code breaks
                 existing features. CircleCI also builds and deploys new version
                 of the game automatically for us.</li>

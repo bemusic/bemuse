@@ -11,7 +11,7 @@ export default React.createClass({
       <div className={c('ModalPopup',
         { 'is-visible': this.props.visible !== false })}>
         <div className="ModalPopupのbackdrop"
-            onClick={this.props.onBackdropClick}></div>
+          onClick={this.props.onBackdropClick}></div>
         <div className="ModalPopupのcontents">
           {this.props.children}
         </div>

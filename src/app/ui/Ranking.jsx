@@ -23,9 +23,9 @@ export default React.createClass({
   render () {
     return <div className="Ranking">
       <AuthenticationPopup
-          visible={this.state.authenticationPopupVisible}
-          onFinish={this.handleAuthenticationFinish}
-          onBackdropClick={this.handleAuthenticationClose} />
+        visible={this.state.authenticationPopupVisible}
+        onFinish={this.handleAuthenticationFinish}
+        onBackdropClick={this.handleAuthenticationClose} />
       {this.renderYours()}
       {this.renderLeaderboard()}
     </div>
@@ -41,7 +41,7 @@ export default React.createClass({
         {
           submission.value
           ? <RankingTable.Row
-                record={submission.value} />
+            record={submission.value} />
           : (
             submission.status === 'unauthenticated'
             ? <RankingTable.Message>
@@ -82,8 +82,8 @@ export default React.createClass({
           state.data && state.data.length
           ? state.data.map((record, index) =>
               <RankingTable.Row
-                  key={index}
-                  record={record} />
+                key={index}
+                record={record} />
             )
           : (
             isWaiting(state.meta.scoreboard)

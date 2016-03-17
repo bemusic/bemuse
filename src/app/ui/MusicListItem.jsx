@@ -17,8 +17,8 @@ export const MusicListItem = React.createClass({
       'js-active-song': this.props.selected,
     })
     return <li
-        className={className}
-        onClick={this.handleClick}>
+      className={className}
+      onClick={this.handleClick}>
       {
         song.tutorial
         ? (
@@ -72,7 +72,7 @@ export const MusicListItem = React.createClass({
       if (i !== segments.length - 1) {
         let highlightedText = text.substr(start, highlight.length)
         output.push(<span
-            className="MusicListItemのhighlight">{highlightedText}</span>)
+          className="MusicListItemのhighlight">{highlightedText}</span>)
         start += highlight.length
       }
     }

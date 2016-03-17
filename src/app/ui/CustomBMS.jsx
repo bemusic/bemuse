@@ -22,10 +22,10 @@ export const CustomBMS = React.createClass({
         </div>
         <div className={c('CustomBMSのdropzone',
               { 'is-hover': this.state.hover })}
-            onDragOver={this.handleDragOver}
-            onDragEnter={this.handleDragEnter}
-            onDragLeave={this.handleDragLeave}
-            onDrop={this.handleDrop}>
+          onDragOver={this.handleDragOver}
+          onDragEnter={this.handleDragEnter}
+          onDragLeave={this.handleDragLeave}
+          onDrop={this.handleDrop}>
           {
             this.props.data.log
             ? (

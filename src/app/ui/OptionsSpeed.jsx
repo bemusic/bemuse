@@ -31,11 +31,11 @@ export const OptionsSpeed = React.createClass({
         <OptionsButton onClick={this.handleMinusButtonClick}>-</OptionsButton>
       </span>
       <OptionsInputField
-          value={this.parseSpeed(this.props.value)}
-          parse={this.parseSpeed}
-          stringify={this.stringifySpeed}
-          validator={/^\d+(?:\.\d)?$/}
-          onChange={this.handleSpeedInputChange} />
+        value={this.parseSpeed(this.props.value)}
+        parse={this.parseSpeed}
+        stringify={this.stringifySpeed}
+        validator={/^\d+(?:\.\d)?$/}
+        onChange={this.handleSpeedInputChange} />
       <span className="OptionsSpeedのplus">
         <OptionsButton onClick={this.handlePlusButtonClick}>+</OptionsButton>
       </span>

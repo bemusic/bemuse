@@ -119,16 +119,16 @@ export default React.createClass({
           <div className="AuthenticationPanelのcontent">
             <div className="AuthenticationPanelのmodeSwitcher">
               <a
-                  href="javascript://online/logIn"
-                  onClick={this.onSwitchToLogin}
-                  className={this.renderModeActiveClass('logIn')}>
+                href="javascript://online/logIn"
+                onClick={this.onSwitchToLogin}
+                className={this.renderModeActiveClass('logIn')}>
                 Log In
               </a>
               {' '}&middot;{' '}
               <a
-                  href="javascript://online/signUp"
-                  onClick={this.onSwitchToSignup}
-                  className={this.renderModeActiveClass('signUp')}>
+                href="javascript://online/signUp"
+                onClick={this.onSwitchToSignup}
+                className={this.renderModeActiveClass('signUp')}>
                 Create an Account
               </a>
             </div>

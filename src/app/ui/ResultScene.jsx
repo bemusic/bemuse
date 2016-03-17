@@ -36,9 +36,9 @@ export default React.createClass({
         </div>
         <div className="ResultSceneのinformationBody">
           <RankingContainer
-              result={this.props.result}
-              chart={this.props.chart}
-              playMode={this.props.playMode} />
+            result={this.props.result}
+            chart={this.props.chart}
+            playMode={this.props.playMode} />
         </div>
         <div className="ResultSceneのinformationFooter">
           <a href={this.getTweetLink()} className="ResultSceneのtweet" onClick={this.onTweet}>

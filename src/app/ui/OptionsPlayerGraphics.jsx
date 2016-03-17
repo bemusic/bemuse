@@ -41,20 +41,20 @@ export default React.createClass({
       <g transform={'translate(' + bx + ' 32)'}>
         {[0, 1, 2, 3, 4, 5, 6].map(i =>
             <rect key={i}
-                className="OptionsPlayerGraphicsのline"
-                x={off && i === 3 ? 10 : i * 10}
-                y={off ? (i === 3 ? 10 : 0) : (1 - i % 2) * 3}
-                width={off && i === 3 ? 48 : 8}
-                height={off ? 8 : 16}
-                rx={2} ry={2} />)}
+              className="OptionsPlayerGraphicsのline"
+              x={off && i === 3 ? 10 : i * 10}
+              y={off ? (i === 3 ? 10 : 0) : (1 - i % 2) * 3}
+              width={off && i === 3 ? 48 : 8}
+              height={off ? 8 : 16}
+              rx={2} ry={2} />)}
       </g>
       {sx && <circle className="OptionsPlayerGraphicsのline"
-          cx={sx} cy="42" r="8"
-          style={{ fill: 'rgba(255,255,255,0.1)' }} />}
+        cx={sx} cy="42" r="8"
+        style={{ fill: 'rgba(255,255,255,0.1)' }} />}
       {gx && <line className="OptionsPlayerGraphicsのline"
-          x1={gx} x2={gx} y1="1" y2="53" />}
+        x1={gx} x2={gx} y1="1" y2="53" />}
       <line className="OptionsPlayerGraphicsのline"
-          x1="1" x2="95" y1="29" y2="29" />
+        x1="1" x2="95" y1="29" y2="29" />
     </svg>
   },
   renderPanel () {
@@ -63,8 +63,8 @@ export default React.createClass({
     return <svg width="96" height="54">
       <g transform={'translate(' + tx + ' 0)'}>
         <path className="OptionsPlayerGraphicsのline"
-            d={PANEL_PATH}
-            style={{ fill: 'rgba(255,255,255,0.1)' }} />
+          d={PANEL_PATH}
+          style={{ fill: 'rgba(255,255,255,0.1)' }} />
       </g>
     </svg>
   }

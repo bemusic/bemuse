@@ -45,7 +45,7 @@ export const MusicInfoTabStats = React.createClass({
 
   renderWhenNotLoading (f) {
     return (this.props.loading
-      ? <Icon name='spinner' spin />
+      ? <Icon name="spinner" spin />
       : f()
     )
   },

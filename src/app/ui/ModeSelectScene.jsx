@@ -44,25 +44,25 @@ export default React.createClass({
     for (let i = 0; i < 7; i++) {
       if (i === 3) {
         children.push(<rect key={i}
-            x={13 + 3.5} y="31" width="63" height="11" rx="2" ry="2" />)
+          x={13 + 3.5} y="31" width="63" height="11" rx="2" ry="2" />)
       } else {
         children.push(<rect key={i}
-            x={13 * i + 3.5} y="13" width="11" height="11" rx="2" ry="2" />)
+          x={13 * i + 3.5} y="13" width="11" height="11" rx="2" ry="2" />)
       }
     }
     return <svg width="96" height="54" viewBox="0 0 96 54"
-        className="ModeSelectSceneのgraphics">{children}</svg>
+      className="ModeSelectSceneのgraphics">{children}</svg>
   },
   renderBMGraphics () {
     let children = []
     for (let i = 0; i < 7; i++) {
       children.push(<rect key={i}
-          x={6.5 * i + 41.5}
-          y={i % 2 === 0 ? 28 : 12}
-          width="11" height="14" rx="2" ry="2" />)
+        x={6.5 * i + 41.5}
+        y={i % 2 === 0 ? 28 : 12}
+        width="11" height="14" rx="2" ry="2" />)
     }
     return <svg width="96" height="54" viewBox="0 0 96 54"
-        className="ModeSelectSceneのgraphics">
+      className="ModeSelectSceneのgraphics">
       <circle cx="21" cy="27" r="16" />
       {children}
     </svg>

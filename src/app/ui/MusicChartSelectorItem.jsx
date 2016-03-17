@@ -15,8 +15,8 @@ export default React.createClass({
           'is-5keys': this.props.chart.keys === '5K',
         })
     return <li
-        className={classes}
-        onClick={this.handleClick}>
+      className={classes}
+      onClick={this.handleClick}>
       {
         this.props.isTutorial
         ? 'Start Tutorial'

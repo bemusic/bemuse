@@ -12,7 +12,7 @@ export default React.createClass({
       'is-grade': !!this.props.grade,
     })
     return <div className={className} onClick={this.handleClick}>
-      <span className='MusicListItemChartのtext'>
+      <span className="MusicListItemChartのtext">
         {this.props.loading
           ? '…'
           : this.props.grade || chart.info.level
