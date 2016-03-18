@@ -1,6 +1,6 @@
 
 import NODE_ENV from 'node-env'
-import enabled  from 'is-true-ish'
+import enabled  from 'yn'
 
 export function production () {
   return NODE_ENV === 'production'
