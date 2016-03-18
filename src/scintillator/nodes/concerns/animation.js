@@ -32,7 +32,7 @@ export class Animation {
   _getAnimation (data) {
     let event       = _(this._events)
         .filter(e => e === '' || e in data)
-        .max(e => data[e] || 0)
+        .maxBy(e => data[e] || 0)
     let t           = data[this._timeKey] - (data[event] || 0)
     let animations  = this._animations.filter(a => a.on === event)
     let values      = animations.map(a => a.data.values(t))

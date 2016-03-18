@@ -1,8 +1,9 @@
 
 import { Parse } from 'parse'
 
-import query  from 'bemuse/utils/query'
-import Online from 'bemuse/online'
+import query         from 'bemuse/utils/query'
+import Online        from 'bemuse/online'
+import OnlineService from 'bemuse/online/online-service'
 
 var uid = (function () {
   var session = Math.floor(Math.random() * 65536).toString(16)
@@ -23,6 +24,10 @@ if (query.PARSE_APP_ID && query.PARSE_API_KEY) {
   describe('Online', function () {
     xit('Set PARSE_APP_ID and PARSE_API_KEY to test')
   })
+}
+
+function createOnline () {
+  return new Online(new OnlineService())
 }
 
 function tests (APP_ID, JS_KEY) {
@@ -47,7 +52,7 @@ function tests (APP_ID, JS_KEY) {
       let online
       let info
       before(function () {
-        online = new Online()
+        online = createOnline()
       })
       after(function () {
         online = null
@@ -66,11 +71,11 @@ function tests (APP_ID, JS_KEY) {
     describe('initially', function () {
       let online
       beforeEach(function () {
-        online = new Online()
+        online = createOnline()
         return online.logOut()
       })
       beforeEach(function () {
-        online = new Online()
+        online = createOnline()
       })
       describe('user川', function () {
         it('should be null', function () {
@@ -82,7 +87,7 @@ function tests (APP_ID, JS_KEY) {
     describe('when signed up', function () {
       let online
       before(function () {
-        online = new Online()
+        online = createOnline()
       })
       describe('user川', function () {
         it('should change to signed-up user, and also start with it', function () {
@@ -93,7 +98,7 @@ function tests (APP_ID, JS_KEY) {
               expect(user.username).to.equal(info.username)
             })
             .tap(() => {
-              return new Online().user川.first().toPromise().then(user => {
+              return createOnline().user川.first().toPromise().then(user => {
                 expect(user.username).to.equal(info.username)
               })
             })
@@ -108,7 +113,7 @@ function tests (APP_ID, JS_KEY) {
       let online
       let info = createAccountInfo()
       before(function () {
-        online = new Online()
+        online = createOnline()
       })
       before(function () {
         return online.signUp(info)
@@ -131,7 +136,7 @@ function tests (APP_ID, JS_KEY) {
 
       let online
       before(function () {
-        online = new Online()
+        online = createOnline()
       })
 
       var prefix = uid() + '_'
@@ -243,7 +248,7 @@ function tests (APP_ID, JS_KEY) {
 
       let online
       before(function () {
-        online = new Online()
+        online = createOnline()
         return online.logOut()
       })
 

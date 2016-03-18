@@ -137,21 +137,7 @@ function applyWebConfig (config) {
 
 
 function applyKarmaConfig (config) {
-  if (Env.coverageEnabled()) {
-    // config.module.preLoaders.push({
-    //   test: /\.js$/,
-    //   include: [path('src')],
-    //   exclude: [
-    //     path('src', 'test'),
-    //     path('src', 'bootstrap'),
-    //     path('src', 'boot', 'loader.js'),
-    //   ],
-    //   loader: 'isparta',
-    // })
-  }
-
   config.devtool = 'cheap-inline-source-map'
-
   return config
 }
 
