@@ -87,7 +87,7 @@ export class PlayerDisplay {
     function updateBarLines () {
       let entities = noteArea.getVisibleBarLines(position, getUpperBound(), 1)
       for (let entity of entities) {
-        push(`barlines`, { key: entity.id, y: entity.y })
+        push('barlines', { key: entity.id, y: entity.y })
       }
     }
 
@@ -122,9 +122,9 @@ export class PlayerDisplay {
           : (notification.delta > 0 ? 'late' : notification.delta < 0 ? 'early' : 'none')
         )
         stateful[`judge_deviation_${deviationMode}`] = time
-        stateful[`combo`] = notification.combo
+        stateful['combo'] = notification.combo
       }
-      data[`score`] = playerState.stats.score
+      data['score'] = playerState.stats.score
     }
 
     function updateExplode () {

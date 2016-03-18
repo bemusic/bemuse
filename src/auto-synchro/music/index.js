@@ -32,13 +32,13 @@ let ASSET_URLS = {
  * Loads the files and create a music instance.
  */
 export function load () {
-  return co(function*() {
+  return co(function * () {
     let master  = new SamplingMaster(context)
     let sample  =
           name => download(ASSET_URLS[`${name}${audioExt()}`])
             .as('arraybuffer')
             .then(buf => master.sample(buf))
-    let samples = _.object(
+    let samples = _.fromPairs(
           yield Promise.all(
             ['bgm', 'intro', 'kick', 'snare'].map(
               name => sample(name).then(sampleObj => [name, sampleObj]))))

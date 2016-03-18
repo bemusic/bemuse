@@ -21,14 +21,14 @@ export const OptionsInputField = React.createClass({
   },
   render () {
     return <input
-        {..._.omit(this.props, ['stringify', 'parse', 'onChange', 'validator', 'value'])}
-        type="text"
-        ref="input"
-        defaultValue={this.props.stringify(this.props.value)}
-        onChange={this.handleInputChange}
-        onKeyDown={this.handleInputKeyDown}
-        onBlur={this.handleInputBlur}
-        className="OptionsInputField" />
+      {..._.omit(this.props, ['stringify', 'parse', 'onChange', 'validator', 'value'])}
+      type="text"
+      ref="input"
+      defaultValue={this.props.stringify(this.props.value)}
+      onChange={this.handleInputChange}
+      onKeyDown={this.handleInputKeyDown}
+      onBlur={this.handleInputBlur}
+      className="OptionsInputField" />
   },
   handleInputChange (e) {
     let input = e.target

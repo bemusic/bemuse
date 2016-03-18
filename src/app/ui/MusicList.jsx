@@ -9,17 +9,17 @@ import pure           from 'recompose/pure'
 export const MusicList = React.createClass({
   render () {
     return <ul className="MusicList js-scrollable-view"
-        onTouchStart={this.props.onTouch}>
+      onTouchStart={this.props.onTouch}>
       {this.props.groups.map(({ title, songs }) => [
         <li className="MusicListのgroupTitle">{title}</li>,
         songs.map(song => <MusicListItem
-            key={song.id}
-            song={song}
-            selected={song.id === this.props.selectedSong.id}
-            selectedChart={this.getSelectedChart(song)}
-            playMode={this.props.playMode}
-            onSelect={this.props.onSelect}
-            highlight={this.props.highlight} />),
+          key={song.id}
+          song={song}
+          selected={song.id === this.props.selectedSong.id}
+          selectedChart={this.getSelectedChart(song)}
+          playMode={this.props.playMode}
+          onSelect={this.props.onSelect}
+          highlight={this.props.highlight} />),
       ])}
     </ul>
   },

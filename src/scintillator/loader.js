@@ -12,7 +12,7 @@ import Resources  from './resources'
 import Compiler   from './compiler'
 
 export function load (xmlPath, progress) {
-  return co(function*() {
+  return co(function * () {
 
     log('load XML from %s', xmlPath)
     let $xml = yield loadXml(xmlPath)

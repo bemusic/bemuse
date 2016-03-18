@@ -8,7 +8,7 @@ describe('NotechartLoader', function () {
     it('should be able to read', function () {
 
       let loader = new NotechartLoader()
-      let buffer = new Buffer(`#TITLE meow`)
+      let buffer = new Buffer('#TITLE meow')
       let arraybuffer = buffer.buffer
 
       return loader.load(arraybuffer, { name: 'wow.bms' }, { }).then(notechart => {

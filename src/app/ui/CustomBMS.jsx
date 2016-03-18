@@ -22,24 +22,28 @@ export const CustomBMS = React.createClass({
         </div>
         <div className={c('CustomBMSのdropzone',
               { 'is-hover': this.state.hover })}
-            onDragOver={this.handleDragOver}
-            onDragEnter={this.handleDragEnter}
-            onDragLeave={this.handleDragLeave}
-            onDrop={this.handleDrop}>
+          onDragOver={this.handleDragOver}
+          onDragEnter={this.handleDragEnter}
+          onDragLeave={this.handleDragLeave}
+          onDrop={this.handleDrop}>
           {
             this.props.data.log
             ? (
-                this.props.data.log.length
-                ? <div className="CustomBMSのlog">
-                    {this.props.data.log.map(text => <p>{text}</p>)}
-                  </div>
-                : <div className="CustomBMSのlog">
-                    <p>Omachi kudasai...</p>
-                  </div>
+              this.props.data.log.length
+              ? (
+                <div className="CustomBMSのlog">
+                  {this.props.data.log.map(text => <p>{text}</p>)}
+                </div>
               )
+              : (
+                <div className="CustomBMSのlog">
+                  <p>Omachi kudasai...</p>
+                </div>
+              )
+            )
             : <div className="CustomBMSのdropzoneHint">
-                Drop BMS folder here.
-              </div>
+              Drop BMS folder here.
+            </div>
           }
         </div>
       </div>

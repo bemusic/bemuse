@@ -9,14 +9,14 @@ import Animation  from './animation'
 
 // Numeric properties that may be interpreted as expressions.
 let properties = [
-  { name: 'x',       default: '0', apply: (obj, v) => obj.x = v },
-  { name: 'y',       default: '0', apply: (obj, v) => obj.y = v },
-  { name: 'scale-x', default: '1', apply: (obj, v) => obj.scale.x = v },
-  { name: 'scale-y', default: '1', apply: (obj, v) => obj.scale.y = v },
-  { name: 'alpha',   default: '1', apply: (obj, v) => obj.alpha = v },
-  { name: 'width',                 apply: (obj, v) => obj.width = v },
-  { name: 'height',                apply: (obj, v) => obj.height = v },
-  { name: 'visible',               apply: (obj, v) => obj.visible = v },
+  { name: 'x',       default: '0', apply: (obj, v) => (obj.x = v) },
+  { name: 'y',       default: '0', apply: (obj, v) => (obj.y = v) },
+  { name: 'scale-x', default: '1', apply: (obj, v) => (obj.scale.x = v) },
+  { name: 'scale-y', default: '1', apply: (obj, v) => (obj.scale.y = v) },
+  { name: 'alpha',   default: '1', apply: (obj, v) => (obj.alpha = v) },
+  { name: 'width',                 apply: (obj, v) => (obj.width = v) },
+  { name: 'height',                apply: (obj, v) => (obj.height = v) },
+  { name: 'visible',               apply: (obj, v) => (obj.visible = v) },
 ]
 
 export class DisplayObject extends SkinNode {

@@ -51,7 +51,7 @@ describe('SamplingMaster', function () {
     it('should reject when decoding failed', function () {
       context.DECODE_AUDIO_DATA_FAILED = true
       return expect(master.sample(new ArrayBuffer(0))
-        .finally(() => context.DECODE_AUDIO_DATA_FAILED = false))
+        .finally(() => (context.DECODE_AUDIO_DATA_FAILED = false)))
           .to.be.rejected
     })
     describe('#play', function () {
@@ -64,7 +64,7 @@ describe('SamplingMaster', function () {
         bufferSource.buffer = buffer
         sinon.stub(context, 'createBufferSource').returns(bufferSource)
         sinon.spy(bufferSource, 'start')
-        return master.sample(new Blob([])).then(s => sample = s)
+        return master.sample(new Blob([])).then(s => (sample = s))
       })
       it('should play a buffer source', function () {
         sample.play()
@@ -146,7 +146,7 @@ describe('SamplingMaster', function () {
   describe('#destroy', function () {
     let sample
     beforeEach(function () {
-      return master.sample(new Blob([])).then(s => sample = s)
+      return master.sample(new Blob([])).then(s => (sample = s))
     })
     it('should stop all samples', function () {
       let a = sample.play()

@@ -14,15 +14,15 @@ export const MusicInfo = React.createClass({
     return <section className="MusicInfo">
       <MusicChartInfo info={chart.info} />
       <MusicChartSelector
-          song={song}
-          selectedChart={chart}
-          charts={this.props.charts}
-          onChartClick={this.props.onChartClick} />
+        song={song}
+        selectedChart={chart}
+        charts={this.props.charts}
+        onChartClick={this.props.onChartClick} />
       <MusicInfoTabs
-          song={song}
-          chart={chart}
-          playMode={this.props.playMode}
-          onOptions={this.props.onOptions} />
+        song={song}
+        chart={chart}
+        playMode={this.props.playMode}
+        onOptions={this.props.onOptions} />
     </section>
   }
 })

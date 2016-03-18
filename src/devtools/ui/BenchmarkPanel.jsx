@@ -5,14 +5,16 @@ import React from 'react'
 export default React.createClass({
   render () {
     return <div className="BenchmarkPanel"
-        onClick={this.handleInteraction}
-        onTouchStart={this.handleInteraction}>
+      onClick={this.handleInteraction}
+      onTouchStart={this.handleInteraction}>
       {
         this.state.show
-        ? <article>
+        ? (
+          <article>
             <b>Benchmark Stats</b><br />
             {this.renderTable()}
           </article>
+        )
         : 'Show Benchmark Stats'
       }
     </div>

@@ -27,7 +27,7 @@ const DefaultPlayground = React.createClass({
         {Object.keys(availablePlaygrounds)
             .map(key => <li>
               <a style={linkStyle}
-                  href={'?mode=playground&playground=' + key}>{key}</a>
+                href={'?mode=playground&playground=' + key}>{key}</a>
             </li>)}
       </ul>
     </div>

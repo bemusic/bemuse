@@ -1,7 +1,11 @@
 
-import { _compile, _attrs, Animation }
-  from 'bemuse/scintillator/nodes/concerns/animation'
+import {
+  _compile,
+  _attrs,
+  Animation
+} from 'bemuse/scintillator/nodes/concerns/animation'
 import $ from 'jquery'
+import assert from 'power-assert'
 
 let $xml = xml => $($.parseXML(xml).documentElement)
 
@@ -9,7 +13,7 @@ describe('Scintillator::Animation', function () {
 
   describe('_attrs', function () {
     it('lists all attributes of an element', function () {
-      let xml = $xml(`<keyframe t="0" x="10" y="30" />`)[0]
+      let xml = $xml('<keyframe t="0" x="10" y="30" />')[0]
       expect(_attrs(xml)).to.deep.equal({ t: '0', x: '10', y: '30' })
     })
   })
@@ -60,6 +64,32 @@ describe('Scintillator::Animation', function () {
     })
   })
 
+  describe('#prop', function () {
+    it('should return the function for given prop', function () {
+      let anim = Animation.compile(null, $xml(`<group>
+        <animation>
+          <keyframe t="0" x="10" />
+          <keyframe t="1" x="20" />
+        </animation>
+      </group>`))
+      assert(anim.prop('x')({ t: 0.4 }) === 14)
+    })
+    it('should choose animation that occurs last', function () {
+      let anim = Animation.compile(null, $xml(`<group>
+        <animation on="event1">
+          <keyframe t="0" x="10" />
+          <keyframe t="1" x="20" />
+        </animation>
+        <animation on="event2">
+          <keyframe t="0" x="100" />
+          <keyframe t="1" x="200" />
+        </animation>
+      </group>`))
+      assert(anim.prop('x')({ event1: 0.2, event2: 0, t: 0.4 }) === 12)
+      assert(anim.prop('x')({ event1: 0, event2: 0.2, t: 0.4 }) === 120)
+    })
+  })
+
   describe('#_events', function () {
     it('list distinct events', function () {
       let anim = Animation.compile(null, $xml(`<group>
@@ -73,4 +103,3 @@ describe('Scintillator::Animation', function () {
   })
 
 })
-

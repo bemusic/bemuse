@@ -10,7 +10,7 @@ export default React.createClass({
     return <div className="Options">
       <Panel title="Player Settings">
         <OptionsPlayer
-            onClose={this.props.onClose} />
+          onClose={this.props.onClose} />
       </Panel>
       <div className="Optionsのvgroup">
         <Panel title="Input Settings">

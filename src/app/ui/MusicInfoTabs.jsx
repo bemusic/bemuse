@@ -22,7 +22,7 @@ export default React.createClass({
         {this.renderTab(2, 'Information')}
       </ul>
       <div
-          className={c('MusicInfoTabsのpanel',
+        className={c('MusicInfoTabsのpanel',
               { 'is-without-padding': this.state.selectedTab === 1 })}>
         {this.renderCurrentTab()}
       </div>
@@ -30,10 +30,13 @@ export default React.createClass({
   },
 
   renderTab (index, title) {
+    const onClick = () => this.setState({ selectedTab: index })
     return <li
-        className={c('MusicInfoTabsのtab',
-            { 'is-active': index === this.state.selectedTab })}
-        onClick={() => this.setState({ selectedTab: index })}>
+      className={c('MusicInfoTabsのtab', {
+        'is-active': index === this.state.selectedTab
+      })}
+      onClick={onClick}
+    >
       {title}
     </li>
   },
@@ -41,16 +44,16 @@ export default React.createClass({
     switch (this.state.selectedTab) {
     case 0:
       return <MusicInfoTabStats
-          song={this.props.song}
-          chart={this.props.chart} />
+        song={this.props.song}
+        chart={this.props.chart} />
     case 1:
       return <RankingContainer
-          chart={this.props.chart}
-          playMode={this.props.playMode} />
+        chart={this.props.chart}
+        playMode={this.props.playMode} />
     case 2:
       return <MusicInfoTabInformation
-          song={this.props.song}
-          chart={this.props.chart} />
+        song={this.props.song}
+        chart={this.props.chart} />
     default:
       return 'Unknown tab'
     }

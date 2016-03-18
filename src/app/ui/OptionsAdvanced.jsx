@@ -25,15 +25,15 @@ export const OptionsAdvanced = React.createClass({
         <label>Latency</label>
         <div className="OptionsAdvancedのgroupItem">
           <OptionsInputField
-              value={+options['system.offset.audio-input']}
-              parse={this.parseLatency}
-              stringify={this.stringifyLatency}
-              validator={/^\d+(?:ms)?$/}
-              onChange={this.handleAudioInputLatencyChange} />
+            value={+options['system.offset.audio-input']}
+            parse={this.parseLatency}
+            stringify={this.stringifyLatency}
+            validator={/^\d+(?:ms)?$/}
+            onChange={this.handleAudioInputLatencyChange} />
           <label>audio</label>
         </div>
         <OptionsButton
-            onClick={this.handleCalibrateButtonClick}>Calibrate</OptionsButton>
+          onClick={this.handleCalibrateButtonClick}>Calibrate</OptionsButton>
       </div>
     </div>
   },

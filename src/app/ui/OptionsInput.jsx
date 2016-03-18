@@ -15,7 +15,8 @@ export const OptionsInput = React.createClass({
       'is-reverse': this.props.scratch === 'right'
     })
     return <div className={className}>
-      {this.props.scratch !== 'off'
+      {
+        this.props.scratch !== 'off'
         ? (
           <div className="OptionsInputのzone is-scratch">
             <div className="OptionsInputのcontrol">

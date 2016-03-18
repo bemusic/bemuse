@@ -4,7 +4,6 @@ import _          from 'lodash'
 import Immutable  from 'immutable'
 
 import id             from './id'
-import OnlineService  from './online-service'
 import * as Level     from './level'
 import * as DataStore from './data-store'
 
@@ -16,9 +15,7 @@ import {
   isWaiting,
 } from './operations'
 
-export function Online () {
-
-  const service = new OnlineService()
+export function Online (service) {
 
   const user口 = new Bacon.Bus()
   const seen口 = new Bacon.Bus()

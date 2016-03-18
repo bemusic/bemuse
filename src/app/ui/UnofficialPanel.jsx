@@ -7,7 +7,7 @@ import OptionsButton from './OptionsButton'
 export default React.createClass({
   render () {
     return <div className="UnofficialPanel">
-      <Panel title='Unofficial Music Server'>
+      <Panel title="Unofficial Music Server">
         <div className="UnofficialPanelのcontent">
           <p>
             You are now playing in an <strong>unofficial music server</strong>.

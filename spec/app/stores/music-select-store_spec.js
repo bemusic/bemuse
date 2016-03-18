@@ -15,7 +15,7 @@ describe('MusicSelectStore', function () {
   let collection
   let url = '/spec/app/fixtures/index.json'
 
-  before(co.wrap(function*() {
+  before(co.wrap(function * () {
     collection = yield Promise.resolve($.get(url))
   }))
 

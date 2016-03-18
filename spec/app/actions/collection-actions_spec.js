@@ -5,7 +5,7 @@ import * as Actions from 'bemuse/app/actions/collection-actions'
 
 describe('CollectionActions', function () {
   describe('loadCollection(url)', function () {
-    it('should load the collection', co.wrap(function*() {
+    it('should load the collection', co.wrap(function * () {
       Actions.loadCollection('/spec/app/fixtures')
       let onStartLoading = waitForAction(Actions.startLoading)
       let onFinishLoading = waitForAction(Actions.finishLoading)
@@ -14,7 +14,7 @@ describe('CollectionActions', function () {
       expect((yield onFinishLoading).value.songs)
           .to.be.an.instanceof(Array)
     }))
-    it('should call errorLoading when cannot load', co.wrap(function*() {
+    it('should call errorLoading when cannot load', co.wrap(function * () {
       Actions.loadCollection('/spec/app/fixtures/nonexistant')
       yield waitForAction(Actions.errorLoading)
     }))

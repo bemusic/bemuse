@@ -5,8 +5,8 @@ import ReactDOM from 'react-dom'
 
 export default React.createClass({
   render () {
-    return <iframe width='100%' className='YouTube'
-        src={this.getUrl()} frameBorder='0' allowFullScreen></iframe>
+    return <iframe width="100%" className="YouTube"
+      src={this.getUrl()} frameBorder="0" allowFullScreen></iframe>
   },
   getUrl () {
     return 'https://www.youtube.com/embed/' +

@@ -10,12 +10,13 @@ const CustomChartSelector = React.createClass({
     return <div className="drop-zone">
       {
         files.length
-        ? <ul>
+        ? (
+          <ul>
             {files.map(file =>
               <li>
                 <a href="javascript://"
-                    onClick={this.handleItemClick(file)}
-                    className={
+                  onClick={this.handleItemClick(file)}
+                  className={
                         c({ 'is-active':
                             file.resource === this.props.selectedResource })}>
                   {file.name}
@@ -24,19 +25,24 @@ const CustomChartSelector = React.createClass({
             )}
             {
               this.props.selectedResource
-              ? <li>
+              ? (
+                <li>
                   <a href="javascript://" onClick={this.handleClear}>
                     Clear
                   </a>
                 </li>
+              )
               : null
             }
           </ul>
-        : <div className="drop-zone-hint">
+        )
+        : (
+          <div className="drop-zone-hint">
             Drop BMS folder here
             <br />
             (only works on Google Chrome)
           </div>
+        )
       }
     </div>
   },
@@ -79,43 +85,42 @@ export default React.createClass({
   render () {
     let options = this.state.options
     return <div
-        className="GameShellScene"
-        onDragOver={this.handleDragOver}
-        onDrop={this.handleDrop}>
+      className="GameShellScene"
+      onDragOver={this.handleDragOver}
+      onDrop={this.handleDrop}>
       <h1>Bemuse Game Shell</h1>
       <p>This tool is intended for developers testing the game.</p>
       <form onSubmit={this.submit}>
         <div className="text">
           <label><span className="label">BMS URL:</span>
             <input
-                type="text"
-                disabled={options.resource}
-                onChange={this.bindOption((o, v) => o.url = v)}
-                value={options.url} />
+              type="text"
+              disabled={options.resource}
+              onChange={this.bindOption((o, v) => (o.url = v))}
+              value={options.url} />
           </label>
         </div>
         <div className="text">
           <label><span className="label">-or- Drop BMS folder here</span>
             <CustomChartSelector
-                ref="dropzone"
-                selectedResource={options.resource}
-                onSelect={this.handleSelectFile} />
+              ref="dropzone"
+              selectedResource={options.resource}
+              onSelect={this.handleSelectFile} />
           </label>
         </div>
         <div className="text">
           <label><span className="label">Audio-Input Latency</span>
             <input
-                type="text"
-                onChange={this.bindOption((o, v) =>
-                            o.game.audioInputLatency = v)}
-                value={options.game.audioInputLatency} />
+              type="text"
+              onChange={this.bindOption((o, v) => (o.game.audioInputLatency = v))}
+              value={options.game.audioInputLatency} />
           </label>
         </div>
         <div className="text">
           <label><span className="label">HI-SPEED:</span>
             <input type="text"
-                onChange={this.bindOption((o, v) => o.players[0].speed = v)}
-                value={options.players[0].speed} />
+              onChange={this.bindOption((o, v) => (o.players[0].speed = v))}
+              value={options.players[0].speed} />
           </label>
         </div>
         <div className="radio">
@@ -123,9 +128,8 @@ export default React.createClass({
           {['left', 'center', 'right'].map(placement =>
             <label>
               <input type="radio" value={placement}
-                  onChange={this.bindOption((o, v) =>
-                      o.players[0].placement = v)}
-                  checked={options.players[0].placement === placement} />
+                onChange={this.bindOption((o, v) => (o.players[0].placement = v))}
+                checked={options.players[0].placement === placement} />
               <span className="label">{placement}</span>
             </label>
           )}

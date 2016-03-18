@@ -15,7 +15,7 @@ export class SamplesLoader {
     let load      = name => this._loadSample(name, onload, ondecode)
     if (decodeProgress) decodeProgress.formatter = EXTRA_FORMATTER
     return Promise.map(files, load)
-        .then(arr => _(arr).filter().object().value())
+        .then(arr => _(arr).filter().fromPairs().value())
   }
   _loadSample (name, onload, ondecode) {
     return this._getFile(name).then(

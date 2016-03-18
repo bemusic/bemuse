@@ -9,20 +9,22 @@ export default React.createClass({
 
   render () {
     let classes = c('MusicChartSelectorItem', {
-          'is-active': this.props.isSelected,
-          'is-tutorial': this.props.isTutorial,
-          'is-insane': this.props.chart.info.difficulty >= 5,
-          'is-5keys': this.props.chart.keys === '5K',
-        })
+      'is-active': this.props.isSelected,
+      'is-tutorial': this.props.isTutorial,
+      'is-insane': this.props.chart.info.difficulty >= 5,
+      'is-5keys': this.props.chart.keys === '5K',
+    })
     return <li
-        className={classes}
-        onClick={this.handleClick}>
+      className={classes}
+      onClick={this.handleClick}>
       {
         this.props.isTutorial
         ? 'Start Tutorial'
-        : <span className="MusicChartSelectorItemのlevel">
+        : (
+          <span className="MusicChartSelectorItemのlevel">
             {this.props.chart.info.level}
           </span>
+        )
       }
       <span className="MusicChartSelectorItemのplay">
         <Icon name="play" />

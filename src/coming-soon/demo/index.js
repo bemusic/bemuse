@@ -48,7 +48,7 @@ function go (loader, element) {
   let $play     = element.find('.js-play').hide()
   let $sampler  = element.find('.js-sampler')
 
-  co(function*() {
+  co(function * () {
     log('Loading file list')
     let list = yield loader.fileList
     let bmsFile = list.filter(f => f.match(/\.(?:bms|bme|bml|pms)$/i))[0]
@@ -115,7 +115,7 @@ function go (loader, element) {
         promises.push(
           loadKeysound(chart.headers.get('wav' + keysound))
             .then(blob => master.sample(blob))
-            .then(sample => samples[keysound] = sample)
+            .then(sample => (samples[keysound] = sample))
             .catch(e => console.error('Unable to load ' + keysound + ': ' + e))
             .tap(() => log('[loaded ' + (++completed) + '/' + promises.length +
               ' samples]'))

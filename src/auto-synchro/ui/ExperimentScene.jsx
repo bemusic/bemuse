@@ -33,7 +33,7 @@ export default React.createClass({
   renderReady () {
     return <div className="ExperimentSceneのready">
       <button className="ExperimentSceneのbutton"
-          onClick={this.props.onStart}>Start Calibration</button>
+        onClick={this.props.onStart}>Start Calibration</button>
     </div>
   },
   renderMessage (text) {

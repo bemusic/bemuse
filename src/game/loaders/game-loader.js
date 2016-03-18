@@ -55,7 +55,7 @@ export function load (spec) {
     }
 
     task('Notechart', 'Loading ' + spec.bms.name, [],
-    co.wrap(function*(progress) {
+    co.wrap(function * (progress) {
       let loader        = new NotechartLoader()
       let arraybuffer   = yield bms.read(progress)
       return yield loader.load(arraybuffer, spec.bms, spec.options.players[0])

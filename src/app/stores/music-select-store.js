@@ -107,7 +107,7 @@ export function MusicSelectStoreFactory (CollectionStore, options = { }) {
 export default MusicSelectStoreFactory(DefaultCollectionStore)
 
 function sortSongs (songs) {
-  return _.sortByAll(songs, [
+  return _.orderBy(songs, [
     song => {
       return (_(song.charts)
         .filter(isChartPlayable)
@@ -156,7 +156,7 @@ function selectFirstItem (previous, items) {
 
 function selectClosestLevel (previous, charts) {
   let level = (previous && previous.info && previous.info.level) || 0
-  return _.min(charts, chart => Math.abs(chart.info.level - level))
+  return _.minBy(charts, chart => Math.abs(chart.info.level - level))
 }
 
 function groupBy (songs, grouping) {
@@ -177,7 +177,7 @@ function groupBy (songs, grouping) {
     if (input.reverse)  output.songs.reverse()
   }
   return (_(groups)
-    .pluck('output')
+    .map('output')
     .filter(group => group.songs.length > 0)
     .value()
   )

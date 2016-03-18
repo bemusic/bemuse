@@ -4,7 +4,7 @@ import _ from 'lodash'
 export class NoteArea {
   constructor (notes, barLines) {
     this._notes     = _.sortBy(notes, position)
-    this._barLines  = _(barLines).pluck('position').sortBy().value()
+    this._barLines  = _(barLines).map('position').sortBy().value()
   }
   getVisibleNotes (lower, upper, headroom) {
     let out = []
