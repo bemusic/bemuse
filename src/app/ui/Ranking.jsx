@@ -44,26 +44,34 @@ export default React.createClass({
             record={submission.value} />
           : (
             submission.status === 'unauthenticated'
-            ? <RankingTable.Message>
+            ? (
+              <RankingTable.Message>
                 Please <a href="javascript://online/auth" onClick={this.handleAuthenticate}>log in or create an account</a> to submit scores.
               </RankingTable.Message>
+            )
             : (
               submission.status === 'error'
-              ? <RankingTable.Message>
+              ? (
+                <RankingTable.Message>
                   {this.renderError(
                     'Unable to submit score',
                     submission.error,
                     this.props.onResubmitScoreRequest
                   )}
                 </RankingTable.Message>
+              )
               : (
                 isWaiting(submission)
-                ? <RankingTable.Message>
+                ? (
+                  <RankingTable.Message>
                     Please wait...
                   </RankingTable.Message>
-                : <RankingTable.Message>
+                )
+                : (
+                  <RankingTable.Message>
                     No record. Let’s play!
                   </RankingTable.Message>
+                )
               )
             )
           )
@@ -81,25 +89,30 @@ export default React.createClass({
         {
           state.data && state.data.length
           ? state.data.map((record, index) =>
-              <RankingTable.Row
-                key={index}
-                record={record} />
-            )
+            <RankingTable.Row
+              key={index}
+              record={record}
+            />
+          )
           : (
             isWaiting(state.meta.scoreboard)
             ? <RankingTable.Message>Loading...</RankingTable.Message>
             : (
               state.meta.scoreboard.status === 'error'
-              ? <RankingTable.Message>
+              ? (
+                <RankingTable.Message>
                   {this.renderError(
                     'Sorry, we are unable to fetch the scoreboard.',
                     state.meta.scoreboard.error,
                     this.props.onReloadScoreboardRequest
                   )}
                 </RankingTable.Message>
-              : <RankingTable.Message>
+              )
+              : (
+                <RankingTable.Message>
                   No Data
                 </RankingTable.Message>
+              )
             )
           )
         }

@@ -9,8 +9,8 @@ import _                from 'lodash'
 import fs               from 'fs'
 
 gulp.task('code-review', function () {
-  gulp.src(javascripts)
-    .pipe(eslint())
+  return gulp.src(javascripts)
+    .pipe(eslint({ quiet: true }))
     .pipe(codeReview())
     .pipe(formatReviewMessage())
 })

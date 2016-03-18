@@ -9,10 +9,12 @@ export default React.createClass({
       onTouchStart={this.handleInteraction}>
       {
         this.state.show
-        ? <article>
+        ? (
+          <article>
             <b>Benchmark Stats</b><br />
             {this.renderTable()}
           </article>
+        )
         : 'Show Benchmark Stats'
       }
     </div>

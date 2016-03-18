@@ -10,7 +10,8 @@ const CustomChartSelector = React.createClass({
     return <div className="drop-zone">
       {
         files.length
-        ? <ul>
+        ? (
+          <ul>
             {files.map(file =>
               <li>
                 <a href="javascript://"
@@ -24,19 +25,24 @@ const CustomChartSelector = React.createClass({
             )}
             {
               this.props.selectedResource
-              ? <li>
+              ? (
+                <li>
                   <a href="javascript://" onClick={this.handleClear}>
                     Clear
                   </a>
                 </li>
+              )
               : null
             }
           </ul>
-        : <div className="drop-zone-hint">
+        )
+        : (
+          <div className="drop-zone-hint">
             Drop BMS folder here
             <br />
             (only works on Google Chrome)
           </div>
+        )
       }
     </div>
   },
@@ -90,7 +96,7 @@ export default React.createClass({
             <input
               type="text"
               disabled={options.resource}
-              onChange={this.bindOption((o, v) => o.url = v)}
+              onChange={this.bindOption((o, v) => (o.url = v))}
               value={options.url} />
           </label>
         </div>
@@ -106,15 +112,14 @@ export default React.createClass({
           <label><span className="label">Audio-Input Latency</span>
             <input
               type="text"
-              onChange={this.bindOption((o, v) =>
-                            o.game.audioInputLatency = v)}
+              onChange={this.bindOption((o, v) => (o.game.audioInputLatency = v))}
               value={options.game.audioInputLatency} />
           </label>
         </div>
         <div className="text">
           <label><span className="label">HI-SPEED:</span>
             <input type="text"
-              onChange={this.bindOption((o, v) => o.players[0].speed = v)}
+              onChange={this.bindOption((o, v) => (o.players[0].speed = v))}
               value={options.players[0].speed} />
           </label>
         </div>
@@ -123,8 +128,7 @@ export default React.createClass({
           {['left', 'center', 'right'].map(placement =>
             <label>
               <input type="radio" value={placement}
-                onChange={this.bindOption((o, v) =>
-                      o.players[0].placement = v)}
+                onChange={this.bindOption((o, v) => (o.players[0].placement = v))}
                 checked={options.players[0].placement === placement} />
               <span className="label">{placement}</span>
             </label>

@@ -30,10 +30,13 @@ export default React.createClass({
   },
 
   renderTab (index, title) {
+    const onClick = () => this.setState({ selectedTab: index })
     return <li
-      className={c('MusicInfoTabsのtab',
-            { 'is-active': index === this.state.selectedTab })}
-      onClick={() => this.setState({ selectedTab: index })}>
+      className={c('MusicInfoTabsのtab', {
+        'is-active': index === this.state.selectedTab
+      })}
+      onClick={onClick}
+    >
       {title}
     </li>
   },

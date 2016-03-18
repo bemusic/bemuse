@@ -10,13 +10,15 @@ const OptionsPlayerSelector = React.createClass({
   render () {
     return <div className="OptionsPlayerSelector">
       {this.props.options.map((item, index) =>
-          <OptionsPlayerSelector.Item
-            key={index}
-            type={this.props.type}
-            value={item.value}
-            label={item.label}
-            active={item.value === this.props.value}
-            onSelect={this.props.onSelect} />)}
+        <OptionsPlayerSelector.Item
+          key={index}
+          type={this.props.type}
+          value={item.value}
+          label={item.label}
+          active={item.value === this.props.value}
+          onSelect={this.props.onSelect}
+        />
+      )}
     </div>
   }
 })

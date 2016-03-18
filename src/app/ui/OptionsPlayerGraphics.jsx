@@ -40,13 +40,16 @@ export default React.createClass({
     return <svg width="96" height="54">
       <g transform={'translate(' + bx + ' 32)'}>
         {[0, 1, 2, 3, 4, 5, 6].map(i =>
-            <rect key={i}
-              className="OptionsPlayerGraphicsのline"
-              x={off && i === 3 ? 10 : i * 10}
-              y={off ? (i === 3 ? 10 : 0) : (1 - i % 2) * 3}
-              width={off && i === 3 ? 48 : 8}
-              height={off ? 8 : 16}
-              rx={2} ry={2} />)}
+          <rect key={i}
+            className="OptionsPlayerGraphicsのline"
+            x={off && i === 3 ? 10 : i * 10}
+            y={off ? (i === 3 ? 10 : 0) : (1 - i % 2) * 3}
+            width={off && i === 3 ? 48 : 8}
+            height={off ? 8 : 16}
+            rx={2}
+            ry={2}
+          />
+        )}
       </g>
       {sx && <circle className="OptionsPlayerGraphicsのline"
         cx={sx} cy="42" r="8"
