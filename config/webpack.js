@@ -4,6 +4,7 @@ import ProgressPlugin from '../src/hacks/webpack-progress'
 import path           from './path'
 import * as Env       from './env'
 import { flowRight }  from 'lodash'
+import Gauge          from 'gauge'
 
 function generateBaseConfig () {
   let config = {
@@ -30,7 +31,6 @@ function generateBaseConfig () {
       preLoaders: [],
       noParse: [
         /node_modules\/sinon\//,
-        /node_modules\/web-audio-test-api\//,
       ],
     },
     plugins: [
@@ -150,7 +150,7 @@ function applyKarmaConfig (config) {
     // })
   }
 
-  config.devtool = 'inline-source-map'
+  config.devtool = 'cheap-inline-source-map'
 
   return config
 }
@@ -164,14 +164,9 @@ export default generateWebConfig()
 
 
 function CompileProgressPlugin () {
-  var old = ''
+  const gauge = new Gauge()
   return new webpack.ProgressPlugin(function (percentage, message) {
-    var text = '['
-    for (var i = 0; i < 20; i++) text += percentage >= i / 20 ? '=' : ' '
-    text += '] ' + message
-    var clear = ''
-    for (i = 0; i < old.length; i++) clear += '\r \r'
-    process.stderr.write(clear + text)
-    old = text
+    if (percentage === 1) gauge.hide()
+    else gauge.show(message, percentage)
   })
 }

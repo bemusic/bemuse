@@ -148,10 +148,10 @@ export class PlayerState {
     }
   }
   _getClosestNote (notes) {
-    return _.min(notes, note => Math.abs(this._gameTime - note.time))
+    return _.minBy(notes, note => Math.abs(this._gameTime - note.time))
   }
   _getFreestyleNote (notes) {
-    return _.min(notes, note => {
+    return _.minBy(notes, note => {
       let distance = Math.abs(this._gameTime - note.time)
       let penalty = (this._gameTime < note.time - 1) ? 1000000 : 0
       return distance + penalty

@@ -8,7 +8,7 @@ export function isChartPlayable (chart) {
 export function visibleCharts (charts) {
   return (_(charts)
     .filter(isChartPlayable)
-    .sortByAll(
+    .orderBy(
       chart => chart.info.difficulty >= 5 ? 1 : 0,
       chart => chart.info.level
     )

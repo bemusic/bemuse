@@ -9,12 +9,12 @@ export class Animation {
   constructor (animations, timeKey) {
     this._timeKey     = timeKey || 't'
     this._properties  = _(animations)
-        .map(animation => _.pluck(animation.data, 'name'))
+        .map(animation => _.map(animation.data, 'name'))
         .flatten()
         .thru(array => new Set(array))
         .value()
     this._animations  = _.map(animations, createKeytime)
-    this._events      = _.uniq(_.pluck(animations, 'on'))
+    this._events      = _.uniq(_.map(animations, 'on'))
   }
   prop (name, fallback) {
     if (!this._properties.has(name)) {
@@ -73,7 +73,7 @@ function _createKeyframes (name) {
 export function _attrs (el) {
   return _(el.attributes)
       .map(n => [n.name.toLowerCase(), n.value])
-      .object()
+      .fromPairs()
       .value()
 }
 

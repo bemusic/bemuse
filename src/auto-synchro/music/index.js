@@ -38,7 +38,7 @@ export function load () {
           name => download(ASSET_URLS[`${name}${audioExt()}`])
             .as('arraybuffer')
             .then(buf => master.sample(buf))
-    let samples = _.object(
+    let samples = _.fromPairs(
           yield Promise.all(
             ['bgm', 'intro', 'kick', 'snare'].map(
               name => sample(name).then(sampleObj => [name, sampleObj]))))
