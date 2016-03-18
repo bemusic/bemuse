@@ -71,7 +71,7 @@
     "hide-stack-frames-from": "^1.0.0",
     "jade": "^1.9.2",
     "jade-loader": "^0.8.0",
-    "js-yaml": "^3.2.5",
+    "js-yaml": "^3.5.5",
     "json-loader": "^0.5.2",
     "karma": "^0.13.19",
     "karma-chrome-launcher": "^0.2.2",
