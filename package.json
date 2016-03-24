@@ -95,7 +95,7 @@
     "serviceworker-loader": "^0.1.0",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.7.0",
-    "style-loader": "^0.13.0",
+    "style-loader": "^0.13.1",
     "through2": "^2.0.0",
     "transform-loader": "^0.2.2",
     "url-loader": "^0.5.5",
