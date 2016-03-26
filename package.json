@@ -30,7 +30,7 @@
   "devDependencies": {
     "autoprefixer-loader": "^3.0.0",
     "babel-core": "^6.4.5",
-    "babel-eslint": "^6.0.0-beta.6",
+    "babel-eslint": "^6.0.0",
     "babel-loader": "^6.2.1",
     "babel-plugin-__coverage__": "^0.1111.1",
     "babel-plugin-espower": "^2.1.1",
