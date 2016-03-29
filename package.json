@@ -136,7 +136,7 @@
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-fa": "^4.0.0",
-    "react-overlay-popup": "^1.0.2",
+    "react-overlay-popup": "^4.0.0",
     "recompose": "^0.15.0",
     "screenfull": "^3.0.0",
     "serviceworker-cache-polyfill": "^3.0.0",
