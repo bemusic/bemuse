@@ -150,9 +150,16 @@ export default generateWebConfig()
 
 
 function CompileProgressPlugin () {
-  const gauge = new Gauge()
+  const gauge = new Gauge(process.stderr)
+  let _enabled = false
   return new webpack.ProgressPlugin(function (percentage, message) {
-    if (percentage === 1) gauge.hide()
-    else gauge.show(message, percentage)
+    if (percentage === 1) {
+      if (_enabled) gauge.disable()
+      _enabled = false
+    } else {
+      gauge.show(message, percentage)
+      if (!_enabled) gauge.enable()
+      _enabled = true
+    }
   })
 }
