@@ -61,7 +61,7 @@
     "exports-loader": "^0.6.2",
     "express": "^4.10.6",
     "file-loader": "^0.8.1",
-    "gauge": "^2.2.1",
+    "gauge": "^1.2.7",
     "glob": "^7.0.3",
     "gulp": "^3.8.10",
     "gulp-eslint": "^2.0.0",

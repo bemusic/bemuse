@@ -34,6 +34,7 @@ function generateBaseConfig () {
       ],
     },
     plugins: [
+      new CompileProgressPlugin(),
       new ProgressPlugin(),
     ],
   }
@@ -117,8 +118,6 @@ function applyWebConfig (config) {
     },
   })
 
-  config.plugins.push(new CompileProgressPlugin())
-
   if (Env.hotModeEnabled()) {
     config.devServer.hot = true
     config.plugins.push(new webpack.HotModuleReplacementPlugin())
@@ -151,16 +150,9 @@ export default generateWebConfig()
 
 
 function CompileProgressPlugin () {
-  const gauge = new Gauge(process.stderr)
-  let _enabled = true
+  const gauge = new Gauge()
   return new webpack.ProgressPlugin(function (percentage, message) {
-    if (percentage === 1) {
-      if (_enabled) gauge.disable()
-      _enabled = false
-    } else {
-      gauge.show(message, percentage)
-      if (!_enabled) gauge.enable()
-      _enabled = true
-    }
+    if (percentage === 1) gauge.hide()
+    else gauge.show(message, percentage)
   })
 }
