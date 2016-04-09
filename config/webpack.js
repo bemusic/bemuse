@@ -34,7 +34,6 @@ function generateBaseConfig () {
       ],
     },
     plugins: [
-      new CompileProgressPlugin(),
       new ProgressPlugin(),
     ],
   }
@@ -117,6 +116,8 @@ function applyWebConfig (config) {
       devtoolFallbackModuleFilenameTemplate: 'file://[absolute-resource-path]?[hash]',
     },
   })
+
+  config.plugins.push(new CompileProgressPlugin())
 
   if (Env.hotModeEnabled()) {
     config.devServer.hot = true
