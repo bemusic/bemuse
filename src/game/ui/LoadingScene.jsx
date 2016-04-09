@@ -2,6 +2,7 @@
 import './LoadingScene.scss'
 
 import React from 'react'
+import ReactDOM from 'react-dom'
 import Scene from 'bemuse/ui/Scene.jsx'
 
 import LoadingSceneSongInfo from './LoadingSceneSongInfo.jsx'
@@ -24,13 +25,13 @@ export default React.createClass({
   componentDidMount () {
     if (this.props.eyecatchImagePromise) {
       this.props.eyecatchImagePromise.then(image => {
-        React.findDOMNode(this.refs.eyecatch).appendChild(image)
+        ReactDOM.findDOMNode(this.refs.eyecatch).appendChild(image)
       })
     }
   },
 
   teardown () {
-    React.findDOMNode(this.refs.scene).classList.add('is-exiting')
+    ReactDOM.findDOMNode(this.refs.scene).classList.add('is-exiting')
     return Promise.delay(500)
   },
 

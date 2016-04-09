@@ -1,6 +1,7 @@
 
 import './AuthenticationForm.scss'
 import React from 'react'
+import ReactDOM from 'react-dom'
 import OptionsButton from 'bemuse/app/ui/OptionsButton'
 import $ from 'jquery'
 
@@ -8,14 +9,14 @@ export default React.createClass({
   onButtonClick (e) {
     e.preventDefault()
     this.props.onSubmit({
-      username:             React.findDOMNode(this.refs.username).value,
-      password:             React.findDOMNode(this.refs.password).value,
-      passwordConfirmation: React.findDOMNode(this.refs.passwordConfirmation).value,
-      email:                React.findDOMNode(this.refs.email).value,
+      username:             ReactDOM.findDOMNode(this.refs.username).value,
+      password:             ReactDOM.findDOMNode(this.refs.password).value,
+      passwordConfirmation: ReactDOM.findDOMNode(this.refs.passwordConfirmation).value,
+      email:                ReactDOM.findDOMNode(this.refs.email).value,
     })
   },
   componentDidMount () {
-    $(React.findDOMNode(this)).on('keydown keyup keypress', (e) => {
+    $(ReactDOM.findDOMNode(this)).on('keydown keyup keypress', (e) => {
       e.stopPropagation()
     })
   },

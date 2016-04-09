@@ -91,6 +91,7 @@ function formatReviewMessage () {
 function reviewEslint (result, problems) {
   let messages = (result && result.messages) || []
   for (let msg of messages) {
+    if (msg.severity < 2) continue
     let problem = {
       source:   'eslint',
       line:     msg.line,
