@@ -52,7 +52,7 @@
     "coveralls": "^2.11.9",
     "css-loader": "^0.23.1",
     "dotenv": "^2.0.0",
-    "eslint": "^2.5.1",
+    "eslint": "^2.8.0",
     "eslint-config-bemuse": "^4.0.0",
     "eslint-plugin-promise": "^1.1.0",
     "eslint-plugin-react": "^4.2.3",
