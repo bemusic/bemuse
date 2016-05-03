@@ -90,7 +90,7 @@
     "react-transform-hmr": "^1.0.1",
     "redbox-react": "^1.2.0",
     "sass-loader": "^3.0.0",
-    "script-loader": "^0.6.1",
+    "script-loader": "^0.7.0",
     "serviceworker-loader": "^0.1.0",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.7.0",
