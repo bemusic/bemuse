@@ -73,7 +73,7 @@
     "js-yaml": "^3.5.5",
     "json-loader": "^0.5.2",
     "karma": "^0.13.19",
-    "karma-chrome-launcher": "^0.2.2",
+    "karma-chrome-launcher": "^1.0.1",
     "karma-coverage": "^0.5.3",
     "karma-firefox-launcher": "^0.1.7",
     "karma-mocha": "^0.2.1",
