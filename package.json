@@ -138,7 +138,7 @@
     "react-overlay-popup": "^4.0.0",
     "recompose": "^0.15.0",
     "screenfull": "^3.0.0",
-    "serviceworker-cache-polyfill": "^3.0.0",
+    "serviceworker-cache-polyfill": "^4.0.0",
     "throat": "^2.0.2",
     "timesynchro": "^1.0.1",
     "variance": "0.0.1"
