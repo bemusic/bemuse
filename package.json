@@ -134,7 +134,7 @@
     "power-assert": "^1.2.0",
     "react": "^15.0.2",
     "react-dom": "^15.0.0",
-    "react-fa": "^4.0.0",
+    "react-fa": "^4.1.0",
     "react-overlay-popup": "^4.0.0",
     "recompose": "^0.15.0",
     "screenfull": "^3.0.0",
