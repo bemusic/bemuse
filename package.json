@@ -32,7 +32,7 @@
     "babel-core": "^6.7.4",
     "babel-eslint": "^6.0.0",
     "babel-loader": "^6.2.1",
-    "babel-plugin-__coverage__": "^0.111111.0",
+    "babel-plugin-__coverage__": "^1.11.111",
     "babel-plugin-espower": "^2.1.1",
     "babel-plugin-react-display-name": "^2.0.0",
     "babel-plugin-react-transform": "^2.0.0",
