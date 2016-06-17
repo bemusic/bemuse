@@ -9,7 +9,7 @@ module.exports = function (config) {
     frameworks: ['mocha'],
     files: [
       'src/test/karma.js',
-      { pattern: 'spec/**/*', watched: false, included: false, served: true, nocache: true },
+      { pattern: 'src/**/*', watched: false, included: false, served: true, nocache: true },
     ],
     proxies: {
       '/spec/': '/base/spec/',
