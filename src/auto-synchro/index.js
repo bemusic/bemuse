@@ -1,6 +1,7 @@
 
 import * as Music       from './music'
 import React            from 'react'
+import ReactDOM         from 'react-dom'
 import ExperimentScene  from './ui/ExperimentScene.jsx'
 import $                from 'jquery'
 import _                from 'lodash'
@@ -26,7 +27,7 @@ export function main () {
     onStart:  () => play(),
   })
 
-  React.render(scene, $('<div></div>').appendTo('body')[0])
+  ReactDOM.render(scene, $('<div></div>').appendTo('body')[0])
 
   let play
 
