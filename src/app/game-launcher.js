@@ -11,7 +11,6 @@ import { getGrade }           from 'bemuse/rules/grade'
 import SCENE_MANAGER          from 'bemuse/scene-manager'
 import URLResource            from 'bemuse/resources/url'
 import BemusePackageResources from 'bemuse/resources/bemuse-package'
-import * as GameLoader        from 'bemuse/game/loaders/game-loader'
 import GameScene              from 'bemuse/game/game-scene'
 import LoadingScene           from 'bemuse/game/ui/LoadingScene.jsx'
 import ResultScene            from './ui/ResultScene'
@@ -23,6 +22,10 @@ import { MISSED }             from 'bemuse/game/judgments'
 import { unmuteAudio }        from 'bemuse/sampling-master'
 
 import { shouldDisableFullScreen, isTitleDisplayMode } from 'bemuse/devtools/query-flags'
+
+if (module.hot) {
+  module.hot.accept('bemuse/game/loaders/game-loader')
+}
 
 export function launch ({ server, song, chart }) {
 
@@ -78,6 +81,7 @@ export function launch ({ server, song, chart }) {
     }
 
     // start loading the game
+    const GameLoader = require('bemuse/game/loaders/game-loader')
     let loader = GameLoader.load(loadSpec)
     let { tasks, promise } = loader
 
