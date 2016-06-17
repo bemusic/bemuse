@@ -1,5 +1,6 @@
 
 import React      from 'react'
+import ReactDOM   from 'react-dom'
 import MAIN       from 'bemuse/utils/main-element'
 import ModalPopup from 'bemuse/ui/ModalPopup'
 import Options    from 'bemuse/app/ui/Options'
@@ -15,5 +16,5 @@ const OptionsPlayground = React.createClass({
 })
 
 export function main () {
-  React.render(<OptionsPlayground />, MAIN)
+  ReactDOM.render(<OptionsPlayground />, MAIN)
 }

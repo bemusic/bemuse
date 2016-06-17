@@ -12,7 +12,8 @@ module.exports = function (config) {
       { pattern: 'spec/**/*', watched: false, included: false, served: true, nocache: true },
     ],
     proxies: {
-      '/spec/': '/base/spec/'
+      '/spec/': '/base/spec/',
+      '/src/': '/base/src/'
     },
     exclude: [
     ],

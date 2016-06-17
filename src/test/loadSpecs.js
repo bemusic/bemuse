@@ -1,8 +1,8 @@
 
 export function loadSpecs () {
-  let context = require.context('../../spec', true, /_spec\.js$/)
-  for (let key of context.keys()) {
-    context(key)
+  const context = require.context('..', true, /\.spec\.js$/)
+  for (const key of context.keys()) {
+    describe(key, () => { context(key) })
   }
 }
 

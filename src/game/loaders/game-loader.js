@@ -7,7 +7,7 @@ import LoadingContext   from 'bemuse/boot/loading-context'
 
 import * as Multitasker from './multitasker'
 import SamplesLoader    from './samples-loader'
-import NotechartLoader  from './notechart-loader'
+import NotechartLoader  from 'bemuse-notechart/loader'
 import loadImage        from './loadImage'
 
 import Game             from '../game'

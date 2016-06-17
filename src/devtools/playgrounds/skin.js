@@ -6,7 +6,7 @@ import $ from 'jquery'
 
 import BMS          from 'bms'
 import Game         from 'bemuse/game/game'
-import Notechart    from 'bemuse/game/notechart'
+import Notechart    from 'bemuse-notechart'
 import GameState    from 'bemuse/game/state'
 import GameInput    from 'bemuse/game/input'
 import GameDisplay  from 'bemuse/game/display'

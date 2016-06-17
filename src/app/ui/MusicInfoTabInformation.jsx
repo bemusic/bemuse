@@ -47,7 +47,7 @@ export const MusicInfoTabInformation = React.createClass({
   },
 })
 
-export default connect({ readme: ReadmeStore }, MusicInfoTabInformation)
+export default connect({ readme: ReadmeStore })(MusicInfoTabInformation)
 
 function link (text, url) {
   return (

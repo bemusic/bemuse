@@ -84,4 +84,4 @@ export const OptionsInput = React.createClass({
   }
 })
 
-export default connect(Store, OptionsInput)
+export default connect(Store)(OptionsInput)

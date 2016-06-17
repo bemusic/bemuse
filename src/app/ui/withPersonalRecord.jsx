@@ -41,9 +41,8 @@ export function withPersonalRecord (Component) {
       user:          online.user川,
       onlineRecords: online.records川,
       playMode:      MusicSelectStore.map(state => state.playMode),
-    },
-    WrappedClass
-  )
+    }
+  )(WrappedClass)
 }
 
 export default withPersonalRecord

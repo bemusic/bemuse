@@ -2,6 +2,7 @@
 import now from 'bemuse/utils/now'
 import { shouldEnableBenchmark } from './query-flags'
 import React from 'react'
+import ReactDOM from 'react-dom'
 import BenchmarkPanel from './ui/BenchmarkPanel'
 
 function Stat () {
@@ -65,7 +66,7 @@ function Benchmarker () {
   let div = document.createElement('div')
   div.setAttribute('style', 'position:fixed;top:10px;right:10px;z-index:99999')
   document.body.appendChild(div)
-  React.render(<BenchmarkPanel bench={bench} />, div)
+  ReactDOM.render(<BenchmarkPanel bench={bench} />, div)
   return bench
 }
 

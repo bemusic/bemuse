@@ -1,5 +1,6 @@
 
 import React    from 'react'
+import ReactDOM from 'react-dom'
 import MAIN     from 'bemuse/utils/main-element'
 import Ranking  from 'bemuse/app/ui/Ranking'
 import './ranking-table-playground.scss'
@@ -85,5 +86,5 @@ const RankingTablePlayground = React.createClass({
 })
 
 export function main () {
-  React.render(<RankingTablePlayground />, MAIN)
+  ReactDOM.render(<RankingTablePlayground />, MAIN)
 }

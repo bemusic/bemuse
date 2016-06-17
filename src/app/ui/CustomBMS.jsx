@@ -72,4 +72,4 @@ export const CustomBMS = React.createClass({
   },
 })
 
-export default connect({ data: Store }, CustomBMS)
+export default connect({ data: Store })(CustomBMS)

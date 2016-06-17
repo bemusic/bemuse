@@ -101,4 +101,4 @@ const titleScenePropsFromStore川 = OptionsStore.map(
   })
 )
 
-export default connect(titleScenePropsFromStore川, TitleScene)
+export default connect(titleScenePropsFromStore川)(TitleScene)

@@ -21,7 +21,7 @@ export function main () {
     latency: 0,
   }, (state, change) => _.assign({ }, state, change))
 
-  const ConnectedExperimentScene = connect(state川, ExperimentScene)
+  const ConnectedExperimentScene = connect(state川)(ExperimentScene)
 
   const scene = React.createElement(ConnectedExperimentScene, {
     onStart:  () => play(),
