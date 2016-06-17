@@ -8,13 +8,14 @@ import * as Actions           from '../actions/music-select-actions'
 import { visibleCharts, isChartPlayable } from '../utils/music-select-utils'
 import DefaultCollectionStore from './collection-store'
 import OptionsStore           from './options-store'
+import { getInitialGrepString } from '../query-flags'
 
 export function MusicSelectStoreFactory (CollectionStore, options = { }) {
-
   const debounce = (typeof options.debounce === 'undefined'
     ? true
     : options.debounce
   )
+  const initialSearchText = options.initialSearchText || ''
 
   const server川 = CollectionStore.map(state => state.server)
   const collection川 = CollectionStore.map(state => state.collection)
@@ -33,7 +34,7 @@ export function MusicSelectStoreFactory (CollectionStore, options = { }) {
     { title: '☆', criteria: () => true },
   ])
 
-  const filterText川 = Bacon.update('',
+  const filterText川 = Bacon.update(initialSearchText,
     [Actions.setFilterText.bus], (prev, filterText) => filterText
   )
 
@@ -104,7 +105,9 @@ export function MusicSelectStoreFactory (CollectionStore, options = { }) {
 
 }
 
-export default MusicSelectStoreFactory(DefaultCollectionStore)
+export default MusicSelectStoreFactory(DefaultCollectionStore, {
+  initialSearchText: getInitialGrepString()
+})
 
 function sortSongs (songs) {
   return _.orderBy(songs, [
