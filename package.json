@@ -80,7 +80,7 @@
     "karma-sourcemap-loader": "^0.3.6",
     "karma-webpack": "^1.7.0",
     "merge-stream": "^1.0.0",
-    "mocha": "^2.1.0",
+    "mocha": "^2.5.3",
     "node-env": "^0.1.6",
     "node-notifier": "^4.0.3",
     "node-sass": "^3.7.0",
