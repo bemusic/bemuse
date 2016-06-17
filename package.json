@@ -120,7 +120,7 @@
     "fastclick": "^1.0.6",
     "immutable": "^3.7.5",
     "invariant": "^2.1.0",
-    "jquery": "^2.2.2",
+    "jquery": "^3.0.0",
     "keycode": "^2.0.0",
     "keytime": "^0.1.0",
     "lazy-property": "^1.0.0",
