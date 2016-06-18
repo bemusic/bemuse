@@ -13,6 +13,7 @@ const unofficial川 = server川.map(server =>
   server && server.url !== OFFICIAL_SERVER_URL
 )
 
+
 const collection川 = Bacon.update({ loading: true },
   [Actions.startLoading.bus], () => ({ loading: true }),
   [Actions.finishLoading.bus], (prev, c) => (

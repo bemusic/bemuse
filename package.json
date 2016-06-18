@@ -54,6 +54,8 @@
     "dotenv": "^2.0.0",
     "eslint": "^2.8.0",
     "eslint-config-bemuse": "^4.0.2",
+    "eslint-import-resolver-webpack": "^0.3.0",
+    "eslint-plugin-import": "^1.8.1",
     "eslint-plugin-promise": "^1.1.0",
     "eslint-plugin-react": "^5.2.1",
     "eslint-plugin-standard": "^1.3.1",
@@ -138,10 +140,15 @@
     "react-fa": "^4.0.0",
     "react-overlay-popup": "^4.0.0",
     "recompose": "^0.20.0",
+    "redux": "^3.5.2",
+    "reselect": "^2.5.1",
+    "rxjs": "^5.0.0-beta.9",
     "screenfull": "^3.0.0",
     "serviceworker-cache-polyfill": "^4.0.0",
     "throat": "^2.0.2",
     "timesynchro": "^1.0.1",
-    "variance": "0.0.1"
+    "updeep": "^0.16.0",
+    "variance": "0.0.1",
+    "whatwg-fetch": "^1.0.0"
   }
 }
