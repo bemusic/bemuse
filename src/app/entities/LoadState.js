@@ -18,3 +18,5 @@ export const errorWithReason = (error) => u({
 export const isLoading = (state) => state.status === 'loading'
 export const isCompleted = (state) => state.status === 'completed'
 export const isError = (state) => state.status === 'error'
+export const value = (state) => state.value
+export const error = (state) => state.error
