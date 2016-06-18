@@ -1,27 +1,28 @@
 
-import Bacon        from 'baconjs'
 import { Store }    from 'bemuse/flux'
-import * as Actions from '../actions/collection-actions'
+import reduxState川 from '../redux/reduxState川'
+import * as ReduxState from '../redux/ReduxState'
+import * as LoadState from '../entities/LoadState'
 
 import { OFFICIAL_SERVER_URL } from '../constants'
 
-const server川 = Bacon.update(null,
-  [Actions.startLoading.bus], (prev, server) => server
+const server川 = (reduxState川
+  .map(ReduxState.selectCurrentCollectionUrl)
+  .map(url => ({ url }))
 )
 
 const unofficial川 = server川.map(server =>
   server && server.url !== OFFICIAL_SERVER_URL
 )
 
-
-const collection川 = Bacon.update({ loading: true },
-  [Actions.startLoading.bus], () => ({ loading: true }),
-  [Actions.finishLoading.bus], (prev, c) => (
-    { loading: false, collection: c }
-  ),
-  [Actions.errorLoading.bus], (prev, e) => (
-    { loading: false, error: e }
-  )
+const collection川 = (reduxState川
+  .map(ReduxState.selectCurrentCollection)
+  .map(current => {
+    if (!current) return { loading: true }
+    if (LoadState.isLoading(current)) return { loading: true }
+    if (LoadState.isError(current)) return { loading: false, error: LoadState.error(current) }
+    return { loading: false, collection: LoadState.value(current) }
+  })
 )
 
 export default new Store({

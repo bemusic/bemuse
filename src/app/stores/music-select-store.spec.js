@@ -1,31 +1,40 @@
 
-import $            from 'jquery'
+import Bacon        from 'baconjs'
 import _            from 'lodash'
-import co           from 'co'
 
 import { MusicSelectStoreFactory }  from './music-select-store'
+import * as Actions                 from '../actions/music-select-actions'
 
-import CollectionStore        from './collection-store'
-import * as CollectionActions from '../actions/collection-actions'
-import * as Actions           from '../actions/music-select-actions'
+function createModel (initialState) {
+  let value = initialState
+  const bus = new Bacon.Bus()
+  const property = bus.toProperty({ }).map(() => value)
+  property.set = (v) => { value = v; bus.push({ }) }
+  return property
+}
 
 describe('MusicSelectStore', function () {
-
   let Store
-  let collection
-  let url = '/src/app/test-fixtures/example-music-server/index.json'
-
-  before(co.wrap(function * () {
-    collection = yield Promise.resolve($.get(url))
-  }))
+  let CollectionStore
+  const collection = require('../test-fixtures/example-music-server/index.json')
+  let url = '/src/app/test-fixtures/example-music-server'
 
   beforeEach(function () {
+    CollectionStore = createModel({
+      server: { url: '' },
+      collection: { loading: true },
+      unofficial: false,
+    })
     Store = MusicSelectStoreFactory(CollectionStore, { debounce: false })
   })
 
   describe('during loading', function () {
     beforeEach(function () {
-      CollectionActions.startLoading({ url: url })
+      CollectionStore.set({
+        server: { url: url },
+        collection: { loading: true },
+        unofficial: false,
+      })
     })
     it('loading should be true', function () {
       void expect(Store.get().loading).to.be.true
@@ -37,8 +46,11 @@ describe('MusicSelectStore', function () {
 
   describe('after loading', function () {
     beforeEach(function () {
-      CollectionActions.startLoading({ url: url })
-      CollectionActions.finishLoading(collection)
+      CollectionStore.set({
+        server: { url: url },
+        collection: { loading: false, collection },
+        unofficial: false,
+      })
     })
     it('loading should be false', function () {
       void expect(Store.get().loading).to.be.false

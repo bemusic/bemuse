@@ -5,9 +5,9 @@ import { createSelector } from 'reselect'
 import createReducer from './createReducer'
 
 // Actions
-const COLLECTION_LOADING_BEGAN = 'COLLECTION_LOADING_BEGAN'
-const COLLECTION_LOADING_ERRORED = 'COLLECTION_LOADING_ERRORED'
-const COLLECTION_LOADED = 'COLLECTION_LOADED'
+export const COLLECTION_LOADING_BEGAN = 'COLLECTION_LOADING_BEGAN'
+export const COLLECTION_LOADING_ERRORED = 'COLLECTION_LOADING_ERRORED'
+export const COLLECTION_LOADED = 'COLLECTION_LOADED'
 
 // Reducer
 export const reducer = combineReducers({
@@ -24,16 +24,18 @@ export const reducer = combineReducers({
   }),
   currentCollection: createReducer('', {
     [COLLECTION_LOADING_BEGAN]: (action) => (state) => (state === ''
-      ? action.collection
+      ? action.url
       : state
     )
   }),
 })
 
 // Selectors
+export const selectCurrentCollectionUrl = state => state.currentCollection
+
 export const selectCurrentCollection = createSelector(
   state => state.collections,
-  state => state.currentCollection,
+  selectCurrentCollectionUrl,
   (collections, currentCollection) => (
     Collections.getCollectionByUrl(currentCollection)(collections)
   )

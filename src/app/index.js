@@ -18,14 +18,38 @@ import { getMusicServer, getTimeSynchroServer }
 import { shouldShowAbout, shouldShowModeSelect }
     from 'bemuse/devtools/query-flags'
 
-import * as CollectionActions from './actions/collection-actions'
 import workerPath from
   'bemuse/hacks/service-worker-url!serviceworker!./service-worker.js'
 
-export function main () {
+import createCollectionLoader from './interactors/createCollectionLoader'
+import * as ReduxState from './redux/ReduxState'
+import store from './redux/instance'
 
-  // load the music collection
-  CollectionActions.loadCollection(getMusicServer() || OFFICIAL_SERVER_URL)
+if (module.hot) {
+  module.hot.accept('./redux/ReduxState', () => { })
+}
+
+export function main () {
+  // Configure a collection loader, which loads the Bemuse music collection.
+  const collectionLoader = createCollectionLoader({
+    fetch: fetch,
+    onBeginLoading: (url) => store.dispatch({
+      type: ReduxState.COLLECTION_LOADING_BEGAN,
+      url: url
+    }),
+    onErrorLoading: (url, reason) => store.dispatch({
+      type: ReduxState.COLLECTION_LOADING_ERRORED,
+      url: url,
+      error: reason
+    }),
+    onLoad: (url, data) => store.dispatch({
+      type: ReduxState.COLLECTION_LOADED,
+      url: url,
+      data: data
+    })
+  })
+
+  collectionLoader.load(getMusicServer() || OFFICIAL_SERVER_URL)
 
   // setup service worker
   let promise = setupServiceWorker()
