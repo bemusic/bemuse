@@ -2,12 +2,12 @@
 import './ModalPopup.scss'
 import React        from 'react'
 import c            from 'classnames'
-import { Overlay }  from 'react-overlay-popup'
+import { WarpPortal } from '../react-warp'
 
 export default React.createClass({
   render () {
     if (this.props.visible === false) return null
-    return <Overlay>
+    return <WarpPortal content={
       <div className={c('ModalPopup',
         { 'is-visible': this.props.visible !== false })}>
         <div className="ModalPopupのbackdrop"
@@ -16,6 +16,8 @@ export default React.createClass({
           {this.props.children}
         </div>
       </div>
-    </Overlay>
+    }>
+      <span style={{ display: 'none' }}></span>
+    </WarpPortal>
   }
 })

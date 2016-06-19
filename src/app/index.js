@@ -20,36 +20,42 @@ import { shouldShowAbout, shouldShowModeSelect }
 
 import workerPath from
   'bemuse/hacks/service-worker-url!serviceworker!./service-worker.js'
-
-import createCollectionLoader from './interactors/createCollectionLoader'
-import * as ReduxState from './redux/ReduxState'
+import { createIO, createRun } from 'impure'
+import ioContext from './io/ioContext'
+import { withContext } from 'recompose'
 import store from './redux/instance'
+import { WarpDestination } from '../react-warp'
 
+export const runIO = createRun({
+  context: ioContext
+})
+
+// HACK: Make SCENE_MANAGER provide Redux store and IO context.
+SCENE_MANAGER.ReactSceneContainer = withContext(
+  { store: React.PropTypes.object, runIO: React.PropTypes.func },
+  () => ({ store, runIO })
+)(({ children }) => {
+  return <div className="bemuse-scene">
+    {React.Children.only(children)}
+    <WarpDestination />
+  </div>
+})
+
+// Allow hot reloading of some modules.
 if (module.hot) {
   module.hot.accept('./redux/ReduxState', () => { })
 }
 
-export function main () {
-  // Configure a collection loader, which loads the Bemuse music collection.
-  const collectionLoader = createCollectionLoader({
-    fetch: fetch,
-    onBeginLoading: (url) => store.dispatch({
-      type: ReduxState.COLLECTION_LOADING_BEGAN,
-      url: url
-    }),
-    onErrorLoading: (url, reason) => store.dispatch({
-      type: ReduxState.COLLECTION_LOADING_ERRORED,
-      url: url,
-      error: reason
-    }),
-    onLoad: (url, data) => store.dispatch({
-      type: ReduxState.COLLECTION_LOADED,
-      url: url,
-      data: data
-    })
-  })
+export default runIO
 
-  collectionLoader.load(getMusicServer() || OFFICIAL_SERVER_URL)
+function bootUp () {
+  return createIO(({ collectionLoader }) => {
+    collectionLoader.load(getMusicServer() || OFFICIAL_SERVER_URL)
+  })
+}
+
+export function main () {
+  runIO(bootUp())
 
   // setup service worker
   let promise = setupServiceWorker()
