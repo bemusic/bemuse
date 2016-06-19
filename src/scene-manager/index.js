@@ -108,13 +108,19 @@ export default instance
 
 function ReactScene (element) {
   return function instantiate (container) {
-    let clonedElement = React.cloneElement(element, { scene: element })
-    let component = ReactDOM.render(clonedElement, container)
+    let teardown = () => { }
+    let clonedElement = React.cloneElement(element, {
+      scene: element,
+      registerTeardownCallback: (callback) => {
+        teardown = callback
+      }
+    })
+    ReactDOM.render(clonedElement, container)
     return {
       teardown () {
         return Promise.try(() => {
-          if (component.teardown) return component.teardown()
-        }).then(() => {
+          return teardown()
+        }).finally(() => {
           ReactDOM.unmountComponentAtNode(container)
         })
       }
