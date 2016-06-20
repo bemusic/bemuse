@@ -25,6 +25,7 @@ import ioContext from './io/ioContext'
 import { withContext } from 'recompose'
 import store from './redux/instance'
 import { WarpDestination } from '../react-warp'
+import * as OptionsIO from './io/OptionsIO'
 
 export const runIO = createRun({
   context: ioContext
@@ -49,8 +50,9 @@ if (module.hot) {
 export default runIO
 
 function bootUp () {
-  return createIO(({ collectionLoader }) => {
+  return createIO(({ collectionLoader }, run) => {
     collectionLoader.load(getMusicServer() || OFFICIAL_SERVER_URL)
+    run(OptionsIO.loadInitialOptions())
   })
 }
 

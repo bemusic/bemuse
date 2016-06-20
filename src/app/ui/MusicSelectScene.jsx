@@ -5,16 +5,20 @@ import React            from 'react'
 import ReactDOM         from 'react-dom'
 import c                from 'classnames'
 import $                from 'jquery'
+import _                from 'lodash'
 import pure             from 'recompose/pure'
 import compose          from 'recompose/compose'
 
-import { connect }      from 'bemuse/flux'
+import { connect }      from 'react-redux'
+import { createSelector, createStructuredSelector } from 'reselect'
+import { connect as connectToLegacyStore } from 'bemuse/flux'
 import SCENE_MANAGER    from 'bemuse/scene-manager'
 import online           from 'bemuse/online/instance'
 import Scene            from 'bemuse/ui/Scene'
 import SceneHeading     from 'bemuse/ui/SceneHeading'
 import SceneToolbar     from 'bemuse/ui/SceneToolbar'
 import ModalPopup       from 'bemuse/ui/ModalPopup'
+import * as ReduxState from '../redux/ReduxState'
 
 import AuthenticationPopup from 'bemuse/online/ui/AuthenticationPopup'
 
@@ -23,14 +27,145 @@ import MusicList        from './MusicList'
 import MusicInfo        from './MusicInfo'
 import Options          from './Options'
 import CustomBMS        from './CustomBMS'
-import Store            from '../stores/music-select-store'
-import * as Actions     from '../actions/music-select-actions'
+// import * as Actions     from '../actions/music-select-actions'
 import * as Analytics   from '../analytics'
+import { connectIO } from '../../impure-react/connectIO'
 
+import * as OptionsEntity from '../entities/Options'
+import * as LoadState from '../entities/LoadState'
+import * as MusicSearchText from '../entities/MusicSearchText'
+import * as MusicSelection from '../entities/MusicSelection'
 import * as CustomBMSActions from '../actions/custom-bms-actions'
 import { shouldShowOptions } from 'bemuse/devtools/query-flags'
+import { OFFICIAL_SERVER_URL } from '../constants'
+
+import * as MusicSelectionIO from '../io/MusicSelectionIO'
+import * as MusicSearchIO from '../io/MusicSearchIO'
+
+import filterSongs from '../interactors/filterSongs'
+import sortSongs from '../interactors/sortSongs'
+import groupSongsIntoCategories from '../interactors/groupSongsIntoCategories'
+import getPlayableCharts from '../interactors/getPlayableCharts'
+
+const selectMusicSelectState = (() => {
+  const selectIsCurrentCollectionLoading = createSelector(
+    ReduxState.selectCurrentCollection,
+    LoadState.isLoading
+  )
+  const selectCurrentCorrectionLoadError = createSelector(
+    ReduxState.selectCurrentCollection,
+    LoadState.error
+  )
+  const selectLegacyServerObjectForCurrentCollection = createSelector(
+    ReduxState.selectCurrentCollectionUrl,
+    (url) => ({ url })
+  )
+  const selectCurrentCollectionValue = (state) => (
+    LoadState.value(ReduxState.selectCurrentCollection(state))
+  )
+  const selectSongListFromCurrentCollection = createSelector(
+    selectCurrentCollectionValue,
+    (collectionData) => collectionData && collectionData.songs || [ ]
+  )
+  const selectSongList = createSelector(
+    selectSongListFromCurrentCollection,
+    (state) => state.customSongs,
+    (songList, customSongs) => [ ...customSongs, ...songList ]
+  )
+  const selectSortedSongList = createSelector(
+    selectSongList,
+    songList => sortSongs(songList)
+  )
+  const selectSearchText = (state) => (
+    MusicSearchText.searchText(state.musicSearchText)
+  )
+  const selectInputText = (state) => (
+    MusicSearchText.inputText(state.musicSearchText)
+  )
+  const selectFilteredSongList = createSelector(
+    selectSortedSongList,
+    selectSearchText,
+    (songList, searchText) => filterSongs(songList, searchText)
+  )
+  const selectGroups = createSelector(
+    selectFilteredSongList,
+    groupSongsIntoCategories
+  )
+  const selectSongs = createSelector(
+    selectGroups,
+    groups => _(groups).map('songs').flatten().value()
+  )
+  const selectMusicSelection = (state) => (
+    state.musicSelection
+  )
+  const selectSelectedSong = createSelector(
+    selectMusicSelection,
+    selectSongs,
+    (musicSelection, songs) => MusicSelection.selectedSong(musicSelection, songs)
+  )
+  const selectCharts = createSelector(
+    selectSelectedSong,
+    (song) => getPlayableCharts((song && song.charts) || [ ])
+  )
+  const selectSelectedChart = createSelector(
+    selectMusicSelection,
+    selectCharts,
+    (musicSelection, charts) => MusicSelection.selectedChart(musicSelection, charts)
+  )
+  const selectIsCurrentCollectionUnofficial = createSelector(
+    ReduxState.selectCurrentCollectionUrl,
+    (url) => url !== OFFICIAL_SERVER_URL
+  )
+  const selectGameMode = (store) => (
+    OptionsEntity.gameMode(store.options)
+  )
+
+  return createStructuredSelector({
+    loading: selectIsCurrentCollectionLoading,
+    error: selectCurrentCorrectionLoadError,
+    server: selectLegacyServerObjectForCurrentCollection,
+    groups: selectGroups,
+    song: selectSelectedSong,
+    charts: selectCharts,
+    chart: selectSelectedChart,
+    filterText: selectInputText,
+    highlight: selectSearchText,
+    unofficial: selectIsCurrentCollectionUnofficial,
+    playMode: selectGameMode
+  })
+})()
+
+const enhance = compose(
+  connectToLegacyStore({ user: online && online.user川 }),
+  connect((state) => ({
+    musicSelect: selectMusicSelectState(state)
+  })),
+  connectIO({
+    onSelectChart: () => (song, chart) => (
+      MusicSelectionIO.selectChart(song, chart)
+    ),
+    onSelectSong: () => (song) => (
+      MusicSelectionIO.selectSong(song)
+    ),
+    onFilterTextChange: () => (text) => (
+      MusicSearchIO.handleSearchTextType(text)
+    ),
+    onLaunchGame: ({ musicSelect }) => () => (
+      MusicSelectionIO.launchGame(musicSelect.server, musicSelect.song, musicSelect.chart)
+    )
+  }),
+  pure
+)
 
 export const MusicSelectScene = React.createClass({
+  propTypes: {
+    musicSelect: React.PropTypes.object,
+    user: React.PropTypes.object,
+    onSelectChart: React.PropTypes.func,
+    onSelectSong: React.PropTypes.func,
+    onFilterTextChange: React.PropTypes.func,
+    onLaunchGame: React.PropTypes.func,
+  },
   render () {
     let musicSelect = this.props.musicSelect
     return <Scene className="MusicSelectScene">
@@ -112,7 +247,7 @@ export const MusicSelectScene = React.createClass({
     if (musicSelect.error) {
       return <div className="MusicSelectSceneのloading">Cannot load collection!</div>
     }
-    if (musicSelect.songs.length === 0) {
+    if (musicSelect.groups.length === 0) {
       return <div className="MusicSelectSceneのloading">No songs found!</div>
     }
     return (
@@ -187,11 +322,11 @@ export const MusicSelectScene = React.createClass({
     }
   },
   handleSongSelect (song, chart) {
-    Actions.selectSong(song)
     if (chart) {
-      Actions.selectChart(chart)
+      this.props.onSelectChart(song, chart)
       Analytics.action('MusicSelectScene:selectSongAndChart')
     } else {
+      this.props.onSelectSong(song)
       Analytics.action('MusicSelectScene:selectSong')
     }
     this.setState({ inSong: true })
@@ -202,14 +337,14 @@ export const MusicSelectScene = React.createClass({
   handleChartClick (chart) {
     if (this.props.musicSelect.chart.md5 === chart.md5) {
       Analytics.action('MusicSelectScene:launchGame')
-      Actions.launchGame()
+      this.props.onLaunchGame()
     } else {
       Analytics.action('MusicSelectScene:selectChart')
-      Actions.selectChart(chart)
+      this.props.onSelectChart(this.props.musicSelect.song, chart)
     }
   },
   handleFilter (e) {
-    Actions.setFilterText(e.target.value)
+    this.props.onFilterTextChange(e.target.value)
   },
   handleOptionsOpen () {
     Analytics.action('MusicSelectScene:optionsOpen')
@@ -227,7 +362,6 @@ export const MusicSelectScene = React.createClass({
     this.setState({ customBMSVisible: false })
   },
   handleCustomSong (song) {
-    Actions.setCustomSong(song)
     this.setState({ customBMSVisible: false })
   },
   handleUnofficialClick () {
@@ -256,10 +390,6 @@ export const MusicSelectScene = React.createClass({
   popScene () {
     SCENE_MANAGER.pop().done()
   },
-
 })
 
-export default compose(
-  connect({ musicSelect: Store, user: online && online.user川 }),
-  pure
-)(MusicSelectScene)
+export default enhance(MusicSelectScene)

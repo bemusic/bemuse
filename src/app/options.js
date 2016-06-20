@@ -1,8 +1,10 @@
 
+import { EventEmitter } from 'events'
+
 let storage = localStorage
 
 // The structure of this may change in the future, so I'll keep this private.
-const DEFAULTS = {
+export const DEFAULTS = {
 
   // Game mode (KB, BM)
   'player.P1.mode':             'KB',
@@ -50,6 +52,8 @@ const DEFAULTS = {
 
 }
 
+export const events = new EventEmitter()
+
 // Returns all the available options.
 export function keys () {
   return Object.keys(DEFAULTS)
@@ -63,11 +67,27 @@ export function get (key) {
 // Saves the options value by a specified key.
 export function set (key, value) {
   storage.setItem(key, value)
+  events.emit('changed')
+}
+
+// Saves many options.
+export function setOptions (options) {
+  for (const key of Object.keys(options)) {
+    storage.setItem(key, options[key])
+  }
+  events.emit('changed')
 }
 
 // Gets the options Storage engine.
 export function getStorage () {
   return storage
+}
+
+// Returns all the options.
+export function getAllCurrentOptions () {
+  let options = { }
+  for (let key of keys()) options[key] = get(key)
+  return options
 }
 
 // Sets the options Storage engine.
