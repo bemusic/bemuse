@@ -2,14 +2,64 @@
 import './OptionsInput.scss'
 import React                from 'react'
 import c                    from 'classnames'
-import { connect }          from 'bemuse/flux'
-import Store                from '../stores/options-input-store'
-import * as Actions         from '../actions/options-input-actions'
+import _                    from 'lodash'
 import OptionsInputScratch  from './OptionsInputScratch'
 import OptionsInputKeys     from './OptionsInputKeys'
-import { key川 }             from 'bemuse/omni-input'
+import { key川 }            from 'bemuse/omni-input'
+import { getName }          from 'bemuse/omni-input'
+import { compose, withState, withHandlers } from 'recompose'
+import * as Options         from '../entities/Options'
+import { createSelector }   from 'reselect'
+import { connect }          from 'react-redux'
+import connectIO            from '../../impure-react/connectIO'
+import * as OptionsIO       from '../io/OptionsIO'
+
+const selectKeyboardMapping = createSelector(
+  (state) => state.options,
+  (options) => Options.keyboardMapping(options)
+)
+
+const selectKeyboardMappingTexts = createSelector(
+  selectKeyboardMapping,
+  (mapping) => _.mapValues(mapping, getName)
+)
+
+const enhance = compose(
+  connect((state) => ({
+    scratch: Options.scratchPosition(state.options),
+    texts: selectKeyboardMappingTexts(state),
+    mode: Options.playMode(state.options),
+  })),
+  withState('editing', 'setEditing', null),
+  connectIO({
+    onSetKeyCode: ({ mode, editing }) => (keyCode) => (
+      OptionsIO.setKeyCode(mode, editing, keyCode)
+    )
+  }),
+  withHandlers({
+    onEdit: ({ editing, setEditing }) => (key) => {
+      if (editing === key) {
+        setEditing(null)
+      } else {
+        setEditing(key)
+      }
+    },
+    onKey: ({ editing, onSetKeyCode, setEditing, scratch }) => (keyCode) => {
+      if (editing) {
+        onSetKeyCode(keyCode)
+        setEditing(Options.nextKeyToEdit(editing, scratch))
+      }
+    }
+  })
+)
 
 export const OptionsInput = React.createClass({
+  propTypes: {
+    scratch: React.PropTypes.string,
+    texts: React.PropTypes.array,
+    editing: React.PropTypes.string,
+    mode: React.PropTypes.string,
+  },
   render () {
     const className = c('OptionsInput', {
       'is-reverse': this.props.scratch === 'right'
@@ -56,11 +106,7 @@ export const OptionsInput = React.createClass({
     </div>
   },
   handleEdit (key) {
-    if (this.props.editing === key) {
-      Actions.deselectKey()
-    } else {
-      Actions.selectKey(key)
-    }
+    this.props.onEdit(key)
   },
   componentDidMount () {
     // XXX: debounce is needed because some gamepad inputs trigger multiple
@@ -74,7 +120,7 @@ export const OptionsInput = React.createClass({
   },
   handleKey (key) {
     if (this.props.editing) {
-      Actions.setKeyCode(this.props.mode, this.props.editing, key)
+      this.props.onKey(key)
     }
   },
   handleKeyboardEvent (e) {
@@ -84,4 +130,4 @@ export const OptionsInput = React.createClass({
   }
 })
 
-export default connect(Store)(OptionsInput)
+export default enhance(OptionsInput)

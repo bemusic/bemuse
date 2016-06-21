@@ -4,9 +4,10 @@ import React   from 'react'
 import pure    from 'recompose/pure'
 import compose from 'recompose/compose'
 
-import { connect }           from 'bemuse/flux'
-import Store                 from '../stores/options-store'
-import * as Actions          from '../actions/options-actions'
+import { connect }           from 'react-redux'
+import connectIO             from '../../impure-react/connectIO'
+import * as OptionsIO        from '../io/OptionsIO'
+import * as Options          from '../entities/Options'
 import OptionsPlayerSelector from './OptionsPlayerSelector'
 import OptionsButton         from './OptionsButton'
 import OptionsSpeed          from './OptionsSpeed'
@@ -23,7 +24,28 @@ const PANEL_OPTIONS = [
   { value: 'right', label: 'Right', },
 ]
 
+const enhance = compose(
+  connect((state) => ({
+    options: state.options,
+    scratch: Options.scratchPosition(state.options),
+  })),
+  connectIO({
+    onSetPanel: () => (value) => OptionsIO.setOptions({ 'player.P1.panel': value }),
+    onSetScratch: () => (position) => OptionsIO.setScratch(position),
+    onSetSpeed: () => (speed) => OptionsIO.setSpeed(speed),
+  }),
+  pure
+)
+
 export const OptionsPlayer = React.createClass({
+  propTypes: {
+    options: React.PropTypes.object,
+    scratch: React.PropTypes.string,
+    onClose: React.PropTypes.func,
+    onSetPanel: React.PropTypes.func,
+    onSetScratch: React.PropTypes.func,
+    onSetSpeed: React.PropTypes.func,
+  },
   render () {
     return <div className="OptionsPlayer">
 
@@ -57,13 +79,13 @@ export const OptionsPlayer = React.createClass({
     </div>
   },
   handleSelectPanel (value) {
-    Actions.setOptions({ 'player.P1.panel': value })
+    this.props.onSetPanel(value)
   },
   handleSelectScratch (value) {
-    Actions.setScratch(value)
+    this.props.onSetScratch(value)
   },
   handleSpeedChange (value) {
-    Actions.setOptions({ 'player.P1.speed': value })
+    this.props.onSetSpeed(value)
   }
 })
 
@@ -76,7 +98,4 @@ OptionsPlayer.Row = React.createClass({
   }
 })
 
-export default compose(
-  connect(Store),
-  pure
-)(OptionsPlayer)
+export default enhance(OptionsPlayer)

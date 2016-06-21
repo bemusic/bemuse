@@ -29,7 +29,6 @@ import CustomBMS from './CustomBMS'
 import * as Analytics from '../analytics'
 import { connectIO } from '../../impure-react/connectIO'
 
-import * as CustomBMSActions from '../actions/custom-bms-actions'
 import { shouldShowOptions } from 'bemuse/devtools/query-flags'
 import { OFFICIAL_SERVER_URL } from '../constants'
 
@@ -281,7 +280,6 @@ export const MusicSelectScene = React.createClass({
     this.setState({ optionsVisible: false })
   },
   handleCustomBMSOpen () {
-    CustomBMSActions.clear()
     this.setState({ customBMSVisible: true })
     Analytics.action('MusicSelectScene:customBMSOpen')
   },

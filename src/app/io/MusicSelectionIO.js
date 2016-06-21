@@ -2,6 +2,7 @@
 import { createIO } from 'impure'
 import * as ReduxState from '../redux/ReduxState'
 import * as GameLauncher from '../game-launcher'
+import * as OptionsIO from './OptionsIO'
 
 export function selectSong (song) {
   return createIO(({ store }) => {
@@ -24,7 +25,13 @@ export function selectChart (song, chart) {
 }
 
 export function launchGame (server, song, chart) {
-  return createIO(() => {
-    Promise.resolve(GameLauncher.launch({ server, song, chart })).done()
+  return createIO(({ store }, run) => {
+    Promise.resolve(GameLauncher.launch({
+      server,
+      song,
+      chart,
+      options: store.getState().options,
+      saveSpeed: (speed) => { run(OptionsIO.setSpeed(speed)) }
+    })).done()
   })
 }
