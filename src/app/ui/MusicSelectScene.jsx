@@ -5,7 +5,6 @@ import React            from 'react'
 import ReactDOM         from 'react-dom'
 import c                from 'classnames'
 import $                from 'jquery'
-import _                from 'lodash'
 import pure             from 'recompose/pure'
 import compose          from 'recompose/compose'
 
@@ -32,9 +31,6 @@ import * as Analytics   from '../analytics'
 import { connectIO } from '../../impure-react/connectIO'
 
 import * as OptionsEntity from '../entities/Options'
-import * as LoadState from '../entities/LoadState'
-import * as MusicSearchText from '../entities/MusicSearchText'
-import * as MusicSelection from '../entities/MusicSelection'
 import * as CustomBMSActions from '../actions/custom-bms-actions'
 import { shouldShowOptions } from 'bemuse/devtools/query-flags'
 import { OFFICIAL_SERVER_URL } from '../constants'
@@ -42,76 +38,12 @@ import { OFFICIAL_SERVER_URL } from '../constants'
 import * as MusicSelectionIO from '../io/MusicSelectionIO'
 import * as MusicSearchIO from '../io/MusicSearchIO'
 
-import filterSongs from '../interactors/filterSongs'
-import sortSongs from '../interactors/sortSongs'
-import groupSongsIntoCategories from '../interactors/groupSongsIntoCategories'
-import getPlayableCharts from '../interactors/getPlayableCharts'
-
 const selectMusicSelectState = (() => {
-  const selectIsCurrentCollectionLoading = createSelector(
-    ReduxState.selectCurrentCollection,
-    LoadState.isLoading
-  )
-  const selectCurrentCorrectionLoadError = createSelector(
-    ReduxState.selectCurrentCollection,
-    LoadState.error
-  )
   const selectLegacyServerObjectForCurrentCollection = createSelector(
     ReduxState.selectCurrentCollectionUrl,
     (url) => ({ url })
   )
-  const selectCurrentCollectionValue = (state) => (
-    LoadState.value(ReduxState.selectCurrentCollection(state))
-  )
-  const selectSongListFromCurrentCollection = createSelector(
-    selectCurrentCollectionValue,
-    (collectionData) => collectionData && collectionData.songs || [ ]
-  )
-  const selectSongList = createSelector(
-    selectSongListFromCurrentCollection,
-    (state) => state.customSongs,
-    (songList, customSongs) => [ ...customSongs, ...songList ]
-  )
-  const selectSortedSongList = createSelector(
-    selectSongList,
-    songList => sortSongs(songList)
-  )
-  const selectSearchText = (state) => (
-    MusicSearchText.searchText(state.musicSearchText)
-  )
-  const selectInputText = (state) => (
-    MusicSearchText.inputText(state.musicSearchText)
-  )
-  const selectFilteredSongList = createSelector(
-    selectSortedSongList,
-    selectSearchText,
-    (songList, searchText) => filterSongs(songList, searchText)
-  )
-  const selectGroups = createSelector(
-    selectFilteredSongList,
-    groupSongsIntoCategories
-  )
-  const selectSongs = createSelector(
-    selectGroups,
-    groups => _(groups).map('songs').flatten().value()
-  )
-  const selectMusicSelection = (state) => (
-    state.musicSelection
-  )
-  const selectSelectedSong = createSelector(
-    selectMusicSelection,
-    selectSongs,
-    (musicSelection, songs) => MusicSelection.selectedSong(musicSelection, songs)
-  )
-  const selectCharts = createSelector(
-    selectSelectedSong,
-    (song) => getPlayableCharts((song && song.charts) || [ ])
-  )
-  const selectSelectedChart = createSelector(
-    selectMusicSelection,
-    selectCharts,
-    (musicSelection, charts) => MusicSelection.selectedChart(musicSelection, charts)
-  )
+
   const selectIsCurrentCollectionUnofficial = createSelector(
     ReduxState.selectCurrentCollectionUrl,
     (url) => url !== OFFICIAL_SERVER_URL
@@ -121,15 +53,15 @@ const selectMusicSelectState = (() => {
   )
 
   return createStructuredSelector({
-    loading: selectIsCurrentCollectionLoading,
-    error: selectCurrentCorrectionLoadError,
+    loading: ReduxState.selectIsCurrentCollectionLoading,
+    error: ReduxState.selectCurrentCorrectionLoadError,
     server: selectLegacyServerObjectForCurrentCollection,
-    groups: selectGroups,
-    song: selectSelectedSong,
-    charts: selectCharts,
-    chart: selectSelectedChart,
-    filterText: selectInputText,
-    highlight: selectSearchText,
+    groups: ReduxState.selectGroups,
+    song: ReduxState.selectSelectedSong,
+    charts: ReduxState.selectChartsForSelectedSong,
+    chart: ReduxState.selectSelectedChart,
+    filterText: ReduxState.selectSearchInputText,
+    highlight: ReduxState.selectSearchText,
     unofficial: selectIsCurrentCollectionUnofficial,
     playMode: selectGameMode
   })

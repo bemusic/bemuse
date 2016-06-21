@@ -15,6 +15,12 @@ import { combineReducers } from 'redux'
 import { createSelector } from 'reselect'
 import createReducer from './createReducer'
 
+import _ from 'lodash'
+import sortSongs from '../interactors/sortSongs'
+import filterSongs from '../interactors/filterSongs'
+import groupSongsIntoCategories from '../interactors/groupSongsIntoCategories'
+import getPlayableCharts from '../interactors/getPlayableCharts'
+
 // Actions
 export const COLLECTION_LOADING_BEGAN = 'COLLECTION_LOADING_BEGAN'
 export const COLLECTION_LOADING_ERRORED = 'COLLECTION_LOADING_ERRORED'
@@ -28,6 +34,9 @@ export const MUSIC_SEARCH_DEBOUNCED = 'MUSIC_SEARCH_DEBOUNCED'
 export const MUSIC_SONG_SELECTED = 'MUSIC_SONG_SELECTED'
 export const MUSIC_CHART_SELECTED = 'MUSIC_CHART_SELECTED'
 export const OPTIONS_LOADED_FROM_STORAGE = 'OPTIONS_LOADED_FROM_STORAGE'
+export const README_LOADING_STARTED = 'README_LOADING_STARTED'
+export const README_LOADED = 'README_LOADED'
+export const README_LOADING_ERRORED = 'README_LOADING_ERRORED'
 
 // Reducer
 export const reducer = combineReducers({
@@ -84,11 +93,18 @@ export const reducer = combineReducers({
     [OPTIONS_LOADED_FROM_STORAGE]: (action) => (state) => (
       Options.initWithDataFromStorage(action.options)
     )
+  }),
+  currentSongReadme: createReducer('Omachi kudasai…', {
+    [README_LOADING_STARTED]: (action) => (state) => 'Omachi kudasai…',
+    [README_LOADING_ERRORED]: (action) => (state) => 'Cannot download ' + action.url,
+    [README_LOADED]: (action) => (state) => action.text
   })
 })
 
 // Selectors
-export const selectCurrentCollectionUrl = state => state.currentCollection
+export const selectCurrentCollectionUrl = (state) => (
+  state.currentCollection
+)
 
 export const selectCurrentCollection = createSelector(
   state => state.collections,
@@ -99,3 +115,76 @@ export const selectCurrentCollection = createSelector(
 )
 
 export const selectCustomSongLoaderLog = state => state.customSongLoaderLog
+
+export const selectIsCurrentCollectionLoading = (state) => (
+  LoadState.isLoading(selectCurrentCollection(state))
+)
+
+export const selectCurrentCorrectionLoadError = (state) => (
+  LoadState.error(selectCurrentCollection(state))
+)
+
+export const selectCurrentCollectionValue = (state) => (
+  LoadState.value(selectCurrentCollection(state))
+)
+
+export const selectSearchInputText = (state) => (
+  MusicSearchText.inputText(state.musicSearchText)
+)
+
+export const selectSearchText = (state) => (
+  MusicSearchText.searchText(state.musicSearchText)
+)
+
+export const { selectGroups, selectSongs } = (() => {
+  const selectSongListFromCurrentCollection = createSelector(
+    selectCurrentCollectionValue,
+    (collectionData) => collectionData && collectionData.songs || [ ]
+  )
+  const selectSongList = createSelector(
+    selectSongListFromCurrentCollection,
+    (state) => state.customSongs,
+    (songList, customSongs) => [ ...customSongs, ...songList ]
+  )
+  const selectSortedSongList = createSelector(
+    selectSongList,
+    songList => sortSongs(songList)
+  )
+  const selectFilteredSongList = createSelector(
+    selectSortedSongList,
+    selectSearchText,
+    (songList, searchText) => filterSongs(songList, searchText)
+  )
+  const selectGroups = createSelector(
+    selectFilteredSongList,
+    groupSongsIntoCategories
+  )
+  const selectSongs = createSelector(
+    selectGroups,
+    groups => _(groups).map('songs').flatten().value()
+  )
+  return { selectGroups, selectSongs }
+})()
+
+export const { selectSelectedSong, selectChartsForSelectedSong, selectSelectedChart } = (() => {
+  const selectMusicSelection = (state) => (
+    state.musicSelection
+  )
+  const selectSelectedSong = createSelector(
+    selectMusicSelection,
+    selectSongs,
+    (musicSelection, songs) => MusicSelection.selectedSong(musicSelection, songs)
+  )
+  const selectChartsForSelectedSong = createSelector(
+    selectSelectedSong,
+    (song) => getPlayableCharts((song && song.charts) || [ ])
+  )
+  const selectSelectedChart = createSelector(
+    selectMusicSelection,
+    selectChartsForSelectedSong,
+    (musicSelection, charts) => MusicSelection.selectedChart(musicSelection, charts)
+  )
+  return { selectSelectedSong, selectChartsForSelectedSong, selectSelectedChart }
+})()
+
+export const selectReadmeTextForSelectedSong = (state) => state.currentSongReadme
