@@ -188,3 +188,7 @@ export const { selectSelectedSong, selectChartsForSelectedSong, selectSelectedCh
 })()
 
 export const selectReadmeTextForSelectedSong = (state) => state.currentSongReadme
+
+export const selectPlayMode = (store) => (
+  Options.playMode(store.options)
+)

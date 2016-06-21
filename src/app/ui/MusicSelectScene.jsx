@@ -21,16 +21,14 @@ import * as ReduxState from '../redux/ReduxState'
 
 import AuthenticationPopup from 'bemuse/online/ui/AuthenticationPopup'
 
-import UnofficialPanel  from './UnofficialPanel'
-import MusicList        from './MusicList'
-import MusicInfo        from './MusicInfo'
-import Options          from './Options'
-import CustomBMS        from './CustomBMS'
-// import * as Actions     from '../actions/music-select-actions'
-import * as Analytics   from '../analytics'
+import UnofficialPanel from './UnofficialPanel'
+import MusicList from './MusicList'
+import MusicInfo from './MusicInfo'
+import Options from './Options'
+import CustomBMS from './CustomBMS'
+import * as Analytics from '../analytics'
 import { connectIO } from '../../impure-react/connectIO'
 
-import * as OptionsEntity from '../entities/Options'
 import * as CustomBMSActions from '../actions/custom-bms-actions'
 import { shouldShowOptions } from 'bemuse/devtools/query-flags'
 import { OFFICIAL_SERVER_URL } from '../constants'
@@ -48,9 +46,6 @@ const selectMusicSelectState = (() => {
     ReduxState.selectCurrentCollectionUrl,
     (url) => url !== OFFICIAL_SERVER_URL
   )
-  const selectGameMode = (store) => (
-    OptionsEntity.gameMode(store.options)
-  )
 
   return createStructuredSelector({
     loading: ReduxState.selectIsCurrentCollectionLoading,
@@ -63,7 +58,7 @@ const selectMusicSelectState = (() => {
     filterText: ReduxState.selectSearchInputText,
     highlight: ReduxState.selectSearchText,
     unofficial: selectIsCurrentCollectionUnofficial,
-    playMode: selectGameMode
+    playMode: ReduxState.selectPlayMode
   })
 })()
 

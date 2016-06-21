@@ -3,14 +3,27 @@ import './MusicInfoTabStats.scss'
 
 import React            from 'react'
 import _                from 'lodash'
-import { connect }      from 'bemuse/flux'
+import * as ReduxState  from '../redux/ReduxState'
 import * as DataStore   from 'bemuse/online/data-store'
 import online           from 'bemuse/online/instance'
 import { isWaiting }    from 'bemuse/online/operations'
 import id               from 'bemuse/online/id'
-import MusicSelectStore from '../stores/music-select-store'
+
+import { connect } from 'react-redux'
+import { connect as legacyConnect } from 'bemuse/flux'
+import { compose } from 'recompose'
 
 export function withPersonalRecord (Component) {
+  const enhance = compose(
+    legacyConnect({
+      user:          online.user川,
+      onlineRecords: online.records川,
+    }),
+    connect((state) => ({
+      playMode: ReduxState.selectPlayMode(state)
+    }))
+  )
+
   const WrappedClass = React.createClass({
     componentDidMount () {
       online.seen(this.getLevel())
@@ -36,13 +49,7 @@ export function withPersonalRecord (Component) {
     },
   })
 
-  return connect(
-    {
-      user:          online.user川,
-      onlineRecords: online.records川,
-      playMode:      MusicSelectStore.map(state => state.playMode),
-    }
-  )(WrappedClass)
+  return enhance(WrappedClass)
 }
 
 export default withPersonalRecord
