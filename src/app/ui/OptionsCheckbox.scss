@@ -1,0 +1,28 @@
+
+@import "~bemuse/ui/common";
+
+.OptionsCheckbox {
+  > label > input {
+    @include input;
+    appearance: none;
+    width: 21px;
+    height: 21px;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    top: 5px;
+    margin-right: 5px;
+    &:checked::after {
+      position: absolute;
+      display: block;
+      transform: translate(-50%, -50%);
+      top: 50%; left: 50%;
+      content: '✓';
+      color: #B9EDFF;
+    }
+    &:checked {
+      border-color: #B9EDFF;
+      border-width: 2px;
+    }
+  }
+}

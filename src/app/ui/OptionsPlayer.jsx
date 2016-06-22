@@ -11,6 +11,7 @@ import * as Options          from '../entities/Options'
 import OptionsPlayerSelector from './OptionsPlayerSelector'
 import OptionsButton         from './OptionsButton'
 import OptionsSpeed          from './OptionsSpeed'
+import OptionsCheckbox       from './OptionsCheckbox'
 
 const SCRATCH_OPTIONS = [
   { value: 'left', label: 'Left', },
@@ -33,6 +34,11 @@ const enhance = compose(
     onSetPanel: () => (value) => OptionsIO.setOptions({ 'player.P1.panel': value }),
     onSetScratch: () => (position) => OptionsIO.setScratch(position),
     onSetSpeed: () => (speed) => OptionsIO.setSpeed(speed),
+    onToggleBackgroundAnimationsEnabled: ({ options }) => (speed) => (
+      OptionsIO.setOptions({
+        'system.bga.enabled': Options.toggleOption(options['system.bga.enabled'])
+      })
+    )
   }),
   pure
 )
@@ -45,6 +51,7 @@ export const OptionsPlayer = React.createClass({
     onSetPanel: React.PropTypes.func,
     onSetScratch: React.PropTypes.func,
     onSetSpeed: React.PropTypes.func,
+    onToggleBackgroundAnimationsEnabled: React.PropTypes.func
   },
   render () {
     return <div className="OptionsPlayer">
@@ -72,10 +79,18 @@ export const OptionsPlayer = React.createClass({
           value={this.props.options['player.P1.panel']} />
       </OptionsPlayer.Row>
 
+      <OptionsPlayer.Row label="BGA">
+        <OptionsCheckbox
+          checked={Options.isBackgroundAnimationsEnabled(this.props.options)}
+          onToggle={this.props.onToggleBackgroundAnimationsEnabled}
+        >
+          Enable background animations
+        </OptionsCheckbox>
+      </OptionsPlayer.Row>
+
       <div className="OptionsPlayerのbuttons">
         <OptionsButton onClick={this.props.onClose}>Save & Exit</OptionsButton>
       </div>
-
     </div>
   },
   handleSelectPanel (value) {

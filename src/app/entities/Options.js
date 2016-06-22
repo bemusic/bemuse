@@ -22,6 +22,9 @@ export const keyboardMapping = (state) => {
   }
   return mapping
 }
+export const isBackgroundAnimationsEnabled = (state) => (
+  toggleOptionEnabled(state['system.bga.enabled'])
+)
 
 // Utils
 export const nextKeyToEdit = (editing, scratch) => {
@@ -38,3 +41,7 @@ export const nextKeyToEdit = (editing, scratch) => {
   if (index < 0) return null
   return keySet[index + 1] || null
 }
+export const toggleOptionEnabled = (value) => value === '1'
+export const toggleOption = (value) => (
+  toggleOptionEnabled(value) ? '0' : '1'
+)

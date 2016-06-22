@@ -80,8 +80,10 @@ export function launch ({ server, song, chart, options, saveSpeed }) {
     }
 
     // set video options
-    loadSpec.videoUrl = song.video_url
-    loadSpec.videoOffset = +song.video_offset
+    if (Options.isBackgroundAnimationsEnabled(options)) {
+      loadSpec.videoUrl = song.video_url
+      loadSpec.videoOffset = +song.video_offset
+    }
 
     // start loading the game
     const GameLoader = require('bemuse/game/loaders/game-loader')
