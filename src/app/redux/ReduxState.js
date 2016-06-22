@@ -173,7 +173,7 @@ export const { selectSelectedSong, selectChartsForSelectedSong, selectSelectedCh
   const selectSelectedSong = createSelector(
     selectMusicSelection,
     selectSongs,
-    (musicSelection, songs) => MusicSelection.selectedSong(musicSelection, songs)
+    (musicSelection, songs) => MusicSelection.selectedSongGivenSongs(songs)(musicSelection)
   )
   const selectChartsForSelectedSong = createSelector(
     selectSelectedSong,
@@ -182,7 +182,7 @@ export const { selectSelectedSong, selectChartsForSelectedSong, selectSelectedCh
   const selectSelectedChart = createSelector(
     selectMusicSelection,
     selectChartsForSelectedSong,
-    (musicSelection, charts) => MusicSelection.selectedChart(musicSelection, charts)
+    (musicSelection, charts) => MusicSelection.selectedChartGivenCharts(charts)(musicSelection)
   )
   return { selectSelectedSong, selectChartsForSelectedSong, selectSelectedChart }
 })()
