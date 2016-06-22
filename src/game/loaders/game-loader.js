@@ -81,14 +81,49 @@ export function load (spec) {
       return new SamplingMaster()
     })
 
+    task('Video', spec.videoUrl ? 'Loading video' : null, ['Notechart'],
+    function (notechart, progress) {
+      if (!spec.videoUrl) return Promise.resolve(null)
+      return new Promise((resolve, reject) => {
+        const video = document.createElement('video')
+        video.src = spec.videoUrl
+        video.addEventListener('progress', onProgress, true)
+        video.addEventListener('canplaythrough', onCanPlayThrough, true)
+        video.addEventListener('error', onError, true)
+        video.load()
+
+        function onProgress (e) {
+          if (e.lengthComputable) {
+            progress.report(e.loaded, e.total)
+          }
+        }
+        function onCanPlayThrough () {
+          video.removeEventListener('progress', onProgress, true)
+          video.removeEventListener('canplaythrough', onCanPlayThrough, true)
+          progress.report(100, 100)
+          resolve({ element: video, offset: spec.videoOffset })
+        }
+        function onError () {
+          console.warn('Cannot load video... Just skip it!')
+          resolve(null)
+        }
+      })
+    })
+
     task('Game', null, ['Notechart'],
     function (notechart) {
       return new Game([notechart], spec.options)
     })
 
-    task('GameDisplay', null, ['Game', 'Skin', 'SkinContext'],
-    function (game, skin, context) {
-      return new GameDisplay({ game, skin, context, backgroundImagePromise: run('BackgroundImage') })
+    task('GameDisplay', null, ['Game', 'Skin', 'SkinContext', 'Video'],
+    function (game, skin, context, video) {
+      return new GameDisplay({
+        game,
+        skin,
+        context,
+        backgroundImagePromise: run('BackgroundImage'),
+        video
+      })
     })
 
     task('Samples', null, ['SamplingMaster', 'Game'],
