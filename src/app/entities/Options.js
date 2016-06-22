@@ -25,6 +25,15 @@ export const keyboardMapping = (state) => {
 export const isBackgroundAnimationsEnabled = (state) => (
   toggleOptionEnabled(state['system.bga.enabled'])
 )
+export const isAutoVelocityEnabled = (state) => (
+  toggleOptionEnabled(state['player.P1.auto-velocity'])
+)
+export const leadTime = (state) => {
+  const parsed = parseInt(state['player.P1.lead-time'], 10)
+  if (!parsed) return 2400
+  if (parsed < 138) return 138
+  return parsed
+}
 
 // Utils
 export const nextKeyToEdit = (editing, scratch) => {

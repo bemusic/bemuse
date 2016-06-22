@@ -38,6 +38,10 @@ export function setSpeed (speed) {
   return setOptions({ 'player.P1.speed': speed })
 }
 
+export function setLeadTime (leadTime) {
+  return setOptions({ 'player.P1.lead-time': leadTime })
+}
+
 export function setScratch (position) {
   if (position === 'off') {
     return setMode('KB')

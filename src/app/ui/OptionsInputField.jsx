@@ -49,7 +49,9 @@ export const OptionsInputField = React.createClass({
     if (this.props.stringify(previousProps.value) !== newValue) {
       let input = ReactDOM.findDOMNode(this.refs.input)
       if (this.props.parse(input.value) !== this.props.parse(newValue)) {
-        input.value = newValue
+        if (document.activeElement !== input) {
+          input.value = newValue
+        }
       }
     }
   },

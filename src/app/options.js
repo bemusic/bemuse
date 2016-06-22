@@ -30,6 +30,8 @@ export const DEFAULTS = {
 
   // Note speed
   'player.P1.speed':            '1.0',
+  'player.P1.lead-time':        '1685',
+  'player.P1.auto-velocity':    '0',
 
   // Scratch placement (left, right, off)
   'player.P1.scratch':          'left',
