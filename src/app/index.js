@@ -13,7 +13,7 @@ import { OFFICIAL_SERVER_URL }    from './constants'
 import { isBrowserSupported }     from './browser-support'
 import BrowserSupportWarningScene from './ui/BrowserSupportWarningScene'
 
-import { getMusicServer, getTimeSynchroServer }
+import { getMusicServer, getTimeSynchroServer, getInitialGrepString }
     from './query-flags'
 import { shouldShowAbout, shouldShowModeSelect }
     from 'bemuse/devtools/query-flags'
@@ -26,6 +26,7 @@ import { withContext } from 'recompose'
 import store from './redux/instance'
 import { WarpDestination } from '../react-warp'
 import * as OptionsIO from './io/OptionsIO'
+import * as ReduxState from './redux/ReduxState'
 
 export const runIO = createRun({
   context: ioContext
@@ -50,8 +51,12 @@ if (module.hot) {
 export default runIO
 
 function bootUp () {
-  return createIO(({ collectionLoader }, run) => {
+  return createIO(({ collectionLoader, store }, run) => {
     collectionLoader.load(getMusicServer() || OFFICIAL_SERVER_URL)
+    store.dispatch({
+      type: ReduxState.MUSIC_SEARCH_TEXT_INITIALIZED,
+      text: getInitialGrepString()
+    })
     run(OptionsIO.loadInitialOptions())
   })
 }
