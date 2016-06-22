@@ -93,14 +93,18 @@ export function load (spec) {
         video.load()
 
         function onProgress (e) {
-          if (e.lengthComputable) {
-            progress.report(e.loaded, e.total)
+          if (video.buffered && video.buffered.length && video.duration) {
+            progress.report(
+              video.buffered.end(0) - video.buffered.start(0),
+              video.duration
+            )
           }
         }
         function onCanPlayThrough () {
           video.removeEventListener('progress', onProgress, true)
           video.removeEventListener('canplaythrough', onCanPlayThrough, true)
-          progress.report(100, 100)
+          const n = video.duration || 100
+          progress.report(n, n)
           resolve({ element: video, offset: spec.videoOffset })
         }
         function onError () {
