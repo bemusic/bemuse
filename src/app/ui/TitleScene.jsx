@@ -54,6 +54,7 @@ export const TitleScene = React.createClass({
         <a onClick={this.openLink} href="https://github.com/bemusic/bemuse">GitHub</a>
         <a onClick={this.openLink} href="https://gitter.im/bemusic/bemuse">Chat</a>
       </SceneToolbar>
+      <div className="TitleSceneのcurtain"></div>
       <ModalPopup
         visible={this.state.changelogModalVisible}
         onBackdropClick={this.toggleChangelogModal}

@@ -1,24 +1,36 @@
 @import "~bemuse/ui/common";
 
 .TitleScene {
-
-  @include main-bg;
+  background: #415067 url(./images/bg-title.jpg) 50% 90% no-repeat;
+  background-size: cover;
 
   &のlogo {
     position: absolute;
-    top: 30%; left: 50%;
-    transform: translate(-50%,-50%);
-    background: url(~bemuse/ui/images/bg/BemuseTitleLogo.png) center no-repeat;
-    width: 120vw;
-    max-width: (2160px / 2.5);
-    height: (720px / 2.5);
+    top: 18%; left: 50%;
+    transform: translate(-50%,0);
+    background: url(./images/logo-with-shadow.svg) center no-repeat;
+    width: 75vw;
+    height: 30vh;
     background-size: contain;
+    animation: 0.8s TitleSceneのfadeIn;
+    @media (min-width: 640px) {
+      width: calc(30vw + 288px);
+    }
+  }
+
+  &のcurtain {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0; background: black;
+    animation: 0.8s TitleSceneのcurtain;
+    opacity: 0;
+    pointer-events: none;
   }
 
   &のenter {
     position: absolute;
     top: 70%; left: 50%;
     transform: translate(-50%,-50%);
+    animation: 0.8s TitleSceneのenterFadeIn;
     > a {
       color: rgba(black, 0.9);
       font-size: 3rem;
@@ -75,6 +87,15 @@
     }
   }
 
+  // HACK: fade in
+  .SceneToolbar {
+    animation: 0.8s TitleSceneのtoolbar;
+  }
+}
+
+@keyframes TitleSceneのtoolbar {
+  from { transform: translateY(1rem); }
+  to { transform: translateY(0); }
 }
 
 @keyframes TitleSceneのnewVersion {
@@ -84,10 +105,25 @@
   }
 }
 
+@keyframes TitleSceneのcurtain {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
 @keyframes TitleSceneのnewVersionContent {
   0% { transform: translateY(0); animation-timing-function: ease-out; }
   25% { transform: translateY(-3px); animation-timing-function: ease-in; }
   50% { transform: translateY(0); animation-timing-function: ease-out; }
   75% { transform: translateY(3px); animation-timing-function: ease-in; }
   100% { transform: translateY(0); }
+}
+
+@keyframes TitleSceneのfadeIn {
+  0% { opacity: 0; transform: translate(-50%, -1rem); }
+  100% { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes TitleSceneのenterFadeIn {
+  0% { opacity: 0; transform: translate(-50%, -50%) translate(0, -1em); }
+  100% { opacity: 1; transform: translate(-50%, -50%); }
 }

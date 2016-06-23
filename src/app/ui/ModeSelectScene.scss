@@ -2,7 +2,9 @@
 @import "~bemuse/ui/common";
 
 .ModeSelectScene {
-  @include main-bg;
+  background: #415067 url(./images/bg-title.jpg) 50% 90% no-repeat;
+  background-size: cover;
+
   .SceneHeading {
     z-index: 10;
   }
@@ -20,18 +22,19 @@
     justify-content: space-around;
   }
   &のitem {
-    color: #444;
+    color: #e7e8e9;
+    text-shadow: 0 2px 8px black;
     margin: 0 1em;
     width: 22em;
     text-align: center;
     font-size: 1rem;
     padding: 1.5em;
-    border-radius: 2vmin;
+    border-radius: 1vmin;
     background: rgba(#fff, 0);
     transition: 0.1s background-color;
     cursor: pointer;
     &:hover {
-      background: rgba(#fff, 0.7);
+      background: rgba(#000, 0.5);
     }
     > h2 {
       margin: 0.5em 0 0;
@@ -45,15 +48,16 @@
     }
   }
   &のgraphics {
-    border: 2px solid rgba(#000, 0.5);
+    border: 2px solid rgba(#8e96a0, 0.5);
     border-radius: 1em;
-    background: rgba(#fff, 0.8);
+    background: rgba(#41454b, 0.8);
     width: 22em;
     height: 22em * 9 / 16;
+    box-shadow: 0 2px 8px black;
     rect, circle {
-      fill: rgba(#fff, 0.8);
-      stroke: rgba(#000, 0.4);
-      stroke-width: 0.6;
+      fill: rgba(mix(#4d535a, #848d99), 0.8);
+      stroke: rgba(#848d99, 1);
+      stroke-width: 0.4;
     }
   }
 }
