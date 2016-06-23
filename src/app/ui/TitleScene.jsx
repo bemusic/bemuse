@@ -39,7 +39,12 @@ export const TitleScene = React.createClass({
   },
   render () {
     return <Scene className="TitleScene">
-      <div className="TitleSceneのlogo"></div>
+      <div className="TitleSceneのlogo">
+        <div className="TitleSceneのtagline">
+          online, web-based rhythm game
+        </div>
+        <img src={require('./images/logo-with-shadow.svg')} />
+      </div>
       <div className="TitleSceneのenter">
         <a href="javascript://" onClick={this.enterGame}>Enter Game</a>
       </div>

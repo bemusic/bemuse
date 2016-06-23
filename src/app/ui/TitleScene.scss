@@ -6,16 +6,26 @@
 
   &のlogo {
     position: absolute;
-    top: 18%; left: 50%;
-    transform: translate(-50%,0);
-    background: url(./images/logo-with-shadow.svg) center no-repeat;
+    top: 32%; left: 50%;
+    transform: translate(-50%,-50%);
     width: 75vw;
-    height: 30vh;
     background-size: contain;
     animation: 0.8s TitleSceneのfadeIn;
     @media (min-width: 640px) {
       width: calc(30vw + 288px);
     }
+    > img {
+      width: 100%;
+      display: block;
+    }
+  }
+
+  &のtagline {
+    font-size: 1.5rem;
+    font-style: italic;
+    text-align: center;
+    font-weight: 300;
+    opacity: 0.5;
   }
 
   &のcurtain {
@@ -119,8 +129,8 @@
 }
 
 @keyframes TitleSceneのfadeIn {
-  0% { opacity: 0; transform: translate(-50%, -1rem); }
-  100% { opacity: 1; transform: translate(-50%, 0); }
+  0% { opacity: 0; transform: translate(-50%, -50%) translate(0, -1rem); }
+  100% { opacity: 1; transform: translate(-50%, -50%); }
 }
 
 @keyframes TitleSceneのenterFadeIn {
