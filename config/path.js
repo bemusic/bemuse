@@ -1,6 +1,8 @@
+'use strict'
 
-import { join, dirname } from 'path'
+const path = require('path')
 
-export let path = (...segments) => join(dirname(__dirname), ...segments)
-export default path
+const join = path.join
+const dirname = path.dirname
 
+module.exports = (...segments) => join(dirname(__dirname), ...segments)

@@ -77,7 +77,7 @@ export class SceneManager {
         let scene = getNextScene()
 
         // coerce react elements
-        if (typeof scene !== 'function') scene = new ReactScene(scene)
+        if (typeof scene !== 'function') scene = new ReactScene(scene, this.ReactSceneContainer)
 
         // set up the next scene
         var element = document.createElement('div')
@@ -106,15 +106,25 @@ export let instance = new SceneManager()
 
 export default instance
 
-function ReactScene (element) {
+function ReactScene (element, ReactSceneContainer) {
   return function instantiate (container) {
-    let clonedElement = React.cloneElement(element, { scene: element })
-    let component = ReactDOM.render(clonedElement, container)
+    let teardown = () => { }
+    const clonedElement = React.cloneElement(element, {
+      scene: element,
+      registerTeardownCallback: (callback) => {
+        teardown = callback
+      }
+    })
+    const elementToDisplay = (ReactSceneContainer
+      ? <ReactSceneContainer>{clonedElement}</ReactSceneContainer>
+      : clonedElement
+    )
+    ReactDOM.render(elementToDisplay, container)
     return {
       teardown () {
         return Promise.try(() => {
-          if (component.teardown) return component.teardown()
-        }).then(() => {
+          return teardown()
+        }).finally(() => {
           ReactDOM.unmountComponentAtNode(container)
         })
       }

@@ -1,8 +1,10 @@
 
+import { EventEmitter } from 'events'
+
 let storage = localStorage
 
 // The structure of this may change in the future, so I'll keep this private.
-const DEFAULTS = {
+export const DEFAULTS = {
 
   // Game mode (KB, BM)
   'player.P1.mode':             'KB',
@@ -28,6 +30,8 @@ const DEFAULTS = {
 
   // Note speed
   'player.P1.speed':            '1.0',
+  'player.P1.lead-time':        '1685',
+  'player.P1.auto-velocity':    '0',
 
   // Scratch placement (left, right, off)
   'player.P1.scratch':          'left',
@@ -45,10 +49,15 @@ const DEFAULTS = {
   'system.offset.audio-input':  '0',
   'system.offset.audio-visual': '0',
 
+  // BGA
+  'system.bga.enabled':         '1',
+
   // Version
   'system.last-seen-version':   '0.0.0',
 
 }
+
+export const events = new EventEmitter()
 
 // Returns all the available options.
 export function keys () {
@@ -63,11 +72,27 @@ export function get (key) {
 // Saves the options value by a specified key.
 export function set (key, value) {
   storage.setItem(key, value)
+  events.emit('changed')
+}
+
+// Saves many options.
+export function setOptions (options) {
+  for (const key of Object.keys(options)) {
+    storage.setItem(key, options[key])
+  }
+  events.emit('changed')
 }
 
 // Gets the options Storage engine.
 export function getStorage () {
   return storage
+}
+
+// Returns all the options.
+export function getAllCurrentOptions () {
+  let options = { }
+  for (let key of keys()) options[key] = get(key)
+  return options
 }
 
 // Sets the options Storage engine.

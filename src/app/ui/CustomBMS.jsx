@@ -1,11 +1,22 @@
 
 import './CustomBMS.scss'
-import React        from 'react'
-import c            from 'classnames'
-import Panel        from 'bemuse/ui/Panel'
-import { connect }  from 'bemuse/flux'
-import Store        from '../stores/custom-bms-store'
-import * as Actions from '../actions/custom-bms-actions'
+import React from 'react'
+import c from 'classnames'
+import Panel from 'bemuse/ui/Panel'
+import { connect } from 'react-redux'
+import connectIO from '../../impure-react/connectIO'
+import * as ReduxState from '../redux/ReduxState'
+import { compose } from 'recompose'
+import * as CustomSongsIO from '../io/CustomSongsIO'
+
+const enhance = compose(
+  connect((state) => ({
+    log: ReduxState.selectCustomSongLoaderLog(state)
+  })),
+  connectIO({
+    onFileDrop: () => (event) => CustomSongsIO.handleCustomSongFolderDrop(event)
+  })
+)
 
 export const CustomBMS = React.createClass({
   render () {
@@ -27,12 +38,12 @@ export const CustomBMS = React.createClass({
           onDragLeave={this.handleDragLeave}
           onDrop={this.handleDrop}>
           {
-            this.props.data.log
+            this.props.log
             ? (
-              this.props.data.log.length
+              this.props.log.length
               ? (
                 <div className="CustomBMSのlog">
-                  {this.props.data.log.map(text => <p>{text}</p>)}
+                  {this.props.log.map(text => <p>{text}</p>)}
                 </div>
               )
               : (
@@ -65,11 +76,12 @@ export const CustomBMS = React.createClass({
   },
   handleDrop (e) {
     this.setState({ hover: false })
-    Actions.drop(e.nativeEvent, (song) => {
+    e.preventDefault()
+    const promise = this.props.onFileDrop(e.nativeEvent)
+    promise.then((song) => {
       if (this.props.onSongLoaded) this.props.onSongLoaded(song)
     })
-    e.preventDefault()
   },
 })
 
-export default connect({ data: Store })(CustomBMS)
+export default enhance(CustomBMS)

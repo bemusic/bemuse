@@ -12,6 +12,7 @@
     "pre-commit": "gulp pre-commit",
     "start": "bash -c \"HOT=true gulp server\"",
     "test": "bash -c \"NODE_ENV=test BEMUSE_COV=true gulp test\"",
+    "test-bed": "bash -c \"NODE_ENV=test test-bed\"",
     "travis": "gulp travis"
   },
   "repository": {
@@ -46,6 +47,7 @@
     "bundle-loader": "^0.5.2",
     "chai": "^3.2.0",
     "chai-as-promised": "^5.1.0",
+    "circumstance": "^1.1.1",
     "codeclimate-test-reporter": "^0.3.1",
     "codecov": "^1.0.1",
     "connect": "^3.3.3",
@@ -54,6 +56,8 @@
     "dotenv": "^2.0.0",
     "eslint": "^2.8.0",
     "eslint-config-bemuse": "^4.0.2",
+    "eslint-import-resolver-webpack": "^0.3.0",
+    "eslint-plugin-import": "^1.8.1",
     "eslint-plugin-promise": "^1.1.0",
     "eslint-plugin-react": "^5.2.1",
     "eslint-plugin-standard": "^1.3.1",
@@ -120,6 +124,7 @@
     "debug": "^2.1.1",
     "fastclick": "^1.0.6",
     "immutable": "^3.7.5",
+    "impure": "^1.0.0",
     "invariant": "^2.1.0",
     "jquery": "^3.0.0",
     "keycode": "^2.0.0",
@@ -137,11 +142,19 @@
     "react-dom": "^15.0.0",
     "react-fa": "^4.0.0",
     "react-overlay-popup": "^4.0.0",
+    "react-redux": "^4.4.5",
+    "react-warp-portal": "^2.1.1",
     "recompose": "^0.20.0",
+    "redux": "^3.5.2",
+    "reselect": "^2.5.1",
+    "rxjs": "^5.0.0-beta.9",
     "screenfull": "^3.0.0",
     "serviceworker-cache-polyfill": "^4.0.0",
+    "test-bed": "^0.5.3",
     "throat": "^2.0.2",
     "timesynchro": "^1.0.1",
-    "variance": "0.0.1"
+    "updeep": "^0.16.0",
+    "variance": "0.0.1",
+    "whatwg-fetch": "^1.0.0"
   }
 }

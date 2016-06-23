@@ -1,0 +1,36 @@
+
+@import "~bemuse/ui/common";
+
+.OptionsCheckbox {
+  > label > input {
+    @include input;
+    appearance: none;
+    width: 21px;
+    height: 21px;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    top: 5px;
+    margin-right: 5px;
+    transform: rotate(0deg);
+    transition: 0.138s all ease-out;
+    &::after {
+      position: absolute;
+      display: block;
+      transform: translate(-50%, -50%) rotate(90deg);
+      top: 50%; left: 50%;
+      content: '✓';
+      color: #B9EDFF;
+      opacity: 0;
+      transform: 0.138s opacity ease-out;
+    }
+    &:checked {
+      border-color: #B9EDFF;
+      border-width: 2px;
+      transform: rotate(-90deg);
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+}

@@ -8,15 +8,30 @@ import ModalPopup       from 'bemuse/ui/ModalPopup'
 import SCENE_MANAGER    from 'bemuse/scene-manager'
 import version          from 'bemuse/utils/version'
 import * as Analytics   from '../analytics'
-import OptionsStore     from '../stores/options-store'
-import { setOptions }   from '../actions/options-actions'
 import ModeSelectScene  from './ModeSelectScene'
 import AboutScene       from './AboutScene'
 import ChangelogPanel   from './ChangelogPanel'
-import { connect }      from 'bemuse/flux'
+import { connect }      from 'react-redux'
+import connectIO        from '../../impure-react/connectIO'
+import { compose }      from 'recompose'
+import * as OptionsIO   from '../io/OptionsIO'
+
+const enhance = compose(
+  connectIO({
+    onMarkChangelogAsSeen: () => () => (
+      OptionsIO.setOptions({ 'system.last-seen-version': version })
+    )
+  }),
+  connect((state) => ({
+    hasSeenChangelog: state.options['system.last-seen-version'] === version,
+  })
+))
 
 export const TitleScene = React.createClass({
-
+  propTypes: {
+    hasSeenChangelog: React.PropTypes.bool,
+    onMarkChangelogAsSeen: React.PropTypes.func.isRequired,
+  },
   getInitialState () {
     return {
       changelogModalVisible: false,
@@ -24,7 +39,12 @@ export const TitleScene = React.createClass({
   },
   render () {
     return <Scene className="TitleScene">
-      <div className="TitleSceneのlogo"></div>
+      <div className="TitleSceneのlogo">
+        <div className="TitleSceneのtagline">
+          online, web-based rhythm game
+        </div>
+        <img src={require('./images/logo-with-shadow.svg')} />
+      </div>
       <div className="TitleSceneのenter">
         <a href="javascript://" onClick={this.enterGame}>Enter Game</a>
       </div>
@@ -39,6 +59,7 @@ export const TitleScene = React.createClass({
         <a onClick={this.openLink} href="https://github.com/bemusic/bemuse">GitHub</a>
         <a onClick={this.openLink} href="https://gitter.im/bemusic/bemuse">Chat</a>
       </SceneToolbar>
+      <div className="TitleSceneのcurtain"></div>
       <ModalPopup
         visible={this.state.changelogModalVisible}
         onBackdropClick={this.toggleChangelogModal}
@@ -83,7 +104,7 @@ export const TitleScene = React.createClass({
   },
   viewChangelog () {
     this.toggleChangelogModal()
-    this.props.markChangelogAsSeen()
+    this.props.onMarkChangelogAsSeen()
     Analytics.action('TitleScene:viewChangelog')
   },
   toggleChangelogModal () {
@@ -92,13 +113,4 @@ export const TitleScene = React.createClass({
 
 })
 
-const titleScenePropsFromStore川 = OptionsStore.map(
-  state => ({
-    hasSeenChangelog: state.options['system.last-seen-version'] === version,
-    markChangelogAsSeen () {
-      setOptions({ 'system.last-seen-version': version })
-    }
-  })
-)
-
-export default connect(titleScenePropsFromStore川)(TitleScene)
+export default enhance(TitleScene)

@@ -18,6 +18,29 @@
     animation-fill-mode: both;
   }
 
+  &--video-bg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: -48px;
+    left: 0px;
+    z-index: 11;
+    opacity: 0;
+    transition: 0.5s opacity;
+    will-change: opacity;
+    &.is-playing {
+      opacity: 1;
+    }
+  }
+  &[data-panel-placement="left"] &--video-bg {
+    left: 135px;
+    transform: scale(0.87);
+  }
+  &[data-panel-placement="right"] &--video-bg {
+    left: -135px;
+    transform: scale(0.87);
+  }
+
   &--bg img {
     width: 100%;
     height: 100%;

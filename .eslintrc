@@ -1,4 +1,6 @@
-extends: bemuse
+extends:
+  - bemuse
+  - ./.eslintrc.config.import.js
 parserOptions:
   ecmaVersion: 6
   sourceType: module

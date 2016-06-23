@@ -13,19 +13,56 @@ import { OFFICIAL_SERVER_URL }    from './constants'
 import { isBrowserSupported }     from './browser-support'
 import BrowserSupportWarningScene from './ui/BrowserSupportWarningScene'
 
-import { getMusicServer, getTimeSynchroServer }
+import { getMusicServer, getTimeSynchroServer, getInitialGrepString }
     from './query-flags'
 import { shouldShowAbout, shouldShowModeSelect }
     from 'bemuse/devtools/query-flags'
 
-import * as CollectionActions from './actions/collection-actions'
 import workerPath from
   'bemuse/hacks/service-worker-url!serviceworker!./service-worker.js'
+import { createIO, createRun } from 'impure'
+import ioContext from './io/ioContext'
+import { withContext } from 'recompose'
+import store from './redux/instance'
+import { WarpDestination } from '../react-warp'
+import * as OptionsIO from './io/OptionsIO'
+import * as ReduxState from './redux/ReduxState'
+
+export const runIO = createRun({
+  context: ioContext
+})
+
+// HACK: Make SCENE_MANAGER provide Redux store and IO context.
+SCENE_MANAGER.ReactSceneContainer = withContext(
+  { store: React.PropTypes.object, runIO: React.PropTypes.func },
+  () => ({ store, runIO })
+)(({ children }) => {
+  return <div className="bemuse-scene">
+    {React.Children.only(children)}
+    <WarpDestination />
+  </div>
+})
+
+// Allow hot reloading of some modules.
+if (module.hot) {
+  module.hot.accept('./redux/ReduxState', () => { })
+}
+
+export default runIO
+
+function bootUp () {
+  return createIO(({ collectionLoader, store }, run) => {
+    collectionLoader.load(getMusicServer() || OFFICIAL_SERVER_URL)
+    store.dispatch({
+      type: ReduxState.MUSIC_SEARCH_TEXT_INITIALIZED,
+      text: getInitialGrepString()
+    })
+    run(OptionsIO.loadInitialOptions())
+  })
+}
 
 export function main () {
-
-  // load the music collection
-  CollectionActions.loadCollection(getMusicServer() || OFFICIAL_SERVER_URL)
+  runIO(bootUp())
 
   // setup service worker
   let promise = setupServiceWorker()

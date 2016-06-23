@@ -1,4 +1,5 @@
 
+import invariant                 from 'invariant'
 import co                        from 'co'
 import { resolve as resolveUrl } from 'url'
 import screenfull                from 'screenfull'
@@ -15,11 +16,10 @@ import GameScene              from 'bemuse/game/game-scene'
 import LoadingScene           from 'bemuse/game/ui/LoadingScene.jsx'
 import ResultScene            from './ui/ResultScene'
 import * as Analytics         from './analytics'
-import * as OptionsActions    from './actions/options-actions'
-import OptionsStore           from './stores/options-store'
-import OptionsInputStore      from './stores/options-input-store'
 import { MISSED }             from 'bemuse/game/judgments'
 import { unmuteAudio }        from 'bemuse/sampling-master'
+import * as Options           from './entities/Options'
+import createAutoVelocity     from './interactors/createAutoVelocity'
 
 import { shouldDisableFullScreen, isTitleDisplayMode } from 'bemuse/devtools/query-flags'
 
@@ -27,13 +27,11 @@ if (module.hot) {
   module.hot.accept('bemuse/game/loaders/game-loader')
 }
 
-export function launch ({ server, song, chart }) {
-
+export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime }) {
   // Unmute audio immediately so that it sounds on iOS.
   unmuteAudio()
 
   return co(function * () {
-
     // go fullscreen
     if (screenfull.enabled && !shouldDisableFullScreen()) {
       let safari = /Safari/.test(navigator.userAgent) &&
@@ -42,8 +40,7 @@ export function launch ({ server, song, chart }) {
     }
 
     // get the options from the store
-    let optionsStoreState = OptionsStore.get()
-    let options = optionsStoreState.options
+    invariant(options, 'Options must be passed!')
 
     // initialize the loading specification
     let loadSpec  = { }
@@ -60,8 +57,18 @@ export function launch ({ server, song, chart }) {
       })
     }
 
-    let latency = +query.latency || (+options['system.offset.audio-input'] / 1000) || 0
-    let volume = getVolume(song)
+    const latency = +query.latency || (+options['system.offset.audio-input'] / 1000) || 0
+    const volume = getVolume(song)
+    const scratch = Options.scratchPosition(options)
+    const keyboardMapping = Options.keyboardMapping(options)
+
+    // Speed handling
+    const autoVelocity = createAutoVelocity({
+      enabled: Options.isAutoVelocityEnabled(options),
+      initialSpeed: +options['player.P1.speed'] || 1,
+      desiredLeadTime: Options.leadTime(options),
+      songBPM: chart.bpm.median
+    })
 
     loadSpec.options = {
       audioInputLatency: latency,
@@ -69,15 +76,21 @@ export function launch ({ server, song, chart }) {
       tutorial: song.tutorial,
       players: [
         {
-          speed:      +options['player.P1.speed'] || 1,
-          autoplay:   false,
-          placement:  options['player.P1.panel'],
-          scratch:    optionsStoreState.scratch,
+          speed: autoVelocity.getInitialSpeed(),
+          autoplay: false,
+          placement: options['player.P1.panel'],
+          scratch: scratch,
           input: {
-            keyboard: OptionsInputStore.get().keyCodes,
+            keyboard: keyboardMapping,
           },
         },
       ],
+    }
+
+    // set video options
+    if (Options.isBackgroundAnimationsEnabled(options)) {
+      loadSpec.videoUrl = song.video_url
+      loadSpec.videoOffset = +song.video_offset
     }
 
     // start loading the game
@@ -97,7 +110,7 @@ export function launch ({ server, song, chart }) {
     if (isTitleDisplayMode()) return
 
     // send data to analytics
-    Analytics.gameStart(song, chart, optionsStoreState.scratch ? 'BM' : 'KB')
+    Analytics.gameStart(song, chart, scratch ? 'BM' : 'KB')
 
     // wait for game to load and display the game
     let controller = yield promise
@@ -112,9 +125,7 @@ export function launch ({ server, song, chart }) {
 
     // get player's state and save options
     let playerState = state.player(state.game.players[0])
-    OptionsActions.setOptions({
-      'player.P1.speed': playerState.speed,
-    })
+    autoVelocity.handleGameFinish(playerState.speed, { saveSpeed, saveLeadTime })
 
     // display evaluation
     if (state.finished) {
@@ -127,7 +138,6 @@ export function launch ({ server, song, chart }) {
 
     // go back to previous scene
     yield SCENE_MANAGER.pop()
-
   })
 }
 

@@ -8,29 +8,90 @@ import $                from 'jquery'
 import pure             from 'recompose/pure'
 import compose          from 'recompose/compose'
 
-import { connect }      from 'bemuse/flux'
+import { connect }      from 'react-redux'
+import { createSelector, createStructuredSelector } from 'reselect'
+import { connect as connectToLegacyStore } from 'bemuse/flux'
 import SCENE_MANAGER    from 'bemuse/scene-manager'
 import online           from 'bemuse/online/instance'
 import Scene            from 'bemuse/ui/Scene'
 import SceneHeading     from 'bemuse/ui/SceneHeading'
 import SceneToolbar     from 'bemuse/ui/SceneToolbar'
 import ModalPopup       from 'bemuse/ui/ModalPopup'
+import * as ReduxState from '../redux/ReduxState'
 
 import AuthenticationPopup from 'bemuse/online/ui/AuthenticationPopup'
 
-import UnofficialPanel  from './UnofficialPanel'
-import MusicList        from './MusicList'
-import MusicInfo        from './MusicInfo'
-import Options          from './Options'
-import CustomBMS        from './CustomBMS'
-import Store            from '../stores/music-select-store'
-import * as Actions     from '../actions/music-select-actions'
-import * as Analytics   from '../analytics'
+import UnofficialPanel from './UnofficialPanel'
+import MusicList from './MusicList'
+import MusicInfo from './MusicInfo'
+import Options from './Options'
+import CustomBMS from './CustomBMS'
+import * as Analytics from '../analytics'
+import { connectIO } from '../../impure-react/connectIO'
 
-import * as CustomBMSActions from '../actions/custom-bms-actions'
 import { shouldShowOptions } from 'bemuse/devtools/query-flags'
+import { OFFICIAL_SERVER_URL } from '../constants'
+
+import * as MusicSelectionIO from '../io/MusicSelectionIO'
+import * as MusicSearchIO from '../io/MusicSearchIO'
+
+const selectMusicSelectState = (() => {
+  const selectLegacyServerObjectForCurrentCollection = createSelector(
+    ReduxState.selectCurrentCollectionUrl,
+    (url) => ({ url })
+  )
+
+  const selectIsCurrentCollectionUnofficial = createSelector(
+    ReduxState.selectCurrentCollectionUrl,
+    (url) => url !== OFFICIAL_SERVER_URL
+  )
+
+  return createStructuredSelector({
+    loading: ReduxState.selectIsCurrentCollectionLoading,
+    error: ReduxState.selectCurrentCorrectionLoadError,
+    server: selectLegacyServerObjectForCurrentCollection,
+    groups: ReduxState.selectGroups,
+    song: ReduxState.selectSelectedSong,
+    charts: ReduxState.selectChartsForSelectedSong,
+    chart: ReduxState.selectSelectedChart,
+    filterText: ReduxState.selectSearchInputText,
+    highlight: ReduxState.selectSearchText,
+    unofficial: selectIsCurrentCollectionUnofficial,
+    playMode: ReduxState.selectPlayMode
+  })
+})()
+
+const enhance = compose(
+  connectToLegacyStore({ user: online && online.user川 }),
+  connect((state) => ({
+    musicSelect: selectMusicSelectState(state)
+  })),
+  connectIO({
+    onSelectChart: () => (song, chart) => (
+      MusicSelectionIO.selectChart(song, chart)
+    ),
+    onSelectSong: () => (song) => (
+      MusicSelectionIO.selectSong(song)
+    ),
+    onFilterTextChange: () => (text) => (
+      MusicSearchIO.handleSearchTextType(text)
+    ),
+    onLaunchGame: ({ musicSelect }) => () => (
+      MusicSelectionIO.launchGame(musicSelect.server, musicSelect.song, musicSelect.chart)
+    )
+  }),
+  pure
+)
 
 export const MusicSelectScene = React.createClass({
+  propTypes: {
+    musicSelect: React.PropTypes.object,
+    user: React.PropTypes.object,
+    onSelectChart: React.PropTypes.func,
+    onSelectSong: React.PropTypes.func,
+    onFilterTextChange: React.PropTypes.func,
+    onLaunchGame: React.PropTypes.func,
+  },
   render () {
     let musicSelect = this.props.musicSelect
     return <Scene className="MusicSelectScene">
@@ -112,7 +173,7 @@ export const MusicSelectScene = React.createClass({
     if (musicSelect.error) {
       return <div className="MusicSelectSceneのloading">Cannot load collection!</div>
     }
-    if (musicSelect.songs.length === 0) {
+    if (musicSelect.groups.length === 0) {
       return <div className="MusicSelectSceneのloading">No songs found!</div>
     }
     return (
@@ -187,11 +248,11 @@ export const MusicSelectScene = React.createClass({
     }
   },
   handleSongSelect (song, chart) {
-    Actions.selectSong(song)
     if (chart) {
-      Actions.selectChart(chart)
+      this.props.onSelectChart(song, chart)
       Analytics.action('MusicSelectScene:selectSongAndChart')
     } else {
+      this.props.onSelectSong(song)
       Analytics.action('MusicSelectScene:selectSong')
     }
     this.setState({ inSong: true })
@@ -202,14 +263,14 @@ export const MusicSelectScene = React.createClass({
   handleChartClick (chart) {
     if (this.props.musicSelect.chart.md5 === chart.md5) {
       Analytics.action('MusicSelectScene:launchGame')
-      Actions.launchGame()
+      this.props.onLaunchGame()
     } else {
       Analytics.action('MusicSelectScene:selectChart')
-      Actions.selectChart(chart)
+      this.props.onSelectChart(this.props.musicSelect.song, chart)
     }
   },
   handleFilter (e) {
-    Actions.setFilterText(e.target.value)
+    this.props.onFilterTextChange(e.target.value)
   },
   handleOptionsOpen () {
     Analytics.action('MusicSelectScene:optionsOpen')
@@ -219,7 +280,6 @@ export const MusicSelectScene = React.createClass({
     this.setState({ optionsVisible: false })
   },
   handleCustomBMSOpen () {
-    CustomBMSActions.clear()
     this.setState({ customBMSVisible: true })
     Analytics.action('MusicSelectScene:customBMSOpen')
   },
@@ -227,7 +287,6 @@ export const MusicSelectScene = React.createClass({
     this.setState({ customBMSVisible: false })
   },
   handleCustomSong (song) {
-    Actions.setCustomSong(song)
     this.setState({ customBMSVisible: false })
   },
   handleUnofficialClick () {
@@ -256,10 +315,6 @@ export const MusicSelectScene = React.createClass({
   popScene () {
     SCENE_MANAGER.pop().done()
   },
-
 })
 
-export default compose(
-  connect({ musicSelect: Store, user: online && online.user川 }),
-  pure
-)(MusicSelectScene)
+export default enhance(MusicSelectScene)

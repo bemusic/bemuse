@@ -4,13 +4,17 @@ import './game-display.scss'
 import $ from 'jquery'
 
 export class GameDisplay {
-  constructor ({ game, context, backgroundImagePromise }) {
+  constructor ({ game, context, backgroundImagePromise, video }) {
     this._game      = game
     this._context   = context
     this._players   = new Map(game.players.map(player =>
         [player, new PlayerDisplay(player)]))
     this._stateful  = { }
-    this._wrapper   = this._createWrapper({ backgroundImagePromise })
+    this._wrapper   = this._createWrapper({
+      backgroundImagePromise,
+      video,
+      panelPlacement: game.players[0].options.placement
+    })
   }
   start () {
     this._started = new Date().getTime()
@@ -28,6 +32,11 @@ export class GameDisplay {
     let data = this._getData(time, gameTime, gameState)
     this._updateStatefulData(time, gameTime, gameState)
     this._context.render(Object.assign({ }, this._stateful, data))
+    if (this._video && !this._videoStarted && gameTime >= this._videoOffset) {
+      this._video.play()
+      this._video.classList.add('is-playing')
+      this._videoStarted = true
+    }
   }
   _getData (time, gameTime, gameState) {
     let data = { }
@@ -63,14 +72,20 @@ export class GameDisplay {
     let f = gameState.readyFraction
     return f > 0.5 ? Math.pow(1 - (f - 0.5) / 0.5, 2) : 0
   }
-  _createWrapper ({ backgroundImagePromise }) {
+  _createWrapper ({ backgroundImagePromise, video, panelPlacement }) {
     var $wrapper = $('<div class="game-display"></div>')
-    .append('<div class="game-display--bg js-back-image"></div>')
-    .append(this.view)
+      .attr('data-panel-placement', panelPlacement)
+      .append('<div class="game-display--bg js-back-image"></div>')
+      .append(this.view)
     if (backgroundImagePromise) {
       Promise.resolve(backgroundImagePromise).then(
         image => $wrapper.find('.js-back-image').append(image)
       )
+    }
+    if (video) {
+      this._video = video.element
+      this._videoOffset = video.offset
+      $(video.element).addClass('game-display--video-bg').appendTo($wrapper)
     }
     return $wrapper[0]
   }

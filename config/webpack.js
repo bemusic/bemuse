@@ -1,20 +1,15 @@
-
 import webpack        from 'webpack'
 import ProgressPlugin from '../src/hacks/webpack-progress'
 import path           from './path'
 import * as Env       from './env'
 import { flowRight }  from 'lodash'
 import Gauge          from 'gauge'
+import webpackResolve from './webpackResolve'
 
 function generateBaseConfig () {
   let config = {
     context: path('src'),
-    resolve: {
-      alias: {
-        bemuse: path('src'),
-      },
-      extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx']
-    },
+    resolve: webpackResolve,
     resolveLoader: {
       alias: {
         bemuse: path('src'),
@@ -142,9 +137,22 @@ function applyKarmaConfig (config) {
 }
 
 
+function applyTestBedConfig (config) {
+  config.entry = './test/testBed.entry.js'
+  config.testBed = {
+    configureExpressApp: (app, express) => {
+      app.use('/src', express.static(path('src')))
+    }
+  }
+  return config
+}
+
+
 export const generateWebConfig = flowRight(applyWebConfig, generateBaseConfig)
 
 export const generateKarmaConfig = flowRight(applyKarmaConfig, generateBaseConfig)
+
+export const generateTestBedConfig = flowRight(applyTestBedConfig, generateBaseConfig)
 
 export default generateWebConfig()
 

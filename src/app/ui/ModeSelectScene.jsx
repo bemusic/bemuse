@@ -7,11 +7,20 @@ import SceneHeading     from 'bemuse/ui/SceneHeading'
 import SceneToolbar     from 'bemuse/ui/SceneToolbar'
 import SCENE_MANAGER    from 'bemuse/scene-manager'
 import MusicSelectScene from './MusicSelectScene'
-import { setMode }      from '../actions/options-actions'
+import connectIO        from '../../impure-react/connectIO'
+import * as OptionsIO   from '../io/OptionsIO'
 import * as Analytics   from '../analytics'
 
-export default React.createClass({
+const enhance = connectIO({
+  onSetMode: () => (mode) => (
+    OptionsIO.setMode(mode)
+  )
+})
 
+export default enhance(React.createClass({
+  propTypes: {
+    onSetMode: React.PropTypes.func,
+  },
   render () {
     return <Scene className="ModeSelectScene">
       <SceneHeading>Select Mode</SceneHeading>
@@ -71,17 +80,16 @@ export default React.createClass({
   },
 
   handleKB () {
-    setMode('KB')
+    this.props.onSetMode('KB')
     SCENE_MANAGER.display(<MusicSelectScene />).done()
     Analytics.action('ModeSelectScene:KB')
   },
   handleBM () {
-    setMode('BM')
+    this.props.onSetMode('BM')
     SCENE_MANAGER.display(<MusicSelectScene />).done()
     Analytics.action('ModeSelectScene:BM')
   },
   handleBack () {
     SCENE_MANAGER.pop().done()
   },
-
-})
+}))
