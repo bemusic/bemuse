@@ -86,10 +86,12 @@ export function load (spec) {
       if (!spec.videoUrl) return Promise.resolve(null)
       return new Promise((resolve, reject) => {
         const video = document.createElement('video')
+        if (!video.canPlayType('video/webm')) return resolve(null)
         video.src = spec.videoUrl
         video.addEventListener('progress', onProgress, true)
         video.addEventListener('canplaythrough', onCanPlayThrough, true)
         video.addEventListener('error', onError, true)
+        video.addEventListener('abort', onError, true)
         video.load()
 
         function onProgress (e) {
@@ -100,14 +102,20 @@ export function load (spec) {
             )
           }
         }
-        function onCanPlayThrough () {
+        function finish () {
           video.removeEventListener('progress', onProgress, true)
           video.removeEventListener('canplaythrough', onCanPlayThrough, true)
+          video.removeEventListener('error', onError, true)
+          video.removeEventListener('abort', onError, true)
+        }
+        function onCanPlayThrough () {
+          finish()
           const n = video.duration || 100
           progress.report(n, n)
           resolve({ element: video, offset: spec.videoOffset })
         }
         function onError () {
+          finish()
           console.warn('Cannot load video... Just skip it!')
           resolve(null)
         }
