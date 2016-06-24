@@ -63,6 +63,9 @@ export const MusicInfoTabInformation = React.createClass({
     if (song.long_url) {
       buttons.push(link('Long Version', song.long_url))
     }
+    if (song.bmssearch_id) {
+      buttons.push(link('BMS Search', 'http://bmssearch.net/bms?id=' + song.bmssearch_id))
+    }
     if (buttons.length === 0) {
       return null
     } else {

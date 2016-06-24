@@ -5,7 +5,6 @@ let storage = localStorage
 
 // The structure of this may change in the future, so I'll keep this private.
 export const DEFAULTS = {
-
   // Game mode (KB, BM)
   'player.P1.mode':             'KB',
 
@@ -55,6 +54,8 @@ export const DEFAULTS = {
   // Version
   'system.last-seen-version':   '0.0.0',
 
+  // Acknowledgements (guide texts)
+  'system.ack.twitter':         '0'
 }
 
 export const events = new EventEmitter()

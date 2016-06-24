@@ -4,4 +4,4 @@
 //
 
 let { version } = require('../../package.json')
-module.exports = 'module.exports=' + JSON.stringify(version)
+module.exports = 'module.exports=' + JSON.stringify(version.replace(/\.0$/, '').replace(/\.0$/, ''))

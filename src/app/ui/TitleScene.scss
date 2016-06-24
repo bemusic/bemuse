@@ -58,12 +58,12 @@
     }
   }
 
-  &のversion {
+  &のversion, &のbubbleContainer {
     position: relative;
     display: inline-block;
   }
 
-  &のnewVersion {
+  &のbubble {
     position: absolute;
     top: -16px;
     left: 50%;
@@ -71,7 +71,7 @@
     animation: 0.5s TitleSceneのnewVersion;
   }
 
-  &のnewVersionContent {
+  &のbubbleContent {
     position: relative;
     display: block;
     background: #B61A44;
