@@ -13,6 +13,7 @@
 // .. _Extended Promise API: https://github.com/petkaantonov/bluebird/blob/master/API.md
 
 import 'babel-polyfill'
+import 'whatwg-fetch'
 import debug    from 'debug'
 import Bluebird from 'bluebird'
 
