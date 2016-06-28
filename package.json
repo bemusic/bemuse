@@ -138,7 +138,7 @@
     "parse": "^1.5.0",
     "pixi.js": "^3.0.10",
     "power-assert": "^1.2.0",
-    "react": "^15.0.2",
+    "react": "^15.1.0",
     "react-dom": "^15.0.0",
     "react-fa": "^4.0.0",
     "react-overlay-popup": "^4.0.0",
