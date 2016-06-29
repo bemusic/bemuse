@@ -24,9 +24,11 @@ export function send (category, action, label, value, extra) {
   console.log('[Analytics]', category, action, label, value, extra)
   ga('send', 'event', category, action, label, value)
   try {
-    const sessionLength = Date.now() - startTime
-    const data = { info: { sid, category, action, label, value, extra, t: sessionLength } }
-    window.navigator.sendBeacon('https://analytics.bemuse.ninja/collect.php?' + stringify(data))
+    if (window.ga) {
+      const sessionLength = Date.now() - startTime
+      const data = { info: { sid, category, action, label, value, extra, t: sessionLength } }
+      window.navigator.sendBeacon('https://analytics.bemuse.ninja/collect.php?' + stringify(data))
+    }
   } catch (e) {
     console.warn('[Analytics]', 'Cannot send', e)
   }
