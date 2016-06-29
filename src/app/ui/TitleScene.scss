@@ -1,8 +1,35 @@
 @import "~bemuse/ui/common";
 
 .TitleScene {
-  background: #415067 url(./images/bg-title.jpg) 50% 90% no-repeat;
+  background: #415067 url('~!!url!./images/bg-title.placeholder.png') 50% 90% no-repeat;
   background-size: cover;
+
+  &のimage {
+    background: url('./images/bg-title.jpg') 50% 90% no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+  }
+
+  &のpage {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+  }
+
+  &のpageTitle {
+    position: relative;
+    height: 100%;
+  }
+
+  &のpageContents {
+    background: white;
+    color: #353433;
+  }
 
   &のlogo {
     position: absolute;
@@ -58,45 +85,6 @@
     }
   }
 
-  &のversion, &のbubbleContainer {
-    position: relative;
-    display: inline-block;
-  }
-
-  &のbubble {
-    position: absolute;
-    top: -16px;
-    left: 50%;
-    transform: translate(-50%, -100%);
-    animation: 0.5s TitleSceneのnewVersion;
-  }
-
-  &のbubbleContent {
-    position: relative;
-    display: block;
-    background: #B61A44;
-    padding: 8px 12px;
-    color: white;
-    white-space: nowrap;
-    border-radius: 8px;
-    font-weight: bold;
-    animation: 1.8s TitleSceneのnewVersionContent linear infinite;
-    &::after {
-      content: '';
-      display: block;
-      position: absolute;
-      width: 0;
-      height: 0;
-      bottom: -8px;
-      left: 50%;
-      margin-left: -8px;
-      border-width: 8px 8px 0 8px;
-      border-style: solid;
-      border-color: transparent;
-      border-top-color: #B61A44;
-    }
-  }
-
   // HACK: fade in
   .SceneToolbar {
     animation: 0.8s TitleSceneのtoolbar;
@@ -108,25 +96,11 @@
   to { transform: translateY(0); }
 }
 
-@keyframes TitleSceneのnewVersion {
-  from {
-    transform: translate(-50%, -200%);
-    opacity: 0;
-  }
-}
-
 @keyframes TitleSceneのcurtain {
   from { opacity: 1; }
   to { opacity: 0; }
 }
 
-@keyframes TitleSceneのnewVersionContent {
-  0% { transform: translateY(0); animation-timing-function: ease-out; }
-  25% { transform: translateY(-3px); animation-timing-function: ease-in; }
-  50% { transform: translateY(0); animation-timing-function: ease-out; }
-  75% { transform: translateY(3px); animation-timing-function: ease-in; }
-  100% { transform: translateY(0); }
-}
 
 @keyframes TitleSceneのfadeIn {
   0% { opacity: 0; transform: translate(-50%, -50%) translate(0, -1rem); }

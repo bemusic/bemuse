@@ -82,12 +82,12 @@ export default enhance(React.createClass({
   handleKB () {
     this.props.onSetMode('KB')
     SCENE_MANAGER.display(<MusicSelectScene />).done()
-    Analytics.action('ModeSelectScene:KB')
+    Analytics.send('ModeSelectScene', 'select mode', 'KB')
   },
   handleBM () {
     this.props.onSetMode('BM')
     SCENE_MANAGER.display(<MusicSelectScene />).done()
-    Analytics.action('ModeSelectScene:BM')
+    Analytics.send('ModeSelectScene', 'select mode', 'BM')
   },
   handleBack () {
     SCENE_MANAGER.pop().done()

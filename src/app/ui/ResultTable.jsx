@@ -5,6 +5,7 @@ import RunningNumber    from 'bemuse/ui/RunningNumber'
 import ModalPopup       from 'bemuse/ui/ModalPopup'
 import ResultDeltasView from './ResultDeltasView'
 import * as Analytics   from '../analytics'
+import FirstTimeTip     from './FirstTimeTip'
 
 export default React.createClass({
   getInitialState () {
@@ -45,10 +46,12 @@ export default React.createClass({
           </tr>
           <tr>
             <td onClick={this.handleViewDeltas} className="is-clickable">
-              <RunningNumber
-                formatter={this.formatAccuracy}
-                value={result['accuracy']}
-              />
+              <FirstTimeTip featureKey="deltas" tip="View detailed accuracy data">
+                <RunningNumber
+                  formatter={this.formatAccuracy}
+                  value={result['accuracy']}
+                />
+              </FirstTimeTip>
             </td>
             <th>Accurate</th>
           </tr>
@@ -78,6 +81,6 @@ export default React.createClass({
   },
   handleViewDeltas () {
     this.handleToggleDeltasModal()
-    Analytics.action('ResultTable:viewDeltas')
+    Analytics.send('ResultTable', 'view deltas')
   },
 })

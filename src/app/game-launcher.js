@@ -110,29 +110,34 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
     if (isTitleDisplayMode()) return
 
     // send data to analytics
-    Analytics.gameStart(song, chart, scratch ? 'BM' : 'KB')
+    const gameMode = scratch ? 'BM' : 'KB'
+    Analytics.gameStart(song, chart, gameMode, options)
 
     // wait for game to load and display the game
     let controller = yield promise
     yield SCENE_MANAGER.display(new GameScene(controller.display))
     controller.start()
 
+    // listen to unload events
+    function onUnload () {
+      Analytics.gameQuit(song, chart, state)
+    }
+    window.addEventListener('beforeunload', onUnload, false)
+
     // wait for final game state
     let state = yield controller.promise
-
-    // send data to analytics
-    Analytics.gameFinish(song, chart, state)
 
     // get player's state and save options
     let playerState = state.player(state.game.players[0])
     autoVelocity.handleGameFinish(playerState.speed, { saveSpeed, saveLeadTime })
 
-    // display evaluation
+    // send data to analytics & display evaluation
+    window.removeEventListener('beforeunload', onUnload, false)
     if (state.finished) {
-      Analytics.action('Game:finish')
+      Analytics.gameFinish(song, chart, state, gameMode)
       yield showResult(playerState, chart)
     } else {
-      Analytics.action('Game:escape')
+      Analytics.gameEscape(song, chart, state)
     }
     controller.destroy()
 

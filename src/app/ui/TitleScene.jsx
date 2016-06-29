@@ -16,19 +16,18 @@ import { connect }      from 'react-redux'
 import connectIO        from '../../impure-react/connectIO'
 import { compose }      from 'recompose'
 import * as OptionsIO   from '../io/OptionsIO'
+import HomePage         from 'bemuse/site/HomePage'
+import TipContainer     from 'bemuse/ui/TipContainer'
+import FirstTimeTip     from './FirstTimeTip'
 
 const enhance = compose(
   connectIO({
     onMarkChangelogAsSeen: () => () => (
       OptionsIO.setOptions({ 'system.last-seen-version': version })
-    ),
-    onTwitterButtonClick: () => () => (
-      OptionsIO.setOptions({ 'system.ack.twitter': '1' })
     )
   }),
   connect((state) => ({
-    hasSeenChangelog: state.options['system.last-seen-version'] === version,
-    clickedTwitterButton: state.options['system.ack.twitter'] === '1'
+    hasSeenChangelog: state.options['system.last-seen-version'] === version
   })
 ))
 
@@ -37,7 +36,6 @@ export const TitleScene = React.createClass({
     hasSeenChangelog: React.PropTypes.bool,
     clickedTwitterButton: React.PropTypes.bool,
     onMarkChangelogAsSeen: React.PropTypes.func.isRequired,
-    onTwitterButtonClick: React.PropTypes.func.isRequired,
   },
   getInitialState () {
     return {
@@ -46,14 +44,22 @@ export const TitleScene = React.createClass({
   },
   render () {
     return <Scene className="TitleScene">
-      <div className="TitleSceneのlogo">
-        <div className="TitleSceneのtagline">
-          online, web-based rhythm game
+      <div className="TitleSceneのimage"></div>
+      <div className="TitleSceneのpage">
+        <div className="TitleSceneのpageTitle">
+          <div className="TitleSceneのlogo">
+            <div className="TitleSceneのtagline">
+              online, web-based rhythm game
+            </div>
+            <img src={require('./images/logo-with-shadow.svg')} />
+          </div>
+          <div className="TitleSceneのenter">
+            <a href="javascript://" onClick={this.enterGame}>Enter Game</a>
+          </div>
         </div>
-        <img src={require('./images/logo-with-shadow.svg')} />
-      </div>
-      <div className="TitleSceneのenter">
-        <a href="javascript://" onClick={this.enterGame}>Enter Game</a>
+        <div className="TitleSceneのpageContents">
+          <HomePage />
+        </div>
       </div>
       <SceneToolbar>
         <a onClick={this.showAbout} href="javascript://">About</a>
@@ -62,7 +68,9 @@ export const TitleScene = React.createClass({
         <SceneToolbar.Spacer />
         <a onClick={this.openLink} href="https://www.facebook.com/bemusegame">Facebook</a>
         <a onClick={this.openTwitterLink} href="https://twitter.com/bemusegame">
-          {this.renderTextWithBubble('Twitter', !this.props.clickedTwitterButton, 'Like & follow us :)')}
+          <FirstTimeTip tip="Like & follow us :)" featureKey="twitter">
+            Twitter
+          </FirstTimeTip>
         </a>
         <a onClick={this.openLink} href="https://github.com/bemusic/bemuse">Fork me on GitHub</a>
       </SceneToolbar>
@@ -76,37 +84,11 @@ export const TitleScene = React.createClass({
     </Scene>
   },
 
-  renderTextWithBubble (text, bubble, bubbleText) {
-    return (
-      <span className="TitleSceneのbubbleContainer">
-        {text} {bubble
-          ? <span className="TitleSceneのbubble">
-            <span className="TitleSceneのbubbleContent">{bubbleText}</span>
-          </span>
-          : null
-        }
-      </span>
-    )
-  },
-
   renderVersion () {
     return (
-      <span className="TitleSceneのversion">
+      <TipContainer tip="What’s new?" tipVisible={!this.props.hasSeenChangelog}>
         <strong>Bemuse</strong> v{version}
-        {!this.props.hasSeenChangelog
-          ? this.renderNewVersionBubble()
-          : null
-        }
-      </span>
-    )
-  },
-  renderNewVersionBubble () {
-    return (
-      <span className="TitleSceneのbubble">
-        <span className="TitleSceneのbubbleContent">
-          What’s new?
-        </span>
-      </span>
+      </TipContainer>
     )
   },
 
@@ -120,16 +102,16 @@ export const TitleScene = React.createClass({
   },
   enterGame () {
     SCENE_MANAGER.push(<ModeSelectScene />).done()
-    Analytics.action('TitleScene:enterGame')
+    Analytics.send('TitleScene', 'enter game')
   },
   showAbout () {
     SCENE_MANAGER.push(<AboutScene />).done()
-    Analytics.action('TitleScene:showAbout')
+    Analytics.send('TitleScene', 'show about')
   },
   viewChangelog () {
     this.toggleChangelogModal()
     this.props.onMarkChangelogAsSeen()
-    Analytics.action('TitleScene:viewChangelog')
+    Analytics.send('TitleScene', 'view changelog')
   },
   toggleChangelogModal () {
     this.setState({ changelogModalVisible: !this.state.changelogModalVisible })

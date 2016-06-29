@@ -3,6 +3,9 @@ import SCENE_MANAGER    from 'bemuse/scene-manager'
 import React            from 'react'
 import ResultScene      from 'bemuse/app/ui/ResultScene'
 
+import { Provider } from 'react-redux'
+import configureStore from 'bemuse/app/redux/configureStore'
+
 export function main () {
   let props = {
     result: {
@@ -32,5 +35,7 @@ export function main () {
     onExit: () => alert('Exit!'),
     playMode: 'BM',
   }
-  SCENE_MANAGER.display(React.createElement(ResultScene, props)).done()
+  SCENE_MANAGER.display(
+    <Provider store={configureStore()}><ResultScene {...props} /></Provider>
+  ).done()
 }

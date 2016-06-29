@@ -6,6 +6,7 @@ import Panel from 'bemuse/ui/Panel'
 import { connect } from 'react-redux'
 import connectIO from '../../impure-react/connectIO'
 import * as ReduxState from '../redux/ReduxState'
+import * as Analytics from '../analytics'
 import { compose } from 'recompose'
 import * as CustomSongsIO from '../io/CustomSongsIO'
 
@@ -76,6 +77,7 @@ export const CustomBMS = React.createClass({
   },
   handleDrop (e) {
     this.setState({ hover: false })
+    Analytics.send('CustomBMS', 'drop')
     e.preventDefault()
     const promise = this.props.onFileDrop(e.nativeEvent)
     promise.then((song) => {
