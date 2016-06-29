@@ -27,6 +27,7 @@ import store from './redux/instance'
 import { WarpDestination } from '../react-warp'
 import * as OptionsIO from './io/OptionsIO'
 import * as ReduxState from './redux/ReduxState'
+import * as Analytics from './analytics'
 
 export const runIO = createRun({
   context: ioContext
@@ -124,3 +125,7 @@ function registerServiceWorker () {
   return navigator.serviceWorker.register('/sw-loader.js?path=' +
     encodeURIComponent(workerPath))
 }
+
+window.addEventListener('beforeunload', () => {
+  Analytics.send('app', 'quit')
+})

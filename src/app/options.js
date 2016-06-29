@@ -55,7 +55,8 @@ export const DEFAULTS = {
   'system.last-seen-version':   '0.0.0',
 
   // Acknowledgements (guide texts)
-  'system.ack.twitter':         '0'
+  'system.ack.twitter':         '0',
+  'system.ack.deltas':          '0'
 }
 
 export const events = new EventEmitter()

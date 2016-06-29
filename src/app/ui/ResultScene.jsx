@@ -82,12 +82,12 @@ export default React.createClass({
   onTweet (e) {
     e.preventDefault()
     e.stopPropagation()
-    Analytics.action('ResultScene:tweet')
+    Analytics.send('ResultScene', 'tweet')
     window.open(this.getTweetLink(), 'intent', 'width=550,height=420')
   },
   handleExit (e) {
     this.props.onExit(e)
-    Analytics.action('ResultScene:exit')
+    Analytics.send('ResultScene', 'exit')
   },
   noop () {
   },
