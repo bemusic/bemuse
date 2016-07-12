@@ -1,7 +1,7 @@
 import keycode from 'keycode'
 import _ from 'lodash'
 import Bacon from 'baconjs'
-import getMidi川 from './midi'
+import getMidi from './midi'
 
 
 // Public: OmniInput is a poll-based class that handles the key-pressed state of
@@ -28,13 +28,13 @@ import getMidi川 from './midi'
 //
 export class OmniInput {
   constructor (win = window, options = { }) {
-    const midi川 = (options.getMidi川 || getMidi川)()
+    const midi = (options.getMidi || getMidi)()
     this._window = win
     this._exclusive = !!options.exclusive
     this._disposables = [
       listen(win, 'keydown', e => this._handleKeyDown(e)),
       listen(win, 'keyup',   e => this._handleKeyUp(e)),
-      midi川.onValue(e => this._handleMIDIMessage(e)),
+      midi.onValue(e => this._handleMIDIMessage(e)),
     ]
     this._status = { }
   }
@@ -112,8 +112,8 @@ export class OmniInput {
 
 // Public: Returns a Bacon EventStream of keys pressed.
 //
-export function key川 (input = new OmniInput(), win = window) {
-  return _key川ForUpdate川(
+export function key (input = new OmniInput(), win = window) {
+  return _keyForUpdate(
     Bacon.fromBinder(sink => {
       const handle = win.setInterval(() => {
         sink(new Bacon.Next(input.update()))
@@ -124,8 +124,8 @@ export function key川 (input = new OmniInput(), win = window) {
 }
 
 
-export function _key川ForUpdate川 (update川) {
-  return (update川
+export function _keyForUpdate (update) {
+  return (update
     .map(update => Object.keys(update).filter(key => update[key]))
     .diff([ ], (previous, current) => _.difference(current, previous))
     .flatMap(array => Bacon.fromArray(array))
