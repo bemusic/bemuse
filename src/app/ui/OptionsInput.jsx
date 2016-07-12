@@ -5,7 +5,7 @@ import c                    from 'classnames'
 import _                    from 'lodash'
 import OptionsInputScratch  from './OptionsInputScratch'
 import OptionsInputKeys     from './OptionsInputKeys'
-import { key川 }            from 'bemuse/omni-input'
+import { key }            from 'bemuse/omni-input'
 import { getName }          from 'bemuse/omni-input'
 import { compose, withState, withHandlers } from 'recompose'
 import * as Options         from '../entities/Options'
@@ -111,7 +111,7 @@ export const OptionsInput = React.createClass({
   componentDidMount () {
     // XXX: debounce is needed because some gamepad inputs trigger multiple
     // buttons
-    this._dispose = key川().debounceImmediate(16).doLog('a').onValue(this.handleKey)
+    this._dispose = key().debounceImmediate(16).doLog('a').onValue(this.handleKey)
     window.addEventListener('keydown', this.handleKeyboardEvent, true)
   },
   componentWillUnmount () {
