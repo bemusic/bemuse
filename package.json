@@ -30,7 +30,7 @@
   "homepage": "https://github.com/spacetme/bemuse",
   "devDependencies": {
     "autoprefixer-loader": "^3.0.0",
-    "babel-core": "^6.7.4",
+    "babel-core": "^6.11.4",
     "babel-eslint": "^6.0.0",
     "babel-loader": "^6.2.1",
     "babel-plugin-__coverage__": "^11.0.0",
