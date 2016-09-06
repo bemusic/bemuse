@@ -1,27 +1,28 @@
+import * as Analytics         from './analytics'
+import * as Options           from './entities/Options'
 
-import invariant                 from 'invariant'
 import co                        from 'co'
-import { resolve as resolveUrl } from 'url'
-import screenfull                from 'screenfull'
-import React                     from 'react'
-
-// TODO: remove this dependency and use Options
+import invariant                 from 'invariant'
 import query                  from 'bemuse/utils/query'
-import { getGrade }           from 'bemuse/rules/grade'
-
-import SCENE_MANAGER          from 'bemuse/scene-manager'
-import URLResource            from 'bemuse/resources/url'
+import screenfull                from 'screenfull'
 import BemusePackageResources from 'bemuse/resources/bemuse-package'
 import GameScene              from 'bemuse/game/game-scene'
 import LoadingScene           from 'bemuse/game/ui/LoadingScene.jsx'
-import ResultScene            from './ui/ResultScene'
-import * as Analytics         from './analytics'
-import { MISSED }             from 'bemuse/game/judgments'
-import { unmuteAudio }        from 'bemuse/sampling-master'
-import * as Options           from './entities/Options'
-import createAutoVelocity     from './interactors/createAutoVelocity'
-
+import React                     from 'react'
+import SCENE_MANAGER          from 'bemuse/scene-manager'
+import URLResource            from 'bemuse/resources/url'
 import { shouldDisableFullScreen, isTitleDisplayMode } from 'bemuse/devtools/query-flags'
+import { MISSED }             from 'bemuse/game/judgments'
+import { getGrade }           from 'bemuse/rules/grade'
+import { unmuteAudio }        from 'bemuse/sampling-master'
+import { resolve as resolveUrl } from 'url'
+
+import createAutoVelocity     from './interactors/createAutoVelocity'
+import ResultScene            from './ui/ResultScene'
+
+// TODO: remove this dependency and use Options
+
+
 
 if (module.hot) {
   module.hot.accept('bemuse/game/loaders/game-loader')
@@ -89,7 +90,7 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
 
     // set video options
     if (Options.isBackgroundAnimationsEnabled(options)) {
-      loadSpec.videoUrl = song.video_url
+      loadSpec.videoUrl = yield findVideoUrl(song, loadSpec.assets)
       loadSpec.videoOffset = +song.video_offset
     }
 
@@ -143,6 +144,24 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
 
     // go back to previous scene
     yield SCENE_MANAGER.pop()
+  })
+}
+
+function findVideoUrl (song, assets) {
+  return co(function * () {
+    if (song.video_url) {
+      return song.video_url
+    }
+    if (song.video_file) {
+      try {
+        const file = yield assets.file(song.video_file)
+        if (file.resolveUrl) {
+          return yield file.resolveUrl()
+        }
+      } catch (e) {
+        console.warn('[game-launcher] findVideoUrl: Cannot load video file:', e)
+      }
+    }
   })
 }
 

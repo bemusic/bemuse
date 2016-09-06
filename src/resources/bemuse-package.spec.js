@@ -1,3 +1,4 @@
+import assert from 'power-assert'
 
 import BemusePackageResources from './bemuse-package'
 
@@ -21,6 +22,13 @@ describe('BemusePackageResources', function () {
       return expect(resources.file('mi.mp3')
         .then(file => file.read())
         .then(buffer => buffer.byteLength)).to.eventually.eq(30093)
+    })
+
+    it('can obtain url', function () {
+      return (resources.file('mi.mp3')
+        .then(file => file.resolveUrl())
+        .then(url => { assert(typeof url === 'string') })
+      )
     })
 
     it('cannot read if not bemuse file', function () {

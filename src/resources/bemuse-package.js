@@ -1,11 +1,11 @@
+import * as ProgressUtils from 'bemuse/progress/utils'
 
-import { resolve }        from 'url'
 import addLazyProperty    from 'lazy-property'
 import download           from 'bemuse/utils/download'
 import readBlob           from 'bemuse/utils/read-blob'
 import throat             from 'throat'
 import Progress           from 'bemuse/progress'
-import * as ProgressUtils from 'bemuse/progress/utils'
+import { resolve }        from 'url'
 
 import { URLResource }    from './url'
 
@@ -78,6 +78,11 @@ class BemusePackageFileResource {
     return ProgressUtils.atomic(progress,
         this._resources.getBlob(this._ref)
         .then(blob => readBlob(blob).as('arraybuffer')))
+  }
+  resolveUrl () {
+    return this._resources.getBlob(this._ref).then(blob => (
+      URL.createObjectURL(blob)
+    ))
   }
   get name () {
     return this._name
