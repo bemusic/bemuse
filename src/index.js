@@ -145,7 +145,7 @@ function notesDataAndKeysoundsDataForBmsonAndTiming (bmson, timing) {
 
 export { _slicesForNotesAndTiming } from './legacy'
 
-function beatForPulseForBmson (bmson) {
+export function beatForPulseForBmson (bmson) {
   if (!bmson.version) return legacy.beatForLoc
   const resolution = (bmson.info && bmson.info.resolution) || 240
   return y => y / resolution
