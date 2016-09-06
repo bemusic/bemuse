@@ -1,7 +1,7 @@
+import * as ProgressUtils from 'bemuse/progress/utils'
 
 import co from 'co'
 import readBlob from 'bemuse/utils/read-blob'
-import * as ProgressUtils from 'bemuse/progress/utils'
 
 export class DndResources {
   constructor (event) {
@@ -29,6 +29,9 @@ export class FileResource {
   read (progress) {
     return ProgressUtils.atomic(progress,
         readBlob(this._file).as('arraybuffer'))
+  }
+  resolveUrl () {
+    return Promise.resolve(URL.createObjectURL(this._file))
   }
   get name () {
     return this._file.name
