@@ -158,6 +158,36 @@ describe('getFileInfo (bmson)', function() {
     })
   })
 
+  describe('.bga', function() {
+    it('is undefined if no bga', function() {
+      return (
+        expect(info({ info: { title: 'Running Out' } })
+          .get('bga')
+        )
+        .to.eventually.equal(undefined)
+      )
+    })
+    it('has timing ', function() {
+      var bmsonData = {
+        version: '1.0.0',
+        info: {
+          title: 'Meow',
+          init_bpm: 42
+        },
+        bga: {
+          bga_events: [ { id: 1, y: 240 } ],
+          bga_header: [ { id: 1, name: 'meow.mp4' } ]
+        }
+      }
+      return (
+        expect(info(bmsonData).get('bga'))
+        .to.eventually.deep.equal({
+          file: 'meow.mp4',
+          offset: 60 / 42
+        })
+      )
+    })
+  })
 })
 
 
@@ -236,7 +266,18 @@ describe('getSongInfo', function() {
         })
       })
     })
+  })
 
+  describe('a song’s video', function () {
+    it('is taken from an available bga in a chart', function () {
+      var charts = [
+        { },
+        { bga: { file: 'a.mp4', offset: 2 } },
+        { }
+      ]
+      expect(indexer._getSongVideoFromCharts(charts).video_file).to.equal('a.mp4')
+      expect(indexer._getSongVideoFromCharts(charts).video_offset).to.equal(2)
+    })
   })
 
 })

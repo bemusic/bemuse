@@ -19,7 +19,7 @@
   "dependencies": {
     "bluebird": "^2.9.25",
     "bms": "^2.0.0",
-    "bmson": "^3.0.0",
+    "bmson": "^3.1.0",
     "invariant": "^2.1.0",
     "lodash": "^3.8.0",
     "object-assign": "^2.0.0"

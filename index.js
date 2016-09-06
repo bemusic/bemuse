@@ -12,6 +12,7 @@ var lcs         = require('./lcs')
 var getKeys     = require('./keys')
 var getBpmInfo  = require('./bpm-info')
 var getDuration = require('./duration')
+var getBmsonBga = require('./bmson-bga')
 
 var readBMS     = Promise.promisify(bms.Reader.readAsync, bms.Reader)
 
@@ -47,12 +48,14 @@ exports.extensions['.bmson'] = function (source) {
       var ms      = bmson.musicalScoreForBmson(object)
       var notes   = ms.notes
       var timing  = ms.timing
+      var bga     = getBmsonBga(object, { timing: timing })
       return {
         info:       info,
         notes:      notes,
         timing:     timing,
         scratch:    bmson.hasScratch(object),
         keys:       bmson.keysForBmson(object),
+        bga:        bga
       }
     })
   )
@@ -96,6 +99,7 @@ function getFileInfo(data, meta, options) {
         duration:   getDuration(notes, timing),
         scratch:    basis.scratch,
         keys:       basis.keys,
+        bga:        basis.bga
       }
     })
   )
@@ -159,6 +163,7 @@ function getSongInfo(files, options) {
       genre:  common(charts, _.property('info.genre')),
       bpm:    median(charts, _.property('bpm.median')),
     }
+    assign(song, getSongVideoFromCharts(charts))
     assign(song, extra)
     song.charts   = charts
     song.warnings = warnings
@@ -167,6 +172,18 @@ function getSongInfo(files, options) {
 }
 
 exports.getSongInfo = getSongInfo
+
+function getSongVideoFromCharts (charts) {
+  var result = { }
+  var chart = _.find(charts, 'bga')
+  if (chart) {
+    result.video_file = chart.bga.file
+    result.video_offset = chart.bga.offset
+  }
+  return result
+}
+
+exports._getSongVideoFromCharts = getSongVideoFromCharts
 
 function noteIsPlayable(note) {
   return note.column !== undefined
