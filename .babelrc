@@ -7,7 +7,7 @@
   ],
   "env": {
     "test": {
-      "plugins": [ "babel-plugin-__coverage__" ]
+      "plugins": [ "istanbul" ]
     },
     "development": {
       "plugins": [
