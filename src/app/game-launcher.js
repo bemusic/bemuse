@@ -54,7 +54,7 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
       loadSpec.bms    = new URLResource(url)
       loadSpec.assets = new BemusePackageResources(assetsUrl, {
         fallback: url,
-        fallbackPattern: /\.(?:png|jpg)/,
+        fallbackPattern: /\.(?:png|jpg|webm|mp4|m4v)/,
       })
     }
 
