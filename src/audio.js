@@ -34,7 +34,7 @@ export class AudioConvertor {
   _doConvert(path, type) {
     if (type === 'm4a') {
       return co(function*() {
-        let wav = yield this._doSoX(path, 'wav')
+        let wav = yield this._SoX(path, 'wav')
         let prefix = tmp()
         let wavPath = prefix + '.wav'
         let m4aPath = prefix + '.m4a'
@@ -48,12 +48,35 @@ export class AudioConvertor {
         return yield readFile(m4aPath)
       }.bind(this))
     } else {
-      return this._doSoX(path, type)
+      return this._SoX(path, type)
     }
   }
-  _doSoX(path, type) {
+  _SoX(path, type) {
+    return co(function*() {
+      let typeArgs = [ ]
+      try {
+        let fd = yield Promise.promisify(fs.open, fs)(path, 'r')
+        let buffer = new Buffer(4)
+        let read = yield Promise.promisify(fs.read, fs)(fd, buffer, 0, 4, null)
+        yield Promise.promisify(fs.close, fs)(fd)
+        if (read === 0) {
+          console.error('[WARN] Empty keysound file.')
+        } else if (buffer[0] === 0x49 && buffer[1] === 0x44 && buffer[2] === 0x33) {
+          typeArgs = [ '-t', 'mp3' ]
+        } else if (buffer[0] === 0xFF && buffer[1] === 0xFB) {
+          typeArgs = [ '-t', 'mp3' ]
+        } else if (buffer[0] === 0x4F && buffer[1] === 0x67 && buffer[2] === 0x67 && buffer[3] === 0x53) {
+          typeArgs = [ '-t', 'ogg' ]
+        }
+      } catch (e) {
+        console.error('[WARN] Unable to detect file type!')
+      }
+      return yield this._doSoX(path, type, typeArgs)
+    }.bind(this));
+  }
+  _doSoX(path, type, inputTypeArgs) {
     return throat(() => new Promise((resolve, reject) => {
-      let sox = spawn('sox', [path, '-t', type, ...this._extra, '-'])
+      let sox = spawn('sox', [...inputTypeArgs, path, '-t', type, ...this._extra, '-'])
       sox.stdin.end()
       sox.stderr.on('data', x => process.stderr.write(x))
       let data = new Promise((resolve, reject) => {

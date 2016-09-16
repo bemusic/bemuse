@@ -2,6 +2,7 @@
 import Promise    from 'bluebird'
 import co         from 'co'
 import fs         from 'fs'
+import _          from 'lodash'
 
 import { join } from 'path'
 
@@ -45,7 +46,28 @@ export function packIntoBemuse(path) {
 }
 
 function dotMap(array, map) {
-  return Promise.map(array, item =>
-            Promise.resolve(map(item)).tap(() => process.stdout.write('.')))
+  return (
+    Promise.map(
+      array,
+      item => (Promise.resolve(map(item))
+        .tap(() => process.stdout.write('.'))
+        .then(result => [result])
+        .catch(e => {
+          process.stdout.write('x')
+          process.stderr.write('[ERR] ' + e.stack)
+          return [ ]
+        })
+      )
+    )
+    .then(results => _.flatten(results))
     .tap(() => process.stdout.write('\n'))
+  )
 }
+
+
+
+
+
+
+
+
