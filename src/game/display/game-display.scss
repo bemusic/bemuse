@@ -33,12 +33,10 @@
     }
   }
   &[data-panel-placement="left"] &--video-bg {
-    left: 135px;
-    transform: scale(0.87);
+    transform: translateX(13.671875%) scale(0.87);
   }
   &[data-panel-placement="right"] &--video-bg {
-    left: -135px;
-    transform: scale(0.87);
+    transform: translateX(13.671875%) scale(0.87);
   }
 
   &--bg img {
