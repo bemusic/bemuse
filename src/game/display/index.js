@@ -33,6 +33,7 @@ export class GameDisplay {
     this._updateStatefulData(time, gameTime, gameState)
     this._context.render(Object.assign({ }, this._stateful, data))
     if (this._video && !this._videoStarted && gameTime >= this._videoOffset) {
+      this._video.volume = 0
       this._video.play()
       this._video.classList.add('is-playing')
       this._videoStarted = true
