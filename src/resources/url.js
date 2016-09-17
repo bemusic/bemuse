@@ -9,6 +9,9 @@ export class URLResource {
   read (progress) {
     return download(this._url).as('arraybuffer', progress)
   }
+  resolveUrl () {
+    return Promise.resolve(this._url)
+  }
   get name () {
     return basename(this._url)
   }
