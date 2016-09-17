@@ -22,12 +22,14 @@
   "homepage": "https://github.com/bemusic/bemuse-tools",
   "dependencies": {
     "babel": "^5.4.3",
-    "bemuse-indexer": "^2.0.1",
+    "bemuse-indexer": "^3.1.0",
     "bluebird": "^2.9.9",
     "bytes": "^1.0.0",
     "chalk": "^1.0.0",
     "co": "^4.0.2",
+    "cors": "^2.7.1",
     "endpoint": "^0.4.2",
+    "express": "^4.12.4",
     "format-json": "^1.0.3",
     "glob": "^4.3.5",
     "gulp-util": "^3.0.1",
@@ -36,6 +38,7 @@
     "meow": "^3.1.0",
     "mime": "^1.2.11",
     "mkdirp": "^0.5.0",
+    "rx": "^2.5.3",
     "temp": "^0.8.1",
     "throat": "^1.0.0"
   },
