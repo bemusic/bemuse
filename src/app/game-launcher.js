@@ -131,7 +131,8 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
       window.addEventListener('beforeunload', onUnload, false)
 
       // wait for final game state
-      let state = yield controller.promise
+      const playResult = yield controller.promise
+      const state = playResult.state
 
       // get player's state and save options
       let playerState = state.player(state.game.players[0])
@@ -145,6 +146,7 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
         replay = exitResult.replay
       } else {
         Analytics.gameEscape(song, chart, state)
+        replay = playResult.replay
       }
       controller.destroy()
     } while (replay)
