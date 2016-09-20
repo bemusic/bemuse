@@ -1,6 +1,7 @@
+import * as ReduxState from '../redux/ReduxState'
 
 import { createIO } from 'impure'
-import * as ReduxState from '../redux/ReduxState'
+
 import DndResources from '../../resources/dnd-resources'
 
 export function handleCustomSongFolderDrop (event) {
@@ -12,7 +13,11 @@ export function handleCustomSongFolderDrop (event) {
         store.dispatch({ type: ReduxState.CUSTOM_SONG_LOG_EMITTED, text })
       }
     })
-    store.dispatch({ type: ReduxState.CUSTOM_SONG_LOADED, song })
-    return song
+    if (song && song.charts && song.charts.length) {
+      store.dispatch({ type: ReduxState.CUSTOM_SONG_LOADED, song })
+      return song
+    } else {
+      store.dispatch({ type: ReduxState.CUSTOM_SONG_LOAD_FAILED })
+    }
   })
 }

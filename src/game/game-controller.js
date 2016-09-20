@@ -1,12 +1,11 @@
+import bench from 'bemuse/devtools/benchmark'
 
-import GameTimer from './game-timer'
-import GameState from './state'
+import Clock from './clock'
 import GameInput from './input'
-import Clock     from './clock'
-import bench     from 'bemuse/devtools/benchmark'
-
-import TouchPlugin        from './input/touch-plugin'
-import OmniInputPlugin    from './input/omni-input-plugin'
+import GameState from './state'
+import GameTimer from './game-timer'
+import OmniInputPlugin from './input/omni-input-plugin'
+import TouchPlugin from './input/touch-plugin'
 
 // The GameController takes care of communications between each game
 // component, and takes care of the Game loop.
@@ -55,10 +54,16 @@ export class GameController {
   // Exits the game when escape is pressed.
   _handleEscape () {
     let onKeyDown = (e) => {
-      if (e.keyCode === 27) {
+      const ESCAPE_KEY = 27
+      const F1_KEY = 112
+      if (e.keyCode === ESCAPE_KEY) {
         e.preventDefault()
         e.stopPropagation()
-        this._resolvePromise(this._state)
+        this._resolvePromise({ state: this._state, replay: false })
+      } else if (e.keyCode === F1_KEY) {
+        e.preventDefault()
+        e.stopPropagation()
+        this._resolvePromise({ state: this._state, replay: true })
       }
     }
     window.addEventListener('keydown', onKeyDown, true)
@@ -111,7 +116,7 @@ export class GameController {
     this._audio.update(t,     this._state)
     this._display.update(t,   this._state)
     if (this._state.finished && this._resolvePromise) {
-      this._resolvePromise(this._state)
+      this._resolvePromise({ state: this._state })
       this._resolvePromise = null
     }
   }

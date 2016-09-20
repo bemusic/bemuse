@@ -1,17 +1,19 @@
-
+import * as Analytics   from '../analytics'
+import * as QueryFlags  from '../query-flags'
 import './ResultScene.scss'
+
+import Flex             from 'bemuse/ui/Flex'
 import React            from 'react'
 import Scene            from 'bemuse/ui/Scene'
 import SceneHeading     from 'bemuse/ui/SceneHeading'
 import SceneToolbar     from 'bemuse/ui/SceneToolbar'
+
+import FirstTimeTip     from './FirstTimeTip'
 import MusicChartInfo   from './MusicChartInfo'
 import MusicChartSelectorItem from './MusicChartSelectorItem'
-import ResultTable      from './ResultTable'
-import ResultGrade      from './ResultGrade'
 import RankingContainer from './RankingContainer'
-import Flex             from 'bemuse/ui/Flex'
-import * as QueryFlags  from '../query-flags'
-import * as Analytics   from '../analytics'
+import ResultGrade      from './ResultGrade'
+import ResultTable      from './ResultTable'
 
 export default React.createClass({
   render () {
@@ -29,8 +31,13 @@ export default React.createClass({
       <div className="ResultSceneのinformation">
         <div className="ResultSceneのinformationHeader">
           <div className="ResultSceneのchart">
-            <MusicChartSelectorItem chart={this.props.chart}
-              onChartClick={this.noop} />
+            <FirstTimeTip tip="Play again" featureKey="replayGame">
+              <MusicChartSelectorItem
+                chart={this.props.chart}
+                onChartClick={this.props.onReplay}
+                isReplayable
+              />
+            </FirstTimeTip>
           </div>
           <MusicChartInfo info={this.props.chart.info} />
         </div>
@@ -45,14 +52,18 @@ export default React.createClass({
             <i className="fa fa-twitter" />
           </a>
           <Flex grow={1} />
-          <div className="ResultSceneのexit" onClick={this.handleExit}>
-            Continue
-          </div>
+          <FirstTimeTip tip="Back to music selection" featureKey="finishGame">
+            <div className="ResultSceneのexit" onClick={this.handleExit}>
+              Continue
+            </div>
+          </FirstTimeTip>
         </div>
       </div>
       <SceneToolbar>
         <SceneToolbar.Spacer />
-        <a onClick={this.props.onExit} href="javascript://">Continue</a>
+        <a onClick={this.props.onExit} href="javascript://">
+          Continue
+        </a>
       </SceneToolbar>
     </Scene>
   },

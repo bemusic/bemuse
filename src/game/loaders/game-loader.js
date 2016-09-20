@@ -1,27 +1,25 @@
+import * as Multitasker from './multitasker'
 
 import co from 'co'
+import keysoundCache from 'bemuse/keysound-cache'
+import LoadingContext from 'bemuse/boot/loading-context'
+import NotechartLoader from 'bemuse-notechart/loader'
+import Progress from 'bemuse/progress'
+import SamplingMaster from 'bemuse/sampling-master'
 
-import Progress         from 'bemuse/progress'
-import SamplingMaster   from 'bemuse/sampling-master'
-import LoadingContext   from 'bemuse/boot/loading-context'
-
-import * as Multitasker from './multitasker'
-import SamplesLoader    from './samples-loader'
-import NotechartLoader  from 'bemuse-notechart/loader'
-import loadImage        from './loadImage'
-
-import Game             from '../game'
-import GameController   from '../game-controller'
-import GameAudio        from '../audio'
-import GameDisplay      from '../display'
+import loadImage from './loadImage'
+import Game from '../game'
+import GameAudio from '../audio'
+import GameController from '../game-controller'
+import GameDisplay from '../display'
+import SamplesLoader from './samples-loader'
 
 export function load (spec) {
-
-  let assets = spec.assets
-  let bms    = spec.bms
+  const assets = spec.assets
+  const bms = spec.bms
+  const songId = spec.songId
 
   return Multitasker.start(function (task, run) {
-
     task('Scintillator', 'Loading game engine', [], function (progress) {
       return new Promise((resolve) => {
         let context = new LoadingContext(progress)
@@ -140,7 +138,8 @@ export function load (spec) {
 
     task('Samples', null, ['SamplingMaster', 'Game'],
     function (master, game) {
-      let samplesLoader = new SamplesLoader(assets, master)
+      keysoundCache.receiveSongId(songId)
+      const samplesLoader = new SamplesLoader(assets, master)
       return samplesLoader.loadFiles(game.samples,
           audioLoadProgress, audioDecodeProgress)
     })

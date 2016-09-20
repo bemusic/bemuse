@@ -1,6 +1,5 @@
-
-import readBlob from 'bemuse/utils/read-blob'
 import defaultAudioContext from 'audio-context'
+import readBlob from 'bemuse/utils/read-blob'
 
 export const FADE_LENGTH = 0.001
 
@@ -52,11 +51,23 @@ export class SamplingMaster {
     this._instances = null
   }
 
-  // Creates a `Sample` from a Blob or an ArrayBuffer.
-  sample (blobOrArrayBuffer) {
+  // Decodes the audio data from a Blob or an ArrayBuffer.
+  // Returns an AudioBuffer which can be re-used in other sampling masters.
+  decode (blobOrArrayBuffer) {
     return this._coerceToArrayBuffer(blobOrArrayBuffer)
     .then(arrayBuffer => this._decodeAudio(arrayBuffer))
-    .then(audioBuffer => {
+  }
+
+  // Creates a `Sample` from a Blob or an ArrayBuffer or an AudioBuffer.
+  sample (blobOrArrayBufferOrAudioBuffer) {
+    const audioBufferPromise = (() => {
+      if (blobOrArrayBufferOrAudioBuffer.numberOfChannels) {
+        return Promise.resolve(blobOrArrayBufferOrAudioBuffer)
+      } else {
+        return this.decode(blobOrArrayBufferOrAudioBuffer)
+      }
+    })()
+    return audioBufferPromise.then(audioBuffer => {
       if (this._destroyed) throw new Error('SamplingMaster already destroyed!')
       var sample = new Sample(this, audioBuffer)
       this._samples.push(sample)

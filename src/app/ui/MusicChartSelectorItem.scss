@@ -25,7 +25,7 @@
     opacity: 0;
     transition: 0.3s opacity;
   }
-  &:not(.is-tutorial).is-active:hover {
+  &:not(.is-tutorial).is-active:hover, &.is-replayable:hover {
     .MusicChartSelectorItemのplay {
       opacity: 1;
     }

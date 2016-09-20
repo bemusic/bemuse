@@ -94,7 +94,10 @@ export const MusicSelectScene = React.createClass({
   },
   render () {
     let musicSelect = this.props.musicSelect
-    return <Scene className="MusicSelectScene">
+    return <Scene
+      className="MusicSelectScene"
+      onDragEnter={this.handleCustomBMSOpen}
+    >
       <SceneHeading>
         Select Music
         <input
@@ -115,7 +118,6 @@ export const MusicSelectScene = React.createClass({
         <a
           onClick={this.handleCustomBMSOpen}
           href="javascript://"
-          onDragEnter={this.handleCustomBMSOpen}
         >
           Play Custom BMS
         </a>
