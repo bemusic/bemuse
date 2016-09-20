@@ -6,20 +6,22 @@
 //   not be here. Instead, put them in entities.
 // - The selectors can be used to query data from the store.
 //
+
 import * as Collections from '../entities/Collections'
 import * as LoadState from '../entities/LoadState'
 import * as MusicSearchText from '../entities/MusicSearchText'
 import * as MusicSelection from '../entities/MusicSelection'
 import * as Options from '../entities/Options'
-import { combineReducers } from 'redux'
-import { createSelector } from 'reselect'
-import createReducer from './createReducer'
 
 import _ from 'lodash'
-import sortSongs from '../interactors/sortSongs'
+import { combineReducers } from 'redux'
+import { createSelector } from 'reselect'
+
+import createReducer from './createReducer'
 import filterSongs from '../interactors/filterSongs'
-import groupSongsIntoCategories from '../interactors/groupSongsIntoCategories'
 import getPlayableCharts from '../interactors/getPlayableCharts'
+import groupSongsIntoCategories from '../interactors/groupSongsIntoCategories'
+import sortSongs from '../interactors/sortSongs'
 
 // Actions
 export const COLLECTION_LOADING_BEGAN = 'COLLECTION_LOADING_BEGAN'
@@ -28,6 +30,7 @@ export const COLLECTION_LOADED = 'COLLECTION_LOADED'
 export const CUSTOM_SONG_LOAD_STARTED = 'CUSTOM_SONG_LOAD_STARTED'
 export const CUSTOM_SONG_LOG_EMITTED = 'CUSTOM_SONG_LOG_EMITTED'
 export const CUSTOM_SONG_LOADED = 'CUSTOM_SONG_LOADED'
+export const CUSTOM_SONG_LOAD_FAILED = 'CUSTOM_SONG_LOAD_FAILED'
 export const MUSIC_SEARCH_TEXT_TYPED = 'MUSIC_SEARCH_TEXT_TYPED'
 export const MUSIC_SEARCH_TEXT_INITIALIZED = 'MUSIC_SEARCH_TEXT_INITIALIZED'
 export const MUSIC_SEARCH_DEBOUNCED = 'MUSIC_SEARCH_DEBOUNCED'
@@ -65,7 +68,8 @@ export const reducer = combineReducers({
   customSongLoaderLog: createReducer(null, {
     [CUSTOM_SONG_LOAD_STARTED]: (action) => (state) => [ ],
     [CUSTOM_SONG_LOG_EMITTED]: (action) => (state) => state && [ ...state, action.text ],
-    [CUSTOM_SONG_LOADED]: (action) => (state) => null
+    [CUSTOM_SONG_LOADED]: (action) => (state) => null,
+    [CUSTOM_SONG_LOAD_FAILED]: (action) => (state) => null
   }),
   currentCollection: createReducer('', {
     [COLLECTION_LOADING_BEGAN]: (action) => (state) => (state === ''
