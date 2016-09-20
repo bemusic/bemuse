@@ -1,10 +1,8 @@
-
-import SCENE_MANAGER    from 'bemuse/scene-manager'
+import configureStore from 'bemuse/app/redux/configureStore'
 import React            from 'react'
 import ResultScene      from 'bemuse/app/ui/ResultScene'
-
+import SCENE_MANAGER    from 'bemuse/scene-manager'
 import { Provider } from 'react-redux'
-import configureStore from 'bemuse/app/redux/configureStore'
 
 export function main () {
   let props = {
@@ -33,6 +31,7 @@ export function main () {
       md5: '12345670123456789abcdef89abemuse',
     },
     onExit: () => alert('Exit!'),
+    onReplay: () => alert('Replay!'),
     playMode: 'BM',
   }
   SCENE_MANAGER.display(

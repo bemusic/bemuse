@@ -1,4 +1,3 @@
-
 import { EventEmitter } from 'events'
 
 let storage = localStorage
@@ -56,7 +55,9 @@ export const DEFAULTS = {
 
   // Acknowledgements (guide texts)
   'system.ack.twitter':         '0',
-  'system.ack.deltas':          '0'
+  'system.ack.deltas':          '0',
+  'system.ack.finishGame':      '0',
+  'system.ack.replayGame':      '0'
 }
 
 export const events = new EventEmitter()

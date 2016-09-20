@@ -92,53 +92,62 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
       loadSpec.videoOffset = +song.video_offset
     }
 
-    // start loading the game
-    const GameLoader = require('bemuse/game/loaders/game-loader')
-    let loader = GameLoader.load(loadSpec)
-    let { tasks, promise } = loader
+    // allow replays...
+    let replay = false
 
-    // display loading scene
-    let loadingScene = React.createElement(LoadingScene, {
-      tasks: tasks,
-      song: chart.info,
-      eyecatchImagePromise: loader.get('EyecatchImage')
-    })
-    yield SCENE_MANAGER.push(loadingScene)
+    do {
+      // start loading the game
+      const GameLoader = require('bemuse/game/loaders/game-loader')
+      let loader = GameLoader.load(loadSpec)
+      let { tasks, promise } = loader
 
-    // if in title display mode, stop
-    if (isTitleDisplayMode()) return
+      // display loading scene
+      let loadingScene = React.createElement(LoadingScene, {
+        tasks: tasks,
+        song: chart.info,
+        eyecatchImagePromise: loader.get('EyecatchImage')
+      })
+      if (replay) {
+        yield SCENE_MANAGER.display(loadingScene)
+      } else {
+        yield SCENE_MANAGER.push(loadingScene)
+      }
+      replay = false
 
-    // send data to analytics
-    const gameMode = scratch ? 'BM' : 'KB'
-    Analytics.gameStart(song, chart, gameMode, options)
+      // if in title display mode, stop
+      if (isTitleDisplayMode()) return
 
-    // wait for game to load and display the game
-    let controller = yield promise
-    yield SCENE_MANAGER.display(new GameScene(controller.display))
-    controller.start()
+      // send data to analytics
+      const gameMode = scratch ? 'BM' : 'KB'
+      Analytics.gameStart(song, chart, gameMode, options)
 
-    // listen to unload events
-    function onUnload () {
-      Analytics.gameQuit(song, chart, state)
-    }
-    window.addEventListener('beforeunload', onUnload, false)
+      // wait for game to load and display the game
+      let controller = yield promise
+      yield SCENE_MANAGER.display(new GameScene(controller.display))
+      controller.start()
 
-    // wait for final game state
-    let state = yield controller.promise
+      // listen to unload events
+      const onUnload = () => { Analytics.gameQuit(song, chart, state) }
+      window.addEventListener('beforeunload', onUnload, false)
 
-    // get player's state and save options
-    let playerState = state.player(state.game.players[0])
-    autoVelocity.handleGameFinish(playerState.speed, { saveSpeed, saveLeadTime })
+      // wait for final game state
+      let state = yield controller.promise
 
-    // send data to analytics & display evaluation
-    window.removeEventListener('beforeunload', onUnload, false)
-    if (state.finished) {
-      Analytics.gameFinish(song, chart, state, gameMode)
-      yield showResult(playerState, chart)
-    } else {
-      Analytics.gameEscape(song, chart, state)
-    }
-    controller.destroy()
+      // get player's state and save options
+      let playerState = state.player(state.game.players[0])
+      autoVelocity.handleGameFinish(playerState.speed, { saveSpeed, saveLeadTime })
+
+      // send data to analytics & display evaluation
+      window.removeEventListener('beforeunload', onUnload, false)
+      if (state.finished) {
+        Analytics.gameFinish(song, chart, state, gameMode)
+        const exitResult = yield showResult(playerState, chart)
+        replay = exitResult.replay
+      } else {
+        Analytics.gameEscape(song, chart, state)
+      }
+      controller.destroy()
+    } while (replay)
 
     // go back to previous scene
     yield SCENE_MANAGER.pop()
@@ -184,7 +193,8 @@ function showResult (playerState, chart) {
       },
       chart:    chart,
       playMode: playMode,
-      onExit:   resolve,
+      onExit:   () => resolve({ replay: false }),
+      onReplay: () => resolve({ replay: true }),
     }
     SCENE_MANAGER.display(React.createElement(ResultScene, props)).done()
   })
