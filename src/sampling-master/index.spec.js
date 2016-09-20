@@ -1,7 +1,11 @@
 
 /*global AudioContext, WebAudioTestAPI*/
-import SamplingMaster, { FADE_LENGTH } from './'
+
 import 'web-audio-test-api'
+
+import assert from 'power-assert'
+
+import SamplingMaster, { FADE_LENGTH } from './'
 
 describe('SamplingMaster', function () {
 
@@ -41,12 +45,25 @@ describe('SamplingMaster', function () {
     })
   })
 
+  describe('#decode', function () {
+    it('returns an audio buffer', () => {
+      return master.decode(new Blob([])).then(audioBuffer => {
+        assert(audioBuffer.numberOfChannels)
+      })
+    })
+  })
+
   describe('#sample', function () {
     it('should coerce blob', function () {
       return master.sample(new Blob([]))
     })
     it('should coerce array buffer', function () {
       return master.sample(new ArrayBuffer(0))
+    })
+    it('should support an audiobuffer', function () {
+      return master.decode(new Blob([])).then(audioBuffer => {
+        return master.sample(audioBuffer)
+      })
     })
     it('should reject when decoding failed', function () {
       context.DECODE_AUDIO_DATA_FAILED = true
