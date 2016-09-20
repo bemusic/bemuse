@@ -1,6 +1,6 @@
+import * as ProgressUtils   from 'bemuse/progress/utils'
 
 import _                    from 'lodash'
-import * as ProgressUtils   from 'bemuse/progress/utils'
 import { EXTRA_FORMATTER }  from 'bemuse/progress/formatters'
 import { canPlay }          from 'bemuse/sampling-master'
 
@@ -35,7 +35,7 @@ export class SamplesLoader {
     )
   }
   _decode (buffer) {
-    return this._master.sample(buffer)
+    return this._master.decode(buffer).then(audioBuffer => this._master.sample(audioBuffer))
   }
   _getFile (name) {
     return Promise.try(() => {

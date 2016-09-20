@@ -1,4 +1,3 @@
-
 import SamplesLoader  from './samples-loader'
 
 describe('SamplesLoader', function () {
@@ -9,7 +8,7 @@ describe('SamplesLoader', function () {
 
   beforeEach(function () {
     assets    = { file: sinon.stub() }
-    master    = { sample: sinon.stub() }
+    master    = { decode: sinon.stub(), sample: sinon.stub() }
     loader = new SamplesLoader(assets, master)
   })
 
@@ -20,7 +19,7 @@ describe('SamplesLoader', function () {
       assets.file.withArgs('a.wav').returns(Promise.resolve({
         read: () => Promise.resolve('ok1')
       }))
-      master.sample.withArgs('ok1').returns(Promise.reject(new Error('..')))
+      master.decode.withArgs('ok1').returns(Promise.reject(new Error('..')))
       return expect(loader.loadFiles(['a.wav'])).to.eventually.deep.eq({ })
     })
 
@@ -29,9 +28,10 @@ describe('SamplesLoader', function () {
       assets.file.withArgs('a.mp3').returns(Promise.resolve({
         read: () => Promise.resolve('ok1')
       }))
-      master.sample.withArgs('ok1').returns(Promise.resolve('ok2'))
+      master.decode.withArgs('ok1').returns(Promise.resolve('ok2'))
+      master.sample.withArgs('ok2').returns(Promise.resolve('ok3'))
       return expect(loader.loadFiles(['a.wav'])).to.eventually.deep.eq({
-        'a.wav': 'ok2'
+        'a.wav': 'ok3'
       })
     })
 
