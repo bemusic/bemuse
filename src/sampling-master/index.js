@@ -51,6 +51,8 @@ export class SamplingMaster {
     this._instances = null
   }
 
+  // Decodes the audio data from a Blob or an ArrayBuffer.
+  // Returns an AudioBuffer which can be re-used in other sampling masters.
   decode (blobOrArrayBuffer) {
     return this._coerceToArrayBuffer(blobOrArrayBuffer)
     .then(arrayBuffer => this._decodeAudio(arrayBuffer))
@@ -60,7 +62,7 @@ export class SamplingMaster {
   sample (blobOrArrayBufferOrAudioBuffer) {
     const audioBufferPromise = (() => {
       if (blobOrArrayBufferOrAudioBuffer.numberOfChannels) {
-        return Promise.resolve(blobOrArrayBufferOrAudioBuffer.numberOfChannels)
+        return Promise.resolve(blobOrArrayBufferOrAudioBuffer)
       } else {
         return this.decode(blobOrArrayBufferOrAudioBuffer)
       }

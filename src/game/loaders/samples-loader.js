@@ -1,13 +1,15 @@
 import * as ProgressUtils   from 'bemuse/progress/utils'
 
 import _                    from 'lodash'
+import defaultKeysoundCache from 'bemuse/keysound-cache'
 import { EXTRA_FORMATTER }  from 'bemuse/progress/formatters'
 import { canPlay }          from 'bemuse/sampling-master'
 
 export class SamplesLoader {
-  constructor (assets, master) {
+  constructor (assets, master, { keysoundCache = defaultKeysoundCache } = { }) {
     this._assets = assets
     this._master = master
+    this._keysoundCache = keysoundCache
   }
   loadFiles (files, loadProgress, decodeProgress) {
     let onload    = ProgressUtils.fixed(files.length, loadProgress)
@@ -18,24 +20,36 @@ export class SamplesLoader {
         .then(arr => _(arr).filter().fromPairs().value())
   }
   _loadSample (name, onload, ondecode) {
-    return this._getFile(name).then(
-      file => file.read()
-        .tap(() => onload(name))
-        .then(buffer => this._decode(buffer))
-        .tap(() => ondecode(name))
-        .then(sample => [name, sample])
-        .catch(e => {
-          console.error('Unable to decode: ' + name, e)
-          return null
-        }),
-      (e) => {
-        console.error('Unable to read: ' + name, e)
-        return null
+    const audioBufferPromise = (() => {
+      if (this._keysoundCache.isCached(name)) {
+        return Promise.resolve(this._keysoundCache.get(name)).tap(() => {
+          onload(name)
+          ondecode(name)
+        })
+      } else {
+        return this._getFile(name).then(file => file.read()
+          .tap(() => {
+            onload(name)
+          })
+          .then((buffer) => this._decode(buffer))
+          .tap((audioBuffer) => {
+            this._keysoundCache.cache(name, audioBuffer)
+            ondecode(name)
+          })
+        )
       }
+    })()
+    return (audioBufferPromise
+      .then((audioBuffer) => this._master.sample(audioBuffer))
+      .then((sample) => [ name, sample ])
+      .catch((e) => {
+        console.error('Unable to load keysound: ' + name, e)
+        return null
+      })
     )
   }
   _decode (buffer) {
-    return this._master.decode(buffer).then(audioBuffer => this._master.sample(audioBuffer))
+    return this._master.decode(buffer)
   }
   _getFile (name) {
     return Promise.try(() => {

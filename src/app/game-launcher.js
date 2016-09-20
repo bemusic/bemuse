@@ -1,28 +1,24 @@
-import * as Analytics         from './analytics'
-import * as Options           from './entities/Options'
+import * as Analytics from './analytics'
+import * as Options from './entities/Options'
 
-import co                        from 'co'
-import invariant                 from 'invariant'
-import query                  from 'bemuse/utils/query'
-import screenfull                from 'screenfull'
+import co from 'co'
+import invariant from 'invariant'
+import query from 'bemuse/utils/query'
+import screenfull from 'screenfull'
 import BemusePackageResources from 'bemuse/resources/bemuse-package'
-import GameScene              from 'bemuse/game/game-scene'
-import LoadingScene           from 'bemuse/game/ui/LoadingScene.jsx'
-import React                     from 'react'
-import SCENE_MANAGER          from 'bemuse/scene-manager'
-import URLResource            from 'bemuse/resources/url'
+import GameScene from 'bemuse/game/game-scene'
+import LoadingScene from 'bemuse/game/ui/LoadingScene.jsx'
+import React from 'react'
+import SCENE_MANAGER from 'bemuse/scene-manager'
+import URLResource from 'bemuse/resources/url'
 import { shouldDisableFullScreen, isTitleDisplayMode } from 'bemuse/devtools/query-flags'
-import { MISSED }             from 'bemuse/game/judgments'
-import { getGrade }           from 'bemuse/rules/grade'
-import { unmuteAudio }        from 'bemuse/sampling-master'
+import { MISSED } from 'bemuse/game/judgments'
+import { getGrade } from 'bemuse/rules/grade'
+import { unmuteAudio } from 'bemuse/sampling-master'
 import { resolve as resolveUrl } from 'url'
 
-import createAutoVelocity     from './interactors/createAutoVelocity'
-import ResultScene            from './ui/ResultScene'
-
-// TODO: remove this dependency and use Options
-
-
+import createAutoVelocity from './interactors/createAutoVelocity'
+import ResultScene from './ui/ResultScene'
 
 if (module.hot) {
   module.hot.accept('bemuse/game/loaders/game-loader')
@@ -44,14 +40,16 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
     invariant(options, 'Options must be passed!')
 
     // initialize the loading specification
-    let loadSpec  = { }
+    let loadSpec = { }
+    loadSpec.songId = song.id
+
     if (song.resources) {
       loadSpec.assets = song.resources
-      loadSpec.bms    = yield song.resources.file(chart.file)
+      loadSpec.bms = yield song.resources.file(chart.file)
     } else {
-      let url         = server.url + '/' + song.path + '/' + encodeURIComponent(chart.file)
-      let assetsUrl   = resolveUrl(url, 'assets/')
-      loadSpec.bms    = new URLResource(url)
+      let url = server.url + '/' + song.path + '/' + encodeURIComponent(chart.file)
+      let assetsUrl = resolveUrl(url, 'assets/')
+      loadSpec.bms = new URLResource(url)
       loadSpec.assets = new BemusePackageResources(assetsUrl, {
         fallback: url,
         fallbackPattern: /\.(?:png|jpg|webm|mp4|m4v)/,
