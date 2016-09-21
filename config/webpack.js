@@ -1,10 +1,12 @@
-import webpack        from 'webpack'
-import ProgressPlugin from '../src/hacks/webpack-progress'
-import path           from './path'
 import * as Env       from './env'
-import { flowRight }  from 'lodash'
+
+import webpack        from 'webpack'
 import Gauge          from 'gauge'
+import { flowRight }  from 'lodash'
+
+import path           from './path'
 import webpackResolve from './webpackResolve'
+import ProgressPlugin from '../src/hacks/webpack-progress'
 
 function generateBaseConfig () {
   let config = {
@@ -31,6 +33,12 @@ function generateBaseConfig () {
     plugins: [
       new CompileProgressPlugin(),
       new ProgressPlugin(),
+      new webpack.DefinePlugin({
+        NODE_ENV: JSON.stringify(String(process.env.NODE_ENV))
+      }),
+      new webpack.ProvidePlugin({
+        BemuseLogger: 'bemuse/logger'
+      })
     ],
   }
 

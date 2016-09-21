@@ -1,11 +1,12 @@
-import { stringify } from 'qs'
-import { timegate } from 'bemuse/game/judgments'
-import variance from 'variance'
+import * as Options from './entities/Options'
+
 import mean from 'mean'
 import median from 'median'
-import { MISSED } from 'bemuse/game/judgments'
-import * as Options from './entities/Options'
+import variance from 'variance'
 import ObjectID from 'bson-objectid'
+import { timegate } from 'bemuse/game/judgments'
+import { MISSED } from 'bemuse/game/judgments'
+import { stringify } from 'qs'
 
 let ga = window.ga || function () { }
 const startTime = Date.now()
@@ -67,6 +68,11 @@ export function gameFinish (song, chart, gameState, gameMode) {
       'w5': stats.counts[MISSED]
     },
   })
+}
+
+export function recordGameLoadTime (gameLoadTimeMillis) {
+  console.log(`[Analytics] Game load time: ${gameLoadTimeMillis} ms`)
+  ga('send', 'timing', 'Game', 'load', gameLoadTimeMillis)
 }
 
 export function getDeltaStats (deltas) {

@@ -20,6 +20,8 @@ import { resolve as resolveUrl } from 'url'
 import createAutoVelocity from './interactors/createAutoVelocity'
 import ResultScene from './ui/ResultScene'
 
+const Log = BemuseLogger.forModule('game-launcher')
+
 if (module.hot) {
   module.hot.accept('bemuse/game/loaders/game-loader')
 }
@@ -97,6 +99,8 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
 
     do {
       // start loading the game
+      const loadStart = Date.now()
+      Log.info(`Loading game: ${describeChart(chart)}`)
       const GameLoader = require('bemuse/game/loaders/game-loader')
       let loader = GameLoader.load(loadSpec)
       let { tasks, promise } = loader
@@ -125,6 +129,10 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
       let controller = yield promise
       yield SCENE_MANAGER.display(new GameScene(controller.display))
       controller.start()
+
+      // send the timing data
+      const loadFinish = Date.now()
+      Analytics.recordGameLoadTime(loadFinish - loadStart)
 
       // listen to unload events
       const onUnload = () => { Analytics.gameQuit(song, chart, state) }
@@ -216,4 +224,9 @@ function replayGainFor (song) {
   const gain = parseFloat(song.replaygain)
   if (isNaN(gain)) return null
   return gain
+}
+
+function describeChart (chart) {
+  const { info } = chart
+  return `[${info.genre}] ${info.title} ／ ${info.artist}`
 }

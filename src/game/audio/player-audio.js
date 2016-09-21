@@ -1,5 +1,5 @@
-
 import _            from 'lodash'
+
 import WaveFactory  from './wave-factory'
 import { isBad }    from '../judgments'
 
@@ -73,7 +73,6 @@ export class PlayerAudio {
   _breakNote (note) {
     let instance = this._played.get(note)
     if (instance) {
-      console.log(instance)
       instance.stop()
     }
   }

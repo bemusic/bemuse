@@ -4,6 +4,7 @@
 // High-accuracy timer, optionally synchronized globally.
 
 import sync from 'timesynchro'
+const Log = BemuseLogger.forModule('timesynchro')
 
 let now
 let offset = 0
@@ -24,10 +25,10 @@ now.synchronize = function (server) {
   }
   function onFinish (err, result) {
     if (err) {
-      console.error('Cannot synchronize time!', err)
+      Log.error('Cannot synchronize time: ' + err)
     } else {
       onResult(result)
-      console.log('Synchronized. Offset = ' + offset)
+      Log.info('Synchronized time with global server! Offset = ' + offset)
     }
   }
 }
