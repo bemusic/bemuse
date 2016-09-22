@@ -4,7 +4,6 @@ import BMS from 'bms'
 import { fromBMSChart } from '../src/loader/BMSNotechartLoader'
 
 describe('Notechart', function () {
-
   function notechart (bms, options) {
     return fromBMSChart(BMS.Compiler.compile(bms).chart, options)
   }

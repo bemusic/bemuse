@@ -3,11 +3,8 @@ import NotechartLoader from '../src/loader'
 import { expect } from 'chai'
 
 describe('NotechartLoader', function () {
-
   describe('with BMS file', function () {
-
     it('should be able to read', function () {
-
       let loader = new NotechartLoader()
       let buffer = new Buffer(`#TITLE meow`)
 
@@ -18,9 +15,7 @@ describe('NotechartLoader', function () {
   })
 
   describe('with bmson file', function () {
-
     it('should be able to read', function () {
-
       let loader = new NotechartLoader()
       let data = {
         info: { title: 'Running Out' }
