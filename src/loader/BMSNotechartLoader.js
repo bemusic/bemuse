@@ -20,8 +20,18 @@ export function fromBMSChart (bms, playerOptions) {
     positioning,
     spacing,
     barLines: generateBarLinesFromBMS(notes, bms),
+    expertJudgmentWindow: getJudgmentWindowFromBMS(bms)
   }
   return new Notechart(data, playerOptions)
+}
+
+function getJudgmentWindowFromBMS (bms) {
+  // http://hitkey.nekokan.dyndns.info/diary1501.php
+  const rank = +bms.headers.get('rank') || 2
+  if (rank === 0) return [ 8, 24 ] // Very Hard
+  if (rank === 1) return [ 15, 30 ] // Hard
+  if (rank === 3) return [ 21, 60 ] // Easy
+  return [ 18, 40 ] // Normal
 }
 
 function generateBarLinesFromBMS (bmsNotes, bms) {

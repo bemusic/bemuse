@@ -28,6 +28,7 @@
     "nyc": "^5.6.0"
   },
   "dependencies": {
+    "bluebird": "^3.4.6",
     "bms": "^2.0.0",
     "bmson": "^3.0.0",
     "lodash": "^4.5.1"

@@ -1,8 +1,7 @@
-
-import BMS from 'bms'
-
 import _          from 'lodash'
 import invariant  from 'invariant'
+import BMS from 'bms'
+
 import GameEvent  from './data/GameEvent'
 import GameNote   from './data/GameNote'
 
@@ -20,6 +19,7 @@ export class Notechart {
       spacing,
       barLines,
       images,
+      expertJudgmentWindow
     } = data
 
     invariant(bmsNotes,     'Expected "data.notes"')
@@ -29,6 +29,8 @@ export class Notechart {
     invariant(positioning,  'Expected "data.positioning"')
     invariant(spacing,      'Expected "data.spacing"')
     invariant(barLines,     'Expected "data.barLines"')
+
+    this.expertJudgmentWindow = expertJudgmentWindow
 
     bmsNotes = this._preTransform(bmsNotes, playerOptions)
 

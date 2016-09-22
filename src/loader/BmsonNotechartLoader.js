@@ -1,6 +1,7 @@
-
 import * as bmson from 'bmson'
+
 import BMS        from 'bms'
+
 import Notechart  from '../'
 
 export function load (source, options) {
@@ -23,8 +24,18 @@ export function load (source, options) {
     images: { // HACK: Hardcoded here, probably should belong in bmson package
       eyecatch: data.info.eyecatch_image,
       background: data.info.back_image,
-    }
+    },
+    expertJudgmentWindow: getExpertJudgmentWindowForBmson(data)
   }
 
   return new Notechart(stuff, options)
+}
+
+function getExpertJudgmentWindowForBmson (data) {
+  const judgeRank = (() => {
+    if (!data.info) return 100
+    if (!data.info.judge_rank) return 100
+    return +data.info.judge_rank || 100
+  })() / 100
+  return [ 18 * judgeRank, 40 * judgeRank ]
 }
