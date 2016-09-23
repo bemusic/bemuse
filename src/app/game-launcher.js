@@ -201,6 +201,7 @@ function showResult (player, playerState, chart) {
         'maxCombo':   stats.maxCombo,
         'accuracy':   stats.accuracy,
         'totalCombo': stats.totalCombo,
+        'totalNotes': stats.totalNotes,
         'log':        stats.log,
         'deltas':     stats.deltas,
         'grade':      getGrade(stats),

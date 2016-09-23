@@ -21,7 +21,8 @@ export default class ResultScene extends React.Component {
     result: React.PropTypes.shape({
       grade: React.PropTypes.string,
       score: React.PropTypes.number,
-      deltas: React.PropTypes.array
+      deltas: React.PropTypes.array,
+      totalNotes: React.PropTypes.number,
     }),
     playMode: React.PropTypes.string,
     expertJudgmentWindow: React.PropTypes.string,
@@ -78,7 +79,7 @@ export default class ResultScene extends React.Component {
             deltas={this.props.result.deltas}
             meticulousWindow={this.props.expertJudgmentWindow[0] / 1000}
             preciseWindow={this.props.expertJudgmentWindow[1] / 1000}
-            noteCount={this.props.chart.noteCount}
+            noteCount={this.props.result.totalNotes}
           />
         </span>
         <SceneToolbar.Spacer />
