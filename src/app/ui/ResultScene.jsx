@@ -12,10 +12,23 @@ import FirstTimeTip     from './FirstTimeTip'
 import MusicChartInfo   from './MusicChartInfo'
 import MusicChartSelectorItem from './MusicChartSelectorItem'
 import RankingContainer from './RankingContainer'
+import ResultExpertInfo from './ResultExpertInfo'
 import ResultGrade      from './ResultGrade'
 import ResultTable      from './ResultTable'
 
-export default React.createClass({
+export default class ResultScene extends React.Component {
+  static propTypes = {
+    result: React.PropTypes.shape({
+      grade: React.PropTypes.string,
+      score: React.PropTypes.number,
+      deltas: React.PropTypes.array
+    }),
+    playMode: React.PropTypes.string,
+    expertJudgmentWindow: React.PropTypes.string,
+    chart: React.PropTypes.object,
+    onReplay: React.PropTypes.func,
+    onExit: React.PropTypes.func,
+  }
   render () {
     return <Scene className="ResultScene">
       <SceneHeading>
@@ -60,13 +73,21 @@ export default React.createClass({
         </div>
       </div>
       <SceneToolbar>
+        <span>
+          <ResultExpertInfo
+            deltas={this.props.result.deltas}
+            meticulousWindow={this.props.expertJudgmentWindow[0] / 1000}
+            preciseWindow={this.props.expertJudgmentWindow[1] / 1000}
+            noteCount={this.props.chart.noteCount}
+          />
+        </span>
         <SceneToolbar.Spacer />
         <a onClick={this.props.onExit} href="javascript://">
           Continue
         </a>
       </SceneToolbar>
     </Scene>
-  },
+  }
   getTweetLink () {
     let title = this.props.chart.info.title
     let subtitle = this.props.chart.info.subtitles[0] || ''
@@ -89,17 +110,15 @@ export default React.createClass({
     }
     let text = `Played:「 ${title}${subtitle} 」on #Bemuse (Score:${score} [${grade}])` + '\n' + `→ ${url}`
     return 'https://twitter.com/intent/tweet?related=bemusegame&text=' + encodeURIComponent(text)
-  },
-  onTweet (e) {
+  }
+  onTweet = (e) => {
     e.preventDefault()
     e.stopPropagation()
     Analytics.send('ResultScene', 'tweet')
     window.open(this.getTweetLink(), 'intent', 'width=550,height=420')
-  },
-  handleExit (e) {
+  }
+  handleExit = (e) => {
     this.props.onExit(e)
     Analytics.send('ResultScene', 'exit')
-  },
-  noop () {
-  },
-})
+  }
+}

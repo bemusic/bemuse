@@ -140,7 +140,9 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
 
       // wait for final game state
       const playResult = yield controller.promise
-      const state = playResult.state
+      const state = controller.state
+      const game = controller.game
+      const [ player ] = game.players
 
       // get player's state and save options
       let playerState = state.player(state.game.players[0])
@@ -150,7 +152,7 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
       window.removeEventListener('beforeunload', onUnload, false)
       if (state.finished) {
         Analytics.gameFinish(song, chart, state, gameMode)
-        const exitResult = yield showResult(playerState, chart)
+        const exitResult = yield showResult(player, playerState, chart)
         replay = exitResult.replay
       } else {
         Analytics.gameEscape(song, chart, state)
@@ -182,7 +184,7 @@ function findVideoUrl (song, assets) {
   })
 }
 
-function showResult (playerState, chart) {
+function showResult (player, playerState, chart) {
   return new Promise(resolve => {
     let stats     = playerState.stats
     let playMode  = playerState.player.options.scratch === 'off' ? 'KB' : 'BM'
@@ -201,8 +203,9 @@ function showResult (playerState, chart) {
         'deltas':     stats.deltas,
         'grade':      getGrade(stats),
       },
-      chart:    chart,
+      chart: chart,
       playMode: playMode,
+      expertJudgmentWindow: player.notechart.expertJudgmentWindow,
       onExit:   () => resolve({ replay: false }),
       onReplay: () => resolve({ replay: true }),
     }
