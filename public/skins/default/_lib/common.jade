@@ -87,31 +87,52 @@ mixin note-hints(modeObject)
           keyframe(t='0.18' alpha='0')
     - x = x + cur.xadvance
 
-mixin note-area(modeObject)
+mixin note-area-background(modeObject)
   sprite(image=modeObject.background x='0' y='0')
+
+mixin note-area(modeObject)
   sprite(image='NoteArea/Flash.png' x='1' y='442' blend='screen'
           alpha='1 - (p1_beat % 1)')
   group(x='1' mask='283x550+1+0')
     +notes(modeObject)
-  group(y='556')
-    +note-hints(modeObject)
   group(x='1' y='550')
     +explosions(modeObject.columns)
+
+mixin note-area-hints(modeObject)
+  group(y='556')
+    +note-hints(modeObject)
 
 mixin all-note-area
   group&attributes(attributes)
     #{'if'}(key='p1_scratch' value='left')
-      group: +note-area(mode.iidx_l)
+      group: +note-area-background(mode.iidx_l)
     #{'if'}(key='p1_scratch' value='right')
-      group: +note-area(mode.iidx_r)
+      group: +note-area-background(mode.iidx_r)
     #{'if'}(key='p1_scratch' value='off')
-      group: +note-area(mode.kb)
-    +press-start
-    group(y='400')
-      +judgments
-    group(y='440')
-      +judgment-deviations
-    sprite(image='NoteArea/Stripe.png' x='1' y='537' blend='screen')
+      group: +note-area-background(mode.kb)
+    group(x='0' mask='284x550+0+0')
+      group(x='0' y=('0-p1_lane_lift*'+area_height))
+        #{'if'}(key='p1_scratch' value='left')
+          group: +note-area(mode.iidx_l)
+        #{'if'}(key='p1_scratch' value='right')
+          group: +note-area(mode.iidx_r)
+        #{'if'}(key='p1_scratch' value='off')
+          group: +note-area(mode.kb)
+        +press-start
+        group(y='400')
+          +judgments
+        group(y='440')
+          +judgment-deviations
+        sprite(image='NoteArea/Stripe.png' x='1' y='537' blend='screen')
+        sprite(image='NoteArea/LaneCover.png' x='1' y=(area_height))
+      group(x='0' y=('p1_lane_press*'+area_height))
+        sprite(image='NoteArea/LaneCover.png' x='1' y=(-area_height))
+    #{'if'}(key='p1_scratch' value='left')
+      group: +note-area-hints(mode.iidx_l)
+    #{'if'}(key='p1_scratch' value='right')
+      group: +note-area-hints(mode.iidx_r)
+    #{'if'}(key='p1_scratch' value='off')
+      group: +note-area-hints(mode.kb)
 
 mixin press-start
   group(alpha='0.6 + ready*0.4')
