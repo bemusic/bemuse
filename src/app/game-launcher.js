@@ -67,6 +67,7 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
     const autoVelocity = createAutoVelocity({
       enabled: Options.isAutoVelocityEnabled(options),
       initialSpeed: +options['player.P1.speed'] || 1,
+      laneCover: Options.laneCover(options),
       desiredLeadTime: Options.leadTime(options),
       songBPM: chart.bpm.median
     })
@@ -81,7 +82,7 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
           autoplay: false,
           placement: options['player.P1.panel'],
           scratch: scratch,
-          laneCover: 0,
+          laneCover: Options.laneCover(options),
           input: {
             keyboard: keyboardMapping,
           },

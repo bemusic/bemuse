@@ -1,5 +1,6 @@
-import createAutoVelocity from './createAutoVelocity'
 import assert from 'power-assert'
+
+import createAutoVelocity from './createAutoVelocity'
 
 describe('createAutoVelocity', function () {
   describe('when disabled', function () {
@@ -36,6 +37,26 @@ describe('createAutoVelocity', function () {
         songBPM: 140
       })
       assert(autoVelocity.getInitialSpeed() === 1.8)
+    })
+    it('should also take into consideration the lane cover', () => {
+      const autoVelocity = createAutoVelocity({
+        enabled: true,
+        initialSpeed: 3.8,
+        desiredLeadTime: 1200,
+        songBPM: 140,
+        laneCover: 0.5
+      })
+      assert(autoVelocity.getInitialSpeed() === 0.9)
+    })
+    it('should also take into consideration the lane cover', () => {
+      const autoVelocity = createAutoVelocity({
+        enabled: true,
+        initialSpeed: 3.8,
+        desiredLeadTime: 1200,
+        songBPM: 140,
+        laneCover: -0.5
+      })
+      assert(autoVelocity.getInitialSpeed() === 0.9)
     })
     it('initial speed should be from song’s BPM [ANOTHER]', () => {
       const autoVelocity = createAutoVelocity({

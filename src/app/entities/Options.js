@@ -1,4 +1,3 @@
-
 import * as options from '../options'
 
 // Initializers
@@ -33,6 +32,9 @@ export const leadTime = (state) => {
   if (!parsed) return 2400
   if (parsed < 138) return 138
   return parsed
+}
+export const laneCover = (state) => {
+  return Math.min(50, Math.max(-50, Math.round(state['player.P1.lane-cover'] * 100))) / 100 || 0
 }
 
 // Utils
