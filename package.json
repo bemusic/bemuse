@@ -55,7 +55,7 @@
     "coveralls": "^2.11.9",
     "css-loader": "^0.23.1",
     "dotenv": "^2.0.0",
-    "eslint": "^2.8.0",
+    "eslint": "^3.6.0",
     "eslint-config-bemuse": "^4.0.2",
     "eslint-import-resolver-webpack": "^0.3.0",
     "eslint-plugin-import": "^1.8.1",
