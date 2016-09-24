@@ -1,12 +1,13 @@
+import * as Judgments from '../judgments'
 
 import _ from 'lodash'
-import * as Judgments from '../judgments'
 
 export class PlayerStats {
   constructor (notechart) {
     this.totalCombo = _(notechart.notes)
         .map(note => notechart.info(note).combos)
         .sum()
+    this.totalNotes = notechart.notes.length
     this.combo = 0
     this.maxCombo = 0
     this.rawSumJudgmentWeight = 0

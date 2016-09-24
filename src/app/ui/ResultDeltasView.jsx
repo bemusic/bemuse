@@ -1,13 +1,14 @@
-
 import './ResultDeltasView.scss'
-import React    from 'react'
-import _        from 'lodash'
-import variance from 'variance'
-import mean     from 'mean'
-import median   from 'median'
 
-import Panel        from 'bemuse/ui/Panel'
+import _ from 'lodash'
+import mean from 'mean'
+import median from 'median'
+import variance from 'variance'
+import Panel from 'bemuse/ui/Panel'
+import React from 'react'
 import { timegate } from 'bemuse/game/judgments'
+
+import getNonMissedDeltas from '../interactors/getNonMissedDeltas'
 
 const ms = delta => `${(delta * 1000).toFixed(1)} ms`
 
@@ -18,9 +19,12 @@ const group = deltas => (_(deltas)
 )
 
 export default React.createClass({
+  propTypes: {
+    deltas: React.PropTypes.array
+  },
   render () {
     const deltas = this.props.deltas
-    const nonMissDeltas = deltas.filter(delta => Math.abs(delta) < timegate(4))
+    const nonMissDeltas = getNonMissedDeltas(deltas)
     const offDeltas = deltas.filter(delta => timegate(1) <= Math.abs(delta))
     const earlyCount = offDeltas.filter(delta => delta < 0).length
     const lateCount = offDeltas.filter(delta => delta > 0).length

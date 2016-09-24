@@ -1,9 +1,8 @@
-
 import PIXI           from 'pixi.js'
 
-import SkinNode       from './lib/base'
-import Instance       from './lib/instance'
 import Expression     from '../expression'
+import Instance       from './lib/instance'
+import SkinNode       from './lib/base'
 
 function ChildManager (expr, child, poolSize) {
   return {
@@ -19,7 +18,6 @@ function ChildManager (expr, child, poolSize) {
       })
       function initPool () {
         var instance
-        console.log('init i' + poolSize)
         for (var i = 0; i < poolSize; i++) {
           instance = child.instantiate(context, subject.object)
           instance.detach()

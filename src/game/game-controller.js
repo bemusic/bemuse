@@ -34,6 +34,9 @@ export class GameController {
   get promise () {
     return this._promise
   }
+  get state () {
+    return this._state
+  }
 
   // Initializes the game components and kickstarts the game loop.
   start () {
@@ -59,11 +62,11 @@ export class GameController {
       if (e.keyCode === ESCAPE_KEY) {
         e.preventDefault()
         e.stopPropagation()
-        this._resolvePromise({ state: this._state, replay: false })
+        this._resolvePromise({ finished: false, replay: false })
       } else if (e.keyCode === F1_KEY) {
         e.preventDefault()
         e.stopPropagation()
-        this._resolvePromise({ state: this._state, replay: true })
+        this._resolvePromise({ finished: false, replay: true })
       }
     }
     window.addEventListener('keydown', onKeyDown, true)
@@ -116,7 +119,7 @@ export class GameController {
     this._audio.update(t,     this._state)
     this._display.update(t,   this._state)
     if (this._state.finished && this._resolvePromise) {
-      this._resolvePromise({ state: this._state })
+      this._resolvePromise({ finished: true })
       this._resolvePromise = null
     }
   }

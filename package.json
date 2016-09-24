@@ -114,7 +114,7 @@
     "audio-context": "^0.1.0",
     "baconjs": "^0.7.75",
     "bemuse-indexer": "^3.1.0",
-    "bemuse-notechart": "^1.0.11",
+    "bemuse-notechart": "^1.1.0",
     "bluebird": "^3.3.4",
     "bms": "^2.0.0",
     "bmson": "^3.0.0",

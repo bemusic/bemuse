@@ -1,4 +1,3 @@
-
 import NoteArea from './note-area'
 import { MISSED, breaksCombo } from '../judgments'
 
@@ -11,7 +10,9 @@ export class PlayerDisplay {
     this._stateful      = { }
     this._defaultData   = {
       placement: player.options.placement,
-      scratch:   player.options.scratch,
+      scratch: player.options.scratch,
+      lane_lift: Math.max(0, -player.options.laneCover),
+      lane_press: Math.max(0, player.options.laneCover),
     }
   }
   update (time, gameTime, playerState) {

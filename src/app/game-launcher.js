@@ -20,6 +20,8 @@ import { resolve as resolveUrl } from 'url'
 import createAutoVelocity from './interactors/createAutoVelocity'
 import ResultScene from './ui/ResultScene'
 
+const Log = BemuseLogger.forModule('game-launcher')
+
 if (module.hot) {
   module.hot.accept('bemuse/game/loaders/game-loader')
 }
@@ -65,6 +67,7 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
     const autoVelocity = createAutoVelocity({
       enabled: Options.isAutoVelocityEnabled(options),
       initialSpeed: +options['player.P1.speed'] || 1,
+      laneCover: Options.laneCover(options),
       desiredLeadTime: Options.leadTime(options),
       songBPM: chart.bpm.median
     })
@@ -79,6 +82,7 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
           autoplay: false,
           placement: options['player.P1.panel'],
           scratch: scratch,
+          laneCover: Options.laneCover(options),
           input: {
             keyboard: keyboardMapping,
           },
@@ -97,6 +101,8 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
 
     do {
       // start loading the game
+      const loadStart = Date.now()
+      Log.info(`Loading game: ${describeChart(chart)}`)
       const GameLoader = require('bemuse/game/loaders/game-loader')
       let loader = GameLoader.load(loadSpec)
       let { tasks, promise } = loader
@@ -126,13 +132,19 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
       yield SCENE_MANAGER.display(new GameScene(controller.display))
       controller.start()
 
+      // send the timing data
+      const loadFinish = Date.now()
+      Analytics.recordGameLoadTime(loadFinish - loadStart)
+
       // listen to unload events
       const onUnload = () => { Analytics.gameQuit(song, chart, state) }
       window.addEventListener('beforeunload', onUnload, false)
 
       // wait for final game state
       const playResult = yield controller.promise
-      const state = playResult.state
+      const state = controller.state
+      const game = controller.game
+      const [ player ] = game.players
 
       // get player's state and save options
       let playerState = state.player(state.game.players[0])
@@ -142,7 +154,7 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
       window.removeEventListener('beforeunload', onUnload, false)
       if (state.finished) {
         Analytics.gameFinish(song, chart, state, gameMode)
-        const exitResult = yield showResult(playerState, chart)
+        const exitResult = yield showResult(player, playerState, chart)
         replay = exitResult.replay
       } else {
         Analytics.gameEscape(song, chart, state)
@@ -174,7 +186,7 @@ function findVideoUrl (song, assets) {
   })
 }
 
-function showResult (playerState, chart) {
+function showResult (player, playerState, chart) {
   return new Promise(resolve => {
     let stats     = playerState.stats
     let playMode  = playerState.player.options.scratch === 'off' ? 'KB' : 'BM'
@@ -189,13 +201,15 @@ function showResult (playerState, chart) {
         'maxCombo':   stats.maxCombo,
         'accuracy':   stats.accuracy,
         'totalCombo': stats.totalCombo,
+        'totalNotes': stats.totalNotes,
         'log':        stats.log,
         'deltas':     stats.deltas,
         'grade':      getGrade(stats),
       },
-      chart:    chart,
+      chart: chart,
       playMode: playMode,
-      onExit:   () => resolve({ replay: false }),
+      lr2Timegate: player.notechart.expertJudgmentWindow,
+      onExit: () => resolve({ replay: false }),
       onReplay: () => resolve({ replay: true }),
     }
     SCENE_MANAGER.display(React.createElement(ResultScene, props)).done()
@@ -216,4 +230,9 @@ function replayGainFor (song) {
   const gain = parseFloat(song.replaygain)
   if (isNaN(gain)) return null
   return gain
+}
+
+function describeChart (chart) {
+  const { info } = chart
+  return `[${info.genre}] ${info.title} ／ ${info.artist}`
 }

@@ -1,7 +1,7 @@
-
-import { createIO } from 'impure'
 import * as options from '../options'
 import * as ReduxState from '../redux/ReduxState'
+
+import { createIO } from 'impure'
 
 export function loadInitialOptions () {
   return createIO(({ store }) => {
@@ -40,6 +40,10 @@ export function setSpeed (speed) {
 
 export function setLeadTime (leadTime) {
   return setOptions({ 'player.P1.lead-time': leadTime })
+}
+
+export function setLaneCover (laneCover) {
+  return setOptions({ 'player.P1.lane-cover': laneCover })
 }
 
 export function setScratch (position) {

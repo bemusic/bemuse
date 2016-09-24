@@ -1,13 +1,17 @@
-
+import * as Analytics   from '../analytics'
 import './ResultTable.scss'
+
+import ModalPopup       from 'bemuse/ui/ModalPopup'
 import React            from 'react'
 import RunningNumber    from 'bemuse/ui/RunningNumber'
-import ModalPopup       from 'bemuse/ui/ModalPopup'
-import ResultDeltasView from './ResultDeltasView'
-import * as Analytics   from '../analytics'
+
 import FirstTimeTip     from './FirstTimeTip'
+import ResultDeltasView from './ResultDeltasView'
 
 export default React.createClass({
+  propTypes: {
+    result: React.PropTypes.object
+  },
   getInitialState () {
     return { deltasModalVisible: false }
   },
@@ -40,7 +44,7 @@ export default React.createClass({
       </table>
       <table className="ResultTableのtable">
         <tbody>
-          <tr>
+          <tr title={`Total combos: ${result['totalCombo']}`}>
             <td><RunningNumber value={result['maxCombo']} /></td>
             <th>Max Combo</th>
           </tr>

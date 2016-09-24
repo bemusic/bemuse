@@ -28,6 +28,7 @@ export const DEFAULTS = {
 
   // Note speed
   'player.P1.speed':            '1.0',
+  'player.P1.lane-cover':       '0',
   'player.P1.lead-time':        '1685',
   'player.P1.auto-velocity':    '0',
 

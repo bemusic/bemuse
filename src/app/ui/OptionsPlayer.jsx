@@ -1,19 +1,19 @@
-
+import * as Options from '../entities/Options'
+import * as OptionsIO from '../io/OptionsIO'
 import './OptionsPlayer.scss'
-import React   from 'react'
-import pure    from 'recompose/pure'
-import compose from 'recompose/compose'
 
-import { withProps }         from 'recompose'
-import { connect }           from 'react-redux'
-import connectIO             from '../../impure-react/connectIO'
-import * as OptionsIO        from '../io/OptionsIO'
-import * as Options          from '../entities/Options'
+import compose from 'recompose/compose'
+import pure from 'recompose/pure'
+import React from 'react'
+import { connect } from 'react-redux'
+import { withProps } from 'recompose'
+
+import connectIO from '../../impure-react/connectIO'
+import OptionsButton from './OptionsButton'
+import OptionsCheckbox from './OptionsCheckbox'
+import OptionsInputField from './OptionsInputField'
 import OptionsPlayerSelector from './OptionsPlayerSelector'
-import OptionsButton         from './OptionsButton'
-import OptionsSpeed          from './OptionsSpeed'
-import OptionsInputField     from './OptionsInputField'
-import OptionsCheckbox       from './OptionsCheckbox'
+import OptionsSpeed from './OptionsSpeed'
 
 const SCRATCH_OPTIONS = [
   { value: 'left', label: 'Left', },
@@ -37,6 +37,7 @@ const enhance = compose(
     onSetScratch: () => (position) => OptionsIO.setScratch(position),
     onSetSpeed: () => (speed) => OptionsIO.setSpeed(speed),
     onSetLeadTime: () => (leadTime) => OptionsIO.setLeadTime(leadTime),
+    onSetLaneCover: () => (laneCover) => OptionsIO.setLaneCover(laneCover),
     onToggleBackgroundAnimationsEnabled: ({ options }) => () => (
       OptionsIO.setOptions({
         'system.bga.enabled': Options.toggleOption(options['system.bga.enabled'])
@@ -59,6 +60,7 @@ export const OptionsPlayer = React.createClass({
     onSetPanel: React.PropTypes.func,
     onSetScratch: React.PropTypes.func,
     onSetSpeed: React.PropTypes.func,
+    onSetLaneCover: React.PropTypes.func,
     onToggleBackgroundAnimationsEnabled: React.PropTypes.func,
     onToggleAutoVelocityEnabled: React.PropTypes.func,
     onSetLeadTime: React.PropTypes.func
@@ -71,8 +73,9 @@ export const OptionsPlayer = React.createClass({
       >
         <OptionsSpeed
           value={this.props.options['player.P1.speed']}
-          onChange={this.props.onSetSpeed} />
-        <div className="OptionsPlayerのspeedHint">
+          onChange={this.props.onSetSpeed}
+        />
+        <div className="OptionsPlayerのhelp">
           You can also change the speed in-game<br />using the Up and Down arrow keys.
         </div>
       </OptionsPlayer.Row>
@@ -86,7 +89,7 @@ export const OptionsPlayer = React.createClass({
           onChange={this.props.onSetLeadTime}
           style={{ width: '5em' }}
         />
-        <div className="OptionsPlayerのspeedHint">
+        <div className="OptionsPlayerのhelp">
           Speed will be automatically adjusted<br />to maintain a consistent note velocity.
         </div>
       </OptionsPlayer.Row>
@@ -95,14 +98,30 @@ export const OptionsPlayer = React.createClass({
         <OptionsPlayerSelector type="scratch"
           options={SCRATCH_OPTIONS}
           onSelect={this.props.onSetScratch}
-          value={this.props.scratch} />
+          value={this.props.scratch}
+        />
       </OptionsPlayer.Row>
 
       <OptionsPlayer.Row label="Panel">
         <OptionsPlayerSelector type="panel"
           options={PANEL_OPTIONS}
           onSelect={this.props.onSetPanel}
-          value={this.props.options['player.P1.panel']} />
+          value={this.props.options['player.P1.panel']}
+        />
+      </OptionsPlayer.Row>
+
+      <OptionsPlayer.Row label="Cover">
+        <OptionsLaneCoverInputField
+          value={Options.laneCover(this.props.options)}
+          onChange={this.props.onSetLaneCover}
+          style={{ width: '5em' }}
+        />
+        <div
+          className="OptionsPlayerのhelp"
+          title="Can be negative, in this case the play area is pulled up."
+        >
+          The amount of play area to hide from the top.
+        </div>
       </OptionsPlayer.Row>
 
       <OptionsPlayer.Row label="BGA">
@@ -146,6 +165,12 @@ const OptionsLeadTimeInputField = withProps({
   parse: str => parseInt(str, 10),
   stringify: value => String(value) + 'ms',
   validator: /^\d+(ms)?$/
+})(OptionsInputField)
+
+const OptionsLaneCoverInputField = withProps({
+  parse: str => parseInt(str, 10) / 100,
+  stringify: value => Math.round(value * 100 || 0) + '%',
+  validator: /^-?\d+(%)?$/
 })(OptionsInputField)
 
 export default enhance(OptionsPlayer)

@@ -10,6 +10,7 @@ export class Player {
       placement:   options.placement || 'center',
       scratch:     options.scratch || 'left',
       input:       options.input,
+      laneCover:  +options.laneCover || 0,
     }
   }
 

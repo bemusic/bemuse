@@ -21,10 +21,13 @@
   &のhint {
     color: #8b8685;
   }
-  &のspeedHint {
+  &のhelp {
     color: #8b8685;
     font-size: 0.9em;
     margin-top: 0.5ex;
+    &[title] {
+      cursor: help;
+    }
   }
   &のbuttons {
     margin-top: 1em;

@@ -30,6 +30,7 @@ export function main () {
       },
       md5: '12345670123456789abcdef89abemuse',
     },
+    lr2Timegate: [ 20, 40 ],
     onExit: () => alert('Exit!'),
     onReplay: () => alert('Replay!'),
     playMode: 'BM',
