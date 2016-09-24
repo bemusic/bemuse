@@ -3,21 +3,13 @@ import variance from 'variance'
 import React from 'react'
 import { createSelector, createStructuredSelector } from 'reselect'
 
-import getLR2Score from '../interactors/getLR2Score'
 import getNonMissedDeltas from '../interactors/getNonMissedDeltas'
 
 export default class ResultExpertInfo extends React.Component {
   static propTypes = {
-    deltas: React.PropTypes.array,
-    lr2Timegate: React.PropTypes.array,
-    noteCount: React.PropTypes.number
+    deltas: React.PropTypes.array
   }
   getStats = (() => {
-    const selectExpertScore = createSelector(
-      (props) => props.deltas,
-      (props) => props.lr2Timegate,
-      getLR2Score
-    )
     const selectNonMissedDeltas = createSelector(
       (props) => props.deltas,
       (deltas) => getNonMissedDeltas(deltas)
@@ -31,7 +23,6 @@ export default class ResultExpertInfo extends React.Component {
       (deltas) => Math.sqrt(variance(deltas))
     )
     const selectStats = createStructuredSelector({
-      expertScore: selectExpertScore,
       mean: selectMean,
       standardDeviation: selectStandardDeviation
     })
@@ -45,13 +36,6 @@ export default class ResultExpertInfo extends React.Component {
         title="Average and standard deviation of your keypresses."
       >
         {formatOffset(stats.mean)} ± {formatDuration(stats.standardDeviation)}ms
-      </span>
-      {' · '}
-      <span
-        style={{ cursor: 'help' }}
-        title="The score as judged by Lunatic Rave 2."
-      >
-        {stats.expertScore} / {this.props.noteCount * 2}
       </span>
     </span>
   }

@@ -75,11 +75,7 @@ export default class ResultScene extends React.Component {
       </div>
       <SceneToolbar>
         <span>
-          <ResultExpertInfo
-            deltas={this.props.result.deltas}
-            lr2Timegate={this.props.lr2Timegate}
-            noteCount={this.props.result.totalNotes}
-          />
+          <ResultExpertInfo deltas={this.props.result.deltas} />
         </span>
         <SceneToolbar.Spacer />
         <a onClick={this.props.onExit} href="javascript://">
