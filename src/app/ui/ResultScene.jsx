@@ -25,7 +25,7 @@ export default class ResultScene extends React.Component {
       totalNotes: React.PropTypes.number,
     }),
     playMode: React.PropTypes.string,
-    expertJudgmentWindow: React.PropTypes.string,
+    lr2Timegate: React.PropTypes.array,
     chart: React.PropTypes.object,
     onReplay: React.PropTypes.func,
     onExit: React.PropTypes.func,
@@ -77,8 +77,7 @@ export default class ResultScene extends React.Component {
         <span>
           <ResultExpertInfo
             deltas={this.props.result.deltas}
-            meticulousWindow={this.props.expertJudgmentWindow[0] / 1000}
-            preciseWindow={this.props.expertJudgmentWindow[1] / 1000}
+            lr2Timegate={this.props.lr2Timegate}
             noteCount={this.props.result.totalNotes}
           />
         </span>

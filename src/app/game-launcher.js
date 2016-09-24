@@ -208,8 +208,8 @@ function showResult (player, playerState, chart) {
       },
       chart: chart,
       playMode: playMode,
-      expertJudgmentWindow: player.notechart.expertJudgmentWindow,
-      onExit:   () => resolve({ replay: false }),
+      lr2Timegate: player.notechart.expertJudgmentWindow,
+      onExit: () => resolve({ replay: false }),
       onReplay: () => resolve({ replay: true }),
     }
     SCENE_MANAGER.display(React.createElement(ResultScene, props)).done()

@@ -29,7 +29,8 @@ function manualVelocity (initialSpeed) {
 }
 
 function autoVelocity ({ songBPM, desiredLeadTime, laneCover }) {
-  const nominalSpeedLeadTime = 60000 * 5 / songBPM * (1 - Math.abs(laneCover))
+  const visiblePortion = 1 - Math.abs(laneCover)
+  const nominalSpeedLeadTime = 60000 * 5 / songBPM * visiblePortion
   const initialSpeed = _.minBy(
     _.range(1, 999).map(x => x / 10),
     (speed) => Math.abs(desiredLeadTime - (nominalSpeedLeadTime / speed))

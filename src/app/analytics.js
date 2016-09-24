@@ -4,9 +4,11 @@ import mean from 'mean'
 import median from 'median'
 import variance from 'variance'
 import ObjectID from 'bson-objectid'
-import { timegate } from 'bemuse/game/judgments'
 import { MISSED } from 'bemuse/game/judgments'
 import { stringify } from 'qs'
+
+import getLR2Score from './interactors/getLR2Score'
+import getNonMissedDeltas from './interactors/getNonMissedDeltas'
 
 let ga = window.ga || function () { }
 const startTime = Date.now()
@@ -47,7 +49,9 @@ export function gameStart (song, chart, gameMode, options) {
 }
 
 export function gameFinish (song, chart, gameState, gameMode) {
-  const state = gameState.player(gameState.game.players[0])
+  const player = gameState.game.players[0]
+  const notechart = player.notechart
+  const state = gameState.player(player)
   const stats = state.stats
   send('song', 'finish', getSongTitle(song))
   send('game', 'finish', getLabel(chart), stats.score, {
@@ -58,8 +62,10 @@ export function gameFinish (song, chart, gameState, gameMode) {
     score: stats.score,
     maxCombo: stats.maxCombo,
     totalCombo: stats.totalCombo,
+    totalNotes: stats.totalNotes,
     accuracy: stats.accuracy,
     stats: getDeltaStats(stats.deltas),
+    lr2Score: getLR2Score(stats.deltas, notechart.expertJudgmentWindow),
     counts: {
       'w1': stats.counts['1'],
       'w2': stats.counts['2'],
@@ -76,7 +82,7 @@ export function recordGameLoadTime (gameLoadTimeMillis) {
 }
 
 export function getDeltaStats (deltas) {
-  const nonMissDeltas = deltas.filter(delta => Math.abs(delta) < timegate(4))
+  const nonMissDeltas = getNonMissedDeltas(deltas)
   return {
     sd: Math.sqrt(variance(nonMissDeltas)),
     mean: mean(nonMissDeltas),

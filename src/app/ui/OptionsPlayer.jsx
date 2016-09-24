@@ -1,19 +1,19 @@
-import * as Options          from '../entities/Options'
-import * as OptionsIO        from '../io/OptionsIO'
+import * as Options from '../entities/Options'
+import * as OptionsIO from '../io/OptionsIO'
 import './OptionsPlayer.scss'
 
 import compose from 'recompose/compose'
-import pure    from 'recompose/pure'
-import React   from 'react'
-import { connect }           from 'react-redux'
-import { withProps }         from 'recompose'
+import pure from 'recompose/pure'
+import React from 'react'
+import { connect } from 'react-redux'
+import { withProps } from 'recompose'
 
-import connectIO             from '../../impure-react/connectIO'
-import OptionsButton         from './OptionsButton'
-import OptionsCheckbox       from './OptionsCheckbox'
-import OptionsInputField     from './OptionsInputField'
+import connectIO from '../../impure-react/connectIO'
+import OptionsButton from './OptionsButton'
+import OptionsCheckbox from './OptionsCheckbox'
+import OptionsInputField from './OptionsInputField'
 import OptionsPlayerSelector from './OptionsPlayerSelector'
-import OptionsSpeed          from './OptionsSpeed'
+import OptionsSpeed from './OptionsSpeed'
 
 const SCRATCH_OPTIONS = [
   { value: 'left', label: 'Left', },
@@ -73,8 +73,9 @@ export const OptionsPlayer = React.createClass({
       >
         <OptionsSpeed
           value={this.props.options['player.P1.speed']}
-          onChange={this.props.onSetSpeed} />
-        <div className="OptionsPlayerのspeedHint">
+          onChange={this.props.onSetSpeed}
+        />
+        <div className="OptionsPlayerのhelp">
           You can also change the speed in-game<br />using the Up and Down arrow keys.
         </div>
       </OptionsPlayer.Row>
@@ -88,7 +89,7 @@ export const OptionsPlayer = React.createClass({
           onChange={this.props.onSetLeadTime}
           style={{ width: '5em' }}
         />
-        <div className="OptionsPlayerのspeedHint">
+        <div className="OptionsPlayerのhelp">
           Speed will be automatically adjusted<br />to maintain a consistent note velocity.
         </div>
       </OptionsPlayer.Row>
@@ -97,14 +98,16 @@ export const OptionsPlayer = React.createClass({
         <OptionsPlayerSelector type="scratch"
           options={SCRATCH_OPTIONS}
           onSelect={this.props.onSetScratch}
-          value={this.props.scratch} />
+          value={this.props.scratch}
+        />
       </OptionsPlayer.Row>
 
       <OptionsPlayer.Row label="Panel">
         <OptionsPlayerSelector type="panel"
           options={PANEL_OPTIONS}
           onSelect={this.props.onSetPanel}
-          value={this.props.options['player.P1.panel']} />
+          value={this.props.options['player.P1.panel']}
+        />
       </OptionsPlayer.Row>
 
       <OptionsPlayer.Row label="Cover">
@@ -113,7 +116,10 @@ export const OptionsPlayer = React.createClass({
           onChange={this.props.onSetLaneCover}
           style={{ width: '5em' }}
         />
-        <div className="OptionsPlayerのspeedHint">
+        <div
+          className="OptionsPlayerのhelp"
+          title="Can be negative, in this case the play area is pulled up."
+        >
           The amount of play area to hide from the top.
         </div>
       </OptionsPlayer.Row>
