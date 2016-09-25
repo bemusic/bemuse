@@ -66,6 +66,7 @@ export function gameFinish (song, chart, gameState, gameMode) {
     accuracy: stats.accuracy,
     stats: getDeltaStats(stats.deltas),
     lr2Score: getLR2Score(stats.deltas, notechart.expertJudgmentWindow),
+    laneCover: player.options.laneCover,
     counts: {
       'w1': stats.counts['1'],
       'w2': stats.counts['2'],
