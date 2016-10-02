@@ -1,24 +1,32 @@
-
+import * as Analytics   from '../analytics'
+import * as OptionsIO   from '../io/OptionsIO'
 import './TitleScene.scss'
 
 import $                from 'jquery'
+import version          from 'bemuse/utils/version'
+import HomePage         from 'bemuse/site/HomePage'
+import ModalPopup       from 'bemuse/ui/ModalPopup'
 import React            from 'react'
 import Scene            from 'bemuse/ui/Scene'
-import SceneToolbar     from 'bemuse/ui/SceneToolbar'
-import ModalPopup       from 'bemuse/ui/ModalPopup'
 import SCENE_MANAGER    from 'bemuse/scene-manager'
-import version          from 'bemuse/utils/version'
-import * as Analytics   from '../analytics'
-import ModeSelectScene  from './ModeSelectScene'
+import SceneToolbar     from 'bemuse/ui/SceneToolbar'
+import TipContainer     from 'bemuse/ui/TipContainer'
+import { connect }      from 'react-redux'
+import { compose }      from 'recompose'
+
+import connectIO        from '../../impure-react/connectIO'
 import AboutScene       from './AboutScene'
 import ChangelogPanel   from './ChangelogPanel'
-import { connect }      from 'react-redux'
-import connectIO        from '../../impure-react/connectIO'
-import { compose }      from 'recompose'
-import * as OptionsIO   from '../io/OptionsIO'
-import HomePage         from 'bemuse/site/HomePage'
-import TipContainer     from 'bemuse/ui/TipContainer'
 import FirstTimeTip     from './FirstTimeTip'
+import ModeSelectScene  from './ModeSelectScene'
+
+const HAS_PARENT = (() => {
+  try {
+    return window.parent !== window
+  } catch (e) {
+    return false
+  }
+})()
 
 const enhance = compose(
   connectIO({
@@ -43,6 +51,7 @@ export const TitleScene = React.createClass({
     }
   },
   render () {
+    const shouldShowHomepage = !HAS_PARENT
     return <Scene className="TitleScene">
       <div className="TitleSceneのimage"></div>
       <div className="TitleSceneのpage">
@@ -57,9 +66,7 @@ export const TitleScene = React.createClass({
             <a href="javascript://" onClick={this.enterGame}>Enter Game</a>
           </div>
         </div>
-        <div className="TitleSceneのpageContents">
-          <HomePage />
-        </div>
+        {shouldShowHomepage ? <div className="TitleSceneのpageContents"><HomePage /></div> : null}
       </div>
       <SceneToolbar>
         <a onClick={this.showAbout} href="javascript://">About</a>
