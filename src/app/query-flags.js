@@ -1,4 +1,3 @@
-
 import query from 'bemuse/utils/query'
 
 export function getMusicServer () {
@@ -11,4 +10,8 @@ export function getInitialGrepString () {
 
 export function getTimeSynchroServer () {
   return query.BEMUSE_TIMESYNCHRO_SERVER
+}
+
+export function getInitiallySelectedSong () {
+  return query.song
 }
