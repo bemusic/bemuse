@@ -156,7 +156,7 @@
     "test-bed": "^0.5.3",
     "throat": "^2.0.2",
     "timesynchro": "^1.0.1",
-    "updeep": "^0.16.0",
+    "updeep": "^1.0.0",
     "variance": "0.0.1",
     "whatwg-fetch": "^1.0.0"
   }
