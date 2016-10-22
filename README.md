@@ -1,4 +1,4 @@
-<h1 align="center"><img src="docs/images/logo.png" alt="Bemuse 〜beat☆music☆sequence〜" width="551" height="162" /></h1>
+<h1 align="center"><a href="https://bemuse.ninja/"><img src="docs/images/logo.png" alt="Bemuse 〜beat☆music☆sequence〜" width="551" height="162" /></a></h1>
 
 <h2 align="center">open-source web-based online rhythm game</h2>
 
@@ -67,6 +67,9 @@ It is recommended to play this game on Google Chrome.
 - __Adjustable turntable position.__ You can put turntable on the left or on the right (BMS mode only).
 
 - __Audio latency compensation.__ Some systems may have audio latency. Bemuse contains a calibration system to compensate for the audio latency.
+
+
+__Play now at https://bemuse.ninja/.__
 
 
 ## Technology
