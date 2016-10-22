@@ -27,6 +27,9 @@ export const isBackgroundAnimationsEnabled = (state) => (
 export const isAutoVelocityEnabled = (state) => (
   toggleOptionEnabled(state['player.P1.auto-velocity'])
 )
+export const getGauge = (state) => (
+  state['player.P1.gauge']
+)
 export const leadTime = (state) => {
   const parsed = parseInt(state['player.P1.lead-time'], 10)
   if (!parsed) return 2400

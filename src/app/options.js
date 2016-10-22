@@ -38,11 +38,8 @@ export const DEFAULTS = {
   // Panel placement (left, center, right)
   'player.P1.panel':            'center',
 
-  // Mirrors note
-  'player.P1.notes.mirror':     '0',
-
-  // Balances left-right hand usage
-  'player.P1.notes.balance':    '0',
+  // Gauge type (off, hope)
+  'player.P1.gauge':            'off',
 
   // Offsets
   'system.offset.audio-input':  '0',
