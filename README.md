@@ -24,26 +24,26 @@ It is recommended to play this game on Google Chrome.
 
 ![Music selection](docs/images/screenshots/music-select.jpg)
 
-- You can play __online songs__ which can be played instantly.
+- You can play __online songs__ instantly in your browser.
 
 - You can play __custom songs__ by dragging a folder containing BMS files into this screen. There are over 5,000 songs published in BMS format by the community worldwide. You can find them using [BMS Search](http://bmssearch.net/).
 
-- There is an __online internet ranking__ which you can compete with other players online.
+- There’s an __online internet ranking__ system. You can compete with other players and see your rank online.
 
-- It has an __insane tutorial.__ :P
+- It has an __insane tutorial.__
 
 
 ![Gameplay](docs/images/screenshots/gameplay-kbd.jpg)
 
 - __Keyboard mode__ (7-keys). Play along the music with your keyboard.
 
-- __Fully key-sounded.__ In Bemuse each note has its own sound. The song will be affected by your game play.
+- __Fully key-sounded.__ Each note has its own sound. The music will be affected by your game play.
 
-- Player together with friends with [__party mode__](https://www.youtube.com/watch?v=hiJzFRIhiiA) which helps starting the game at the exact same time.
+- Player together with friends using [__party mode.__](https://www.youtube.com/watch?v=hiJzFRIhiiA) It helps you start the game at the exact same time.
 
-- __Multiple difficulties.__ Each song has multiple difficulties to accommodate every player skill level!
+- __Multiple difficulties.__ Each song has multiple difficulties to accommodate every player skill levels.
 
-- __Adjustable speed.__ You can adjust the speed (spacing) of the notes to make it easy-to-sightread. This does not affect the speed of the song, which means lowering the speed causes notes to become more dense on-screen.
+- __Adjustable speed.__ You can adjust the speed (spacing) of the notes to make it easy-to-sightread. This does not affect the speed of the song; lowering the speed causes notes to become more dense on-screen.
 
 - [__Scoring and grading system.__](http://bemuse.readthedocs.io/en/latest/users/scoring-and-judgment.html) Master the song to get the S grade (score over 500000).
 
