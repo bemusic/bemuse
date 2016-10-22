@@ -22,7 +22,7 @@ It is recommended to play this game on Google Chrome.
 
 ## Quick Tour
 
-![Music selection](docs/screenshots/music-select.jpg)
+![Music selection](docs/images/screenshots/music-select.jpg)
 
 - You can play __online songs__ which can be played instantly.
 
@@ -33,7 +33,7 @@ It is recommended to play this game on Google Chrome.
 - It has an __insane tutorial.__ :P
 
 
-![Gameplay](docs/screenshots/gameplay-kbd.jpg)
+![Gameplay](docs/images/screenshots/gameplay-kbd.jpg)
 
 - __Keyboard mode__ (7-keys). Play along the music with your keyboard.
 
@@ -48,7 +48,7 @@ It is recommended to play this game on Google Chrome.
 - [__Scoring and grading system.__](http://bemuse.readthedocs.io/en/latest/users/scoring-and-judgment.html) Master the song to get the S grade (score over 500000).
 
 
-![Gameplay](docs/screenshots/gameplay-bms.jpg)
+![Gameplay](docs/images/screenshots/gameplay-bms.jpg)
 
 - __BMS mode__ (7-keys + turntable). You can play using an [IIDX controller](https://www.youtube.com/watch?v=EOgI37Myqvk) or [MIDI controller](https://www.facebook.com/bemusegame/videos/985712734835136/).
 
@@ -60,7 +60,7 @@ It is recommended to play this game on Google Chrome.
 
 
 
-![Options](docs/screenshots/options.jpg)
+![Options](docs/images/screenshots/options.jpg)
 
 - __Adjustable panel position.__ You can position the note panel on either side of the screen, or put it at the center.
 
