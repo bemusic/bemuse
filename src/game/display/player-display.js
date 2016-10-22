@@ -1,5 +1,6 @@
 import NoteArea from './note-area'
 import { MISSED, breaksCombo } from '../judgments'
+import { getGauge } from './Gauge'
 
 export class PlayerDisplay {
   constructor (player) {
@@ -14,6 +15,7 @@ export class PlayerDisplay {
       lane_lift: Math.max(0, -player.options.laneCover),
       lane_press: Math.max(0, player.options.laneCover),
     }
+    this._gauge         = getGauge(player.options.gauge)
   }
   update (time, gameTime, playerState) {
     let player   = this._player
@@ -24,6 +26,7 @@ export class PlayerDisplay {
     let spacing  = player.notechart.spacingAtBeat(beat)
     let data     = Object.assign({ }, this._defaultData)
     let push     = (key, value) => (data[key] || (data[key] = [])).push(value)
+    let gauge    = this._gauge
 
     this._currentSpeed += (playerState.speed - this._currentSpeed) / 3
     let speed    = this._currentSpeed * spacing
@@ -33,6 +36,7 @@ export class PlayerDisplay {
     updateBarLines()
     updateInput()
     updateJudgment()
+    updateGauge()
     updateExplode()
 
     data['speed'] = (playerState.speed.toFixed(1) + 'x')
@@ -125,17 +129,20 @@ export class PlayerDisplay {
         stateful[`judge_deviation_${deviationMode}`] = time
         stateful['combo'] = notification.combo
       }
-      const stats = playerState.stats
-      data['score'] = stats.score
-      const maxPossibleScore = stats.maxPossibleScore
-      const realHope = Math.max(0, maxPossibleScore - 500000) / 55555
-      const progress = stats.numJudgments / stats.totalCombo
-      const hope = Math.min(1, realHope * (progress * progress + 0.75 * progress + 0.25))
-      data['hope'] = hope
-      data['hope_a'] = hope > 0 ? 0 : (() => {
-        const realHopeA = Math.max(0, maxPossibleScore - 450000) / 50000
-        return Math.min(1, realHopeA * (0.67 * progress * progress + 0.33 * progress))
-      })()
+      data['score'] = playerState.stats.score
+    }
+
+    function updateGauge () {
+      gauge.update(playerState)
+      if (gauge.shouldDisplay()) {
+        if (!stateful['gauge_enter']) stateful['gauge_enter'] = time
+      } else {
+        if (stateful['gauge_enter']) {
+          if (!stateful['gauge_exit']) stateful['gauge_exit'] = time
+        }
+      }
+      data['gauge_primary'] = gauge.getPrimary()
+      data['gauge_secondary'] = gauge.getSecondary()
     }
 
     function updateExplode () {
