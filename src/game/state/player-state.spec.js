@@ -1,7 +1,8 @@
+import assert             from 'power-assert'
 
-import PlayerState        from './player-state'
-import Player             from '../player'
 import GameInput          from '../input'
+import Player             from '../player'
+import PlayerState        from './player-state'
 import { notechart }      from '../test-helpers'
 
 describe('PlayerState', function () {
@@ -176,6 +177,12 @@ describe('PlayerState', function () {
           expect(state.getNoteJudgment(note)).to.equal(1)
           expect(state.notifications.judgments[0].judgment).to.equal(1)
         })
+        it('gives 2 discrete judgments, one for down and one for up', function () {
+          advance(2, { 'p1_1': 1 })
+          assert(state.stats.numJudgments === 1)
+          advance(3, { 'p1_1': 0 })
+          assert(state.stats.numJudgments === 2)
+        })
         it('records delta once', function () {
           sinon.spy(state.stats, 'handleDelta')
           advance(2, { 'p1_1': 1 })
@@ -187,16 +194,22 @@ describe('PlayerState', function () {
           expect(state.getNoteStatus(note)).to.equal('judged')
           expect(state.getNoteJudgment(note)).to.equal(-1)
         })
+        it('gives 2 missed judgment for missed longnote', function () {
+          advance(2.3, { 'p1_1': 1 })
+          assert(state.stats.numJudgments === 2)
+        })
         it('judges long note lifted too fast as missed', function () {
           advance(2, { 'p1_1': 1 })
           advance(2.01, { 'p1_1': 0 })
           expect(state.getNoteStatus(note)).to.equal('judged')
           expect(state.getNoteJudgment(note)).to.equal(-1)
+          assert(state.stats.numJudgments === 2)
         })
         it('does not end automatically', function () {
           advance(2, { 'p1_1': 1 })
           advance(3.1, { 'p1_1': 1 })
           expect(state.getNoteStatus(note)).to.equal('active')
+          assert(state.stats.numJudgments === 1)
         })
         it('judges long note lifted too slow as missed', function () {
           advance(2, { 'p1_1': 1 })

@@ -1680,6 +1680,11 @@
           <group x="0" y="p1_lane_press*550">
             <sprite image="NoteArea/LaneCover.png" x="1" y="-550"></sprite>
           </group>
+          <group x="6" y="6">
+            <sprite image="Hope/HopeBar.png"></sprite>
+            <sprite image="Hope/HopeA.png" x="3" y="3" width="p1_hope_a*263" height="5"></sprite>
+            <sprite image="Hope/Hope.png" x="3" y="3" width="p1_hope*263" height="5"></sprite>
+          </group>
         </group>
         <if key="p1_scratch" value="left">
           <group>

@@ -125,7 +125,17 @@ export class PlayerDisplay {
         stateful[`judge_deviation_${deviationMode}`] = time
         stateful['combo'] = notification.combo
       }
-      data['score'] = playerState.stats.score
+      const stats = playerState.stats
+      data['score'] = stats.score
+      const maxPossibleScore = stats.maxPossibleScore
+      const realHope = Math.max(0, maxPossibleScore - 500000) / 55555
+      const progress = stats.numJudgments / stats.totalCombo
+      const hope = Math.min(1, realHope * (progress * progress + 0.75 * progress + 0.25))
+      data['hope'] = hope
+      data['hope_a'] = hope > 0 ? 0 : (() => {
+        const realHopeA = Math.max(0, maxPossibleScore - 450000) / 50000
+        return Math.min(1, realHopeA * (0.67 * progress * progress + 0.33 * progress))
+      })()
     }
 
     function updateExplode () {
