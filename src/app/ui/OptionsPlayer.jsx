@@ -47,6 +47,11 @@ const enhance = compose(
       OptionsIO.setOptions({
         'player.P1.auto-velocity': Options.toggleOption(options['player.P1.auto-velocity'])
       })
+    ),
+    onToggleGauge: ({ options }) => () => (
+      OptionsIO.setOptions({
+        'player.P1.gauge': Options.toggleGauge(options['player.P1.gauge'])
+      })
     )
   }),
   pure
@@ -63,6 +68,7 @@ export const OptionsPlayer = React.createClass({
     onSetLaneCover: React.PropTypes.func,
     onToggleBackgroundAnimationsEnabled: React.PropTypes.func,
     onToggleAutoVelocityEnabled: React.PropTypes.func,
+    onToggleGauge: React.PropTypes.func,
     onSetLeadTime: React.PropTypes.func
   },
   render () {
@@ -139,6 +145,15 @@ export const OptionsPlayer = React.createClass({
           onToggle={this.props.onToggleAutoVelocityEnabled}
         >
           Maintain absolute note velocity <span className="OptionsPlayerのhint">(advanced)</span>
+        </OptionsCheckbox>
+      </OptionsPlayer.Row>
+
+      <OptionsPlayer.Row label="Gauge">
+        <OptionsCheckbox
+          checked={Options.isGaugeEnabled(this.props.options)}
+          onToggle={this.props.onToggleGauge}
+        >
+          Enable score gauge <span className="OptionsPlayerのhint">(experimental)</span>
         </OptionsCheckbox>
       </OptionsPlayer.Row>
 

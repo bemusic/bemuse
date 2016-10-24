@@ -30,6 +30,12 @@ export const isAutoVelocityEnabled = (state) => (
 export const getGauge = (state) => (
   state['player.P1.gauge']
 )
+export const isGaugeEnabled = (state) => (
+  getGauge(state) !== 'off'
+)
+export const toggleGauge = (gauge) => (
+  gauge === 'off' ? 'hope' : 'off'
+)
 export const leadTime = (state) => {
   const parsed = parseInt(state['player.P1.lead-time'], 10)
   if (!parsed) return 2400
