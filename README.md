@@ -15,10 +15,15 @@
 </p>
 
 __Bemuse__ is an open-source, online, web-based rhythm game.
-It plays songs in [BMS format](https://www.youtube.com/watch?v=Guv1vRAKanY).
+It plays songs in BMS format (See: [Introduction to BMS](https://www.youtube.com/watch?v=Guv1vRAKanY)).
 
 It is recommended to play this game on Google Chrome.
 
+## Video Demo
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=EOgI37Myqvk"><img src="http://i.imgur.com/3sVRyGm.jpg" alt="Video Demo" width="754" /></a>
+</p>
 
 ## Quick Tour
 
@@ -104,6 +109,7 @@ npm start
 ```
 
 Note: Online ranking features are not available.
+
 
 
 ## License
