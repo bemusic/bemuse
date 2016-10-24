@@ -53,7 +53,7 @@
     "codecov": "^1.0.1",
     "connect": "^3.3.3",
     "coveralls": "^2.11.9",
-    "css-loader": "^0.23.1",
+    "css-loader": "^0.25.0",
     "dotenv": "^2.0.0",
     "eslint": "^2.8.0",
     "eslint-config-bemuse": "^4.0.2",
