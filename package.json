@@ -57,7 +57,7 @@
     "dotenv": "^2.0.0",
     "eslint": "^2.8.0",
     "eslint-config-bemuse": "^4.0.2",
-    "eslint-import-resolver-webpack": "^0.3.0",
+    "eslint-import-resolver-webpack": "^0.5.0",
     "eslint-plugin-import": "^1.8.1",
     "eslint-plugin-promise": "^1.1.0",
     "eslint-plugin-react": "^5.2.1",
