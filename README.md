@@ -1,47 +1,115 @@
-<h1 align="center">Bemuse</h1>
+<h1 align="center"><a href="https://bemuse.ninja/"><img src="docs/images/logo.png" alt="Bemuse 〜beat☆music☆sequence〜" width="551" height="162" /></a></h1>
 
-<h3 align="center">~BEAT☆MUSIC☆SEQUENCE~</h3>
-
-<h3 align="center"><em>web-based BMS simulator of the future</em></h3>
+<h2 align="center">open-source web-based online rhythm game</h2>
 
 <p align="center">
-  <a href="https://waffle.io/bemusic/bemuse"><img src="http://img.shields.io/badge/wow%20much-waffle-green.svg?style=flat" alt="Waffles"></a>
   <a href="https://travis-ci.org/bemusic/bemuse"><img src="https://img.shields.io/travis/bemusic/bemuse.svg?style=flat" alt="Travis CI"></a>
   <a href="https://circleci.com/gh/bemusic/bemuse"><img src="https://img.shields.io/circleci/project/bemusic/bemuse/master.svg?style=flat" alt="CircleCI"></a>
   <a href="https://codeclimate.com/github/bemusic/bemuse"><img src="https://img.shields.io/codeclimate/github/bemusic/bemuse.svg?style=flat" alt="Code Climate"></a>
-  <a href="https://coveralls.io/r/bemusic/bemuse"><img src="https://img.shields.io/coveralls/bemusic/bemuse.svg?style=flat" alt="Coveralls"></a>
-  <a href="https://gitter.im/bemusic/bemuse"><img src="https://img.shields.io/badge/gitter-join%20chat-green.svg?style=flat" alt="Gitter"></a>
+  <a href="https://codecov.io/gh/bemusic/bemuse"><img src="https://codecov.io/gh/bemusic/bemuse/branch/master/graph/badge.svg" alt="Codecov" /></a>
+  <a href="https://twitter.com/bemusegame"><img src="https://img.shields.io/badge/twitter-@bemusegame-blue.svg" alt="twitter" /></a>
   <br>
   <a href="http://bemuse.rtfd.org/"><img src="https://img.shields.io/badge/read%20the-docs-brightgreen.svg?style=flat" alt="RTFD"></a>
   <a href="https://david-dm.org/bemusic/bemuse" title="Dependency status"><img src="https://david-dm.org/bemusic/bemuse.svg" alt="david-dm Dependency Status"></a>
   <a href="https://david-dm.org/bemusic/bemuse#info=devDependencies" title="devDependency status"><img src="https://david-dm.org/bemusic/bemuse/dev-status.svg" alt="david-dm Development Depedency Status"></a>
 </p>
 
----
+__Bemuse__ is an open-source, online, web-based rhythm game.
+It plays songs in BMS format (See: [Introduction to BMS](https://www.youtube.com/watch?v=Guv1vRAKanY)).
 
-Free and open-source web-based BMS simulator, built with the future's web technology.
-Play on your computer or on your iPad.
+It is recommended to play this game on Google Chrome.
 
-## Features
+## Video Demo
 
-* Online play
-  * comes with some [default selection of songs](https://github.com/bemusic/music).
-  * people can host song collections on their own music servers too.
-* Offline play
-  * downloaded simfiles can be played later offline.
-  * can also play simfiles on your computer (by hosting a music server on your local host).
-* Game modes:
-  * 7-keys + Scratch
-  * 7-keys
-* Online start time synchronization — play together with friends.
-* Fully supports keysounds.
-* Supports `#LNTYPE 1` and `#LNOBJ`.
-* Play on PC (using keyboard or gamepad) or on iPad.
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=EOgI37Myqvk"><img src="http://i.imgur.com/3sVRyGm.jpg" alt="Video Demo" width="754" /></a>
+</p>
+
+## Quick Tour
+
+![Music selection](docs/images/screenshots/music-select.jpg)
+
+- You can play __online songs__ instantly in your browser.
+
+- You can play __custom songs__ by dragging a folder containing BMS files into this screen. There are over 5,000 songs published in BMS format by the community worldwide. You can find them using [BMS Search](http://bmssearch.net/).
+
+- There’s an __online internet ranking__ system. You can compete with other players and see your rank online.
+
+- It has an __insane tutorial.__
+
+
+![Gameplay](docs/images/screenshots/gameplay-kbd.jpg)
+
+- __Keyboard mode__ (7-keys). Play along the music with your keyboard.
+
+- __Fully key-sounded.__ Each note has its own sound. The music will be affected by your game play.
+
+- Player together with friends using [__party mode.__](https://www.youtube.com/watch?v=hiJzFRIhiiA) It helps you start the game at the exact same time.
+
+- __Multiple difficulties.__ Each song has multiple difficulties to accommodate every player skill levels.
+
+- __Adjustable speed.__ You can adjust the speed (spacing) of the notes to make it easy-to-sightread. This does not affect the speed of the song; lowering the speed causes notes to become more dense on-screen.
+
+- [__Scoring and grading system.__](http://bemuse.readthedocs.io/en/latest/users/scoring-and-judgment.html) Master the song to get the S grade (score over 500000).
+
+
+![Gameplay](docs/images/screenshots/gameplay-bms.jpg)
+
+- __BMS mode__ (7-keys + turntable). You can play using an [IIDX controller](https://www.youtube.com/watch?v=EOgI37Myqvk) or [MIDI controller](https://www.facebook.com/bemusegame/videos/985712734835136/).
+
+- __HD video support.__ Some songs will have a background animation in high-definition (720p).
+
+- __Adjustable play area size.__ If the gameplay area is too long, you can adjust the cover it to make the play area more easy-to-sightread.
+
+- __Early/Late indicator.__ Bemuse will tell you if you press the note too early or too late.
+
+
+
+![Options](docs/images/screenshots/options.jpg)
+
+- __Adjustable panel position.__ You can position the note panel on either side of the screen, or put it at the center.
+
+- __Adjustable turntable position.__ You can put turntable on the left or on the right (BMS mode only).
+
+- __Audio latency compensation.__ Some systems may have audio latency. Bemuse contains a calibration system to compensate for the audio latency.
+
+
+__Play now at https://bemuse.ninja/.__
+
+
+## Technology
+
+- The web application is powered by __[React](https://facebook.github.io/react/) and [Redux](http://redux.js.org/).__
+
+- The game engine is powered by __[PixiJS](http://www.pixijs.com/).__
+
 
 
 ## Development
 
-See the [Developer's Documentation](http://bemuse.readthedocs.org/en/latest/developers/README.html).
+Install [Node.js](https://nodejs.org/en/) and [Yarn](https://github.com/yarnpkg).
+
+```
+# Create a folder for Bemuse
+mkdir Bemuse
+cd Bemuse
+
+# Clone Bemuse and music server (warning, very large repo!!)
+git clone git@github.com:bemusic/bemuse.git
+git clone git@github.com:bemusic/music.git
+
+# Enter the main repository
+cd bemuse
+
+# Install the dependencies
+yarn
+
+# Start development server
+npm start
+```
+
+Note: Online ranking features are not available.
+
 
 
 ## License
