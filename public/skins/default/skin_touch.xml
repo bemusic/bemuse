@@ -1689,7 +1689,8 @@
             </animation>
             <animation on="p1_gauge_enter">
               <keyframe t="0" y="-20"></keyframe>
-              <keyframe t="0.5" y="6" ease="quadOut"></keyframe>
+              <keyframe t="0.5" y="-20" ease="quadOut"></keyframe>
+              <keyframe t="1" y="6" ease="quadOut"></keyframe>
             </animation>
             <animation on="p1_gauge_exit">
               <keyframe t="0" y="6"></keyframe>
