@@ -77,7 +77,7 @@
     "jade-loader": "^0.8.0",
     "js-yaml": "^3.5.5",
     "json-loader": "^0.5.2",
-    "karma": "^0.13.19",
+    "karma": "^1.1.0",
     "karma-chrome-launcher": "^1.0.1",
     "karma-coverage": "^1.0.0",
     "karma-firefox-launcher": "^1.0.0",
