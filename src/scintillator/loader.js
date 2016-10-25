@@ -2,10 +2,10 @@
 import debug from 'debug/browser'
 let log = debug('scintillator:loader')
 
-import $    from 'jquery'
-import url  from 'url'
-import co   from 'co'
-import PIXI from 'pixi.js'
+import $         from 'jquery'
+import url       from 'url'
+import co        from 'co'
+import * as PIXI from 'pixi.js'
 import { PERCENTAGE_FORMATTER } from 'bemuse/progress/formatters'
 
 import Resources  from './resources'

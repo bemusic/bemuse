@@ -1,8 +1,8 @@
 
-import PIXI     from 'pixi.js'
+import * as PIXI  from 'pixi.js'
 
-import SkinNode from '../lib/base'
-import Instance from '../lib/instance'
+import SkinNode   from '../lib/base'
+import Instance   from '../lib/instance'
 
 import Expression from '../../expression'
 import Animation  from './animation'

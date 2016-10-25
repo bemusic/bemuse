@@ -1,5 +1,5 @@
 
-import PIXI from 'pixi.js'
+import * as PIXI from 'pixi.js'
 
 export function parseFrame (text) {
   let m = text.match(/^(\d+)x(\d+)\+(\d+)\+(\d+)$/)

@@ -1,5 +1,5 @@
 
-import PIXI from 'pixi.js'
+import * as PIXI from 'pixi.js'
 
 function createRenderer (w, h) {
   hackPIXIToForceNewBlendModes()
