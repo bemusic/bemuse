@@ -2,6 +2,9 @@ import * as Judgments from '../judgments'
 
 import _ from 'lodash'
 
+const getAccuracyScore = (accuracy) => Math.floor(accuracy * 500000)
+const getComboScore = (sum, total) => Math.floor(sum * 55555 / total)
+
 export class PlayerStats {
   constructor (notechart) {
     this.totalCombo = _(notechart.notes)
@@ -26,10 +29,10 @@ export class PlayerStats {
     //#endregion
   }
   get accuracyScore () {
-    return Math.floor(this.accuracy * 500000)
+    return getAccuracyScore(this.accuracy)
   }
   get comboScore () {
-    return Math.floor(this.rawSumComboScore * 55555 / this.rawTotalComboScore)
+    return getComboScore(this.rawSumComboScore, this.rawTotalComboScore)
   }
   get maxPossibleScore () {
     return this.maxPossibleAccuracyScore + this.maxPossibleComboScore
@@ -38,13 +41,13 @@ export class PlayerStats {
     const remainingJudgments = this.totalCombo - this.numJudgments
     const maxPossibleRawWeight = this.rawSumJudgmentWeight + Judgments.weight(1) * remainingJudgments
     const maxPossibleAccuracy = maxPossibleRawWeight / (Judgments.weight(1) * this.totalCombo)
-    return Math.floor(maxPossibleAccuracy * 500000)
+    return getAccuracyScore(maxPossibleAccuracy)
   }
   get maxPossibleComboScore () {
     const maxPossibleRawComboScore = (
       this.rawSumComboScore + this._remainingMaxPossibleRawComboScore
     )
-    return Math.floor(maxPossibleRawComboScore * 55555 / this.rawTotalComboScore)
+    return getComboScore(maxPossibleRawComboScore, this.rawTotalComboScore)
   }
   get accuracy () {
     return this.rawSumJudgmentWeight / (Judgments.weight(1) * this.totalCombo)
