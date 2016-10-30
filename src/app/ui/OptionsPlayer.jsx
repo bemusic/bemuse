@@ -153,7 +153,7 @@ export const OptionsPlayer = React.createClass({
           checked={Options.isGaugeEnabled(this.props.options)}
           onToggle={this.props.onToggleGauge}
         >
-          Enable score gauge <span className="OptionsPlayerのhint">(experimental)</span>
+          Show expert gauge <span className="OptionsPlayerのhint">(experimental)</span>
         </OptionsCheckbox>
       </OptionsPlayer.Row>
 
