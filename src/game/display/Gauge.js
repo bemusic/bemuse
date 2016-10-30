@@ -28,16 +28,18 @@ function hopeGauge () {
   return {
     update (playerState) {
       const stats = playerState.stats
-      const maxPossibleScore = stats.maxPossibleScore
-      const realHope = Math.max(0, maxPossibleScore - 500000) / 55555
       const progress = stats.numJudgments / stats.totalCombo
-      const hopeS = Math.min(1, realHope * (progress * progress + 0.75 * progress + 0.25))
+      const getHope = (min, max1, max2) => {
+        const max = max1 + (max2 - max1) * progress
+        const maxPossibleScore = stats.maxPossibleScore
+        return Math.max(0, (maxPossibleScore - min) / (max - min))
+      }
+      const hopeS = Math.min(1, getHope(500000, 555555, 510000) * 0.5)
       primary = hopeS
       if (hopeS > 0) {
         secondary = 0
       } else {
-        const realHopeA = Math.max(0, maxPossibleScore - 450000) / 50000
-        const hopeA = Math.min(1, realHopeA * (0.67 * progress * progress + 0.33 * progress))
+        const hopeA = getHope(450000, 500000, 500000)
         secondary = hopeA
       }
     },
