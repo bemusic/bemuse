@@ -20,6 +20,22 @@ export function loadInitialOptions () {
   })
 }
 
+export function updateOptions (updater) {
+  return createIO(({ store }) => {
+    const currentOptions = store.getState().options
+    const nextOptions = updater(currentOptions)
+    const changes = { }
+    console.log(nextOptions)
+    for (const key of Object.keys(currentOptions)) {
+      if (nextOptions[key] !== currentOptions[key]) {
+        changes[key] = nextOptions[key]
+      }
+    }
+    console.log(changes)
+    return options.setOptions(changes)
+  })
+}
+
 export function setOptions (changes) {
   return createIO(() => {
     options.setOptions(changes)
@@ -42,6 +58,7 @@ export function setLeadTime (leadTime) {
   return setOptions({ 'player.P1.lead-time': leadTime })
 }
 
+// LEGACY LAND
 export function setLaneCover (laneCover) {
   return setOptions({ 'player.P1.lane-cover': laneCover })
 }

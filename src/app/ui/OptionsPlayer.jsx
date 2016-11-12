@@ -15,12 +15,12 @@ import OptionsSpeed from './OptionsSpeed'
 
 const SettingRow = compose(
   connect((state) => ({ options: state.options })),
-  connectIO({ onRunIO: () => (io) => io }),
+  connectIO({ onUpdateOptions: () => (updater) => OptionsIO.updateOptions(updater) }),
 )((props) => {
   const { label, isVisible, help, renderControl } = props // user-supplied
-  const { options, onRunIO } = props // from higher-order component
+  const { options, onUpdateOptions } = props // from higher-order component
   const visible = isVisible ? isVisible(options) : true
-  const control = renderControl(options, onRunIO)
+  const control = renderControl(options, onUpdateOptions)
   return (
     <OptionsPlayer.Row label={label} hidden={!visible}>
       {control}
@@ -38,10 +38,10 @@ export const OptionsPlayer = React.createClass({
       <SettingRow
         label="Speed"
         isVisible={(options) => !Options.isAutoVelocityEnabled(options)}
-        renderControl={(options, onRunIO) => (
+        renderControl={(options, onUpdateOptions) => (
           <OptionsSpeed
-            value={options['player.P1.speed']}
-            onChange={(speed) => onRunIO(OptionsIO.setSpeed(speed))}
+            value={Options.speed(options)}
+            onChange={(speed) => onUpdateOptions(Options.changeSpeed(speed))}
           />
         )}
         help={<span>
@@ -52,13 +52,13 @@ export const OptionsPlayer = React.createClass({
       <SettingRow
         label="LeadTime"
         isVisible={(options) => Options.isAutoVelocityEnabled(options)}
-        renderControl={(options, onRunIO) => (
+        renderControl={(options, onUpdateOptions) => (
           <OptionsInputField
             parse={str => parseInt(str, 10)}
             stringify={value => String(value) + 'ms'}
             validator={/^\d+(ms)?$/}
             value={Options.leadTime(options)}
-            onChange={(leadTime) => onRunIO(OptionsIO.setLeadTime(leadTime))}
+            onChange={(leadTime) => onUpdateOptions(Options.changeLeadTime(leadTime))}
             style={{ width: '5em' }}
           />
         )}
@@ -69,43 +69,43 @@ export const OptionsPlayer = React.createClass({
 
       <SettingRow
         label="Scratch"
-        renderControl={(options, onRunIO) => (
+        renderControl={(options, onUpdateOptions) => (
           <OptionsPlayerSelector type="scratch"
             options={[
               { value: 'left', label: 'Left', },
               { value: 'right', label: 'Right', },
               { value: 'off', label: 'Disabled', },
             ]}
-            onSelect={(position) => onRunIO(OptionsIO.setScratch(position))}
             value={Options.scratchPosition(options)}
+            onSelect={(position) => onUpdateOptions(Options.changeScratchPosition(position))}
           />
         )}
       />
 
       <SettingRow
         label="Panel"
-        renderControl={(options, onRunIO) => (
+        renderControl={(options, onUpdateOptions) => (
           <OptionsPlayerSelector type="panel"
             options={[
               { value: 'left', label: 'Left', },
               { value: 'center', label: 'Center', },
               { value: 'right', label: 'Right', },
             ]}
-            onSelect={(value) => onRunIO(OptionsIO.setOptions({ 'player.P1.panel': value }))}
-            value={options['player.P1.panel']}
+            onSelect={(value) => onUpdateOptions(Options.changePanelPlacement(value))}
+            value={Options.panelPlacement(options)}
           />
         )}
       />
 
       <SettingRow
         label="Cover"
-        renderControl={(options, onRunIO) => (
+        renderControl={(options, onUpdateOptions) => (
           <OptionsInputField
             parse={str => parseInt(str, 10) / 100}
             stringify={value => Math.round(value * 100 || 0) + '%'}
             validator={/^-?\d+(%)?$/}
             value={Options.laneCover(options)}
-            onChange={(laneCover) => onRunIO(OptionsIO.setLaneCover(laneCover))}
+            onChange={(laneCover) => onUpdateOptions(Options.changeLaneCover(laneCover))}
             style={{ width: '5em' }}
           />
         )}
@@ -113,12 +113,10 @@ export const OptionsPlayer = React.createClass({
 
       <SettingRow
         label="BGA"
-        renderControl={(options, onRunIO) => (
+        renderControl={(options, onUpdateOptions) => (
           <OptionsCheckbox
             checked={Options.isBackgroundAnimationsEnabled(options)}
-            onToggle={() => onRunIO(OptionsIO.setOptions({
-              'system.bga.enabled': Options.toggleOption(options['system.bga.enabled'])
-            }))}
+            onToggle={() => onUpdateOptions(Options.toggleBackgroundAnimations)}
           >
             Enable background animations <span className="OptionsPlayerのhint">(720p, alpha)</span>
           </OptionsCheckbox>
@@ -127,12 +125,10 @@ export const OptionsPlayer = React.createClass({
 
       <SettingRow
         label="AutoVel"
-        renderControl={(options, onRunIO) => (
+        renderControl={(options, onUpdateOptions) => (
           <OptionsCheckbox
             checked={Options.isAutoVelocityEnabled(options)}
-            onToggle={() => onRunIO(OptionsIO.setOptions({
-              'player.P1.auto-velocity': Options.toggleOption(options['player.P1.auto-velocity'])
-            }))}
+            onToggle={() => onUpdateOptions(Options.toggleAutoVelocity)}
           >
             Maintain absolute note velocity <span className="OptionsPlayerのhint">(advanced)</span>
           </OptionsCheckbox>
@@ -141,12 +137,10 @@ export const OptionsPlayer = React.createClass({
 
       <SettingRow
         label="Gauge"
-        renderControl={(options, onRunIO) => (
+        renderControl={(options, onUpdateOptions) => (
           <OptionsCheckbox
             checked={Options.isGaugeEnabled(options)}
-            onToggle={() => onRunIO(OptionsIO.setOptions({
-              'player.P1.gauge': Options.toggleGauge(options['player.P1.gauge'])
-            }))}
+            onToggle={() => onUpdateOptions(Options.toggleGauge)}
           >
             Show expert gauge <span className="OptionsPlayerのhint">(experimental)</span>
           </OptionsCheckbox>
