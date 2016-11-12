@@ -1,8 +1,9 @@
+import * as Options from '../entities/Options'
+import * as GameLauncher from '../game-launcher'
+import * as ReduxState from '../redux/ReduxState'
+import * as OptionsIO from './OptionsIO'
 
 import { createIO } from 'impure'
-import * as ReduxState from '../redux/ReduxState'
-import * as GameLauncher from '../game-launcher'
-import * as OptionsIO from './OptionsIO'
 
 export function selectSong (song) {
   return createIO(({ store }) => {
@@ -31,8 +32,8 @@ export function launchGame (server, song, chart) {
       song,
       chart,
       options: store.getState().options,
-      saveSpeed: (speed) => { run(OptionsIO.setSpeed(speed)) },
-      saveLeadTime: (leadTime) => { run(OptionsIO.setLeadTime(leadTime)) }
+      saveSpeed: (speed) => { run(OptionsIO.updateOptions(Options.changeSpeed(speed))) },
+      saveLeadTime: (leadTime) => { run(OptionsIO.updateOptions(Options.changeLeadTime(leadTime))) }
     })).done()
   })
 }

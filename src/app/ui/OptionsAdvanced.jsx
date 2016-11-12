@@ -1,12 +1,13 @@
-
-import './OptionsAdvanced.scss'
-import React   from 'react'
-import pure    from 'recompose/pure'
-import compose from 'recompose/compose'
-
-import { connect }           from 'react-redux'
-import connectIO             from '../../impure-react/connectIO'
+import * as Options          from '../entities/Options'
 import * as OptionsIO        from '../io/OptionsIO'
+import './OptionsAdvanced.scss'
+
+import compose from 'recompose/compose'
+import pure    from 'recompose/pure'
+import React   from 'react'
+import { connect }           from 'react-redux'
+
+import connectIO             from '../../impure-react/connectIO'
 import OptionsButton         from './OptionsButton'
 import OptionsInputField     from './OptionsInputField'
 
@@ -15,7 +16,7 @@ const enhance = compose(
     options: state.options
   })),
   connectIO({
-    onSetOptions: () => (changes) => OptionsIO.setOptions(changes)
+    onUpdateOptions: () => (updater) => OptionsIO.updateOptions(updater)
   }),
   pure
 )
@@ -23,7 +24,7 @@ const enhance = compose(
 export const OptionsAdvanced = React.createClass({
   propTypes: {
     options: React.PropTypes.object,
-    onSetOptions: React.PropTypes.func
+    onUpdateOptions: React.PropTypes.func
   },
   stringifyLatency (latency) {
     return Math.round(latency) + 'ms'
@@ -39,7 +40,7 @@ export const OptionsAdvanced = React.createClass({
         <label>Latency</label>
         <div className="OptionsAdvancedのgroupItem">
           <OptionsInputField
-            value={+options['system.offset.audio-input']}
+            value={Options.audioInputLatency(options)}
             parse={this.parseLatency}
             stringify={this.stringifyLatency}
             validator={/^\d+(?:ms)?$/}
@@ -52,7 +53,7 @@ export const OptionsAdvanced = React.createClass({
     </div>
   },
   handleAudioInputLatencyChange (value) {
-    this.props.onSetOptions({ 'system.offset.audio-input': `${value}` })
+    this.props.onUpdateOptions(Options.changeAudioInputLatency(value))
   },
   handleCalibrateButtonClick () {
     let options = 'width=640,height=360'
@@ -63,6 +64,9 @@ export const OptionsAdvanced = React.createClass({
 export default enhance(OptionsAdvanced)
 
 const LatencyMessageListener = React.createClass({
+  propTypes: {
+    onLatency: React.PropTypes.func
+  },
   render () {
     return null
   },

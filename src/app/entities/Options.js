@@ -6,6 +6,12 @@ import u from 'updeep'
 export const initialState = options.DEFAULTS
 export const initWithDataFromStorage = (options) => ({ ...initialState, ...options })
 
+// Internal utils
+const toggleOptionEnabled = (value) => value === '1'
+const toggleOption = (value) => (
+  toggleOptionEnabled(value) ? '0' : '1'
+)
+
 // Key mapping
 export const getKeyMapping = (mode, key) => (state) => (
   state['input.P1.keyboard.' + mode + '.' + key]
@@ -73,7 +79,7 @@ export const isAutoVelocityEnabled = (state) => (
   toggleOptionEnabled(state['player.P1.auto-velocity'])
 )
 export const toggleAutoVelocity = u({
-  'system.bga.enabled': toggleOption
+  'player.P1.auto-velocity': toggleOption
 })
 
 // Gauge
@@ -97,6 +103,30 @@ export const keyboardMapping = (state) => {
   return mapping
 }
 
+// Feature acknowledgements
+export const hasAcknowledged = (featureKey) => (state) => (
+  state[`system.ack.${featureKey}`] !== '1'
+)
+export const acknowledge = (featureKey) => u({
+  [`system.ack.${featureKey}`]: '1'
+})
+
+// Audio-input latency
+export const audioInputLatency = (state) => (
+  +state['system.offset.audio-input']
+)
+export const changeAudioInputLatency = (latency) => u({
+  'system.offset.audio-input': `${latency}`
+})
+
+// Latest version
+export const lastSeenVersion = (state) => (
+  state['system.last-seen-version']
+)
+export const updateLastSeenVersion = (newVersion) => u({
+  'system.last-seen-version': newVersion
+})
+
 // Utils
 export const nextKeyToEdit = (editing, scratch) => {
   const keySet = (() => {
@@ -112,9 +142,3 @@ export const nextKeyToEdit = (editing, scratch) => {
   if (index < 0) return null
   return keySet[index + 1] || null
 }
-
-// Internal utils
-const toggleOptionEnabled = (value) => value === '1'
-const toggleOption = (value) => (
-  toggleOptionEnabled(value) ? '0' : '1'
-)

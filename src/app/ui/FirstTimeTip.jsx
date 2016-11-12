@@ -1,18 +1,21 @@
+import * as Options from '../entities/Options'
+import * as OptionsIO from '../io/OptionsIO'
+
 import React from 'react'
 import TipContainer from 'bemuse/ui/TipContainer'
 import { connect } from 'react-redux'
-import connectIO from '../../impure-react/connectIO'
 import { compose } from 'recompose'
-import * as OptionsIO from '../io/OptionsIO'
+
+import connectIO from '../../impure-react/connectIO'
 
 export const FirstTimeTip = compose(
   connectIO({
     onClick: ({ featureKey }) => () => (
-      OptionsIO.setOptions({ [`system.ack.${featureKey}`]: '1' })
+      OptionsIO.updateOptions(Options.acknowledge(featureKey))
     )
   }),
   connect((state, { featureKey }) => ({
-    tipVisible: state.options[`system.ack.${featureKey}`] !== '1'
+    tipVisible: Options.hasAcknowledged(featureKey)(state.options)
   }))
 )(({ onClick, ...props }) => (
   <span onClick={onClick}><TipContainer {...props} /></span>
