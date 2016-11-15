@@ -46,7 +46,8 @@ export class PlayerDisplay {
     data['stat_4'] = getCount(4)
     data['stat_missed'] = getCount(MISSED)
     data['stat_acc'] = getAccuracy()
-    data['bpm'] = Math.round(player.notechart.bpmAtBeat(beat))
+    const bpm = player.notechart.bpmAtBeat(beat)
+    data['bpm'] = bpm < 1 ? '' : Math.round(bpm)
 
     Object.assign(data, stateful)
     return data
