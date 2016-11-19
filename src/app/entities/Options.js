@@ -31,7 +31,7 @@ export const changeSpeed = (speed) => u({ 'player.P1.speed': speed })
 // Lead time
 export const leadTime = (state) => {
   const parsed = parseInt(state['player.P1.lead-time'], 10)
-  if (!parsed) return 2400
+  if (!parsed) return 1685
   if (parsed < 138) return 138
   return parsed
 }
@@ -105,7 +105,7 @@ export const keyboardMapping = (state) => {
 
 // Feature acknowledgements
 export const hasAcknowledged = (featureKey) => (state) => (
-  state[`system.ack.${featureKey}`] !== '1'
+  state[`system.ack.${featureKey}`] === '1'
 )
 export const acknowledge = (featureKey) => u({
   [`system.ack.${featureKey}`]: '1'

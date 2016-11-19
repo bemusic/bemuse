@@ -15,7 +15,7 @@ export const FirstTimeTip = compose(
     )
   }),
   connect((state, { featureKey }) => ({
-    tipVisible: Options.hasAcknowledged(featureKey)(state.options)
+    tipVisible: !Options.hasAcknowledged(featureKey)(state.options)
   }))
 )(({ onClick, ...props }) => (
   <span onClick={onClick}><TipContainer {...props} /></span>
