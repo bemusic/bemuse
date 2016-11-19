@@ -83,6 +83,7 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
           placement: options['player.P1.panel'],
           scratch: scratch,
           laneCover: Options.laneCover(options),
+          gauge: Options.getGauge(options),
           input: {
             keyboard: keyboardMapping,
           },

@@ -1,19 +1,20 @@
-
+import * as Analytics   from '../analytics'
+import * as Options     from '../entities/Options'
+import * as OptionsIO   from '../io/OptionsIO'
 import './ModeSelectScene.scss'
 
 import React            from 'react'
 import Scene            from 'bemuse/ui/Scene'
+import SCENE_MANAGER    from 'bemuse/scene-manager'
 import SceneHeading     from 'bemuse/ui/SceneHeading'
 import SceneToolbar     from 'bemuse/ui/SceneToolbar'
-import SCENE_MANAGER    from 'bemuse/scene-manager'
-import MusicSelectScene from './MusicSelectScene'
+
 import connectIO        from '../../impure-react/connectIO'
-import * as OptionsIO   from '../io/OptionsIO'
-import * as Analytics   from '../analytics'
+import MusicSelectScene from './MusicSelectScene'
 
 const enhance = connectIO({
   onSetMode: () => (mode) => (
-    OptionsIO.setMode(mode)
+    OptionsIO.updateOptions(Options.changePlayMode(mode))
   )
 })
 

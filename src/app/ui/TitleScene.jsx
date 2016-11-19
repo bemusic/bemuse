@@ -1,4 +1,5 @@
 import * as Analytics   from '../analytics'
+import * as Options     from '../entities/Options'
 import * as OptionsIO   from '../io/OptionsIO'
 import './TitleScene.scss'
 
@@ -31,11 +32,11 @@ const HAS_PARENT = (() => {
 const enhance = compose(
   connectIO({
     onMarkChangelogAsSeen: () => () => (
-      OptionsIO.setOptions({ 'system.last-seen-version': version })
+      OptionsIO.updateOptions(Options.updateLastSeenVersion(version))
     )
   }),
   connect((state) => ({
-    hasSeenChangelog: state.options['system.last-seen-version'] === version
+    hasSeenChangelog: Options.lastSeenVersion(state.options) === version
   })
 ))
 

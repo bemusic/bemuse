@@ -1,3 +1,0 @@
-customization "node" {
-    node_version = "5.0.0"
-}

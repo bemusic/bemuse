@@ -2,6 +2,9 @@ import * as Judgments from '../judgments'
 
 import _ from 'lodash'
 
+const getAccuracyScore = (accuracy) => Math.floor(accuracy * 500000)
+const getComboScore = (sum, total) => Math.floor(sum * 55555 / total)
+
 export class PlayerStats {
   constructor (notechart) {
     this.totalCombo = _(notechart.notes)
@@ -11,7 +14,8 @@ export class PlayerStats {
     this.combo = 0
     this.maxCombo = 0
     this.rawSumJudgmentWeight = 0
-    this.rawTotalComboScore = this._calculateRawTotalComboScore()
+    this.rawTotalComboScore = this._calculateRawTotalComboScore(this.totalCombo)
+    this._remainingMaxPossibleRawComboScore = this.rawTotalComboScore
     this.rawSumComboScore = 0
     this.counts = { [Judgments.MISSED]: 0, '1': 0, '2': 0, '3': 0, '4': 0, }
     this.numJudgments = 0
@@ -21,12 +25,29 @@ export class PlayerStats {
   }
   get score () {
     //#region score
-    let accuracyScore = Math.floor(
-          this.accuracy * 500000)
-    let comboScore = Math.floor(
-          this.rawSumComboScore * 55555 / this.rawTotalComboScore)
-    return accuracyScore + comboScore
+    return this.accuracyScore + this.comboScore
     //#endregion
+  }
+  get accuracyScore () {
+    return getAccuracyScore(this.accuracy)
+  }
+  get comboScore () {
+    return getComboScore(this.rawSumComboScore, this.rawTotalComboScore)
+  }
+  get maxPossibleScore () {
+    return this.maxPossibleAccuracyScore + this.maxPossibleComboScore
+  }
+  get maxPossibleAccuracyScore () {
+    const remainingJudgments = this.totalCombo - this.numJudgments
+    const maxPossibleRawWeight = this.rawSumJudgmentWeight + Judgments.weight(1) * remainingJudgments
+    const maxPossibleAccuracy = maxPossibleRawWeight / (Judgments.weight(1) * this.totalCombo)
+    return getAccuracyScore(maxPossibleAccuracy)
+  }
+  get maxPossibleComboScore () {
+    const maxPossibleRawComboScore = (
+      this.rawSumComboScore + this._remainingMaxPossibleRawComboScore
+    )
+    return getComboScore(maxPossibleRawComboScore, this.rawTotalComboScore)
   }
   get accuracy () {
     return this.rawSumJudgmentWeight / (Judgments.weight(1) * this.totalCombo)
@@ -44,28 +65,32 @@ export class PlayerStats {
     )
   }
   handleJudgment (judgment) {
+    this.counts[judgment] += 1
+    this.numJudgments += 1
     if (Judgments.breaksCombo(judgment)) {
+      const remainingJudgments = this.totalCombo - this.numJudgments
       this.combo = 0
       this.poor = true
+      this._remainingMaxPossibleRawComboScore = this._calculateRawTotalComboScore(remainingJudgments)
     } else {
       this.combo += 1
-      this.rawSumComboScore += this._calculateRawComboScore(this.combo)
+      const rawComboScore = this._calculateRawComboScore(this.combo)
+      this.rawSumComboScore += rawComboScore
+      this._remainingMaxPossibleRawComboScore -= rawComboScore
       this.poor = false
     }
     this.rawSumJudgmentWeight += Judgments.weight(judgment)
     if (this.combo > this.maxCombo) {
       this.maxCombo = this.combo
     }
-    this.counts[judgment] += 1
-    this.numJudgments += 1
     this._recordLog(judgment)
   }
   handleDelta (delta) {
     this.deltas.push(delta)
   }
-  _calculateRawTotalComboScore () {
-    var sum = 0
-    for (var i = 1; i <= this.totalCombo; i++) {
+  _calculateRawTotalComboScore (total) {
+    let sum = 0
+    for (let i = 1; i <= total; i++) {
       sum += this._calculateRawComboScore(i)
     }
     return sum

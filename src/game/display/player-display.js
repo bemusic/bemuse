@@ -1,5 +1,6 @@
 import NoteArea from './note-area'
 import { MISSED, breaksCombo } from '../judgments'
+import { getGauge } from './Gauge'
 
 export class PlayerDisplay {
   constructor (player) {
@@ -14,6 +15,7 @@ export class PlayerDisplay {
       lane_lift: Math.max(0, -player.options.laneCover),
       lane_press: Math.max(0, player.options.laneCover),
     }
+    this._gauge         = getGauge(player.options.gauge)
   }
   update (time, gameTime, playerState) {
     let player   = this._player
@@ -24,6 +26,7 @@ export class PlayerDisplay {
     let spacing  = player.notechart.spacingAtBeat(beat)
     let data     = Object.assign({ }, this._defaultData)
     let push     = (key, value) => (data[key] || (data[key] = [])).push(value)
+    let gauge    = this._gauge
 
     this._currentSpeed += (playerState.speed - this._currentSpeed) / 3
     let speed    = this._currentSpeed * spacing
@@ -33,6 +36,7 @@ export class PlayerDisplay {
     updateBarLines()
     updateInput()
     updateJudgment()
+    updateGauge()
     updateExplode()
 
     data['speed'] = (playerState.speed.toFixed(1) + 'x')
@@ -42,7 +46,8 @@ export class PlayerDisplay {
     data['stat_4'] = getCount(4)
     data['stat_missed'] = getCount(MISSED)
     data['stat_acc'] = getAccuracy()
-    data['bpm'] = Math.round(player.notechart.bpmAtBeat(beat))
+    const bpm = player.notechart.bpmAtBeat(beat)
+    data['bpm'] = bpm < 1 ? '' : Math.round(bpm)
 
     Object.assign(data, stateful)
     return data
@@ -126,6 +131,19 @@ export class PlayerDisplay {
         stateful['combo'] = notification.combo
       }
       data['score'] = playerState.stats.score
+    }
+
+    function updateGauge () {
+      gauge.update(playerState)
+      if (gauge.shouldDisplay()) {
+        if (!stateful['gauge_enter']) stateful['gauge_enter'] = time
+      } else {
+        if (stateful['gauge_enter']) {
+          if (!stateful['gauge_exit']) stateful['gauge_exit'] = time
+        }
+      }
+      data['gauge_primary'] = gauge.getPrimary()
+      data['gauge_secondary'] = gauge.getSecondary()
     }
 
     function updateExplode () {

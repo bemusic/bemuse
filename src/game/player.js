@@ -11,6 +11,7 @@ export class Player {
       scratch:     options.scratch || 'left',
       input:       options.input,
       laneCover:  +options.laneCover || 0,
+      gauge:       options.gauge,
     }
   }
 

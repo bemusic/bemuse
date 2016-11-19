@@ -28,3 +28,4 @@ plugins:
   - react
 rules:
   react/prop-types: 1
+  react/jsx-no-bind: 0

@@ -34,8 +34,15 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: [process.env.BROWSER === 'firefox' ? 'Firefox' : 'Chrome'],
+    browsers: [ process.env.BROWSER || 'Chrome' ],
     singleRun: false,
-    concurrency: Infinity
+    concurrency: Infinity,
+    customLaunchers: {
+      // http://stackoverflow.com/a/27873086/559913
+      Chrome_travis_ci: {
+        base: 'Chrome',
+        flags: [ '--no-sandbox' ]
+      }
+    }
   })
 }

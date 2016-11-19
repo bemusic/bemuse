@@ -1,7 +1,7 @@
-
 import _ from 'lodash'
-import { judgeTime, judgeEndTime, isBad, MISSED } from '../judgments'
+
 import PlayerStats   from './player-stats'
+import { judgeTime, judgeEndTime, isBad, MISSED } from '../judgments'
 
 // The PlayerState class holds a single player's state, including the stats
 // (score, current combo, maximum combo).
@@ -187,6 +187,10 @@ export class PlayerState {
     if (note.end) {
       if (isDown) {
         let status = judgment === MISSED ? 'judged' : 'active'
+        if (judgment === MISSED) {
+          // judge missed long note twice
+          this._setJudgment(judgment, delta, note.column)
+        }
         result = { status, judgment, delta }
       } else if (isUp) {
         let scratch = note.column === 'SC'

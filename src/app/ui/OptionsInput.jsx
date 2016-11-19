@@ -1,18 +1,19 @@
-
+import * as Options         from '../entities/Options'
+import * as OptionsIO       from '../io/OptionsIO'
 import './OptionsInput.scss'
-import React                from 'react'
-import c                    from 'classnames'
+
 import _                    from 'lodash'
-import OptionsInputScratch  from './OptionsInputScratch'
-import OptionsInputKeys     from './OptionsInputKeys'
+import c                    from 'classnames'
+import React                from 'react'
 import { key川 }            from 'bemuse/omni-input'
 import { getName }          from 'bemuse/omni-input'
-import { compose, withState, withHandlers } from 'recompose'
-import * as Options         from '../entities/Options'
-import { createSelector }   from 'reselect'
 import { connect }          from 'react-redux'
+import { compose, withState, withHandlers } from 'recompose'
+import { createSelector }   from 'reselect'
+
 import connectIO            from '../../impure-react/connectIO'
-import * as OptionsIO       from '../io/OptionsIO'
+import OptionsInputKeys     from './OptionsInputKeys'
+import OptionsInputScratch  from './OptionsInputScratch'
 
 const selectKeyboardMapping = createSelector(
   (state) => state.options,
@@ -33,7 +34,7 @@ const enhance = compose(
   withState('editing', 'setEditing', null),
   connectIO({
     onSetKeyCode: ({ mode, editing }) => (keyCode) => (
-      OptionsIO.setKeyCode(mode, editing, keyCode)
+      OptionsIO.updateOptions(Options.changeKeyMapping(mode, editing, keyCode))
     )
   }),
   withHandlers({
