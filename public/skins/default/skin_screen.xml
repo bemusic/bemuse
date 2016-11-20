@@ -1464,23 +1464,6 @@
         <group x="0" y="p1_lane_press*550">
           <sprite image="NoteArea/LaneCover.png" x="1" y="-550"></sprite>
         </group>
-        <group x="6" y="6">
-          <sprite image="Hope/HopeBar.png"></sprite>
-          <sprite image="Hope/HopeA.png" x="3" y="3" width="p1_gauge_secondary*263" height="5"></sprite>
-          <sprite image="Hope/Hope.png" x="3" y="3" width="p1_gauge_primary*263" height="5"></sprite>
-          <animation>
-            <keyframe t="0" y="-20"></keyframe>
-          </animation>
-          <animation on="p1_gauge_enter">
-            <keyframe t="0" y="-20"></keyframe>
-            <keyframe t="0.5" y="-20" ease="quadOut"></keyframe>
-            <keyframe t="1" y="6" ease="quadOut"></keyframe>
-          </animation>
-          <animation on="p1_gauge_exit">
-            <keyframe t="0" y="6"></keyframe>
-            <keyframe t="0.5" y="-20" ease="quadIn"></keyframe>
-          </animation>
-        </group>
       </group>
       <if key="p1_scratch" value="left">
         <group>
@@ -2034,6 +2017,23 @@
             <sprite image="Deviation/Early.png" x="111"></sprite>
           </group>
         </group>
+      </group>
+      <group x="6" y="6">
+        <sprite image="Hope/HopeBar.png"></sprite>
+        <sprite image="Hope/HopeA.png" x="3" y="3" width="p1_gauge_secondary*263" height="5"></sprite>
+        <sprite image="Hope/Hope.png" x="3" y="3" width="p1_gauge_primary*263" height="5"></sprite>
+        <animation>
+          <keyframe t="0" y="-20"></keyframe>
+        </animation>
+        <animation on="p1_gauge_enter">
+          <keyframe t="0" y="-20"></keyframe>
+          <keyframe t="0.5" y="-20" ease="quadOut"></keyframe>
+          <keyframe t="1" y="6" ease="quadOut"></keyframe>
+        </animation>
+        <animation on="p1_gauge_exit">
+          <keyframe t="0" y="6"></keyframe>
+          <keyframe t="0.5" y="-20" ease="quadIn"></keyframe>
+        </animation>
       </group>
     </group>
   </defs>
