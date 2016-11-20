@@ -25,13 +25,11 @@ export function updateOptions (updater) {
     const currentOptions = store.getState().options
     const nextOptions = updater(currentOptions)
     const changes = { }
-    console.log(nextOptions)
     for (const key of Object.keys(currentOptions)) {
       if (nextOptions[key] !== currentOptions[key]) {
         changes[key] = nextOptions[key]
       }
     }
-    console.log(changes)
     return options.setOptions(changes)
   })
 }

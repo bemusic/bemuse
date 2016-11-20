@@ -90,6 +90,9 @@ mixin note-hints(modeObject)
 mixin note-area-background(modeObject)
   sprite(image=modeObject.background x='0' y='0')
 
+mixin note-area-covers(modeObject)
+  sprite(image=modeObject.cover5k alpha='0.8' x='0' y='0')
+
 mixin note-area(modeObject)
   sprite(image='NoteArea/Flash.png' x='1' y='442' blend='screen'
           alpha='1 - (p1_beat % 1)')
@@ -118,11 +121,6 @@ mixin all-note-area
           group: +note-area(mode.iidx_r)
         #{'if'}(key='p1_scratch' value='off')
           group: +note-area(mode.kb)
-        +press-start
-        group(y='400')
-          +judgments
-        group(y='440')
-          +judgment-deviations
         sprite(image='NoteArea/Stripe.png' x='1' y='537' blend='screen')
         sprite(image='NoteArea/LaneCover.png' x='1' y=(area_height))
       group(x='0' y=('p1_lane_press*'+area_height))
@@ -146,10 +144,24 @@ mixin all-note-area
       group: +note-area-hints(mode.iidx_r)
     #{'if'}(key='p1_scratch' value='off')
       group: +note-area-hints(mode.kb)
+    #{'if'}(key='p1_key_mode' value='5K')
+      group
+        #{'if'}(key='p1_scratch' value='left')
+          group: +note-area-covers(mode.iidx_l)
+        #{'if'}(key='p1_scratch' value='right')
+          group: +note-area-covers(mode.iidx_r)
+        #{'if'}(key='p1_scratch' value='off')
+          group: +note-area-covers(mode.kb)
+    group(y=('0-p1_lane_lift*'+area_height))
+      +press-start
+      group(y='400')
+        +judgments
+      group(y='440')
+        +judgment-deviations
 
 mixin press-start
   group(alpha='0.6 + ready*0.4')
-    group(x='140' y='400' alpha='1')
+    group(x='143' y='400' alpha='1')
       animation
         keyframe(t='0' alpha='1')
       animation(on='gettingStarted')
