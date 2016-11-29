@@ -22,6 +22,7 @@ mode:
   iidx_l:
     background: 'Note/DX/BackgroundLeft.png'
     highlight: 'Note/DX/Highlight.png'
+    cover5k: 'Note/DX/5kLeft.png'
     hintStart: 3
     columns:
       - { style: 'scratch', channel: 'SC' }
@@ -35,6 +36,7 @@ mode:
   iidx_r:
     background: 'Note/DX/BackgroundRight.png'
     highlight: 'Note/DX/Highlight.png'
+    cover5k: 'Note/DX/5kRight.png'
     hintStart: 3
     columns:
       - { style: 'white',   channel: '1' }
@@ -48,6 +50,7 @@ mode:
   kb:
     background: 'Note/KB/Background.png'
     highlight: 'Note/KB/Highlight.png'
+    cover5k: 'Note/KB/5k.png'
     hintStart: 0
     columns:
       - { style: 'lwhite',  channel: '1' }

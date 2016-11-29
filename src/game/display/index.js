@@ -1,7 +1,9 @@
-
-import PlayerDisplay from './player-display'
 import './game-display.scss'
+
 import $ from 'jquery'
+
+import formatTime from '../../utils/formatTime'
+import PlayerDisplay from './player-display'
 
 export class GameDisplay {
   constructor ({ game, context, backgroundImagePromise, video }) {
@@ -66,8 +68,8 @@ export class GameDisplay {
   }
   _getSongTime (gameTime) {
     return (
-        this._formatTime(Math.min(this._duration, Math.max(0, gameTime))) +
-        ' / ' + this._formatTime(this._duration))
+        formatTime(Math.min(this._duration, Math.max(0, gameTime))) +
+        ' / ' + formatTime(this._duration))
   }
   _getReady (gameState) {
     let f = gameState.readyFraction
@@ -98,10 +100,6 @@ export class GameDisplay {
   }
   get wrapper () {
     return this._wrapper
-  }
-  _formatTime (seconds) {
-    let s = Math.floor(seconds % 60)
-    return Math.floor(seconds / 60) + ':' + (s < 10 ? '0' : '') + s
   }
 }
 

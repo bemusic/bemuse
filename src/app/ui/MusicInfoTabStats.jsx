@@ -1,13 +1,19 @@
-
 import './MusicInfoTabStats.scss'
 
+import Icon from 'react-fa'
 import React from 'react'
-import Icon  from 'react-fa'
-
-import withPersonalRecord             from './withPersonalRecord'
 import { formattedAccuracyForRecord } from 'bemuse/rules/accuracy'
 
+import formatTime from '../../utils/formatTime'
+import withPersonalRecord from './withPersonalRecord'
+
 export const MusicInfoTabStats = React.createClass({
+  propTypes: {
+    chart: React.PropTypes.object,
+    record: React.PropTypes.object,
+    user: React.PropTypes.object,
+    loading: React.PropTypes.bool
+  },
 
   render () {
     const chart = this.props.chart
@@ -19,6 +25,8 @@ export const MusicInfoTabStats = React.createClass({
         <dd>{chart.noteCount}</dd>
         <dt>BPM</dt>
         <dd>{chart.bpm.median}</dd>
+        <dt>Duration</dt>
+        <dd>{formatTime(chart.duration)}</dd>
         <dt>Play Count</dt>
         <dd>{this.renderWhenNotLoading(() =>
           record ? record.playCount : (this.props.user ? '0' : '-')
@@ -51,7 +59,6 @@ export const MusicInfoTabStats = React.createClass({
   },
 
   renderMessage () {
-
     if (!this.props.user) {
       return (
         <div className="MusicInfoTabStatsのmessage">
@@ -59,10 +66,8 @@ export const MusicInfoTabStats = React.createClass({
         </div>
       )
     }
-
     return null
   }
-
 })
 
 export default withPersonalRecord(MusicInfoTabStats)
