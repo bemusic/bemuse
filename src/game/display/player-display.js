@@ -166,6 +166,8 @@ export class PlayerDisplay {
 
 export default PlayerDisplay
 
+// TODO: MOVE THIS TO bemuse-notechart
+//
 function getKeyMode (notechart, scratch) {
   const usedColumns = { }
   for (const note of notechart.notes) {
