@@ -1,33 +1,28 @@
-
-import now from 'bemuse/utils/now'
-
-import SCENE_MANAGER    from 'bemuse/scene-manager'
-import React            from 'react'
-import TitleScene       from './ui/TitleScene'
-import AboutScene       from './ui/AboutScene'
-import ModeSelectScene  from './ui/ModeSelectScene'
-import ServiceWorkerRegistrationScene
-    from './ui/ServiceWorkerRegistrationScene'
-
-import { OFFICIAL_SERVER_URL }    from './constants'
-import { isBrowserSupported }     from './browser-support'
-import BrowserSupportWarningScene from './ui/BrowserSupportWarningScene'
-
-import { getMusicServer, getTimeSynchroServer, getInitialGrepString }
-    from './query-flags'
-import { shouldShowAbout, shouldShowModeSelect }
-    from 'bemuse/devtools/query-flags'
-
-import workerPath from
-  'bemuse/hacks/service-worker-url!serviceworker!./service-worker.js'
-import { createIO, createRun } from 'impure'
-import ioContext from './io/ioContext'
-import { withContext } from 'recompose'
-import store from './redux/instance'
-import { WarpDestination } from '../react-warp'
+import * as Analytics from './analytics'
 import * as OptionsIO from './io/OptionsIO'
 import * as ReduxState from './redux/ReduxState'
-import * as Analytics from './analytics'
+
+import now from 'bemuse/utils/now'
+import workerPath from
+  'bemuse/hacks/service-worker-url!serviceworker!./service-worker.js'
+import React from 'react'
+import SCENE_MANAGER from 'bemuse/scene-manager'
+import { shouldShowAbout, shouldShowModeSelect }
+    from 'bemuse/devtools/query-flags'
+import { createIO, createRun } from 'impure'
+import { withContext } from 'recompose'
+
+import ioContext from './io/ioContext'
+import store from './redux/instance'
+import AboutScene from './ui/AboutScene'
+import BrowserSupportWarningScene from './ui/BrowserSupportWarningScene'
+import ModeSelectScene from './ui/ModeSelectScene'
+import TitleScene from './ui/TitleScene'
+import { WarpDestination } from '../react-warp'
+import { isBrowserSupported } from './browser-support'
+import { OFFICIAL_SERVER_URL } from './constants'
+import { getMusicServer, getTimeSynchroServer, getInitialGrepString }
+    from './query-flags'
 
 export const runIO = createRun({
   context: ioContext
@@ -98,32 +93,23 @@ function getFirstScene () {
   }
 }
 
+function shouldActivateServiceWorker () {
+  return (
+    (location.protocol === 'https:' && location.host === 'bemuse.ninja') ||
+    (location.hostname === 'localhost')
+  )
+}
+
 function setupServiceWorker () {
   if (!('serviceWorker' in navigator)) return false
-  if (location.host !== 'bemuse.dev' && location.host !== 'bemuse.ninja') {
-    return false
-  }
-  if (location.protocol !== 'https:') return false
-  if (navigator.serviceWorker.controller) {
-    registerServiceWorker()
-    return true
-  } else {
-    var cutscene = React.createElement(ServiceWorkerRegistrationScene)
-    return SCENE_MANAGER.display(cutscene)
-    .then(function () {
-      return registerServiceWorker()
-    })
-    .then(function () {
-      return new Promise(function () {
-        location.reload()
-      })
-    })
-  }
+  if (!shouldActivateServiceWorker()) return false
+  registerServiceWorker()
+  return true
 }
 
 function registerServiceWorker () {
-  return navigator.serviceWorker.register('/sw-loader.js?path=' +
-    encodeURIComponent(workerPath))
+  const url = '/sw-loader.js?path=' + encodeURIComponent(workerPath)
+  return navigator.serviceWorker.register(url)
 }
 
 window.addEventListener('beforeunload', () => {

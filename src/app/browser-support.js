@@ -5,8 +5,8 @@ export const SUPPORTED = [
     test: () => checkUserAgent(/Firefox\/(\d+)/, 37),
   },
   {
-    name: 'Chrome 42+',
-    test: () => checkUserAgent(/Chrome\/(\d+)\./, 42),
+    name: 'Chrome 54+',
+    test: () => checkUserAgent(/Chrome\/(\d+)\./, 54),
   },
   {
     name: 'Safari 8+',

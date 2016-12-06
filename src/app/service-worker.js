@@ -1,10 +1,10 @@
 
 /*global caches*/
+
 import version from 'bemuse/utils/version'
-import 'serviceworker-cache-polyfill'
 
 function log (...args) {
-  console.log('[serviceworker]', ...args)
+  console.log('%c serviceworker %c', 'background:yellow;color:black', '', ...args)
 }
 
 log('I am a service worker! ' + version)
@@ -17,14 +17,15 @@ var SONG_CACHE_KEY = 'songs'
 
 self.addEventListener('install', function (event) {
   event.waitUntil(
-    caches.open(SITE_CACHE_KEY).then(function (cache) {
-      return cache.addAll(['/'])
-    })
+    caches.open(SITE_CACHE_KEY)
+    .then((cache) => cache.addAll([ '/' ]))
+    .then(() => self.skipWaiting())
   )
 })
 
 self.addEventListener('activate', function () {
-  log('Service worker activated!')
+  log('Service worker activated! Claiming clients now!')
+  return self.clients.claim()
 })
 
 self.addEventListener('fetch', function (event) {
@@ -69,7 +70,7 @@ function cacheForever (event, cacheName) {
     caches.open(cacheName).then(function (cache) {
       return cache.match(event.request).then(function (cached) {
         return cached || fetch(event.request).then(function (response) {
-          log('[caching forever]', event.request.url)
+          log('Cache forever:', event.request.url)
           cache.put(event.request, response.clone())
           return response
         })
@@ -83,7 +84,7 @@ function fetchThenCache (event, cacheName) {
     caches.open(cacheName).then(function (cache) {
       return fetch(event.request).then(function (response) {
         if (response && response.ok) {
-          log('[cached]', event.request.url)
+          log('Fetch OK:', event.request.url)
           cache.put(event.request, response.clone())
           return response
         } else {
@@ -102,7 +103,7 @@ function staleWhileRevalidate (event, cacheName) {
       return cache.match(event.request).then(function (cached) {
         var promise = fetch(event.request).then(function (response) {
           if (response && response.ok) {
-            log('[updated]', event.request.url)
+            log('Updated:', event.request.url)
             cache.put(event.request, response.clone())
           }
           return response
