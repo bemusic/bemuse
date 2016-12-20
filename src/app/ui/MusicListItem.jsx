@@ -1,11 +1,9 @@
-
 import './MusicListItem.scss'
 
 import React  from 'react'
 import c      from 'classnames'
+import getPlayableCharts from 'bemuse/music-collection/getPlayableCharts'
 import pure   from 'recompose/pure'
-
-import { visibleCharts } from '../utils/music-select-utils'
 
 import MusicListItemCharts from './MusicListItemCharts'
 
@@ -54,10 +52,11 @@ export const MusicListItem = React.createClass({
   },
   renderChartlist () {
     return <MusicListItemCharts
-      charts={visibleCharts(this.props.song.charts)}
+      charts={getPlayableCharts(this.props.song.charts)}
       selectedChart={this.props.selectedChart}
       onChartClick={this.handleChartClick}
-      playMode={this.props.playMode} />
+      playMode={this.props.playMode}
+    />
   },
   renderHighlight (text) {
     if (!this.props.highlight) return text

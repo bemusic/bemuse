@@ -7,21 +7,20 @@
 // - The selectors can be used to query data from the store.
 //
 
+import _ from 'lodash'
+import filterSongs from 'bemuse/music-collection/filterSongs'
+import getPlayableCharts from 'bemuse/music-collection/getPlayableCharts'
+import groupSongsIntoCategories from 'bemuse/music-collection/groupSongsIntoCategories'
+import sortSongs from 'bemuse/music-collection/sortSongs'
+import { combineReducers } from 'redux'
+import { createSelector } from 'reselect'
+
 import * as Collections from '../entities/Collections'
 import * as LoadState from '../entities/LoadState'
 import * as MusicSearchText from '../entities/MusicSearchText'
 import * as MusicSelection from '../entities/MusicSelection'
 import * as Options from '../entities/Options'
-
-import _ from 'lodash'
-import { combineReducers } from 'redux'
-import { createSelector } from 'reselect'
-
 import createReducer from './createReducer'
-import filterSongs from '../interactors/filterSongs'
-import getPlayableCharts from '../interactors/getPlayableCharts'
-import groupSongsIntoCategories from '../interactors/groupSongsIntoCategories'
-import sortSongs from '../interactors/sortSongs'
 
 // Actions
 export const COLLECTION_LOADING_BEGAN = 'COLLECTION_LOADING_BEGAN'

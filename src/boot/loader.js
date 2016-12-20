@@ -9,6 +9,11 @@ var modules = {
   app:        'bemuse/app',
 
   // >>
+  // music
+  //   The music collection viewer which shows all the songs.
+  music:      'bemuse/music-collection-viewer',
+
+  // >>
   // test
   //   The unit tests.
   test:       'bemuse/test',
