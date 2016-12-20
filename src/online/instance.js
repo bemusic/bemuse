@@ -1,9 +1,8 @@
-
-import { Parse }      from 'parse'
+import OfflineService from './offline-service'
 import Online         from './index'
 import OnlineService  from './online-service'
-import OfflineService from './offline-service'
-import config         from 'val?cacheable!./config'
+import { Parse }      from 'parse'
+import config         from 'val-loader?cacheable!./config'
 
 export let instance = null
 

@@ -1,12 +1,11 @@
-
 // This file boots up Mocha
 //
-import 'script!mocha/mocha.js'
-import 'style!mocha/mocha.css'
-import 'style!./support/mocha-overrides.css'
+import 'script-loader!mocha/mocha.js'
+import 'style-loader!mocha/mocha.css'
+import 'style-loader!./support/mocha-overrides.css'
 
-import prepareTestEnvironment from './prepareTestEnvironment'
 import loadSpecs from './loadSpecs'
+import prepareTestEnvironment from './prepareTestEnvironment'
 
 export function main () {
   setupMocha()

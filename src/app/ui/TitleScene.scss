@@ -1,7 +1,7 @@
 @import "~bemuse/ui/common";
 
 .TitleScene {
-  background: #415067 url('~!!url!./images/bg-title.placeholder.png') 50% 90% no-repeat;
+  background: #415067 url('~!!url-loader!./images/bg-title.placeholder.png') 50% 90% no-repeat;
   background-size: cover;
 
   &のimage {

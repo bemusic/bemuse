@@ -6,5 +6,5 @@ module.exports = {
   alias: {
     bemuse: path('src'),
   },
-  extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx']
+  extensions: [ '.webpack.js', '.web.js', '.js', '.jsx' ]
 }

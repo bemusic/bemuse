@@ -5,15 +5,15 @@
 // We need this file to load as soon as possible, therefore,
 // we minimize the amount of third-party dependencies.
 
-import 'style?-singleton!bemuse/ui/fonts.scss'
+import 'style-loader?-singleton!bemuse/ui/fonts.scss'
 import 'bemuse/ui/global.scss'
 
-import Progress         from 'bemuse/progress'
-import query            from 'bemuse/utils/query'
-
-import LoadingContext   from './loading-context'
 import * as Boot        from './ui/Boot'
 import * as ErrorDialog from './ui/ErrorDialog'
+
+import LoadingContext   from './loading-context'
+import Progress         from 'bemuse/progress'
+import query            from 'bemuse/utils/query'
 
 window.onerror = function (message, url, line, col, e) {
   ErrorDialog.show(message, url, line, col, e)
@@ -32,7 +32,7 @@ require.ensure(['./environment'],
 function (require) {
 
   require('./environment')
-  var loadModule = require('val!./loader.js')
+  var loadModule = require('val-loader!./loader.js')
 
   if (loadModule[mode]) {
     let progress = new Progress()
