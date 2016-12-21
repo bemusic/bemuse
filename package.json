@@ -15,6 +15,12 @@
     "test-bed": "bash -c \"NODE_ENV=test test-bed\"",
     "travis": "gulp travis"
   },
+  "importSort": {
+    ".js, .jsx, .es6, .es": {
+      "parser": "babylon",
+      "style": "renke"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/spacetme/bemuse.git"
@@ -73,6 +79,7 @@
     "gulp-mocha": "^2.0.1",
     "gulp-util": "^3.0.1",
     "hide-stack-frames-from": "^1.0.0",
+    "import-sort-style-renke": "^2.4.0",
     "jade": "^1.9.2",
     "jade-loader": "^0.8.0",
     "js-yaml": "^3.5.5",

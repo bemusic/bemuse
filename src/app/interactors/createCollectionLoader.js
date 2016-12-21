@@ -1,5 +1,6 @@
-
 import * as Rx from 'rxjs/Rx'
+import { load as loadCollection } from 'bemuse/music-collection'
+
 import performSideEffects from './performSideEffects'
 
 export function createCollectionLoader ({
@@ -13,8 +14,7 @@ export function createCollectionLoader ({
     .groupBy(url => url)
     .flatMap(url川 => url川.switchMap(url => Rx.Observable.concat(
       Rx.Observable.of(() => onBeginLoading(url)),
-      Rx.Observable.fromPromise(fetch(url + '/index.json')
-        .then(response => response.json())
+      Rx.Observable.fromPromise(loadCollection(url, { fetch })
         .then(
           data => () => onLoad(url, data),
           error => () => onErrorLoading(url, error)

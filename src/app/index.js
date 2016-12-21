@@ -1,28 +1,27 @@
-import * as Analytics from './analytics'
-import * as OptionsIO from './io/OptionsIO'
-import * as ReduxState from './redux/ReduxState'
-
+import React from 'react'
+import SCENE_MANAGER from 'bemuse/scene-manager'
 import now from 'bemuse/utils/now'
 import workerPath from
   'bemuse/hacks/service-worker-url!serviceworker!./service-worker.js'
-import React from 'react'
-import SCENE_MANAGER from 'bemuse/scene-manager'
+import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
+import { createIO, createRun } from 'impure'
 import { shouldShowAbout, shouldShowModeSelect }
     from 'bemuse/devtools/query-flags'
-import { createIO, createRun } from 'impure'
 import { withContext } from 'recompose'
 
-import ioContext from './io/ioContext'
-import store from './redux/instance'
+import * as Analytics from './analytics'
+import * as OptionsIO from './io/OptionsIO'
+import * as ReduxState from './redux/ReduxState'
 import AboutScene from './ui/AboutScene'
 import BrowserSupportWarningScene from './ui/BrowserSupportWarningScene'
 import ModeSelectScene from './ui/ModeSelectScene'
 import TitleScene from './ui/TitleScene'
+import ioContext from './io/ioContext'
+import store from './redux/instance'
 import { WarpDestination } from '../react-warp'
-import { isBrowserSupported } from './browser-support'
-import { OFFICIAL_SERVER_URL } from './constants'
-import { getMusicServer, getTimeSynchroServer, getInitialGrepString }
+import { getInitialGrepString, getMusicServer, getTimeSynchroServer }
     from './query-flags'
+import { isBrowserSupported } from './browser-support'
 
 export const runIO = createRun({
   context: ioContext
