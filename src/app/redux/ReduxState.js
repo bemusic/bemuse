@@ -11,6 +11,7 @@ import _ from 'lodash'
 import filterSongs from 'bemuse/music-collection/filterSongs'
 import getPlayableCharts from 'bemuse/music-collection/getPlayableCharts'
 import groupSongsIntoCategories from 'bemuse/music-collection/groupSongsIntoCategories'
+import preprocessCollection from 'bemuse/music-collection/preprocessCollection'
 import sortSongs from 'bemuse/music-collection/sortSongs'
 import { combineReducers } from 'redux'
 import { createSelector } from 'reselect'
@@ -127,8 +128,13 @@ export const selectCurrentCorrectionLoadError = (state) => (
   LoadState.error(selectCurrentCollection(state))
 )
 
-export const selectCurrentCollectionValue = (state) => (
+export const selectRawCurrentCollectionValue = (state) => (
   LoadState.value(selectCurrentCollection(state))
+)
+
+export const selectCurrentCollectionValue = createSelector(
+  selectRawCurrentCollectionValue,
+  (collection) => collection && preprocessCollection(collection)
 )
 
 export const selectSearchInputText = (state) => (

@@ -1,6 +1,9 @@
 import React from 'react'
+import preprocessCollection from 'bemuse/music-collection/preprocessCollection'
 import query from 'bemuse/utils/query'
 import { OFFICIAL_SERVER_URL, load } from 'bemuse/music-collection'
+
+import MusicTable from './MusicTable'
 
 export class CollectionViewer extends React.Component {
   constructor (props) {
@@ -27,9 +30,10 @@ export class CollectionViewer extends React.Component {
           <div>{this.state.url}<br />{this.state.status}</div>
         </header>
         <div style={{ padding: 20 }}>
-          <pre wrap>
-            {require('util').inspect(this.state.data)}
-          </pre>
+          <MusicTable
+            data={this.state.data && preprocessCollection(this.state.data)}
+            initialSort={query.sort}
+          />
         </div>
       </div>
     )
