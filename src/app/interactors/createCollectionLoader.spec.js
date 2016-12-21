@@ -1,8 +1,8 @@
-
-import { createCollectionLoader } from './createCollectionLoader'
-import waitUntil from 'bemuse/wait-until'
 import assert from 'power-assert'
 import co from 'co'
+import waitUntil from 'bemuse/wait-until'
+
+import { createCollectionLoader } from './createCollectionLoader'
 
 function setup ({ fetch }) {
   const onBeginLoading = sinon.spy()
@@ -30,7 +30,7 @@ describe('createCollectionLoader', () => {
       assert(onBeginLoading.called)
     }))
 
-    it('should load the collection and call `onErrorLoading`', co.wrap(function * () {
+    it('should load the collection and call `onErrorLoading` when there is an error', co.wrap(function * () {
       const { collectionLoader, onErrorLoading } = setup({
         fetch: (url) => Promise.reject(new Error('???'))
       })

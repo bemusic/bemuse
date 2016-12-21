@@ -14,7 +14,7 @@ export function createCollectionLoader ({
     .groupBy(url => url)
     .flatMap(url川 => url川.switchMap(url => Rx.Observable.concat(
       Rx.Observable.of(() => onBeginLoading(url)),
-      Rx.Observable.fromPromise(loadCollection(url)
+      Rx.Observable.fromPromise(loadCollection(url, { fetch })
         .then(
           data => () => onLoad(url, data),
           error => () => onErrorLoading(url, error)
