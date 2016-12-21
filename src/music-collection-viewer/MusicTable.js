@@ -1,3 +1,4 @@
+import * as MusicPreviewer from 'bemuse/music-previewer'
 import _ from 'lodash'
 import React from 'react'
 import getPlayableCharts from 'bemuse/music-collection/getPlayableCharts'
@@ -74,6 +75,7 @@ function renderSongWarnings (song) {
 export class MusicTable extends React.Component {
   static propTypes = {
     data: React.PropTypes.object,
+    url: React.PropTypes.string,
     initialSort: React.PropTypes.string
   }
   constructor (props) {
@@ -128,7 +130,14 @@ export class MusicTable extends React.Component {
               <span style={{ color: '#8b8685' }}>{song.added}</span>
             </td>
             <td style={{ textAlign: 'center', background: '#353433' }}>
-              <span style={{ color: '#8b8685' }}>{song.genre}</span><br />
+              <span
+                style={{ color: '#8b8685' }}
+                onClick={() => {
+                  const previewUrl = this.props.url + '/' + song.path + '/_bemuse_preview.mp3'
+                  MusicPreviewer.enable()
+                  MusicPreviewer.preview(previewUrl)
+                }}
+              >{song.genre}</span><br />
               <strong
                 onClick={() => {
                   console.log(song)

@@ -32,6 +32,7 @@ export class CollectionViewer extends React.Component {
         <div style={{ padding: 20 }}>
           <MusicTable
             data={this.state.data && preprocessCollection(this.state.data)}
+            url={this.state.url}
             initialSort={query.sort}
           />
         </div>
