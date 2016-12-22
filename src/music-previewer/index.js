@@ -79,8 +79,8 @@ function createMusicPreviewer () {
   let backgroundPlayed = false
   const instances = { }
 
-  const background = document.createElement('audio')
-  background.src = require('./default.ogg')
+  const background = new Audio(require('./default.ogg'))
+  background.preload = 'auto'
   background.loop = true
   background.oncanplaythrough = () => {
     backgroundLoaded = true
@@ -90,6 +90,7 @@ function createMusicPreviewer () {
 
   const goSound = document.createElement('audio')
   goSound.src = require('./go.ogg')
+  goSound.volume = 0.5
   goSound.load()
 
   const backgroundFader = createFader(background, 0.5, (target) => {
@@ -102,11 +103,13 @@ function createMusicPreviewer () {
   function update () {
     if (!enabled) {
       if (backgroundPlayed) {
-        backgroundFader.fadeTo(0, 2)
+        backgroundFader.fadeTo(0, 100)
+        backgroundPlayed = false
+        background.pause()
       }
       for (const key of Object.keys(instances)) {
         const instance = instances[key]
-        instance.stop()
+        instance.destroy()
       }
       return
     }
@@ -125,7 +128,7 @@ function createMusicPreviewer () {
     if (playing) {
       backgroundFader.fadeTo(0, 1)
     } else {
-      backgroundFader.fadeTo(0.5, 0.5)
+      backgroundFader.fadeTo(0.4, 0.5)
       if (backgroundLoaded && !backgroundPlayed) {
         backgroundPlayed = true
         try {
@@ -195,6 +198,11 @@ function createMusicPreviewer () {
       },
       stop () {
         fader.fadeTo(0, 4)
+      },
+      destroy () {
+        audio.pause()
+        delete instances[songUrl]
+        update()
       }
     }
 
