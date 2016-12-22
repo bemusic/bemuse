@@ -3,6 +3,7 @@ import _ from 'lodash'
 const grouping = [
   { title: 'Custom Song', criteria: song => song.custom },
   { title: 'Tutorial', criteria: song => song.tutorial },
+  { title: 'Unreleased', criteria: song => song.unreleased },
   { title: 'New Songs',
     criteria: song => song.added &&
         Date.now() - Date.parse(song.added) < 14 * 86400000,
