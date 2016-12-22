@@ -29,6 +29,11 @@ self.addEventListener('activate', function () {
 })
 
 self.addEventListener('fetch', function (event) {
+  if (event.request.headers.get('range')) {
+    // https://bugs.chromium.org/p/chromium/issues/detail?id=575357
+    log('Bailing out for ranged request.', event.request.url)
+    return
+  }
   var build = location.origin + '/build/'
   var skin = location.origin + '/skins/'
   var res = location.origin + '/res/'
