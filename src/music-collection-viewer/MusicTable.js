@@ -1,5 +1,5 @@
-import * as MusicPreviewer from 'bemuse/music-previewer'
 import _ from 'lodash'
+import MusicSelectPreviewer from 'bemuse/music-previewer/MusicSelectPreviewer'
 import React from 'react'
 import getPlayableCharts from 'bemuse/music-collection/getPlayableCharts'
 import groupSongsIntoCategories from 'bemuse/music-collection/groupSongsIntoCategories'
@@ -80,7 +80,11 @@ export class MusicTable extends React.Component {
   }
   constructor (props) {
     super(props)
-    this.state = { sort: this.props.initialSort || Object.keys(sorters)[0] }
+    this.state = {
+      sort: this.props.initialSort || Object.keys(sorters)[0],
+      previewUrl: null,
+      previewEnabled: false
+    }
   }
   renderTable () {
     return (
@@ -89,6 +93,8 @@ export class MusicTable extends React.Component {
           <tr>
             <th colSpan={4}>
               {this.renderSorter()}
+              {' · '}
+              {this.renderPreview()}
             </th>
           </tr>
           <tr>
@@ -115,6 +121,23 @@ export class MusicTable extends React.Component {
     }
     return <span><strong>Sort by:</strong> {out}</span>
   }
+  renderPreview () {
+    const button = (
+      <button
+        onClick={() => {
+          this.setState((s) => ({ previewEnabled: !s.previewEnabled }))
+        }}
+      >
+        {this.state.previewEnabled ? 'disable' : 'enable'}
+      </button>
+    )
+    return <span>
+      <strong>Music preview:</strong> {button}
+      {this.state.previewEnabled &&
+        <MusicSelectPreviewer url={this.state.previewUrl} />
+      }
+    </span>
+  }
   renderRows () {
     const categories = sorters[this.state.sort](this.props.data.songs)
     const out = [ ]
@@ -134,8 +157,7 @@ export class MusicTable extends React.Component {
                 style={{ color: '#8b8685' }}
                 onClick={() => {
                   const previewUrl = this.props.url + '/' + song.path + '/_bemuse_preview.mp3'
-                  MusicPreviewer.enable()
-                  MusicPreviewer.preview(previewUrl)
+                  this.setState({ previewUrl })
                 }}
               >{song.genre}</span><br />
               <strong

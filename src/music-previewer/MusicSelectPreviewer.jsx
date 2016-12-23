@@ -1,5 +1,6 @@
-import * as MusicPreviewer from 'bemuse/music-previewer'
 import React from 'react'
+
+import * as MusicPreviewer from './'
 
 MusicPreviewer.preload()
 
