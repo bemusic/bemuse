@@ -2,6 +2,7 @@ import _ from 'lodash'
 import MusicSelectPreviewer from 'bemuse/music-previewer/MusicSelectPreviewer'
 import React from 'react'
 import getPlayableCharts from 'bemuse/music-collection/getPlayableCharts'
+import getPreviewUrl from 'bemuse/music-collection/getPreviewUrl'
 import groupSongsIntoCategories from 'bemuse/music-collection/groupSongsIntoCategories'
 import sortSongs from 'bemuse/music-collection/sortSongs'
 
@@ -156,7 +157,7 @@ export class MusicTable extends React.Component {
               <span
                 style={{ color: '#8b8685' }}
                 onClick={() => {
-                  const previewUrl = this.props.url + '/' + song.path + '/_bemuse_preview.mp3'
+                  const previewUrl = getPreviewUrl(this.props.url, song)
                   this.setState({ previewUrl })
                 }}
               >{song.genre}</span><br />

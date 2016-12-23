@@ -13,6 +13,7 @@ import SceneHeading from 'bemuse/ui/SceneHeading'
 import SceneToolbar from 'bemuse/ui/SceneToolbar'
 import c from 'classnames'
 import compose from 'recompose/compose'
+import getPreviewUrl from 'bemuse/music-collection/getPreviewUrl'
 import online from 'bemuse/online/instance'
 import pure from 'recompose/pure'
 import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
@@ -96,9 +97,7 @@ export const MusicSelectScene = React.createClass({
   },
   getPreviewUrl () {
     const song = this.props.musicSelect.song
-    if (!song) return null
-    if (song.tutorial) return null
-    return this.props.collectionUrl + '/' + song.path + '/_bemuse_preview.mp3'
+    return getPreviewUrl(this.props.collectionUrl, song)
   },
   render () {
     let musicSelect = this.props.musicSelect
