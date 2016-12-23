@@ -26,4 +26,4 @@ deployment:
       - git remote add www https://akibot:$GH_TOKEN@github.com/bemusic/bemusic.github.io.git
       - git config --global user.email "aki@spacet.me"
       - git config --global user.name "Aki running on CircleCI"
-      - git log --format=%B -n 1 | egrep '^[0-9]+\.[0-9]+\.[0-9]+' && ./node_modules/.bin/gulp deploy || echo 'Not a release commit, skipped!'
+      - git log --format=%B -n 1 | egrep '^:bookmark: [0-9]+\.[0-9]+\.[0-9]+' && ./node_modules/.bin/gulp deploy || echo 'Not a release commit, skipped!'
