@@ -1,5 +1,4 @@
 import * as ProgressUtils   from 'bemuse/progress/utils'
-
 import _                    from 'lodash'
 import defaultKeysoundCache from 'bemuse/keysound-cache'
 import { EXTRA_FORMATTER }  from 'bemuse/progress/formatters'
@@ -14,9 +13,13 @@ export class SamplesLoader {
   loadFiles (files, loadProgress, decodeProgress) {
     let onload    = ProgressUtils.fixed(files.length, loadProgress)
     let ondecode  = ProgressUtils.fixed(files.length, decodeProgress)
-    let load      = name => this._loadSample(name, onload, ondecode)
+    let load      = name => new Promise((resolve) => {
+      requestAnimationFrame(() => {
+        resolve(this._loadSample(name, onload, ondecode))
+      })
+    })
     if (decodeProgress) decodeProgress.formatter = EXTRA_FORMATTER
-    return Promise.map(files, load)
+    return Promise.map(files, load, { concurrency: 64 })
         .then(arr => _(arr).filter().fromPairs().value())
   }
   _loadSample (name, onload, ondecode) {

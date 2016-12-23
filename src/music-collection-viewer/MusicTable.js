@@ -1,6 +1,8 @@
 import _ from 'lodash'
+import MusicSelectPreviewer from 'bemuse/music-previewer/MusicSelectPreviewer'
 import React from 'react'
 import getPlayableCharts from 'bemuse/music-collection/getPlayableCharts'
+import getPreviewUrl from 'bemuse/music-collection/getPreviewUrl'
 import groupSongsIntoCategories from 'bemuse/music-collection/groupSongsIntoCategories'
 import sortSongs from 'bemuse/music-collection/sortSongs'
 
@@ -74,11 +76,16 @@ function renderSongWarnings (song) {
 export class MusicTable extends React.Component {
   static propTypes = {
     data: React.PropTypes.object,
+    url: React.PropTypes.string,
     initialSort: React.PropTypes.string
   }
   constructor (props) {
     super(props)
-    this.state = { sort: this.props.initialSort || Object.keys(sorters)[0] }
+    this.state = {
+      sort: this.props.initialSort || Object.keys(sorters)[0],
+      previewUrl: null,
+      previewEnabled: false
+    }
   }
   renderTable () {
     return (
@@ -87,6 +94,8 @@ export class MusicTable extends React.Component {
           <tr>
             <th colSpan={4}>
               {this.renderSorter()}
+              {' · '}
+              {this.renderPreview()}
             </th>
           </tr>
           <tr>
@@ -113,6 +122,23 @@ export class MusicTable extends React.Component {
     }
     return <span><strong>Sort by:</strong> {out}</span>
   }
+  renderPreview () {
+    const button = (
+      <button
+        onClick={() => {
+          this.setState((s) => ({ previewEnabled: !s.previewEnabled }))
+        }}
+      >
+        {this.state.previewEnabled ? 'disable' : 'enable'}
+      </button>
+    )
+    return <span>
+      <strong>Music preview:</strong> {button}
+      {this.state.previewEnabled &&
+        <MusicSelectPreviewer url={this.state.previewUrl} />
+      }
+    </span>
+  }
   renderRows () {
     const categories = sorters[this.state.sort](this.props.data.songs)
     const out = [ ]
@@ -128,7 +154,13 @@ export class MusicTable extends React.Component {
               <span style={{ color: '#8b8685' }}>{song.added}</span>
             </td>
             <td style={{ textAlign: 'center', background: '#353433' }}>
-              <span style={{ color: '#8b8685' }}>{song.genre}</span><br />
+              <span
+                style={{ color: '#8b8685' }}
+                onClick={() => {
+                  const previewUrl = getPreviewUrl(this.props.url, song)
+                  this.setState({ previewUrl })
+                }}
+              >{song.genre}</span><br />
               <strong
                 onClick={() => {
                   console.log(song)

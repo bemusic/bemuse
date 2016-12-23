@@ -1,6 +1,6 @@
-import * as options from '../options'
-
 import u from 'updeep'
+
+import * as options from '../options'
 
 // Initializers
 export const initialState = options.DEFAULTS
@@ -80,6 +80,14 @@ export const isAutoVelocityEnabled = (state) => (
 )
 export const toggleAutoVelocity = u({
   'player.P1.auto-velocity': toggleOption
+})
+
+// Song preview enabled
+export const isPreviewEnabled = (state) => (
+  toggleOptionEnabled(state['system.preview.enabled'])
+)
+export const togglePreview = u({
+  'system.preview.enabled': toggleOption
 })
 
 // Gauge

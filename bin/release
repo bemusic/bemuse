@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
 git pull --ff-only
-npm version "$@"
+npm version "$@" -m ':bookmark: %s'
 git push --follow-tags
 
