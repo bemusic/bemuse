@@ -1,18 +1,17 @@
-import * as Multitasker from './multitasker'
-
-import co from 'co'
-import keysoundCache from 'bemuse/keysound-cache'
 import LoadingContext from 'bemuse/boot/loading-context'
 import NotechartLoader from 'bemuse-notechart/loader'
 import Progress from 'bemuse/progress'
 import SamplingMaster from 'bemuse/sampling-master'
+import co from 'co'
+import keysoundCache from 'bemuse/keysound-cache'
 
-import loadImage from './loadImage'
+import * as Multitasker from './multitasker'
 import Game from '../game'
 import GameAudio from '../audio'
 import GameController from '../game-controller'
 import GameDisplay from '../display'
 import SamplesLoader from './samples-loader'
+import loadImage from './loadImage'
 
 export function load (spec) {
   const assets = spec.assets
@@ -86,6 +85,7 @@ export function load (spec) {
         const video = document.createElement('video')
         if (!video.canPlayType('video/webm')) return resolve(null)
         video.src = spec.videoUrl
+        video.preload = 'auto'
         video.addEventListener('progress', onProgress, true)
         video.addEventListener('canplaythrough', onCanPlayThrough, true)
         video.addEventListener('error', onError, true)
