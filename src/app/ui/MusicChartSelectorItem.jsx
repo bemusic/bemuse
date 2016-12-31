@@ -1,8 +1,8 @@
 import './MusicChartSelectorItem.scss'
 
-import c      from 'classnames'
 import Icon   from 'react-fa'
 import React  from 'react'
+import c      from 'classnames'
 
 export default React.createClass({
 
@@ -19,7 +19,10 @@ export default React.createClass({
       onClick={this.handleClick}>
       {
         this.props.isTutorial
-        ? 'Start Tutorial'
+        ? (this.props.chart.keys === '5K'
+          ? 'Start Tutorial (5 keys)'
+          : 'Start Tutorial (7 keys)'
+        )
         : (
           <span className="MusicChartSelectorItemのlevel">
             {this.props.chart.info.level}
