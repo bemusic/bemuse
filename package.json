@@ -37,7 +37,7 @@
   "devDependencies": {
     "autoprefixer-loader": "^3.0.0",
     "babel-core": "^6.14.0",
-    "babel-eslint": "^6.0.0",
+    "babel-eslint": "^7.0.0",
     "babel-loader": "^6.2.1",
     "babel-plugin-espower": "^2.1.1",
     "babel-plugin-istanbul": "^2.0.1",
