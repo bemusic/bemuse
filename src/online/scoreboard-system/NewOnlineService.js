@@ -150,6 +150,11 @@ function createScoreboardClient ({
     })
   }
 
+  function graphql ({ query, variables }) {
+    return client
+      .post('graphql', { query, variables })
+  }
+
   function usernamePasswordLogin (playerId, password) {
     return new Promise((resolve, reject) => {
       log('Auth0 log in')
@@ -170,8 +175,8 @@ function createScoreboardClient ({
   }
 
   function checkPlayerNameAvailability (playerName) {
-    return Promise.resolve(client
-      .post('graphql', {
+    return Promise.resolve(
+      graphql({
         query: `
           query checkPlayerNameAvailability ($name: String!) {
             player (name: $name) {
@@ -197,8 +202,8 @@ function createScoreboardClient ({
   }
 
   function resolvePlayerId (playerName) {
-    return Promise.resolve(client
-      .post('graphql', {
+    return Promise.resolve(
+      graphql({
         query: `
           query resolvePlayerId ($name: String!) {
             player (name: $name) {
@@ -221,8 +226,8 @@ function createScoreboardClient ({
   }
 
   function reservePlayerId (playerName) {
-    return Promise.resolve(client
-      .post('graphql', {
+    return Promise.resolve(
+      graphql({
         query: `
           mutation reservePlayerId ($name: String!) {
             registerPlayer(name: $name) {
@@ -243,8 +248,8 @@ function createScoreboardClient ({
   }
 
   function ensureLink (idToken) {
-    return Promise.resolve(client
-      .post('graphql', {
+    return Promise.resolve(
+      graphql({
         query: `
           mutation ensureLink ($jwt: String!) {
             linkPlayer(jwt: $jwt) {
