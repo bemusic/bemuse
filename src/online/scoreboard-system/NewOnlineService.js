@@ -73,13 +73,42 @@ export class NewOnlineService {
   }
 
   async submitScore (info) {
-    throw new Error('meow')
-    // return (
-    //   wrapPromise(Parse.Cloud.run('submitScore', info))
-    //   .then(({ data, meta: { rank } }) => {
-    //     return Object.assign(toObject(data), { rank })
-    //   })
-    // )
+    if (!this._currentUser) {
+      throw new Error('Not logged in')
+    }
+    const result = await this._scoreboardClient.submitScore({
+      idToken: this._currentUser.idToken,
+      md5: info.md5,
+      playMode: info.playMode,
+      input: {
+        score: info.score,
+        combo: info.combo,
+        count: info.count,
+        total: info.total,
+        log: info.log
+      }
+    })
+    const data = {
+      md5: info.md5,
+      playMode: info.playMode,
+      ...toEntry(result.data.registerScore.resultingRow)
+    }
+    console.log(data)
+    return data
+
+    function toEntry (row) {
+      return {
+        rank: row.rank,
+        score: row.entry.score,
+        combo: row.entry.combo,
+        count: row.entry.count,
+        total: row.entry.total,
+        playerName: row.entry.player.name,
+        recordedAt: new Date(row.entry.recordedAt),
+        playCount: row.entry.playCount,
+        playNumber: row.entry.playNumber
+      }
+    }
   }
 
   // Retrieves a record.
@@ -153,6 +182,7 @@ function createScoreboardClient ({
   function graphql ({ query, variables }) {
     return client
       .post('graphql', { query, variables })
+      .then(response => response.data)
   }
 
   function usernamePasswordLogin (playerId, password) {
@@ -188,9 +218,9 @@ function createScoreboardClient ({
           name: playerName
         }
       })
-      .then(response => {
-        log('checkPlayerNameAvailability response', response)
-        if (response.data.data.player === null) {
+      .then(result => {
+        log('checkPlayerNameAvailability response', result)
+        if (result.data.player === null) {
           log('checkPlayerNameAvailability: Player name is available!')
           return true
         } else {
@@ -215,11 +245,11 @@ function createScoreboardClient ({
           name: playerName
         }
       })
-      .then(response => {
-        if (response.data.data.player === null) {
+      .then(result => {
+        if (result.data.player === null) {
           return { error: 'Player not found...' }
         } else {
-          return { playerId: response.data.data.player.id }
+          return { playerId: result.data.player.id }
         }
       })
     )
@@ -239,9 +269,9 @@ function createScoreboardClient ({
           name: playerName
         }
       })
-      .then(response => {
-        const playerId = response.data.data.registerPlayer.id
-        log('reservePlayerId response', response, 'playerId', playerId)
+      .then(result => {
+        const playerId = result.data.registerPlayer.id
+        log('reservePlayerId response', result, 'playerId', playerId)
         return playerId
       })
     )
@@ -262,14 +292,41 @@ function createScoreboardClient ({
           jwt: idToken
         }
       })
-      .then(response => {
-        const playerId = response.data.data.linkPlayer.id
-        const playerName = response.data.data.linkPlayer.name
-        log('ensureLink response', response, 'playerId', playerId)
+      .then(result => {
+        const playerId = result.data.linkPlayer.id
+        const playerName = result.data.linkPlayer.name
+        log('ensureLink response', result, 'playerId', playerId)
         return { playerId, playerName }
       })
     )
   }
+
+  const ENTRY = `{
+    rank
+    entry {
+      id
+      score
+      total
+      combo
+      count
+      player { name }
+    }
+  }`
+
+  const OWN_ENTRY = `{
+    rank
+    entry {
+      id
+      score
+      total
+      combo
+      count
+      playNumber
+      playCount
+      recordedAt
+      player { name }
+    }
+  }`
 
   const scoreboardClient = {
     signUp ({ username, password, email }) {
@@ -296,6 +353,26 @@ function createScoreboardClient ({
           resolvePlayerId,
           ensureLink
         })
+      })
+    },
+    submitScore ({ idToken, md5, playMode, input }) {
+      return graphql({
+        query: `
+          mutation submitScore ($idToken: String!, $md5: String!, $playMode: String!, $input: RegisterScoreInput!) {
+            registerScore (jwt: $idToken, md5: $md5, playMode: $playMode, input: $input) {
+              resultingRow ${OWN_ENTRY}
+              level {
+                leaderboard (max: 50) ${ENTRY}
+              }
+            }
+          }
+        `,
+        variables: {
+          idToken,
+          md5,
+          playMode,
+          input
+        }
       })
     }
   }
