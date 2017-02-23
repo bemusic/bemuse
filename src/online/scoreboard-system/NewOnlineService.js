@@ -91,34 +91,29 @@ export class NewOnlineService {
       ...toEntry(result.data.registerScore.resultingRow)
     }
     return data
-
-    function toEntry (row) {
-      return {
-        rank: row.rank,
-        score: row.entry.score,
-        combo: row.entry.combo,
-        count: row.entry.count,
-        total: row.entry.total,
-        playerName: row.entry.player.name,
-        recordedAt: new Date(row.entry.recordedAt),
-        playCount: row.entry.playCount,
-        playNumber: row.entry.playNumber
-      }
-    }
   }
 
   // Retrieves a record.
   //
   // Returns a record object.
-  retrieveRecord (level, user) {
-    throw new Error('meow')
-    // return record object
+  async retrieveRecord (level, user) {
+    console.log('GONNA RETRIEVE A SINGLE RECORD =========================!!!')
+    const result = await this._scoreboardClient.retrieveRecord({
+      idToken: this._currentUser.idToken,
+      md5: level.md5,
+      playMode: level.playMode,
+    })
+    return {
+      md5: level.md5,
+      playMode: level.playMode,
+      ...toEntry(result.data.chart.level.myRecord)
+    }
   }
 
   // Retrieves the scoreboard
-  retrieveScoreboard ({ md5, playMode }) {
-    throw new Error('meow')
-    // return { data: [ record ] }
+  async retrieveScoreboard ({ md5, playMode }) {
+    const result = await this._scoreboardClient.retrieveScoreboard({ md5, playMode })
+    return { data: result.data.chart.level.leaderboard.map(toEntry) }
   }
 
   // Retrieve multiple records!
@@ -131,3 +126,17 @@ export class NewOnlineService {
 }
 
 export default NewOnlineService
+
+function toEntry (row) {
+  return {
+    rank: row.rank,
+    score: row.entry.score,
+    combo: row.entry.combo,
+    count: row.entry.count,
+    total: row.entry.total,
+    playerName: row.entry.player.name,
+    recordedAt: new Date(row.entry.recordedAt),
+    playCount: row.entry.playCount,
+    playNumber: row.entry.playNumber
+  }
+}

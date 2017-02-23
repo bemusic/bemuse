@@ -45,7 +45,7 @@ function tests (onlineServiceOptions) {
       }
     }
 
-    this.timeout(10000)
+    this.timeout(20000)
 
     describe('signup', function () {
       let online

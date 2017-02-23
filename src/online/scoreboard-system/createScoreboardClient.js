@@ -177,18 +177,6 @@ export default function createScoreboardClient ({
       total
       combo
       count
-      player { name }
-    }
-  }`
-
-  const OWN_ENTRY = `{
-    rank
-    entry {
-      id
-      score
-      total
-      combo
-      count
       playNumber
       playCount
       recordedAt
@@ -228,7 +216,7 @@ export default function createScoreboardClient ({
         query: `
           mutation submitScore ($idToken: String!, $md5: String!, $playMode: String!, $input: RegisterScoreInput!) {
             registerScore (jwt: $idToken, md5: $md5, playMode: $playMode, input: $input) {
-              resultingRow ${OWN_ENTRY}
+              resultingRow ${ENTRY}
               level {
                 leaderboard (max: 50) ${ENTRY}
               }
@@ -240,6 +228,41 @@ export default function createScoreboardClient ({
           md5,
           playMode,
           input
+        }
+      })
+    },
+    retrieveScoreboard ({ md5, playMode }) {
+      return graphql({
+        query: `
+          query retrieveScoreboard ($md5: String!, $playMode: String!) {
+            chart (md5: $md5) {
+              level (playMode: $playMode) {
+                leaderboard (max: 50) ${ENTRY}
+              }
+            }
+          }
+        `,
+        variables: {
+          md5,
+          playMode
+        }
+      })
+    },
+    retrieveRecord ({ idToken, md5, playMode }) {
+      return graphql({
+        query: `
+          query retrieveRecord ($md5: String!, $playMode: String!, $jwt: String!) {
+            chart (md5: $md5) {
+              level (playMode: $playMode) {
+                myRecord (jwt: $jwt) ${ENTRY}
+              }
+            }
+          }
+        `,
+        variables: {
+          md5,
+          playMode,
+          jwt: idToken
         }
       })
     }
