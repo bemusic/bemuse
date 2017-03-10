@@ -1,24 +1,22 @@
-import * as Analytics from './analytics'
-import * as Options from './entities/Options'
-
-import co from 'co'
-import invariant from 'invariant'
-import query from 'bemuse/utils/query'
-import screenfull from 'screenfull'
 import BemusePackageResources from 'bemuse/resources/bemuse-package'
 import GameScene from 'bemuse/game/game-scene'
 import LoadingScene from 'bemuse/game/ui/LoadingScene.jsx'
 import React from 'react'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 import URLResource from 'bemuse/resources/url'
-import { shouldDisableFullScreen, isTitleDisplayMode } from 'bemuse/devtools/query-flags'
+import co from 'co'
+import invariant from 'invariant'
+import query from 'bemuse/utils/query'
 import { MISSED } from 'bemuse/game/judgments'
 import { getGrade } from 'bemuse/rules/grade'
-import { unmuteAudio } from 'bemuse/sampling-master'
+import { isTitleDisplayMode } from 'bemuse/devtools/query-flags'
 import { resolve as resolveUrl } from 'url'
+import { unmuteAudio } from 'bemuse/sampling-master'
 
-import createAutoVelocity from './interactors/createAutoVelocity'
+import * as Analytics from './analytics'
+import * as Options from './entities/Options'
 import ResultScene from './ui/ResultScene'
+import createAutoVelocity from './interactors/createAutoVelocity'
 
 const Log = BemuseLogger.forModule('game-launcher')
 
@@ -31,13 +29,6 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
   unmuteAudio()
 
   return co(function * () {
-    // go fullscreen
-    if (screenfull.enabled && !shouldDisableFullScreen()) {
-      let safari = /Safari/.test(navigator.userAgent) &&
-                  !/Chrom/.test(navigator.userAgent)
-      if (!safari) screenfull.request()
-    }
-
     // get the options from the store
     invariant(options, 'Options must be passed!')
 

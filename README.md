@@ -90,13 +90,8 @@ __Play now at https://bemuse.ninja/.__
 Install [Node.js](https://nodejs.org/en/) and [Yarn](https://github.com/yarnpkg).
 
 ```
-# Create a folder for Bemuse
-mkdir Bemuse
-cd Bemuse
-
-# Clone Bemuse and music server (warning, very large repo!!)
+# Clone Bemuse
 git clone git@github.com:bemusic/bemuse.git
-git clone git@github.com:bemusic/music.git
 
 # Enter the main repository
 cd bemuse

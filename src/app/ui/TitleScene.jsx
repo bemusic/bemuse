@@ -1,25 +1,27 @@
-import * as Analytics   from '../analytics'
-import * as Options     from '../entities/Options'
-import * as OptionsIO   from '../io/OptionsIO'
 import './TitleScene.scss'
 
-import $                from 'jquery'
-import version          from 'bemuse/utils/version'
-import HomePage         from 'bemuse/site/HomePage'
-import ModalPopup       from 'bemuse/ui/ModalPopup'
-import React            from 'react'
-import Scene            from 'bemuse/ui/Scene'
-import SCENE_MANAGER    from 'bemuse/scene-manager'
-import SceneToolbar     from 'bemuse/ui/SceneToolbar'
-import TipContainer     from 'bemuse/ui/TipContainer'
-import { connect }      from 'react-redux'
-import { compose }      from 'recompose'
+import $ from 'jquery'
+import HomePage from 'bemuse/site/HomePage'
+import ModalPopup from 'bemuse/ui/ModalPopup'
+import React from 'react'
+import SCENE_MANAGER from 'bemuse/scene-manager'
+import Scene from 'bemuse/ui/Scene'
+import SceneToolbar from 'bemuse/ui/SceneToolbar'
+import TipContainer from 'bemuse/ui/TipContainer'
+import screenfull from 'screenfull'
+import version from 'bemuse/utils/version'
+import { compose } from 'recompose'
+import { connect } from 'react-redux'
+import { shouldDisableFullScreen } from 'bemuse/devtools/query-flags'
 
-import connectIO        from '../../impure-react/connectIO'
-import AboutScene       from './AboutScene'
-import ChangelogPanel   from './ChangelogPanel'
-import FirstTimeTip     from './FirstTimeTip'
-import ModeSelectScene  from './ModeSelectScene'
+import * as Analytics from '../analytics'
+import * as Options from '../entities/Options'
+import * as OptionsIO from '../io/OptionsIO'
+import AboutScene from './AboutScene'
+import ChangelogPanel from './ChangelogPanel'
+import FirstTimeTip from './FirstTimeTip'
+import ModeSelectScene from './ModeSelectScene'
+import connectIO from '../../impure-react/connectIO'
 
 const HAS_PARENT = (() => {
   try {
@@ -111,6 +113,12 @@ export const TitleScene = React.createClass({
   enterGame () {
     SCENE_MANAGER.push(<ModeSelectScene />).done()
     Analytics.send('TitleScene', 'enter game')
+    // go fullscreen
+    if (screenfull.enabled && !shouldDisableFullScreen()) {
+      let safari = /Safari/.test(navigator.userAgent) &&
+                  !/Chrom/.test(navigator.userAgent)
+      if (!safari) screenfull.request()
+    }
   },
   showAbout () {
     SCENE_MANAGER.push(<AboutScene />).done()

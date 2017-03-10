@@ -1,18 +1,16 @@
-
-import Bacon      from 'baconjs'
 import _          from 'lodash'
+import Bacon      from 'baconjs'
 import Immutable  from 'immutable'
 
-import id             from './id'
-import * as Level     from './level'
 import * as DataStore from './data-store'
-
+import * as Level     from './level'
+import id             from './id'
 import {
   INITIAL_OPERATION_STATE,
   completedStateTransition,
-  transition川FromPromise,
-  operationState川,
   isWaiting,
+  operationState川,
+  transition川FromPromise,
 } from './operations'
 
 export function Online (service) {
@@ -29,11 +27,11 @@ export function Online (service) {
   )
 
   function signUp (options) {
-    return service.signUp(options).tap(user => user口.push(user))
+    return Promise.resolve(service.signUp(options)).tap(user => user口.push(user))
   }
 
   function logIn (options) {
-    return service.logIn(options).tap(user => user口.push(user))
+    return Promise.resolve(service.logIn(options)).tap(user => user口.push(user))
   }
 
   function logOut () {
@@ -103,7 +101,8 @@ export function Online (service) {
           let transitions = _.defaults(loadedRecords, nullResults)
           return DataStore.putMultiple(transitions)
         })
-        .catch(function () {
+        .catch(function (e) {
+          console.error('Cannot fetch levels:', e)
           return DataStore.putMultiple({ })
         })
       )

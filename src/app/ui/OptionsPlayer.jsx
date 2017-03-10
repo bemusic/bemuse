@@ -1,17 +1,17 @@
-import * as Options from '../entities/Options'
-import * as OptionsIO from '../io/OptionsIO'
 import './OptionsPlayer.scss'
 
-import compose from 'recompose/compose'
 import React from 'react'
+import compose from 'recompose/compose'
 import { connect } from 'react-redux'
 
-import connectIO from '../../impure-react/connectIO'
+import * as Options from '../entities/Options'
+import * as OptionsIO from '../io/OptionsIO'
 import OptionsButton from './OptionsButton'
 import OptionsCheckbox from './OptionsCheckbox'
 import OptionsInputField from './OptionsInputField'
 import OptionsPlayerSelector from './OptionsPlayerSelector'
 import OptionsSpeed from './OptionsSpeed'
+import connectIO from '../../impure-react/connectIO'
 
 const SettingRow = compose(
   connect((state) => ({ options: state.options })),
@@ -147,6 +147,18 @@ export const OptionsPlayer = React.createClass({
         )}
       />
 
+      <SettingRow
+        label="Preview"
+        renderControl={(options, onUpdateOptions) => (
+          <OptionsCheckbox
+            checked={Options.isPreviewEnabled(options)}
+            onToggle={() => onUpdateOptions(Options.togglePreview)}
+          >
+            Enable music preview
+          </OptionsCheckbox>
+        )}
+      />
+
       <div className="OptionsPlayerのbuttons">
         <OptionsButton onClick={this.props.onClose}>Save & Exit</OptionsButton>
       </div>
@@ -155,6 +167,11 @@ export const OptionsPlayer = React.createClass({
 })
 
 OptionsPlayer.Row = React.createClass({
+  propTypes: {
+    hidden: React.PropTypes.bool,
+    label: React.PropTypes.node,
+    children: React.PropTypes.node
+  },
   render () {
     return <div
       className="OptionsPlayerのrow"

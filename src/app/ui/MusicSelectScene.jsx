@@ -1,39 +1,38 @@
-
 import './MusicSelectScene.scss'
 
-import React            from 'react'
-import ReactDOM         from 'react-dom'
-import c                from 'classnames'
-import $                from 'jquery'
-import pure             from 'recompose/pure'
-import compose          from 'recompose/compose'
-
-import { connect }      from 'react-redux'
-import { createSelector, createStructuredSelector } from 'reselect'
-import { connect as connectToLegacyStore } from 'bemuse/flux'
-import SCENE_MANAGER    from 'bemuse/scene-manager'
-import online           from 'bemuse/online/instance'
-import Scene            from 'bemuse/ui/Scene'
-import SceneHeading     from 'bemuse/ui/SceneHeading'
-import SceneToolbar     from 'bemuse/ui/SceneToolbar'
-import ModalPopup       from 'bemuse/ui/ModalPopup'
-import * as ReduxState from '../redux/ReduxState'
-
+import * as MusicPreviewer from 'bemuse/music-previewer'
+import $ from 'jquery'
 import AuthenticationPopup from 'bemuse/online/ui/AuthenticationPopup'
-
-import UnofficialPanel from './UnofficialPanel'
-import MusicList from './MusicList'
-import MusicInfo from './MusicInfo'
-import Options from './Options'
-import CustomBMS from './CustomBMS'
-import * as Analytics from '../analytics'
-import { connectIO } from '../../impure-react/connectIO'
-
+import ModalPopup from 'bemuse/ui/ModalPopup'
+import MusicSelectPreviewer from 'bemuse/music-previewer/MusicSelectPreviewer'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import SCENE_MANAGER from 'bemuse/scene-manager'
+import Scene from 'bemuse/ui/Scene'
+import SceneHeading from 'bemuse/ui/SceneHeading'
+import SceneToolbar from 'bemuse/ui/SceneToolbar'
+import c from 'classnames'
+import compose from 'recompose/compose'
+import getPreviewUrl from 'bemuse/music-collection/getPreviewUrl'
+import online from 'bemuse/online/instance'
+import pure from 'recompose/pure'
+import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
+import { connect } from 'react-redux'
+import { connect as connectToLegacyStore } from 'bemuse/flux'
+import { createSelector, createStructuredSelector } from 'reselect'
 import { shouldShowOptions } from 'bemuse/devtools/query-flags'
-import { OFFICIAL_SERVER_URL } from '../constants'
 
-import * as MusicSelectionIO from '../io/MusicSelectionIO'
+import * as Analytics from '../analytics'
 import * as MusicSearchIO from '../io/MusicSearchIO'
+import * as MusicSelectionIO from '../io/MusicSelectionIO'
+import * as Options from '../entities/Options'
+import * as ReduxState from '../redux/ReduxState'
+import CustomBMS from './CustomBMS'
+import MusicInfo from './MusicInfo'
+import MusicList from './MusicList'
+import OptionsView from './Options'
+import UnofficialPanel from './UnofficialPanel'
+import { connectIO } from '../../impure-react/connectIO'
 
 const selectMusicSelectState = (() => {
   const selectLegacyServerObjectForCurrentCollection = createSelector(
@@ -64,7 +63,9 @@ const selectMusicSelectState = (() => {
 const enhance = compose(
   connectToLegacyStore({ user: online && online.user川 }),
   connect((state) => ({
-    musicSelect: selectMusicSelectState(state)
+    musicSelect: selectMusicSelectState(state),
+    collectionUrl: ReduxState.selectCurrentCollectionUrl(state),
+    musicPreviewEnabled: Options.isPreviewEnabled(state.options)
   })),
   connectIO({
     onSelectChart: () => (song, chart) => (
@@ -91,6 +92,12 @@ export const MusicSelectScene = React.createClass({
     onSelectSong: React.PropTypes.func,
     onFilterTextChange: React.PropTypes.func,
     onLaunchGame: React.PropTypes.func,
+    collectionUrl: React.PropTypes.string,
+    musicPreviewEnabled: React.PropTypes.bool,
+  },
+  getPreviewUrl () {
+    const song = this.props.musicSelect.song
+    return getPreviewUrl(this.props.collectionUrl, song)
   },
   render () {
     let musicSelect = this.props.musicSelect
@@ -130,7 +137,7 @@ export const MusicSelectScene = React.createClass({
         visible={this.state.optionsVisible}
         onBackdropClick={this.handleOptionsClose}
       >
-        <Options onClose={this.handleOptionsClose} />
+        <OptionsView onClose={this.handleOptionsClose} />
       </ModalPopup>
 
       <ModalPopup
@@ -154,6 +161,10 @@ export const MusicSelectScene = React.createClass({
         onFinish={this.handleAuthenticationFinish}
         onBackdropClick={this.handleAuthenticationClose}
       />
+
+      {!!this.props.musicPreviewEnabled &&
+        <MusicSelectPreviewer url={this.getPreviewUrl()} />
+      }
     </Scene>
   },
   renderUnofficialDisclaimer () {
@@ -265,6 +276,7 @@ export const MusicSelectScene = React.createClass({
   handleChartClick (chart) {
     if (this.props.musicSelect.chart.md5 === chart.md5) {
       Analytics.send('MusicSelectScene', 'launch game')
+      MusicPreviewer.go()
       this.props.onLaunchGame()
     } else {
       Analytics.send('MusicSelectScene', 'select chart')

@@ -47,6 +47,7 @@ export const DEFAULTS = {
 
   // BGA
   'system.bga.enabled':         '1',
+  'system.preview.enabled':     '1',
 
   // Version
   'system.last-seen-version':   '0.0.0',
