@@ -300,9 +300,22 @@ export default function createScoreboardClient ({
         `,
         variables: {
           md5s,
-          jwt: playerToken
+          playerToken
         }
       })
+    },
+    renewPlayerToken ({ playerToken }) {
+      return graphql({
+        query: `
+          mutation renewPlayerToken ($playerToken: String!) {
+            renewPlayerToken (playerToken: $playerToken) {
+              playerToken
+            }
+          }
+        `,
+        variables: { playerToken }
+      })
+      .then(result => result.data.renewPlayerToken.playerToken)
     }
   }
 

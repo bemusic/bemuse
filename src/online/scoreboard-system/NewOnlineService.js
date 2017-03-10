@@ -16,6 +16,7 @@ export class NewOnlineService {
     this._scoreboardClient = createScoreboardClient({ server, auth })
     this._storagePrefix = storagePrefix
     this._updateUserFromStorage()
+    this._renewPlayerToken()
   }
 
   _updateUserFromStorage () {
@@ -30,8 +31,21 @@ export class NewOnlineService {
     this._currentUser = loadUser(localStorage[`${this._storagePrefix}.id`])
   }
 
+  _renewPlayerToken () {
+    const playerToken = this._currentUser && this._currentUser.playerToken
+    if (!playerToken) return
+    const username = this._currentUser.username
+    return this._scoreboardClient.renewPlayerToken({ playerToken })
+      .then(newToken => {
+        localStorage[`${this._storagePrefix}.id`] = JSON.stringify({
+          username: username,
+          playerToken: newToken
+        })
+      })
+  }
+
   getCurrentUser () {
-    if (this._currentUser) {
+    if (this._currentUser && this._currentUser.playerToken) {
       return { username: this._currentUser.username }
     } else {
       return null
