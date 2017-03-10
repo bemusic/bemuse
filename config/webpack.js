@@ -132,10 +132,7 @@ function applyWebConfig (config) {
   }
 
   if (Env.production()) {
-    config.plugins.push(
-      new webpack.optimize.UglifyJsPlugin(),
-      new webpack.optimize.OccurenceOrderPlugin()
-    )
+    config.plugins.push(new webpack.optimize.UglifyJsPlugin())
   }
 
   return config
