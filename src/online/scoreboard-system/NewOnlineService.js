@@ -47,7 +47,7 @@ export class NewOnlineService {
       .then(signUpResult => {
         localStorage[`${this._storagePrefix}.id`] = JSON.stringify({
           username: username,
-          idToken: signUpResult.idToken
+          playerToken: signUpResult.playerToken
         })
         this._updateUserFromStorage()
       })
@@ -58,9 +58,10 @@ export class NewOnlineService {
       .then(loginResult => {
         localStorage[`${this._storagePrefix}.id`] = JSON.stringify({
           username: username,
-          idToken: loginResult.idToken
+          playerToken: loginResult.playerToken
         })
         this._updateUserFromStorage()
+        return this.getCurrentUser()
       })
   }
 
@@ -74,7 +75,7 @@ export class NewOnlineService {
       throw new Error('Not logged in')
     }
     const result = await this._scoreboardClient.submitScore({
-      idToken: this._currentUser.idToken,
+      playerToken: this._currentUser.playerToken,
       md5: info.md5,
       playMode: info.playMode,
       input: {
@@ -97,16 +98,16 @@ export class NewOnlineService {
   //
   // Returns a record object.
   async retrieveRecord (level, user) {
-    console.log('GONNA RETRIEVE A SINGLE RECORD =========================!!!')
     const result = await this._scoreboardClient.retrieveRecord({
-      idToken: this._currentUser.idToken,
+      playerToken: this._currentUser.playerToken,
       md5: level.md5,
       playMode: level.playMode,
     })
-    return {
+    const myRecord = result.data.chart.level.myRecord
+    return myRecord && {
       md5: level.md5,
       playMode: level.playMode,
-      ...toEntry(result.data.chart.level.myRecord)
+      ...toEntry(myRecord)
     }
   }
 
@@ -119,9 +120,17 @@ export class NewOnlineService {
   // Retrieve multiple records!
   //
   // Items is an array of song items. They have a md5 property.
-  retrieveMultipleRecords (items, user) {
-    throw new Error('meow')
-    // return [ records ]
+  async retrieveMultipleRecords (items) {
+    const result = await this._scoreboardClient.retrieveRankingEntries({
+      playerToken: this._currentUser.playerToken,
+      md5s: items.map(item => item.md5)
+    })
+    const entries = result.data.me.records.map(item => ({
+      ...toEntry(item),
+      md5: item.md5,
+      playMode: item.playMode
+    }))
+    return entries
   }
 }
 

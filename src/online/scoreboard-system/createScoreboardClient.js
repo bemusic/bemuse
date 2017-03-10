@@ -27,7 +27,7 @@ export default function createScoreboardClient ({
       }, function (err) {
         if (err) {
           log('Auth0 signup error', err)
-          return reject(err)
+          return reject(coerceAuth0ErrorToErrorObject(err))
         }
         log('Auth0 signup OK — now logging in')
         auth.client.login({
@@ -38,7 +38,7 @@ export default function createScoreboardClient ({
         }, function (err, authResult) {
           if (err) {
             log('Auth0 login error', err)
-            return reject(err)
+            return reject(coerceAuth0ErrorToErrorObject(err))
           }
           log('Auth result', authResult)
           resolve({ idToken: authResult.idToken })
@@ -64,7 +64,7 @@ export default function createScoreboardClient ({
       }, function (err, authResult) {
         if (err) {
           log('Auth0 login error', err)
-          return reject(err)
+          return reject(coerceAuth0ErrorToErrorObject(err))
         }
         log('Auth result', authResult)
         resolve({ idToken: authResult.idToken })
@@ -169,19 +169,39 @@ export default function createScoreboardClient ({
     )
   }
 
+  function resolvePlayerTokenFromIdToken (idToken) {
+    return Promise.resolve(
+      graphql({
+        query: `
+          mutation resolvePlayerTokenFromIdToken ($jwt: String!) {
+            authenticatePlayer(jwt: $jwt) { playerToken }
+          }
+        `,
+        variables: {
+          jwt: idToken
+        }
+      })
+      .then(result => {
+        return result.data.authenticatePlayer.playerToken
+      })
+    )
+  }
+
   const ENTRY = `{
+    id
+    score
+    total
+    combo
+    count
+    playNumber
+    playCount
+    recordedAt
+    player { name }
+  }`
+
+  const ROW = `{
     rank
-    entry {
-      id
-      score
-      total
-      combo
-      count
-      playNumber
-      playCount
-      recordedAt
-      player { name }
-    }
+    entry ${ENTRY}
   }`
 
   const scoreboardClient = {
@@ -190,41 +210,40 @@ export default function createScoreboardClient ({
       invariant(typeof password === 'string', 'password must be a string')
       invariant(typeof email === 'string',    'email must be a string')
       return co(function * () {
-        return yield * authenticationFlow.signUp(username, email, password, {
+        const { idToken } = yield * authenticationFlow.signUp(username, email, password, {
           log: (message) => log('[signUp]', message),
           userSignUp,
           checkPlayerNameAvailability,
           reservePlayerId,
           ensureLink
         })
+        return { playerToken: yield resolvePlayerTokenFromIdToken(idToken) }
       })
     },
     loginByUsernamePassword ({ username, password }) {
       invariant(typeof username === 'string', 'username must be a string')
       invariant(typeof password === 'string', 'password must be a string')
       return co(function * () {
-        return yield * authenticationFlow.loginByUsernamePassword(username, password, {
+        const { idToken } = yield * authenticationFlow.loginByUsernamePassword(username, password, {
           log: (message) => log('[loginByUsernamePassword]', message),
           usernamePasswordLogin,
           resolvePlayerId,
           ensureLink
         })
+        return { playerToken: yield resolvePlayerTokenFromIdToken(idToken) }
       })
     },
-    submitScore ({ idToken, md5, playMode, input }) {
+    submitScore ({ playerToken, md5, playMode, input }) {
       return graphql({
         query: `
-          mutation submitScore ($idToken: String!, $md5: String!, $playMode: String!, $input: RegisterScoreInput!) {
-            registerScore (jwt: $idToken, md5: $md5, playMode: $playMode, input: $input) {
-              resultingRow ${ENTRY}
-              level {
-                leaderboard (max: 50) ${ENTRY}
-              }
+          mutation submitScore ($playerToken: String!, $md5: String!, $playMode: String!, $input: RegisterScoreInput!) {
+            registerScore (playerToken: $playerToken, md5: $md5, playMode: $playMode, input: $input) {
+              resultingRow ${ROW}
             }
           }
         `,
         variables: {
-          idToken,
+          playerToken,
           md5,
           playMode,
           input
@@ -237,7 +256,7 @@ export default function createScoreboardClient ({
           query retrieveScoreboard ($md5: String!, $playMode: String!) {
             chart (md5: $md5) {
               level (playMode: $playMode) {
-                leaderboard (max: 50) ${ENTRY}
+                leaderboard (max: 50) ${ROW}
               }
             }
           }
@@ -248,13 +267,13 @@ export default function createScoreboardClient ({
         }
       })
     },
-    retrieveRecord ({ idToken, md5, playMode }) {
+    retrieveRecord ({ playerToken, md5, playMode }) {
       return graphql({
         query: `
-          query retrieveRecord ($md5: String!, $playMode: String!, $jwt: String!) {
+          query retrieveRecord ($md5: String!, $playMode: String!, $playerToken: String!) {
             chart (md5: $md5) {
               level (playMode: $playMode) {
-                myRecord (jwt: $jwt) ${ENTRY}
+                myRecord (playerToken: $playerToken) ${ROW}
               }
             }
           }
@@ -262,11 +281,34 @@ export default function createScoreboardClient ({
         variables: {
           md5,
           playMode,
-          jwt: idToken
+          playerToken
+        }
+      })
+    },
+    retrieveRankingEntries ({ playerToken, md5s }) {
+      return graphql({
+        query: `
+          query retrieveRecord ($md5s: [String], $playerToken: String!) {
+            me (playerToken: $playerToken) {
+              records (md5s: $md5s) {
+                md5
+                playMode
+                entry ${ENTRY}
+              }
+            }
+          }
+        `,
+        variables: {
+          md5s,
+          jwt: playerToken
         }
       })
     }
   }
 
   return scoreboardClient
+}
+
+function coerceAuth0ErrorToErrorObject (err) {
+  return new Error(`Auth0 Error: ${err.statusCode} ${err.description} [${err.code}]`)
 }
