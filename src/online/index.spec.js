@@ -1,9 +1,7 @@
+import query from 'bemuse/utils/query'
 
-import { Parse } from 'parse'
-
-import query         from 'bemuse/utils/query'
-import Online        from './'
-import OnlineService from './online-service'
+import Online from './'
+import OnlineService from './scoreboard-system/OnlineService'
 
 var uid = (function () {
   var session = Math.floor(Math.random() * 65536).toString(16)
@@ -18,22 +16,27 @@ var uid = (function () {
   }
 })()
 
-if (query.PARSE_APP_ID && query.PARSE_API_KEY) {
-  tests(query.PARSE_APP_ID, query.PARSE_API_KEY)
+if (query.TEST_SCOREBOARD) {
+  tests({
+    server: 'https://immense-ravine-52031.herokuapp.com/',
+    authOptions: {
+      domain: 'bemuse-scoreboard-staging-001.auth0.com',
+      clientID: 'WssUDVmiXYfSRrXXAPpztJ8qW41Dmoeb'
+    },
+    storagePrefix: 'scoreboard.test-auth'
+  })
 } else {
   describe('Online', function () {
-    xit('Set PARSE_APP_ID and PARSE_API_KEY to test')
+    xit('Add TEST_SCOREBOARD env to test it!')
   })
 }
 
-function createOnline () {
-  return new Online(new OnlineService())
-}
-
-function tests (APP_ID, JS_KEY) {
+function tests (onlineServiceOptions) {
+  function createOnline () {
+    return new Online(new OnlineService(onlineServiceOptions))
+  }
 
   describe('Online', function () {
-
     function createAccountInfo () {
       return {
         username: uid(),
@@ -42,11 +45,7 @@ function tests (APP_ID, JS_KEY) {
       }
     }
 
-    this.timeout(10000)
-
-    before(function () {
-      Parse.initialize(APP_ID, JS_KEY)
-    })
+    this.timeout(20000)
 
     describe('signup', function () {
       let online
