@@ -2,7 +2,7 @@ import React from 'react'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 import now from 'bemuse/utils/now'
 import workerPath from
-  'bemuse/hacks/service-worker-url!serviceworker!./service-worker.js'
+  'bemuse/hacks/service-worker-url/index.loader.js!serviceworker-loader!./service-worker.js'
 import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
 import { createIO, createRun } from 'impure'
 import { shouldShowAbout, shouldShowModeSelect }

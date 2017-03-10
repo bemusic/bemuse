@@ -1,4 +1,4 @@
-import config           from 'val?cacheable!./config'
+import config           from 'val-loader?cacheable!./config'
 
 import OfflineService   from './OfflineService'
 import Online           from './index'

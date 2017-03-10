@@ -1,6 +1,6 @@
+import 'style-loader!./style.scss'
 
 import template from './template.jade'
-import 'style!./style.scss'
 
 export function main () {
 

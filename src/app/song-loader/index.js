@@ -1,4 +1,4 @@
-import Worker from 'worker!./worker.js'
+import Worker from 'worker-loader!./worker.js'
 
 export function loadSongFromResources (resources, options = {}) {
   var onMessage = options.onMessage || (() => {})

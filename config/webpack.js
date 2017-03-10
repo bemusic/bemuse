@@ -1,12 +1,11 @@
-import * as Env       from './env'
+import * as Env from './env'
 
-import webpack        from 'webpack'
-import Gauge          from 'gauge'
-import { flowRight }  from 'lodash'
-
-import path           from './path'
+import Gauge from 'gauge'
+import LoadProgressPlugin from '../src/hacks/webpack-progress'
+import { flowRight } from 'lodash'
+import path from './path'
+import webpack from 'webpack'
 import webpackResolve from './webpackResolve'
-import ProgressPlugin from '../src/hacks/webpack-progress'
 
 function generateBaseConfig () {
   let config = {
@@ -24,15 +23,13 @@ function generateBaseConfig () {
     },
     module: {
       loaders: generateLoadersConfig(),
-      postLoaders: [],
-      preLoaders: [],
       noParse: [
         /node_modules\/sinon\//,
       ],
     },
     plugins: [
       new CompileProgressPlugin(),
-      new ProgressPlugin(),
+      new LoadProgressPlugin(),
       new webpack.DefinePlugin({
         NODE_ENV: JSON.stringify(String(process.env.NODE_ENV))
       }),
@@ -58,33 +55,33 @@ function generateLoadersConfig () {
     {
       test: /\.jsx?$/,
       include: [path('src'), path('spec')],
-      loader: 'babel?cacheDirectory',
+      loader: 'babel-loader?cacheDirectory',
     },
     {
       test: /\.js$/,
       include: [path('node_modules', 'pixi.js')],
-      loader: 'transform/cacheable?brfs',
+      loader: 'transform-loader/cacheable?brfs',
     },
     {
       test: /\.json$/,
-      loader: 'json',
+      loader: 'json-loader',
     },
     {
       test: /\.pegjs$/,
-      loader: 'pegjs',
+      loader: 'pegjs-loader',
     },
     {
       test: /\.scss$/,
-      loader: 'style!css!autoprefixer?browsers=last 2 version' +
-              '!sass?outputStyle=expanded'
+      loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 version' +
+              '!sass-loader?outputStyle=expanded'
     },
     {
       test: /\.css$/,
-      loader: 'style!css!autoprefixer?browsers=last 2 version',
+      loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 version',
     },
     {
       test: /\.jade$/,
-      loader: 'jade',
+      loader: 'jade-loader',
     },
     {
       test: /\.png$/,
@@ -123,16 +120,19 @@ function applyWebConfig (config) {
 
   if (Env.hotModeEnabled()) {
     config.devServer.hot = true
-    config.plugins.push(new webpack.HotModuleReplacementPlugin())
-    config.entry.boot.unshift('webpack-dev-server/client?http://' + Env.serverHost() + ':' + Env.serverPort())
-    config.entry.boot.unshift('webpack/hot/dev-server')
+    config.plugins.push(
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NamedModulesPlugin()
+    )
+    config.entry.boot.unshift(
+      'react-hot-loader/patch',
+      'webpack-dev-server/client?http://' + Env.serverHost() + ':' + Env.serverPort(),
+      'webpack/hot/only-dev-server'
+    )
   }
 
   if (Env.production()) {
-    config.plugins.push(
-      new webpack.optimize.UglifyJsPlugin(),
-      new webpack.optimize.OccurenceOrderPlugin()
-    )
+    config.plugins.push(new webpack.optimize.UglifyJsPlugin())
   }
 
   return config

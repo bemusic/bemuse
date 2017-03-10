@@ -1,2 +1,2 @@
 
-module.exports = require('val!./version-loader')
+module.exports = require('val-loader!./version-loader')
