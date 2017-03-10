@@ -2,7 +2,7 @@ import Auth0 from 'auth0-js'
 
 import createScoreboardClient from './createScoreboardClient'
 
-export class NewOnlineService {
+export class OnlineService {
   constructor ({
     server,
     storagePrefix = 'scoreboard.auth',
@@ -148,7 +148,7 @@ export class NewOnlineService {
   }
 }
 
-export default NewOnlineService
+export default OnlineService
 
 function toEntry (row) {
   return {

@@ -5249,14 +5249,6 @@ parse-uri@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/parse-uri/-/parse-uri-1.0.0.tgz#2872dcc22f1a797acde1583d8a0ac29552ddac20"
 
-parse@^1.5.0:
-  version "1.9.2"
-  resolved "https://registry.yarnpkg.com/parse/-/parse-1.9.2.tgz#e41d7cb6efd464eea30c34ec0651548f66c5b8e4"
-  dependencies:
-    babel-runtime "^6.11.6"
-    ws "^1.0.1"
-    xmlhttprequest "^1.7.0"
-
 parsejson@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/parsejson/-/parsejson-0.0.1.tgz#9b10c6c0d825ab589e685153826de0a3ba278bcc"
@@ -7428,7 +7420,7 @@ write@^0.2.1:
   dependencies:
     mkdirp "^0.5.1"
 
-ws@1.1.1, ws@^1.0.1:
+ws@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ws/-/ws-1.1.1.tgz#082ddb6c641e85d4bb451f03d52f06eabdb1f018"
   dependencies:
@@ -7442,10 +7434,6 @@ wtf-8@1.0.0:
 xmlhttprequest-ssl@1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/xmlhttprequest-ssl/-/xmlhttprequest-ssl-1.5.1.tgz#3b7741fea4a86675976e908d296d4445961faa67"
-
-xmlhttprequest@^1.7.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/xmlhttprequest/-/xmlhttprequest-1.8.0.tgz#67fe075c5c24fef39f9d65f5f7b7fe75171968fc"
 
 "xtend@>=4.0.0 <4.1.0-0", xtend@^4.0.0, xtend@~4.0.0:
   version "4.0.1"
