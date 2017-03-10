@@ -1,4 +1,3 @@
-
 import Worker from 'worker!./worker.js'
 
 export function loadSongFromResources (resources, options = {}) {
@@ -33,6 +32,8 @@ export function loadSongFromResources (resources, options = {}) {
         }
       }
       worker.onerror = function (e) {
+        onMessage('Worker error: ' + e)
+        console.error('Worker error: ' + e)
         reject(e)
       }
       worker.postMessage({ files })
