@@ -13,7 +13,11 @@ export class OnlineService {
       redirectUri: window.location.href,
       responseType: 'token id_token'
     })
-    this._scoreboardClient = createScoreboardClient({ server, auth })
+    this._scoreboardClient = createScoreboardClient({
+      server,
+      auth,
+      log: () => { }
+    })
     this._storagePrefix = storagePrefix
     this._updateUserFromStorage()
     this._renewPlayerToken()
@@ -23,7 +27,14 @@ export class OnlineService {
     const loadUser = (text) => {
       if (!text) return null
       try {
-        return JSON.parse(text)
+        const data = JSON.parse(text)
+        const playerToken = data.playerToken
+        const playerTokenExpires = JSON.parse(atob(playerToken.split('.')[1])).exp * 1000
+        if (Date.now() > playerTokenExpires - 86400e3) {
+          console.warn('Authentication token is about to expire, skipping!')
+          return null
+        }
+        return data
       } catch (e) {
         return null
       }
