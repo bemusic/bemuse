@@ -1,6 +1,7 @@
 #!/bin/bash -e
 
-git pull --ff-only
+git fetch
+git checkout origin/master
 npm version "$@" -m ':bookmark: %s'
-git push --follow-tags
+git push origin HEAD:master --follow-tags
 
