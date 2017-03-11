@@ -139,8 +139,10 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
       const [ player ] = game.players
 
       // get player's state and save options
-      let playerState = state.player(state.game.players[0])
-      autoVelocity.handleGameFinish(playerState.speed, { saveSpeed, saveLeadTime })
+      const playerState = state.player(state.game.players[0])
+      const playerSpeed = playerState.speed
+      autoVelocity.handleGameFinish(playerSpeed, { saveSpeed, saveLeadTime })
+      loadSpec.options.players[0].speed = playerSpeed
 
       // send data to analytics & display evaluation
       window.removeEventListener('beforeunload', onUnload, false)
