@@ -78,7 +78,7 @@ export default function createScoreboardClient ({
         query: `
           query checkPlayerNameAvailability ($name: String!) {
             player (name: $name) {
-              id
+              linked
             }
           }
         `,
@@ -88,12 +88,12 @@ export default function createScoreboardClient ({
       })
       .then(result => {
         log('checkPlayerNameAvailability response', result)
-        if (result.data.player === null) {
-          log('checkPlayerNameAvailability: Player name is available!')
-          return true
-        } else {
+        if (result.data.player && result.data.player.linked) {
           log('checkPlayerNameAvailability: Player name already taken.')
           return false
+        } else {
+          log('checkPlayerNameAvailability: Player name is available!')
+          return true
         }
       })
     )
