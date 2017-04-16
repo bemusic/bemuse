@@ -8,18 +8,20 @@ init:
 # Test against these versions of Node.js.
 environment:
   nodejs_version: "0.10"
+  NODE_ENV: test
 
 # Install scripts. (runs after repo cloning)
 install:
   - ps: Install-Product node $env:nodejs_version
-  - npm install
+  - npm install npm # https://github.com/npm/npm/issues/6309
+  - ./node_modules/.bin/npm install
 
 # Post-install test scripts.
 test_script:
   - node --version
-  - npm --version
-  - NODE_ENV=test npm run build
-  - NODE_ENV=test npm run travis
+  - ./node_modules/.bin/npm --version
+  - ./node_modules/.bin/npm run build
+  - ./node_modules/.bin/npm run travis
 
 # Don't actually build.
 build: off
