@@ -1,5 +1,5 @@
 
-import { OmniInput, getName, key川, _key川ForUpdate川 } from './'
+import { OmniInput, getName, key, _keyForUpdate } from './'
 import { EventEmitter } from 'events'
 import assert from 'power-assert'
 import Bacon from 'baconjs'
@@ -46,12 +46,12 @@ describe('OmniInput', function () {
 
   beforeEach(function () {
     this.window = fakeWindow()
-    this.midi口 = new Bacon.Bus()
+    this.midibus = new Bacon.Bus()
     this.input = new OmniInput(this.window, {
-      getMidi川: () => this.midi口
+      getMidi: () => this.midibus
     })
     this.midi = (...args) => {
-      this.midi口.push({
+      this.midibus.push({
         data: args,
         target: { id: '1234' },
       })
@@ -152,10 +152,10 @@ describe('OmniInput', function () {
     })
   })
 
-  describe('key川', function () {
+  describe('key', function () {
     it('should return events', function () {
       let last
-      const dispose = key川(this.input, this.window).onValue(value => (last = value))
+      const dispose = key(this.input, this.window).onValue(value => (last = value))
 
       this.window.keydown(32)
       this.window.tick()
@@ -165,19 +165,19 @@ describe('OmniInput', function () {
     })
   })
 
-  describe('_key川ForUpdate川', function () {
+  describe('_keyForUpdate', function () {
     it('should emit new keys', function () {
-      const 口 = new Bacon.Bus()
+      const bus = new Bacon.Bus()
       const events = [ ]
-      const dispose = _key川ForUpdate川(口).onValue(value => events.push(value))
-      口.push({ '32': true })
-      口.push({ '32': true })
-      口.push({ '32': false })
-      口.push({ '32': true })
-      口.push({ '33': true })
-      口.push({ '32': true })
-      口.push({ '32': true, '35': true })
-      口.push({ '31': true, '35': true })
+      const dispose = _keyForUpdate(bus).onValue(value => events.push(value))
+      bus.push({ '32': true })
+      bus.push({ '32': true })
+      bus.push({ '32': false })
+      bus.push({ '32': true })
+      bus.push({ '33': true })
+      bus.push({ '32': true })
+      bus.push({ '32': true, '35': true })
+      bus.push({ '31': true, '35': true })
       assert.deepEqual(events, ['32', '32', '33', '32', '35', '31'])
       dispose()
     })
