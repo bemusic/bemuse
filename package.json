@@ -46,7 +46,7 @@
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-es2016": "^6.11.3",
     "babel-preset-react": "^6.3.13",
-    "babel-preset-stage-2": "^6.13.0",
+    "babel-preset-stage-2": "^6.16.0",
     "babel-register": "^6.4.3",
     "body-parser": "^1.10.0",
     "brfs": "^1.4.0",
