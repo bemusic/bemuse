@@ -52,7 +52,7 @@
     "brfs": "^1.4.0",
     "bundle-loader": "^0.5.5",
     "chai": "^3.2.0",
-    "chai-as-promised": "^5.1.0",
+    "chai-as-promised": "^6.0.0",
     "circumstance": "^1.1.1",
     "codeclimate-test-reporter": "^0.3.1",
     "codecov": "^1.0.1",
