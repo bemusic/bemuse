@@ -54,7 +54,7 @@
     "chai": "^3.2.0",
     "chai-as-promised": "^5.1.0",
     "circumstance": "^1.1.1",
-    "codeclimate-test-reporter": "^0.3.1",
+    "codeclimate-test-reporter": "^0.4.0",
     "codecov": "^1.0.1",
     "connect": "^3.3.3",
     "coveralls": "^2.11.9",
