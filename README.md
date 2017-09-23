@@ -28,6 +28,7 @@ It is recommended to play this game on Google Chrome.
 ## Quick Tour
 
 ![Music selection](docs/images/screenshots/music-select.jpg)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fbemusic%2Fbemuse.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fbemusic%2Fbemuse?ref=badge_shield)
 
 - You can play __online songs__ instantly in your browser.
 
@@ -111,3 +112,6 @@ Note: Online ranking features are not available.
 
 [AGPLv3](LICENSE), for now.
 After the project matures, it may be released into a more permissive license.
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fbemusic%2Fbemuse.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fbemusic%2Fbemuse?ref=badge_large)
