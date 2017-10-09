@@ -33,10 +33,9 @@ First, you should create a folder for Bemuse development::
    mkdir Bemuse
    cd Bemuse
 
-Then, clone the Bemuse repository and music repository::
+Then, clone the Bemuse repository::
 
    git clone git@github.com:bemusic/bemuse.git
-   git clone git@github.com:bemusic/music.git
 
 After these repository has been cloned, ``cd`` into the Bemuse repository::
 
@@ -44,13 +43,13 @@ After these repository has been cloned, ``cd`` into the Bemuse repository::
 
 Install the project's dependencies::
 
-   npm install
+   yarn
 
 When it finishes installing, start the development server::
 
-   npm start
+   yarn start
 
-The game should be accessible at ``http://localhost:8080/?mode=app``.
+The game should be accessible at ``http://localhost:8080/``.
 
 To run unit tests, go to ``http://localhost:8080/?mode=test``.
 
