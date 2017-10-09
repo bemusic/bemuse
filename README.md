@@ -103,6 +103,25 @@ yarn
 npm start
 ```
 
+#### Developing on Windows
+
+Install [Node.js](https://nodejs.org/en/), [Python](https://www.python.org/downloads/) and [VS Build Tools](https://www.visualstudio.com/downloads/#build-tools-for-visual-studio-2017) (MSBuild and Windows 8.1 SDK required)
+
+```
+# Clone Bemuse
+git clone git@github.com:bemusic/bemuse.git
+
+# Enter the main repository
+cd bemuse
+
+# Install the dependencies - use npm instead of yarn
+npm install
+
+# Start development server
+# If you get an error "Cannot file module ...\cygdrive..." you have to run npm start from Cygwin
+npm start
+```
+
 Note: Online ranking features are not available.
 
 
