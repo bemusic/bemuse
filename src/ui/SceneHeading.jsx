@@ -1,15 +1,13 @@
 
 import './SceneHeading.scss'
 
-import React  from 'react'
-import c      from 'classnames'
+import React, { Component } from 'react'
+import c from 'classnames'
 
-export default React.createClass({
-
-  render () {
-    return <div className={c('SceneHeading', this.props.className)}>
-      {this.props.children}
+export default class extends Component {
+  render ({ className, children }) {
+    return <div className={c('SceneHeading', className)}>
+      {children}
     </div>
   }
-
-})
+}

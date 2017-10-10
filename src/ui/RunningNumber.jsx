@@ -1,13 +1,13 @@
 
 import './RunningNumber.scss'
-import React    from 'react'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import now      from 'bemuse/utils/now'
+import now from 'bemuse/utils/now'
 
-export default React.createClass({
+export default class extends Component {
   render () {
-    return <span className="RunningNumber"></span>
-  },
+    return <span className="RunningNumber" />
+  }
   componentDidMount () {
     let node = ReactDOM.findDOMNode(this)
     let text = document.createTextNode('')
@@ -22,9 +22,9 @@ export default React.createClass({
         clearInterval(interval)
       }
     }, 16)
-  },
+  }
   _getText (value) {
     if (this.props.formatter) return this.props.formatter(value)
     return value.toFixed(0)
-  },
-})
+  }
+}

@@ -1,23 +1,23 @@
 
 import './ModalPopup.scss'
-import React        from 'react'
-import c            from 'classnames'
+import React, { Component } from 'react'
+import c from 'classnames'
 import { WarpPortal } from '../react-warp'
 
-export default React.createClass({
-  render () {
-    if (this.props.visible === false) return null
+export default class extends Component {
+  render ({ children, onBackdropClick, visible }) {
+    if (visible === false) return null
     return <WarpPortal content={
       <div className={c('ModalPopup',
-        { 'is-visible': this.props.visible !== false })}>
+        { 'is-visible': visible !== false })}>
         <div className="ModalPopupのbackdrop"
-          onClick={this.props.onBackdropClick}></div>
+          onClick={onBackdropClick}></div>
         <div className="ModalPopupのcontents">
-          {this.props.children}
+          {children}
         </div>
       </div>
     }>
       <span style={{ display: 'none' }}></span>
     </WarpPortal>
   }
-})
+}

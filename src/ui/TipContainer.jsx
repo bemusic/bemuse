@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import './TipContainer.scss'
 
 const TipContainer = ({ children, tip, tipVisible = true }) => (
@@ -16,9 +17,9 @@ const TipContainer = ({ children, tip, tipVisible = true }) => (
 )
 
 TipContainer.propTypes = {
-  children: React.PropTypes.node,
-  tip: React.PropTypes.node,
-  tipVisible: React.PropTypes.bool
+  children: PropTypes.node,
+  tip: PropTypes.node,
+  tipVisible: PropTypes.bool
 }
 
 export default TipContainer
