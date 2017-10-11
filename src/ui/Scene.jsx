@@ -1,20 +1,22 @@
 import './Scene.scss'
 
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import c from 'classnames'
-import React from 'react'
 
-export default React.createClass({
-  propTypes: {
-    className: React.PropTypes.string,
-    children: React.PropTypes.node,
-    onDragEnter: React.PropTypes.func
-  },
-  render () {
+export class Scene extends Component {
+  render ({ className, children, onDragEnter }) {
     return <div
-      className={c('Scene', this.props.className)}
-      onDragEnter={this.props.onDragEnter}
+      className={c('Scene', className)}
+      onDragEnter={onDragEnter}
     >
-      {this.props.children}
+      {children}
     </div>
   }
-})
+}
+
+Scene.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.node,
+  onDragEnter: PropTypes.func
+}

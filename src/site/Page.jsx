@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import './Page.scss'
 
 export const Page = ({ children }) => (
@@ -14,7 +15,7 @@ export const Page = ({ children }) => (
 )
 
 Page.propTypes = {
-  children: React.PropTypes.node
+  children: PropTypes.node
 }
 
 export default Page
@@ -24,5 +25,5 @@ export const Heading = ({ children }) => (
 )
 
 Heading.propTypes = {
-  children: React.PropTypes.node
+  children: PropTypes.node
 }

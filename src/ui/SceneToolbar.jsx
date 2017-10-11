@@ -1,19 +1,19 @@
 
 import './SceneToolbar.scss'
-import React from 'react'
+import React, { Component } from 'react'
 
-export const SceneToolbar = React.createClass({
-  render () {
+export class SceneToolbar extends Component {
+  render ({ children }) {
     return <div className="SceneToolbar">
-      {this.props.children}
+      {children}
     </div>
   }
-})
+}
 
-SceneToolbar.Spacer = React.createClass({
+SceneToolbar.Spacer = class extends Component {
   render () {
     return <div className="SceneToolbarのspacer"></div>
   }
-})
+}
 
 export default SceneToolbar

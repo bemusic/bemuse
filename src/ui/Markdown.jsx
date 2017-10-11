@@ -1,7 +1,7 @@
 
-import Markdown   from 'markdown-it'
-import React      from 'react'
-import ReactDOM   from 'react-dom'
+import Markdown from 'markdown-it'
+import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 
 const markdown = new Markdown({
   linkify: true,
@@ -16,10 +16,10 @@ const safeMarkdown = new Markdown({
   typographer: true,
 })
 
-export default React.createClass({
+export default class extends Component {
   render () {
     return <article className="Markdown" dangerouslySetInnerHTML={this.renderHTML()}></article>
-  },
+  }
   componentDidMount () {
     ReactDOM.findDOMNode(this).addEventListener('click', e => {
       e.preventDefault()
@@ -27,9 +27,9 @@ export default React.createClass({
         window.open(e.target.href, '_blank')
       }
     })
-  },
+  }
   renderHTML () {
     const html = (this.props.safe ? safeMarkdown : markdown).render(this.props.source)
     return { __html: html }
-  },
-})
+  }
+}

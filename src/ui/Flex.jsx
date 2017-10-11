@@ -1,10 +1,10 @@
 
-import React from 'react'
+import React, { Component } from 'react'
 
-export default React.createClass({
-  render () {
+export default class extends Component {
+  render ({ grow }) {
     let style = { }
-    if (this.props.grow !== undefined) style.flex = this.props.grow
+    if (grow !== undefined) style.flex = grow
     return <div style={style}></div>
   }
-})
+}
