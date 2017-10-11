@@ -1,7 +1,8 @@
 
 import './MusicInfoTabInformation.scss'
 
-import React  from 'react'
+import React      from 'react'
+import PropTypes  from 'prop-types'
 
 import { connect } from 'react-redux'
 import connectIO from '../../impure-react/connectIO'
@@ -23,9 +24,9 @@ const enhance = compose(
 
 export const MusicInfoTabInformation = React.createClass({
   propTypes: {
-    song: React.PropTypes.object,
-    readme: React.PropTypes.string,
-    onRequestReadme: React.PropTypes.func
+    song: PropTypes.object,
+    readme: PropTypes.string,
+    onRequestReadme: PropTypes.func
   },
   componentDidMount () {
     this.props.onRequestReadme(this.props.song)

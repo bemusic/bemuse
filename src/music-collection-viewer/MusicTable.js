@@ -75,9 +75,9 @@ function renderSongWarnings (song) {
 
 export class MusicTable extends React.Component {
   static propTypes = {
-    data: React.PropTypes.object,
-    url: React.PropTypes.string,
-    initialSort: React.PropTypes.string
+    data: PropTypes.object,
+    url: PropTypes.string,
+    initialSort: PropTypes.string
   }
   constructor (props) {
     super(props)

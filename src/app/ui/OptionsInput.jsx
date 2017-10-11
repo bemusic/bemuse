@@ -5,6 +5,7 @@ import './OptionsInput.scss'
 import _                    from 'lodash'
 import c                    from 'classnames'
 import React                from 'react'
+import PropTypes            from 'prop-types'
 import { key川 }            from 'bemuse/omni-input'
 import { getName }          from 'bemuse/omni-input'
 import { connect }          from 'react-redux'
@@ -56,10 +57,10 @@ const enhance = compose(
 
 export const OptionsInput = React.createClass({
   propTypes: {
-    scratch: React.PropTypes.string,
-    texts: React.PropTypes.array,
-    editing: React.PropTypes.string,
-    mode: React.PropTypes.string,
+    scratch: PropTypes.string,
+    texts: PropTypes.array,
+    editing: PropTypes.string,
+    mode: PropTypes.string,
   },
   render () {
     const className = c('OptionsInput', {

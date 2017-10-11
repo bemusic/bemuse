@@ -6,6 +6,7 @@ import median from 'median'
 import variance from 'variance'
 import Panel from 'bemuse/ui/Panel'
 import React from 'react'
+import PropTypes from 'prop-types'
 import { timegate } from 'bemuse/game/judgments'
 
 import getNonMissedDeltas from '../interactors/getNonMissedDeltas'
@@ -20,7 +21,7 @@ const group = deltas => (_(deltas)
 
 export default React.createClass({
   propTypes: {
-    deltas: React.PropTypes.array
+    deltas: PropTypes.array
   },
   render () {
     const deltas = this.props.deltas

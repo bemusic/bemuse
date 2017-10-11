@@ -3,6 +3,7 @@ import './LoadingScene.scss'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 import Scene from 'bemuse/ui/Scene.jsx'
 
 import LoadingSceneSongInfo from './LoadingSceneSongInfo.jsx'
@@ -10,10 +11,10 @@ import LoadingSceneProgress from './LoadingSceneProgress.jsx'
 
 export default React.createClass({
   propTypes: {
-    song: React.PropTypes.object,
-    tasks: React.PropTypes.array,
-    eyecatchImagePromise: React.PropTypes.object,
-    registerTeardownCallback: React.PropTypes.func,
+    song: PropTypes.object,
+    tasks: PropTypes.array,
+    eyecatchImagePromise: PropTypes.object,
+    registerTeardownCallback: PropTypes.func,
   },
 
   render () {

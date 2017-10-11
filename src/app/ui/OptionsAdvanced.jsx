@@ -2,9 +2,10 @@ import * as Options          from '../entities/Options'
 import * as OptionsIO        from '../io/OptionsIO'
 import './OptionsAdvanced.scss'
 
-import compose from 'recompose/compose'
-import pure    from 'recompose/pure'
-import React   from 'react'
+import compose    from 'recompose/compose'
+import pure       from 'recompose/pure'
+import React      from 'react'
+import PropTypes  from 'prop-types'
 import { connect }           from 'react-redux'
 
 import connectIO             from '../../impure-react/connectIO'
@@ -23,8 +24,8 @@ const enhance = compose(
 
 export const OptionsAdvanced = React.createClass({
   propTypes: {
-    options: React.PropTypes.object,
-    onUpdateOptions: React.PropTypes.func
+    options: PropTypes.object,
+    onUpdateOptions: PropTypes.func
   },
   stringifyLatency (latency) {
     return Math.round(latency) + 'ms'
@@ -65,7 +66,7 @@ export default enhance(OptionsAdvanced)
 
 const LatencyMessageListener = React.createClass({
   propTypes: {
-    onLatency: React.PropTypes.func
+    onLatency: PropTypes.func
   },
   render () {
     return null

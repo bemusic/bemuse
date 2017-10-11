@@ -2,6 +2,7 @@ import './MusicInfoTabStats.scss'
 
 import Icon from 'react-fa'
 import React from 'react'
+import PropTypes from 'prop-types'
 import { formattedAccuracyForRecord } from 'bemuse/rules/accuracy'
 
 import formatTime from '../../utils/formatTime'
@@ -9,10 +10,10 @@ import withPersonalRecord from './withPersonalRecord'
 
 export const MusicInfoTabStats = React.createClass({
   propTypes: {
-    chart: React.PropTypes.object,
-    record: React.PropTypes.object,
-    user: React.PropTypes.object,
-    loading: React.PropTypes.bool
+    chart: PropTypes.object,
+    record: PropTypes.object,
+    user: PropTypes.object,
+    loading: PropTypes.bool
   },
 
   render () {

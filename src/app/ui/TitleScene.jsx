@@ -4,6 +4,7 @@ import $ from 'jquery'
 import HomePage from 'bemuse/site/HomePage'
 import ModalPopup from 'bemuse/ui/ModalPopup'
 import React from 'react'
+import PropTypes from 'prop-types'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 import Scene from 'bemuse/ui/Scene'
 import SceneToolbar from 'bemuse/ui/SceneToolbar'
@@ -44,9 +45,9 @@ const enhance = compose(
 
 export const TitleScene = React.createClass({
   propTypes: {
-    hasSeenChangelog: React.PropTypes.bool,
-    clickedTwitterButton: React.PropTypes.bool,
-    onMarkChangelogAsSeen: React.PropTypes.func.isRequired,
+    hasSeenChangelog: PropTypes.bool,
+    clickedTwitterButton: PropTypes.bool,
+    onMarkChangelogAsSeen: PropTypes.func.isRequired,
   },
   getInitialState () {
     return {

@@ -1,11 +1,12 @@
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { compose, getContext, mapProps, withHandlers } from 'recompose'
 
 export const connectIO = (handlers) => compose(
   getContext({
-    runIO: React.PropTypes.func
+    runIO: PropTypes.func
   }),
   withHandlers(_.mapValues(handlers, (handler) => {
     return ({ runIO, ...props }) => (...args) => {

@@ -2,12 +2,13 @@ import './Scene.scss'
 
 import c from 'classnames'
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export default React.createClass({
   propTypes: {
-    className: React.PropTypes.string,
-    children: React.PropTypes.node,
-    onDragEnter: React.PropTypes.func
+    className: PropTypes.string,
+    children: PropTypes.node,
+    onDragEnter: PropTypes.func
   },
   render () {
     return <div

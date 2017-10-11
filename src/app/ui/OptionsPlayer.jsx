@@ -1,6 +1,7 @@
 import './OptionsPlayer.scss'
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import compose from 'recompose/compose'
 import { connect } from 'react-redux'
 
@@ -31,7 +32,7 @@ const SettingRow = compose(
 
 export const OptionsPlayer = React.createClass({
   propTypes: {
-    onClose: React.PropTypes.func
+    onClose: PropTypes.func
   },
   render () {
     return <div className="OptionsPlayer">
@@ -168,9 +169,9 @@ export const OptionsPlayer = React.createClass({
 
 OptionsPlayer.Row = React.createClass({
   propTypes: {
-    hidden: React.PropTypes.bool,
-    label: React.PropTypes.node,
-    children: React.PropTypes.node
+    hidden: PropTypes.bool,
+    label: PropTypes.node,
+    children: PropTypes.node
   },
   render () {
     return <div
