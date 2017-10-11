@@ -94,7 +94,7 @@
     "mocha": "^2.1.0",
     "node-env": "^0.1.6",
     "node-notifier": "^4.0.3",
-    "node-sass": "^4.5.0",
+    "node-sass": "^4.5.3",
     "pegjs": "^0.9.0",
     "pegjs-loader": "^0.5.1",
     "react-hot-loader": "^3.0.0-beta.6",
