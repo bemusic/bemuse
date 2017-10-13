@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 import now from 'bemuse/utils/now'
 import workerPath from
@@ -29,7 +30,7 @@ export const runIO = createRun({
 
 // HACK: Make SCENE_MANAGER provide Redux store and IO context.
 SCENE_MANAGER.ReactSceneContainer = withContext(
-  { store: React.PropTypes.object, runIO: React.PropTypes.func },
+  { store: PropTypes.object, runIO: PropTypes.func },
   () => ({ store, runIO })
 )(({ children }) => {
   return <div className="bemuse-scene">

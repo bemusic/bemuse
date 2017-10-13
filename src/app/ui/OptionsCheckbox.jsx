@@ -1,6 +1,7 @@
 
 import './OptionsCheckbox.scss'
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const OptionsCheckbox = ({ checked, children, onToggle }) => {
   return (
@@ -16,9 +17,9 @@ const OptionsCheckbox = ({ checked, children, onToggle }) => {
 }
 
 OptionsCheckbox.propTypes = {
-  checked: React.PropTypes.bool,
-  children: React.PropTypes.node,
-  onToggle: React.PropTypes.func
+  checked: PropTypes.bool,
+  children: PropTypes.node,
+  onToggle: PropTypes.func
 }
 
 export default OptionsCheckbox

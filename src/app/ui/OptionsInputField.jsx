@@ -2,16 +2,17 @@
 import './OptionsInputField.scss'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 import _ from 'lodash'
 import pure from 'recompose/pure'
 
 export const OptionsInputField = React.createClass({
   propTypes: {
-    stringify: React.PropTypes.func,
-    parse: React.PropTypes.func,
-    onChange: React.PropTypes.func,
-    validator: React.PropTypes.object,
-    value: React.PropTypes.any,
+    stringify: PropTypes.func,
+    parse: PropTypes.func,
+    onChange: PropTypes.func,
+    validator: PropTypes.object,
+    value: PropTypes.any,
   },
   getDefaultProps () {
     return {

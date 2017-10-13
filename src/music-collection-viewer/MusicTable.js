@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import MusicSelectPreviewer from 'bemuse/music-previewer/MusicSelectPreviewer'
 import React from 'react'
+import PropTypes from 'prop-types'
 import getPlayableCharts from 'bemuse/music-collection/getPlayableCharts'
 import getPreviewUrl from 'bemuse/music-collection/getPreviewUrl'
 import groupSongsIntoCategories from 'bemuse/music-collection/groupSongsIntoCategories'
@@ -75,9 +76,9 @@ function renderSongWarnings (song) {
 
 export class MusicTable extends React.Component {
   static propTypes = {
-    data: React.PropTypes.object,
-    url: React.PropTypes.string,
-    initialSort: React.PropTypes.string
+    data: PropTypes.object,
+    url: PropTypes.string,
+    initialSort: PropTypes.string
   }
   constructor (props) {
     super(props)

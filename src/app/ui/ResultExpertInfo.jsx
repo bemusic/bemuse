@@ -1,13 +1,14 @@
 import mean from 'mean'
 import variance from 'variance'
 import React from 'react'
+import PropTypes from 'prop-types'
 import { createSelector, createStructuredSelector } from 'reselect'
 
 import getNonMissedDeltas from '../interactors/getNonMissedDeltas'
 
 export default class ResultExpertInfo extends React.Component {
   static propTypes = {
-    deltas: React.PropTypes.array
+    deltas: PropTypes.array
   }
   getStats = (() => {
     const selectNonMissedDeltas = createSelector(

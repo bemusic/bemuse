@@ -4,6 +4,7 @@ import './ResultScene.scss'
 
 import Flex             from 'bemuse/ui/Flex'
 import React            from 'react'
+import PropTypes        from 'prop-types'
 import Scene            from 'bemuse/ui/Scene'
 import SceneHeading     from 'bemuse/ui/SceneHeading'
 import SceneToolbar     from 'bemuse/ui/SceneToolbar'
@@ -18,17 +19,17 @@ import ResultTable      from './ResultTable'
 
 export default class ResultScene extends React.Component {
   static propTypes = {
-    result: React.PropTypes.shape({
-      grade: React.PropTypes.string,
-      score: React.PropTypes.number,
-      deltas: React.PropTypes.array,
-      totalNotes: React.PropTypes.number,
+    result: PropTypes.shape({
+      grade: PropTypes.string,
+      score: PropTypes.number,
+      deltas: PropTypes.array,
+      totalNotes: PropTypes.number,
     }),
-    playMode: React.PropTypes.string,
-    lr2Timegate: React.PropTypes.array,
-    chart: React.PropTypes.object,
-    onReplay: React.PropTypes.func,
-    onExit: React.PropTypes.func,
+    playMode: PropTypes.string,
+    lr2Timegate: PropTypes.array,
+    chart: PropTypes.object,
+    onReplay: PropTypes.func,
+    onExit: PropTypes.func,
   }
   render () {
     return <Scene className="ResultScene">

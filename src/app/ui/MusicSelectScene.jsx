@@ -7,6 +7,7 @@ import ModalPopup from 'bemuse/ui/ModalPopup'
 import MusicSelectPreviewer from 'bemuse/music-previewer/MusicSelectPreviewer'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 import Scene from 'bemuse/ui/Scene'
 import SceneHeading from 'bemuse/ui/SceneHeading'
@@ -86,14 +87,14 @@ const enhance = compose(
 
 export const MusicSelectScene = React.createClass({
   propTypes: {
-    musicSelect: React.PropTypes.object,
-    user: React.PropTypes.object,
-    onSelectChart: React.PropTypes.func,
-    onSelectSong: React.PropTypes.func,
-    onFilterTextChange: React.PropTypes.func,
-    onLaunchGame: React.PropTypes.func,
-    collectionUrl: React.PropTypes.string,
-    musicPreviewEnabled: React.PropTypes.bool,
+    musicSelect: PropTypes.object,
+    user: PropTypes.object,
+    onSelectChart: PropTypes.func,
+    onSelectSong: PropTypes.func,
+    onFilterTextChange: PropTypes.func,
+    onLaunchGame: PropTypes.func,
+    collectionUrl: PropTypes.string,
+    musicPreviewEnabled: PropTypes.bool,
   },
   getPreviewUrl () {
     const song = this.props.musicSelect.song

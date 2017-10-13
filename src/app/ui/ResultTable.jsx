@@ -3,6 +3,7 @@ import './ResultTable.scss'
 
 import ModalPopup       from 'bemuse/ui/ModalPopup'
 import React            from 'react'
+import PropTypes        from 'prop-types'
 import RunningNumber    from 'bemuse/ui/RunningNumber'
 
 import FirstTimeTip     from './FirstTimeTip'
@@ -10,7 +11,7 @@ import ResultDeltasView from './ResultDeltasView'
 
 export default React.createClass({
   propTypes: {
-    result: React.PropTypes.object
+    result: PropTypes.object
   },
   getInitialState () {
     return { deltasModalVisible: false }

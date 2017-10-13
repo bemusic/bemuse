@@ -4,6 +4,7 @@ import * as OptionsIO   from '../io/OptionsIO'
 import './ModeSelectScene.scss'
 
 import React            from 'react'
+import PropTypes        from 'prop-types'
 import Scene            from 'bemuse/ui/Scene'
 import SCENE_MANAGER    from 'bemuse/scene-manager'
 import SceneHeading     from 'bemuse/ui/SceneHeading'
@@ -20,7 +21,7 @@ const enhance = connectIO({
 
 export default enhance(React.createClass({
   propTypes: {
-    onSetMode: React.PropTypes.func,
+    onSetMode: PropTypes.func,
   },
   render () {
     return <Scene className="ModeSelectScene">
