@@ -38,6 +38,7 @@ export default class RankingContainer extends React.Component {
   componentDidMount () {
     this.model        = online.Ranking(this.getParams(this.props))
     this.unsubscribe  = this.model.state川.onValue(this.onStoreTrigger)
+    this.mounted      = true
   }
 
   componentWillReceiveProps (nextProps) {
@@ -49,11 +50,12 @@ export default class RankingContainer extends React.Component {
   }
 
   componentWillUnmount () {
+    this.mounted = false
     if (this.unsubscribe) this.unsubscribe()
   }
 
-  onStoreTrigger (state) {
-    if (this.isMounted()) this.setState(state)
+  onStoreTrigger = (state) => {
+    if (this.mounted) this.setState(state)
   }
 
   onReloadScoreboardRequest () {
