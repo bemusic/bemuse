@@ -22,7 +22,7 @@ const enhance = compose(
 class CustomBMS extends React.Component {
   constructor () {
     super()
-    this.state = this.getInitialState()
+    this.state = { hover: false }
   }
 
   render () {
@@ -65,10 +65,6 @@ class CustomBMS extends React.Component {
         </div>
       </div>
     </Panel>
-  }
-
-  getInitialState () {
-    return { hover: false }
   }
 
   handleDragEnter (e) {

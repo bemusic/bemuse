@@ -20,7 +20,7 @@ const PANEL_PATH = (function () {
           L${x4} ${y4} L${x4} ${y3} L${x3} ${y2} L${x3} ${y1}`
 })()
 
-export default React.createClass({
+export default class OptionsPlayerGraphics extends React.Component {
   render () {
     let svg =
       this.props.type === 'scratch'
@@ -30,7 +30,7 @@ export default React.createClass({
         { 'is-active': this.props.active })}>
       {svg}
     </div>
-  },
+  }
   renderScratch () {
     let p = this.props.value
     let bx = p === 'left' ? 24 : p === 'right' ? 4 : 14
@@ -59,7 +59,7 @@ export default React.createClass({
       <line className="OptionsPlayerGraphicsのline"
         x1="1" x2="95" y1="29" y2="29" />
     </svg>
-  },
+  }
   renderPanel () {
     let p = this.props.value
     let tx = p === 'left' ? -35 : p === 'right' ? 35 : 0
@@ -71,4 +71,4 @@ export default React.createClass({
       </g>
     </svg>
   }
-})
+}

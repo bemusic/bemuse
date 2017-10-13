@@ -55,13 +55,13 @@ const enhance = compose(
   })
 )
 
-export const OptionsInput = React.createClass({
-  propTypes: {
+class OptionsInput extends React.Component {
+  static propTypes = {
     scratch: PropTypes.string,
     texts: PropTypes.array,
     editing: PropTypes.string,
     mode: PropTypes.string,
-  },
+  }
   render () {
     const className = c('OptionsInput', {
       'is-reverse': this.props.scratch === 'right'
@@ -106,30 +106,30 @@ export const OptionsInput = React.createClass({
         </div>
       </div>
     </div>
-  },
+  }
   handleEdit (key) {
     this.props.onEdit(key)
-  },
+  }
   componentDidMount () {
     // XXX: debounce is needed because some gamepad inputs trigger multiple
     // buttons
     this._dispose = key川().debounceImmediate(16).doLog('a').onValue(this.handleKey)
     window.addEventListener('keydown', this.handleKeyboardEvent, true)
-  },
+  }
   componentWillUnmount () {
     if (this._dispose) this._dispose()
     window.removeEventListener('keydown', this.handleKeyboardEvent, true)
-  },
+  }
   handleKey (key) {
     if (this.props.editing) {
       this.props.onKey(key)
     }
-  },
+  }
   handleKeyboardEvent (e) {
     if (this.props.editing) {
       e.preventDefault()
     }
   }
-})
+}
 
 export default enhance(OptionsInput)

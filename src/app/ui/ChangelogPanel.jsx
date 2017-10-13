@@ -9,11 +9,7 @@ import Markdown from 'bemuse/ui/Markdown'
 class ChangelogPanel extends React.Component {
   constructor () {
     super()
-    this.state = this.getInitialState()
-  }
-
-  getInitialState () {
-    return { data: { status: 'loading' } }
+    this.state = { data: { status: 'loading' } }
   }
 
   componentDidMount () {

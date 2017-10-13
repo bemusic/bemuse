@@ -5,7 +5,7 @@ import OptionsPlayer    from './OptionsPlayer'
 import OptionsInput     from './OptionsInput'
 import OptionsAdvanced  from './OptionsAdvanced'
 
-export default React.createClass({
+export default class Options extends React.Component {
   render () {
     return <div className="Options">
       <Panel title="Player Settings">
@@ -22,4 +22,4 @@ export default React.createClass({
       </div>
     </div>
   }
-})
+}

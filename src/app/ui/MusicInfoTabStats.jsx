@@ -8,13 +8,13 @@ import { formattedAccuracyForRecord } from 'bemuse/rules/accuracy'
 import formatTime from '../../utils/formatTime'
 import withPersonalRecord from './withPersonalRecord'
 
-export const MusicInfoTabStats = React.createClass({
-  propTypes: {
+class MusicInfoTabStats extends React.Component {
+  static propTypes = {
     chart: PropTypes.object,
     record: PropTypes.object,
     user: PropTypes.object,
     loading: PropTypes.bool
-  },
+  }
 
   render () {
     const chart = this.props.chart
@@ -50,14 +50,14 @@ export const MusicInfoTabStats = React.createClass({
         )}</dd>
       </dl>
     </div>
-  },
+  }
 
   renderWhenNotLoading (f) {
     return (this.props.loading
       ? <Icon name="spinner" spin />
       : f()
     )
-  },
+  }
 
   renderMessage () {
     if (!this.props.user) {
@@ -69,6 +69,6 @@ export const MusicInfoTabStats = React.createClass({
     }
     return null
   }
-})
+}
 
 export default withPersonalRecord(MusicInfoTabStats)

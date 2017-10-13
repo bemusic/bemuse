@@ -6,7 +6,7 @@ import pure  from 'recompose/pure'
 
 import OptionsPlayerGraphics from './OptionsPlayerGraphics'
 
-const OptionsPlayerSelector = React.createClass({
+class OptionsPlayerSelector extends React.Component {
   render () {
     return <div className="OptionsPlayerSelector">
       {this.props.options.map((item, index) =>
@@ -21,9 +21,9 @@ const OptionsPlayerSelector = React.createClass({
       )}
     </div>
   }
-})
+}
 
-OptionsPlayerSelector.Item = pure(React.createClass({
+class OptionsPlayerSelectorItem extends React.PureComponent {
   render () {
     return <div
       className={c('OptionsPlayerSelectorのitem',
@@ -37,10 +37,12 @@ OptionsPlayerSelector.Item = pure(React.createClass({
         {this.props.label}
       </div>
     </div>
-  },
+  }
   handleClick () {
     this.props.onSelect(this.props.value)
-  },
-}))
+  }
+}
+
+OptionsPlayerSelector.Item = OptionsPlayerSelectorItem
 
 export default pure(OptionsPlayerSelector)

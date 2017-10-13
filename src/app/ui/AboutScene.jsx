@@ -13,11 +13,7 @@ let artists
 class AboutScene extends React.Component {
   constructor () {
     super()
-    this.state = this.getInitialState()
-  }
-
-  getInitialState () {
-    return { artists: [] }
+    this.state = { artists: [] }
   }
 
   componentDidMount () {

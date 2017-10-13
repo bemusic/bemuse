@@ -3,8 +3,7 @@ import './MusicChartInfo.scss'
 
 import React from 'react'
 
-export default React.createClass({
-
+class MusicChartInfo extends React.Component {
   render () {
     const info = this.props.info
     return <section className="MusicChartInfo">
@@ -22,5 +21,6 @@ export default React.createClass({
       </div>
     </section>
   }
+}
 
-})
+export default MusicChartInfo

@@ -4,8 +4,7 @@ import Icon   from 'react-fa'
 import React  from 'react'
 import c      from 'classnames'
 
-export default React.createClass({
-
+class MusicChartSelectorItem extends React.Component {
   render () {
     let classes = c('MusicChartSelectorItem', {
       'is-active': this.props.isSelected,
@@ -33,10 +32,11 @@ export default React.createClass({
         <Icon name="play" />
       </span>
     </li>
-  },
+  }
 
   handleClick () {
     this.props.onChartClick(this.props.chart)
-  },
+  }
+}
 
-})
+export default MusicChartSelectorItem

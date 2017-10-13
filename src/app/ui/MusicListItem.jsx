@@ -7,7 +7,7 @@ import pure   from 'recompose/pure'
 
 import MusicListItemCharts from './MusicListItemCharts'
 
-export const MusicListItem = React.createClass({
+class MusicListItem extends React.PureComponent {
   render () {
     const song = this.props.song
     const className = c('MusicListItem', {
@@ -49,7 +49,8 @@ export const MusicListItem = React.createClass({
         )
       }
     </li>
-  },
+  }
+
   renderChartlist () {
     return <MusicListItemCharts
       charts={getPlayableCharts(this.props.song.charts)}
@@ -57,7 +58,8 @@ export const MusicListItem = React.createClass({
       onChartClick={this.handleChartClick}
       playMode={this.props.playMode}
     />
-  },
+  }
+
   renderHighlight (text) {
     if (!this.props.highlight) return text
     let highlight = this.props.highlight
@@ -76,16 +78,17 @@ export const MusicListItem = React.createClass({
       }
     }
     return output
-  },
+  }
 
   handleClick () {
     this.props.onSelect(this.props.song)
-  },
+  }
+
   handleChartClick (chart, e) {
     e.stopPropagation()
     this.props.onSelect(this.props.song, chart)
-  },
+  }
 
-})
+}
 
-export default pure(MusicListItem)
+export default MusicListItem
