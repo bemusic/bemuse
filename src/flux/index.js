@@ -57,26 +57,31 @@ function toProperty (store) {
 
 export const connect = (props川) => (Component) => {
   let propsProperty = toProperty(props川)
-  return React.createClass({
-    getInitialState () {
+  return class extends React.Component {
+    constructor(props) {
+      super(props)
       this._unsubscribe = propsProperty.onValue(this.handleValue)
       let initialValue
       const initialUnsubscribe = propsProperty.onValue(value => (initialValue = value))
       initialUnsubscribe()
-      return { value: initialValue }
-    },
-    componentWillUnmount () {
+      this.state = { value: initialValue }
+    }
+
+    componentWillUnmount() {
       this._mounted = false
       if (this._unsubscribe) this._unsubscribe()
-    },
-    componentDidMount () {
+    }
+
+    componentDidMount() {
       this._mounted = true
-    },
-    handleValue (value) {
+    }
+
+    handleValue = (value) => {
       if (this._mounted) this.setState({ value })
-    },
-    render () {
+    }
+
+    render() {
       return <Component {...(this.state.value || { })} {...this.props} />
     }
-  })
+  }
 }
