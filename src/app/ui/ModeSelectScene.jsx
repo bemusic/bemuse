@@ -19,10 +19,15 @@ const enhance = connectIO({
   )
 })
 
-export default enhance(React.createClass({
-  propTypes: {
+class ModeSelectScene extends React.Component {
+  static propTypes = {
     onSetMode: PropTypes.func,
-  },
+  }
+
+  constructor () {
+    super()
+  }
+
   render () {
     return <Scene className="ModeSelectScene">
       <SceneHeading>Select Mode</SceneHeading>
@@ -51,7 +56,8 @@ export default enhance(React.createClass({
         <a onClick={this.handleBack} href="javascript://">Go Back</a>
       </SceneToolbar>
     </Scene>
-  },
+  }
+
   renderKBGraphics () {
     let children = []
     for (let i = 0; i < 7; i++) {
@@ -65,7 +71,8 @@ export default enhance(React.createClass({
     }
     return <svg width="96" height="54" viewBox="0 0 96 54"
       className="ModeSelectSceneのgraphics">{children}</svg>
-  },
+  }
+
   renderBMGraphics () {
     let children = []
     for (let i = 0; i < 7; i++) {
@@ -79,19 +86,23 @@ export default enhance(React.createClass({
       <circle cx="21" cy="27" r="16" />
       {children}
     </svg>
-  },
+  }
 
   handleKB () {
     this.props.onSetMode('KB')
     SCENE_MANAGER.display(<MusicSelectScene />).done()
     Analytics.send('ModeSelectScene', 'select mode', 'KB')
-  },
+  }
+
   handleBM () {
     this.props.onSetMode('BM')
     SCENE_MANAGER.display(<MusicSelectScene />).done()
     Analytics.send('ModeSelectScene', 'select mode', 'BM')
-  },
+  }
+
   handleBack () {
     SCENE_MANAGER.pop().done()
-  },
-}))
+  }
+}
+
+export default enhance(ModeSelectScene)

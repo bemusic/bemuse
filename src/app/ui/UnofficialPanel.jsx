@@ -4,7 +4,7 @@ import React from 'react'
 import Panel from 'bemuse/ui/Panel'
 import OptionsButton from './OptionsButton'
 
-export default React.createClass({
+class UnofficialPanel extends React.Component {
   render () {
     return <div className="UnofficialPanel">
       <Panel title="Unofficial Music Server">
@@ -21,4 +21,6 @@ export default React.createClass({
       </Panel>
     </div>
   }
-})
+}
+
+export default UnofficialPanel

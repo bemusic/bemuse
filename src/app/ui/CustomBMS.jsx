@@ -19,7 +19,12 @@ const enhance = compose(
   })
 )
 
-export const CustomBMS = React.createClass({
+class CustomBMS extends React.Component {
+  constructor () {
+    super()
+    this.state = this.getInitialState()
+  }
+
   render () {
     return <Panel className="CustomBMS" title="Load Custom BMS">
       <div className="CustomBMSのwrapper">
@@ -60,21 +65,26 @@ export const CustomBMS = React.createClass({
         </div>
       </div>
     </Panel>
-  },
+  }
+
   getInitialState () {
     return { hover: false }
-  },
+  }
+
   handleDragEnter (e) {
     e.preventDefault()
-  },
+  }
+
   handleDragOver (e) {
     this.setState({ hover: true })
     e.preventDefault()
-  },
+  }
+
   handleDragLeave (e) {
     this.setState({ hover: false })
     e.preventDefault()
-  },
+  }
+
   handleDrop (e) {
     this.setState({ hover: false })
     Analytics.send('CustomBMS', 'drop')
@@ -83,7 +93,7 @@ export const CustomBMS = React.createClass({
     promise.then((song) => {
       if (this.props.onSongLoaded) this.props.onSongLoaded(song)
     })
-  },
-})
+  }
+}
 
 export default enhance(CustomBMS)

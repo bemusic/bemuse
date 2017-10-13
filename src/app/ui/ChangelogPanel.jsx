@@ -6,17 +6,24 @@ import _        from 'lodash'
 import Panel    from 'bemuse/ui/Panel'
 import Markdown from 'bemuse/ui/Markdown'
 
-export const ChangelogPanel = React.createClass({
+class ChangelogPanel extends React.Component {
+  constructor () {
+    super()
+    this.state = this.getInitialState()
+  }
+
   getInitialState () {
     return { data: { status: 'loading' } }
-  },
+  }
+
   componentDidMount () {
     const promise = Promise.resolve($.get('https://api.github.com/repos/bemusic/bemuse/releases'))
     promise.then(
       releases => this.setState({ data: { status: 'completed', releases } }),
       ()       => this.setState({ data: { status: 'error' } }),
     )
-  },
+  }
+
   render () {
     return (
       <Panel className="ChangelogPanel" title="What’s New">
@@ -25,7 +32,8 @@ export const ChangelogPanel = React.createClass({
         </div>
       </Panel>
     )
-  },
+  }
+
   getMarkdown () {
     const releasesPage = '[releases page on GitHub](https://github.com/bemusic/bemuse/releases)'
     if (this.state.data.status === 'loading') {
@@ -53,7 +61,7 @@ export const ChangelogPanel = React.createClass({
       'The change log for older versions are available at the ' + releasesPage
     )
     return changelog + '\n\n' + seeMore
-  },
-})
+  }
+}
 
 export default ChangelogPanel
