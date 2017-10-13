@@ -80,8 +80,8 @@ class TitleScene extends React.Component {
         <a onClick={this.openLink} href="https://bemuse.readthedocs.org">Docs</a>
         <a onClick={() => this.viewChangelog()} href="javascript://">{this.renderVersion()}</a>
         <SceneToolbar.Spacer />
-        <a onClick={this.openLink} href="https://www.facebook.com/bemusegame">Facebook</a>
-        <a onClick={this.openTwitterLink} href="https://twitter.com/bemusegame">
+        <a onClick={() => this.openLink()} href="https://www.facebook.com/bemusegame">Facebook</a>
+        <a onClick={() => this.openTwitterLink()} href="https://twitter.com/bemusegame">
           <FirstTimeTip tip="Like & follow us :)" featureKey="twitter">
             Twitter
           </FirstTimeTip>
