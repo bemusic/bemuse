@@ -215,7 +215,7 @@ class MusicSelectScene extends React.Component {
           selectedSong={musicSelect.song}
           selectedChart={musicSelect.chart}
           playMode={musicSelect.playMode}
-          onSelect={() => this.handleSongSelect()}
+          onSelect={() => this.handleSongSelect(musicSelect.song)}
           onTouch={() => this.handleMusicListTouch()}
         />
         <MusicInfo
@@ -223,7 +223,7 @@ class MusicSelectScene extends React.Component {
           chart={musicSelect.chart}
           charts={musicSelect.charts}
           playMode={musicSelect.playMode}
-          onChartClick={() => this.handleChartClick()}
+          onChartClick={() => this.handleChartClick(musicSelect.chart)}
           onOptions={() => this.handleOptionsOpen()}
         />
       </div>
