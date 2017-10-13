@@ -11,8 +11,8 @@ import RankingContainer         from './RankingContainer'
 
 export default class MusicInfoTabs extends React.Component {
 
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = {
       selectedTab: 0,
     }
