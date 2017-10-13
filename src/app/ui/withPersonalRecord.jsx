@@ -24,13 +24,13 @@ export function withPersonalRecord (Component) {
     }))
   )
 
-  const WrappedClass = React.createClass({
+  class WrappedClass extends React.Component {
     componentDidMount () {
       online.seen(this.getLevel())
-    },
+    }
     componentDidUpdate () {
       online.seen(this.getLevel())
-    },
+    }
     render () {
       const recordState = this.getRecordState()
       return (
@@ -40,14 +40,14 @@ export function withPersonalRecord (Component) {
           {..._.omit(this.props, 'onlineRecords')}
         />
       )
-    },
+    }
     getRecordState (data) {
       return DataStore.get(this.props.onlineRecords, id(this.getLevel()))
-    },
+    }
     getLevel () {
       return { md5: this.props.chart.md5, playMode: this.props.playMode }
-    },
-  })
+    }
+  }
 
   return enhance(WrappedClass)
 }
