@@ -15,7 +15,7 @@ const CustomChartSelector = React.createClass({
             {files.map(file =>
               <li>
                 <a href="javascript://"
-                  onClick={this.handleItemClick(file)}
+                  onClick={() => this.handleItemClick(file)}
                   className={
                         c({ 'is-active':
                             file.resource === this.props.selectedResource })}>
@@ -27,7 +27,7 @@ const CustomChartSelector = React.createClass({
               this.props.selectedResource
               ? (
                 <li>
-                  <a href="javascript://" onClick={this.handleClear}>
+                  <a href="javascript://" onClick={() => this.handleClear()}>
                     Clear
                   </a>
                 </li>
@@ -86,8 +86,8 @@ export default React.createClass({
     let options = this.state.options
     return <div
       className="GameShellScene"
-      onDragOver={this.handleDragOver}
-      onDrop={this.handleDrop}>
+      onDragOver={() => this.handleDragOver()}
+      onDrop={() => this.handleDrop()}>
       <h1>Bemuse Game Shell</h1>
       <p>This tool is intended for developers testing the game.</p>
       <form onSubmit={this.submit}>
@@ -105,7 +105,7 @@ export default React.createClass({
             <CustomChartSelector
               ref="dropzone"
               selectedResource={options.resource}
-              onSelect={this.handleSelectFile} />
+              onSelect={() => this.handleSelectFile()} />
           </label>
         </div>
         <div className="text">

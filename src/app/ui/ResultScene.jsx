@@ -68,7 +68,7 @@ export default class ResultScene extends React.Component {
           </a>
           <Flex grow={1} />
           <FirstTimeTip tip="Back to music selection" featureKey="finishGame">
-            <div className="ResultSceneのexit" onClick={this.handleExit}>
+            <div className="ResultSceneのexit" onClick={() => this.handleExit()}>
               Continue
             </div>
           </FirstTimeTip>

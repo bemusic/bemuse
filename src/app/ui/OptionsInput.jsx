@@ -82,7 +82,7 @@ class OptionsInput extends React.Component {
                   ? 0
                   : this.props.editing === 'SC2' ? 1 : -1
                 }
-                onEdit={this.handleEdit}
+                onEdit={() => this.handleEdit()}
               />
             </div>
             <div className="OptionsInputのtitle">
@@ -98,7 +98,7 @@ class OptionsInput extends React.Component {
             keyboardMode={this.props.scratch === 'off'}
             texts={this.props.texts}
             editing={this.props.editing}
-            onEdit={this.handleEdit}
+            onEdit={() => this.handleEdit()}
           />
         </div>
         <div className="OptionsInputのtitle">

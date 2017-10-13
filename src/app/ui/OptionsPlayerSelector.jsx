@@ -28,7 +28,7 @@ class OptionsPlayerSelectorItem extends React.PureComponent {
     return <div
       className={c('OptionsPlayerSelectorのitem',
             { 'is-active': this.props.active })}
-      onClick={this.handleClick}>
+      onClick={() => this.handleClick()}>
       <OptionsPlayerGraphics
         type={this.props.type}
         value={this.props.value}

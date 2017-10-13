@@ -27,7 +27,7 @@ class BrowserSupportWarningScene extends React.Component {
         ])}.
       </p>
       <p>
-        <OptionsButton onClick={this.handleContinue}>
+        <OptionsButton onClick={() => this.handleContinue()}>
           Continue Anyway
         </OptionsButton>
       </p>

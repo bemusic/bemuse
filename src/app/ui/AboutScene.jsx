@@ -160,7 +160,7 @@ class AboutScene extends React.Component {
         </article>
       </section>
       <SceneToolbar>
-        <a onClick={this.handleBack} href="javascript://">Back</a>
+        <a onClick={() => this.handleBack()} href="javascript://">Back</a>
       </SceneToolbar>
     </Scene>
   }

@@ -15,7 +15,7 @@ class MusicChartSelectorItem extends React.Component {
     })
     return <li
       className={classes}
-      onClick={this.handleClick}>
+      onClick={() => this.handleClick()}>
       {
         this.props.isTutorial
         ? (this.props.chart.keys === '5K'

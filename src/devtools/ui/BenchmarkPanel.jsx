@@ -5,8 +5,8 @@ import React from 'react'
 export default React.createClass({
   render () {
     return <div className="BenchmarkPanel"
-      onClick={this.handleInteraction}
-      onTouchStart={this.handleInteraction}>
+      onClick={() => this.handleInteraction()}
+      onTouchStart={() => this.handleInteraction()}>
       {
         this.state.show
         ? (

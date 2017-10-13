@@ -53,7 +53,7 @@ class ModeSelectScene extends React.Component {
         </div>
       </div>
       <SceneToolbar>
-        <a onClick={this.handleBack} href="javascript://">Go Back</a>
+        <a onClick={() => this.handleBack()} href="javascript://">Go Back</a>
       </SceneToolbar>
     </Scene>
   }

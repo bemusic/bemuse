@@ -30,9 +30,9 @@ class OptionsInputField extends React.PureComponent {
       type="text"
       ref="input"
       defaultValue={this.props.stringify(this.props.value)}
-      onChange={this.handleInputChange}
-      onKeyDown={this.handleInputKeyDown}
-      onBlur={this.handleInputBlur}
+      onChange={() => this.handleInputChange()}
+      onKeyDown={() => this.handleInputKeyDown()}
+      onBlur={() => this.handleInputBlur()}
       className="OptionsInputField" />
   }
   handleInputChange (e) {

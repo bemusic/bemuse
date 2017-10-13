@@ -50,7 +50,7 @@ export default React.createClass({
             <th>Max Combo</th>
           </tr>
           <tr>
-            <td onClick={this.handleViewDeltas} className="is-clickable">
+            <td onClick={() => this.handleViewDeltas()} className="is-clickable">
               <FirstTimeTip featureKey="deltas" tip="View detailed accuracy data">
                 <RunningNumber
                   formatter={this.formatAccuracy}
@@ -72,7 +72,7 @@ export default React.createClass({
       </table>
       <ModalPopup
         visible={this.state.deltasModalVisible}
-        onBackdropClick={this.handleToggleDeltasModal}
+        onBackdropClick={() => this.handleToggleDeltasModal()}
       >
         <ResultDeltasView deltas={result['deltas']} />
       </ModalPopup>

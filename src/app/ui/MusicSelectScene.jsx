@@ -117,7 +117,7 @@ class MusicSelectScene extends React.Component {
     let musicSelect = this.props.musicSelect
     return <Scene
       className="MusicSelectScene"
-      onDragEnter={this.handleCustomBMSOpen}
+      onDragEnter={() => this.handleCustomBMSOpen()}
     >
       <SceneHeading>
         Select Music
@@ -125,7 +125,7 @@ class MusicSelectScene extends React.Component {
           type="text"
           placeholder="Filter…"
           className="MusicSelectSceneのsearch"
-          onChange={this.handleFilter}
+          onChange={() => this.handleFilter()}
           value={musicSelect.filterText}
         />
       </SceneHeading>
@@ -137,43 +137,43 @@ class MusicSelectScene extends React.Component {
       <SceneToolbar>
         <a onClick={this.popScene} href="javascript://">Exit</a>
         <a
-          onClick={this.handleCustomBMSOpen}
+          onClick={() => this.handleCustomBMSOpen()}
           href="javascript://"
         >
           Play Custom BMS
         </a>
         <SceneToolbar.Spacer />
         {this.renderOnlineToolbarButtons()}
-        <a onClick={this.handleOptionsOpen} href="javascript://">Options</a>
+        <a onClick={() => this.handleOptionsOpen()} href="javascript://">Options</a>
       </SceneToolbar>
 
       <ModalPopup
         visible={this.state.optionsVisible}
-        onBackdropClick={this.handleOptionsClose}
+        onBackdropClick={() => this.handleOptionsClose()}
       >
-        <OptionsView onClose={this.handleOptionsClose} />
+        <OptionsView onClose={() => this.handleOptionsClose()} />
       </ModalPopup>
 
       <ModalPopup
         visible={this.state.customBMSVisible}
-        onBackdropClick={this.handleCustomBMSClose}
+        onBackdropClick={() => this.handleCustomBMSClose()}
       >
         <div className="MusicSelectSceneのcustomBms">
-          <CustomBMS onSongLoaded={this.handleCustomSong} />
+          <CustomBMS onSongLoaded={() => this.handleCustomSong()} />
         </div>
       </ModalPopup>
 
       <ModalPopup
         visible={this.state.unofficialDisclaimerVisible}
-        onBackdropClick={this.handleUnofficialClose}
+        onBackdropClick={() => this.handleUnofficialClose()}
       >
-        <UnofficialPanel onClose={this.handleUnofficialClose} />
+        <UnofficialPanel onClose={() => this.handleUnofficialClose()} />
       </ModalPopup>
 
       <AuthenticationPopup
         visible={this.state.authenticationPopupVisible}
-        onFinish={this.handleAuthenticationFinish}
-        onBackdropClick={this.handleAuthenticationClose}
+        onFinish={() => this.handleAuthenticationFinish()}
+        onBackdropClick={() => this.handleAuthenticationClose()}
       />
 
       {!!this.props.musicPreviewEnabled &&
@@ -187,7 +187,7 @@ class MusicSelectScene extends React.Component {
     return (
       <div
         className="MusicSelectSceneのunofficialLabel"
-        onClick={this.handleUnofficialClick}
+        onClick={() => this.handleUnofficialClick()}
       >
         <b>Disclaimer:</b> Unofficial Server
       </div>
@@ -215,16 +215,16 @@ class MusicSelectScene extends React.Component {
           selectedSong={musicSelect.song}
           selectedChart={musicSelect.chart}
           playMode={musicSelect.playMode}
-          onSelect={this.handleSongSelect}
-          onTouch={this.handleMusicListTouch}
+          onSelect={() => this.handleSongSelect()}
+          onTouch={() => this.handleMusicListTouch()}
         />
         <MusicInfo
           song={musicSelect.song}
           chart={musicSelect.chart}
           charts={musicSelect.charts}
           playMode={musicSelect.playMode}
-          onChartClick={this.handleChartClick}
-          onOptions={this.handleOptionsOpen}
+          onChartClick={() => this.handleChartClick()}
+          onOptions={() => this.handleOptionsOpen()}
         />
       </div>
     )

@@ -28,16 +28,16 @@ class OptionsSpeed extends React.PureComponent {
   render () {
     return <div className="OptionsSpeed">
       <span className="OptionsSpeedのminus">
-        <OptionsButton onClick={this.handleMinusButtonClick}>-</OptionsButton>
+        <OptionsButton onClick={() => this.handleMinusButtonClick()}>-</OptionsButton>
       </span>
       <OptionsInputField
         value={this.parseSpeed(this.props.value)}
         parse={this.parseSpeed}
         stringify={this.stringifySpeed}
         validator={/^\d+(?:\.\d)?$/}
-        onChange={this.handleSpeedInputChange} />
+        onChange={() => this.handleSpeedInputChange()} />
       <span className="OptionsSpeedのplus">
-        <OptionsButton onClick={this.handlePlusButtonClick}>+</OptionsButton>
+        <OptionsButton onClick={() => this.handlePlusButtonClick()}>+</OptionsButton>
       </span>
     </div>
   }
