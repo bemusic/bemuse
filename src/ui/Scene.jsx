@@ -4,13 +4,14 @@ import c from 'classnames'
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export default React.createClass({
-  propTypes: {
+export default class Scene extends React.Component {
+  static propTypes = {
     className: PropTypes.string,
     children: PropTypes.node,
     onDragEnter: PropTypes.func
-  },
-  render () {
+  };
+
+  render() {
     return <div
       className={c('Scene', this.props.className)}
       onDragEnter={this.props.onDragEnter}
@@ -18,4 +19,4 @@ export default React.createClass({
       {this.props.children}
     </div>
   }
-})
+}

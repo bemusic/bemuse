@@ -16,20 +16,22 @@ const safeMarkdown = new Markdown({
   typographer: true,
 })
 
-export default React.createClass({
-  render () {
+export default class Markdown extends React.Component {
+  render() {
     return <article className="Markdown" dangerouslySetInnerHTML={this.renderHTML()}></article>
-  },
-  componentDidMount () {
+  }
+
+  componentDidMount() {
     ReactDOM.findDOMNode(this).addEventListener('click', e => {
       e.preventDefault()
       if (e.target.href) {
         window.open(e.target.href, '_blank')
       }
     })
-  },
-  renderHTML () {
+  }
+
+  renderHTML = () => {
     const html = (this.props.safe ? safeMarkdown : markdown).render(this.props.source)
     return { __html: html }
-  },
-})
+  }
+}

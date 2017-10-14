@@ -4,8 +4,8 @@ import React        from 'react'
 import c            from 'classnames'
 import { WarpPortal } from '../react-warp'
 
-export default React.createClass({
-  render () {
+export default class ModalPopup extends React.Component {
+  render() {
     if (this.props.visible === false) return null
     return <WarpPortal content={
       <div className={c('ModalPopup',
@@ -20,4 +20,4 @@ export default React.createClass({
       <span style={{ display: 'none' }}></span>
     </WarpPortal>
   }
-})
+}
