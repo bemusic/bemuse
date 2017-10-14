@@ -58,7 +58,7 @@ const enhance = compose(
 class OptionsInput extends React.Component {
   static propTypes = {
     scratch: PropTypes.string,
-    texts: PropTypes.array,
+    texts: PropTypes.object,
     editing: PropTypes.string,
     mode: PropTypes.string,
   }

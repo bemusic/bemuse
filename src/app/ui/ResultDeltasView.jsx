@@ -44,6 +44,7 @@ export default class ResultDeltasView extends React.Component {
             <div className="ResultDeltasViewのhistogram">
               {stats.map(({ bucket, count }) =>
                 <div
+                  key={bucket}
                   className="ResultDeltasViewのhistogramBar"
                   data-bucket={bucket}
                   style={{ height: height(count) }}

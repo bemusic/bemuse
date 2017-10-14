@@ -12,13 +12,13 @@ export default class LoadingSceneSongInfo extends React.Component {
       <div className="LoadingSceneSongInfoのtitle">{song.title}</div>
       {!isTitleDisplayMode()
         ? song.subtitles.map(text =>
-          <div className="LoadingSceneSongInfoのsubtitle">{text}</div>
+          <div key={text} className="LoadingSceneSongInfoのsubtitle">{text}</div>
         )
         : null
       }
       <div className="LoadingSceneSongInfoのartist">{song.artist}</div>
       {song.subartists.map(text =>
-        <div className="LoadingSceneSongInfoのsubartist">{text}</div>)}
+        <div key={text} className="LoadingSceneSongInfoのsubartist">{text}</div>)}
     </div>
   }
 }
