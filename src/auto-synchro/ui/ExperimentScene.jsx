@@ -4,8 +4,8 @@ import React from 'react'
 import c from 'classnames'
 import Loading from 'bemuse/ui/Loading'
 
-export default React.createClass({
-  render () {
+export default class ExperimentScene extends React.Component {
+  render() {
     return <div className={c('ExperimentScene', { 'is-finished': this.props.finished })}>
       <div className="ExperimentSceneのwrapper">
         <div className="ExperimentSceneのwrapperInner">
@@ -13,8 +13,9 @@ export default React.createClass({
         </div>
       </div>
     </div>
-  },
-  renderContents () {
+  }
+
+  renderContents = () => {
     if (this.props.loading) {
       return this.renderLoading()
     } else if (!this.props.started) {
@@ -24,24 +25,28 @@ export default React.createClass({
     } else {
       return this.renderCollection()
     }
-  },
-  renderLoading () {
+  }
+
+  renderLoading = () => {
     return <div className="ExperimentSceneのloading">
       <Loading />
     </div>
-  },
-  renderReady () {
+  }
+
+  renderReady = () => {
     return <div className="ExperimentSceneのready">
       <button className="ExperimentSceneのbutton"
         onClick={this.props.onStart}>Start Calibration</button>
     </div>
-  },
-  renderMessage (text) {
+  }
+
+  renderMessage = (text) => {
     return <div className="ExperimentSceneのmessage">
       {text}
     </div>
-  },
-  renderCollection () {
+  }
+
+  renderCollection = () => {
     let scale = (
       this.props.finished
       ? 1
@@ -62,8 +67,8 @@ export default React.createClass({
         <div className="ExperimentSceneのprogressBar" style={style}></div>
       </div>
     </div>
-  },
-})
+  }
+}
 
 function easeOut (x) {
   return 1 - Math.pow(1 - x, 2)

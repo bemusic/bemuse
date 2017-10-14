@@ -4,9 +4,8 @@ import './LoadingSceneSongInfo.scss'
 import React from 'react'
 import { isTitleDisplayMode } from 'bemuse/devtools/query-flags'
 
-export default React.createClass({
-
-  render () {
+export default class LoadingSceneSongInfo extends React.Component {
+  render() {
     const song = this.props.song
     return <div className="LoadingSceneSongInfo">
       <div className="LoadingSceneSongInfoのgenre">{song.genre}</div>
@@ -22,5 +21,4 @@ export default React.createClass({
         <div className="LoadingSceneSongInfoのsubartist">{text}</div>)}
     </div>
   }
-
-})
+}

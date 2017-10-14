@@ -9,15 +9,15 @@ import Scene from 'bemuse/ui/Scene.jsx'
 import LoadingSceneSongInfo from './LoadingSceneSongInfo.jsx'
 import LoadingSceneProgress from './LoadingSceneProgress.jsx'
 
-export default React.createClass({
-  propTypes: {
+export default class LoadingScene extends React.Component {
+  static propTypes = {
     song: PropTypes.object,
     tasks: PropTypes.array,
     eyecatchImagePromise: PropTypes.object,
     registerTeardownCallback: PropTypes.func,
-  },
+  }
 
-  render () {
+  render() {
     return <Scene className="LoadingScene" ref="scene">
       <div className="LoadingSceneのimage" ref="eyecatch"></div>
       <div className="LoadingSceneのinfo">
@@ -27,9 +27,9 @@ export default React.createClass({
       <div className="LoadingSceneのflash"></div>
       <div className="LoadingSceneのcover"></div>
     </Scene>
-  },
+  }
 
-  componentDidMount () {
+  componentDidMount() {
     if (this.props.eyecatchImagePromise) {
       this.props.eyecatchImagePromise.then(image => {
         ReactDOM.findDOMNode(this.refs.eyecatch).appendChild(image)
@@ -39,5 +39,5 @@ export default React.createClass({
       ReactDOM.findDOMNode(this.refs.scene).classList.add('is-exiting')
       return Promise.delay(500)
     })
-  },
-})
+  }
+}
