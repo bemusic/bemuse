@@ -10,7 +10,7 @@ import online from 'bemuse/online/instance'
 
 import AuthenticationForm from './AuthenticationForm'
 
-export default class extends React.Component {
+export default class AuthenticationPanel extends React.Component {
   constructor (props) {
     super(props)
     this.state = {

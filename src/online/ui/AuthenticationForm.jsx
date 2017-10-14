@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom'
 import OptionsButton from 'bemuse/app/ui/OptionsButton'
 import $ from 'jquery'
 
-export default class extends React.Component {
+export default class AuthenticationForm extends React.Component {
   onButtonClick = (e) => {
     e.preventDefault()
     this.props.onSubmit({

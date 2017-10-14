@@ -86,7 +86,7 @@ class CustomChartSelector extends React.Component {
   };
 }
 
-export default class extends React.Component {
+export default class GameShellScene extends React.Component {
   constructor(props) {
     super(props)
     this.state = {

@@ -4,7 +4,7 @@ import React from 'react'
 import ModalPopup from 'bemuse/ui/ModalPopup'
 import AuthenticationPanel from './AuthenticationPanel'
 
-export default class extends React.Component {
+export default class AuthenticationPopup extends React.Component {
   render() {
     return <ModalPopup {...this.props}>
       <div className="AuthenticationPopup">

@@ -2,7 +2,7 @@
 import './BenchmarkPanel.scss'
 import React from 'react'
 
-export default class extends React.Component {
+export default class BenchmarkPanel extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
