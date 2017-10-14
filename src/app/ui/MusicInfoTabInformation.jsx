@@ -29,10 +29,6 @@ class MusicInfoTabInformation extends React.Component {
     onRequestReadme: PropTypes.func
   }
 
-  constructor () {
-    super()
-  }
-
   componentDidMount () {
     this.props.onRequestReadme(this.props.song)
   }

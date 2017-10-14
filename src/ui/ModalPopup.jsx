@@ -5,7 +5,7 @@ import c            from 'classnames'
 import { WarpPortal } from '../react-warp'
 
 export default class ModalPopup extends React.Component {
-  render() {
+  render () {
     if (this.props.visible === false) return null
     return <WarpPortal content={
       <div className={c('ModalPopup',

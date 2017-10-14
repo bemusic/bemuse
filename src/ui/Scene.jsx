@@ -9,9 +9,9 @@ export default class Scene extends React.Component {
     className: PropTypes.string,
     children: PropTypes.node,
     onDragEnter: PropTypes.func
-  };
+  }
 
-  render() {
+  render () {
     return <div
       className={c('Scene', this.props.className)}
       onDragEnter={this.props.onDragEnter}

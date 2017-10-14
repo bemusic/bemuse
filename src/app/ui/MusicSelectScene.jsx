@@ -16,7 +16,6 @@ import c from 'classnames'
 import compose from 'recompose/compose'
 import getPreviewUrl from 'bemuse/music-collection/getPreviewUrl'
 import online from 'bemuse/online/instance'
-import pure from 'recompose/pure'
 import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
 import { connect } from 'react-redux'
 import { connect as connectToLegacyStore } from 'bemuse/flux'
@@ -81,11 +80,10 @@ const enhance = compose(
     onLaunchGame: ({ musicSelect }) => () => (
       MusicSelectionIO.launchGame(musicSelect.server, musicSelect.song, musicSelect.chart)
     )
-  }),
-  pure
+  })
 )
 
-class MusicSelectScene extends React.Component {
+class MusicSelectScene extends React.PureComponent {
   static propTypes = {
     musicSelect: PropTypes.object,
     user: PropTypes.object,

@@ -11,7 +11,7 @@ export default class BenchmarkPanel extends React.Component {
     }
   }
 
-  render() {
+  render () {
     return <div className="BenchmarkPanel"
       onClick={this.handleInteraction}
       onTouchStart={this.handleInteraction}>
@@ -28,7 +28,7 @@ export default class BenchmarkPanel extends React.Component {
     </div>
   }
 
-  componentDidMount() {
+  componentDidMount () {
     setInterval(() => this.forceUpdate(), 1000)
   }
 

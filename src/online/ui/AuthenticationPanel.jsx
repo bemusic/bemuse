@@ -114,7 +114,7 @@ export default class AuthenticationPanel extends React.Component {
     this.setState({ mode: 'signUp' })
   }
 
-  render() {
+  render () {
     return <div className="AuthenticationPanel">
       <Panel title="Bemuse Online Ranking">
         <div className="AuthenticationPanelのlayout">

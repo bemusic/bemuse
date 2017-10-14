@@ -83,6 +83,6 @@ const RankingTablePlayground = () => (
   </div>
 )
 
-export function main() {
+export function main () {
   ReactDOM.render(<RankingTablePlayground />, MAIN)
 }

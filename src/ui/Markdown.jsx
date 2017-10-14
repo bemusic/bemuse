@@ -17,11 +17,11 @@ const safeMarkdown = new Markdown({
 })
 
 export default class MarkdownContent extends React.Component {
-  render() {
+  render () {
     return <article className="Markdown" dangerouslySetInnerHTML={this.renderHTML()}></article>
   }
 
-  componentDidMount() {
+  componentDidMount () {
     ReactDOM.findDOMNode(this).addEventListener('click', e => {
       e.preventDefault()
       if (e.target.href) {

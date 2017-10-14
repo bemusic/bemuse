@@ -3,7 +3,7 @@ import './LoadingSceneProgressBar.scss'
 import React from 'react'
 
 export default class LoadingSceneProgressBar extends React.Component {
-  render() {
+  render () {
     return <div className="LoadingSceneProgressBar">
       <div
         className="LoadingSceneProgressBarのbar"

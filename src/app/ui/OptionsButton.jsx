@@ -7,3 +7,5 @@ const OptionsButton = ({ children, onClick }) => (
     {children}
   </button>
 )
+
+export default OptionsButton

@@ -5,7 +5,7 @@ import React from 'react'
 import { isTitleDisplayMode } from 'bemuse/devtools/query-flags'
 
 export default class LoadingSceneSongInfo extends React.Component {
-  render() {
+  render () {
     const song = this.props.song
     return <div className="LoadingSceneSongInfo">
       <div className="LoadingSceneSongInfoのgenre">{song.genre}</div>

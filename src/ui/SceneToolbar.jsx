@@ -3,7 +3,7 @@ import './SceneToolbar.scss'
 import React from 'react'
 
 export class SceneToolbar extends React.Component {
-  render() {
+  render () {
     return <div className="SceneToolbar">
       {this.props.children}
     </div>
@@ -11,7 +11,7 @@ export class SceneToolbar extends React.Component {
 }
 
 SceneToolbar.Spacer = class SceneToolbarSpacer extends React.Component {
-  render() {
+  render () {
     return <div className="SceneToolbarのspacer"></div>
   }
 }

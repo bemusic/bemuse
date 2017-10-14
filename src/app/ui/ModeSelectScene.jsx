@@ -24,10 +24,6 @@ class ModeSelectScene extends React.Component {
     onSetMode: PropTypes.func,
   }
 
-  constructor () {
-    super()
-  }
-
   render () {
     return <Scene className="ModeSelectScene">
       <SceneHeading>Select Mode</SceneHeading>

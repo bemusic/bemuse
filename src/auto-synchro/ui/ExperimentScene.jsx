@@ -5,7 +5,7 @@ import c from 'classnames'
 import Loading from 'bemuse/ui/Loading'
 
 export default class ExperimentScene extends React.Component {
-  render() {
+  render () {
     return <div className={c('ExperimentScene', { 'is-finished': this.props.finished })}>
       <div className="ExperimentSceneのwrapper">
         <div className="ExperimentSceneのwrapperInner">

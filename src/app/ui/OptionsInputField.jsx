@@ -19,10 +19,6 @@ class OptionsInputField extends React.PureComponent {
     onChange: () => {},
   }
 
-  constructor () {
-    super()
-  }
-
   render () {
     return <input
       {..._.omit(this.props, ['stringify', 'parse', 'onChange', 'validator', 'value'])}

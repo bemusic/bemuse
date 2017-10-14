@@ -16,13 +16,13 @@ export default class AuthenticationForm extends React.Component {
     })
   };
 
-  componentDidMount() {
+  componentDidMount () {
     $(ReactDOM.findDOMNode(this)).on('keydown keyup keypress', (e) => {
       e.stopPropagation()
     })
   }
 
-  render() {
+  render () {
     return <form className="AuthenticationForm">
       <div className="AuthenticationFormのgroup">
         <label>

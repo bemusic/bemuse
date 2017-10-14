@@ -5,11 +5,11 @@ import ReactDOM from 'react-dom'
 import now      from 'bemuse/utils/now'
 
 export default class RunningNumber extends React.Component {
-  render() {
+  render () {
     return <span className="RunningNumber"></span>
   }
 
-  componentDidMount() {
+  componentDidMount () {
     let node = ReactDOM.findDOMNode(this)
     let text = document.createTextNode('')
     node.appendChild(text)

@@ -94,7 +94,7 @@ export default class GameShellScene extends React.Component {
     }
   }
 
-  render() {
+  render () {
     let options = this.state.options
     return <div
       className="GameShellScene"

@@ -14,11 +14,11 @@ const availablePlaygrounds = (function (context) {
 })(require.context('./playgrounds', false, /\.jsx?$/))
 
 class DefaultPlayground extends React.Component {
-  static main() {
+  static main () {
     ReactDOM.render(<DefaultPlayground />, MAIN)
   }
 
-  render() {
+  render () {
     const linkStyle = { color: '#abc' }
     return <div>
       <h1>Bemuse Playground</h1>

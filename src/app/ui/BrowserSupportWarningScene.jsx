@@ -8,9 +8,6 @@ import { SUPPORTED } from '../browser-support'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 
 class BrowserSupportWarningScene extends React.Component {
-  constructor () {
-    super()
-  }
 
   render () {
     return <Scene className="BrowserSupportWarningScene">
