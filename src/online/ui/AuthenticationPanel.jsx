@@ -10,24 +10,27 @@ import online from 'bemuse/online/instance'
 
 import AuthenticationForm from './AuthenticationForm'
 
-export default React.createClass({
-  getInitialState () {
-    return {
+export default class extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
       mode: 'logIn',
       authentication: {
         status: 'idle',
         message: ''
       }
     }
-  },
-  onSubmit (formData) {
+  }
+
+  onSubmit = (formData) => {
     if (this.state.mode === 'signUp') {
       this.runPromise(this.doSignUp(formData))
     } else {
       this.runPromise(this.doLogIn(formData))
     }
-  },
-  runPromise (promise) {
+  }
+
+  runPromise = (promise) => {
     this.setState({
       authentication: {
         status: 'loading',
@@ -53,8 +56,9 @@ export default React.createClass({
       }
     )
     .done()
-  },
-  doSignUp (formData) {
+  }
+
+  doSignUp = (formData) => {
     return Promise.try(() => {
       if (!formData.username.trim()) {
         throw new Error('Please enter a username.')
@@ -85,8 +89,9 @@ export default React.createClass({
         return 'Welcome to Bemuse!'
       })
     })
-  },
-  doLogIn (formData) {
+  }
+
+  doLogIn = (formData) => {
     return Promise.try(() => {
       if (!formData.username.trim()) {
         throw new Error('Please enter your username.')
@@ -99,14 +104,17 @@ export default React.createClass({
         return 'Welcome back!'
       })
     })
-  },
-  onSwitchToLogin () {
+  }
+
+  onSwitchToLogin = () => {
     this.setState({ mode: 'logIn' })
-  },
-  onSwitchToSignup () {
+  }
+
+  onSwitchToSignup = () => {
     this.setState({ mode: 'signUp' })
-  },
-  render () {
+  }
+
+  render() {
     return <div className="AuthenticationPanel">
       <Panel title="Bemuse Online Ranking">
         <div className="AuthenticationPanelのlayout">
@@ -140,15 +148,17 @@ export default React.createClass({
         </div>
       </Panel>
     </div>
-  },
-  renderMessage () {
+  }
+
+  renderMessage = () => {
     let state = this.state.authentication
     if (state.status === 'idle' || !state.message) return null
     return <div className={c('AuthenticationPanelのmessage', 'is-' + state.status)}>
       {state.message}
     </div>
-  },
-  renderModeActiveClass (mode) {
+  }
+
+  renderModeActiveClass = (mode) => {
     return mode === this.state.mode ? 'is-active' : ''
-  },
-})
+  }
+}
