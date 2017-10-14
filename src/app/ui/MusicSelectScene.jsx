@@ -175,7 +175,7 @@ class MusicSelectScene extends React.PureComponent {
       />
 
       {!!this.props.musicPreviewEnabled &&
-        <MusicSelectPreviewer url={this.getPreviewUrl} />
+        <MusicSelectPreviewer url={this.getPreviewUrl()} />
       }
     </Scene>
   }
