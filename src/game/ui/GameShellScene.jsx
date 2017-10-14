@@ -5,14 +5,14 @@ import DndResources from 'bemuse/resources/dnd-resources'
 import c            from 'classnames'
 
 class CustomChartSelector extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       files: [],
     }
   }
 
-  render() {
+  render () {
     let files = this.state.files
     return <div className="drop-zone">
       {
@@ -87,7 +87,7 @@ class CustomChartSelector extends React.Component {
 }
 
 export default class GameShellScene extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       options: this.props.options,

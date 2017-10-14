@@ -14,12 +14,12 @@ export default class extends React.Component {
         this.props.url.match(/v=([^&]+)/)[1]
   }
 
-  componentDidMount() {
+  componentDidMount () {
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     window.removeEventListener('resize', this.handleResize)
   }
 
