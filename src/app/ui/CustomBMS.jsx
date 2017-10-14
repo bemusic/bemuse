@@ -39,10 +39,10 @@ class CustomBMS extends React.Component {
         </div>
         <div className={c('CustomBMSのdropzone',
               { 'is-hover': this.state.hover })}
-          onDragOver={() => this.handleDragOver()}
-          onDragEnter={() => this.handleDragEnter()}
-          onDragLeave={() => this.handleDragLeave()}
-          onDrop={() => this.handleDrop()}>
+          onDragOver={this.handleDragOver}
+          onDragEnter={this.handleDragEnter}
+          onDragLeave={this.handleDragLeave}
+          onDrop={this.handleDrop}>
           {
             this.props.log
             ? (
@@ -67,21 +67,21 @@ class CustomBMS extends React.Component {
     </Panel>
   }
 
-  handleDragEnter (e) {
+  handleDragEnter = (e) => {
     e.preventDefault()
   }
 
-  handleDragOver (e) {
+  handleDragOver = (e) => {
     this.setState({ hover: true })
     e.preventDefault()
   }
 
-  handleDragLeave (e) {
+  handleDragLeave = (e) => {
     this.setState({ hover: false })
     e.preventDefault()
   }
 
-  handleDrop (e) {
+  handleDrop = (e) => {
     this.setState({ hover: false })
     Analytics.send('CustomBMS', 'drop')
     e.preventDefault()

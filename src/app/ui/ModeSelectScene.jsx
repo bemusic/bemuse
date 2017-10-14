@@ -33,7 +33,7 @@ class ModeSelectScene extends React.Component {
       <SceneHeading>Select Mode</SceneHeading>
       <div className="ModeSelectSceneのmain">
         <div className="ModeSelectSceneのcontent">
-          <div className="ModeSelectSceneのitem" onClick={() => this.handleKB()}>
+          <div className="ModeSelectSceneのitem" onClick={this.handleKB}>
             {this.renderKBGraphics()}
             <h2>Keyboard Mode</h2>
             <p>
@@ -41,7 +41,7 @@ class ModeSelectScene extends React.Component {
             </p>
             <p>This mode is similar to O2Jam.</p>
           </div>
-          <div className="ModeSelectSceneのitem" onClick={() => this.handleBM()}>
+          <div className="ModeSelectSceneのitem" onClick={this.handleBM}>
             {this.renderBMGraphics()}
             <h2>BMS Mode</h2>
             <p>
@@ -53,7 +53,7 @@ class ModeSelectScene extends React.Component {
         </div>
       </div>
       <SceneToolbar>
-        <a onClick={() => this.handleBack()} href="javascript://">Go Back</a>
+        <a onClick={this.handleBack} href="javascript://">Go Back</a>
       </SceneToolbar>
     </Scene>
   }
@@ -88,19 +88,19 @@ class ModeSelectScene extends React.Component {
     </svg>
   }
 
-  handleKB () {
+  handleKB = () => {
     this.props.onSetMode('KB')
     SCENE_MANAGER.display(<MusicSelectScene />).done()
     Analytics.send('ModeSelectScene', 'select mode', 'KB')
   }
 
-  handleBM () {
+  handleBM = () => {
     this.props.onSetMode('BM')
     SCENE_MANAGER.display(<MusicSelectScene />).done()
     Analytics.send('ModeSelectScene', 'select mode', 'BM')
   }
 
-  handleBack () {
+  handleBack = () => {
     SCENE_MANAGER.pop().done()
   }
 }

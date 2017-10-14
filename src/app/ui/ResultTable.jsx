@@ -51,7 +51,7 @@ export default class ResultTable extends React.Component {
             <th>Max Combo</th>
           </tr>
           <tr>
-            <td onClick={() => this.handleViewDeltas()} className="is-clickable">
+            <td onClick={this.handleViewDeltas} className="is-clickable">
               <FirstTimeTip featureKey="deltas" tip="View detailed accuracy data">
                 <RunningNumber
                   formatter={this.formatAccuracy}
@@ -73,7 +73,7 @@ export default class ResultTable extends React.Component {
       </table>
       <ModalPopup
         visible={this.state.deltasModalVisible}
-        onBackdropClick={() => this.handleToggleDeltasModal()}
+        onBackdropClick={this.handleToggleDeltasModal}
       >
         <ResultDeltasView deltas={result['deltas']} />
       </ModalPopup>
@@ -82,10 +82,10 @@ export default class ResultTable extends React.Component {
   formatAccuracy (value) {
     return (value * 100).toFixed(2) + '%'
   }
-  handleToggleDeltasModal () {
+  handleToggleDeltasModal = () => {
     this.setState({ deltasModalVisible: !this.state.deltasModalVisible })
   }
-  handleViewDeltas () {
+  handleViewDeltas = () => {
     this.handleToggleDeltasModal()
     Analytics.send('ResultTable', 'view deltas')
   }

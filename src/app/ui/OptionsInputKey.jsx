@@ -10,12 +10,12 @@ class OptionsInputKey extends React.PureComponent {
       <div
         className={c('OptionsInputKeyのcontents',
               { 'is-editing': this.props.isEditing })}
-        onClick={() => this.handleClick()}>
+        onClick={this.handleClick}>
         <div className="OptionsInputKeyのtext">{this.props.text}</div>
       </div>
     </div>
   }
-  handleClick () {
+  handleClick = () => {
     this.props.onEdit('' + this.props.n)
   }
 }

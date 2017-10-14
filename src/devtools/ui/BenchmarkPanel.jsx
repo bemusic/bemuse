@@ -2,11 +2,19 @@
 import './BenchmarkPanel.scss'
 import React from 'react'
 
-export default React.createClass({
-  render () {
+export default class extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      show: false,
+      text: 'wow',
+    }
+  }
+
+  render() {
     return <div className="BenchmarkPanel"
-      onClick={() => this.handleInteraction()}
-      onTouchStart={() => this.handleInteraction()}>
+      onClick={this.handleInteraction}
+      onTouchStart={this.handleInteraction}>
       {
         this.state.show
         ? (
@@ -18,11 +26,13 @@ export default React.createClass({
         : 'Show Benchmark Stats'
       }
     </div>
-  },
-  componentDidMount () {
+  }
+
+  componentDidMount() {
     setInterval(() => this.forceUpdate(), 1000)
-  },
-  renderTable () {
+  }
+
+  renderTable = () => {
     let stats = this.props.bench.stats
     return <table>
       <tbody>
@@ -35,16 +45,11 @@ export default React.createClass({
         })}
       </tbody>
     </table>
-  },
-  getInitialState () {
-    return {
-      show: false,
-      text: 'wow',
-    }
-  },
-  handleInteraction (e) {
+  };
+
+  handleInteraction = (e) => {
     e.preventDefault()
     e.stopPropagation()
     this.setState({ show: !this.state.show })
-  }
-})
+  };
+}

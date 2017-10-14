@@ -117,7 +117,7 @@ class MusicSelectScene extends React.Component {
     let musicSelect = this.props.musicSelect
     return <Scene
       className="MusicSelectScene"
-      onDragEnter={() => this.handleCustomBMSOpen()}
+      onDragEnter={this.handleCustomBMSOpen}
     >
       <SceneHeading>
         Select Music
@@ -125,7 +125,7 @@ class MusicSelectScene extends React.Component {
           type="text"
           placeholder="Filter…"
           className="MusicSelectSceneのsearch"
-          onChange={() => this.handleFilter()}
+          onChange={this.handleFilter}
           value={musicSelect.filterText}
         />
       </SceneHeading>
@@ -137,47 +137,47 @@ class MusicSelectScene extends React.Component {
       <SceneToolbar>
         <a onClick={this.popScene} href="javascript://">Exit</a>
         <a
-          onClick={() => this.handleCustomBMSOpen()}
+          onClick={this.handleCustomBMSOpen}
           href="javascript://"
         >
           Play Custom BMS
         </a>
         <SceneToolbar.Spacer />
         {this.renderOnlineToolbarButtons()}
-        <a onClick={() => this.handleOptionsOpen()} href="javascript://">Options</a>
+        <a onClick={this.handleOptionsOpen} href="javascript://">Options</a>
       </SceneToolbar>
 
       <ModalPopup
         visible={this.state.optionsVisible}
-        onBackdropClick={() => this.handleOptionsClose()}
+        onBackdropClick={this.handleOptionsClose}
       >
-        <OptionsView onClose={() => this.handleOptionsClose()} />
+        <OptionsView onClose={this.handleOptionsClose} />
       </ModalPopup>
 
       <ModalPopup
         visible={this.state.customBMSVisible}
-        onBackdropClick={() => this.handleCustomBMSClose()}
+        onBackdropClick={this.handleCustomBMSClose}
       >
         <div className="MusicSelectSceneのcustomBms">
-          <CustomBMS onSongLoaded={() => this.handleCustomSong()} />
+          <CustomBMS onSongLoaded={this.handleCustomSong} />
         </div>
       </ModalPopup>
 
       <ModalPopup
         visible={this.state.unofficialDisclaimerVisible}
-        onBackdropClick={() => this.handleUnofficialClose()}
+        onBackdropClick={this.handleUnofficialClose}
       >
-        <UnofficialPanel onClose={() => this.handleUnofficialClose()} />
+        <UnofficialPanel onClose={this.handleUnofficialClose} />
       </ModalPopup>
 
       <AuthenticationPopup
         visible={this.state.authenticationPopupVisible}
-        onFinish={() => this.handleAuthenticationFinish()}
-        onBackdropClick={() => this.handleAuthenticationClose()}
+        onFinish={this.handleAuthenticationFinish}
+        onBackdropClick={this.handleAuthenticationClose}
       />
 
       {!!this.props.musicPreviewEnabled &&
-        <MusicSelectPreviewer url={this.getPreviewUrl()} />
+        <MusicSelectPreviewer url={this.getPreviewUrl} />
       }
     </Scene>
   }
@@ -187,7 +187,7 @@ class MusicSelectScene extends React.Component {
     return (
       <div
         className="MusicSelectSceneのunofficialLabel"
-        onClick={() => this.handleUnofficialClick()}
+        onClick={this.handleUnofficialClick}
       >
         <b>Disclaimer:</b> Unofficial Server
       </div>
@@ -215,16 +215,16 @@ class MusicSelectScene extends React.Component {
           selectedSong={musicSelect.song}
           selectedChart={musicSelect.chart}
           playMode={musicSelect.playMode}
-          onSelect={() => this.handleSongSelect(musicSelect.song)}
-          onTouch={() => this.handleMusicListTouch()}
+          onSelect={this.handleSongSelect}
+          onTouch={this.handleMusicListTouch}
         />
         <MusicInfo
           song={musicSelect.song}
           chart={musicSelect.chart}
           charts={musicSelect.charts}
           playMode={musicSelect.playMode}
-          onChartClick={() => this.handleChartClick(musicSelect.chart)}
-          onOptions={() => this.handleOptionsOpen()}
+          onChartClick={this.handleChartClick}
+          onOptions={this.handleOptionsOpen}
         />
       </div>
     )
@@ -268,7 +268,7 @@ class MusicSelectScene extends React.Component {
       )
     }
   }
-  handleSongSelect (song, chart) {
+  handleSongSelect = (song, chart) => {
     if (chart) {
       this.props.onSelectChart(song, chart)
       Analytics.send('MusicSelectScene', 'select', 'song and chart')
@@ -278,10 +278,10 @@ class MusicSelectScene extends React.Component {
     }
     this.setState({ inSong: true })
   }
-  handleMusicListTouch () {
+  handleMusicListTouch = () => {
     this.setState({ inSong: false })
   }
-  handleChartClick (chart) {
+  handleChartClick = (chart) => {
     if (this.props.musicSelect.chart.md5 === chart.md5) {
       Analytics.send('MusicSelectScene', 'launch game')
       MusicPreviewer.go()
@@ -291,47 +291,47 @@ class MusicSelectScene extends React.Component {
       this.props.onSelectChart(this.props.musicSelect.song, chart)
     }
   }
-  handleFilter (e) {
+  handleFilter = (e) => {
     this.props.onFilterTextChange(e.target.value)
   }
-  handleOptionsOpen () {
+  handleOptionsOpen = () => {
     Analytics.send('MusicSelectScene', 'open options')
     this.setState({ optionsVisible: true })
   }
-  handleOptionsClose () {
+  handleOptionsClose = () => {
     this.setState({ optionsVisible: false })
   }
-  handleCustomBMSOpen () {
+  handleCustomBMSOpen = () => {
     this.setState({ customBMSVisible: true })
     Analytics.send('MusicSelectScene', 'open custom BMS')
   }
-  handleCustomBMSClose () {
+  handleCustomBMSClose = () => {
     this.setState({ customBMSVisible: false })
   }
-  handleCustomSong (song) {
+  handleCustomSong = (song) => {
     this.setState({ customBMSVisible: false })
   }
-  handleUnofficialClick () {
+  handleUnofficialClick = () => {
     this.setState({ unofficialDisclaimerVisible: true })
     Analytics.send('MusicSelectScene', 'view unofficial disclaimer')
   }
-  handleUnofficialClose () {
+  handleUnofficialClose = () => {
     this.setState({ unofficialDisclaimerVisible: false })
   }
-  handleLogout () {
+  handleLogout = () => {
     if (confirm('Do you really want to log out?')) {
       Promise.resolve(online.logOut()).done()
       Analytics.send('MusicSelectScene', 'logout')
     }
   }
-  handleAuthenticate () {
+  handleAuthenticatev = () => {
     this.setState({ authenticationPopupVisible: true })
     Analytics.send('MusicSelectScene', 'authenticate')
   }
-  handleAuthenticationClose () {
+  handleAuthenticationClose = () => {
     this.setState({ authenticationPopupVisible: false })
   }
-  handleAuthenticationFinish () {
+  handleAuthenticationFinish = () => {
     this.setState({ authenticationPopupVisible: false })
   }
   popScene () {

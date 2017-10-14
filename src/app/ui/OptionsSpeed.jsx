@@ -12,32 +12,32 @@ class OptionsSpeed extends React.PureComponent {
   stringifySpeed (speed) {
     return speed.toFixed(1)
   }
-  handleMinusButtonClick () {
+  handleMinusButtonClick = () => {
     let speed = this.parseSpeed(this.props.value)
     let nextSpeed = speed - (speed > 0.5 ? 0.5 : speed > 0.2 ? 0.3 : 0)
     this.props.onChange(this.stringifySpeed(nextSpeed))
   }
-  handlePlusButtonClick () {
+  handlePlusButtonClick = () => {
     let speed = this.parseSpeed(this.props.value)
     let nextSpeed = speed + (speed < 0.5 ? 0.3 : 0.5)
     this.props.onChange(this.stringifySpeed(nextSpeed))
   }
-  handleSpeedInputChange (nextSpeed) {
+  handleSpeedInputChange = (nextSpeed) => {
     this.props.onChange(this.stringifySpeed(nextSpeed))
   }
   render () {
     return <div className="OptionsSpeed">
       <span className="OptionsSpeedのminus">
-        <OptionsButton onClick={() => this.handleMinusButtonClick()}>-</OptionsButton>
+        <OptionsButton onClick={this.handleMinusButtonClick}>-</OptionsButton>
       </span>
       <OptionsInputField
         value={this.parseSpeed(this.props.value)}
         parse={this.parseSpeed}
         stringify={this.stringifySpeed}
         validator={/^\d+(?:\.\d)?$/}
-        onChange={() => this.handleSpeedInputChange()} />
+        onChange={this.handleSpeedInputChange} />
       <span className="OptionsSpeedのplus">
-        <OptionsButton onClick={() => this.handlePlusButtonClick()}>+</OptionsButton>
+        <OptionsButton onClick={this.handlePlusButtonClick}>+</OptionsButton>
       </span>
     </div>
   }

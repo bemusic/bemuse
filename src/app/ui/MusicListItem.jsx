@@ -16,7 +16,7 @@ class MusicListItem extends React.PureComponent {
     })
     return <li
       className={className}
-      onClick={() => this.handleClick()}>
+      onClick={this.handleClick}>
       {
         song.tutorial
         ? (
@@ -55,7 +55,7 @@ class MusicListItem extends React.PureComponent {
     return <MusicListItemCharts
       charts={getPlayableCharts(this.props.song.charts)}
       selectedChart={this.props.selectedChart}
-      onChartClick={() => this.handleChartClick()}
+      onChartClick={this.handleChartClick}
       playMode={this.props.playMode}
     />
   }
@@ -80,11 +80,11 @@ class MusicListItem extends React.PureComponent {
     return output
   }
 
-  handleClick () {
+  handleClick = () => {
     this.props.onSelect(this.props.song)
   }
 
-  handleChartClick (chart, e) {
+  handleChartClick = (chart, e) => {
     e.stopPropagation()
     this.props.onSelect(this.props.song, chart)
   }

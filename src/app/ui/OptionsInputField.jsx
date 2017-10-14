@@ -30,12 +30,12 @@ class OptionsInputField extends React.PureComponent {
       type="text"
       ref="input"
       defaultValue={this.props.stringify(this.props.value)}
-      onChange={() => this.handleInputChange()}
-      onKeyDown={() => this.handleInputKeyDown()}
-      onBlur={() => this.handleInputBlur()}
+      onChange={this.handleInputChange}
+      onKeyDown={this.handleInputKeyDown}
+      onBlur={this.handleInputBlur}
       className="OptionsInputField" />
   }
-  handleInputChange (e) {
+  handleInputChange = (e) => {
     let input = e.target
     let valid = this.props.validator.test(input.value)
     input.classList[valid ? 'remove' : 'add']('is-invalid')
@@ -43,7 +43,7 @@ class OptionsInputField extends React.PureComponent {
       this.props.onChange(this.props.parse(input.value))
     }
   }
-  handleInputBlur () {
+  handleInputBlur = () => {
     let input = ReactDOM.findDOMNode(this.refs.input)
     input.value = this.props.stringify(this.props.value)
     input.classList.remove('is-invalid')

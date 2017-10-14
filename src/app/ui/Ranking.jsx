@@ -12,21 +12,21 @@ export default class Ranking extends React.Component {
       authenticationPopupVisible: false,
     }
   }
-  handleAuthenticate () {
+  handleAuthenticate = () => {
     this.setState({ authenticationPopupVisible: true })
   }
-  handleAuthenticationClose () {
+  handleAuthenticationClose = () => {
     this.setState({ authenticationPopupVisible: false })
   }
-  handleAuthenticationFinish () {
+  handleAuthenticationFinish = () => {
     this.setState({ authenticationPopupVisible: false })
   }
   render () {
     return <div className="Ranking">
       <AuthenticationPopup
         visible={this.state.authenticationPopupVisible}
-        onFinish={() => this.handleAuthenticationFinish()}
-        onBackdropClick={() => this.handleAuthenticationClose()} />
+        onFinish={this.handleAuthenticationFinish}
+        onBackdropClick={this.handleAuthenticationClose} />
       {this.renderYours()}
       {this.renderLeaderboard()}
     </div>

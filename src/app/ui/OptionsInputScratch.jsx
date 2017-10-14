@@ -9,7 +9,7 @@ class OptionsInputScratch extends React.PureComponent {
     return <div
       className={c('OptionsInputScratch',
             { 'is-editing': this.props.isEditing })}
-      onClick={() => this.handleClick()}>
+      onClick={this.handleClick}>
       <svg viewBox="-100 -100 200 200">
         <path d={star()} className="OptionsInputScratchのstar" />
       </svg>
@@ -25,7 +25,7 @@ class OptionsInputScratch extends React.PureComponent {
       'is-editing': this.props.editIndex === index
     })
   }
-  handleClick () {
+  handleClick = () => {
     this.props.onEdit('SC')
   }
 }

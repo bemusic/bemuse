@@ -82,7 +82,7 @@ class OptionsInput extends React.Component {
                   ? 0
                   : this.props.editing === 'SC2' ? 1 : -1
                 }
-                onEdit={() => this.handleEdit()}
+                onEdit={this.handleEdit}
               />
             </div>
             <div className="OptionsInputのtitle">
@@ -98,7 +98,7 @@ class OptionsInput extends React.Component {
             keyboardMode={this.props.scratch === 'off'}
             texts={this.props.texts}
             editing={this.props.editing}
-            onEdit={() => this.handleEdit()}
+            onEdit={this.handleEdit}
           />
         </div>
         <div className="OptionsInputのtitle">
@@ -107,7 +107,7 @@ class OptionsInput extends React.Component {
       </div>
     </div>
   }
-  handleEdit (key) {
+  handleEdit = (key) => {
     this.props.onEdit(key)
   }
   componentDidMount () {
@@ -120,12 +120,12 @@ class OptionsInput extends React.Component {
     if (this._dispose) this._dispose()
     window.removeEventListener('keydown', this.handleKeyboardEvent, true)
   }
-  handleKey (key) {
+  handleKey = (key) => {
     if (this.props.editing) {
       this.props.onKey(key)
     }
   }
-  handleKeyboardEvent (e) {
+  handleKeyboardEvent = (e) => {
     if (this.props.editing) {
       e.preventDefault()
     }
