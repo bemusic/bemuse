@@ -322,7 +322,7 @@ class MusicSelectScene extends React.PureComponent {
       Analytics.send('MusicSelectScene', 'logout')
     }
   }
-  handleAuthenticatev = () => {
+  handleAuthenticate = () => {
     this.setState({ authenticationPopupVisible: true })
     Analytics.send('MusicSelectScene', 'authenticate')
   }
