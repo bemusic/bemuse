@@ -1,16 +1,25 @@
-
 import _ from 'lodash'
 
 export const UNJUDGED = 0
 export const MISSED = -1
 
 //#region judgment timegate
-export const JUDGMENTS = [
-  { value: 1, timegate: 0.020, endTimegate: 0.040 },
-  { value: 2, timegate: 0.050, endTimegate: 0.100 },
-  { value: 3, timegate: 0.100, endTimegate: 0.200 },
-  { value: 4, timegate: 0.200, endTimegate: 0.200 },
-]
+export const NORMAL_JUDGE = {
+  timegates: [
+    { value: 1, timegate: 0.020, endTimegate: 0.040 },
+    { value: 2, timegate: 0.050, endTimegate: 0.100 },
+    { value: 3, timegate: 0.100, endTimegate: 0.200 },
+    { value: 4, timegate: 0.200, endTimegate: 0.200 },
+  ]
+}
+export const BEGINNER_JUDGE = {
+  timegates: [
+    { value: 1, timegate: 0.050, endTimegate: 0.080 },
+    { value: 2, timegate: 0.100, endTimegate: 0.160 },
+    { value: 3, timegate: 0.160, endTimegate: 0.200 },
+    { value: 4, timegate: 0.200, endTimegate: 0.200 },
+  ]
+}
 //#endregion
 
 /**
@@ -24,10 +33,11 @@ export const JUDGMENTS = [
  * -1 - MISSED
  */
 export function judgeTimeWith (f) {
-  return function judgeTimeWithF (gameTime, noteTime) {
+  return function judgeTimeWithF (gameTime, noteTime, judge = NORMAL_JUDGE) {
+    const timegates = judge.timegates
     let delta = Math.abs(gameTime - noteTime)
-    for (let i = 0; i < JUDGMENTS.length; i++) {
-      if (delta < f(JUDGMENTS[i])) return JUDGMENTS[i].value
+    for (let i = 0; i < timegates.length; i++) {
+      if (delta < f(timegates[i])) return timegates[i].value
     }
     return gameTime < noteTime ? UNJUDGED : MISSED
   }
@@ -36,8 +46,8 @@ export function judgeTimeWith (f) {
 export const judgeTime    = judgeTimeWith(_.property('timegate'))
 export const judgeEndTime = judgeTimeWith(_.property('endTimegate'))
 
-export function timegate (judgment) {
-  return _.find(JUDGMENTS, { value: judgment }).timegate
+export function timegate (judgment, judge = NORMAL_JUDGE) {
+  return _.find(judge.timegates, { value: judgment }).timegate
 }
 
 export function isBad (judgment) {
