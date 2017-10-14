@@ -1,7 +1,6 @@
 
 import './OptionsInputKeys.scss'
 import React from 'react'
-import pure  from 'recompose/pure'
 
 import OptionsInputKey from './OptionsInputKey'
 

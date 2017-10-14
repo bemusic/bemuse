@@ -2,7 +2,6 @@
 import './OptionsInputKey.scss'
 import React from 'react'
 import c     from 'classnames'
-import pure  from 'recompose/pure'
 
 class OptionsInputKey extends React.PureComponent {
   render () {

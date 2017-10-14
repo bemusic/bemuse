@@ -2,11 +2,10 @@
 import './OptionsPlayerSelector.scss'
 import React from 'react'
 import c     from 'classnames'
-import pure  from 'recompose/pure'
 
 import OptionsPlayerGraphics from './OptionsPlayerGraphics'
 
-class OptionsPlayerSelector extends React.Component {
+class OptionsPlayerSelector extends React.PureComponent {
   render () {
     return <div className="OptionsPlayerSelector">
       {this.props.options.map((item, index) =>
@@ -45,4 +44,4 @@ class OptionsPlayerSelectorItem extends React.PureComponent {
 
 OptionsPlayerSelector.Item = OptionsPlayerSelectorItem
 
-export default pure(OptionsPlayerSelector)
+export default OptionsPlayerSelector

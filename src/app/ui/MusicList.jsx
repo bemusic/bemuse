@@ -4,7 +4,6 @@ import './MusicList.scss'
 import React          from 'react'
 import _              from 'lodash'
 import MusicListItem  from './MusicListItem.jsx'
-import pure           from 'recompose/pure'
 
 class MusicList extends React.PureComponent {
   render () {

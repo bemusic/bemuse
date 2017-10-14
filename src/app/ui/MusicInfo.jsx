@@ -5,7 +5,6 @@ import React from 'react'
 import MusicChartInfo     from './MusicChartInfo.jsx'
 import MusicChartSelector from './MusicChartSelector.jsx'
 import MusicInfoTabs      from './MusicInfoTabs.jsx'
-import pure               from 'recompose/pure'
 
 class MusicInfo extends React.PureComponent {
   render () {

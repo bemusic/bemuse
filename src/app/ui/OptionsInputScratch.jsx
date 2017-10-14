@@ -1,7 +1,6 @@
 
 import './OptionsInputScratch.scss'
 import React from 'react'
-import pure  from 'recompose/pure'
 import c     from 'classnames'
 
 class OptionsInputScratch extends React.PureComponent {

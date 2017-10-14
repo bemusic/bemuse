@@ -3,7 +3,6 @@ import './OptionsSpeed.scss'
 import OptionsButton from './OptionsButton'
 import OptionsInputField from './OptionsInputField'
 import React from 'react'
-import pure from 'recompose/pure'
 
 class OptionsSpeed extends React.PureComponent {
   parseSpeed (speedString) {

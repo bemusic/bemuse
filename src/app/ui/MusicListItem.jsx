@@ -3,7 +3,6 @@ import './MusicListItem.scss'
 import React  from 'react'
 import c      from 'classnames'
 import getPlayableCharts from 'bemuse/music-collection/getPlayableCharts'
-import pure   from 'recompose/pure'
 
 import MusicListItemCharts from './MusicListItemCharts'
 
