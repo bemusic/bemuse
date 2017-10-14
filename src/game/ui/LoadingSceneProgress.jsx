@@ -4,7 +4,7 @@ import './LoadingSceneProgress.scss'
 import React from 'react'
 import LoadingSceneProgressBar from './LoadingSceneProgressBar.jsx'
 
-export default class LoadingSceneProgressBar extends React.Component {
+export default class LoadingSceneProgress extends React.Component {
   render() {
     return <div className="LoadingSceneProgress">
       {this.props.tasks.value.map(task => this.renderItem(task))}

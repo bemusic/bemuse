@@ -16,7 +16,7 @@ const safeMarkdown = new Markdown({
   typographer: true,
 })
 
-export default class Markdown extends React.Component {
+export default class MarkdownContent extends React.Component {
   render() {
     return <article className="Markdown" dangerouslySetInnerHTML={this.renderHTML()}></article>
   }
