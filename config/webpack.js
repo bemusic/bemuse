@@ -24,7 +24,7 @@ function generateBaseConfig () {
     module: {
       loaders: generateLoadersConfig(),
       noParse: [
-        /node_modules\/sinon\//,
+        /sinon\.js/,
       ],
     },
     plugins: [
