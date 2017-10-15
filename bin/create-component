@@ -13,11 +13,11 @@ import './名.scss'
 import React from 'react'
 import c     from 'classnames'
 
-export default React.createClass({
+export default class extends React.Component{
   render() {
     return <div className="名"></div>
   }
-})
+}
 `.replace(/名/g, 名)
 
 let scssData = `

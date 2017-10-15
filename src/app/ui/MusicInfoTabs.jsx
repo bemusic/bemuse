@@ -9,7 +9,14 @@ import MusicInfoTabStats        from './MusicInfoTabStats.jsx'
 import MusicInfoTabInformation  from './MusicInfoTabInformation.jsx'
 import RankingContainer         from './RankingContainer'
 
-export default React.createClass({
+export default class MusicInfoTabs extends React.Component {
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      selectedTab: 0,
+    }
+  }
 
   render () {
     return <section className="MusicInfoTabs">
@@ -27,7 +34,7 @@ export default React.createClass({
         {this.renderCurrentTab()}
       </div>
     </section>
-  },
+  }
 
   renderTab (index, title) {
     const onClick = () => this.setState({ selectedTab: index })
@@ -39,7 +46,8 @@ export default React.createClass({
     >
       {title}
     </li>
-  },
+  }
+
   renderCurrentTab () {
     switch (this.state.selectedTab) {
     case 0:
@@ -57,12 +65,6 @@ export default React.createClass({
     default:
       return 'Unknown tab'
     }
-  },
+  }
 
-  getInitialState () {
-    return {
-      selectedTab: 0,
-    }
-  },
-
-})
+}

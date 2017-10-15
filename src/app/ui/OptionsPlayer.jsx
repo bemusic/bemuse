@@ -30,10 +30,10 @@ const SettingRow = compose(
   )
 })
 
-export const OptionsPlayer = React.createClass({
-  propTypes: {
+class OptionsPlayer extends React.Component {
+  static propTypes = {
     onClose: PropTypes.func
-  },
+  }
   render () {
     return <div className="OptionsPlayer">
       <SettingRow
@@ -165,14 +165,14 @@ export const OptionsPlayer = React.createClass({
       </div>
     </div>
   }
-})
+}
 
-OptionsPlayer.Row = React.createClass({
-  propTypes: {
+class OptionsPlayerRow extends React.Component {
+  static propTypes = {
     hidden: PropTypes.bool,
     label: PropTypes.node,
     children: PropTypes.node
-  },
+  }
   render () {
     return <div
       className="OptionsPlayerのrow"
@@ -182,6 +182,8 @@ OptionsPlayer.Row = React.createClass({
       <div>{this.props.children}</div>
     </div>
   }
-})
+}
+
+OptionsPlayer.Row = OptionsPlayerRow
 
 export default OptionsPlayer

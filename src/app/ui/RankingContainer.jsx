@@ -3,17 +3,18 @@ import React    from 'react'
 import Ranking  from './Ranking'
 import online   from 'bemuse/online/instance'
 
-export default React.createClass({
+export default class RankingContainer extends React.Component {
 
-  getInitialState () {
-    return {
+  constructor () {
+    super()
+    this.state = {
       data: null,
       meta: {
         scoreboard: { status: 'loading' },
         submission: { status: 'loading' },
       }
     }
-  },
+  }
 
   getParams (props) {
     let params = { }
@@ -32,12 +33,13 @@ export default React.createClass({
       })
     }
     return params
-  },
+  }
 
   componentDidMount () {
     this.model        = online.Ranking(this.getParams(this.props))
     this.unsubscribe  = this.model.state川.onValue(this.onStoreTrigger)
-  },
+    this.mounted      = true
+  }
 
   componentWillReceiveProps (nextProps) {
     if (this.props.chart.md5 !== nextProps.chart.md5 || this.props.playMode !== nextProps.playMode) {
@@ -45,23 +47,24 @@ export default React.createClass({
       this.model        = online.Ranking(this.getParams(nextProps))
       this.unsubscribe  = this.model.state川.onValue(this.onStoreTrigger)
     }
-  },
+  }
 
   componentWillUnmount () {
+    this.mounted = false
     if (this.unsubscribe) this.unsubscribe()
-  },
+  }
 
-  onStoreTrigger (state) {
-    if (this.isMounted()) this.setState(state)
-  },
+  onStoreTrigger = (state) => {
+    if (this.mounted) this.setState(state)
+  }
 
   onReloadScoreboardRequest () {
     this.model.reloadScoreboard()
-  },
+  }
 
   onResubmitScoreRequest () {
     this.model.resubmit()
-  },
+  }
 
   render () {
     return (
@@ -71,5 +74,5 @@ export default React.createClass({
         onResubmitScoreRequest={this.onResubmitScoreRequest}
       />
     )
-  },
-})
+  }
+}

@@ -4,10 +4,11 @@ import React    from 'react'
 import ReactDOM from 'react-dom'
 import now      from 'bemuse/utils/now'
 
-export default React.createClass({
+export default class RunningNumber extends React.Component {
   render () {
     return <span className="RunningNumber"></span>
-  },
+  }
+
   componentDidMount () {
     let node = ReactDOM.findDOMNode(this)
     let text = document.createTextNode('')
@@ -22,9 +23,10 @@ export default React.createClass({
         clearInterval(interval)
       }
     }, 16)
-  },
-  _getText (value) {
+  }
+
+  _getText = (value) => {
     if (this.props.formatter) return this.props.formatter(value)
     return value.toFixed(0)
-  },
-})
+  }
+}

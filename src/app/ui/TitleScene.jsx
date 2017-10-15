@@ -43,17 +43,20 @@ const enhance = compose(
   })
 ))
 
-export const TitleScene = React.createClass({
-  propTypes: {
+class TitleScene extends React.Component {
+  static propTypes = {
     hasSeenChangelog: PropTypes.bool,
     clickedTwitterButton: PropTypes.bool,
     onMarkChangelogAsSeen: PropTypes.func.isRequired,
-  },
-  getInitialState () {
-    return {
+  }
+
+  constructor () {
+    super()
+    this.state = {
       changelogModalVisible: false,
     }
-  },
+  }
+
   render () {
     const shouldShowHomepage = !HAS_PARENT
     return <Scene className="TitleScene">
@@ -75,10 +78,10 @@ export const TitleScene = React.createClass({
       <SceneToolbar>
         <a onClick={this.showAbout} href="javascript://">About</a>
         <a onClick={this.openLink} href="https://bemuse.readthedocs.org">Docs</a>
-        <a onClick={this.viewChangelog} href="javascript://">{this.renderVersion()}</a>
+        <a onClick={() => this.viewChangelog()} href="javascript://">{this.renderVersion()}</a>
         <SceneToolbar.Spacer />
-        <a onClick={this.openLink} href="https://www.facebook.com/bemusegame">Facebook</a>
-        <a onClick={this.openTwitterLink} href="https://twitter.com/bemusegame">
+        <a onClick={() => this.openLink()} href="https://www.facebook.com/bemusegame">Facebook</a>
+        <a onClick={() => this.openTwitterLink()} href="https://twitter.com/bemusegame">
           <FirstTimeTip tip="Like & follow us :)" featureKey="twitter">
             Twitter
           </FirstTimeTip>
@@ -88,12 +91,12 @@ export const TitleScene = React.createClass({
       <div className="TitleSceneのcurtain"></div>
       <ModalPopup
         visible={this.state.changelogModalVisible}
-        onBackdropClick={this.toggleChangelogModal}
+        onBackdropClick={() => this.toggleChangelogModal()}
       >
         <ChangelogPanel />
       </ModalPopup>
     </Scene>
-  },
+  }
 
   renderVersion () {
     return (
@@ -101,16 +104,18 @@ export const TitleScene = React.createClass({
         <strong>Bemuse</strong> v{version}
       </TipContainer>
     )
-  },
+  }
 
   openLink (e) {
     e.preventDefault()
     window.open($(e.target).closest('a').get(0).href, '_blank')
-  },
+  }
+
   openTwitterLink (e) {
     this.openLink(e)
     this.props.onTwitterButtonClick()
-  },
+  }
+
   enterGame () {
     SCENE_MANAGER.push(<ModeSelectScene />).done()
     Analytics.send('TitleScene', 'enter game')
@@ -120,20 +125,23 @@ export const TitleScene = React.createClass({
                   !/Chrom/.test(navigator.userAgent)
       if (!safari) screenfull.request()
     }
-  },
+  }
+
   showAbout () {
     SCENE_MANAGER.push(<AboutScene />).done()
     Analytics.send('TitleScene', 'show about')
-  },
+  }
+
   viewChangelog () {
     this.toggleChangelogModal()
     this.props.onMarkChangelogAsSeen()
     Analytics.send('TitleScene', 'view changelog')
-  },
+  }
+
   toggleChangelogModal () {
     this.setState({ changelogModalVisible: !this.state.changelogModalVisible })
-  },
+  }
 
-})
+}
 
 export default enhance(TitleScene)

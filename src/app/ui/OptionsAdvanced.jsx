@@ -22,17 +22,17 @@ const enhance = compose(
   pure
 )
 
-export const OptionsAdvanced = React.createClass({
-  propTypes: {
+class OptionsAdvanced extends React.Component {
+  static propTypes = {
     options: PropTypes.object,
     onUpdateOptions: PropTypes.func
-  },
+  }
   stringifyLatency (latency) {
     return Math.round(latency) + 'ms'
-  },
+  }
   parseLatency (latencyText) {
     return parseInt(latencyText, 10)
-  },
+  }
   render () {
     let options = this.props.options
     return <div className="OptionsAdvanced">
@@ -52,34 +52,34 @@ export const OptionsAdvanced = React.createClass({
           onClick={this.handleCalibrateButtonClick}>Calibrate</OptionsButton>
       </div>
     </div>
-  },
-  handleAudioInputLatencyChange (value) {
+  }
+  handleAudioInputLatencyChange = (value) => {
     this.props.onUpdateOptions(Options.changeAudioInputLatency(value))
-  },
-  handleCalibrateButtonClick () {
+  }
+  handleCalibrateButtonClick = () => {
     let options = 'width=640,height=360'
     window.open('?mode=sync', 'sync', options)
-  },
-})
+  }
+}
 
 export default enhance(OptionsAdvanced)
 
-const LatencyMessageListener = React.createClass({
-  propTypes: {
+class LatencyMessageListener extends React.Component {
+  static propTypes = {
     onLatency: PropTypes.func
-  },
+  }
   render () {
     return null
-  },
+  }
   componentDidMount () {
     window.addEventListener('message', this.handleMessage)
-  },
+  }
   componentWillUnmount () {
     window.removeEventListener('message', this.handleMessage)
-  },
-  handleMessage (event) {
+  }
+  handleMessage = (event) => {
     if (event.data && typeof event.data.latency === 'number') {
       this.props.onLatency(event.data.latency)
     }
-  },
-})
+  }
+}

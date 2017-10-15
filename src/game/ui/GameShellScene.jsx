@@ -4,7 +4,14 @@ import React        from 'react'
 import DndResources from 'bemuse/resources/dnd-resources'
 import c            from 'classnames'
 
-const CustomChartSelector = React.createClass({
+class CustomChartSelector extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      files: [],
+    }
+  }
+
   render () {
     let files = this.state.files
     return <div className="drop-zone">
@@ -15,7 +22,7 @@ const CustomChartSelector = React.createClass({
             {files.map(file =>
               <li>
                 <a href="javascript://"
-                  onClick={this.handleItemClick(file)}
+                  onClick={this.handleItemClick}
                   className={
                         c({ 'is-active':
                             file.resource === this.props.selectedResource })}>
@@ -45,13 +52,9 @@ const CustomChartSelector = React.createClass({
         )
       }
     </div>
-  },
-  getInitialState () {
-    return {
-      files: [],
-    }
-  },
-  handleDrop (e) {
+  }
+
+  handleDrop = (e) => {
     e.preventDefault()
     let event = e.nativeEvent
     let resources = new DndResources(event)
@@ -70,18 +73,27 @@ const CustomChartSelector = React.createClass({
       }
     })
     .done()
-  },
-  handleItemClick (file) {
+  };
+
+  handleItemClick = (file) => {
     return () => {
       this.props.onSelect(this.state.resources, file.resource)
     }
-  },
-  handleClear () {
-    this.props.onSelect(null, null)
-  },
-})
+  };
 
-export default React.createClass({
+  handleClear = () => {
+    this.props.onSelect(null, null)
+  };
+}
+
+export default class GameShellScene extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      options: this.props.options,
+    }
+  }
+
   render () {
     let options = this.state.options
     return <div
@@ -137,33 +149,33 @@ export default React.createClass({
         <button type="submit">Play</button>
       </form>
     </div>
-  },
-  submit (e) {
+  }
+
+  submit = (e) => {
     e.preventDefault()
     this.props.play(this.state.options)
-  },
-  getInitialState () {
-    return {
-      options: this.props.options,
-    }
-  },
-  bindOption (binder) {
+  };
+
+  bindOption = (binder) => {
     return (event) => {
       binder(this.state.options, event.target.value)
       this.forceUpdate()
     }
-  },
-  handleDragOver (e) {
+  };
+
+  handleDragOver = (e) => {
     e.preventDefault()
-  },
-  handleDrop (e) {
+  };
+
+  handleDrop = (e) => {
     e.preventDefault()
     this.refs.dropzone.handleDrop(e)
-  },
-  handleSelectFile (resources, resource) {
+  };
+
+  handleSelectFile = (resources, resource) => {
     this.setState({
       options: Object.assign(this.state.options, { resources, resource })
     })
     this.forceUpdate()
-  },
-})
+  };
+}

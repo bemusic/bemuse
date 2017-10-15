@@ -9,13 +9,14 @@ import RunningNumber    from 'bemuse/ui/RunningNumber'
 import FirstTimeTip     from './FirstTimeTip'
 import ResultDeltasView from './ResultDeltasView'
 
-export default React.createClass({
-  propTypes: {
+export default class ResultTable extends React.Component {
+  static propType = {
     result: PropTypes.object
-  },
-  getInitialState () {
-    return { deltasModalVisible: false }
-  },
+  }
+  constructor () {
+    super()
+    this.state = { deltasModalVisible: false }
+  }
   render () {
     let result = this.props.result
     return <div className="ResultTable">
@@ -77,15 +78,15 @@ export default React.createClass({
         <ResultDeltasView deltas={result['deltas']} />
       </ModalPopup>
     </div>
-  },
+  }
   formatAccuracy (value) {
     return (value * 100).toFixed(2) + '%'
-  },
-  handleToggleDeltasModal () {
+  }
+  handleToggleDeltasModal = () => {
     this.setState({ deltasModalVisible: !this.state.deltasModalVisible })
-  },
-  handleViewDeltas () {
+  }
+  handleViewDeltas = () => {
     this.handleToggleDeltasModal()
     Analytics.send('ResultTable', 'view deltas')
-  },
-})
+  }
+}

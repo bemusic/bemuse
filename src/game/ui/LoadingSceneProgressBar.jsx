@@ -2,7 +2,7 @@
 import './LoadingSceneProgressBar.scss'
 import React from 'react'
 
-export default React.createClass({
+export default class LoadingSceneProgressBar extends React.Component {
   render () {
     return <div className="LoadingSceneProgressBar">
       <div
@@ -10,4 +10,4 @@ export default React.createClass({
         style={{ width: this.props.width }}></div>
     </div>
   }
-})
+}

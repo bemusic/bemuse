@@ -3,11 +3,10 @@ import './MusicListItem.scss'
 import React  from 'react'
 import c      from 'classnames'
 import getPlayableCharts from 'bemuse/music-collection/getPlayableCharts'
-import pure   from 'recompose/pure'
 
 import MusicListItemCharts from './MusicListItemCharts'
 
-export const MusicListItem = React.createClass({
+class MusicListItem extends React.PureComponent {
   render () {
     const song = this.props.song
     const className = c('MusicListItem', {
@@ -49,7 +48,8 @@ export const MusicListItem = React.createClass({
         )
       }
     </li>
-  },
+  }
+
   renderChartlist () {
     return <MusicListItemCharts
       charts={getPlayableCharts(this.props.song.charts)}
@@ -57,7 +57,8 @@ export const MusicListItem = React.createClass({
       onChartClick={this.handleChartClick}
       playMode={this.props.playMode}
     />
-  },
+  }
+
   renderHighlight (text) {
     if (!this.props.highlight) return text
     let highlight = this.props.highlight
@@ -76,16 +77,17 @@ export const MusicListItem = React.createClass({
       }
     }
     return output
-  },
+  }
 
-  handleClick () {
+  handleClick = () => {
     this.props.onSelect(this.props.song)
-  },
-  handleChartClick (chart, e) {
+  }
+
+  handleChartClick = (chart, e) => {
     e.stopPropagation()
     this.props.onSelect(this.props.song, chart)
-  },
+  }
 
-})
+}
 
-export default pure(MusicListItem)
+export default MusicListItem

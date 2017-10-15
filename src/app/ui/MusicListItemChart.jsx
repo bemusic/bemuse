@@ -3,7 +3,7 @@ import './MusicListItemChart.scss'
 import React from 'react'
 import c from 'classnames'
 
-export default React.createClass({
+export default class MusicListItemChart extends React.Component {
   render () {
     const chart = this.props.chart
     const className = c('MusicListItemChart', {
@@ -19,10 +19,11 @@ export default React.createClass({
         }
       </span>
     </div>
-  },
-  handleClick (e) {
+  }
+
+  handleClick = (e) => {
     if (this.props.onClick) {
       this.props.onClick(this.props.chart, e)
     }
-  },
-})
+  }
+}

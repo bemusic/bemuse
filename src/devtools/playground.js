@@ -13,12 +13,11 @@ const availablePlaygrounds = (function (context) {
   return playgrounds
 })(require.context('./playgrounds', false, /\.jsx?$/))
 
-const DefaultPlayground = React.createClass({
-  statics: {
-    main () {
-      ReactDOM.render(<DefaultPlayground />, MAIN)
-    }
-  },
+class DefaultPlayground extends React.Component {
+  static main () {
+    ReactDOM.render(<DefaultPlayground />, MAIN)
+  }
+
   render () {
     const linkStyle = { color: '#abc' }
     return <div>
@@ -33,7 +32,7 @@ const DefaultPlayground = React.createClass({
       </ul>
     </div>
   }
-})
+}
 
 export function main () {
   void (availablePlaygrounds[query.playground] || DefaultPlayground).main()
