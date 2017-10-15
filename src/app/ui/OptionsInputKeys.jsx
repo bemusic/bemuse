@@ -1,11 +1,10 @@
 
 import './OptionsInputKeys.scss'
 import React from 'react'
-import pure  from 'recompose/pure'
 
 import OptionsInputKey from './OptionsInputKey'
 
-export const OptionsInputKeys = React.createClass({
+class OptionsInputKeys extends React.PureComponent {
   render () {
     let keys = []
     for (let i = 1; i <= 7; i++) {
@@ -23,6 +22,6 @@ export const OptionsInputKeys = React.createClass({
       </div>
     </div>
   }
-})
+}
 
-export default pure(OptionsInputKeys)
+export default OptionsInputKeys

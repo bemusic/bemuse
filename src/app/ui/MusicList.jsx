@@ -4,9 +4,8 @@ import './MusicList.scss'
 import React          from 'react'
 import _              from 'lodash'
 import MusicListItem  from './MusicListItem.jsx'
-import pure           from 'recompose/pure'
 
-export const MusicList = React.createClass({
+class MusicList extends React.PureComponent {
   render () {
     return <ul className="MusicList js-scrollable-view"
       onTouchStart={this.props.onTouch}>
@@ -22,7 +21,8 @@ export const MusicList = React.createClass({
           highlight={this.props.highlight} />),
       ])}
     </ul>
-  },
+  }
+
   getSelectedChart (song) {
     // Performance issue:
     //
@@ -36,6 +36,6 @@ export const MusicList = React.createClass({
     let selectedChart = this.props.selectedChart
     return _.find(song.charts, chart => chart === selectedChart)
   }
-})
+}
 
-export default pure(MusicList)
+export default MusicList

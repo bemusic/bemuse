@@ -7,13 +7,11 @@ import Options    from 'bemuse/app/ui/Options'
 
 const noop = () => { }
 
-const OptionsPlayground = React.createClass({
-  render () {
-    return <ModalPopup visible onBackdropClick={noop}>
-      <Options onClose={noop} />
-    </ModalPopup>
-  }
-})
+const OptionsPlayground = () => (
+  <ModalPopup visible onBackdropClick={noop}>
+    <Options onClose={noop} />
+  </ModalPopup>
+)
 
 export function main () {
   ReactDOM.render(<OptionsPlayground />, MAIN)

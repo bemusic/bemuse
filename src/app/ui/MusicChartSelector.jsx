@@ -4,8 +4,7 @@ import './MusicChartSelector.scss'
 import React from 'react'
 import MusicChartSelectorItem from './MusicChartSelectorItem.jsx'
 
-export default React.createClass({
-
+class MusicChartSelector extends React.Component {
   render () {
     return <ul className="MusicChartSelector">
       {this.props.charts.map((chart, index) =>
@@ -17,5 +16,6 @@ export default React.createClass({
           onChartClick={this.props.onChartClick} />)}
     </ul>
   }
+}
 
-})
+export default MusicChartSelector

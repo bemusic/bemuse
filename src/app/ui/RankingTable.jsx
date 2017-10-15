@@ -3,17 +3,15 @@ import './RankingTable.scss'
 import React from 'react'
 import { formattedAccuracyForRecord } from 'bemuse/rules/accuracy'
 
-export const RankingTable = React.createClass({
-  render () {
-    return <table className="RankingTable">
-      <tbody>
-        {this.props.children}
-      </tbody>
-    </table>
-  }
-})
+const RankingTable = ({ children }) => (
+  <table className="RankingTable">
+    <tbody>
+      {children}
+    </tbody>
+  </table>
+)
 
-export const Row = React.createClass({
+class Row extends React.Component {
   render () {
     return <tr>
       <td className="RankingTableのrank">
@@ -29,18 +27,16 @@ export const Row = React.createClass({
         {formattedAccuracyForRecord(this.props.record)}
       </td>
     </tr>
-  },
-})
+  }
+}
 
-export const Message = React.createClass({
-  render () {
-    return <tr>
-      <td colSpan={4} className="RankingTableのmessage">
-        {this.props.children}
-      </td>
-    </tr>
-  },
-})
+export const Message = ({ children }) => (
+  <tr>
+    <td colSpan={4} className="RankingTableのmessage">
+      {children}
+    </td>
+  </tr>
+)
 
 RankingTable.Row = Row
 RankingTable.Message = Message

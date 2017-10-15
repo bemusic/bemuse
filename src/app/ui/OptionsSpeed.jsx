@@ -3,28 +3,27 @@ import './OptionsSpeed.scss'
 import OptionsButton from './OptionsButton'
 import OptionsInputField from './OptionsInputField'
 import React from 'react'
-import pure from 'recompose/pure'
 
-export const OptionsSpeed = React.createClass({
+class OptionsSpeed extends React.PureComponent {
   parseSpeed (speedString) {
     return +(+speedString || 1.0).toFixed(1)
-  },
+  }
   stringifySpeed (speed) {
     return speed.toFixed(1)
-  },
-  handleMinusButtonClick () {
+  }
+  handleMinusButtonClick = () => {
     let speed = this.parseSpeed(this.props.value)
     let nextSpeed = speed - (speed > 0.5 ? 0.5 : speed > 0.2 ? 0.3 : 0)
     this.props.onChange(this.stringifySpeed(nextSpeed))
-  },
-  handlePlusButtonClick () {
+  }
+  handlePlusButtonClick = () => {
     let speed = this.parseSpeed(this.props.value)
     let nextSpeed = speed + (speed < 0.5 ? 0.3 : 0.5)
     this.props.onChange(this.stringifySpeed(nextSpeed))
-  },
-  handleSpeedInputChange (nextSpeed) {
+  }
+  handleSpeedInputChange = (nextSpeed) => {
     this.props.onChange(this.stringifySpeed(nextSpeed))
-  },
+  }
   render () {
     return <div className="OptionsSpeed">
       <span className="OptionsSpeedのminus">
@@ -40,7 +39,7 @@ export const OptionsSpeed = React.createClass({
         <OptionsButton onClick={this.handlePlusButtonClick}>+</OptionsButton>
       </span>
     </div>
-  },
-})
+  }
+}
 
-export default pure(OptionsSpeed)
+export default OptionsSpeed

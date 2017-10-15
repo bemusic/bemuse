@@ -16,7 +16,6 @@ import c from 'classnames'
 import compose from 'recompose/compose'
 import getPreviewUrl from 'bemuse/music-collection/getPreviewUrl'
 import online from 'bemuse/online/instance'
-import pure from 'recompose/pure'
 import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
 import { connect } from 'react-redux'
 import { connect as connectToLegacyStore } from 'bemuse/flux'
@@ -81,12 +80,11 @@ const enhance = compose(
     onLaunchGame: ({ musicSelect }) => () => (
       MusicSelectionIO.launchGame(musicSelect.server, musicSelect.song, musicSelect.chart)
     )
-  }),
-  pure
+  })
 )
 
-export const MusicSelectScene = React.createClass({
-  propTypes: {
+class MusicSelectScene extends React.PureComponent {
+  static propTypes = {
     musicSelect: PropTypes.object,
     user: PropTypes.object,
     onSelectChart: PropTypes.func,
@@ -95,11 +93,24 @@ export const MusicSelectScene = React.createClass({
     onLaunchGame: PropTypes.func,
     collectionUrl: PropTypes.string,
     musicPreviewEnabled: PropTypes.bool,
-  },
+  }
+
+  constructor () {
+    super()
+    this.state = {
+      optionsVisible:               shouldShowOptions(),
+      customBMSVisible:             false,
+      unofficialDisclaimerVisible:  false,
+      inSong:                       false,
+      authenticationPopupVisible:   false,
+    }
+  }
+
   getPreviewUrl () {
     const song = this.props.musicSelect.song
     return getPreviewUrl(this.props.collectionUrl, song)
-  },
+  }
+
   render () {
     let musicSelect = this.props.musicSelect
     return <Scene
@@ -167,7 +178,8 @@ export const MusicSelectScene = React.createClass({
         <MusicSelectPreviewer url={this.getPreviewUrl()} />
       }
     </Scene>
-  },
+  }
+
   renderUnofficialDisclaimer () {
     if (!this.props.musicSelect.unofficial) return null
     return (
@@ -178,7 +190,8 @@ export const MusicSelectScene = React.createClass({
         <b>Disclaimer:</b> Unofficial Server
       </div>
     )
-  },
+  }
+
   renderMain () {
     const musicSelect = this.props.musicSelect
     if (musicSelect.loading) {
@@ -213,7 +226,8 @@ export const MusicSelectScene = React.createClass({
         />
       </div>
     )
-  },
+  }
+
   renderOnlineToolbarButtons () {
     if (!online) return null
     let buttons = []
@@ -232,20 +246,11 @@ export const MusicSelectScene = React.createClass({
       )
     }
     return buttons
-  },
+  }
 
-  getInitialState () {
-    return {
-      optionsVisible:               shouldShowOptions(),
-      customBMSVisible:             false,
-      unofficialDisclaimerVisible:  false,
-      inSong:                       false,
-      authenticationPopupVisible:   false,
-    }
-  },
   componentDidMount () {
     this.ensureSelectedSongInView()
-  },
+  }
   ensureSelectedSongInView () {
     const $this = $(ReactDOM.findDOMNode(this))
     const active = $this.find('.js-active-song')[0]
@@ -260,8 +265,8 @@ export const MusicSelectScene = React.createClass({
         (scrollerRect.top + scrollerRect.height / 2)
       )
     }
-  },
-  handleSongSelect (song, chart) {
+  }
+  handleSongSelect = (song, chart) => {
     if (chart) {
       this.props.onSelectChart(song, chart)
       Analytics.send('MusicSelectScene', 'select', 'song and chart')
@@ -270,11 +275,11 @@ export const MusicSelectScene = React.createClass({
       Analytics.send('MusicSelectScene', 'select', 'song')
     }
     this.setState({ inSong: true })
-  },
-  handleMusicListTouch () {
+  }
+  handleMusicListTouch = () => {
     this.setState({ inSong: false })
-  },
-  handleChartClick (chart) {
+  }
+  handleChartClick = (chart) => {
     if (this.props.musicSelect.chart.md5 === chart.md5) {
       Analytics.send('MusicSelectScene', 'launch game')
       MusicPreviewer.go()
@@ -283,53 +288,53 @@ export const MusicSelectScene = React.createClass({
       Analytics.send('MusicSelectScene', 'select chart')
       this.props.onSelectChart(this.props.musicSelect.song, chart)
     }
-  },
-  handleFilter (e) {
+  }
+  handleFilter = (e) => {
     this.props.onFilterTextChange(e.target.value)
-  },
-  handleOptionsOpen () {
+  }
+  handleOptionsOpen = () => {
     Analytics.send('MusicSelectScene', 'open options')
     this.setState({ optionsVisible: true })
-  },
-  handleOptionsClose () {
+  }
+  handleOptionsClose = () => {
     this.setState({ optionsVisible: false })
-  },
-  handleCustomBMSOpen () {
+  }
+  handleCustomBMSOpen = () => {
     this.setState({ customBMSVisible: true })
     Analytics.send('MusicSelectScene', 'open custom BMS')
-  },
-  handleCustomBMSClose () {
+  }
+  handleCustomBMSClose = () => {
     this.setState({ customBMSVisible: false })
-  },
-  handleCustomSong (song) {
+  }
+  handleCustomSong = (song) => {
     this.setState({ customBMSVisible: false })
-  },
-  handleUnofficialClick () {
+  }
+  handleUnofficialClick = () => {
     this.setState({ unofficialDisclaimerVisible: true })
     Analytics.send('MusicSelectScene', 'view unofficial disclaimer')
-  },
-  handleUnofficialClose () {
+  }
+  handleUnofficialClose = () => {
     this.setState({ unofficialDisclaimerVisible: false })
-  },
-  handleLogout () {
+  }
+  handleLogout = () => {
     if (confirm('Do you really want to log out?')) {
       Promise.resolve(online.logOut()).done()
       Analytics.send('MusicSelectScene', 'logout')
     }
-  },
-  handleAuthenticate () {
+  }
+  handleAuthenticate = () => {
     this.setState({ authenticationPopupVisible: true })
     Analytics.send('MusicSelectScene', 'authenticate')
-  },
-  handleAuthenticationClose () {
+  }
+  handleAuthenticationClose = () => {
     this.setState({ authenticationPopupVisible: false })
-  },
-  handleAuthenticationFinish () {
+  }
+  handleAuthenticationFinish = () => {
     this.setState({ authenticationPopupVisible: false })
-  },
+  }
   popScene () {
     SCENE_MANAGER.pop().done()
-  },
-})
+  }
+}
 
 export default enhance(MusicSelectScene)

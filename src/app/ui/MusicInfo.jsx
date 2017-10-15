@@ -5,9 +5,8 @@ import React from 'react'
 import MusicChartInfo     from './MusicChartInfo.jsx'
 import MusicChartSelector from './MusicChartSelector.jsx'
 import MusicInfoTabs      from './MusicInfoTabs.jsx'
-import pure               from 'recompose/pure'
 
-export const MusicInfo = React.createClass({
+class MusicInfo extends React.PureComponent {
   render () {
     const song  = this.props.song
     const chart = this.props.chart
@@ -25,6 +24,6 @@ export const MusicInfo = React.createClass({
         onOptions={this.props.onOptions} />
     </section>
   }
-})
+}
 
-export default pure(MusicInfo)
+export default MusicInfo

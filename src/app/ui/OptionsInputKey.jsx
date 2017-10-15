@@ -2,9 +2,8 @@
 import './OptionsInputKey.scss'
 import React from 'react'
 import c     from 'classnames'
-import pure  from 'recompose/pure'
 
-export const OptionsInputKey = React.createClass({
+class OptionsInputKey extends React.PureComponent {
   render () {
     return <div className="OptionsInputKey" data-n={this.props.n}>
       <div
@@ -14,10 +13,10 @@ export const OptionsInputKey = React.createClass({
         <div className="OptionsInputKeyのtext">{this.props.text}</div>
       </div>
     </div>
-  },
-  handleClick () {
+  }
+  handleClick = () => {
     this.props.onEdit('' + this.props.n)
-  },
-})
+  }
+}
 
-export default pure(OptionsInputKey)
+export default OptionsInputKey

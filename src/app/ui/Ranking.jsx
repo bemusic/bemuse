@@ -5,21 +5,22 @@ import RankingTable from './RankingTable'
 import AuthenticationPopup from 'bemuse/online/ui/AuthenticationPopup'
 import { isWaiting } from 'bemuse/online/operations'
 
-export default React.createClass({
-  getInitialState () {
-    return {
+export default class Ranking extends React.Component {
+  constructor () {
+    super()
+    this.state = {
       authenticationPopupVisible: false,
     }
-  },
-  handleAuthenticate () {
+  }
+  handleAuthenticate = () => {
     this.setState({ authenticationPopupVisible: true })
-  },
-  handleAuthenticationClose () {
+  }
+  handleAuthenticationClose = () => {
     this.setState({ authenticationPopupVisible: false })
-  },
-  handleAuthenticationFinish () {
+  }
+  handleAuthenticationFinish = () => {
     this.setState({ authenticationPopupVisible: false })
-  },
+  }
   render () {
     return <div className="Ranking">
       <AuthenticationPopup
@@ -29,7 +30,7 @@ export default React.createClass({
       {this.renderYours()}
       {this.renderLeaderboard()}
     </div>
-  },
+  }
   renderYours () {
     const state = this.props.state
     const submission = state.meta.submission
@@ -78,7 +79,7 @@ export default React.createClass({
         }
       </RankingTable>
     </div>
-  },
+  }
   renderLeaderboard () {
     const state = this.props.state
     return <div className="Rankingのleaderboard">
@@ -118,7 +119,7 @@ export default React.createClass({
         }
       </RankingTable>
     </div>
-  },
+  }
   renderError (text, error, retry) {
     return <span className="Rankingのerror">
       <strong>
@@ -138,4 +139,4 @@ export default React.createClass({
       </span>
     </span>
   }
-})
+}

@@ -1,10 +1,9 @@
 
 import './OptionsInputScratch.scss'
 import React from 'react'
-import pure  from 'recompose/pure'
 import c     from 'classnames'
 
-export const OptionsInputScratch = React.createClass({
+class OptionsInputScratch extends React.PureComponent {
   render () {
     return <div
       className={c('OptionsInputScratch',
@@ -19,18 +18,18 @@ export const OptionsInputScratch = React.createClass({
         <div className={this.renderKeyClass(1)}>{this.props.text[1]}</div>
       </div>
     </div>
-  },
+  }
   renderKeyClass (index) {
     return c('OptionsInputScratchのkey', {
       'is-editing': this.props.editIndex === index
     })
-  },
-  handleClick () {
+  }
+  handleClick = () => {
     this.props.onEdit('SC')
-  },
-})
+  }
+}
 
-export default pure(OptionsInputScratch)
+export default OptionsInputScratch
 
 function star () {
   let out = ''

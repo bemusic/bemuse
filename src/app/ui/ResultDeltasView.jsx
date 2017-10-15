@@ -19,10 +19,11 @@ const group = deltas => (_(deltas)
   .value()
 )
 
-export default React.createClass({
-  propTypes: {
+export default class ResultDeltasView extends React.Component {
+  static propTypes = {
     deltas: PropTypes.array
-  },
+  }
+
   render () {
     const deltas = this.props.deltas
     const nonMissDeltas = getNonMissedDeltas(deltas)
@@ -43,6 +44,7 @@ export default React.createClass({
             <div className="ResultDeltasViewのhistogram">
               {stats.map(({ bucket, count }) =>
                 <div
+                  key={bucket}
                   className="ResultDeltasViewのhistogramBar"
                   data-bucket={bucket}
                   style={{ height: height(count) }}
@@ -67,7 +69,8 @@ export default React.createClass({
         </Panel>
       </div>
     )
-  },
+  }
+
   renderRow (text, data, options = { }) {
     return (
       <tr>
@@ -79,5 +82,5 @@ export default React.createClass({
         }</td>
       </tr>
     )
-  },
-})
+  }
+}

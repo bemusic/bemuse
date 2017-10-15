@@ -22,20 +22,23 @@ const enhance = compose(
   })
 )
 
-export const MusicInfoTabInformation = React.createClass({
-  propTypes: {
+class MusicInfoTabInformation extends React.Component {
+  static propTypes = {
     song: PropTypes.object,
     readme: PropTypes.string,
     onRequestReadme: PropTypes.func
-  },
+  }
+
   componentDidMount () {
     this.props.onRequestReadme(this.props.song)
-  },
+  }
+
   componentWillReceiveProps (nextProps) {
     if (nextProps.song !== this.props.song) {
       this.props.onRequestReadme(nextProps.song)
     }
-  },
+  }
+
   render () {
     const song = this.props.song
     return <div className="MusicInfoTabInformation">
@@ -49,7 +52,8 @@ export const MusicInfoTabInformation = React.createClass({
         <Markdown source={this.props.readme} />
       </section>
     </div>
-  },
+  }
+
   renderButtons () {
     let buttons = []
     let song = this.props.song
@@ -72,15 +76,15 @@ export const MusicInfoTabInformation = React.createClass({
     } else {
       return <p className="MusicInfoTabInformationのbuttons">{buttons}</p>
     }
-  },
-})
+  }
+}
 
 export default enhance(MusicInfoTabInformation)
 
 function link (text, url) {
   return (
     url
-    ? <a href={url} target="_blank">{text}</a>
+    ? <a key={text} href={url} target="_blank">{text}</a>
     : text
   )
 }

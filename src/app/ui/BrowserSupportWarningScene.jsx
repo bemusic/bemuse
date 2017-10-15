@@ -7,7 +7,8 @@ import OptionsButton from './OptionsButton'
 import { SUPPORTED } from '../browser-support'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 
-export default React.createClass({
+class BrowserSupportWarningScene extends React.Component {
+
   render () {
     return <Scene className="BrowserSupportWarningScene">
       <h1>Warning: Unsupported Browser</h1>
@@ -31,8 +32,11 @@ export default React.createClass({
         <strong>User agent:</strong> {navigator.userAgent}
       </p>
     </Scene>
-  },
-  handleContinue () {
+  }
+
+  handleContinue = () => {
     SCENE_MANAGER.display(this.props.next)
-  },
-})
+  }
+}
+
+export default BrowserSupportWarningScene
