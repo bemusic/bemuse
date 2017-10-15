@@ -1,7 +1,7 @@
 import _ from 'lodash'
 
 import PlayerStats from './player-stats'
-import { BEGINNER_JUDGE, MISSED, NORMAL_JUDGE, isBad, judgeEndTime, judgeTime } from '../judgments'
+import { MISSED, getJudgeForNotechart, isBad, judgeEndTime, judgeTime } from '../judgments'
 
 // The PlayerState class holds a single player's state, including the stats
 // (score, current combo, maximum combo).
@@ -13,7 +13,10 @@ export class PlayerState {
       .sortBy('time').groupBy('column').mapValues(noteBuffer(this)).value()
     this._noteResult    = new Map()
     this._duration      = player.notechart.duration
-    this._judge         = isBeginnerChart(player.notechart) ? BEGINNER_JUDGE : NORMAL_JUDGE
+    this._judge         = getJudgeForNotechart(player.notechart, {
+      tutorial: player.options.tutorial
+    })
+    console.log('GET JDG', this._judge)
 
     // The PlayerStats object.
     this.stats          = new PlayerStats(player.notechart)
@@ -236,12 +239,6 @@ function noteBuffer (state) {
       },
     }
   }
-}
-
-function isBeginnerChart (notechart) {
-  const info = notechart.songInfo
-  const insane = info.difficulty >= 5
-  return !insane && info.level <= 2
 }
 
 export default PlayerState
