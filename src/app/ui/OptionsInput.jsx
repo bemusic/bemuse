@@ -61,6 +61,7 @@ class OptionsInput extends React.Component {
     texts: PropTypes.object,
     editing: PropTypes.string,
     mode: PropTypes.string,
+    onEdit: PropTypes.func
   }
   render () {
     const className = c('OptionsInput', {
