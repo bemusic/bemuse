@@ -10,7 +10,7 @@ import FirstTimeTip     from './FirstTimeTip'
 import ResultDeltasView from './ResultDeltasView'
 
 export default class ResultTable extends React.Component {
-  static propType = {
+  static propTypes = {
     result: PropTypes.object
   }
   constructor (props) {
@@ -18,7 +18,7 @@ export default class ResultTable extends React.Component {
     this.state = { deltasModalVisible: false }
   }
   render () {
-    let result = this.props.result
+    let { result } = this.props
     return <div className="ResultTable">
       <table className="ResultTableのtable">
         <tbody>

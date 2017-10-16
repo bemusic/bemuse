@@ -1,6 +1,7 @@
 
 import './RankingTable.scss'
 import React from 'react'
+import PropTypes from 'prop-types'
 import { formattedAccuracyForRecord } from 'bemuse/rules/accuracy'
 
 const RankingTable = ({ children }) => (
@@ -11,7 +12,15 @@ const RankingTable = ({ children }) => (
   </table>
 )
 
+RankingTable.propTypes = {
+  children: PropTypes.func
+}
+
 class Row extends React.Component {
+  static propTypes = {
+    record: PropTypes.object
+  }
+
   render () {
     return <tr>
       <td className="RankingTableのrank">
@@ -37,6 +46,10 @@ export const Message = ({ children }) => (
     </td>
   </tr>
 )
+
+Message.propTypes = {
+  children: PropTypes.func
+}
 
 RankingTable.Row = Row
 RankingTable.Message = Message
