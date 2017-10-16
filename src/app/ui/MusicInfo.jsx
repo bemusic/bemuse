@@ -8,8 +8,7 @@ import MusicInfoTabs      from './MusicInfoTabs.jsx'
 
 class MusicInfo extends React.PureComponent {
   render () {
-    const song  = this.props.song
-    const chart = this.props.chart
+    const { song, chart } = this.props
     return <section className="MusicInfo">
       <MusicChartInfo info={chart.info} />
       <MusicChartSelector
