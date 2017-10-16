@@ -10,6 +10,8 @@
     "code-review": "gulp code-review",
     "lint": "gulp lint",
     "pre-commit": "gulp pre-commit",
+    "prod-build": "cross-env NODE_ENV=production gulp build",
+    "prod-start": "cross-env NODE_ENV=production HOT=true gulp server",
     "start": "cross-env HOT=true gulp server",
     "test": "cross-env NODE_ENV=test BEMUSE_COV=true gulp test",
     "test-bed": "cross-env NODE_ENV=test test-bed",
