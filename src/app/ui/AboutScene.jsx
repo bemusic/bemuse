@@ -1,26 +1,23 @@
 
 import './AboutScene.scss'
 
-import $                from 'jquery'
 import React            from 'react'
 import Scene            from 'bemuse/ui/Scene'
 import SceneHeading     from 'bemuse/ui/SceneHeading'
 import SceneToolbar     from 'bemuse/ui/SceneToolbar'
 import SCENE_MANAGER    from 'bemuse/scene-manager'
 
-let artists
-
 class AboutScene extends React.Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = { artists: [] }
   }
 
   componentDidMount () {
-    if (!artists) {
-      artists = Promise.resolve($.get('/music/artists.json'))
-    }
-    artists.then(a => this.setState({ artists: a }))
+    fetch('/music/artists.json')
+      .then(res => res.json())
+      .then(a => this.setState({ artists: a }))
+      .catch(err => console.error(err))
   }
 
   render () {
