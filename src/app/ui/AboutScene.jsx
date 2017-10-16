@@ -11,8 +11,8 @@ import SCENE_MANAGER    from 'bemuse/scene-manager'
 let artists
 
 class AboutScene extends React.Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = { artists: [] }
   }
 

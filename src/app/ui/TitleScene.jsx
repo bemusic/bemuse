@@ -50,8 +50,8 @@ class TitleScene extends React.Component {
     onMarkChangelogAsSeen: PropTypes.func.isRequired,
   }
 
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = {
       changelogModalVisible: false,
     }

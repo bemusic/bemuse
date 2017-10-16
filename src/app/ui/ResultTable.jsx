@@ -13,8 +13,8 @@ export default class ResultTable extends React.Component {
   static propType = {
     result: PropTypes.object
   }
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = { deltasModalVisible: false }
   }
   render () {

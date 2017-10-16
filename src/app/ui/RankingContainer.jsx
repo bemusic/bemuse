@@ -5,8 +5,8 @@ import online   from 'bemuse/online/instance'
 
 export default class RankingContainer extends React.Component {
 
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = {
       data: null,
       meta: {

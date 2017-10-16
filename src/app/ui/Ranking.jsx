@@ -6,8 +6,8 @@ import AuthenticationPopup from 'bemuse/online/ui/AuthenticationPopup'
 import { isWaiting } from 'bemuse/online/operations'
 
 export default class Ranking extends React.Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = {
       authenticationPopupVisible: false,
     }
