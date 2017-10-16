@@ -10,22 +10,28 @@ const NORMAL_TIMEGATES = [
   { value: 3, timegate: 0.100, endTimegate: 0.200 },
   { value: 4, timegate: 0.200, endTimegate: 0.200 },
 ]
-const TRANSITIONAL_BEGINNER_LV4_TIMEGATES = [
-  { value: 1, timegate: 0.025, endTimegate: 0.050 },
+const TRANSITIONAL_BEGINNER_LV5_TIMEGATES = [
+  { value: 1, timegate: 0.021, endTimegate: 0.042 },
   { value: 2, timegate: 0.060, endTimegate: 0.120 },
   { value: 3, timegate: 0.120, endTimegate: 0.200 },
   { value: 4, timegate: 0.200, endTimegate: 0.200 },
 ]
-const TRANSITIONAL_BEGINNER_LV3_TIMEGATES = [
-  { value: 1, timegate: 0.030, endTimegate: 0.060 },
+const TRANSITIONAL_BEGINNER_LV4_TIMEGATES = [
+  { value: 1, timegate: 0.022, endTimegate: 0.044 },
   { value: 2, timegate: 0.070, endTimegate: 0.140 },
   { value: 3, timegate: 0.140, endTimegate: 0.200 },
   { value: 4, timegate: 0.200, endTimegate: 0.200 },
 ]
-const ABSOLUTE_BEGINNER_TIMEGATES = [
-  { value: 1, timegate: 0.035, endTimegate: 0.070 },
+const TRANSITIONAL_BEGINNER_LV3_TIMEGATES = [
+  { value: 1, timegate: 0.023, endTimegate: 0.046 },
   { value: 2, timegate: 0.080, endTimegate: 0.160 },
   { value: 3, timegate: 0.160, endTimegate: 0.200 },
+  { value: 4, timegate: 0.200, endTimegate: 0.200 },
+]
+const ABSOLUTE_BEGINNER_TIMEGATES = [
+  { value: 1, timegate: 0.024, endTimegate: 0.048 },
+  { value: 2, timegate: 0.100, endTimegate: 0.180 },
+  { value: 3, timegate: 0.180, endTimegate: 0.200 },
   { value: 4, timegate: 0.200, endTimegate: 0.200 },
 ]
 //#endregion
@@ -38,20 +44,11 @@ class FixedTimegatesJudge {
     return this._timegates
   }
 }
-let ot = 0
 class TutorialJudge {
   getTimegates (gameTime, noteTime) {
     if (noteTime < 100) {
-      if (Date.now() > ot + 1000) {
-        ot = Date.now()
-        console.log('Using beginner timegate', noteTime)
-      }
       return ABSOLUTE_BEGINNER_TIMEGATES
     } else {
-      if (Date.now() > ot + 1000) {
-        ot = Date.now()
-        console.log('Using NORMAL', noteTime)
-      }
       return NORMAL_TIMEGATES
     }
   }
@@ -78,6 +75,9 @@ export function getJudgeForNotechart (notechart, {
   }
   if (info.level === 4) {
     return new FixedTimegatesJudge(TRANSITIONAL_BEGINNER_LV4_TIMEGATES)
+  }
+  if (info.level === 5) {
+    return new FixedTimegatesJudge(TRANSITIONAL_BEGINNER_LV5_TIMEGATES)
   }
   return NORMAL_JUDGE
 }
