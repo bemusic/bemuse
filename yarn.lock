@@ -6156,12 +6156,6 @@ react-hot-loader@^3.0.0-beta.6:
     redbox-react "^1.2.5"
     source-map "^0.4.4"
 
-react-overlay-popup@^4.0.0:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/react-overlay-popup/-/react-overlay-popup-4.0.2.tgz#70bc138abbcea06224a8d4520192f026e4e0e0c7"
-  dependencies:
-    invariant "^2.2.0"
-
 react-proxy@^3.0.0-alpha.0:
   version "3.0.0-alpha.1"
   resolved "https://registry.yarnpkg.com/react-proxy/-/react-proxy-3.0.0-alpha.1.tgz#4400426bcfa80caa6724c7755695315209fa4b07"

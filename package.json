@@ -155,7 +155,6 @@
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
     "react-fa": "^5.0.0",
-    "react-overlay-popup": "^4.0.0",
     "react-redux": "^5.0.6",
     "react-warp-portal": "^2.1.1",
     "recompose": "^0.26.0",
