@@ -13,7 +13,7 @@ const RankingTable = ({ children }) => (
 )
 
 RankingTable.propTypes = {
-  children: PropTypes.func
+  children: PropTypes.any
 }
 
 class Row extends React.Component {
@@ -48,7 +48,7 @@ export const Message = ({ children }) => (
 )
 
 Message.propTypes = {
-  children: PropTypes.func
+  children: PropTypes.any
 }
 
 RankingTable.Row = Row
