@@ -1,20 +1,28 @@
 
 import './ModalPopup.scss'
-import React        from 'react'
-import c            from 'classnames'
+import React          from 'react'
+import PropTypes      from 'prop-types'
+import c              from 'classnames'
+import WarpContainer  from './WarpContainer'
 
-// TODO: Reimplement using the Portals API
-// https://reactjs.org/docs/portals.html
 export default class ModalPopup extends React.Component {
+  static propTypes = {
+    visible: PropTypes.bool,
+    onBackdropClick: PropTypes.func,
+    children: PropTypes.node
+  }
+
   render () {
     if (this.props.visible === false) return null
-    return <div className={c('ModalPopup',
-      { 'is-visible': this.props.visible !== false })}>
-      <div className="ModalPopupのbackdrop"
-        onClick={this.props.onBackdropClick}></div>
-      <div className="ModalPopupのcontents">
-        {this.props.children}
+    return <WarpContainer>
+      <div className={c('ModalPopup',
+        { 'is-visible': this.props.visible !== false })}>
+        <div className="ModalPopupのbackdrop"
+          onClick={this.props.onBackdropClick}></div>
+        <div className="ModalPopupのcontents">
+          {this.props.children}
+        </div>
       </div>
-    </div>
+    </WarpContainer>
   }
 }

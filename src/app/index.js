@@ -34,7 +34,6 @@ SCENE_MANAGER.ReactSceneContainer = withContext(
 )(({ children }) => {
   return <div className="bemuse-scene">
     {React.Children.only(children)}
-    {/* TODO: old position of WarpDestination */}
   </div>
 })
 
