@@ -2,22 +2,19 @@
 import './ModalPopup.scss'
 import React        from 'react'
 import c            from 'classnames'
-import { WarpPortal } from '../react-warp'
 
+// TODO: Reimplement using the Portals API
+// https://reactjs.org/docs/portals.html
 export default class ModalPopup extends React.Component {
   render () {
     if (this.props.visible === false) return null
-    return <WarpPortal content={
-      <div className={c('ModalPopup',
-        { 'is-visible': this.props.visible !== false })}>
-        <div className="ModalPopupのbackdrop"
-          onClick={this.props.onBackdropClick}></div>
-        <div className="ModalPopupのcontents">
-          {this.props.children}
-        </div>
+    return <div className={c('ModalPopup',
+      { 'is-visible': this.props.visible !== false })}>
+      <div className="ModalPopupのbackdrop"
+        onClick={this.props.onBackdropClick}></div>
+      <div className="ModalPopupのcontents">
+        {this.props.children}
       </div>
-    }>
-      <span style={{ display: 'none' }}></span>
-    </WarpPortal>
+    </div>
   }
 }
