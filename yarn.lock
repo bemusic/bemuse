@@ -5605,10 +5605,6 @@ portfinder@^1.0.9:
     debug "^2.2.0"
     mkdirp "0.5.x"
 
-positioning-strategy@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/positioning-strategy/-/positioning-strategy-2.0.0.tgz#9ad23a76e33d1e4b2fd1e04d06dc1fcddb783d95"
-
 postcss-calc@^5.2.0:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/postcss-calc/-/postcss-calc-5.3.1.tgz#77bae7ca928ad85716e2fda42f261bf7c1d65b5e"
@@ -6176,12 +6172,6 @@ react-redux@^5.0.6:
 react-transform-catch-errors@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-transform-catch-errors/-/react-transform-catch-errors-1.0.2.tgz#1b4d4a76e97271896fc16fe3086c793ec88a9eeb"
-
-react-warp-portal@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/react-warp-portal/-/react-warp-portal-2.1.1.tgz#9a5f6e74c281c7bc6298a84bfe69fff33e242862"
-  dependencies:
-    positioning-strategy "^2.0.0"
 
 react@^15.6.2:
   version "15.6.2"
