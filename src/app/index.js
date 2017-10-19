@@ -19,7 +19,6 @@ import ModeSelectScene from './ui/ModeSelectScene'
 import TitleScene from './ui/TitleScene'
 import ioContext from './io/ioContext'
 import store from './redux/instance'
-import { WarpDestination } from '../react-warp'
 import { getInitialGrepString, getMusicServer, getTimeSynchroServer }
     from './query-flags'
 import { isBrowserSupported } from './browser-support'
@@ -35,7 +34,6 @@ SCENE_MANAGER.ReactSceneContainer = withContext(
 )(({ children }) => {
   return <div className="bemuse-scene">
     {React.Children.only(children)}
-    <WarpDestination />
   </div>
 })
 

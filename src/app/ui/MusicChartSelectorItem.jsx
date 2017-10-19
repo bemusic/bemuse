@@ -10,7 +10,7 @@ class MusicChartSelectorItem extends React.Component {
     chart: PropTypes.object.isRequired,
     isSelected: PropTypes.bool,
     isReplayable: PropTypes.bool,
-    isTutorial: PropTypes.bool,
+    isTutorial: PropTypes.number,
     onChartClick: PropTypes.func.isRequired
   }
 
