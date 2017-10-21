@@ -7,8 +7,8 @@ import Panel    from 'bemuse/ui/Panel'
 import Markdown from 'bemuse/ui/Markdown'
 
 class ChangelogPanel extends React.Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = { data: { status: 'loading' } }
   }
 

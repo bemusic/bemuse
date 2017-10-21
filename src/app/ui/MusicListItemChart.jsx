@@ -5,7 +5,7 @@ import c from 'classnames'
 
 export default class MusicListItemChart extends React.Component {
   render () {
-    const chart = this.props.chart
+    const { chart } = this.props
     const className = c('MusicListItemChart', {
       'is-played': this.props.played,
       'is-selected': !!this.props.selected,

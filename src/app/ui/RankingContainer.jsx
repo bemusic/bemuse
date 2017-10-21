@@ -1,12 +1,17 @@
 
-import React    from 'react'
-import Ranking  from './Ranking'
-import online   from 'bemuse/online/instance'
+import React      from 'react'
+import PropTypes  from 'prop-types'
+import Ranking    from './Ranking'
+import online     from 'bemuse/online/instance'
 
 export default class RankingContainer extends React.Component {
+  static propTypes = {
+    chart: PropTypes.object,
+    playMode: PropTypes.any
+  }
 
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = {
       data: null,
       meta: {

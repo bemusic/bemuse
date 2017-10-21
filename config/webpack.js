@@ -31,7 +31,9 @@ function generateBaseConfig () {
       new CompileProgressPlugin(),
       new LoadProgressPlugin(),
       new webpack.DefinePlugin({
-        NODE_ENV: JSON.stringify(String(process.env.NODE_ENV))
+        'process.env': {
+          'NODE_ENV': JSON.stringify(String(process.env.NODE_ENV))
+        }
       }),
       new webpack.ProvidePlugin({
         BemuseLogger: 'bemuse/logger'

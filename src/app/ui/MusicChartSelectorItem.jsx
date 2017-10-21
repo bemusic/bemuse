@@ -1,10 +1,19 @@
 import './MusicChartSelectorItem.scss'
 
-import Icon   from 'react-fa'
-import React  from 'react'
-import c      from 'classnames'
+import Icon       from 'react-fa'
+import React      from 'react'
+import PropTypes  from 'prop-types'
+import c          from 'classnames'
 
 class MusicChartSelectorItem extends React.Component {
+  static propTypes = {
+    chart: PropTypes.object.isRequired,
+    isSelected: PropTypes.bool,
+    isReplayable: PropTypes.bool,
+    isTutorial: PropTypes.number,
+    onChartClick: PropTypes.func.isRequired
+  }
+
   render () {
     let classes = c('MusicChartSelectorItem', {
       'is-active': this.props.isSelected,

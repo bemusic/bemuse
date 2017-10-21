@@ -1,2 +1,2 @@
 
-export default document.querySelector('main')
+export default document.querySelector('#scene-root')
