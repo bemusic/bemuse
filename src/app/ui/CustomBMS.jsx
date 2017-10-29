@@ -20,8 +20,8 @@ const enhance = compose(
 )
 
 class CustomBMS extends React.Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = { hover: false }
   }
 

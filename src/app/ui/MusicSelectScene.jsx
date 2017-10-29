@@ -95,8 +95,8 @@ class MusicSelectScene extends React.PureComponent {
     musicPreviewEnabled: PropTypes.bool,
   }
 
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = {
       optionsVisible:               shouldShowOptions(),
       customBMSVisible:             false,

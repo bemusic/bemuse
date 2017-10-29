@@ -10,7 +10,7 @@ class MusicList extends React.PureComponent {
     return <ul className="MusicList js-scrollable-view"
       onTouchStart={this.props.onTouch}>
       {this.props.groups.map(({ title, songs }) => [
-        <li className="MusicListのgroupTitle">{title}</li>,
+        <li key={title} className="MusicListのgroupTitle">{title}</li>,
         songs.map(song => <MusicListItem
           key={song.id}
           song={song}
