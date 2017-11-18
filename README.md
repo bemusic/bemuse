@@ -15,7 +15,13 @@
 ---
 
 A [Be-Music Source](http://en.wikipedia.org/wiki/Be-Music_Source) file-format parser.
-It is made primarily for usage in [BEMUSE](https://github.com/bemusic/bemuse).
+It is made primarily for usage in [Bemuse](https://github.com/bemusic/bemuse).
+
+
+Usage
+-----
+
+Documentation has been lacking. For now, please see [issue 26](https://github.com/bemusic/bms-js/issues/26) for preliminary usage notes.
 
 
 BMS Parsing Stages
