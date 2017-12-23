@@ -13,7 +13,7 @@ function gitRevision () {
 if (process.env.CONTEXT === 'deploy-preview') {
   name += 'DevMode'
   if (process.env.DEPLOY_PRIME_URL) {
-    const m = process.env.DEPLOY_PRIME_URL.match(/\/\/(.*?)--/)[1]
+    const m = process.env.DEPLOY_PRIME_URL.match(/\/\/(.*?)--/)
     version += `[${m[1]}]`
   }
   version += '@' + gitRevision()
