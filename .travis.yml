@@ -4,8 +4,6 @@ env:
   global:
     # CODECLIMATE_REPO_TOKEN
     - secure: "vWu/FG20Uc1JgcUmzH467bZ82BKLuRU0wfKnA6f4CGfOIHsiAL62MDA3KRqfsRpsss9JTyERQ2zm7iLEVXu4dOcKody9AsrZRWtC+wvuKBoAllUt6jZnNOgs7Hjac50TI68E0p4Hrz+0xqV+YlppU5I34mGlZ2EhmSTnZ0zdIgw="
-    - BROWSER=Chrome_travis_ci
-    - CHROME_BIN=chromium-browser
     - NODE_ENV=test
     - CXX=g++-4.8
 addons:
