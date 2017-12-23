@@ -17,11 +17,12 @@ if (process.env.CONTEXT === 'deploy-preview') {
     version += `[${m[1]}]`
   }
   version += '@' + gitRevision()
-}
-
-if (process.env.CONTEXT === 'production') {
+} else if (process.env.CONTEXT === 'production') {
   name += 'DevMode'
   version += '+next[staging]@' + gitRevision()
+} else if (!process.env.CI) {
+  name += 'DevMode'
+  version += '+local'
 }
 
 module.exports = { name, version }
