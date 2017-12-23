@@ -16,7 +16,7 @@ const writeFile = Promise.promisify(fs.writeFile, fs)
 gulp.task('build', ['dist'], co.wrap(function * () {
   let stats = yield Promise.promisify(webpack)(config)
   gutil.log('[webpack]', stats.toString({ colors: true }))
-  if (Env.production()) yield postProcess()
+  yield postProcess()
 }))
 
 function postProcess () {
