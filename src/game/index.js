@@ -1,20 +1,17 @@
-import co from 'co'
-
-import SCENE_MANAGER  from 'bemuse/scene-manager'
-import query          from 'bemuse/utils/query'
-import React          from 'react'
-import LoadingScene   from './ui/LoadingScene.jsx'
-import GameShellScene from './ui/GameShellScene.jsx'
-import GameScene      from './game-scene'
-
-import URLResource            from 'bemuse/resources/url'
 import BemusePackageResources from 'bemuse/resources/bemuse-package'
-import { unmuteAudio }        from 'bemuse/sampling-master'
-import audioContext           from 'audio-context'
-
+import React from 'react'
+import SCENE_MANAGER from 'bemuse/scene-manager'
+import URLResource from 'bemuse/resources/url'
+import audioContext from 'bemuse/audio-context'
+import co from 'co'
+import query from 'bemuse/utils/query'
 import { resolveUrl } from 'url'
+import { unmuteAudio } from 'bemuse/sampling-master'
 
 import * as GameLoader from './loaders/game-loader'
+import GameScene from './game-scene'
+import GameShellScene from './ui/GameShellScene.jsx'
+import LoadingScene from './ui/LoadingScene.jsx'
 
 export function main () {
 

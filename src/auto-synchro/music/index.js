@@ -1,12 +1,10 @@
-
-import download       from 'bemuse/utils/download'
+import _ from 'lodash'
 import SamplingMaster from 'bemuse/sampling-master'
-import { canPlay }    from 'bemuse/sampling-master'
-
-import co             from 'co'
-import once           from 'once'
-import context        from 'audio-context'
-import _              from 'lodash'
+import co from 'co'
+import context from 'bemuse/audio-context'
+import download from 'bemuse/utils/download'
+import once from 'once'
+import { canPlay } from 'bemuse/sampling-master'
 
 /**
  * The audio format to use (.ogg or .m4a)

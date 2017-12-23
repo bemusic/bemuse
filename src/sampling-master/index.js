@@ -1,4 +1,4 @@
-import defaultAudioContext from 'audio-context'
+import defaultAudioContext from 'bemuse/audio-context'
 import readBlob from 'bemuse/utils/read-blob'
 
 export const FADE_LENGTH = 0.001

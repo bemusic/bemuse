@@ -1,19 +1,17 @@
+import './style.scss'
 
 import $ from 'jquery'
-import co from 'co'
-
-import SamplingMaster from 'bemuse/sampling-master'
-import DndResources   from 'bemuse/resources/dnd-resources'
-import ctx            from 'audio-context'
-
-import Reader   from 'bms/reader'
 import Compiler from 'bms/compiler'
-import Timing   from 'bms/timing'
-import Notes    from 'bms/notes'
+import DndResources from 'bemuse/resources/dnd-resources'
+import Notes from 'bms/notes'
+import Reader from 'bms/reader'
+import SamplingMaster from 'bemuse/sampling-master'
 import SongInfo from 'bms/song-info'
+import Timing from 'bms/timing'
+import co from 'co'
+import ctx from 'bemuse/audio-context'
 
 import template from './template.jade'
-import './style.scss'
 
 export function main (element) {
 

@@ -120,7 +120,7 @@
     "yn": "^1.2.0"
   },
   "dependencies": {
-    "audio-context": "^0.1.0",
+    "audio-context": "^1.0.1",
     "auth0-js": "^8.1.2",
     "axios": "^0.15.3",
     "baconjs": "^0.7.75",
