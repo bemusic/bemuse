@@ -1,12 +1,12 @@
-import * as Analytics   from '../analytics'
+import * as Analytics from '../analytics'
 import './ResultTable.scss'
 
-import ModalPopup       from 'bemuse/ui/ModalPopup'
-import React            from 'react'
-import PropTypes        from 'prop-types'
-import RunningNumber    from 'bemuse/ui/RunningNumber'
+import ModalPopup from 'bemuse/ui/ModalPopup'
+import React from 'react'
+import PropTypes from 'prop-types'
+import RunningNumber from 'bemuse/ui/RunningNumber'
 
-import FirstTimeTip     from './FirstTimeTip'
+import FirstTimeTip from './FirstTimeTip'
 import ResultDeltasView from './ResultDeltasView'
 
 export default class ResultTable extends React.Component {
@@ -19,8 +19,8 @@ export default class ResultTable extends React.Component {
   }
   render () {
     let { result } = this.props
-    return <div className="ResultTable">
-      <table className="ResultTableのtable">
+    return <div className='ResultTable'>
+      <table className='ResultTableのtable'>
         <tbody>
           <tr>
             <td><RunningNumber value={result['1']} /></td>
@@ -44,15 +44,15 @@ export default class ResultTable extends React.Component {
           </tr>
         </tbody>
       </table>
-      <table className="ResultTableのtable">
+      <table className='ResultTableのtable'>
         <tbody>
           <tr title={`Total combos: ${result['totalCombo']}`}>
             <td><RunningNumber value={result['maxCombo']} /></td>
             <th>Max Combo</th>
           </tr>
           <tr>
-            <td onClick={this.handleViewDeltas} className="is-clickable">
-              <FirstTimeTip featureKey="deltas" tip="View detailed accuracy data">
+            <td onClick={this.handleViewDeltas} className='is-clickable'>
+              <FirstTimeTip featureKey='deltas' tip='View detailed accuracy data'>
                 <RunningNumber
                   formatter={this.formatAccuracy}
                   value={result['accuracy']}
@@ -63,7 +63,7 @@ export default class ResultTable extends React.Component {
           </tr>
         </tbody>
       </table>
-      <table className="ResultTableのtable is-total">
+      <table className='ResultTableのtable is-total'>
         <tbody>
           <tr>
             <td><RunningNumber value={result['score']} /></td>

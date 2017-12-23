@@ -1,12 +1,12 @@
 
-import gulp             from 'gulp'
-import path             from '../config/path'
-import { javascripts }  from '../config/sources'
-import eslint           from 'gulp-eslint'
-import through2         from 'through2'
-import { relative }     from 'path'
-import _                from 'lodash'
-import fs               from 'fs'
+import gulp from 'gulp'
+import path from '../config/path'
+import { javascripts } from '../config/sources'
+import eslint from 'gulp-eslint'
+import through2 from 'through2'
+import { relative } from 'path'
+import _ from 'lodash'
+import fs from 'fs'
 
 gulp.task('code-review', function () {
   return gulp.src(javascripts)
@@ -34,7 +34,7 @@ function formatReviewMessage () {
       process.env.TRAVIS_REPO_SLUG,
       'blob',
       process.env.TRAVIS_COMMIT,
-      repoPath,
+      repoPath
     ].join('/') + extra
     return `[${text}](${url})`
   }
@@ -52,7 +52,7 @@ function formatReviewMessage () {
           link(`line ${problem.line}`, `#L${problem.line}`),
           ', ' + `col ${problem.col}`,
           ': ',
-          `${problem.message} (${problem.code})`,
+          `${problem.message} (${problem.code})`
         ].join(''))
       }
       problems.push(...lines)
@@ -68,7 +68,7 @@ function formatReviewMessage () {
           'and check for consistent coding style, ' +
           'and I found some problems with your code submission ' +
           'in the commit ' + process.env.TRAVIS_COMMIT + ':',
-        '',
+        ''
       ]
       text.push(...problems)
       text.push(
@@ -93,11 +93,11 @@ function reviewEslint (result, problems) {
   for (let msg of messages) {
     if (msg.severity < 2) continue
     let problem = {
-      source:   'eslint',
-      line:     msg.line,
-      col:      msg.column,
-      code:     msg.ruleId,
-      message:  msg.message,
+      source: 'eslint',
+      line: msg.line,
+      col: msg.column,
+      code: msg.ruleId,
+      message: msg.message
     }
     problems.push(problem)
   }

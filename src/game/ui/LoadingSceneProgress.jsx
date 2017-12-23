@@ -6,7 +6,7 @@ import LoadingSceneProgressBar from './LoadingSceneProgressBar.jsx'
 
 export default class LoadingSceneProgress extends React.Component {
   render () {
-    return <div className="LoadingSceneProgress">
+    return <div className='LoadingSceneProgress'>
       {this.props.tasks.value.map(task => this.renderItem(task))}
     </div>
   }
@@ -14,10 +14,10 @@ export default class LoadingSceneProgress extends React.Component {
   renderItem = ({ text, progressText, progress }) => {
     let width = Math.round((progress * 100) || 0) + '%'
     let extra = progressText ? ` (${progressText})` : ''
-    return <div key={text} className="LoadingSceneProgressのitem">
+    return <div key={text} className='LoadingSceneProgressのitem'>
       <LoadingSceneProgressBar width={width} />
       {text}
-      <span className="LoadingSceneProgressのextra">{extra}</span>
+      <span className='LoadingSceneProgressのextra'>{extra}</span>
     </div>
   };
 

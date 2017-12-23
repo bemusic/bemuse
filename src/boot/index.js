@@ -1,3 +1,4 @@
+/* eslint import/no-webpack-loader-syntax: off */
 
 // :doc:
 //
@@ -8,12 +9,12 @@
 import 'style-loader?-singleton!bemuse/ui/fonts.scss'
 import 'bemuse/ui/global.scss'
 
-import * as Boot        from './ui/Boot'
-import * as ErrorDialog from './ui/ErrorDialog'
+import Progress from 'bemuse/progress'
+import query from 'bemuse/utils/query'
 
-import LoadingContext   from './loading-context'
-import Progress         from 'bemuse/progress'
-import query            from 'bemuse/utils/query'
+import * as Boot from './ui/Boot'
+import * as ErrorDialog from './ui/ErrorDialog'
+import LoadingContext from './loading-context'
 
 window.onerror = function (message, url, line, col, e) {
   ErrorDialog.show(message, url, line, col, e)
@@ -25,20 +26,18 @@ window.onerror = function (message, url, line, col, e) {
 // After the ``boot`` script has been loaded, the main script is scanned
 // from the ``mode`` query parameter.
 
-
 let mode = query.mode || 'app'
 
 require.ensure(['./environment'],
-function (require) {
+  function (require) {
+    require('./environment')
+    var loadModule = require('val-loader!./loader.js')
 
-  require('./environment')
-  var loadModule = require('val-loader!./loader.js')
-
-  if (loadModule[mode]) {
-    let progress = new Progress()
-    let context = new LoadingContext(progress)
-    progress.watch(() => Boot.setProgress(progress.progress))
-    context.use(function () {
+    if (loadModule[mode]) {
+      let progress = new Progress()
+      let context = new LoadingContext(progress)
+      progress.watch(() => Boot.setProgress(progress.progress))
+      context.use(function () {
       // >>
       // The main script is then loaded and imported into the environment,
       // and its ``main()`` method is invoked.
@@ -49,13 +48,12 @@ function (require) {
       //
       // .. codedoc:: boot/modes
       //
-      loadModule[mode](function (loadedModule) {
-        Boot.hide()
-        loadedModule.main()
+        loadModule[mode](function (loadedModule) {
+          Boot.hide()
+          loadedModule.main()
+        })
       })
-    })
-  } else {
-    console.error('Invalid mode:', mode)
-  }
-
-}, 'environment')
+    } else {
+      console.error('Invalid mode:', mode)
+    }
+  }, 'environment')

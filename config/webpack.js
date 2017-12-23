@@ -13,19 +13,19 @@ function generateBaseConfig () {
     resolve: webpackResolve,
     resolveLoader: {
       alias: {
-        bemuse: path('src'),
-      },
+        bemuse: path('src')
+      }
     },
     devServer: {
       contentBase: false,
       publicPath: '/build/',
-      stats: { colors: true, chunkModules: false },
+      stats: { colors: true, chunkModules: false }
     },
     module: {
       loaders: generateLoadersConfig(),
       noParse: [
-        /sinon\.js/,
-      ],
+        /sinon\.js/
+      ]
     },
     plugins: [
       new CompileProgressPlugin(),
@@ -38,7 +38,7 @@ function generateBaseConfig () {
       new webpack.ProvidePlugin({
         BemuseLogger: 'bemuse/logger'
       })
-    ],
+    ]
   }
 
   if (Env.sourceMapsEnabled() && Env.development()) {
@@ -57,20 +57,20 @@ function generateLoadersConfig () {
     {
       test: /\.jsx?$/,
       include: [path('src'), path('spec')],
-      loader: 'babel-loader?cacheDirectory',
+      loader: 'babel-loader?cacheDirectory'
     },
     {
       test: /\.js$/,
       include: [path('node_modules', 'pixi.js')],
-      loader: 'transform-loader/cacheable?brfs',
+      loader: 'transform-loader/cacheable?brfs'
     },
     {
       test: /\.json$/,
-      loader: 'json-loader',
+      loader: 'json-loader'
     },
     {
       test: /\.pegjs$/,
-      loader: 'pegjs-loader',
+      loader: 'pegjs-loader'
     },
     {
       test: /\.scss$/,
@@ -79,31 +79,30 @@ function generateLoadersConfig () {
     },
     {
       test: /\.css$/,
-      loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 version',
+      loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 version'
     },
     {
       test: /\.jade$/,
-      loader: 'jade-loader',
+      loader: 'jade-loader'
     },
     {
       test: /\.png$/,
-      loader: 'url-loader?limit=100000&mimetype=image/png',
+      loader: 'url-loader?limit=100000&mimetype=image/png'
     },
     {
       test: /\.jpg$/,
-      loader: 'file-loader',
+      loader: 'file-loader'
     },
     {
       test: /\.(?:mp3|mp4|ogg|m4a)$/,
-      loader: 'file-loader',
+      loader: 'file-loader'
     },
     {
       test: /\.(otf|eot|svg|ttf|woff|woff2)(?:$|\?)/,
       loader: 'url-loader?limit=8192'
-    },
+    }
   ]
 }
-
 
 function applyWebConfig (config) {
   Object.assign(config, {
@@ -116,8 +115,8 @@ function applyWebConfig (config) {
       filename: '[name].js',
       chunkFilename: '[name]-[chunkhash].js',
       devtoolModuleFilenameTemplate: 'file://[absolute-resource-path]',
-      devtoolFallbackModuleFilenameTemplate: 'file://[absolute-resource-path]?[hash]',
-    },
+      devtoolFallbackModuleFilenameTemplate: 'file://[absolute-resource-path]?[hash]'
+    }
   })
 
   if (Env.hotModeEnabled()) {
@@ -140,12 +139,10 @@ function applyWebConfig (config) {
   return config
 }
 
-
 function applyKarmaConfig (config) {
   config.devtool = 'cheap-inline-source-map'
   return config
 }
-
 
 function applyTestBedConfig (config) {
   config.entry = './test/testBed.entry.js'
@@ -157,7 +154,6 @@ function applyTestBedConfig (config) {
   return config
 }
 
-
 export const generateWebConfig = flowRight(applyWebConfig, generateBaseConfig)
 
 export const generateKarmaConfig = flowRight(applyKarmaConfig, generateBaseConfig)
@@ -165,7 +161,6 @@ export const generateKarmaConfig = flowRight(applyKarmaConfig, generateBaseConfi
 export const generateTestBedConfig = flowRight(applyTestBedConfig, generateBaseConfig)
 
 export default generateWebConfig()
-
 
 function CompileProgressPlugin () {
   const gauge = new Gauge()

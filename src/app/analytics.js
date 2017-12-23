@@ -75,7 +75,7 @@ export function gameFinish (song, chart, gameState, gameMode) {
       'w3': stats.counts['3'],
       'w4': stats.counts['4'],
       'w5': stats.counts[MISSED]
-    },
+    }
   })
 }
 
@@ -89,7 +89,7 @@ export function getDeltaStats (deltas) {
   return {
     sd: Math.sqrt(variance(nonMissDeltas)),
     mean: mean(nonMissDeltas),
-    median: median(nonMissDeltas),
+    median: median(nonMissDeltas)
   }
 }
 

@@ -46,7 +46,7 @@ export function TouchPlugin (context) {
     },
     destroy () {
       statsRecorder.done()
-    },
+    }
   }
   function _expand (rectangle, amount = 4) {
     const newRect = rectangle.clone()

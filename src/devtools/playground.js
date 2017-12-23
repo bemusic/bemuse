@@ -1,13 +1,12 @@
-
-import query from 'bemuse/utils/query'
 import MAIN from 'bemuse/utils/main-element'
-import ReactDOM from 'react-dom'
 import React from 'react'
+import ReactDOM from 'react-dom'
+import query from 'bemuse/utils/query'
 
 const availablePlaygrounds = (function (context) {
   let playgrounds = { }
   for (let key of context.keys()) {
-    let name = key.match(/\w[^\.]+/)[0]
+    let name = key.match(/\w[^.]+/)[0]
     playgrounds[name] = context(key)
   }
   return playgrounds
@@ -25,10 +24,10 @@ class DefaultPlayground extends React.Component {
       <p>Please select a playground</p>
       <ul>
         {Object.keys(availablePlaygrounds)
-            .map(key => <li>
-              <a style={linkStyle}
-                href={'?mode=playground&playground=' + key}>{key}</a>
-            </li>)}
+          .map(key => <li>
+            <a style={linkStyle}
+              href={'?mode=playground&playground=' + key}>{key}</a>
+          </li>)}
       </ul>
     </div>
   }

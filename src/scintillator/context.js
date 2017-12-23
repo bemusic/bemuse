@@ -21,12 +21,12 @@ function hackPIXIToForceNewBlendModes () {
 
 export class Context {
   constructor (skin) {
-    this.refs       = { }
-    this._skin      = skin
-    this._instance  = skin.instantiate(this)
-    this._renderer  = createRenderer(skin.width, skin.height)
-    this.stage      = this._instance.object
-    this.view       = this._renderer.view
+    this.refs = { }
+    this._skin = skin
+    this._instance = skin.instantiate(this)
+    this._renderer = createRenderer(skin.width, skin.height)
+    this.stage = this._instance.object
+    this.view = this._renderer.view
     this._setupInteractivity()
   }
   render (data) {
@@ -51,15 +51,15 @@ export class Context {
     set.delete(object)
   }
   _setupInteractivity () {
-    let mouse         = null
-    let touches       = [ ]
-    let onMouse       = (e) => { mouse = e }
+    let mouse = null
+    let touches = [ ]
+    let onMouse = (e) => { mouse = e }
     let onUpdateMouse = (e) => { mouse = mouse && e }
-    let onNoMouse     = ()  => { mouse = null }
-    let onTouch       = (e) => { touches = [].slice.call(e.touches) }
-    let view          = this.view
-    let width         = this._skin.width
-    let height        = this._skin.height
+    let onNoMouse = () => { mouse = null }
+    let onTouch = (e) => { touches = [].slice.call(e.touches) }
+    let view = this.view
+    let width = this._skin.width
+    let height = this._skin.height
     view.addEventListener('mousedown', onMouse, false)
     view.addEventListener('mousemove', onUpdateMouse, false)
     view.addEventListener('mouseup', onNoMouse, false)
@@ -92,7 +92,7 @@ export class Context {
       return {
         x: (p.clientX - rect.left) / rect.width * width,
         y: (p.clientY - rect.top) / rect.height * height,
-        id: id,
+        id: id
       }
     }
   }

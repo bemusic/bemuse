@@ -7,23 +7,23 @@ export default class BenchmarkPanel extends React.Component {
     super(props)
     this.state = {
       show: false,
-      text: 'wow',
+      text: 'wow'
     }
   }
 
   render () {
-    return <div className="BenchmarkPanel"
+    return <div className='BenchmarkPanel'
       onClick={this.handleInteraction}
       onTouchStart={this.handleInteraction}>
       {
         this.state.show
-        ? (
-          <article>
-            <b>Benchmark Stats</b><br />
-            {this.renderTable()}
-          </article>
-        )
-        : 'Show Benchmark Stats'
+          ? (
+            <article>
+              <b>Benchmark Stats</b><br />
+              {this.renderTable()}
+            </article>
+          )
+          : 'Show Benchmark Stats'
       }
     </div>
   }
@@ -40,7 +40,7 @@ export default class BenchmarkPanel extends React.Component {
           let stat = stats[key]
           return <tr>
             <td><strong>{key}</strong></td>
-            <td align="right">{'' + stat}</td>
+            <td align='right'>{'' + stat}</td>
           </tr>
         })}
       </tbody>

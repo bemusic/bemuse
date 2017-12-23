@@ -27,7 +27,7 @@ function Stat () {
     },
     toString () {
       return format(average) + ' / ' + format(secAvg)
-    },
+    }
   }
 }
 
@@ -73,7 +73,7 @@ function Benchmarker () {
 function FakeBenchmarker () {
   return {
     enabled: false,
-    wrap: (title, f) => f,
+    wrap: (title, f) => f
   }
 }
 

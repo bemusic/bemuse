@@ -25,8 +25,8 @@ class OptionsSpeed extends React.PureComponent {
     this.props.onChange(this.stringifySpeed(nextSpeed))
   }
   render () {
-    return <div className="OptionsSpeed">
-      <span className="OptionsSpeedのminus">
+    return <div className='OptionsSpeed'>
+      <span className='OptionsSpeedのminus'>
         <OptionsButton onClick={this.handleMinusButtonClick}>-</OptionsButton>
       </span>
       <OptionsInputField
@@ -35,7 +35,7 @@ class OptionsSpeed extends React.PureComponent {
         stringify={this.stringifySpeed}
         validator={/^\d+(?:\.\d)?$/}
         onChange={this.handleSpeedInputChange} />
-      <span className="OptionsSpeedのplus">
+      <span className='OptionsSpeedのplus'>
         <OptionsButton onClick={this.handlePlusButtonClick}>+</OptionsButton>
       </span>
     </div>

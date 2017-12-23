@@ -3,7 +3,6 @@ import PlayerDisplay from './player-display'
 import { tap, notechart, playerWithBMS } from '../test-helpers'
 
 describe('PlayerDisplay', function () {
-
   let display
   let data
 
@@ -16,7 +15,6 @@ describe('PlayerDisplay', function () {
   }
 
   it('reacts to input', function () {
-
     let inputState = (inputs) => makeState({ input: new Map(inputs) })
 
     setup({
@@ -24,8 +22,8 @@ describe('PlayerDisplay', function () {
       columns: ['wow'],
       options: {
         placement: 'center',
-        scratch: 'left',
-      },
+        scratch: 'left'
+      }
     })
 
     update(555, 0.5, inputState([['wow', { value: 0, changed: false }]]))
@@ -38,7 +36,6 @@ describe('PlayerDisplay', function () {
     update(558, 3.5, inputState([['wow', { value: 0, changed: true }]]))
     expect(data['wow_active']).to.equal(0)
     expect(data['wow_up']).to.equal(558)
-
   })
 
   describe('with note', function () {
@@ -137,12 +134,11 @@ describe('PlayerDisplay', function () {
       notifications: { judgments: [ ] },
       getNoteStatus: sinon.stub().returns('unjudged'),
       getNoteJudgment: sinon.stub().returns(0),
-      stats: { score: 0 },
+      stats: { score: 0 }
     }
   }
 
   function makeState (object) {
     return Object.assign(blankState(), object)
   }
-
 })

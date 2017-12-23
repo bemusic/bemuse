@@ -8,9 +8,8 @@ import { SUPPORTED } from '../browser-support'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 
 class BrowserSupportWarningScene extends React.Component {
-
   render () {
-    return <Scene className="BrowserSupportWarningScene">
+    return <Scene className='BrowserSupportWarningScene'>
       <h1>Warning: Unsupported Browser</h1>
       <p>
         It seems that you are using an unsupported browser.<br />
@@ -20,7 +19,7 @@ class BrowserSupportWarningScene extends React.Component {
         We support
         {SUPPORTED.map((browser, index, array) => [
           !index ? ' ' : index === array.length - 1 ? ' and ' : ', ',
-          <strong>{browser.name}</strong>,
+          <strong>{browser.name}</strong>
         ])}.
       </p>
       <p>
@@ -28,7 +27,7 @@ class BrowserSupportWarningScene extends React.Component {
           Continue Anyway
         </OptionsButton>
       </p>
-      <p className="BrowserSupportWarningSceneのuserAgent">
+      <p className='BrowserSupportWarningSceneのuserAgent'>
         <strong>User agent:</strong> {navigator.userAgent}
       </p>
     </Scene>

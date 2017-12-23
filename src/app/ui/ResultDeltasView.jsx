@@ -33,32 +33,31 @@ export default class ResultDeltasView extends React.Component {
     const groups = group(deltas)
     const stats = _.range(-20, 20).map(bucket => ({
       bucket,
-      count: groups[bucket] || 0,
+      count: groups[bucket] || 0
     }))
     const max = _(stats).map('count').max()
     const height = value => Math.ceil(value / Math.max(max, 1) * 128)
     return (
-      <div className="ResultDeltasView">
-        <Panel title="Accuracy Data">
-          <div className="ResultDeltasViewのcontent">
-            <div className="ResultDeltasViewのhistogram">
+      <div className='ResultDeltasView'>
+        <Panel title='Accuracy Data'>
+          <div className='ResultDeltasViewのcontent'>
+            <div className='ResultDeltasViewのhistogram'>
               {stats.map(({ bucket, count }) =>
                 <div
                   key={bucket}
-                  className="ResultDeltasViewのhistogramBar"
+                  className='ResultDeltasViewのhistogramBar'
                   data-bucket={bucket}
                   style={{ height: height(count) }}
-                >
-                </div>
+                />
               )}
             </div>
-            <div className="ResultDeltasViewのnumber is-early">
+            <div className='ResultDeltasViewのnumber is-early'>
               <strong>{earlyCount}</strong> EARLY
             </div>
-            <div className="ResultDeltasViewのnumber is-late">
+            <div className='ResultDeltasViewのnumber is-late'>
               <strong>{lateCount}</strong> LATE
             </div>
-            <table className="ResultDeltasViewのinfo">
+            <table className='ResultDeltasViewのinfo'>
               <tbody>
                 {this.renderRow('Mean:', mean(nonMissDeltas))}
                 {this.renderRow('S.D:', Math.sqrt(variance(nonMissDeltas)), { showEarlyLate: false })}
@@ -75,7 +74,7 @@ export default class ResultDeltasView extends React.Component {
     return (
       <tr>
         <th>{text}</th>
-        <td className="is-number">{ms(data)}</td>
+        <td className='is-number'>{ms(data)}</td>
         <td>{options.showEarlyLate !== false
           ? (data > 0 ? '(late)' : data < 0 ? '(early)' : '')
           : null

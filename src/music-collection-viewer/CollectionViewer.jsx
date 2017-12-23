@@ -15,12 +15,12 @@ export class CollectionViewer extends React.Component {
   }
   componentDidMount () {
     load(this.state.url)
-    .then((result) => {
-      this.setState({ status: 'Load completed', data: result })
-    })
-    .catch((e) => {
-      this.setState({ status: 'Load error: ' + e })
-    })
+      .then((result) => {
+        this.setState({ status: 'Load completed', data: result })
+      })
+      .catch((e) => {
+        this.setState({ status: 'Load error: ' + e })
+      })
   }
   render () {
     return (

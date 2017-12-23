@@ -4,7 +4,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const OptionsButton = ({ children, onClick }) => (
-  <button className="OptionsButton" onClick={onClick}>
+  <button className='OptionsButton' onClick={onClick}>
     {children}
   </button>
 )

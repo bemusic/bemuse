@@ -1,16 +1,15 @@
 import _ from 'lodash'
-import SamplingMaster from 'bemuse/sampling-master'
 import co from 'co'
 import context from 'bemuse/audio-context'
 import download from 'bemuse/utils/download'
 import once from 'once'
-import { canPlay } from 'bemuse/sampling-master'
+import SamplingMaster, { canPlay } from 'bemuse/sampling-master'
 
 /**
  * The audio format to use (.ogg or .m4a)
  */
-let audioExt =  once(() =>
-                  canPlay('audio/ogg; codecs="vorbis"') ? '.ogg' : '.m4a')
+let audioExt = once(() =>
+  canPlay('audio/ogg; codecs="vorbis"') ? '.ogg' : '.m4a')
 
 /**
  * The asset URL of these files...
@@ -23,7 +22,7 @@ let ASSET_URLS = {
   'kick.m4a': require('./data/kick.m4a'),
   'kick.ogg': require('./data/kick.ogg'),
   'snare.m4a': require('./data/snare.m4a'),
-  'snare.ogg': require('./data/snare.ogg'),
+  'snare.ogg': require('./data/snare.ogg')
 }
 
 /**
@@ -31,15 +30,15 @@ let ASSET_URLS = {
  */
 export function load () {
   return co(function * () {
-    let master  = new SamplingMaster(context)
-    let sample  =
+    let master = new SamplingMaster(context)
+    let sample =
           name => download(ASSET_URLS[`${name}${audioExt()}`])
             .as('arraybuffer')
             .then(buf => master.sample(buf))
     let samples = _.fromPairs(
-          yield Promise.all(
-            ['bgm', 'intro', 'kick', 'snare'].map(
-              name => sample(name).then(sampleObj => [name, sampleObj]))))
+      yield Promise.all(
+        ['bgm', 'intro', 'kick', 'snare'].map(
+          name => sample(name).then(sampleObj => [name, sampleObj]))))
     return music(master, samples)
   })
 }
@@ -49,7 +48,6 @@ export function load () {
  */
 function music (master, samples) {
   return function play (callbacks) {
-
     master.unmute()
 
     let BPM = 148
@@ -99,9 +97,8 @@ function music (master, samples) {
         let nearestBeat = Math.round(time.t * BPM / 60)
         let nearestBeatTime = nearestBeat * 60 / BPM
         return [nearestBeat, time.t - nearestBeatTime]
-      },
+      }
     }
-
   }
 }
 

@@ -51,7 +51,7 @@ describe('BemusePackageResources', function () {
     it('supports fallback', function () {
       resources = new BemusePackageResources('/src/resources/test-fixtures/a/', {
         fallback: '/src/resources/test-fixtures/f/',
-        fallbackPattern: /\.txt$/,
+        fallbackPattern: /\.txt$/
       })
       return resources.file('meow.txt')
         .then(file => file.read())
@@ -63,7 +63,7 @@ describe('BemusePackageResources', function () {
     it('supports fallback only with the pattern', function () {
       resources = new BemusePackageResources('/spec/resources/fixtures/a/', {
         fallback: '/src/resources/test-fixtures/f/',
-        fallbackPattern: /\.txt$/,
+        fallbackPattern: /\.txt$/
       })
       return expect(resources.file('meow.dat')).to.be.rejected
     })

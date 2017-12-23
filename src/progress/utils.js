@@ -12,14 +12,14 @@ export function fixed (total, progress) {
 export function atomic (progress, promise) {
   if (!progress) return promise
   return Promise.resolve(promise)
-      .tap((data) => {
-        if (data && data.byteLength) {
-          progress.formatter = BYTES_FORMATTER
-          progress.report(data.byteLength, data.byteLength)
-        } else {
-          progress.report(1, 1)
-        }
-      })
+    .tap((data) => {
+      if (data && data.byteLength) {
+        progress.formatter = BYTES_FORMATTER
+        progress.report(data.byteLength, data.byteLength)
+      } else {
+        progress.report(1, 1)
+      }
+    })
 }
 
 export function wrapPromise (progress, f) {

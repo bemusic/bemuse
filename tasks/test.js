@@ -1,6 +1,6 @@
 
-import gulp       from 'gulp'
-import { join }   from 'path'
+import gulp from 'gulp'
+import { join } from 'path'
 import { Server } from 'karma'
 
 gulp.task('test', function (done) {

@@ -1,10 +1,10 @@
 
-import { getGrade }       from 'bemuse/rules/grade'
+import { getGrade } from 'bemuse/rules/grade'
 import withPersonalRecord from './withPersonalRecord'
 import MusicListItemChart from './MusicListItemChart'
-import withPropsOnChange  from 'recompose/withPropsOnChange'
-import pure               from 'recompose/pure'
-import compose            from 'recompose/compose'
+import withPropsOnChange from 'recompose/withPropsOnChange'
+import pure from 'recompose/pure'
+import compose from 'recompose/compose'
 
 export default compose(
   withPersonalRecord,

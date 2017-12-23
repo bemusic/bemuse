@@ -14,7 +14,7 @@
 
 import 'babel-polyfill'
 import 'whatwg-fetch'
-import debug    from 'debug'
+import debug from 'debug'
 import Bluebird from 'bluebird'
 
 // .. js:data:: DEBUG

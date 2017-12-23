@@ -1,18 +1,17 @@
-import assert             from 'power-assert'
+import assert from 'power-assert'
 
-import GameInput          from '../input'
-import Player             from '../player'
-import PlayerState        from './player-state'
-import { notechart }      from '../test-helpers'
+import GameInput from '../input'
+import Player from '../player'
+import PlayerState from './player-state'
+import { notechart } from '../test-helpers'
 
 describe('PlayerState', function () {
-
   it('updates the input', function () {
     let state = new PlayerState({
       number: 1,
       columns: ['wow'],
       notechart: notechart(''),
-      options: { speed: 1 },
+      options: { speed: 1 }
     })
     let input = {
       get: name => ({ name })
@@ -22,7 +21,6 @@ describe('PlayerState', function () {
   })
 
   describe('with player and chart', function () {
-
     let chart
     let player
     let state
@@ -30,10 +28,10 @@ describe('PlayerState', function () {
     let buttons
 
     function setup (bms, options = { speed: 1 }) {
-      chart   = notechart(bms)
-      player  = new Player(chart, 1, options)
-      state   = new PlayerState(player)
-      input   = new GameInput()
+      chart = notechart(bms)
+      player = new Player(chart, 1, options)
+      state = new PlayerState(player)
+      input = new GameInput()
       buttons = { }
       input.use({ get: () => buttons })
     }
@@ -45,9 +43,7 @@ describe('PlayerState', function () {
     }
 
     describe('node judging', function () {
-
       it('judges notes', function () {
-
         setup(`
           #BPM 120
           #00111:0101
@@ -69,21 +65,19 @@ describe('PlayerState', function () {
         expect(state.getNoteJudgment(chart.notes[0])).to.equal(1)
         expect(state.getNoteStatus(chart.notes[1])).to.equal('unjudged')
         expect(state.notifications.judgments[0]).to.deep.equal({
-            judgment: 1, combo: 1, delta: 0, column, })
+          judgment: 1, combo: 1, delta: 0, column })
         expect(state.stats.poor).to.equal(false)
 
         advance(2.1, { 'p1_1': 0 })
-        advance(5,   { 'p1_1': 0 })
+        advance(5, { 'p1_1': 0 })
         expect(state.getNoteStatus(chart.notes[1])).to.equal('judged')
         expect(state.getNoteJudgment(chart.notes[1])).to.equal(-1)
         expect(state.notifications.judgments[0]).to.deep.equal({
-            judgment: -1, combo: 0, delta: 2, column, })
+          judgment: -1, combo: 0, delta: 2, column })
         expect(state.stats.poor).to.equal(true)
-
       })
 
       it('judges multiple notes in different column', function () {
-
         setup(`
           #BPM 120
           #00111:01
@@ -93,11 +87,9 @@ describe('PlayerState', function () {
         advance(2, { 'p1_1': 1, 'p1_2': 1 })
         expect(state.getNoteStatus(chart.notes[0])).to.equal('judged')
         expect(state.getNoteStatus(chart.notes[1])).to.equal('judged')
-
       })
 
       it('judges single note from one column at a time', function () {
-
         setup(`
           #BPM 480
           #00111:01010100000000000000000000000000
@@ -121,11 +113,9 @@ describe('PlayerState', function () {
         expect(state.getNoteJudgment(chart.notes[0])).to.gt(1)
         expect(state.getNoteJudgment(chart.notes[1])).to.eq(1)
         expect(state.getNoteJudgment(chart.notes[2])).to.gt(1)
-
       })
 
       it('leaves note unjudged when bad and there are closer note', function () {
-
         setup(`
           #BPM 120
           #00111:01010100000000000000000000000000
@@ -135,7 +125,6 @@ describe('PlayerState', function () {
         expect(state.getNoteStatus(chart.notes[0])).to.equal('unjudged')
         expect(state.getNoteStatus(chart.notes[1])).to.equal('judged')
         expect(state.getNoteStatus(chart.notes[2])).to.equal('unjudged')
-
       })
 
       it('records delta when pressed', function () {
@@ -217,7 +206,7 @@ describe('PlayerState', function () {
           expect(state.getNoteStatus(note)).to.equal('judged')
           expect(state.getNoteJudgment(note)).to.equal(-1)
           expect(state.notifications.judgments[0]).to.deep.equal({
-              judgment: -1, combo: 0, delta: 1, column: note.column, })
+            judgment: -1, combo: 0, delta: 1, column: note.column })
         })
       })
 
@@ -314,7 +303,6 @@ describe('PlayerState', function () {
           expect(state.notifications.sounds[0].note).to.equal(chart.notes[1])
         })
       })
-
     })
 
     describe('speed', function () {
@@ -352,7 +340,5 @@ describe('PlayerState', function () {
         expect(state.finished).to.equal(true)
       })
     })
-
   })
-
 })

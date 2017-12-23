@@ -52,7 +52,7 @@ export const reducer = combineReducers({
     ),
     [COLLECTION_LOADED]: (action) => (
       Collections.completeLoading(action.url, action.data)
-    ),
+    )
   }),
   customSongLoadState: createReducer(LoadState.initCompletedWithValue(null), {
     [CUSTOM_SONG_LOAD_STARTED]: (action) => (
@@ -91,7 +91,7 @@ export const reducer = combineReducers({
     ),
     [MUSIC_CHART_SELECTED]: (action) => (
       MusicSelection.selectChart(action.songId, action.chartId, action.chartLevel)
-    ),
+    )
   }),
   options: createReducer(Options.initialState, {
     [OPTIONS_LOADED_FROM_STORAGE]: (action) => (state) => (

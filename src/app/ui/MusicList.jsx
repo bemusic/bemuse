@@ -1,16 +1,16 @@
 
 import './MusicList.scss'
 
-import React          from 'react'
-import _              from 'lodash'
-import MusicListItem  from './MusicListItem.jsx'
+import React from 'react'
+import _ from 'lodash'
+import MusicListItem from './MusicListItem.jsx'
 
 class MusicList extends React.PureComponent {
   render () {
-    return <ul className="MusicList js-scrollable-view"
+    return <ul className='MusicList js-scrollable-view'
       onTouchStart={this.props.onTouch}>
       {this.props.groups.map(({ title, songs }) => [
-        <li key={title} className="MusicListのgroupTitle">{title}</li>,
+        <li key={title} className='MusicListのgroupTitle'>{title}</li>,
         songs.map(song => <MusicListItem
           key={song.id}
           song={song}
@@ -18,7 +18,7 @@ class MusicList extends React.PureComponent {
           selectedChart={this.getSelectedChart(song)}
           playMode={this.props.playMode}
           onSelect={this.props.onSelect}
-          highlight={this.props.highlight} />),
+          highlight={this.props.highlight} />)
       ])}
     </ul>
   }

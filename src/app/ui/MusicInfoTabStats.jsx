@@ -19,9 +19,9 @@ class MusicInfoTabStats extends React.Component {
   render () {
     const chart = this.props.chart
     const record = this.props.record
-    return <div className="MusicInfoTabStats">
+    return <div className='MusicInfoTabStats'>
       {this.renderMessage()}
-      <dl className="MusicInfoTabStatsのcolumn is-left">
+      <dl className='MusicInfoTabStatsのcolumn is-left'>
         <dt>Notes</dt>
         <dd>{chart.noteCount}</dd>
         <dt>BPM</dt>
@@ -33,7 +33,7 @@ class MusicInfoTabStats extends React.Component {
           record ? record.playCount : (this.props.user ? '0' : '-')
         )}</dd>
       </dl>
-      <dl className="MusicInfoTabStatsのcolumn is-right">
+      <dl className='MusicInfoTabStatsのcolumn is-right'>
         <dt>Best Score</dt>
         <dd>{this.renderWhenNotLoading(() => record ? record.score : '-')}</dd>
 
@@ -54,7 +54,7 @@ class MusicInfoTabStats extends React.Component {
 
   renderWhenNotLoading (f) {
     return (this.props.loading
-      ? <Icon name="spinner" spin />
+      ? <Icon name='spinner' spin />
       : f()
     )
   }
@@ -62,7 +62,7 @@ class MusicInfoTabStats extends React.Component {
   renderMessage () {
     if (!this.props.user) {
       return (
-        <div className="MusicInfoTabStatsのmessage">
+        <div className='MusicInfoTabStatsのmessage'>
           Please log in or create an account to save your play statistics.
         </div>
       )

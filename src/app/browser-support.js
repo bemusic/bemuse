@@ -2,20 +2,20 @@
 export const SUPPORTED = [
   {
     name: 'Firefox 37+',
-    test: () => checkUserAgent(/Firefox\/(\d+)/, 37),
+    test: () => checkUserAgent(/Firefox\/(\d+)/, 37)
   },
   {
     name: 'Chrome 54+',
-    test: () => checkUserAgent(/Chrome\/(\d+)\./, 54),
+    test: () => checkUserAgent(/Chrome\/(\d+)\./, 54)
   },
   {
     name: 'Safari 8+',
-    test: () => checkUserAgent(/Version\/(\d+)\.\S+ Safari\//, 8),
+    test: () => checkUserAgent(/Version\/(\d+)\.\S+ Safari\//, 8)
   },
   {
     name: 'iOS 9.2+ (iPad Pro)',
-    test: () => checkUserAgent(/iPad; CPU OS (\d+)/, 9),
-  },
+    test: () => checkUserAgent(/iPad; CPU OS (\d+)/, 9)
+  }
 ]
 
 function checkUserAgent (pattern, num) {

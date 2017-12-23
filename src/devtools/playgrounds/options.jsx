@@ -1,9 +1,9 @@
 
-import React      from 'react'
-import ReactDOM   from 'react-dom'
-import MAIN       from 'bemuse/utils/main-element'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import MAIN from 'bemuse/utils/main-element'
 import ModalPopup from 'bemuse/ui/ModalPopup'
-import Options    from 'bemuse/app/ui/Options'
+import Options from 'bemuse/app/ui/Options'
 
 const noop = () => { }
 

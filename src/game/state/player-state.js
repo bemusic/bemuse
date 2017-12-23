@@ -7,28 +7,28 @@ import { MISSED, getJudgeForNotechart, isBad, judgeEndTime, judgeTime } from '..
 // (score, current combo, maximum combo).
 export class PlayerState {
   constructor (player) {
-    this._player        = player
-    this._columns       = player.columns
+    this._player = player
+    this._columns = player.columns
     this._noteBufferByColumn = _(player.notechart.notes)
       .sortBy('time').groupBy('column').mapValues(noteBuffer(this)).value()
-    this._noteResult    = new Map()
-    this._duration      = player.notechart.duration
-    this._judge         = getJudgeForNotechart(player.notechart, {
+    this._noteResult = new Map()
+    this._duration = player.notechart.duration
+    this._judge = getJudgeForNotechart(player.notechart, {
       tutorial: player.options.tutorial
     })
     console.log('GET JDG', this._judge)
 
     // The PlayerStats object.
-    this.stats          = new PlayerStats(player.notechart)
+    this.stats = new PlayerStats(player.notechart)
 
     // The notifications from the previous update.
-    this.notifications  = { }
+    this.notifications = { }
 
     // The current note scrolling speed.
-    this.speed          = player.options.speed
+    this.speed = player.options.speed
 
     // ``true`` if finished playing, ``false`` otherwise.
-    this.finished       = false
+    this.finished = false
   }
 
   // The `Player` associated with this `PlayerState`.
@@ -41,8 +41,8 @@ export class PlayerState {
     this._gameTime = gameTime
     this._rawInput = input
     this.notifications = { }
-    this.notifications.sounds     = [ ]
-    this.notifications.judgments  = [ ]
+    this.notifications.sounds = [ ]
+    this.notifications.judgments = [ ]
     this._updateInputColumnMap()
     this._judgeNotes()
     this._updateSpeed()
@@ -82,7 +82,7 @@ export class PlayerState {
   }
   _updateInputColumnMap () {
     this.input = new Map(this._columns.map((column) =>
-        [column, this.getPlayerInput(column)]))
+      [column, this.getPlayerInput(column)]))
   }
 
   _judgeNotes () {
@@ -141,7 +141,7 @@ export class PlayerState {
         this.notifications.sounds.push({
           note: judgedNote,
           type: 'hit',
-          judgment: judgment,
+          judgment: judgment
         })
       } else {
         let freestyleNote = this._getFreestyleNote(notes)
@@ -164,30 +164,30 @@ export class PlayerState {
   _shouldJudge (note, control, buffer) {
     let status = this.getNoteStatus(note)
     if (status === 'unjudged') {
-      let judgment  = judgeTime(this._gameTime, note.time, this._judge)
-      let missed    = judgment === MISSED
-      let hit       = judgment > 0 && control.changed && control.value
+      let judgment = judgeTime(this._gameTime, note.time, this._judge)
+      let missed = judgment === MISSED
+      let hit = judgment > 0 && control.changed && control.value
       if (isBad(judgment) && this._getClosestNote(buffer.notes) !== note) {
         hit = false
       }
       return missed || hit
     } else if (status === 'active') {
-      let judgment  = judgeEndTime(this._gameTime, note.end.time, this._judge)
-      let missed    = judgment === MISSED
-      let lifted    = control.changed
-      let scratch   = note.column === 'SC'
-      let passed    = this._gameTime >= note.end.time
+      let judgment = judgeEndTime(this._gameTime, note.end.time, this._judge)
+      let missed = judgment === MISSED
+      let lifted = control.changed
+      let scratch = note.column === 'SC'
+      let passed = this._gameTime >= note.end.time
       return missed || lifted || (scratch && passed)
     } else {
       return false
     }
   }
   _judgeNote (note) {
-    let delta    = this._gameTime - note.time
+    let delta = this._gameTime - note.time
     let judgment = judgeTime(this._gameTime, note.time, this._judge)
-    let result   = this._noteResult.get(note)
-    let isDown   = !result || result.status === 'unjudged'
-    let isUp     = result  && result.status === 'active'
+    let result = this._noteResult.get(note)
+    let isDown = !result || result.status === 'unjudged'
+    let isUp = result && result.status === 'active'
     if (note.end) {
       if (isDown) {
         let status = judgment === MISSED ? 'judged' : 'active'
@@ -198,10 +198,10 @@ export class PlayerState {
         result = { status, judgment, delta }
       } else if (isUp) {
         let scratch = note.column === 'SC'
-        delta     = this._gameTime - note.end.time
-        judgment  = judgeEndTime(this._gameTime, note.end.time, this._judge) || MISSED
+        delta = this._gameTime - note.end.time
+        judgment = judgeEndTime(this._gameTime, note.end.time, this._judge) || MISSED
         if (scratch && delta > 0) judgment = 1
-        result    = { status: 'judged', judgment, delta }
+        result = { status: 'judged', judgment, delta }
       }
     } else {
       result = { status: 'judged', judgment, delta }
@@ -225,7 +225,7 @@ export class PlayerState {
 
 function noteBuffer (state) {
   return function bufferNotes (notes) {
-    let startIndex  = 0
+    let startIndex = 0
     return {
       notes,
       get startIndex () {
@@ -236,7 +236,7 @@ function noteBuffer (state) {
             state.getNoteStatus(notes[startIndex]) === 'judged') {
           startIndex += 1
         }
-      },
+      }
     }
   }
 }

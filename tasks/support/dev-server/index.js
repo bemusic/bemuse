@@ -1,16 +1,15 @@
 
-import gutil            from 'gulp-util'
-import webpack          from 'webpack'
+import gutil from 'gulp-util'
+import webpack from 'webpack'
 import WebpackDevServer from 'webpack-dev-server'
-import express          from 'express'
+import express from 'express'
 
-import config           from '../../../config/webpack'
-import routes           from '../../../config/routes'
-import path             from '../../../config/path'
-import * as Env         from '../../../config/env'
+import config from '../../../config/webpack'
+import routes from '../../../config/routes'
+import path from '../../../config/path'
+import * as Env from '../../../config/env'
 
 export function start () {
-
   let port = Env.serverPort()
   var compiler = webpack(config)
   var server = new WebpackDevServer(compiler, config.devServer)

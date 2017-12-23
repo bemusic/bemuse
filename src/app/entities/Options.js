@@ -51,7 +51,7 @@ export const changeScratchPosition = (position) => {
   } else {
     return u({
       'player.P1.mode': 'BM',
-      'player.P1.scratch': position,
+      'player.P1.scratch': position
     })
   }
 }

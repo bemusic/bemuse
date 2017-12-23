@@ -1,15 +1,15 @@
 
-import co       from 'co'
-import fs       from 'fs'
-import gulp     from 'gulp'
-import gutil    from 'gulp-util'
-import webpack  from 'webpack'
-import Promise  from 'bluebird'
-import config   from '../config/webpack'
-import path     from '../config/path'
+import co from 'co'
+import fs from 'fs'
+import gulp from 'gulp'
+import gutil from 'gulp-util'
+import webpack from 'webpack'
+import Promise from 'bluebird'
+import config from '../config/webpack'
+import path from '../config/path'
 import * as Env from '../config/env'
 
-const readFile  = Promise.promisify(fs.readFile, fs)
+const readFile = Promise.promisify(fs.readFile, fs)
 const writeFile = Promise.promisify(fs.writeFile, fs)
 
 gulp.task('build', ['dist'], co.wrap(function * () {

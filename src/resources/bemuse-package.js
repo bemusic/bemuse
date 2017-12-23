@@ -1,13 +1,13 @@
 import * as ProgressUtils from 'bemuse/progress/utils'
 
-import addLazyProperty    from 'lazy-property'
-import download           from 'bemuse/utils/download'
-import readBlob           from 'bemuse/utils/read-blob'
-import throat             from 'throat'
-import Progress           from 'bemuse/progress'
-import { resolve }        from 'url'
+import addLazyProperty from 'lazy-property'
+import download from 'bemuse/utils/download'
+import readBlob from 'bemuse/utils/read-blob'
+import throat from 'throat'
+import Progress from 'bemuse/progress'
+import { resolve } from 'url'
 
-import { URLResource }    from './url'
+import { URLResource } from './url'
 
 export class BemusePackageResources {
   constructor (url, options = { }) {
@@ -16,22 +16,22 @@ export class BemusePackageResources {
     this._fallback = options.fallback
     this._fallbackPattern = options.fallbackPattern
     lazy('metadata', () =>
-        download(resolve(this._url, 'metadata.json')).as('text')
-            .then(str => JSON.parse(str)))
+      download(resolve(this._url, 'metadata.json')).as('text')
+        .then(str => JSON.parse(str)))
     lazy('refs', () =>
-        this.metadata.then(metadata =>
-            metadata.refs.map(spec => new Ref(this, spec))))
+      this.metadata.then(metadata =>
+        metadata.refs.map(spec => new Ref(this, spec))))
     lazy('_fileMap', () =>
-        this.metadata.then(metadata => {
-          let files = new Map()
-          for (let file of metadata.files) {
-            files.set(file.name.toLowerCase(), file)
-          }
-          return files
-        }))
+      this.metadata.then(metadata => {
+        let files = new Map()
+        for (let file of metadata.files) {
+          files.set(file.name.toLowerCase(), file)
+        }
+        return files
+      }))
     this.progress = {
-      all:      new Progress(),
-      current:  new Progress(),
+      all: new Progress(),
+      current: new Progress()
     }
     let simultaneous = ProgressUtils.simultaneous(this.progress.current)
     let nextProgress = () => {
@@ -76,7 +76,7 @@ class BemusePackageFileResource {
   }
   read (progress) {
     return ProgressUtils.atomic(progress,
-        this._resources.getBlob(this._ref)
+      this._resources.getBlob(this._ref)
         .then(blob => readBlob(blob).as('arraybuffer')))
   }
   resolveUrl () {

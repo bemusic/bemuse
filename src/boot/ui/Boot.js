@@ -1,7 +1,7 @@
 
 import './Boot.scss'
 import template from './Boot.jade'
-import version  from 'bemuse/utils/version'
+import version from 'bemuse/utils/version'
 
 let boot = document.createElement('div')
 boot.id = 'boot'

@@ -86,16 +86,16 @@ export default function createScoreboardClient ({
           name: playerName
         }
       })
-      .then(result => {
-        log('checkPlayerNameAvailability response', result)
-        if (result.data.player && result.data.player.linked) {
-          log('checkPlayerNameAvailability: Player name already taken.')
-          return false
-        } else {
-          log('checkPlayerNameAvailability: Player name is available!')
-          return true
-        }
-      })
+        .then(result => {
+          log('checkPlayerNameAvailability response', result)
+          if (result.data.player && result.data.player.linked) {
+            log('checkPlayerNameAvailability: Player name already taken.')
+            return false
+          } else {
+            log('checkPlayerNameAvailability: Player name is available!')
+            return true
+          }
+        })
     )
   }
 
@@ -113,13 +113,13 @@ export default function createScoreboardClient ({
           name: playerName
         }
       })
-      .then(result => {
-        if (result.data.player === null) {
-          return { error: 'Player not found...' }
-        } else {
-          return { playerId: result.data.player.id }
-        }
-      })
+        .then(result => {
+          if (result.data.player === null) {
+            return { error: 'Player not found...' }
+          } else {
+            return { playerId: result.data.player.id }
+          }
+        })
     )
   }
 
@@ -137,11 +137,11 @@ export default function createScoreboardClient ({
           name: playerName
         }
       })
-      .then(result => {
-        const playerId = result.data.registerPlayer.id
-        log('reservePlayerId response', result, 'playerId', playerId)
-        return playerId
-      })
+        .then(result => {
+          const playerId = result.data.registerPlayer.id
+          log('reservePlayerId response', result, 'playerId', playerId)
+          return playerId
+        })
     )
   }
 
@@ -160,12 +160,12 @@ export default function createScoreboardClient ({
           jwt: idToken
         }
       })
-      .then(result => {
-        const playerId = result.data.linkPlayer.id
-        const playerName = result.data.linkPlayer.name
-        log('ensureLink response', result, 'playerId', playerId)
-        return { playerId, playerName }
-      })
+        .then(result => {
+          const playerId = result.data.linkPlayer.id
+          const playerName = result.data.linkPlayer.name
+          log('ensureLink response', result, 'playerId', playerId)
+          return { playerId, playerName }
+        })
     )
   }
 
@@ -181,9 +181,9 @@ export default function createScoreboardClient ({
           jwt: idToken
         }
       })
-      .then(result => {
-        return result.data.authenticatePlayer.playerToken
-      })
+        .then(result => {
+          return result.data.authenticatePlayer.playerToken
+        })
     )
   }
 
@@ -208,7 +208,7 @@ export default function createScoreboardClient ({
     signUp ({ username, password, email }) {
       invariant(typeof username === 'string', 'username must be a string')
       invariant(typeof password === 'string', 'password must be a string')
-      invariant(typeof email === 'string',    'email must be a string')
+      invariant(typeof email === 'string', 'email must be a string')
       return co(function * () {
         const { idToken } = yield * authenticationFlow.signUp(username, email, password, {
           log: (message) => log('[signUp]', message),
@@ -315,7 +315,7 @@ export default function createScoreboardClient ({
         `,
         variables: { playerToken }
       })
-      .then(result => result.data.renewPlayerToken.playerToken)
+        .then(result => result.data.renewPlayerToken.playerToken)
     }
   }
 

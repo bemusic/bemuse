@@ -1,5 +1,5 @@
 
-import * as PIXI   from 'pixi.js'
+import * as PIXI from 'pixi.js'
 import TouchPlugin from './touch-plugin'
 
 describe('TouchPlugin', function () {
@@ -7,16 +7,16 @@ describe('TouchPlugin', function () {
     let instance = new TouchPlugin({
       refs: {
         'p1_1': new Set([
-          { getBounds: () => new PIXI.Rectangle(64, 64, 64, 64) },
+          { getBounds: () => new PIXI.Rectangle(64, 64, 64, 64) }
         ]),
         'p1_2': new Set([
-          { getBounds: () => new PIXI.Rectangle(128, 64, 64, 64) },
-        ]),
+          { getBounds: () => new PIXI.Rectangle(128, 64, 64, 64) }
+        ])
       },
       input: [
         { x: 72, y: 72, id: 'touch1' },
-        { x: 32, y: 32, id: 'touch2' },
-      ],
+        { x: 32, y: 32, id: 'touch2' }
+      ]
     })
     let data = instance.get()
     expect(data['p1_1']).to.equal(1)

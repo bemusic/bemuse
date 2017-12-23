@@ -28,7 +28,7 @@ export class FileResource {
   }
   read (progress) {
     return ProgressUtils.atomic(progress,
-        readBlob(this._file).as('arraybuffer'))
+      readBlob(this._file).as('arraybuffer'))
   }
   resolveUrl () {
     return Promise.resolve(URL.createObjectURL(this._file))
@@ -41,7 +41,6 @@ export class FileResource {
 export default DndResources
 
 function getFilesFromEvent (event) {
-
   let out = []
 
   return co(function * () {
@@ -81,9 +80,9 @@ function getFilesFromEvent (event) {
     return new Promise((resolve, reject) => {
       entry.file(resolve, reject)
     })
-    .tap((file) => {
-      addFile(file)
-    })
+      .tap((file) => {
+        addFile(file)
+      })
   }
 
   function readDirectory (dir) {
@@ -109,5 +108,4 @@ function getFilesFromEvent (event) {
       out.push({ name: file.name, file })
     }
   }
-
 }

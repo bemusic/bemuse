@@ -2,7 +2,6 @@
 import download from 'bemuse/utils/download'
 
 describe('download', function () {
-
   it('resolves with correct type', function () {
     return expect(download('/src/utils/test-fixtures/download/hello.txt').as('text'))
       .to.eventually.match(/hello world/)
@@ -25,5 +24,4 @@ describe('download', function () {
         .finally(() => stub.restore())
     ).to.be.rejected
   })
-
 })

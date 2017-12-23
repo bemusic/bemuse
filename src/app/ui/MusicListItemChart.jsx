@@ -9,10 +9,10 @@ export default class MusicListItemChart extends React.Component {
     const className = c('MusicListItemChart', {
       'is-played': this.props.played,
       'is-selected': !!this.props.selected,
-      'is-grade': !!this.props.grade,
+      'is-grade': !!this.props.grade
     })
     return <div className={className} onClick={this.handleClick}>
-      <span className="MusicListItemChartのtext">
+      <span className='MusicListItemChartのtext'>
         {this.props.loading
           ? '…'
           : this.props.grade || chart.info.level

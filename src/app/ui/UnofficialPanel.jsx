@@ -6,15 +6,15 @@ import OptionsButton from './OptionsButton'
 
 class UnofficialPanel extends React.Component {
   render () {
-    return <div className="UnofficialPanel">
-      <Panel title="Unofficial Music Server">
-        <div className="UnofficialPanelのcontent">
+    return <div className='UnofficialPanel'>
+      <Panel title='Unofficial Music Server'>
+        <div className='UnofficialPanelのcontent'>
           <p>
             You are now playing in an <strong>unofficial music server</strong>.
             This music server is not maintained or endorsed by Bemuse or
             Bemuse’s developers.
           </p>
-          <p className="UnofficialPanelのbuttons">
+          <p className='UnofficialPanelのbuttons'>
             <OptionsButton onClick={this.props.onClose}>Close</OptionsButton>
           </p>
         </div>

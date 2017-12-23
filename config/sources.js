@@ -9,5 +9,5 @@ export let javascripts = [
   path('src', '**', '*.jsx'),
   path('spec', '**', '*.js'),
   path('tasks', '**', '*.js'),
-  path('config', '**', '*.js'),
+  path('config', '**', '*.js')
 ]

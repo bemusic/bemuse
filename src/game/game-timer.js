@@ -8,7 +8,7 @@ export class GameTimer {
   constructor (clock, input) {
     this._clock = clock
     this._input = input
-    this._now   = now.synchronized()
+    this._now = now.synchronized()
     this.startTime = null
     this.readyFraction = 0
   }
@@ -62,7 +62,6 @@ export class GameTimer {
       return delta - 31 / 30
     }
   }
-
 }
 
 export default GameTimer

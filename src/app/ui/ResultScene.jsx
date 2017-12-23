@@ -1,21 +1,21 @@
-import * as Analytics   from '../analytics'
-import * as QueryFlags  from '../query-flags'
 import './ResultScene.scss'
 
-import Flex             from 'bemuse/ui/Flex'
-import React            from 'react'
-import PropTypes        from 'prop-types'
-import Scene            from 'bemuse/ui/Scene'
-import SceneHeading     from 'bemuse/ui/SceneHeading'
-import SceneToolbar     from 'bemuse/ui/SceneToolbar'
+import Flex from 'bemuse/ui/Flex'
+import PropTypes from 'prop-types'
+import React from 'react'
+import Scene from 'bemuse/ui/Scene'
+import SceneHeading from 'bemuse/ui/SceneHeading'
+import SceneToolbar from 'bemuse/ui/SceneToolbar'
 
-import FirstTimeTip     from './FirstTimeTip'
-import MusicChartInfo   from './MusicChartInfo'
+import * as Analytics from '../analytics'
+import * as QueryFlags from '../query-flags'
+import FirstTimeTip from './FirstTimeTip'
+import MusicChartInfo from './MusicChartInfo'
 import MusicChartSelectorItem from './MusicChartSelectorItem'
 import RankingContainer from './RankingContainer'
 import ResultExpertInfo from './ResultExpertInfo'
-import ResultGrade      from './ResultGrade'
-import ResultTable      from './ResultTable'
+import ResultGrade from './ResultGrade'
+import ResultTable from './ResultTable'
 
 export default class ResultScene extends React.Component {
   static propTypes = {
@@ -23,30 +23,32 @@ export default class ResultScene extends React.Component {
       grade: PropTypes.string,
       score: PropTypes.number,
       deltas: PropTypes.array,
-      totalNotes: PropTypes.number,
+      totalNotes: PropTypes.number
     }),
     playMode: PropTypes.string,
     lr2Timegate: PropTypes.array,
     chart: PropTypes.object,
     onReplay: PropTypes.func,
-    onExit: PropTypes.func,
+    onExit: PropTypes.func
   }
   render () {
-    return <Scene className="ResultScene">
+    void this.props.lr2Timegate // XXX: unused for now
+
+    return <Scene className='ResultScene'>
       <SceneHeading>
         Play Result
-        <div className="ResultSceneのmode">
+        <div className='ResultSceneのmode'>
           {this.props.playMode === 'KB' ? 'Keyboard' : 'BMS'} Mode
         </div>
       </SceneHeading>
-      <div className="ResultSceneのreport">
+      <div className='ResultSceneのreport'>
         <ResultTable result={this.props.result} />
       </div>
       <ResultGrade grade={this.props.result.grade} />
-      <div className="ResultSceneのinformation">
-        <div className="ResultSceneのinformationHeader">
-          <div className="ResultSceneのchart">
-            <FirstTimeTip tip="Play again" featureKey="replayGame">
+      <div className='ResultSceneのinformation'>
+        <div className='ResultSceneのinformationHeader'>
+          <div className='ResultSceneのchart'>
+            <FirstTimeTip tip='Play again' featureKey='replayGame'>
               <MusicChartSelectorItem
                 chart={this.props.chart}
                 onChartClick={this.props.onReplay}
@@ -56,19 +58,19 @@ export default class ResultScene extends React.Component {
           </div>
           <MusicChartInfo info={this.props.chart.info} />
         </div>
-        <div className="ResultSceneのinformationBody">
+        <div className='ResultSceneのinformationBody'>
           <RankingContainer
             result={this.props.result}
             chart={this.props.chart}
             playMode={this.props.playMode} />
         </div>
-        <div className="ResultSceneのinformationFooter">
-          <a href={this.getTweetLink()} className="ResultSceneのtweet" onClick={this.onTweet}>
-            <i className="fa fa-twitter" />
+        <div className='ResultSceneのinformationFooter'>
+          <a href={this.getTweetLink()} className='ResultSceneのtweet' onClick={this.onTweet}>
+            <i className='fa fa-twitter' />
           </a>
           <Flex grow={1} />
-          <FirstTimeTip tip="Back to music selection" featureKey="finishGame">
-            <div className="ResultSceneのexit" onClick={this.handleExit}>
+          <FirstTimeTip tip='Back to music selection' featureKey='finishGame'>
+            <div className='ResultSceneのexit' onClick={this.handleExit}>
               Continue
             </div>
           </FirstTimeTip>
@@ -79,7 +81,7 @@ export default class ResultScene extends React.Component {
           <ResultExpertInfo deltas={this.props.result.deltas} />
         </span>
         <SceneToolbar.Spacer />
-        <a onClick={this.props.onExit} href="javascript://">
+        <a onClick={this.props.onExit} href='javascript://'>
           Continue
         </a>
       </SceneToolbar>
@@ -95,7 +97,7 @@ export default class ResultScene extends React.Component {
       if (match) subtitle = match[1]
     }
     subtitle = subtitle.trim()
-    if (subtitle !== '' && !/^[\[\(]/.test(subtitle)) subtitle = `[${subtitle}]`
+    if (subtitle !== '' && !/^[[(]/.test(subtitle)) subtitle = `[${subtitle}]`
     if (subtitle !== '') subtitle = ` ${subtitle}`
     let url = 'https://bemuse.ninja/'
     let server = QueryFlags.getMusicServer()

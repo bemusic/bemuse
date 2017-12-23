@@ -2,8 +2,9 @@ import 'style-loader!./style.scss'
 
 import template from './template.jade'
 
-export function main () {
+/* eslint import/no-webpack-loader-syntax: off */
 
+export function main () {
   var div = document.createElement('div')
   div.className = 'coming-soon'
   div.innerHTML = template()
@@ -14,5 +15,4 @@ export function main () {
   }, 'comingSoonDemo')
 
   document.body.appendChild(div)
-
 }

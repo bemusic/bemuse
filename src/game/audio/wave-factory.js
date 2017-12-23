@@ -1,12 +1,11 @@
 
 export class WaveFactory {
-
   constructor (master, samples, map, { volume } = { }) {
-    this._master              = master
-    this._samples             = samples
-    this._map                 = map
-    this._exclusiveInstances  = new Map()
-    this._group               = this._master.group({ volume })
+    this._master = master
+    this._samples = samples
+    this._map = map
+    this._exclusiveInstances = new Map()
+    this._group = this._master.group({ volume })
   }
 
   // Plays an autokeysound note (using limited polyphony)
@@ -36,7 +35,7 @@ export class WaveFactory {
     let instance = sample.play(delay, {
       start: note.keysoundStart,
       end: note.keysoundEnd,
-      group: this._group,
+      group: this._group
     })
     if (exclusive) this._exclusiveInstances.set(keysound, instance)
     return instance
@@ -49,7 +48,6 @@ export class WaveFactory {
       this._exclusiveInstances.delete(keysound)
     }
   }
-
 }
 
 export default WaveFactory

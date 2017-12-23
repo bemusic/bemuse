@@ -15,9 +15,9 @@ class OptionsInputKeys extends React.PureComponent {
         isEditing={'' + i === '' + this.props.editing}
         onEdit={this.props.onEdit} />)
     }
-    return <div className="OptionsInputKeys"
+    return <div className='OptionsInputKeys'
       data-arrangement={this.props.keyboardMode ? 'kb' : 'bm'}>
-      <div className="OptionsInputKeysのkeys">
+      <div className='OptionsInputKeysのkeys'>
         {keys}
       </div>
     </div>

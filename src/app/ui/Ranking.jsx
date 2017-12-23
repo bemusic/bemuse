@@ -9,7 +9,7 @@ export default class Ranking extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      authenticationPopupVisible: false,
+      authenticationPopupVisible: false
     }
   }
   handleAuthenticate = () => {
@@ -22,7 +22,7 @@ export default class Ranking extends React.Component {
     this.setState({ authenticationPopupVisible: false })
   }
   render () {
-    return <div className="Ranking">
+    return <div className='Ranking'>
       <AuthenticationPopup
         visible={this.state.authenticationPopupVisible}
         onFinish={this.handleAuthenticationFinish}
@@ -34,107 +34,107 @@ export default class Ranking extends React.Component {
   renderYours () {
     const state = this.props.state
     const submission = state.meta.submission
-    return <div className="Rankingのyours">
-      <div className="Rankingのtitle">
+    return <div className='Rankingのyours'>
+      <div className='Rankingのtitle'>
         Your Ranking
       </div>
       <RankingTable>
         {
           submission.value
-          ? <RankingTable.Row
-            record={submission.value} />
-          : (
-            submission.status === 'unauthenticated'
-            ? (
-              <RankingTable.Message>
-                Please <a href="javascript://online/auth" onClick={this.handleAuthenticate}>log in or create an account</a> to submit scores.
-              </RankingTable.Message>
-            )
+            ? <RankingTable.Row
+              record={submission.value} />
             : (
-              submission.status === 'error'
-              ? (
-                <RankingTable.Message>
-                  {this.renderError(
-                    'Unable to submit score',
-                    submission.error,
-                    this.props.onResubmitScoreRequest
-                  )}
-                </RankingTable.Message>
-              )
-              : (
-                isWaiting(submission)
+              submission.status === 'unauthenticated'
                 ? (
                   <RankingTable.Message>
-                    Please wait...
+                Please <a href='javascript://online/auth' onClick={this.handleAuthenticate}>log in or create an account</a> to submit scores.
                   </RankingTable.Message>
                 )
                 : (
-                  <RankingTable.Message>
+                  submission.status === 'error'
+                    ? (
+                      <RankingTable.Message>
+                        {this.renderError(
+                          'Unable to submit score',
+                          submission.error,
+                          this.props.onResubmitScoreRequest
+                        )}
+                      </RankingTable.Message>
+                    )
+                    : (
+                      isWaiting(submission)
+                        ? (
+                          <RankingTable.Message>
+                    Please wait...
+                          </RankingTable.Message>
+                        )
+                        : (
+                          <RankingTable.Message>
                     No record. Let’s play!
-                  </RankingTable.Message>
+                          </RankingTable.Message>
+                        )
+                    )
                 )
-              )
             )
-          )
         }
       </RankingTable>
     </div>
   }
   renderLeaderboard () {
     const state = this.props.state
-    return <div className="Rankingのleaderboard">
-      <div className="Rankingのtitle">
+    return <div className='Rankingのleaderboard'>
+      <div className='Rankingのtitle'>
         Leaderboard
       </div>
       <RankingTable>
         {
           state.data && state.data.length
-          ? state.data.map((record, index) =>
-            <RankingTable.Row
-              key={index}
-              record={record}
-            />
-          )
-          : (
-            isWaiting(state.meta.scoreboard)
-            ? <RankingTable.Message>Loading...</RankingTable.Message>
-            : (
-              state.meta.scoreboard.status === 'error'
-              ? (
-                <RankingTable.Message>
-                  {this.renderError(
-                    'Sorry, we are unable to fetch the scoreboard.',
-                    state.meta.scoreboard.error,
-                    this.props.onReloadScoreboardRequest
-                  )}
-                </RankingTable.Message>
-              )
-              : (
-                <RankingTable.Message>
-                  No Data
-                </RankingTable.Message>
-              )
+            ? state.data.map((record, index) =>
+              <RankingTable.Row
+                key={index}
+                record={record}
+              />
             )
-          )
+            : (
+              isWaiting(state.meta.scoreboard)
+                ? <RankingTable.Message>Loading...</RankingTable.Message>
+                : (
+                  state.meta.scoreboard.status === 'error'
+                    ? (
+                      <RankingTable.Message>
+                        {this.renderError(
+                          'Sorry, we are unable to fetch the scoreboard.',
+                          state.meta.scoreboard.error,
+                          this.props.onReloadScoreboardRequest
+                        )}
+                      </RankingTable.Message>
+                    )
+                    : (
+                      <RankingTable.Message>
+                  No Data
+                      </RankingTable.Message>
+                    )
+                )
+            )
         }
       </RankingTable>
     </div>
   }
   renderError (text, error, retry) {
-    return <span className="Rankingのerror">
+    return <span className='Rankingのerror'>
       <strong>
         {text}
         {' '}
-        <a onClick={retry} className="RankingのerrorRetry" href="javascript://retry">
+        <a onClick={retry} className='RankingのerrorRetry' href='javascript://retry'>
           (click to retry)
         </a>
       </strong>
       <br />
-      <span className="RankingのerrorDescription">
+      <span className='RankingのerrorDescription'>
         {
           error && error.message
-          ? '' + error.message
-          : '(unknown error)'
+            ? '' + error.message
+            : '(unknown error)'
         }
       </span>
     </span>

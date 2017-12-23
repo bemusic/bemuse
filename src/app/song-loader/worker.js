@@ -1,10 +1,9 @@
-
 import 'bemuse/bootstrap'
 
-import indexer  from 'bemuse-indexer'
-import Promise  from 'bluebird'
+import Promise from 'bluebird'
+import indexer from 'bemuse-indexer'
 
-/*global FileReaderSync*/
+/* global FileReaderSync */
 if (typeof FileReader === 'undefined' &&
     typeof FileReaderSync !== 'undefined') {
   // Need to shim FileReader so that bemuse-chardet works.
@@ -32,21 +31,21 @@ addEventListener('message', function ({ data }) {
   Promise.try(function () {
     return indexer.getSongInfo(files, { onProgress })
   })
-  .then(function (song) {
-    song.warnings.forEach(function (warning) {
-      if (global.console && console.warn) {
-        console.warn(warning)
-      }
+    .then(function (song) {
+      song.warnings.forEach(function (warning) {
+        if (global.console && console.warn) {
+          console.warn(warning)
+        }
+      })
+      postMessage({ type: 'result', song: song })
     })
-    postMessage({ type: 'result', song: song })
-  })
-  .catch(function () {
-    console.error('CAUGHT')
-  })
-  .done()
+    .catch(function () {
+      console.error('CAUGHT')
+    })
+    .done()
 })
 
 function convertBuffer (file) {
-  file.data = new Buffer(new Uint8Array(file.data))
+  file.data = Buffer.from(new Uint8Array(file.data))
   return file
 }

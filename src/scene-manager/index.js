@@ -1,8 +1,8 @@
 
-import co       from 'co'
-import React    from 'react'
+import co from 'co'
+import React from 'react'
 import ReactDOM from 'react-dom'
-import MAIN     from 'bemuse/utils/main-element'
+import MAIN from 'bemuse/utils/main-element'
 
 // The SceneManager takes care of managing the scenes in this game.
 // Only a single scene may be displayed at any given time, but a scene may
@@ -83,16 +83,14 @@ export class SceneManager {
         var element = document.createElement('div')
         element.className = 'scene-manager--scene'
         MAIN.appendChild(element)
-        this.currentElement       = element
-        this.currentScene         = scene
+        this.currentElement = element
+        this.currentScene = scene
         this.currentSceneInstance = scene(element)
-
       } finally {
         this._transitioning = false
       }
     }.bind(this))
   }
-
 }
 
 function detach (element) {

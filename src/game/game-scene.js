@@ -15,7 +15,6 @@ export default function GameScene (display) {
 }
 
 function showCanvas (display, container) {
-
   var { view, wrapper } = display
   var { width, height } = view
   container.appendChild(wrapper)
@@ -37,5 +36,4 @@ function showCanvas (display, container) {
   }
 
   return wrapper
-
 }

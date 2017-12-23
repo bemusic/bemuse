@@ -14,7 +14,6 @@ import ctx from 'bemuse/audio-context'
 import template from './template.jade'
 
 export function main (element) {
-
   $(element).text('Technical Demo!').on('click', handler)
 
   function handler () {
@@ -28,23 +27,21 @@ export function main (element) {
     var el = $(template()).appendTo('body')
     el.find('.js-play').hide()
     el
-    .on('dragover', () => false)
-    .on('drop', e => {
-      e.preventDefault()
-      let dndLoader = new DndResources(e.originalEvent)
-      go(dndLoader, el)
-      return false
-    })
+      .on('dragover', () => false)
+      .on('drop', e => {
+        e.preventDefault()
+        let dndLoader = new DndResources(e.originalEvent)
+        go(dndLoader, el)
+        return false
+      })
   }
-
 }
 
 function go (loader, element) {
-
-  let master    = new SamplingMaster(ctx)
-  let $log      = element.find('.js-log')
-  let $play     = element.find('.js-play').hide()
-  let $sampler  = element.find('.js-sampler')
+  let master = new SamplingMaster(ctx)
+  let $log = element.find('.js-log')
+  let $play = element.find('.js-play').hide()
+  let $sampler = element.find('.js-sampler')
 
   co(function * () {
     log('Loading file list')
@@ -53,7 +50,7 @@ function go (loader, element) {
     log('Loading ' + bmsFile)
 
     let arraybuffer = yield (yield loader.file(bmsFile)).read()
-    let buffer = new Buffer(new Uint8Array(arraybuffer))
+    let buffer = Buffer.from(new Uint8Array(arraybuffer))
     let text = yield Promise.promisify(Reader.readAsync)(buffer)
     let chart = Compiler.compile(text).chart
     var timing = Timing.fromBMSChart(chart)
@@ -74,8 +71,8 @@ function go (loader, element) {
             return
           }
           let span = $('<span></span>')
-                .text('[' + note.keysound + '] ')
-                .appendTo($sampler)
+            .text('[' + note.keysound + '] ')
+            .appendTo($sampler)
           let instance = sample.play()
           $sampler[0].scrollTop = $sampler[0].scrollHeight
           instance.onstop = function () {
@@ -132,5 +129,4 @@ function go (loader, element) {
       .catch(() => loader.file(name.replace(/\.\w+$/, '.wav')))
       .then(file => file.read())
   }
-
 }

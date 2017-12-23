@@ -4,9 +4,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const ResultGrade = ({ grade }) => (
-  <div className="ResultGrade">
-    <div className="ResultGradeのlabel">GRADE</div>
-    <div className="ResultGradeのgrade">{grade}</div>
+  <div className='ResultGrade'>
+    <div className='ResultGradeのlabel'>GRADE</div>
+    <div className='ResultGradeのgrade'>{grade}</div>
   </div>
 )
 

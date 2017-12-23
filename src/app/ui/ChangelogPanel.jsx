@@ -1,9 +1,9 @@
 
 import './ChangelogPanel.scss'
-import React    from 'react'
-import $        from 'jquery'
-import _        from 'lodash'
-import Panel    from 'bemuse/ui/Panel'
+import React from 'react'
+import $ from 'jquery'
+import _ from 'lodash'
+import Panel from 'bemuse/ui/Panel'
 import Markdown from 'bemuse/ui/Markdown'
 
 class ChangelogPanel extends React.Component {
@@ -16,14 +16,14 @@ class ChangelogPanel extends React.Component {
     const promise = Promise.resolve($.get('https://api.github.com/repos/bemusic/bemuse/releases'))
     promise.then(
       releases => this.setState({ data: { status: 'completed', releases } }),
-      ()       => this.setState({ data: { status: 'error' } }),
+      () => this.setState({ data: { status: 'error' } })
     )
   }
 
   render () {
     return (
-      <Panel className="ChangelogPanel" title="What’s New">
-        <div className="ChangelogPanelのcontent">
+      <Panel className='ChangelogPanel' title='What’s New'>
+        <div className='ChangelogPanelのcontent'>
           <Markdown source={this.getMarkdown()} safe />
         </div>
       </Panel>

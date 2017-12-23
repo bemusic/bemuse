@@ -1,11 +1,11 @@
 
 import './AuthenticationPanel.scss'
 
-import React  from 'react'
-import c      from 'classnames'
+import React from 'react'
+import c from 'classnames'
 
-import Panel  from 'bemuse/ui/Panel'
-import Flex   from 'bemuse/ui/Flex'
+import Panel from 'bemuse/ui/Panel'
+import Flex from 'bemuse/ui/Flex'
 import online from 'bemuse/online/instance'
 
 import AuthenticationForm from './AuthenticationForm'
@@ -42,7 +42,7 @@ export default class AuthenticationPanel extends React.Component {
         this.setState({
           authentication: {
             status: 'completed',
-            message: message,
+            message: message
           }
         })
       },
@@ -50,12 +50,12 @@ export default class AuthenticationPanel extends React.Component {
         this.setState({
           authentication: {
             status: 'error',
-            message: error.message,
+            message: error.message
           }
         })
       }
     )
-    .done()
+      .done()
   }
 
   doSignUp = (formData) => {
@@ -115,35 +115,35 @@ export default class AuthenticationPanel extends React.Component {
   }
 
   render () {
-    return <div className="AuthenticationPanel">
-      <Panel title="Bemuse Online Ranking">
-        <div className="AuthenticationPanelのlayout">
-          <div className="AuthenticationPanelのtitle">
-            <img src={require('bemuse/app/ui/about-scene/DJBM.png')} alt="DJ Bemuse" />
-            <div className="AuthenticationPanelのidentification">
+    return <div className='AuthenticationPanel'>
+      <Panel title='Bemuse Online Ranking'>
+        <div className='AuthenticationPanelのlayout'>
+          <div className='AuthenticationPanelのtitle'>
+            <img src={require('bemuse/app/ui/about-scene/DJBM.png')} alt='DJ Bemuse' />
+            <div className='AuthenticationPanelのidentification'>
               Bemuse<br />Online<br />Ranking
             </div>
           </div>
-          <div className="AuthenticationPanelのcontent">
-            <div className="AuthenticationPanelのmodeSwitcher">
+          <div className='AuthenticationPanelのcontent'>
+            <div className='AuthenticationPanelのmodeSwitcher'>
               <a
-                href="javascript://online/logIn"
+                href='javascript://online/logIn'
                 onClick={this.onSwitchToLogin}
                 className={this.renderModeActiveClass('logIn')}>
                 Log In
               </a>
               {' '}&middot;{' '}
               <a
-                href="javascript://online/signUp"
+                href='javascript://online/signUp'
                 onClick={this.onSwitchToSignup}
                 className={this.renderModeActiveClass('signUp')}>
                 Create an Account
               </a>
             </div>
-            <Flex grow="2" />
+            <Flex grow='2' />
             {this.renderMessage()}
             <AuthenticationForm mode={this.state.mode} onSubmit={this.onSubmit} />
-            <Flex grow="3" />
+            <Flex grow='3' />
           </div>
         </div>
       </Panel>

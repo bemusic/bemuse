@@ -6,7 +6,6 @@ import * as Scintillator from './'
 let fixture = file => `/src/scintillator/test-fixtures/${file}`
 
 describe('Scintillator', function () {
-
   describe('#load', function () {
     it('should load skin and return skin node', co.wrap(function * () {
       let skin = yield Scintillator.load(fixture('bare.xml'))
@@ -15,7 +14,7 @@ describe('Scintillator', function () {
     }))
     it('should reject if invalid', function () {
       return expect(Scintillator.load(fixture('invalid_tag.xml')))
-          .to.be.rejected
+        .to.be.rejected
     })
   })
 
@@ -45,7 +44,7 @@ describe('Scintillator', function () {
       function mouse (type, x, y) {
         context.view.dispatchEvent(new MouseEvent(`mouse${type}`, {
           clientX: x,
-          clientY: y,
+          clientY: y
         }))
       }
       function touch (type, touches, changedTouches) {
@@ -60,22 +59,22 @@ describe('Scintillator', function () {
         mouse('move', 10, 10)
         mouse('down', 10, 10)
         expect(context.input).to.deep.equal([
-          { x: 10, y: 10, id: 'mouse' },
+          { x: 10, y: 10, id: 'mouse' }
         ])
         let t = { identifier: 1, clientX: 80, clientY: 80 }
         touch('start', [t], [t])
         expect(context.input).to.deep.equal([
           { x: 10, y: 10, id: 'mouse' },
-          { x: 80, y: 80, id: 'touch1' },
+          { x: 80, y: 80, id: 'touch1' }
         ])
         mouse('move', 20, 20)
         expect(context.input).to.deep.equal([
           { x: 20, y: 20, id: 'mouse' },
-          { x: 80, y: 80, id: 'touch1' },
+          { x: 80, y: 80, id: 'touch1' }
         ])
         mouse('up', 10, 10)
         expect(context.input).to.deep.equal([
-          { x: 80, y: 80, id: 'touch1' },
+          { x: 80, y: 80, id: 'touch1' }
         ])
         touch('end', [], [t])
         expect(context.input).to.deep.equal([])
@@ -87,7 +86,7 @@ describe('Scintillator', function () {
         let context = new Scintillator.Context(skin)
         context.render({})
         expect(Array.from(context.refs['a'])[0])
-            .to.equal(context.stage.children[0])
+          .to.equal(context.stage.children[0])
         context.destroy()
       }))
     })
@@ -143,7 +142,7 @@ describe('Scintillator', function () {
     }))
     it('should reject if blend mode is invalid', function () {
       return expect(Scintillator.load(fixture('sprite_invalid_blend.xml')))
-                .to.be.rejected
+        .to.be.rejected
     })
   })
 
@@ -272,7 +271,7 @@ describe('Scintillator', function () {
       context.render({ t: 0.5, exitEvent: 0.5 })
       expect(group.x).to.equal(50)
       expect(group.y).to.equal(0)
-      context.render({ t: 1,   exitEvent: 0.5 })
+      context.render({ t: 1, exitEvent: 0.5 })
       expect(group.x).to.equal(60)
       expect(group.y).to.equal(50)
       context.render({ t: 1.5, exitEvent: 0.5 })
@@ -302,5 +301,4 @@ describe('Scintillator', function () {
       context.destroy()
     }))
   })
-
 })

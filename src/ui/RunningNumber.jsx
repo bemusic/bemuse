@@ -1,12 +1,12 @@
 
 import './RunningNumber.scss'
-import React    from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
-import now      from 'bemuse/utils/now'
+import now from 'bemuse/utils/now'
 
 export default class RunningNumber extends React.Component {
   render () {
-    return <span className="RunningNumber"></span>
+    return <span className='RunningNumber' />
   }
 
   componentDidMount () {

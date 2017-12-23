@@ -1,7 +1,7 @@
 
 import './OptionsPlayerGraphics.scss'
 import React from 'react'
-import c     from 'classnames'
+import c from 'classnames'
 
 const PANEL_PATH = (function () {
   const x = 48
@@ -24,10 +24,10 @@ export default class OptionsPlayerGraphics extends React.Component {
   render () {
     let svg =
       this.props.type === 'scratch'
-      ? this.renderScratch()
-      : this.renderPanel()
+        ? this.renderScratch()
+        : this.renderPanel()
     return <div className={c('OptionsPlayerGraphics',
-        { 'is-active': this.props.active })}>
+      { 'is-active': this.props.active })}>
       {svg}
     </div>
   }
@@ -37,11 +37,11 @@ export default class OptionsPlayerGraphics extends React.Component {
     let gx = p === 'left' ? 21 : p === 'right' ? 75 : null
     let sx = p === 'left' ? 11 : p === 'right' ? 85 : null
     let off = this.props.value === 'off'
-    return <svg width="96" height="54">
+    return <svg width='96' height='54'>
       <g transform={'translate(' + bx + ' 32)'}>
         {[0, 1, 2, 3, 4, 5, 6].map(i =>
           <rect key={i}
-            className="OptionsPlayerGraphicsのline"
+            className='OptionsPlayerGraphicsのline'
             x={off && i === 3 ? 10 : i * 10}
             y={off ? (i === 3 ? 10 : 0) : (1 - i % 2) * 3}
             width={off && i === 3 ? 48 : 8}
@@ -51,21 +51,21 @@ export default class OptionsPlayerGraphics extends React.Component {
           />
         )}
       </g>
-      {sx && <circle className="OptionsPlayerGraphicsのline"
-        cx={sx} cy="42" r="8"
+      {sx && <circle className='OptionsPlayerGraphicsのline'
+        cx={sx} cy='42' r='8'
         style={{ fill: 'rgba(255,255,255,0.1)' }} />}
-      {gx && <line className="OptionsPlayerGraphicsのline"
-        x1={gx} x2={gx} y1="1" y2="53" />}
-      <line className="OptionsPlayerGraphicsのline"
-        x1="1" x2="95" y1="29" y2="29" />
+      {gx && <line className='OptionsPlayerGraphicsのline'
+        x1={gx} x2={gx} y1='1' y2='53' />}
+      <line className='OptionsPlayerGraphicsのline'
+        x1='1' x2='95' y1='29' y2='29' />
     </svg>
   }
   renderPanel () {
     let p = this.props.value
     let tx = p === 'left' ? -35 : p === 'right' ? 35 : 0
-    return <svg width="96" height="54">
+    return <svg width='96' height='54'>
       <g transform={'translate(' + tx + ' 0)'}>
-        <path className="OptionsPlayerGraphicsのline"
+        <path className='OptionsPlayerGraphicsのline'
           d={PANEL_PATH}
           style={{ fill: 'rgba(255,255,255,0.1)' }} />
       </g>

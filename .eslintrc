@@ -1,5 +1,6 @@
 extends:
-  - bemuse
+  - standard
+  - standard-react
   - ./.eslintrc.config.import.js
 parserOptions:
   ecmaVersion: 6
@@ -27,5 +28,8 @@ parser: babel-eslint
 plugins:
   - react
 rules:
-  react/prop-types: 1
-  react/jsx-no-bind: 0
+  react/prop-types: warn
+  react/jsx-no-bind: off
+  no-mixed-operators: off
+  node/no-deprecated-api: warn
+  no-sequences: off

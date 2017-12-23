@@ -9,29 +9,27 @@ import Observable from 'bemuse/utils/observable'
 // .. _C#'s IProgress: http://blogs.msdn.com/b/dotnet/archive/2012/06/06/async-in-4-5-enabling-progress-and-cancellation-in-async-apis.aspx
 export class Progress {
   constructor () {
-
     // The current progress (out of `Progress#total`) as a Number.
-    this.current      = undefined
+    this.current = undefined
 
     // The maximum value of this Progress as a Number.
-    this.total        = undefined
+    this.total = undefined
 
     // Some arbitrary information associated with this Progress.
-    this.extra        = undefined
+    this.extra = undefined
 
     // The formatter of this progress. This formatter will be used to compute
     // the text representation of this progress (`Progress#toString`).
-    this.formatter    = undefined
+    this.formatter = undefined
 
-    this._observable  = new Observable()
-
+    this._observable = new Observable()
   }
 
   // Updates the progress.
   report (current, total, extra) {
-    this.current    = current
-    this.total      = total
-    this.extra      = extra
+    this.current = current
+    this.total = total
+    this.extra = extra
     this._observable.notify()
   }
 

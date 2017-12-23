@@ -1,16 +1,14 @@
-
 import { loadSongFromResources } from './'
 
 describe('SongLoader', function () {
-
   function buffer (text) {
-    return Promise.resolve(new Buffer(text).buffer)
+    return Promise.resolve(Buffer.from(text).buffer)
   }
 
   function createResources (files) {
     return {
       fileList: Promise.resolve(Object.keys(files)),
-      file (name) { return Promise.resolve(files[name]) },
+      file (name) { return Promise.resolve(files[name]) }
     }
   }
 
@@ -36,7 +34,7 @@ describe('SongLoader', function () {
     before(function () {
       let options = { onMessage: msg => console.log(msg) }
       return Promise.resolve(loadSongFromResources(resources, options))
-      .tap(x => (song = x))
+        .tap(x => (song = x))
     })
     it('should have correct title', function () {
       expect(song.title).to.equal('meow')
@@ -60,7 +58,7 @@ describe('SongLoader', function () {
     let song
     before(function () {
       return Promise.resolve(loadSongFromResources(resources))
-      .tap(x => (song = x))
+        .tap(x => (song = x))
     })
     it('should have correct title', function () {
       expect(song.title).to.equal('meow')

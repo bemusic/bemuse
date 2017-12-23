@@ -1,3 +1,4 @@
+import React from 'react'
 
 import Page, { Heading } from './Page'
 
@@ -15,10 +16,10 @@ export const HomePage = () => {
       </p>
       <p>
         Compete for the highest score with our online ranking system.
-        Play with your friends with our <a href="https://www.youtube.com/watch?v=hiJzFRIhiiA" target="_blank">party mode</a>.
+        Play with your friends with our <a href='https://www.youtube.com/watch?v=hiJzFRIhiiA' target='_blank'>party mode</a>.
       </p>
       <p>
-        Plug in your headphone, connect your <a href="https://www.youtube.com/watch?v=EOgI37Myqvk" target="_blank">game controller</a> or <a href="https://twitter.com/bemusegame/status/673094391905435648" target="_blank">MIDI keyboard</a> and enjoy Bemuse more intensely!
+        Plug in your headphone, connect your <a href='https://www.youtube.com/watch?v=EOgI37Myqvk' target='_blank'>game controller</a> or <a href='https://twitter.com/bemusegame/status/673094391905435648' target='_blank'>MIDI keyboard</a> and enjoy Bemuse more intensely!
       </p>
       <p>
         As a web-based game,

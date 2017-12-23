@@ -1,9 +1,8 @@
 
-import Progress         from './'
-import * as Formatters  from './formatters'
+import Progress from './'
+import * as Formatters from './formatters'
 
 describe('ProgressFormatters', function () {
-
   describe('BYTES_FORMATTER', function () {
     it('should return blank for indeterminate', function () {
       let p = new Progress()
@@ -23,5 +22,4 @@ describe('ProgressFormatters', function () {
       expect(Formatters.EXTRA_FORMATTER(p)).to.equal('one.wav')
     })
   })
-
 })

@@ -16,7 +16,7 @@ export function download (url) {
         var xh = new XMLHttpRequest()
         xh.open('GET', url, true)
         xh.responseType = type
-        xh.onload  = () => {
+        xh.onload = () => {
           if (+xh.status === 200) {
             resolve(xh.response)
           } else {
