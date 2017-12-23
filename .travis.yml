@@ -30,7 +30,6 @@ script:
   - BEMUSE_COV=true gulp test
 after_success:
   - codecov
-  - 'cat coverage/lcov.info | ./node_modules/.bin/coveralls'
   - 'cat coverage/lcov.info | ./node_modules/.bin/codeclimate'
 notifications:
   webhooks:
