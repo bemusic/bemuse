@@ -13,7 +13,6 @@ addons:
     packages:
       - g++-4.8
 node_js:
-  - "6"
   - "8"
 before_install:
   - "export DISPLAY=:99.0"
