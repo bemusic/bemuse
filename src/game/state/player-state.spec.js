@@ -17,7 +17,7 @@ describe('PlayerState', function () {
       get: name => ({ name })
     }
     state.update(0, input)
-    expect(state.input.get('wow').name).to.equal('p1_wow')
+    assert(state.input.get('wow').name === 'p1_wow')
   })
 
   describe('with player and chart', function () {
@@ -51,30 +51,34 @@ describe('PlayerState', function () {
 
         let column = chart.notes[0].column
 
-        expect(state.getNoteStatus(chart.notes[0])).to.equal('unjudged')
-        expect(state.stats.combo).to.equal(0)
-        expect(state.stats.poor).to.equal(false)
-        expect(state.stats.totalCombo).to.equal(2)
-        void expect(state.notifications.judgments).to.be.empty
+        assert(state.getNoteStatus(chart.notes[0]) === 'unjudged')
+        assert(state.stats.combo === 0)
+        assert(state.stats.poor === false)
+        assert(state.stats.totalCombo === 2)
+        assert(!state.notifications.judgments)
 
         advance(1.999, { })
-        expect(state.getNoteStatus(chart.notes[0])).to.equal('unjudged')
+        assert(state.getNoteStatus(chart.notes[0]), 'unjudged')
 
         advance(2, { 'p1_1': 1 })
-        expect(state.getNoteStatus(chart.notes[0])).to.equal('judged')
-        expect(state.getNoteJudgment(chart.notes[0])).to.equal(1)
-        expect(state.getNoteStatus(chart.notes[1])).to.equal('unjudged')
-        expect(state.notifications.judgments[0]).to.deep.equal({
-          judgment: 1, combo: 1, delta: 0, column })
-        expect(state.stats.poor).to.equal(false)
+        assert(state.getNoteStatus(chart.notes[0]), 'judged')
+        assert(state.getNoteJudgment(chart.notes[0]), 1)
+        assert(state.getNoteStatus(chart.notes[1]), 'unjudged')
+        assert.deepEqual(
+          state.notifications.judgments[0],
+          { judgment: 1, combo: 1, delta: 0, column }
+        )
+        assert(!state.stats.poor)
 
         advance(2.1, { 'p1_1': 0 })
         advance(5, { 'p1_1': 0 })
-        expect(state.getNoteStatus(chart.notes[1])).to.equal('judged')
-        expect(state.getNoteJudgment(chart.notes[1])).to.equal(-1)
-        expect(state.notifications.judgments[0]).to.deep.equal({
-          judgment: -1, combo: 0, delta: 2, column })
-        expect(state.stats.poor).to.equal(true)
+        assert(state.getNoteStatus(chart.notes[1]) === 'judged')
+        assert(state.getNoteJudgment(chart.notes[1]) === -1)
+        assert.deepEqual(
+          state.notifications.judgments[0],
+          { judgment: -1, combo: 0, delta: 2, column }
+        )
+        assert(state.stats.poor === true)
       })
 
       it('judges multiple notes in different column', function () {
@@ -85,8 +89,8 @@ describe('PlayerState', function () {
         `)
 
         advance(2, { 'p1_1': 1, 'p1_2': 1 })
-        expect(state.getNoteStatus(chart.notes[0])).to.equal('judged')
-        expect(state.getNoteStatus(chart.notes[1])).to.equal('judged')
+        assert(state.getNoteStatus(chart.notes[0]) === 'judged')
+        assert(state.getNoteStatus(chart.notes[1]) === 'judged')
       })
 
       it('judges single note from one column at a time', function () {
@@ -96,23 +100,23 @@ describe('PlayerState', function () {
         `)
 
         advance(0.531, { 'p1_1': 1 })
-        expect(state.getNoteStatus(chart.notes[0])).to.equal('judged')
-        expect(state.getNoteStatus(chart.notes[1])).to.equal('unjudged')
-        expect(state.getNoteStatus(chart.notes[2])).to.equal('unjudged')
+        assert(state.getNoteStatus(chart.notes[0]) === 'judged')
+        assert(state.getNoteStatus(chart.notes[1]) === 'unjudged')
+        assert(state.getNoteStatus(chart.notes[2]) === 'unjudged')
         advance(0.531, { 'p1_1': 0 })
         advance(0.531, { 'p1_1': 1 })
-        expect(state.getNoteStatus(chart.notes[0])).to.equal('judged')
-        expect(state.getNoteStatus(chart.notes[1])).to.equal('judged')
-        expect(state.getNoteStatus(chart.notes[2])).to.equal('unjudged')
+        assert(state.getNoteStatus(chart.notes[0]) === 'judged')
+        assert(state.getNoteStatus(chart.notes[1]) === 'judged')
+        assert(state.getNoteStatus(chart.notes[2]) === 'unjudged')
         advance(0.531, { 'p1_1': 0 })
         advance(0.531, { 'p1_1': 1 })
-        expect(state.getNoteStatus(chart.notes[0])).to.equal('judged')
-        expect(state.getNoteStatus(chart.notes[1])).to.equal('judged')
-        expect(state.getNoteStatus(chart.notes[2])).to.equal('judged')
+        assert(state.getNoteStatus(chart.notes[0]) === 'judged')
+        assert(state.getNoteStatus(chart.notes[1]) === 'judged')
+        assert(state.getNoteStatus(chart.notes[2]) === 'judged')
 
-        expect(state.getNoteJudgment(chart.notes[0])).to.gt(1)
-        expect(state.getNoteJudgment(chart.notes[1])).to.eq(1)
-        expect(state.getNoteJudgment(chart.notes[2])).to.gt(1)
+        assert(state.getNoteJudgment(chart.notes[0]) > 1)
+        assert(state.getNoteJudgment(chart.notes[1]) === 1)
+        assert(state.getNoteJudgment(chart.notes[2]) > 1)
       })
 
       it('leaves note unjudged when bad and there are closer note', function () {
@@ -122,9 +126,9 @@ describe('PlayerState', function () {
         `)
 
         advance(2.125, { 'p1_1': 1 })
-        expect(state.getNoteStatus(chart.notes[0])).to.equal('unjudged')
-        expect(state.getNoteStatus(chart.notes[1])).to.equal('judged')
-        expect(state.getNoteStatus(chart.notes[2])).to.equal('unjudged')
+        assert(state.getNoteStatus(chart.notes[0]) === 'unjudged')
+        assert(state.getNoteStatus(chart.notes[1]) === 'judged')
+        assert(state.getNoteStatus(chart.notes[2]) === 'unjudged')
       })
 
       it('records delta when pressed', function () {
@@ -134,7 +138,7 @@ describe('PlayerState', function () {
         `)
         sinon.spy(state.stats, 'handleDelta')
         advance(2.01, { 'p1_1': 1 })
-        expect(state.stats.handleDelta).to.have.been.calledWith(2.01 - 2)
+        assert(state.stats.handleDelta.calledWith(2.01 - 2))
       })
 
       it('does not record delta when missed', function () {
@@ -144,7 +148,7 @@ describe('PlayerState', function () {
         `)
         sinon.spy(state.stats, 'handleDelta')
         advance(9, { 'p1_1': 1 })
-        expect(state.stats.handleDelta).to.have.callCount(0)
+        assert(state.stats.handleDelta.callCount === 0)
       })
 
       describe('with long note', function () {
@@ -158,13 +162,13 @@ describe('PlayerState', function () {
         })
         it('judges long note', function () {
           advance(2, { 'p1_1': 1 })
-          expect(state.getNoteStatus(note)).to.equal('active')
-          expect(state.getNoteJudgment(note)).to.equal(1)
-          expect(state.notifications.judgments[0].judgment).to.equal(1)
+          assert(state.getNoteStatus(note) === 'active')
+          assert(state.getNoteJudgment(note) === 1)
+          assert(state.notifications.judgments[0].judgment === 1)
           advance(3, { 'p1_1': 0 })
-          expect(state.getNoteStatus(note)).to.equal('judged')
-          expect(state.getNoteJudgment(note)).to.equal(1)
-          expect(state.notifications.judgments[0].judgment).to.equal(1)
+          assert(state.getNoteStatus(note) === 'judged')
+          assert(state.getNoteJudgment(note) === 1)
+          assert(state.notifications.judgments[0].judgment === 1)
         })
         it('gives 2 discrete judgments, one for down and one for up', function () {
           advance(2, { 'p1_1': 1 })
@@ -176,12 +180,12 @@ describe('PlayerState', function () {
           sinon.spy(state.stats, 'handleDelta')
           advance(2, { 'p1_1': 1 })
           advance(3, { 'p1_1': 0 })
-          expect(state.stats.handleDelta).to.have.callCount(1)
+          assert(state.stats.handleDelta.callCount === 1)
         })
         it('judges missed long note', function () {
           advance(2.3, { 'p1_1': 1 })
-          expect(state.getNoteStatus(note)).to.equal('judged')
-          expect(state.getNoteJudgment(note)).to.equal(-1)
+          assert(state.getNoteStatus(note) === 'judged')
+          assert(state.getNoteJudgment(note) === -1)
         })
         it('gives 2 missed judgment for missed longnote', function () {
           advance(2.3, { 'p1_1': 1 })
@@ -190,23 +194,25 @@ describe('PlayerState', function () {
         it('judges long note lifted too fast as missed', function () {
           advance(2, { 'p1_1': 1 })
           advance(2.01, { 'p1_1': 0 })
-          expect(state.getNoteStatus(note)).to.equal('judged')
-          expect(state.getNoteJudgment(note)).to.equal(-1)
+          assert(state.getNoteStatus(note) === 'judged')
+          assert(state.getNoteJudgment(note) === -1)
           assert(state.stats.numJudgments === 2)
         })
         it('does not end automatically', function () {
           advance(2, { 'p1_1': 1 })
           advance(3.1, { 'p1_1': 1 })
-          expect(state.getNoteStatus(note)).to.equal('active')
+          assert(state.getNoteStatus(note) === 'active')
           assert(state.stats.numJudgments === 1)
         })
         it('judges long note lifted too slow as missed', function () {
           advance(2, { 'p1_1': 1 })
           advance(4, { 'p1_1': 1 })
-          expect(state.getNoteStatus(note)).to.equal('judged')
-          expect(state.getNoteJudgment(note)).to.equal(-1)
-          expect(state.notifications.judgments[0]).to.deep.equal({
-            judgment: -1, combo: 0, delta: 1, column: note.column })
+          assert(state.getNoteStatus(note) === 'judged')
+          assert(state.getNoteJudgment(note) === -1)
+          assert.deepEqual(
+            state.notifications.judgments[0],
+            { judgment: -1, combo: 0, delta: 1, column: note.column }
+          )
         })
       })
 
@@ -221,13 +227,13 @@ describe('PlayerState', function () {
         })
         it('ends automatically', function () {
           advance(2, { 'p1_SC': 1 })
-          expect(state.getNoteStatus(note)).to.equal('active')
-          expect(state.getNoteJudgment(note)).to.equal(1)
-          expect(state.notifications.judgments[0].judgment).to.equal(1)
+          assert(state.getNoteStatus(note) === 'active')
+          assert(state.getNoteJudgment(note) === 1)
+          assert(state.notifications.judgments[0].judgment === 1)
           advance(3.1, { 'p1_SC': 1 })
-          expect(state.getNoteStatus(note)).to.equal('judged')
-          expect(state.getNoteJudgment(note)).to.equal(1)
-          expect(state.notifications.judgments[0].judgment).to.equal(1)
+          assert(state.getNoteStatus(note) === 'judged')
+          assert(state.getNoteJudgment(note) === 1)
+          assert(state.notifications.judgments[0].judgment === 1)
         })
       })
 
@@ -242,8 +248,8 @@ describe('PlayerState', function () {
         it('should switch to next one on change', function () {
           advance(2, { 'p1_SC': 1 })
           advance(4, { 'p1_SC': -1 })
-          expect(state.getNoteStatus(chart.notes[0])).to.equal('judged')
-          expect(state.getNoteStatus(chart.notes[1])).to.equal('active')
+          assert(state.getNoteStatus(chart.notes[0]) === 'judged')
+          assert(state.getNoteStatus(chart.notes[1]) === 'active')
         })
       })
 
@@ -254,8 +260,8 @@ describe('PlayerState', function () {
             #00111:0102
           `)
           advance(2, { 'p1_1': 1 })
-          expect(state.notifications.sounds[0].note).to.equal(chart.notes[0])
-          expect(state.notifications.sounds[0].type).to.equal('hit')
+          assert(state.notifications.sounds[0].note === chart.notes[0])
+          assert(state.notifications.sounds[0].type === 'hit')
         })
         it('should notify missed notes as break', function () {
           setup(`
@@ -263,8 +269,8 @@ describe('PlayerState', function () {
             #00111:01
           `)
           advance(5, { 'p1_1': 0 })
-          expect(state.notifications.sounds[0].note).to.equal(chart.notes[0])
-          expect(state.notifications.sounds[0].type).to.equal('break')
+          assert(state.notifications.sounds[0].note === chart.notes[0])
+          assert(state.notifications.sounds[0].type === 'break')
         })
         it('notifies of free keysound hit', function () {
           setup(`
@@ -279,28 +285,28 @@ describe('PlayerState', function () {
 
           // hit the blank area
           advance(4, { 'p1_1': 1 })
-          expect(state.notifications.sounds[0].note).to.equal(chart.notes[0])
-          expect(state.notifications.sounds[0].type).to.equal('free')
+          assert(state.notifications.sounds[0].note === chart.notes[0])
+          assert(state.notifications.sounds[0].type === 'free')
 
           // release the button
           advance(4, { 'p1_1': 0 })
-          void expect(state.notifications.sounds).to.be.empty
+          assert(!state.notifications.sounds.length)
 
           // try again
           advance(5, { 'p1_1': 1 })
-          expect(state.notifications.sounds[0].note).to.equal(chart.notes[0])
+          assert(state.notifications.sounds[0].note === chart.notes[0])
 
           // release the button
           advance(5, { 'p1_1': 0 })
 
           // wait and try again.
           advance(6.5, { 'p1_1': 1 })
-          expect(state.notifications.sounds[0].note).to.equal(chart.notes[0])
+          assert(state.notifications.sounds[0].note === chart.notes[0])
           advance(6.5, { 'p1_1': 0 })
 
           // wait and try again. this time keysound should change
           advance(7.5, { 'p1_1': 1 })
-          expect(state.notifications.sounds[0].note).to.equal(chart.notes[1])
+          assert(state.notifications.sounds[0].note === chart.notes[1])
         })
       })
     })
@@ -308,36 +314,36 @@ describe('PlayerState', function () {
     describe('speed', function () {
       it('infers speed from player', function () {
         setup('', { speed: 2 })
-        expect(state.speed).to.equal(2)
+        assert(state.speed === 2)
       })
       it('updates speed on dedicated buttons', function () {
         setup('', { speed: 2 })
         advance(1.0, { 'p1_speedup': 1 })
-        expect(state.speed).to.equal(2.5)
+        assert(state.speed === 2.5)
         advance(1.2, { 'p1_speedup': 0, 'p1_speeddown': 1 })
-        expect(state.speed).to.equal(2)
+        assert(state.speed === 2)
       })
       it('supports fine-grained speed modifications', function () {
         setup('', { speed: 2 })
         advance(1.0, { 'p1_speedup': 1, 'select': 1 })
-        expect(state.speed).to.equal(2.1)
+        assert(state.speed === 2.1)
       })
       it('supports pinching to zoom', function () {
         setup('', { speed: 2 })
         advance(1.0, { 'p1_pinch': 300 })
         advance(1.2, { 'p1_pinch': 450 })
-        expect(state.speed).to.equal(3)
+        assert(state.speed === 3)
       })
     })
 
     describe('finish', function () {
       it('should become true when song is finished', function () {
         setup('#00111:0101')
-        expect(state.finished).to.equal(false)
+        assert(state.finished === false)
         advance(4.0, { })
-        expect(state.finished).to.equal(false)
+        assert(state.finished === false)
         advance(16.0, { })
-        expect(state.finished).to.equal(true)
+        assert(state.finished === true)
       })
     })
   })

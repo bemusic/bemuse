@@ -1,6 +1,7 @@
+import assert from 'power-assert'
 
 import PlayerDisplay from './player-display'
-import { tap, notechart, playerWithBMS } from '../test-helpers'
+import { notechart, playerWithBMS, tap } from '../test-helpers'
 
 describe('PlayerDisplay', function () {
   let display
@@ -27,15 +28,15 @@ describe('PlayerDisplay', function () {
     })
 
     update(555, 0.5, inputState([['wow', { value: 0, changed: false }]]))
-    expect(data['wow_active']).to.equal(0)
+    assert(data['wow_active'] === 0)
 
     update(557, 2.5, inputState([['wow', { value: 1, changed: true }]]))
-    expect(data['wow_active']).to.equal(1)
-    expect(data['wow_down']).to.equal(557)
+    assert(data['wow_active'] === 1)
+    assert(data['wow_down'] === 557)
 
     update(558, 3.5, inputState([['wow', { value: 0, changed: true }]]))
-    expect(data['wow_active']).to.equal(0)
-    expect(data['wow_up']).to.equal(558)
+    assert(data['wow_active'] === 0)
+    assert(data['wow_up'] === 558)
   })
 
   describe('with note', function () {
@@ -44,12 +45,12 @@ describe('PlayerDisplay', function () {
     })
     it('displays unjudged notes', function () {
       update(3.95, 3.95, blankState())
-      expect(data['note_1']).to.have.length(1)
+      assert(data['note_1'].length === 1)
     })
     it('hides judged notes', function () {
       let state = tap(blankState(), s => s.getNoteStatus.returns('judged'))
       update(3.95, 3.95, state)
-      void expect(data['note_1']).to.be.empty
+      assert(!(data['note_1'] || []).length)
     })
   })
 
@@ -59,26 +60,26 @@ describe('PlayerDisplay', function () {
     })
     it('displays unjudged long notes', function () {
       update(3.95, 3.95, blankState())
-      expect(data['longnote_1']).to.have.length(1)
-      void expect(data['longnote_1'][0].active).to.be.false
-      void expect(data['longnote_1'][0].missed).to.be.false
+      assert(data['longnote_1'].length === 1)
+      assert(!data['longnote_1'][0].active)
+      assert(!data['longnote_1'][0].missed)
     })
     it('displays holding long notes', function () {
       let state = tap(blankState(), s => s.getNoteJudgment.returns(1))
       update(3.95, 3.95, state)
-      void expect(data['longnote_1'][0].active).to.be.true
+      assert(data['longnote_1'][0].active)
     })
     it('displays holding long notes event it is bad', function () {
       let state = tap(blankState(), s => s.getNoteJudgment.returns(4))
       update(3.95, 3.95, state)
-      void expect(data['longnote_1'][0].active).to.be.true
+      assert(data['longnote_1'][0].active)
     })
     it('displays missed long notes', function () {
       let state = blankState()
       state.getNoteJudgment.returns(-1)
       state.getNoteStatus.returns('judged')
       update(3.95, 3.95, state)
-      void expect(data['longnote_1'][0].missed).to.be.true
+      assert(data['longnote_1'][0].missed)
     })
   })
 
@@ -89,40 +90,40 @@ describe('PlayerDisplay', function () {
     it('sets judgment time', function () {
       let info = { judgment: 1, delta: 0, combo: 123, column: 'SC' }
       update(12, 34, makeState({ notifications: { judgments: [info] } }))
-      expect(data['judge_1']).to.equal(12)
-      expect(data['judge_deviation_none']).to.equal(12)
+      assert(data['judge_1'] === 12)
+      assert(data['judge_deviation_none'] === 12)
     })
     it('sets judgment deviation (early)', function () {
       let info = { judgment: 2, delta: -0.03, combo: 123, column: 'SC' }
       update(12, 34, makeState({ notifications: { judgments: [info] } }))
-      expect(data['judge_2']).to.equal(12)
-      expect(data['judge_deviation_early']).to.equal(12)
+      assert(data['judge_2'] === 12)
+      assert(data['judge_deviation_early'] === 12)
     })
     it('sets judgment deviation (late)', function () {
       let info = { judgment: 2, delta: 0.03, combo: 123, column: 'SC' }
       update(12, 34, makeState({ notifications: { judgments: [info] } }))
-      expect(data['judge_2']).to.equal(12)
-      expect(data['judge_deviation_late']).to.equal(12)
+      assert(data['judge_2'] === 12)
+      assert(data['judge_deviation_late'] === 12)
     })
     it('sets judgment missed time', function () {
       let info = { judgment: -1, delta: 0, combo: 0, column: 'SC' }
       update(12, 34, makeState({ notifications: { judgments: [info] } }))
-      expect(data['judge_missed']).to.equal(12)
+      assert(data['judge_missed'] === 12)
     })
     it('sets combo', function () {
       let info = { judgment: 1, delta: 0, combo: 123, column: 'SC' }
       update(12, 34, makeState({ notifications: { judgments: [info] } }))
-      expect(data['combo']).to.equal(123)
+      assert(data['combo'] === 123)
     })
     it('sets note explode time', function () {
       let info = { judgment: 1, delta: 0, combo: 123, column: 'SC' }
       update(12, 34, makeState({ notifications: { judgments: [info] } }))
-      expect(data['SC_explode']).to.equal(12)
+      assert(data['SC_explode'] === 12)
     })
     it('does not set note explode time if missed', function () {
       let info = { judgment: -1, delta: 0, combo: 123, column: 'SC' }
       update(12, 34, makeState({ notifications: { judgments: [info] } }))
-      void expect(data['SC_explode']).to.be.empty
+      assert(!(data['SC_explode'] || []).length)
     })
   })
 
