@@ -1,4 +1,3 @@
-
 import Player     from './player'
 
 // The Game model holds the game's options and the player objects.
@@ -13,7 +12,8 @@ export class Game {
     // The Game's players
     this.players = options.players.map(function (playerOptions, index) {
       playerOptions = Object.assign({ }, playerOptions, {
-        autosound: options.audioInputLatency >= 0.01
+        autosound: options.audioInputLatency >= 0.01,
+        tutorial: options.tutorial
       })
       return new Player(notecharts[index], index + 1, playerOptions)
     })

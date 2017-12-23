@@ -12,6 +12,7 @@ export class Player {
       input:       options.input,
       laneCover:  +options.laneCover || 0,
       gauge:       options.gauge,
+      tutorial:  !!options.tutorial
     }
   }
 
