@@ -36,7 +36,7 @@ export function loadSongFromResources (resources, options = {}) {
         worker.onerror = function (e) {
           onMessage('Worker error: ' + e)
           console.error('Worker error: ' + e)
-          reject(e)
+          reject(e.error)
         }
         worker.postMessage({ files })
       })
