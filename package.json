@@ -103,6 +103,8 @@
     "node-sass": "^4.5.3",
     "pegjs": "^0.9.0",
     "pegjs-loader": "^0.5.1",
+    "prettier-eslint": "^8.6.0",
+    "prettier-eslint-cli": "^4.7.0",
     "puppeteer": "^0.13.0",
     "react-hot-loader": "^3.0.0-beta.6",
     "react-transform-catch-errors": "^1.0.1",
