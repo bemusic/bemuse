@@ -1,4 +1,3 @@
-
 import * as PIXI from 'pixi.js'
 
 import SkinNode from '../lib/base'
@@ -22,7 +21,7 @@ let properties = [
 export class DisplayObject extends SkinNode {
   compile (compiler, $el) {
     this._animation = Animation.compile(compiler, $el)
-    this._bindings = [ ]
+    this._bindings = []
     for (let property of properties) {
       let code = $el.attr(property.name) || property.default
       if (!code) continue
@@ -38,12 +37,12 @@ export class DisplayObject extends SkinNode {
   }
   instantiate (context, subject) {
     var object = subject.object
-    var bindings = [ ]
+    var bindings = []
     var onDestroy = null
     object.blendMode = this.blendMode
     for (var i = 0; i < this._bindings.length; i++) {
       var binding = this._bindings[i]
-      bindings.push([ binding.getter, binding.apply.bind(null, object) ])
+      bindings.push([binding.getter, binding.apply.bind(null, object)])
     }
     if (this.ref) {
       context.ref(this.ref, object)

@@ -1,4 +1,3 @@
-
 import Expression from 'bemuse/scintillator/expression'
 
 describe('Scintillator Expression', function () {

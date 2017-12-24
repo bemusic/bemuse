@@ -24,15 +24,18 @@ function setupMocha () {
 
 function runMocha () {
   let specs = []
-  mocha.run()
+  mocha
+    .run()
     .on('test end', function reportFailedSpec (test) {
       if (test.err) {
-        console.log('%cFailed Spec: %c%s\n %c%s',
+        console.log(
+          '%cFailed Spec: %c%s\n %c%s',
           'color: black; font: 16px sans-serif',
           'color: black; font: bold 16px sans-serif',
           test.title,
           'color: red; font: bold 1em sans-serif',
-          test.err.message)
+          test.err.message
+        )
         console.error(test.err.stack)
       }
     })

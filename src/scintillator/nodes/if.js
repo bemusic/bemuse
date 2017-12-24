@@ -1,4 +1,3 @@
-
 import * as PIXI from 'pixi.js'
 
 import SkinNode from './lib/base'
@@ -9,8 +8,9 @@ export class IfNode extends SkinNode {
   compile (compiler, $el) {
     let children = compiler.compileChildren($el)
     if (children.length !== 1) {
-      throw new Error('Expected exactly 1 children, ' +
-        children.length + ' found')
+      throw new Error(
+        'Expected exactly 1 children, ' + children.length + ' found'
+      )
     }
     this.child = children[0]
     this.key = new Expression($el.attr('key'))
@@ -26,7 +26,7 @@ export class IfNode extends SkinNode {
       context: context,
       parent: container,
       object: object,
-      onData: (data) => {
+      onData: data => {
         if (String(expr(data)) === value) {
           if (child === null) {
             child = childNode.instantiate(context, object)

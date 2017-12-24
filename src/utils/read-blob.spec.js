@@ -1,4 +1,3 @@
-
 import readBlob from './read-blob'
 
 describe('readBlob', function () {
@@ -7,8 +6,11 @@ describe('readBlob', function () {
     let stub = sinon.stub(FileReader.prototype, 'readAsText', function () {
       this.onerror(new Error('...'))
     })
-    return expect(readBlob(blob).as('text').finally(() => stub.restore()))
-      .to.be.rejected
+    return expect(
+      readBlob(blob)
+        .as('text')
+        .finally(() => stub.restore())
+    ).to.be.rejected
   })
 
   it('resolves with correct type', function () {

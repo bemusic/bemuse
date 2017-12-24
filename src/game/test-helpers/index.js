@@ -1,4 +1,3 @@
-
 import BMS from 'bms'
 import { fromBMSChart } from 'bemuse-notechart/loader/BMSNotechartLoader'
 import Player from '../player'

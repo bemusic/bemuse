@@ -1,4 +1,3 @@
-
 import './Boot.scss'
 import template from './Boot.jade'
 import version from 'bemuse/utils/version'
@@ -11,8 +10,9 @@ boot.innerHTML = template()
 let bar = boot.querySelector('.js-progress-bar')
 bar.classList.add('is-indeterminate')
 
-boot.querySelector('.js-version').appendChild(
-  document.createTextNode(`v${version}`))
+boot
+  .querySelector('.js-version')
+  .appendChild(document.createTextNode(`v${version}`))
 
 document.body.appendChild(boot)
 

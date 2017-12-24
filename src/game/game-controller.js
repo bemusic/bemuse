@@ -56,7 +56,7 @@ export class GameController {
 
   // Exits the game when escape is pressed.
   _handleEscape () {
-    let onKeyDown = (e) => {
+    let onKeyDown = e => {
       const ESCAPE_KEY = 27
       const F1_KEY = 112
       if (e.keyCode === ESCAPE_KEY) {
@@ -70,9 +70,11 @@ export class GameController {
       }
     }
     window.addEventListener('keydown', onKeyDown, true)
-    this._promise.finally(function () {
-      window.removeEventListener('keydown', onKeyDown, true)
-    }).done()
+    this._promise
+      .finally(function () {
+        window.removeEventListener('keydown', onKeyDown, true)
+      })
+      .done()
   }
 
   // Destroy the game.
@@ -131,10 +133,12 @@ export class GameController {
     bench.benchmark('audio_update', this._audio, 'update')
     bench.benchmark('display_update', this._display, 'update')
     bench.benchmark('display_compute', this._display, '_getData')
-    bench.benchmark('display_push',
-      this._display._context._instance, 'push')
-    bench.benchmark('display_render',
-      this._display._context._renderer, 'render')
+    bench.benchmark('display_push', this._display._context._instance, 'push')
+    bench.benchmark(
+      'display_render',
+      this._display._context._renderer,
+      'render'
+    )
   }
 }
 

@@ -13,11 +13,11 @@ import getNonMissedDeltas from '../interactors/getNonMissedDeltas'
 
 const ms = delta => `${(delta * 1000).toFixed(1)} ms`
 
-const group = deltas => (_(deltas)
-  .map(delta => Math.floor(delta * 100))
-  .countBy(bucket => bucket)
-  .value()
-)
+const group = deltas =>
+  _(deltas)
+    .map(delta => Math.floor(delta * 100))
+    .countBy(bucket => bucket)
+    .value()
 
 export default class ResultDeltasView extends React.Component {
   static propTypes = {
@@ -35,21 +35,23 @@ export default class ResultDeltasView extends React.Component {
       bucket,
       count: groups[bucket] || 0
     }))
-    const max = _(stats).map('count').max()
+    const max = _(stats)
+      .map('count')
+      .max()
     const height = value => Math.ceil(value / Math.max(max, 1) * 128)
     return (
       <div className='ResultDeltasView'>
         <Panel title='Accuracy Data'>
           <div className='ResultDeltasViewのcontent'>
             <div className='ResultDeltasViewのhistogram'>
-              {stats.map(({ bucket, count }) =>
+              {stats.map(({ bucket, count }) => (
                 <div
                   key={bucket}
                   className='ResultDeltasViewのhistogramBar'
                   data-bucket={bucket}
                   style={{ height: height(count) }}
                 />
-              )}
+              ))}
             </div>
             <div className='ResultDeltasViewのnumber is-early'>
               <strong>{earlyCount}</strong> EARLY
@@ -60,7 +62,9 @@ export default class ResultDeltasView extends React.Component {
             <table className='ResultDeltasViewのinfo'>
               <tbody>
                 {this.renderRow('Mean:', mean(nonMissDeltas))}
-                {this.renderRow('S.D:', Math.sqrt(variance(nonMissDeltas)), { showEarlyLate: false })}
+                {this.renderRow('S.D:', Math.sqrt(variance(nonMissDeltas)), {
+                  showEarlyLate: false
+                })}
                 {this.renderRow('Median:', median(nonMissDeltas))}
               </tbody>
             </table>
@@ -70,15 +74,16 @@ export default class ResultDeltasView extends React.Component {
     )
   }
 
-  renderRow (text, data, options = { }) {
+  renderRow (text, data, options = {}) {
     return (
       <tr>
         <th>{text}</th>
         <td className='is-number'>{ms(data)}</td>
-        <td>{options.showEarlyLate !== false
-          ? (data > 0 ? '(late)' : data < 0 ? '(early)' : '')
-          : null
-        }</td>
+        <td>
+          {options.showEarlyLate !== false
+            ? data > 0 ? '(late)' : data < 0 ? '(early)' : ''
+            : null}
+        </td>
       </tr>
     )
   }

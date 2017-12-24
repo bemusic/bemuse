@@ -1,21 +1,24 @@
+export function * loginByUsernamePassword (
+  username,
+  password,
+  {
+    log = message => console.log('[loginByUsernamePassword]', message),
 
-export function * loginByUsernamePassword (username, password, {
-  log = (message) => console.log('[loginByUsernamePassword]', message),
+    // (usernameOrEmail, password) => Promise
+    // - If result contain `idToken` property => OK.
+    // - Otherwise, invalid username or password.
+    usernamePasswordLogin,
 
-  // (usernameOrEmail, password) => Promise
-  // - If result contain `idToken` property => OK.
-  // - Otherwise, invalid username or password.
-  usernamePasswordLogin,
+    // (username) => Promise
+    // - If result contain `playerId` property => OK.
+    // - Otherwise, player not found.
+    resolvePlayerId,
 
-  // (username) => Promise
-  // - If result contain `playerId` property => OK.
-  // - Otherwise, player not found.
-  resolvePlayerId,
-
-  // (idToken) => Promise
-  // - Result should contain `playerId` and `playerName` property.
-  ensureLink
-}) {
+    // (idToken) => Promise
+    // - Result should contain `playerId` and `playerName` property.
+    ensureLink
+  }
+) {
   {
     const { idToken } = yield * obtainIdToken()
     log('Loading profile...')
@@ -38,9 +41,8 @@ export function * loginByUsernamePassword (username, password, {
     log('Resolving player...')
     const { playerId } = yield resolvePlayerId(username)
     if (!playerId) {
-      throw new Error(triedEmail
-        ? 'Invalid email or password'
-        : 'Player not registered'
+      throw new Error(
+        triedEmail ? 'Invalid email or password' : 'Player not registered'
       )
     }
 
@@ -53,26 +55,31 @@ export function * loginByUsernamePassword (username, password, {
   }
 }
 
-export function * signUp (username, email, password, {
-  log = (message) => console.log('[signUp]', message),
+export function * signUp (
+  username,
+  email,
+  password,
+  {
+    log = message => console.log('[signUp]', message),
 
-  // (username, email, password) => Promise
-  // - Result should always contain `idToken` property.
-  // - Otherwise, it should reject (throw).
-  userSignUp,
+    // (username, email, password) => Promise
+    // - Result should always contain `idToken` property.
+    // - Otherwise, it should reject (throw).
+    userSignUp,
 
-  // (playerId) => Promise
-  // - Result should be a string.
-  reservePlayerId,
+    // (playerId) => Promise
+    // - Result should be a string.
+    reservePlayerId,
 
-  // (playerId) => Promise
-  // - Result is a boolean.
-  checkPlayerNameAvailability,
+    // (playerId) => Promise
+    // - Result is a boolean.
+    checkPlayerNameAvailability,
 
-  // (idToken) => Promise
-  // - Result should contain `playerId` and `playerName` property.
-  ensureLink
-}) {
+    // (idToken) => Promise
+    // - Result should contain `playerId` and `playerName` property.
+    ensureLink
+  }
+) {
   log('Checking player name availability...')
   const available = yield checkPlayerNameAvailability(username)
 

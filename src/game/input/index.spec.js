@@ -1,4 +1,3 @@
-
 import GameInput from './'
 
 describe('GameInput', function () {
@@ -8,7 +7,7 @@ describe('GameInput', function () {
   beforeEach(function () {
     input = new GameInput()
     plugin = {
-      out: { },
+      out: {},
       get () {
         return this.out
       }

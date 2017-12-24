@@ -19,65 +19,84 @@ export default class ResultTable extends React.Component {
   }
   render () {
     let { result } = this.props
-    return <div className='ResultTable'>
-      <table className='ResultTableのtable'>
-        <tbody>
-          <tr>
-            <td><RunningNumber value={result['1']} /></td>
-            <th>Meticulous</th>
-          </tr>
-          <tr>
-            <td><RunningNumber value={result['2']} /></td>
-            <th>Precise</th>
-          </tr>
-          <tr>
-            <td><RunningNumber value={result['3']} /></td>
-            <th>Good</th>
-          </tr>
-          <tr>
-            <td><RunningNumber value={result['4']} /></td>
-            <th>Offbeat</th>
-          </tr>
-          <tr>
-            <td><RunningNumber value={result['missed']} /></td>
-            <th>Missed</th>
-          </tr>
-        </tbody>
-      </table>
-      <table className='ResultTableのtable'>
-        <tbody>
-          <tr title={`Total combos: ${result['totalCombo']}`}>
-            <td><RunningNumber value={result['maxCombo']} /></td>
-            <th>Max Combo</th>
-          </tr>
-          <tr>
-            <td onClick={this.handleViewDeltas} className='is-clickable'>
-              <FirstTimeTip featureKey='deltas' tip='View detailed accuracy data'>
-                <RunningNumber
-                  formatter={this.formatAccuracy}
-                  value={result['accuracy']}
-                />
-              </FirstTimeTip>
-            </td>
-            <th>Accurate</th>
-          </tr>
-        </tbody>
-      </table>
-      <table className='ResultTableのtable is-total'>
-        <tbody>
-          <tr>
-            <td><RunningNumber value={result['score']} /></td>
-            <th>Total Score</th>
-          </tr>
-        </tbody>
-      </table>
-      <ModalPopup
-        visible={this.state.deltasModalVisible}
-        onBackdropClick={this.handleToggleDeltasModal}
-      >
-        <ResultDeltasView deltas={result['deltas']} />
-      </ModalPopup>
-    </div>
+    return (
+      <div className='ResultTable'>
+        <table className='ResultTableのtable'>
+          <tbody>
+            <tr>
+              <td>
+                <RunningNumber value={result['1']} />
+              </td>
+              <th>Meticulous</th>
+            </tr>
+            <tr>
+              <td>
+                <RunningNumber value={result['2']} />
+              </td>
+              <th>Precise</th>
+            </tr>
+            <tr>
+              <td>
+                <RunningNumber value={result['3']} />
+              </td>
+              <th>Good</th>
+            </tr>
+            <tr>
+              <td>
+                <RunningNumber value={result['4']} />
+              </td>
+              <th>Offbeat</th>
+            </tr>
+            <tr>
+              <td>
+                <RunningNumber value={result['missed']} />
+              </td>
+              <th>Missed</th>
+            </tr>
+          </tbody>
+        </table>
+        <table className='ResultTableのtable'>
+          <tbody>
+            <tr title={`Total combos: ${result['totalCombo']}`}>
+              <td>
+                <RunningNumber value={result['maxCombo']} />
+              </td>
+              <th>Max Combo</th>
+            </tr>
+            <tr>
+              <td onClick={this.handleViewDeltas} className='is-clickable'>
+                <FirstTimeTip
+                  featureKey='deltas'
+                  tip='View detailed accuracy data'
+                >
+                  <RunningNumber
+                    formatter={this.formatAccuracy}
+                    value={result['accuracy']}
+                  />
+                </FirstTimeTip>
+              </td>
+              <th>Accurate</th>
+            </tr>
+          </tbody>
+        </table>
+        <table className='ResultTableのtable is-total'>
+          <tbody>
+            <tr>
+              <td>
+                <RunningNumber value={result['score']} />
+              </td>
+              <th>Total Score</th>
+            </tr>
+          </tbody>
+        </table>
+        <ModalPopup
+          visible={this.state.deltasModalVisible}
+          onBackdropClick={this.handleToggleDeltasModal}
+        >
+          <ResultDeltasView deltas={result['deltas']} />
+        </ModalPopup>
+      </div>
+    )
   }
   formatAccuracy (value) {
     return (value * 100).toFixed(2) + '%'

@@ -11,12 +11,12 @@ import TextNode from './nodes/text'
 const log = debug('scintillator:compiler')
 
 let NODES = {
-  'skin': SkinRootNode,
-  'sprite': SpriteNode,
-  'group': GroupNode,
-  'object': ObjectNode,
-  'text': TextNode,
-  'if': IfNode
+  skin: SkinRootNode,
+  sprite: SpriteNode,
+  group: GroupNode,
+  object: ObjectNode,
+  text: TextNode,
+  if: IfNode
 }
 
 /**

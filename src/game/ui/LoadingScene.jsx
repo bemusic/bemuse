@@ -1,4 +1,3 @@
-
 import './LoadingScene.scss'
 
 import React from 'react'
@@ -18,15 +17,17 @@ export default class LoadingScene extends React.Component {
   }
 
   render () {
-    return <Scene className='LoadingScene' ref='scene'>
-      <div className='LoadingSceneのimage' ref='eyecatch' />
-      <div className='LoadingSceneのinfo'>
-        <LoadingSceneSongInfo song={this.props.song} />
-      </div>
-      <LoadingSceneProgress tasks={this.props.tasks} />
-      <div className='LoadingSceneのflash' />
-      <div className='LoadingSceneのcover' />
-    </Scene>
+    return (
+      <Scene className='LoadingScene' ref='scene'>
+        <div className='LoadingSceneのimage' ref='eyecatch' />
+        <div className='LoadingSceneのinfo'>
+          <LoadingSceneSongInfo song={this.props.song} />
+        </div>
+        <LoadingSceneProgress tasks={this.props.tasks} />
+        <div className='LoadingSceneのflash' />
+        <div className='LoadingSceneのcover' />
+      </Scene>
+    )
   }
 
   componentDidMount () {

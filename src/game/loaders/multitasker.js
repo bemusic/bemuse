@@ -3,16 +3,17 @@ import Progress from 'bemuse/progress'
 import { throttle } from 'lodash'
 
 export function start (callback) {
-  let tasks = { }
-  let running = { }
-  let taskList = [ ]
+  let tasks = {}
+  let running = {}
+  let taskList = []
 
   function task (name, text, dependencies, f) {
     let progress = new Progress()
     if (text) taskList.push({ text, progress })
     tasks[name] = function () {
       return Promise.all(dependencies.map(run)).then(deps =>
-        f(...deps.concat([progress])))
+        f(...deps.concat([progress]))
+      )
     }
   }
 

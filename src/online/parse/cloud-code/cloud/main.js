@@ -1,4 +1,3 @@
-
 /* global Parse */
 var GameScore = Parse.Object.extend('GameScore')
 
@@ -17,7 +16,8 @@ Parse.Cloud.define('submitScore', function (request, response) {
   query.equalTo('md5', params.md5)
   query.equalTo('playMode', params.playMode)
 
-  query.first()
+  query
+    .first()
     .then(function (gameScore) {
       if (!gameScore) {
         gameScore = new GameScore()
@@ -64,27 +64,28 @@ Parse.Cloud.define('submitScore', function (request, response) {
         countQuery.equalTo('md5', params.md5)
         countQuery.equalTo('playMode', params.playMode)
         countQuery.greaterThan('score', gameScore.get('score'))
-        return (
-          countQuery.count()
-            .then(
-              function (count) {
-                return count + 1
-              },
-              function () {
-                return null
-              }
-            )
-            .then(function (rank) {
-              response.success({
-                meta: { rank: rank, user: user },
-                data: gameScore
-              })
+        return countQuery
+          .count()
+          .then(
+            function (count) {
+              return count + 1
+            },
+            function () {
+              return null
+            }
+          )
+          .then(function (rank) {
+            response.success({
+              meta: { rank: rank, user: user },
+              data: gameScore
             })
-        )
+          })
       },
       function (error) {
         if (error && error.code && error.message) {
-          response.error('Unable to submit score: ' + error.code + ': ' + error.message)
+          response.error(
+            'Unable to submit score: ' + error.code + ': ' + error.message
+          )
         } else if (error && error.message) {
           response.error('Unable to submit score: ' + error.message)
         } else {

@@ -8,7 +8,7 @@ export class PlayerDisplay {
     this._currentSpeed = 1
     this._player = player
     this._noteArea = new NoteArea(notechart.notes, notechart.barLines)
-    this._stateful = { }
+    this._stateful = {}
     this._defaultData = {
       placement: player.options.placement,
       scratch: player.options.scratch,
@@ -25,7 +25,7 @@ export class PlayerDisplay {
     let beat = player.notechart.secondsToBeat(gameTime)
     let position = player.notechart.beatToPosition(beat)
     let spacing = player.notechart.spacingAtBeat(beat)
-    let data = Object.assign({ }, this._defaultData)
+    let data = Object.assign({}, this._defaultData)
     let push = (key, value) => (data[key] || (data[key] = [])).push(value)
     let gauge = this._gauge
 
@@ -40,7 +40,7 @@ export class PlayerDisplay {
     updateGauge()
     updateExplode()
 
-    data['speed'] = (playerState.speed.toFixed(1) + 'x')
+    data['speed'] = playerState.speed.toFixed(1) + 'x'
     data['stat_1'] = getCount(1)
     data['stat_2'] = getCount(2)
     data['stat_3'] = getCount(3)
@@ -48,7 +48,7 @@ export class PlayerDisplay {
     data['stat_missed'] = getCount(MISSED)
     data['stat_acc'] = getAccuracy()
     const bpm = player.notechart.bpmAtBeat(beat)
-    data['bpm'] = bpm < 1 ? '' : (Math.round(bpm) % 10000 || '')
+    data['bpm'] = bpm < 1 ? '' : Math.round(bpm) % 10000 || ''
 
     Object.assign(data, stateful)
     return data
@@ -102,7 +102,7 @@ export class PlayerDisplay {
       let input = playerState.input
       for (let column of player.columns) {
         let control = input.get(column)
-        data[`${column}_active`] = (control.value !== 0) ? 1 : 0
+        data[`${column}_active`] = control.value !== 0 ? 1 : 0
         if (control.changed) {
           if (control.value !== 0) {
             stateful[`${column}_down`] = time
@@ -117,17 +117,15 @@ export class PlayerDisplay {
       let notifications = playerState.notifications.judgments
       let notification = notifications[notifications.length - 1]
       if (notification) {
-        let name = (
-          notification.judgment === -1
-            ? 'missed'
-            : `${notification.judgment}`
-        )
+        let name =
+          notification.judgment === -1 ? 'missed' : `${notification.judgment}`
         stateful[`judge_${name}`] = time
-        let deviationMode = (
+        let deviationMode =
           notification.judgment === -1 || notification.judgment === 1
             ? 'none'
-            : (notification.delta > 0 ? 'late' : notification.delta < 0 ? 'early' : 'none')
-        )
+            : notification.delta > 0
+              ? 'late'
+              : notification.delta < 0 ? 'early' : 'none'
         stateful[`judge_deviation_${deviationMode}`] = time
         stateful['combo'] = notification.combo
       }
@@ -158,7 +156,7 @@ export class PlayerDisplay {
     }
 
     function getUpperBound () {
-      return position + (5 / speed)
+      return position + 5 / speed
     }
   }
 }
@@ -168,7 +166,7 @@ export default PlayerDisplay
 // TODO: MOVE THIS TO bemuse-notechart
 //
 function getKeyMode (notechart, scratch) {
-  const usedColumns = { }
+  const usedColumns = {}
   for (const note of notechart.notes) {
     usedColumns[note.column] = true
   }

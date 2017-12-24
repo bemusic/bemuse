@@ -1,4 +1,3 @@
-
 import './MusicInfoTabInformation.scss'
 
 import React from 'react'
@@ -14,11 +13,11 @@ import Markdown from 'bemuse/ui/Markdown'
 import YouTube from 'bemuse/ui/YouTube'
 
 const enhance = compose(
-  connect((state) => ({
+  connect(state => ({
     readme: ReduxState.selectReadmeTextForSelectedSong(state)
   })),
   connectIO({
-    onRequestReadme: () => (song) => ReadmeIO.requestReadme(song)
+    onRequestReadme: () => song => ReadmeIO.requestReadme(song)
   })
 )
 
@@ -41,17 +40,19 @@ class MusicInfoTabInformation extends React.Component {
 
   render () {
     const song = this.props.song
-    return <div className='MusicInfoTabInformation'>
-      {this.renderButtons()}
-      <p className='MusicInfoTabInformationのartist'>
-        <span>Artist:</span>
-        <strong>{link(song.artist, song.artist_url)}</strong>
-      </p>
-      {song.youtube_url ? <YouTube url={song.youtube_url} /> : null}
-      <section className='MusicInfoTabInformationのreadme'>
-        <Markdown source={this.props.readme} />
-      </section>
-    </div>
+    return (
+      <div className='MusicInfoTabInformation'>
+        {this.renderButtons()}
+        <p className='MusicInfoTabInformationのartist'>
+          <span>Artist:</span>
+          <strong>{link(song.artist, song.artist_url)}</strong>
+        </p>
+        {song.youtube_url ? <YouTube url={song.youtube_url} /> : null}
+        <section className='MusicInfoTabInformationのreadme'>
+          <Markdown source={this.props.readme} />
+        </section>
+      </div>
+    )
   }
 
   renderButtons () {
@@ -62,14 +63,17 @@ class MusicInfoTabInformation extends React.Component {
     }
     if (song.song_url) {
       let text = /soundcloud\.com/.test(song.song_url)
-        ? 'SoundCloud' : 'Song URL'
+        ? 'SoundCloud'
+        : 'Song URL'
       buttons.push(link(text, song.song_url))
     }
     if (song.long_url) {
       buttons.push(link('Long Version', song.long_url))
     }
     if (song.bmssearch_id) {
-      buttons.push(link('BMS Search', 'http://bmssearch.net/bms?id=' + song.bmssearch_id))
+      buttons.push(
+        link('BMS Search', 'http://bmssearch.net/bms?id=' + song.bmssearch_id)
+      )
     }
     if (buttons.length === 0) {
       return null
@@ -82,9 +86,11 @@ class MusicInfoTabInformation extends React.Component {
 export default enhance(MusicInfoTabInformation)
 
 function link (text, url) {
-  return (
-    url
-      ? <a key={text} href={url} target='_blank'>{text}</a>
-      : text
+  return url ? (
+    <a key={text} href={url} target='_blank'>
+      {text}
+    </a>
+  ) : (
+    text
   )
 }

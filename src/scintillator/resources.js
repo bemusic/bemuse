@@ -1,4 +1,3 @@
-
 import _ from 'lodash'
 
 /**
@@ -7,7 +6,7 @@ import _ from 'lodash'
  */
 export class Resources {
   constructor () {
-    this._map = { }
+    this._map = {}
   }
   add (src, url) {
     this._map[src] = url

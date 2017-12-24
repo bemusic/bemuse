@@ -19,44 +19,56 @@ class MusicInfoTabStats extends React.Component {
   render () {
     const chart = this.props.chart
     const record = this.props.record
-    return <div className='MusicInfoTabStats'>
-      {this.renderMessage()}
-      <dl className='MusicInfoTabStatsのcolumn is-left'>
-        <dt>Notes</dt>
-        <dd>{chart.noteCount}</dd>
-        <dt>BPM</dt>
-        <dd>{chart.bpm.median}</dd>
-        <dt>Duration</dt>
-        <dd>{formatTime(chart.duration)}</dd>
-        <dt>Play Count</dt>
-        <dd>{this.renderWhenNotLoading(() =>
-          record ? record.playCount : (this.props.user ? '0' : '-')
-        )}</dd>
-      </dl>
-      <dl className='MusicInfoTabStatsのcolumn is-right'>
-        <dt>Best Score</dt>
-        <dd>{this.renderWhenNotLoading(() => record ? record.score : '-')}</dd>
+    return (
+      <div className='MusicInfoTabStats'>
+        {this.renderMessage()}
+        <dl className='MusicInfoTabStatsのcolumn is-left'>
+          <dt>Notes</dt>
+          <dd>{chart.noteCount}</dd>
+          <dt>BPM</dt>
+          <dd>{chart.bpm.median}</dd>
+          <dt>Duration</dt>
+          <dd>{formatTime(chart.duration)}</dd>
+          <dt>Play Count</dt>
+          <dd>
+            {this.renderWhenNotLoading(
+              () => (record ? record.playCount : this.props.user ? '0' : '-')
+            )}
+          </dd>
+        </dl>
+        <dl className='MusicInfoTabStatsのcolumn is-right'>
+          <dt>Best Score</dt>
+          <dd>
+            {this.renderWhenNotLoading(() => (record ? record.score : '-'))}
+          </dd>
 
-        <dt>Accuracy</dt>
-        <dd>{this.renderWhenNotLoading(() => record
-          ? formattedAccuracyForRecord(record)
-          : '-'
-        )}</dd>
+          <dt>Accuracy</dt>
+          <dd>
+            {this.renderWhenNotLoading(
+              () => (record ? formattedAccuracyForRecord(record) : '-')
+            )}
+          </dd>
 
-        <dt>Max Combo</dt>
-        <dd>{this.renderWhenNotLoading(() => record
-          ? <span>{record.combo} <small>/ {record.total}</small></span>
-          : '-'
-        )}</dd>
-      </dl>
-    </div>
+          <dt>Max Combo</dt>
+          <dd>
+            {this.renderWhenNotLoading(
+              () =>
+                record ? (
+                  <span>
+                    {record.combo} <small>/ {record.total}</small>
+                  </span>
+                ) : (
+                  '-'
+                )
+            )}
+          </dd>
+        </dl>
+      </div>
+    )
   }
 
   renderWhenNotLoading (f) {
-    return (this.props.loading
-      ? <Icon name='spinner' spin />
-      : f()
-    )
+    return this.props.loading ? <Icon name='spinner' spin /> : f()
   }
 
   renderMessage () {

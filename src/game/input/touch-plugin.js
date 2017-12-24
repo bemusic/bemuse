@@ -1,12 +1,11 @@
-
 import bench from 'bemuse/devtools/benchmark'
 
 let BUTTONS = ['p1_1', 'p1_2', 'p1_3', 'p1_4', 'p1_5', 'p1_6', 'p1_7', 'start']
 
-window.BEMUSE_TOUCH_STATS = [ ]
+window.BEMUSE_TOUCH_STATS = []
 
 function StatsRecorder () {
-  const stats = [ ]
+  const stats = []
   window.BEMUSE_TOUCH_STATS.push(stats)
   return {
     record (input) {
@@ -34,7 +33,7 @@ export function TouchPlugin (context) {
     name: 'TouchPlugin',
     get () {
       let input = getInput()
-      let output = { }
+      let output = {}
       if (bench.enabled) bench.stats['input:touch:n'] = '' + input.length
       statsRecorder.record(input)
       output['p1_SC'] = getScratch(input)
@@ -98,13 +97,9 @@ export function TouchPlugin (context) {
     } else if (scratchY < scratchStartY - 24) {
       scratchStartY = scratchY + 24
     }
-    return (scratchY > scratchStartY + 4
+    return scratchY > scratchStartY + 4
       ? -1
-      : (scratchY < scratchStartY - 4
-        ? 1
-        : 0
-      )
-    )
+      : scratchY < scratchStartY - 4 ? 1 : 0
   }
   function _getPinch (input) {
     let a = null

@@ -1,4 +1,3 @@
-
 /* global AudioContext, WebAudioTestAPI */
 
 import 'web-audio-test-api'
@@ -10,7 +9,9 @@ import SamplingMaster, { FADE_LENGTH } from './'
 describe('SamplingMaster', function () {
   let context
   let master
-  before(() => { WebAudioTestAPI.use() })
+  before(() => {
+    WebAudioTestAPI.use()
+  })
   beforeEach(() => {
     context = new AudioContext()
     master = new SamplingMaster(context)
@@ -66,9 +67,11 @@ describe('SamplingMaster', function () {
     })
     it('should reject when decoding failed', function () {
       context.DECODE_AUDIO_DATA_FAILED = true
-      return expect(master.sample(new ArrayBuffer(0))
-        .finally(() => (context.DECODE_AUDIO_DATA_FAILED = false)))
-        .to.be.rejected
+      return expect(
+        master
+          .sample(new ArrayBuffer(0))
+          .finally(() => (context.DECODE_AUDIO_DATA_FAILED = false))
+      ).to.be.rejected
     })
     describe('#play', function () {
       let sample
@@ -99,12 +102,17 @@ describe('SamplingMaster', function () {
       })
       it('should play a buffer slice (with end)', function () {
         sample.play(0, { start: 1, end: 3 })
-        expect(bufferSource.start).to.have.been.calledWith(0, 1, 2 + FADE_LENGTH)
+        expect(bufferSource.start).to.have.been.calledWith(
+          0,
+          1,
+          2 + FADE_LENGTH
+        )
       })
       it('should play to a group', function () {
         const group = master.group()
         const instance = sample.play(0, { group })
-        void expect(instance.TEST_node.$isConnectedTo(group.destination)).to.be.true
+        void expect(instance.TEST_node.$isConnectedTo(group.destination)).to.be
+          .true
       })
 
       // HACK: only enable this test case when Event#type can be set after
@@ -119,7 +127,7 @@ describe('SamplingMaster', function () {
           void e
           return it.skip
         }
-      }())('should call #stop when playing finished', function () {
+      })()('should call #stop when playing finished', function () {
         let instance = sample.play()
         sinon.spy(instance, 'stop')
         context.$processTo(1.5)
@@ -189,5 +197,7 @@ describe('SamplingMaster', function () {
     })
   })
 
-  after(() => { WebAudioTestAPI.unuse() })
+  after(() => {
+    WebAudioTestAPI.unuse()
+  })
 })

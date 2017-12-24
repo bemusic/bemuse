@@ -1,4 +1,3 @@
-
 import React from 'react'
 import PropTypes from 'prop-types'
 import Ranking from './Ranking'
@@ -22,7 +21,7 @@ export default class RankingContainer extends React.Component {
   }
 
   getParams (props) {
-    let params = { }
+    let params = {}
     Object.assign(params, {
       md5: props.chart.md5,
       playMode: props.playMode
@@ -33,7 +32,13 @@ export default class RankingContainer extends React.Component {
         score: result.score,
         combo: result.maxCombo,
         total: result.totalCombo,
-        count: [result['1'], result['2'], result['3'], result['4'], result.missed],
+        count: [
+          result['1'],
+          result['2'],
+          result['3'],
+          result['4'],
+          result.missed
+        ],
         log: result.log
       })
     }
@@ -47,7 +52,10 @@ export default class RankingContainer extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (this.props.chart.md5 !== nextProps.chart.md5 || this.props.playMode !== nextProps.playMode) {
+    if (
+      this.props.chart.md5 !== nextProps.chart.md5 ||
+      this.props.playMode !== nextProps.playMode
+    ) {
       if (this.unsubscribe) this.unsubscribe()
       this.model = online.Ranking(this.getParams(nextProps))
       this.unsubscribe = this.model.state川.onValue(this.onStoreTrigger)
@@ -59,7 +67,7 @@ export default class RankingContainer extends React.Component {
     if (this.unsubscribe) this.unsubscribe()
   }
 
-  onStoreTrigger = (state) => {
+  onStoreTrigger = state => {
     if (this.mounted) this.setState(state)
   }
 

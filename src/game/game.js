@@ -10,7 +10,7 @@ export class Game {
 
     // The Game's players
     this.players = options.players.map(function (playerOptions, index) {
-      playerOptions = Object.assign({ }, playerOptions, {
+      playerOptions = Object.assign({}, playerOptions, {
         autosound: options.audioInputLatency >= 0.01,
         tutorial: options.tutorial
       })

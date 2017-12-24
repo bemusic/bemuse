@@ -1,4 +1,3 @@
-
 import * as PIXI from 'pixi.js'
 
 function createRenderer (w, h) {
@@ -21,7 +20,7 @@ function hackPIXIToForceNewBlendModes () {
 
 export class Context {
   constructor (skin) {
-    this.refs = { }
+    this.refs = {}
     this._skin = skin
     this._instance = skin.instantiate(this)
     this._renderer = createRenderer(skin.width, skin.height)
@@ -52,11 +51,19 @@ export class Context {
   }
   _setupInteractivity () {
     let mouse = null
-    let touches = [ ]
-    let onMouse = (e) => { mouse = e }
-    let onUpdateMouse = (e) => { mouse = mouse && e }
-    let onNoMouse = () => { mouse = null }
-    let onTouch = (e) => { touches = [].slice.call(e.touches) }
+    let touches = []
+    let onMouse = e => {
+      mouse = e
+    }
+    let onUpdateMouse = e => {
+      mouse = mouse && e
+    }
+    let onNoMouse = () => {
+      mouse = null
+    }
+    let onTouch = e => {
+      touches = [].slice.call(e.touches)
+    }
     let view = this.view
     let width = this._skin.width
     let height = this._skin.height

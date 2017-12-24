@@ -1,4 +1,3 @@
-
 import * as PIXI from 'pixi.js'
 
 import SkinNode from './lib/base'
@@ -34,7 +33,7 @@ export class GroupNode extends SkinNode {
   }
   instantiate (context, container) {
     let object = new PIXI.Container()
-    let concerns = [ this.display ]
+    let concerns = [this.display]
     if (this.mask) {
       concerns.push(this.mask)
     }

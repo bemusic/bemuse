@@ -1,10 +1,14 @@
-
 /* global caches */
 
 import version from 'bemuse/utils/version'
 
 function log (...args) {
-  console.log('%c serviceworker %c', 'background:yellow;color:black', '', ...args)
+  console.log(
+    '%c serviceworker %c',
+    'background:yellow;color:black',
+    '',
+    ...args
+  )
 }
 
 log('I am a service worker! ' + version)
@@ -17,8 +21,9 @@ var SONG_CACHE_KEY = 'songs'
 
 self.addEventListener('install', function (event) {
   event.waitUntil(
-    caches.open(SITE_CACHE_KEY)
-      .then((cache) => cache.addAll([ '/' ]))
+    caches
+      .open(SITE_CACHE_KEY)
+      .then(cache => cache.addAll(['/']))
       .then(() => self.skipWaiting())
   )
 })
@@ -74,11 +79,14 @@ function cacheForever (event, cacheName) {
   event.respondWith(
     caches.open(cacheName).then(function (cache) {
       return cache.match(event.request).then(function (cached) {
-        return cached || fetch(event.request).then(function (response) {
-          log('Cache forever:', event.request.url)
-          cache.put(event.request, response.clone())
-          return response
-        })
+        return (
+          cached ||
+          fetch(event.request).then(function (response) {
+            log('Cache forever:', event.request.url)
+            cache.put(event.request, response.clone())
+            return response
+          })
+        )
       })
     })
   )
@@ -87,17 +95,19 @@ function cacheForever (event, cacheName) {
 function fetchThenCache (event, cacheName) {
   event.respondWith(
     caches.open(cacheName).then(function (cache) {
-      return fetch(event.request).then(function (response) {
-        if (response && response.ok) {
-          log('Fetch OK:', event.request.url)
-          cache.put(event.request, response.clone())
-          return response
-        } else {
+      return fetch(event.request)
+        .then(function (response) {
+          if (response && response.ok) {
+            log('Fetch OK:', event.request.url)
+            cache.put(event.request, response.clone())
+            return response
+          } else {
+            return cache.match(event.request)
+          }
+        })
+        .catch(function () {
           return cache.match(event.request)
-        }
-      }).catch(function () {
-        return cache.match(event.request)
-      })
+        })
     })
   )
 }

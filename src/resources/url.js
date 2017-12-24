@@ -1,4 +1,3 @@
-
 import download from 'bemuse/utils/download'
 import { basename } from 'path'
 

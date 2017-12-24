@@ -1,4 +1,3 @@
-
 import now from 'bemuse/utils/now'
 
 // The game timer keeps track of song progression in-game.

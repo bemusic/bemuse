@@ -16,7 +16,7 @@ describe('PlayerDisplay', function () {
   }
 
   it('reacts to input', function () {
-    let inputState = (inputs) => makeState({ input: new Map(inputs) })
+    let inputState = inputs => makeState({ input: new Map(inputs) })
 
     setup({
       notechart: notechart(),
@@ -132,7 +132,7 @@ describe('PlayerDisplay', function () {
     return {
       speed: 1,
       input: { get: () => ({ value: 0, changed: false }) },
-      notifications: { judgments: [ ] },
+      notifications: { judgments: [] },
       getNoteStatus: sinon.stub().returns('unjudged'),
       getNoteJudgment: sinon.stub().returns(0),
       stats: { score: 0 }

@@ -2,7 +2,7 @@ import * as Judgments from '../judgments'
 
 import _ from 'lodash'
 
-const getAccuracyScore = (accuracy) => Math.floor(accuracy * 500000)
+const getAccuracyScore = accuracy => Math.floor(accuracy * 500000)
 const getComboScore = (sum, total) => Math.floor(sum * 55555 / total)
 
 export class PlayerStats {
@@ -20,8 +20,8 @@ export class PlayerStats {
     this.counts = { [Judgments.MISSED]: 0, '1': 0, '2': 0, '3': 0, '4': 0 }
     this.numJudgments = 0
     this.poor = false
-    this._log = [ ]
-    this.deltas = [ ]
+    this._log = []
+    this.deltas = []
   }
   get score () {
     // #region score
@@ -39,30 +39,29 @@ export class PlayerStats {
   }
   get maxPossibleAccuracyScore () {
     const remainingJudgments = this.totalCombo - this.numJudgments
-    const maxPossibleRawWeight = this.rawSumJudgmentWeight + Judgments.weight(1) * remainingJudgments
-    const maxPossibleAccuracy = maxPossibleRawWeight / (Judgments.weight(1) * this.totalCombo)
+    const maxPossibleRawWeight =
+      this.rawSumJudgmentWeight + Judgments.weight(1) * remainingJudgments
+    const maxPossibleAccuracy =
+      maxPossibleRawWeight / (Judgments.weight(1) * this.totalCombo)
     return getAccuracyScore(maxPossibleAccuracy)
   }
   get maxPossibleComboScore () {
-    const maxPossibleRawComboScore = (
+    const maxPossibleRawComboScore =
       this.rawSumComboScore + this._remainingMaxPossibleRawComboScore
-    )
     return getComboScore(maxPossibleRawComboScore, this.rawTotalComboScore)
   }
   get accuracy () {
     return this.rawSumJudgmentWeight / (Judgments.weight(1) * this.totalCombo)
   }
   get currentAccuracy () {
-    return (this.rawSumJudgmentWeight /
-        (Judgments.weight(1) * this.numJudgments || 1))
+    return (
+      this.rawSumJudgmentWeight / (Judgments.weight(1) * this.numJudgments || 1)
+    )
   }
   get log () {
-    return (
-      this._log.map(({ character, count }) =>
-        `${count > 1 ? count : ''}${character}`
-      )
-        .join('')
-    )
+    return this._log
+      .map(({ character, count }) => `${count > 1 ? count : ''}${character}`)
+      .join('')
   }
   handleJudgment (judgment) {
     this.counts[judgment] += 1
@@ -71,7 +70,9 @@ export class PlayerStats {
       const remainingJudgments = this.totalCombo - this.numJudgments
       this.combo = 0
       this.poor = true
-      this._remainingMaxPossibleRawComboScore = this._calculateRawTotalComboScore(remainingJudgments)
+      this._remainingMaxPossibleRawComboScore = this._calculateRawTotalComboScore(
+        remainingJudgments
+      )
     } else {
       this.combo += 1
       const rawComboScore = this._calculateRawComboScore(this.combo)
@@ -120,11 +121,16 @@ export class PlayerStats {
   }
   _getLogCharacter (judgment) {
     switch (judgment) {
-      case 1: return 'A'
-      case 2: return 'B'
-      case 3: return 'C'
-      case 4: return 'D'
-      case Judgments.MISSED: return 'M'
+      case 1:
+        return 'A'
+      case 2:
+        return 'B'
+      case 3:
+        return 'C'
+      case 4:
+        return 'D'
+      case Judgments.MISSED:
+        return 'M'
     }
   }
 }

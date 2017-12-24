@@ -1,4 +1,3 @@
-
 import './AuthenticationPanel.scss'
 
 import React from 'react'
@@ -22,7 +21,7 @@ export default class AuthenticationPanel extends React.Component {
     }
   }
 
-  onSubmit = (formData) => {
+  onSubmit = formData => {
     if (this.state.mode === 'signUp') {
       this.runPromise(this.doSignUp(formData))
     } else {
@@ -30,35 +29,36 @@ export default class AuthenticationPanel extends React.Component {
     }
   }
 
-  runPromise = (promise) => {
+  runPromise = promise => {
     this.setState({
       authentication: {
         status: 'loading',
         message: 'Omachi kudasai...'
       }
     })
-    promise.then(
-      (message) => {
-        this.setState({
-          authentication: {
-            status: 'completed',
-            message: message
-          }
-        })
-      },
-      (error) => {
-        this.setState({
-          authentication: {
-            status: 'error',
-            message: error.message
-          }
-        })
-      }
-    )
+    promise
+      .then(
+        message => {
+          this.setState({
+            authentication: {
+              status: 'completed',
+              message: message
+            }
+          })
+        },
+        error => {
+          this.setState({
+            authentication: {
+              status: 'error',
+              message: error.message
+            }
+          })
+        }
+      )
       .done()
   }
 
-  doSignUp = (formData) => {
+  doSignUp = formData => {
     return Promise.try(() => {
       if (!formData.username.trim()) {
         throw new Error('Please enter a username.')
@@ -91,7 +91,7 @@ export default class AuthenticationPanel extends React.Component {
     })
   }
 
-  doLogIn = (formData) => {
+  doLogIn = formData => {
     return Promise.try(() => {
       if (!formData.username.trim()) {
         throw new Error('Please enter your username.')
@@ -115,50 +115,62 @@ export default class AuthenticationPanel extends React.Component {
   }
 
   render () {
-    return <div className='AuthenticationPanel'>
-      <Panel title='Bemuse Online Ranking'>
-        <div className='AuthenticationPanelのlayout'>
-          <div className='AuthenticationPanelのtitle'>
-            <img src={require('bemuse/app/ui/about-scene/DJBM.png')} alt='DJ Bemuse' />
-            <div className='AuthenticationPanelのidentification'>
-              Bemuse<br />Online<br />Ranking
+    return (
+      <div className='AuthenticationPanel'>
+        <Panel title='Bemuse Online Ranking'>
+          <div className='AuthenticationPanelのlayout'>
+            <div className='AuthenticationPanelのtitle'>
+              <img
+                src={require('bemuse/app/ui/about-scene/DJBM.png')}
+                alt='DJ Bemuse'
+              />
+              <div className='AuthenticationPanelのidentification'>
+                Bemuse<br />Online<br />Ranking
+              </div>
+            </div>
+            <div className='AuthenticationPanelのcontent'>
+              <div className='AuthenticationPanelのmodeSwitcher'>
+                <a
+                  href='javascript://online/logIn'
+                  onClick={this.onSwitchToLogin}
+                  className={this.renderModeActiveClass('logIn')}
+                >
+                  Log In
+                </a>{' '}
+                &middot;{' '}
+                <a
+                  href='javascript://online/signUp'
+                  onClick={this.onSwitchToSignup}
+                  className={this.renderModeActiveClass('signUp')}
+                >
+                  Create an Account
+                </a>
+              </div>
+              <Flex grow='2' />
+              {this.renderMessage()}
+              <AuthenticationForm
+                mode={this.state.mode}
+                onSubmit={this.onSubmit}
+              />
+              <Flex grow='3' />
             </div>
           </div>
-          <div className='AuthenticationPanelのcontent'>
-            <div className='AuthenticationPanelのmodeSwitcher'>
-              <a
-                href='javascript://online/logIn'
-                onClick={this.onSwitchToLogin}
-                className={this.renderModeActiveClass('logIn')}>
-                Log In
-              </a>
-              {' '}&middot;{' '}
-              <a
-                href='javascript://online/signUp'
-                onClick={this.onSwitchToSignup}
-                className={this.renderModeActiveClass('signUp')}>
-                Create an Account
-              </a>
-            </div>
-            <Flex grow='2' />
-            {this.renderMessage()}
-            <AuthenticationForm mode={this.state.mode} onSubmit={this.onSubmit} />
-            <Flex grow='3' />
-          </div>
-        </div>
-      </Panel>
-    </div>
+        </Panel>
+      </div>
+    )
   }
 
   renderMessage = () => {
     let state = this.state.authentication
     if (state.status === 'idle' || !state.message) return null
-    return <div className={c('AuthenticationPanelのmessage', 'is-' + state.status)}>
-      {state.message}
-    </div>
+    return (
+      <div className={c('AuthenticationPanelのmessage', 'is-' + state.status)}>
+        {state.message}
+      </div>
+    )
   }
 
-  renderModeActiveClass = (mode) => {
+  renderModeActiveClass = mode => {
     return mode === this.state.mode ? 'is-active' : ''
   }
 }

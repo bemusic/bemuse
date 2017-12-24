@@ -1,4 +1,3 @@
-
 // :doc:
 // This module exports the query string in browser.
 //

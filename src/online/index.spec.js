@@ -10,8 +10,14 @@ var uid = (function () {
     var random = Math.floor(Math.random() * 65536).toString(16)
     var time = Date.now().toString(16)
     return (
-      'bemuse.' + time + '.' + session + '.' + random +
-      '.' + (++index).toString(16)
+      'bemuse.' +
+      time +
+      '.' +
+      session +
+      '.' +
+      random +
+      '.' +
+      (++index).toString(16)
     )
   }
 })()
@@ -91,17 +97,20 @@ function tests (onlineServiceOptions) {
       describe('user川', function () {
         it('should change to signed-up user, and also start with it', function () {
           let info = createAccountInfo()
-          let promise = (
-            online.user川.take(2).toPromise()
-              .then(user => {
-                expect(user.username).to.equal(info.username)
-              })
-              .tap(() => {
-                return createOnline().user川.first().toPromise().then(user => {
+          let promise = online.user川
+            .take(2)
+            .toPromise()
+            .then(user => {
+              expect(user.username).to.equal(info.username)
+            })
+            .tap(() => {
+              return createOnline()
+                .user川.first()
+                .toPromise()
+                .then(user => {
                   expect(user.username).to.equal(info.username)
                 })
-              })
-          )
+            })
           Promise.resolve(online.signUp(info)).done()
           return promise
         })
@@ -122,9 +131,12 @@ function tests (onlineServiceOptions) {
       })
       describe('when log out', function () {
         it('should change user川 back to null', function () {
-          let promise = online.user川.take(2).toPromise().then(user => {
-            void expect(user).to.be.null
-          })
+          let promise = online.user川
+            .take(2)
+            .toPromise()
+            .then(user => {
+              void expect(user).to.be.null
+            })
           Promise.resolve(online.logOut()).done()
           return promise
         })
@@ -147,34 +159,38 @@ function tests (onlineServiceOptions) {
           return online.signUp(user1)
         })
         step('records data successfully', function () {
-          return Promise.resolve(online.submitScore({
-            md5: prefix + 'song',
-            playMode: 'BM',
-            score: 123456,
-            combo: 123,
-            total: 456,
-            count: [122, 1, 0, 0, 333],
-            log: ''
-          }))
-            .tap(function (record) {
-              expect(record.playNumber).to.equal(1)
-              expect(record.playCount).to.equal(1)
-              expect(record.recordedAt).to.be.an.instanceof(Date)
-              expect(record.rank).to.equal(1)
-              lastRecordedAt = record.recordedAt
+          return Promise.resolve(
+            online.submitScore({
+              md5: prefix + 'song',
+              playMode: 'BM',
+              score: 123456,
+              combo: 123,
+              total: 456,
+              count: [122, 1, 0, 0, 333],
+              log: ''
             })
+          ).tap(function (record) {
+            expect(record.playNumber).to.equal(1)
+            expect(record.playCount).to.equal(1)
+            expect(record.recordedAt).to.be.an.instanceof(Date)
+            expect(record.rank).to.equal(1)
+            lastRecordedAt = record.recordedAt
+          })
         })
-        step('does not update if old score is better, but update play count', function () {
-          return Promise.resolve(online.submitScore({
-            md5: prefix + 'song',
-            playMode: 'BM',
-            score: 123210,
-            combo: 124,
-            total: 456,
-            count: [123, 1, 0, 0, 332],
-            log: ''
-          }))
-            .tap(function (record) {
+        step(
+          'does not update if old score is better, but update play count',
+          function () {
+            return Promise.resolve(
+              online.submitScore({
+                md5: prefix + 'song',
+                playMode: 'BM',
+                score: 123210,
+                combo: 124,
+                total: 456,
+                count: [123, 1, 0, 0, 332],
+                log: ''
+              })
+            ).tap(function (record) {
               expect(record.score).to.equal(123456)
               expect(record.combo).to.equal(123)
               expect(record.playNumber).to.equal(1)
@@ -182,61 +198,65 @@ function tests (onlineServiceOptions) {
               expect(record.recordedAt).not.to.be.above(lastRecordedAt)
               lastRecordedAt = record.recordedAt
             })
-        })
+          }
+        )
         step('updates data if new score is better', function () {
-          return Promise.resolve(online.submitScore({
-            md5: prefix + 'song',
-            playMode: 'BM',
-            score: 555555,
-            combo: 456,
-            total: 456,
-            count: [456, 0, 0, 0, 0],
-            log: ''
-          }))
-            .tap(function (record) {
-              expect(record.score).to.equal(555555)
-              expect(record.combo).to.equal(456)
-              expect(record.playNumber).to.equal(3)
-              expect(record.playCount).to.equal(3)
-              expect(record.recordedAt).to.be.above(lastRecordedAt)
-              expect(record.playerName).to.equal(user1.username)
-              lastRecordedAt = record.recordedAt
+          return Promise.resolve(
+            online.submitScore({
+              md5: prefix + 'song',
+              playMode: 'BM',
+              score: 555555,
+              combo: 456,
+              total: 456,
+              count: [456, 0, 0, 0, 0],
+              log: ''
             })
+          ).tap(function (record) {
+            expect(record.score).to.equal(555555)
+            expect(record.combo).to.equal(456)
+            expect(record.playNumber).to.equal(3)
+            expect(record.playCount).to.equal(3)
+            expect(record.recordedAt).to.be.above(lastRecordedAt)
+            expect(record.playerName).to.equal(user1.username)
+            lastRecordedAt = record.recordedAt
+          })
         })
         step('different mode have different score board', function () {
-          return Promise.resolve(online.submitScore({
-            md5: prefix + 'song',
-            playMode: 'KB',
-            score: 123210,
-            combo: 124,
-            total: 456,
-            count: [123, 1, 0, 0, 332],
-            log: ''
-          }))
-            .tap(function (record) {
-              expect(record.score).to.equal(123210)
-              expect(record.rank).to.equal(1)
+          return Promise.resolve(
+            online.submitScore({
+              md5: prefix + 'song',
+              playMode: 'KB',
+              score: 123210,
+              combo: 124,
+              total: 456,
+              count: [123, 1, 0, 0, 332],
+              log: ''
             })
+          ).tap(function (record) {
+            expect(record.score).to.equal(123210)
+            expect(record.rank).to.equal(1)
+          })
         })
         step('as another user...', function () {
           return online.signUp(user2)
         })
         step('saves a separate data', function () {
-          return Promise.resolve(online.submitScore({
-            md5: prefix + 'song',
-            playMode: 'BM',
-            score: 123210,
-            combo: 124,
-            total: 456,
-            count: [123, 1, 0, 0, 332],
-            log: ''
-          }))
-            .tap(function (record) {
-              expect(record.score).to.equal(123210)
-              expect(record.playNumber).to.equal(1)
-              expect(record.playCount).to.equal(1)
-              expect(record.rank).to.equal(2)
+          return Promise.resolve(
+            online.submitScore({
+              md5: prefix + 'song',
+              playMode: 'BM',
+              score: 123210,
+              combo: 124,
+              total: 456,
+              count: [123, 1, 0, 0, 332],
+              log: ''
             })
+          ).tap(function (record) {
+            expect(record.score).to.equal(123210)
+            expect(record.playNumber).to.equal(1)
+            expect(record.playCount).to.equal(1)
+            expect(record.rank).to.equal(2)
+          })
         })
       })
     })
@@ -283,15 +303,16 @@ function tests (onlineServiceOptions) {
           })
         })
         step('scoreboard should return the top score', function () {
-          return Promise.resolve(online.scoreboard({
-            md5: prefix + 'song1',
-            playMode: 'BM'
-          }))
-            .tap(function (result) {
-              expect(result.data).to.have.length(2)
-              expect(result.data[0].rank).to.eq(1)
-              expect(result.data[1].rank).to.eq(2)
+          return Promise.resolve(
+            online.scoreboard({
+              md5: prefix + 'song1',
+              playMode: 'BM'
             })
+          ).tap(function (result) {
+            expect(result.data).to.have.length(2)
+            expect(result.data[0].rank).to.eq(1)
+            expect(result.data[1].rank).to.eq(2)
+          })
         })
         step('log out...', function () {
           return online.logOut()
@@ -315,22 +336,25 @@ function tests (onlineServiceOptions) {
         })
 
         function when (predicate) {
-          return Promise.resolve(ranking川.filter(predicate).first().toPromise())
+          return Promise.resolve(
+            ranking川
+              .filter(predicate)
+              .first()
+              .toPromise()
+          )
         }
 
         step('should have scoreboard loading status', function () {
           return when(state => state.meta.scoreboard.status === 'loading')
         })
         step('no new score should be submitted', function () {
-          return (
-            when(state =>
+          return when(
+            state =>
               state.meta.scoreboard.status === 'completed' &&
               state.meta.submission.status === 'unauthenticated'
-            )
-              .then(state => {
-                expect(state.data).to.have.length(2)
-              })
-          )
+          ).then(state => {
+            expect(state.data).to.have.length(2)
+          })
         })
         step('sign up user3...', function () {
           return online.signUp(user3)
@@ -339,21 +363,21 @@ function tests (onlineServiceOptions) {
           return when(state => state.meta.submission.status === 'loading')
         })
         step('should finish sending score', function () {
-          return (when(state => state.meta.submission.status === 'completed')
-            .then(state => {
-              expect(state.meta.submission.value.rank).to.equal(3)
-            })
-          )
+          return when(
+            state => state.meta.submission.status === 'completed'
+          ).then(state => {
+            expect(state.meta.submission.value.rank).to.equal(3)
+          })
         })
         step('should start loading scoreboard', function () {
           return when(state => state.meta.scoreboard.status === 'loading')
         })
         step('should finish reloading scoreboard', function () {
-          return (when(state => state.meta.scoreboard.status === 'completed')
-            .then(state => {
-              expect(state.data).to.have.length(3)
-            })
-          )
+          return when(
+            state => state.meta.scoreboard.status === 'completed'
+          ).then(state => {
+            expect(state.data).to.have.length(3)
+          })
         })
         step('resubscribe with read only', function () {
           dispose()
@@ -365,16 +389,14 @@ function tests (onlineServiceOptions) {
           dispose = ranking川.subscribe(() => {})
         })
         step('should not submit new score', function () {
-          return (
-            when(state =>
+          return when(
+            state =>
               state.meta.scoreboard.status === 'completed' &&
               state.meta.submission.status === 'completed'
-            )
-              .then(function (state) {
-                expect(state.data).to.have.length(3)
-                expect(state.meta.submission.value.playCount).to.equal(1)
-              })
-          )
+          ).then(function (state) {
+            expect(state.data).to.have.length(3)
+            expect(state.meta.submission.value.playCount).to.equal(1)
+          })
         })
         after(function () {
           online.logOut()
@@ -391,13 +413,9 @@ function steps (f) {
   var i = 0
   before(() => void _resolve())
   return f((name, fn) => {
-    promise = (
-      promise
-        .then(
-          fn,
-          () => { throw new Error('Previous steps errored') }
-        )
-    )
+    promise = promise.then(fn, () => {
+      throw new Error('Previous steps errored')
+    })
     let current = promise
     it(`${++i}. ${name}`, () => current)
   })

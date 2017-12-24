@@ -24,7 +24,14 @@ if (module.hot) {
   module.hot.accept('bemuse/game/loaders/game-loader')
 }
 
-export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime }) {
+export function launch ({
+  server,
+  song,
+  chart,
+  options,
+  saveSpeed,
+  saveLeadTime
+}) {
   // Unmute audio immediately so that it sounds on iOS.
   unmuteAudio()
 
@@ -33,14 +40,15 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
     invariant(options, 'Options must be passed!')
 
     // initialize the loading specification
-    let loadSpec = { }
+    let loadSpec = {}
     loadSpec.songId = song.id
 
     if (song.resources) {
       loadSpec.assets = song.resources
       loadSpec.bms = yield song.resources.file(chart.file)
     } else {
-      let url = server.url + '/' + song.path + '/' + encodeURIComponent(chart.file)
+      let url =
+        server.url + '/' + song.path + '/' + encodeURIComponent(chart.file)
       let assetsUrl = resolveUrl(url, 'assets/')
       loadSpec.bms = new URLResource(url)
       loadSpec.assets = new BemusePackageResources(assetsUrl, {
@@ -49,7 +57,8 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
       })
     }
 
-    const latency = +query.latency || (+options['system.offset.audio-input'] / 1000) || 0
+    const latency =
+      +query.latency || +options['system.offset.audio-input'] / 1000 || 0
     const volume = getVolume(song)
     const scratch = Options.scratchPosition(options)
     const keyboardMapping = Options.keyboardMapping(options)
@@ -129,14 +138,16 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
       Analytics.recordGameLoadTime(loadFinish - loadStart)
 
       // listen to unload events
-      const onUnload = () => { Analytics.gameQuit(song, chart, state) }
+      const onUnload = () => {
+        Analytics.gameQuit(song, chart, state)
+      }
       window.addEventListener('beforeunload', onUnload, false)
 
       // wait for final game state
       const playResult = yield controller.promise
       const state = controller.state
       const game = controller.game
-      const [ player ] = game.players
+      const [player] = game.players
 
       // get player's state and save options
       const playerState = state.player(state.game.players[0])
@@ -190,15 +201,15 @@ function showResult (player, playerState, chart) {
         '2': stats.counts['2'],
         '3': stats.counts['3'],
         '4': stats.counts['4'],
-        'missed': stats.counts[MISSED],
-        'score': stats.score,
-        'maxCombo': stats.maxCombo,
-        'accuracy': stats.accuracy,
-        'totalCombo': stats.totalCombo,
-        'totalNotes': stats.totalNotes,
-        'log': stats.log,
-        'deltas': stats.deltas,
-        'grade': getGrade(stats)
+        missed: stats.counts[MISSED],
+        score: stats.score,
+        maxCombo: stats.maxCombo,
+        accuracy: stats.accuracy,
+        totalCombo: stats.totalCombo,
+        totalNotes: stats.totalNotes,
+        log: stats.log,
+        deltas: stats.deltas,
+        grade: getGrade(stats)
       },
       chart: chart,
       playMode: playMode,

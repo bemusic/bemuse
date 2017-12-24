@@ -1,4 +1,3 @@
-
 import './OptionsInputField.scss'
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -20,17 +19,26 @@ class OptionsInputField extends React.PureComponent {
   }
 
   render () {
-    return <input
-      {..._.omit(this.props, ['stringify', 'parse', 'onChange', 'validator', 'value'])}
-      type='text'
-      ref='input'
-      defaultValue={this.props.stringify(this.props.value)}
-      onChange={this.handleInputChange}
-      onKeyDown={this.handleInputKeyDown}
-      onBlur={this.handleInputBlur}
-      className='OptionsInputField' />
+    return (
+      <input
+        {..._.omit(this.props, [
+          'stringify',
+          'parse',
+          'onChange',
+          'validator',
+          'value'
+        ])}
+        type='text'
+        ref='input'
+        defaultValue={this.props.stringify(this.props.value)}
+        onChange={this.handleInputChange}
+        onKeyDown={this.handleInputKeyDown}
+        onBlur={this.handleInputBlur}
+        className='OptionsInputField'
+      />
+    )
   }
-  handleInputChange = (e) => {
+  handleInputChange = e => {
     let input = e.target
     let valid = this.props.validator.test(input.value)
     input.classList[valid ? 'remove' : 'add']('is-invalid')

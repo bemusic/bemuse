@@ -8,18 +8,20 @@ import groupSongsIntoCategories from 'bemuse/music-collection/groupSongsIntoCate
 import sortSongs from 'bemuse/music-collection/sortSongs'
 
 const sorters = {
-  'ingame': (songs) => (
-    groupSongsIntoCategories(sortSongs(songs))
-  ),
-  'added': (songs) => [
-    { title: 'Sorted by added date', songs: _.reverse(_.sortBy(songs, getAdded)) }
+  ingame: songs => groupSongsIntoCategories(sortSongs(songs)),
+  added: songs => [
+    {
+      title: 'Sorted by added date',
+      songs: _.reverse(_.sortBy(songs, getAdded))
+    }
   ]
 }
 
-const getAdded = (song) => song.added || (song.initial ? '0000-00-00' : '9999-99-99')
+const getAdded = song =>
+  song.added || (song.initial ? '0000-00-00' : '9999-99-99')
 
 function validateSong (song) {
-  const problems = [ ]
+  const problems = []
   const report = (message, ...keys) => problems.push({ keys, message })
   if (song.unreleased) {
     report('Not released', 'unreleased')
@@ -59,19 +61,29 @@ function validateSong (song) {
 function renderSongWarnings (song) {
   const problems = validateSong(song)
   if (!problems.length) return null
-  return <div>
-    {problems.map((problem, index) => (
-      <div key={index}>
-        {problem.keys.map(key =>
-          <code
-            key={key}
-            style={{ fontFamily: 'Ubuntu Mono', marginRight: '2', padding: 3, fontSize: '0.8em', background: '#755' }}
-          >{key}</code>
-        )}
-        {problem.message}
-      </div>
-    ))}
-  </div>
+  return (
+    <div>
+      {problems.map((problem, index) => (
+        <div key={index}>
+          {problem.keys.map(key => (
+            <code
+              key={key}
+              style={{
+                fontFamily: 'Ubuntu Mono',
+                marginRight: '2',
+                padding: 3,
+                fontSize: '0.8em',
+                background: '#755'
+              }}
+            >
+              {key}
+            </code>
+          ))}
+          {problem.message}
+        </div>
+      ))}
+    </div>
+  )
 }
 
 export class MusicTable extends React.Component {
@@ -105,53 +117,70 @@ export class MusicTable extends React.Component {
             <th>warnings</th>
           </tr>
         </thead>
-        <tbody>
-          {this.renderRows()}
-        </tbody>
+        <tbody>{this.renderRows()}</tbody>
       </table>
     )
   }
   renderSorter () {
-    const out = [ ]
+    const out = []
     for (const key of Object.keys(sorters)) {
       out.push(
         <button
           key={key}
-          onClick={() => { this.setState({ sort: key }) }}
-        >{key}</button>
+          onClick={() => {
+            this.setState({ sort: key })
+          }}
+        >
+          {key}
+        </button>
       )
     }
-    return <span><strong>Sort by:</strong> {out}</span>
+    return (
+      <span>
+        <strong>Sort by:</strong> {out}
+      </span>
+    )
   }
   renderPreview () {
     const button = (
       <button
         onClick={() => {
-          this.setState((s) => ({ previewEnabled: !s.previewEnabled }))
+          this.setState(s => ({ previewEnabled: !s.previewEnabled }))
         }}
       >
         {this.state.previewEnabled ? 'disable' : 'enable'}
       </button>
     )
-    return <span>
-      <strong>Music preview:</strong> {button}
-      {this.state.previewEnabled &&
-        <MusicSelectPreviewer url={this.state.previewUrl} />
-      }
-    </span>
+    return (
+      <span>
+        <strong>Music preview:</strong> {button}
+        {this.state.previewEnabled && (
+          <MusicSelectPreviewer url={this.state.previewUrl} />
+        )}
+      </span>
+    )
   }
   renderRows () {
     const categories = sorters[this.state.sort](this.props.data.songs)
-    const out = [ ]
+    const out = []
     for (const category of categories) {
       out.push(
-        <tr key={category.title}><th colSpan={4}>{category.title}</th></tr>
+        <tr key={category.title}>
+          <th colSpan={4}>{category.title}</th>
+        </tr>
       )
       for (const song of category.songs) {
         out.push(
           <tr key={song.id}>
             <td>
-              <strong onClick={() => { prompt('', `vim '${song.id}/README.md'`) }}><code style={{ fontFamily: 'Ubuntu Mono' }}>{song.id}</code></strong><br />
+              <strong
+                onClick={() => {
+                  prompt('', `vim '${song.id}/README.md'`)
+                }}
+              >
+                <code style={{ fontFamily: 'Ubuntu Mono' }}>{song.id}</code>
+              </strong>
+              <br />
               <span style={{ color: '#8b8685' }}>{song.added}</span>
             </td>
             <td style={{ textAlign: 'center', background: '#353433' }}>
@@ -161,18 +190,22 @@ export class MusicTable extends React.Component {
                   const previewUrl = getPreviewUrl(this.props.url, song)
                   this.setState({ previewUrl })
                 }}
-              >{song.genre}</span><br />
+              >
+                {song.genre}
+              </span>
+              <br />
               <strong
                 onClick={() => {
                   console.log(song)
                   alert(require('util').inspect(song))
                 }}
-              >{song.title}</strong><br />
+              >
+                {song.title}
+              </strong>
+              <br />
               {song.artist}
             </td>
-            <td>
-              {renderSongWarnings(song)}
-            </td>
+            <td>{renderSongWarnings(song)}</td>
           </tr>
         )
       }

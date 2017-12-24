@@ -1,4 +1,3 @@
-
 import Markdown from 'markdown-it'
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -18,7 +17,12 @@ const safeMarkdown = new Markdown({
 
 export default class MarkdownContent extends React.Component {
   render () {
-    return <article className='Markdown' dangerouslySetInnerHTML={this.renderHTML()} />
+    return (
+      <article
+        className='Markdown'
+        dangerouslySetInnerHTML={this.renderHTML()}
+      />
+    )
   }
 
   componentDidMount () {
@@ -31,7 +35,9 @@ export default class MarkdownContent extends React.Component {
   }
 
   renderHTML = () => {
-    const html = (this.props.safe ? safeMarkdown : markdown).render(this.props.source)
+    const html = (this.props.safe ? safeMarkdown : markdown).render(
+      this.props.source
+    )
     return { __html: html }
   }
 }

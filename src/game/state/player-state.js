@@ -1,7 +1,13 @@
 import _ from 'lodash'
 
 import PlayerStats from './player-stats'
-import { MISSED, getJudgeForNotechart, isBad, judgeEndTime, judgeTime } from '../judgments'
+import {
+  MISSED,
+  getJudgeForNotechart,
+  isBad,
+  judgeEndTime,
+  judgeTime
+} from '../judgments'
 
 // The PlayerState class holds a single player's state, including the stats
 // (score, current combo, maximum combo).
@@ -10,7 +16,10 @@ export class PlayerState {
     this._player = player
     this._columns = player.columns
     this._noteBufferByColumn = _(player.notechart.notes)
-      .sortBy('time').groupBy('column').mapValues(noteBuffer(this)).value()
+      .sortBy('time')
+      .groupBy('column')
+      .mapValues(noteBuffer(this))
+      .value()
     this._noteResult = new Map()
     this._duration = player.notechart.duration
     this._judge = getJudgeForNotechart(player.notechart, {
@@ -22,7 +31,7 @@ export class PlayerState {
     this.stats = new PlayerStats(player.notechart)
 
     // The notifications from the previous update.
-    this.notifications = { }
+    this.notifications = {}
 
     // The current note scrolling speed.
     this.speed = player.options.speed
@@ -40,9 +49,9 @@ export class PlayerState {
   update (gameTime, input) {
     this._gameTime = gameTime
     this._rawInput = input
-    this.notifications = { }
-    this.notifications.sounds = [ ]
-    this.notifications.judgments = [ ]
+    this.notifications = {}
+    this.notifications.sounds = []
+    this.notifications.judgments = []
     this._updateInputColumnMap()
     this._judgeNotes()
     this._updateSpeed()
@@ -81,8 +90,9 @@ export class PlayerState {
     return this._rawInput.get(`p${this._player.number}_${control}`)
   }
   _updateInputColumnMap () {
-    this.input = new Map(this._columns.map((column) =>
-      [column, this.getPlayerInput(column)]))
+    this.input = new Map(
+      this._columns.map(column => [column, this.getPlayerInput(column)])
+    )
   }
 
   _judgeNotes () {
@@ -115,10 +125,9 @@ export class PlayerState {
     }
   }
   _modifySpeed (direction) {
-    let amount = (this._rawInput.get('select').value
+    let amount = this._rawInput.get('select').value
       ? 0.1
-      : (this.speed < 0.5 ? 0.3 : 0.5)
-    )
+      : this.speed < 0.5 ? 0.3 : 0.5
     this.speed += direction * amount
     if (this.speed < 0.2) this.speed = 0.2
   }
@@ -157,7 +166,7 @@ export class PlayerState {
   _getFreestyleNote (notes) {
     return _.minBy(notes, note => {
       let distance = Math.abs(this._gameTime - note.time)
-      let penalty = (this._gameTime < note.time - 1) ? 1000000 : 0
+      let penalty = this._gameTime < note.time - 1 ? 1000000 : 0
       return distance + penalty
     })
   }
@@ -199,7 +208,8 @@ export class PlayerState {
       } else if (isUp) {
         let scratch = note.column === 'SC'
         delta = this._gameTime - note.end.time
-        judgment = judgeEndTime(this._gameTime, note.end.time, this._judge) || MISSED
+        judgment =
+          judgeEndTime(this._gameTime, note.end.time, this._judge) || MISSED
         if (scratch && delta > 0) judgment = 1
         result = { status: 'judged', judgment, delta }
       }
@@ -232,8 +242,10 @@ function noteBuffer (state) {
         return startIndex
       },
       update () {
-        while (startIndex < notes.length &&
-            state.getNoteStatus(notes[startIndex]) === 'judged') {
+        while (
+          startIndex < notes.length &&
+          state.getNoteStatus(notes[startIndex]) === 'judged'
+        ) {
           startIndex += 1
         }
       }

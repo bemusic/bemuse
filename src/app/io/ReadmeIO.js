@@ -1,11 +1,12 @@
-
 import { createIO } from 'impure'
 import $ from 'jquery'
 import * as ReduxState from '../redux/ReduxState'
 
 export function requestReadme (song) {
   return createIO(({ store }, run) => {
-    const collectionUrl = ReduxState.selectCurrentCollectionUrl(store.getState())
+    const collectionUrl = ReduxState.selectCurrentCollectionUrl(
+      store.getState()
+    )
     if (song && song.readme) {
       const readmeUrl = collectionUrl + '/' + song.path + '/' + song.readme
       return run(requestReadmeForUrl(song.id, readmeUrl))

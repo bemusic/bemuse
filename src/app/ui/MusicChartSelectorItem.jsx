@@ -22,25 +22,24 @@ class MusicChartSelectorItem extends React.Component {
       'is-insane': this.props.chart.info.difficulty >= 5,
       'is-5keys': this.props.chart.keys === '5K'
     })
-    return <li
-      className={classes}
-      onClick={this.handleClick}>
-      {
-        this.props.isTutorial
-          ? (this.props.chart.keys === '5K'
-            ? 'Start Tutorial (5 keys)'
-            : 'Start Tutorial (7 keys)'
+    return (
+      <li className={classes} onClick={this.handleClick}>
+        {this.props.isTutorial ? (
+          this.props.chart.keys === '5K' ? (
+            'Start Tutorial (5 keys)'
+          ) : (
+            'Start Tutorial (7 keys)'
           )
-          : (
-            <span className='MusicChartSelectorItemのlevel'>
-              {this.props.chart.info.level}
-            </span>
-          )
-      }
-      <span className='MusicChartSelectorItemのplay'>
-        <Icon name='play' />
-      </span>
-    </li>
+        ) : (
+          <span className='MusicChartSelectorItemのlevel'>
+            {this.props.chart.info.level}
+          </span>
+        )}
+        <span className='MusicChartSelectorItemのplay'>
+          <Icon name='play' />
+        </span>
+      </li>
+    )
   }
 
   handleClick = () => {

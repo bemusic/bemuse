@@ -1,4 +1,3 @@
-
 import './MusicInfoTabs.scss'
 
 import React from 'react'
@@ -18,49 +17,61 @@ export default class MusicInfoTabs extends React.Component {
   }
 
   render () {
-    return <section className='MusicInfoTabs'>
-      <ul className='MusicInfoTabsのtabs'>
-        <li className='MusicInfoTabsのoptions' onClick={this.props.onOptions}>
-          <Icon name='gear' /> Options
-        </li>
-        {this.renderTab(0, 'Stats')}
-        {this.renderTab(1, 'Ranking')}
-        {this.renderTab(2, 'Information')}
-      </ul>
-      <div
-        className={c('MusicInfoTabsのpanel',
-          { 'is-without-padding': this.state.selectedTab === 1 })}>
-        {this.renderCurrentTab()}
-      </div>
-    </section>
+    return (
+      <section className='MusicInfoTabs'>
+        <ul className='MusicInfoTabsのtabs'>
+          <li className='MusicInfoTabsのoptions' onClick={this.props.onOptions}>
+            <Icon name='gear' /> Options
+          </li>
+          {this.renderTab(0, 'Stats')}
+          {this.renderTab(1, 'Ranking')}
+          {this.renderTab(2, 'Information')}
+        </ul>
+        <div
+          className={c('MusicInfoTabsのpanel', {
+            'is-without-padding': this.state.selectedTab === 1
+          })}
+        >
+          {this.renderCurrentTab()}
+        </div>
+      </section>
+    )
   }
 
   renderTab (index, title) {
     const onClick = () => this.setState({ selectedTab: index })
-    return <li
-      className={c('MusicInfoTabsのtab', {
-        'is-active': index === this.state.selectedTab
-      })}
-      onClick={onClick}
-    >
-      {title}
-    </li>
+    return (
+      <li
+        className={c('MusicInfoTabsのtab', {
+          'is-active': index === this.state.selectedTab
+        })}
+        onClick={onClick}
+      >
+        {title}
+      </li>
+    )
   }
 
   renderCurrentTab () {
     switch (this.state.selectedTab) {
       case 0:
-        return <MusicInfoTabStats
-          song={this.props.song}
-          chart={this.props.chart} />
+        return (
+          <MusicInfoTabStats song={this.props.song} chart={this.props.chart} />
+        )
       case 1:
-        return <RankingContainer
-          chart={this.props.chart}
-          playMode={this.props.playMode} />
+        return (
+          <RankingContainer
+            chart={this.props.chart}
+            playMode={this.props.playMode}
+          />
+        )
       case 2:
-        return <MusicInfoTabInformation
-          song={this.props.song}
-          chart={this.props.chart} />
+        return (
+          <MusicInfoTabInformation
+            song={this.props.song}
+            chart={this.props.chart}
+          />
+        )
       default:
         return 'Unknown tab'
     }

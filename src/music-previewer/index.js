@@ -77,7 +77,7 @@ function createMusicPreviewer () {
   let currentUrl = null
   let backgroundLoaded = false
   let backgroundPlayed = false
-  const instances = { }
+  const instances = {}
 
   const background = new Audio(require('./default.ogg'))
   background.preload = 'auto'
@@ -93,7 +93,7 @@ function createMusicPreviewer () {
   goSound.volume = 0.5
   goSound.load()
 
-  const backgroundFader = createFader(background, 0.5, (target) => {
+  const backgroundFader = createFader(background, 0.5, target => {
     if (target === 0 && backgroundPlayed) {
       backgroundPlayed = false
       background.pause()
@@ -175,7 +175,7 @@ function createMusicPreviewer () {
     audio.src = songUrl
     let played = false
 
-    const fader = createFader(audio, 1, (target) => {
+    const fader = createFader(audio, 1, target => {
       if (target === 0) {
         audio.pause()
         delete instances[songUrl]

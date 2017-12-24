@@ -1,9 +1,8 @@
-
 import _ from 'lodash'
 import $ from 'jquery'
 import keytime from 'keytime'
 
-let createKeytime = def => Object.assign({ }, def, { data: keytime(def.data) })
+let createKeytime = def => Object.assign({}, def, { data: keytime(def.data) })
 
 export class Animation {
   constructor (animations, timeKey) {
@@ -48,7 +47,7 @@ export class Animation {
 
 export function _compile ($el) {
   let keyframes = _.map(Array.from($el.children('keyframe')), _attrs)
-  let attrs = { }
+  let attrs = {}
   for (let keyframe of keyframes) {
     let time = +keyframe.t
     let ease = keyframe.ease || 'linear'

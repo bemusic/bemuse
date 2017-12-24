@@ -15,10 +15,10 @@ export class CollectionViewer extends React.Component {
   }
   componentDidMount () {
     load(this.state.url)
-      .then((result) => {
+      .then(result => {
         this.setState({ status: 'Load completed', data: result })
       })
-      .catch((e) => {
+      .catch(e => {
         this.setState({ status: 'Load error: ' + e })
       })
   }
@@ -27,7 +27,11 @@ export class CollectionViewer extends React.Component {
       <div>
         <header style={{ textAlign: 'center' }}>
           <h1>Bemuse collection viewer</h1>
-          <div>{this.state.url}<br />{this.state.status}</div>
+          <div>
+            {this.state.url}
+            <br />
+            {this.state.status}
+          </div>
         </header>
         <div style={{ padding: 20 }}>
           <MusicTable

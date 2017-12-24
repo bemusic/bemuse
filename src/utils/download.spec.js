@@ -1,10 +1,10 @@
-
 import download from 'bemuse/utils/download'
 
 describe('download', function () {
   it('resolves with correct type', function () {
-    return expect(download('/src/utils/test-fixtures/download/hello.txt').as('text'))
-      .to.eventually.match(/hello world/)
+    return expect(
+      download('/src/utils/test-fixtures/download/hello.txt').as('text')
+    ).to.eventually.match(/hello world/)
   })
 
   it('rejects for 404', function () {
@@ -20,7 +20,8 @@ describe('download', function () {
       this.onerror(new Error('...'))
     })
     return expect(
-      download('/spec/download/fixtures/hello.txt').as('blob')
+      download('/spec/download/fixtures/hello.txt')
+        .as('blob')
         .finally(() => stub.restore())
     ).to.be.rejected
   })

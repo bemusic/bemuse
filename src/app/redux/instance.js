@@ -1,4 +1,3 @@
-
 // HACK: This is only here to allow old Bacon.js-based code to access the store
 // state to provide a smoother migration path!
 // Only legacy code are allowed to access this file!!

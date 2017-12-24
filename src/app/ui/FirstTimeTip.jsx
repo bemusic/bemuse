@@ -10,15 +10,16 @@ import connectIO from '../../impure-react/connectIO'
 
 export const FirstTimeTip = compose(
   connectIO({
-    onClick: ({ featureKey }) => () => (
+    onClick: ({ featureKey }) => () =>
       OptionsIO.updateOptions(Options.acknowledge(featureKey))
-    )
   }),
   connect((state, { featureKey }) => ({
     tipVisible: !Options.hasAcknowledged(featureKey)(state.options)
   }))
 )(({ onClick, ...props }) => (
-  <span onClick={onClick}><TipContainer {...props} /></span>
+  <span onClick={onClick}>
+    <TipContainer {...props} />
+  </span>
 ))
 
 export default FirstTimeTip

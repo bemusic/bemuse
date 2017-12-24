@@ -4,8 +4,10 @@ import Promise from 'bluebird'
 import indexer from 'bemuse-indexer'
 
 /* global FileReaderSync */
-if (typeof FileReader === 'undefined' &&
-    typeof FileReaderSync !== 'undefined') {
+if (
+  typeof FileReader === 'undefined' &&
+  typeof FileReaderSync !== 'undefined'
+) {
   // Need to shim FileReader so that bemuse-chardet works.
   global.FileReader = function FileReaderShim () {
     let reader = new FileReaderSync()

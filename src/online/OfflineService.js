@@ -1,4 +1,3 @@
-
 const no = () => Promise.reject(new Error('Online services not enabled.'))
 
 export class OfflineService {

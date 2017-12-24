@@ -1,4 +1,3 @@
-
 export class LoadingContext {
   constructor (progress) {
     this._progress = progress
@@ -8,7 +7,7 @@ export class LoadingContext {
     let xh = new XMLHttpRequest()
     xh.open('GET', src, true)
     xh.responseType = 'blob'
-    xh.onprogress = (e) => {
+    xh.onprogress = e => {
       if (e.total && e.lengthComputable) {
         this._progress.report(e.loaded, e.total)
       }

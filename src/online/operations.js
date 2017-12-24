@@ -1,4 +1,3 @@
-
 import Bacon from 'baconjs'
 
 // An asynchronous operation may be in four states:
@@ -11,7 +10,11 @@ import Bacon from 'baconjs'
 
 // A constant representing the initial state of an asynchronous operation
 // that may be repeated:
-export const INITIAL_OPERATION_STATE = { status: 'pending', value: null, error: null }
+export const INITIAL_OPERATION_STATE = {
+  status: 'pending',
+  value: null,
+  error: null
+}
 
 export function loadingStateTransition () {
   return { status: 'loading', error: null }
@@ -25,8 +28,11 @@ export function errorStateTransition (error) {
   return { status: 'error', error }
 }
 
-export function transitionState (previousState = INITIAL_OPERATION_STATE, transition) {
-  return Object.assign({ }, previousState, transition)
+export function transitionState (
+  previousState = INITIAL_OPERATION_STATE,
+  transition
+) {
+  return Object.assign({}, previousState, transition)
 }
 
 export function isWaiting (state) {
@@ -43,7 +49,9 @@ export function outcomeOfPromise (promise) {
 }
 
 export function transition川FromPromise (promise) {
-  return Bacon.fromPromise(outcomeOfPromise(promise)).startWith(loadingStateTransition())
+  return Bacon.fromPromise(outcomeOfPromise(promise)).startWith(
+    loadingStateTransition()
+  )
 }
 
 export function operationState川 (transition川) {

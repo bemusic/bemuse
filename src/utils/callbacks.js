@@ -1,10 +1,9 @@
-
 // !! avoid external dependencies since this is used in boot script!
 
 // A utility class to hold a collection of callbacks.
 export class Callbacks {
   constructor (init) {
-    this._callbacks = { }
+    this._callbacks = {}
     this._nextId = 1
     if (typeof init === 'function') {
       this.add(init)

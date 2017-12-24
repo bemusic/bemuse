@@ -5,34 +5,34 @@ export const MISSED = -1
 
 // #region judgment timegate
 const NORMAL_TIMEGATES = [
-  { value: 1, timegate: 0.020, endTimegate: 0.040 },
-  { value: 2, timegate: 0.050, endTimegate: 0.100 },
-  { value: 3, timegate: 0.100, endTimegate: 0.200 },
-  { value: 4, timegate: 0.200, endTimegate: 0.200 }
+  { value: 1, timegate: 0.02, endTimegate: 0.04 },
+  { value: 2, timegate: 0.05, endTimegate: 0.1 },
+  { value: 3, timegate: 0.1, endTimegate: 0.2 },
+  { value: 4, timegate: 0.2, endTimegate: 0.2 }
 ]
 const TRANSITIONAL_BEGINNER_LV5_TIMEGATES = [
   { value: 1, timegate: 0.021, endTimegate: 0.042 },
-  { value: 2, timegate: 0.060, endTimegate: 0.120 },
-  { value: 3, timegate: 0.120, endTimegate: 0.200 },
-  { value: 4, timegate: 0.200, endTimegate: 0.200 }
+  { value: 2, timegate: 0.06, endTimegate: 0.12 },
+  { value: 3, timegate: 0.12, endTimegate: 0.2 },
+  { value: 4, timegate: 0.2, endTimegate: 0.2 }
 ]
 const TRANSITIONAL_BEGINNER_LV4_TIMEGATES = [
   { value: 1, timegate: 0.022, endTimegate: 0.044 },
-  { value: 2, timegate: 0.070, endTimegate: 0.140 },
-  { value: 3, timegate: 0.140, endTimegate: 0.200 },
-  { value: 4, timegate: 0.200, endTimegate: 0.200 }
+  { value: 2, timegate: 0.07, endTimegate: 0.14 },
+  { value: 3, timegate: 0.14, endTimegate: 0.2 },
+  { value: 4, timegate: 0.2, endTimegate: 0.2 }
 ]
 const TRANSITIONAL_BEGINNER_LV3_TIMEGATES = [
   { value: 1, timegate: 0.023, endTimegate: 0.046 },
-  { value: 2, timegate: 0.080, endTimegate: 0.160 },
-  { value: 3, timegate: 0.160, endTimegate: 0.200 },
-  { value: 4, timegate: 0.200, endTimegate: 0.200 }
+  { value: 2, timegate: 0.08, endTimegate: 0.16 },
+  { value: 3, timegate: 0.16, endTimegate: 0.2 },
+  { value: 4, timegate: 0.2, endTimegate: 0.2 }
 ]
 const ABSOLUTE_BEGINNER_TIMEGATES = [
   { value: 1, timegate: 0.024, endTimegate: 0.048 },
-  { value: 2, timegate: 0.100, endTimegate: 0.180 },
-  { value: 3, timegate: 0.180, endTimegate: 0.200 },
-  { value: 4, timegate: 0.200, endTimegate: 0.200 }
+  { value: 2, timegate: 0.1, endTimegate: 0.18 },
+  { value: 3, timegate: 0.18, endTimegate: 0.2 },
+  { value: 4, timegate: 0.2, endTimegate: 0.2 }
 ]
 // #endregion
 
@@ -56,9 +56,7 @@ class TutorialJudge {
 
 const NORMAL_JUDGE = new FixedTimegatesJudge(NORMAL_TIMEGATES)
 
-export function getJudgeForNotechart (notechart, {
-  tutorial = false
-}) {
+export function getJudgeForNotechart (notechart, { tutorial = false }) {
   const info = notechart.songInfo
   const insane = info.difficulty >= 5
   if (tutorial) {

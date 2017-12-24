@@ -1,4 +1,3 @@
-
 import './ChangelogPanel.scss'
 import React from 'react'
 import $ from 'jquery'
@@ -13,7 +12,9 @@ class ChangelogPanel extends React.Component {
   }
 
   componentDidMount () {
-    const promise = Promise.resolve($.get('https://api.github.com/repos/bemusic/bemuse/releases'))
+    const promise = Promise.resolve(
+      $.get('https://api.github.com/repos/bemusic/bemuse/releases')
+    )
     promise.then(
       releases => this.setState({ data: { status: 'completed', releases } }),
       () => this.setState({ data: { status: 'error' } })
@@ -31,31 +32,31 @@ class ChangelogPanel extends React.Component {
   }
 
   getMarkdown () {
-    const releasesPage = '[releases page on GitHub](https://github.com/bemusic/bemuse/releases)'
+    const releasesPage =
+      '[releases page on GitHub](https://github.com/bemusic/bemuse/releases)'
     if (this.state.data.status === 'loading') {
       return 'Omachi kudasai…'
     }
     if (this.state.data.status === 'error') {
       return (
         '__Unable to load the change log :(__\n\n' +
-        'You can view the change log at the ' + releasesPage
+        'You can view the change log at the ' +
+        releasesPage
       )
     }
-    const releases = (_(this.state.data.releases || [ ])
+    const releases = _(this.state.data.releases || [])
       .reject('draft')
       .sortBy('created_at')
       .reverse()
       .take(10)
       .value()
-    )
-    const changelog = (releases
+    const changelog = releases
       .map(release => `# ${release.tag_name}` + '\n\n' + release.body)
       .join('\n\n')
-    )
-    const seeMore = (
+    const seeMore =
       '# Older Versions\n\n' +
-      'The change log for older versions are available at the ' + releasesPage
-    )
+      'The change log for older versions are available at the ' +
+      releasesPage
     return changelog + '\n\n' + seeMore
   }
 }

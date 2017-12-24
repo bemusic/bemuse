@@ -1,4 +1,3 @@
-
 export function forModule (moduleName) {
   return {
     info: bindLogger(moduleName, 'info'),
@@ -9,6 +8,10 @@ export function forModule (moduleName) {
 
 function bindLogger (moduleName, level) {
   return (...args) => {
-    console.log(`[${new Date().toJSON()}] [${moduleName}] [${level}] ${require('util').format(...args)}`)
+    console.log(
+      `[${new Date().toJSON()}] [${moduleName}] [${level}] ${require('util').format(
+        ...args
+      )}`
+    )
   }
 }

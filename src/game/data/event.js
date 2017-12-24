@@ -1,4 +1,3 @@
-
 import DataStructure from 'data-structure'
 
 export let GameEvent = new DataStructure({

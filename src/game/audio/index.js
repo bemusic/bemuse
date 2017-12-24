@@ -5,8 +5,12 @@ export class GameAudio {
     const volume = game.options.soundVolume
     this._master = master
     this._context = master.audioContext
-    this._players = new Map(game.players.map(player =>
-      [player, new PlayerAudio({ player, samples, master, volume })]))
+    this._players = new Map(
+      game.players.map(player => [
+        player,
+        new PlayerAudio({ player, samples, master, volume })
+      ])
+    )
   }
   destroy () {
     this._master.destroy()

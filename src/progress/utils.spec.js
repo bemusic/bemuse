@@ -1,4 +1,3 @@
-
 import Progress from './'
 import * as ProgressUtils from './utils'
 
