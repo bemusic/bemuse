@@ -27,13 +27,19 @@ export function selectChart (song, chart) {
 
 export function launchGame (server, song, chart) {
   return createIO(({ store }, run) => {
-    Promise.resolve(GameLauncher.launch({
-      server,
-      song,
-      chart,
-      options: store.getState().options,
-      saveSpeed: (speed) => { run(OptionsIO.updateOptions(Options.changeSpeed(speed))) },
-      saveLeadTime: (leadTime) => { run(OptionsIO.updateOptions(Options.changeLeadTime(leadTime))) }
-    })).done()
+    Promise.resolve(
+      GameLauncher.launch({
+        server,
+        song,
+        chart,
+        options: store.getState().options,
+        saveSpeed: speed => {
+          run(OptionsIO.updateOptions(Options.changeSpeed(speed)))
+        },
+        saveLeadTime: leadTime => {
+          run(OptionsIO.updateOptions(Options.changeLeadTime(leadTime)))
+        }
+      })
+    ).done()
   })
 }

@@ -28,7 +28,8 @@ window.onerror = function (message, url, line, col, e) {
 
 let mode = query.mode || 'app'
 
-require.ensure(['./environment'],
+require.ensure(
+  ['./environment'],
   function (require) {
     require('./environment')
     var loadModule = require('val-loader!./loader.js')
@@ -38,16 +39,16 @@ require.ensure(['./environment'],
       let context = new LoadingContext(progress)
       progress.watch(() => Boot.setProgress(progress.progress))
       context.use(function () {
-      // >>
-      // The main script is then loaded and imported into the environment,
-      // and its ``main()`` method is invoked.
-      //
-      // Available Modes
-      // ~~~~~~~~~~~~~~~
-      // The available modes are specified in :src:`boot/loader.js`.
-      //
-      // .. codedoc:: boot/modes
-      //
+        // >>
+        // The main script is then loaded and imported into the environment,
+        // and its ``main()`` method is invoked.
+        //
+        // Available Modes
+        // ~~~~~~~~~~~~~~~
+        // The available modes are specified in :src:`boot/loader.js`.
+        //
+        // .. codedoc:: boot/modes
+        //
         loadModule[mode](function (loadedModule) {
           Boot.hide()
           loadedModule.main()
@@ -56,4 +57,6 @@ require.ensure(['./environment'],
     } else {
       console.error('Invalid mode:', mode)
     }
-  }, 'environment')
+  },
+  'environment'
+)

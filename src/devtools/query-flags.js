@@ -1,4 +1,3 @@
-
 import query from 'bemuse/utils/query'
 
 export function shouldShowOptions () {

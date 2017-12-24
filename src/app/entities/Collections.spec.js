@@ -12,8 +12,7 @@ describe('Collections', function () {
         Collections.getCollectionByUrl('https://test-server/'),
         LoadState.isCompleted,
         shouldEqual(true)
-      )
-  )
+      ))
   it('should allow errors', () =>
     given(Collections.initialState)
       .when(Collections.beginLoading('https://test-server/'))
@@ -22,6 +21,5 @@ describe('Collections', function () {
         Collections.getCollectionByUrl('https://test-server/'),
         LoadState.isError,
         shouldEqual(true)
-      )
-  )
+      ))
 })

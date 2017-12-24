@@ -25,13 +25,13 @@ describe('Options', () => {
     it('can be retrieved for current mode by column', () => {
       given(Options.initialState)
         .when(Options.changePlayMode('KB'))
-        .then(Options.keyboardMapping, (mapping) => {
+        .then(Options.keyboardMapping, mapping => {
           assert(mapping['4'] === '32') // KB mode, 4th button is space.
         })
 
       given(Options.initialState)
         .when(Options.changePlayMode('BM'))
-        .then(Options.keyboardMapping, (mapping) => {
+        .then(Options.keyboardMapping, mapping => {
           assert(mapping['4'] === '68') // BM mode, 4th button is D.
         })
     })
@@ -71,8 +71,7 @@ describe('Options', () => {
 
   describe('lead time', () => {
     it('defaults to 1685 ms (initial speed of tutorial)', () => {
-      given(Options.initialState)
-        .then(Options.leadTime, shouldEqual(1685))
+      given(Options.initialState).then(Options.leadTime, shouldEqual(1685))
     })
   })
 
@@ -81,20 +80,24 @@ describe('Options', () => {
       given(Options.initialState)
         .when(Options.changeScratchPosition('off'))
         .then(Options.scratchPosition, shouldEqual('off'))
-        .and((state) => { assert(state['player.P1.mode'] === 'KB') })
+        .and(state => {
+          assert(state['player.P1.mode'] === 'KB')
+        })
     })
     it('switches to BMS mode if on', () => {
       given(Options.initialState)
         .when(Options.changeScratchPosition('right'))
         .then(Options.scratchPosition, shouldEqual('right'))
-        .and((state) => { assert(state['player.P1.mode'] === 'BM') })
+        .and(state => {
+          assert(state['player.P1.mode'] === 'BM')
+        })
     })
     it('remembers previous scratch position prior to turning off', () => {
       given(Options.initialState)
         .when(Options.changeScratchPosition('right'))
         .and(Options.changeScratchPosition('off'))
         .then(Options.scratchPosition, shouldEqual('off'))
-        .and((state) => {
+        .and(state => {
           assert(state['player.P1.mode'] === 'KB')
           assert(state['player.P1.scratch'] === 'right')
         })
@@ -127,8 +130,10 @@ describe('Options', () => {
 
   describe('new feature announcements', () => {
     it('should track its acknowledgement', () => {
-      given(Options.initialState)
-        .then(Options.hasAcknowledged('twitter'), shouldEqual(false))
+      given(Options.initialState).then(
+        Options.hasAcknowledged('twitter'),
+        shouldEqual(false)
+      )
     })
     it('can be acknowledged by the user', () => {
       given(Options.initialState)
@@ -139,8 +144,10 @@ describe('Options', () => {
 
   describe('auto/input latency', () => {
     it('defaults to 0', () => {
-      given(Options.initialState)
-        .then(Options.audioInputLatency, shouldEqual(0))
+      given(Options.initialState).then(
+        Options.audioInputLatency,
+        shouldEqual(0)
+      )
     })
     it('can be adjusted', () => {
       given(Options.initialState)
@@ -159,8 +166,7 @@ describe('Options', () => {
 
   function itCanBeToggled ({ check, toggle, defaultSetting }) {
     it('defaults to ' + defaultSetting, () => {
-      given(Options.initialState)
-        .then(check, shouldEqual(defaultSetting))
+      given(Options.initialState).then(check, shouldEqual(defaultSetting))
     })
     it('can be toggled', () => {
       given(Options.initialState)

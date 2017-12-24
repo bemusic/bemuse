@@ -1,4 +1,3 @@
-
 export const SUPPORTED = [
   {
     name: 'Firefox 37+',

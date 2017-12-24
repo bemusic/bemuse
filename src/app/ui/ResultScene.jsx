@@ -34,58 +34,65 @@ export default class ResultScene extends React.Component {
   render () {
     void this.props.lr2Timegate // XXX: unused for now
 
-    return <Scene className='ResultScene'>
-      <SceneHeading>
-        Play Result
-        <div className='ResultSceneのmode'>
-          {this.props.playMode === 'KB' ? 'Keyboard' : 'BMS'} Mode
+    return (
+      <Scene className='ResultScene'>
+        <SceneHeading>
+          Play Result
+          <div className='ResultSceneのmode'>
+            {this.props.playMode === 'KB' ? 'Keyboard' : 'BMS'} Mode
+          </div>
+        </SceneHeading>
+        <div className='ResultSceneのreport'>
+          <ResultTable result={this.props.result} />
         </div>
-      </SceneHeading>
-      <div className='ResultSceneのreport'>
-        <ResultTable result={this.props.result} />
-      </div>
-      <ResultGrade grade={this.props.result.grade} />
-      <div className='ResultSceneのinformation'>
-        <div className='ResultSceneのinformationHeader'>
-          <div className='ResultSceneのchart'>
-            <FirstTimeTip tip='Play again' featureKey='replayGame'>
-              <MusicChartSelectorItem
-                chart={this.props.chart}
-                onChartClick={this.props.onReplay}
-                isReplayable
-              />
+        <ResultGrade grade={this.props.result.grade} />
+        <div className='ResultSceneのinformation'>
+          <div className='ResultSceneのinformationHeader'>
+            <div className='ResultSceneのchart'>
+              <FirstTimeTip tip='Play again' featureKey='replayGame'>
+                <MusicChartSelectorItem
+                  chart={this.props.chart}
+                  onChartClick={this.props.onReplay}
+                  isReplayable
+                />
+              </FirstTimeTip>
+            </div>
+            <MusicChartInfo info={this.props.chart.info} />
+          </div>
+          <div className='ResultSceneのinformationBody'>
+            <RankingContainer
+              result={this.props.result}
+              chart={this.props.chart}
+              playMode={this.props.playMode}
+            />
+          </div>
+          <div className='ResultSceneのinformationFooter'>
+            <a
+              href={this.getTweetLink()}
+              className='ResultSceneのtweet'
+              onClick={this.onTweet}
+            >
+              <i className='fa fa-twitter' />
+            </a>
+            <Flex grow={1} />
+            <FirstTimeTip tip='Back to music selection' featureKey='finishGame'>
+              <div className='ResultSceneのexit' onClick={this.handleExit}>
+                Continue
+              </div>
             </FirstTimeTip>
           </div>
-          <MusicChartInfo info={this.props.chart.info} />
         </div>
-        <div className='ResultSceneのinformationBody'>
-          <RankingContainer
-            result={this.props.result}
-            chart={this.props.chart}
-            playMode={this.props.playMode} />
-        </div>
-        <div className='ResultSceneのinformationFooter'>
-          <a href={this.getTweetLink()} className='ResultSceneのtweet' onClick={this.onTweet}>
-            <i className='fa fa-twitter' />
+        <SceneToolbar>
+          <span>
+            <ResultExpertInfo deltas={this.props.result.deltas} />
+          </span>
+          <SceneToolbar.Spacer />
+          <a onClick={this.props.onExit} href='javascript://'>
+            Continue
           </a>
-          <Flex grow={1} />
-          <FirstTimeTip tip='Back to music selection' featureKey='finishGame'>
-            <div className='ResultSceneのexit' onClick={this.handleExit}>
-              Continue
-            </div>
-          </FirstTimeTip>
-        </div>
-      </div>
-      <SceneToolbar>
-        <span>
-          <ResultExpertInfo deltas={this.props.result.deltas} />
-        </span>
-        <SceneToolbar.Spacer />
-        <a onClick={this.props.onExit} href='javascript://'>
-          Continue
-        </a>
-      </SceneToolbar>
-    </Scene>
+        </SceneToolbar>
+      </Scene>
+    )
   }
   getTweetLink () {
     let title = this.props.chart.info.title
@@ -102,21 +109,27 @@ export default class ResultScene extends React.Component {
     let url = 'https://bemuse.ninja/'
     let server = QueryFlags.getMusicServer()
     if (server) {
-      url = (
+      url =
         (/^http:/.test(server) ? 'http' : 'https') +
-        '://bemuse.ninja/?server=' + encodeURIComponent(server)
-      )
+        '://bemuse.ninja/?server=' +
+        encodeURIComponent(server)
     }
-    let text = `Played:「 ${title}${subtitle} 」on #Bemuse (Score:${score} [${grade}])` + '\n' + `→ ${url}`
-    return 'https://twitter.com/intent/tweet?related=bemusegame&text=' + encodeURIComponent(text)
+    let text =
+      `Played:「 ${title}${subtitle} 」on #Bemuse (Score:${score} [${grade}])` +
+      '\n' +
+      `→ ${url}`
+    return (
+      'https://twitter.com/intent/tweet?related=bemusegame&text=' +
+      encodeURIComponent(text)
+    )
   }
-  onTweet = (e) => {
+  onTweet = e => {
     e.preventDefault()
     e.stopPropagation()
     Analytics.send('ResultScene', 'tweet')
     window.open(this.getTweetLink(), 'intent', 'width=550,height=420')
   }
-  handleExit = (e) => {
+  handleExit = e => {
     this.props.onExit(e)
     Analytics.send('ResultScene', 'exit')
   }

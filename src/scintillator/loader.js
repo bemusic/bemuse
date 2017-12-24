@@ -41,8 +41,9 @@ export function load (xmlPath, progress) {
 }
 
 function loadXml (xmlUrl) {
-  return Promise.resolve($.ajax({ url: xmlUrl, dataType: 'xml' }))
-    .then(xml => $(xml.documentElement))
+  return Promise.resolve($.ajax({ url: xmlUrl, dataType: 'xml' })).then(xml =>
+    $(xml.documentElement)
+  )
 }
 
 function loadResources (resources, progress) {

@@ -12,11 +12,13 @@ export default class Scene extends React.Component {
   }
 
   render () {
-    return <div
-      className={c('Scene', this.props.className)}
-      onDragEnter={this.props.onDragEnter}
-    >
-      {this.props.children}
-    </div>
+    return (
+      <div
+        className={c('Scene', this.props.className)}
+        onDragEnter={this.props.onDragEnter}
+      >
+        {this.props.children}
+      </div>
+    )
   }
 }

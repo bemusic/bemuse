@@ -1,4 +1,3 @@
-
 import './RankingTable.scss'
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -6,9 +5,7 @@ import { formattedAccuracyForRecord } from 'bemuse/rules/accuracy'
 
 const RankingTable = ({ children }) => (
   <table className='RankingTable'>
-    <tbody>
-      {children}
-    </tbody>
+    <tbody>{children}</tbody>
   </table>
 )
 
@@ -22,20 +19,20 @@ class Row extends React.Component {
   }
 
   render () {
-    return <tr>
-      <td className='RankingTableのrank'>
-        {this.props.record.rank || <span title='Unable to determine your rank'>??</span>}
-      </td>
-      <td className='RankingTableのname'>
-        {this.props.record.playerName}
-      </td>
-      <td className='RankingTableのscore'>
-        {this.props.record.score}
-      </td>
-      <td className='RankingTableのaccuracy'>
-        {formattedAccuracyForRecord(this.props.record)}
-      </td>
-    </tr>
+    return (
+      <tr>
+        <td className='RankingTableのrank'>
+          {this.props.record.rank || (
+            <span title='Unable to determine your rank'>??</span>
+          )}
+        </td>
+        <td className='RankingTableのname'>{this.props.record.playerName}</td>
+        <td className='RankingTableのscore'>{this.props.record.score}</td>
+        <td className='RankingTableのaccuracy'>
+          {formattedAccuracyForRecord(this.props.record)}
+        </td>
+      </tr>
+    )
   }
 }
 

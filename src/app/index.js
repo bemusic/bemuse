@@ -2,12 +2,13 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 import now from 'bemuse/utils/now'
-import workerPath from
-  'bemuse/hacks/service-worker-url/index.loader.js!serviceworker-loader!./service-worker.js'
+import workerPath from 'bemuse/hacks/service-worker-url/index.loader.js!serviceworker-loader!./service-worker.js'
 import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
 import { createIO, createRun } from 'impure'
-import { shouldShowAbout, shouldShowModeSelect }
-  from 'bemuse/devtools/query-flags'
+import {
+  shouldShowAbout,
+  shouldShowModeSelect
+} from 'bemuse/devtools/query-flags'
 import { withContext } from 'recompose'
 
 import * as Analytics from './analytics'
@@ -19,8 +20,11 @@ import ModeSelectScene from './ui/ModeSelectScene'
 import TitleScene from './ui/TitleScene'
 import ioContext from './io/ioContext'
 import store from './redux/instance'
-import { getInitialGrepString, getMusicServer, getTimeSynchroServer }
-  from './query-flags'
+import {
+  getInitialGrepString,
+  getMusicServer,
+  getTimeSynchroServer
+} from './query-flags'
 import { isBrowserSupported } from './browser-support'
 
 /* eslint import/no-webpack-loader-syntax: off */
@@ -33,14 +37,12 @@ SCENE_MANAGER.ReactSceneContainer = withContext(
   { store: PropTypes.object, runIO: PropTypes.func },
   () => ({ store, runIO })
 )(({ children }) => {
-  return <div className='bemuse-scene'>
-    {React.Children.only(children)}
-  </div>
+  return <div className='bemuse-scene'>{React.Children.only(children)}</div>
 })
 
 // Allow hot reloading of some modules.
 if (module.hot) {
-  module.hot.accept('./redux/ReduxState', () => { })
+  module.hot.accept('./redux/ReduxState', () => {})
 }
 
 export default runIO
@@ -62,14 +64,16 @@ export function main () {
   // setup service worker
   let promise = setupServiceWorker()
   if (promise && promise.then) {
-    Promise.resolve(promise).finally(displayFirstScene).done()
+    Promise.resolve(promise)
+      .finally(displayFirstScene)
+      .done()
   } else {
     displayFirstScene()
   }
 
   // synchronize time
-  let timeSynchroServer = (getTimeSynchroServer() ||
-        'wss://timesynchro.herokuapp.com/')
+  let timeSynchroServer =
+    getTimeSynchroServer() || 'wss://timesynchro.herokuapp.com/'
   if (timeSynchroServer) now.synchronize(timeSynchroServer)
 }
 
@@ -94,7 +98,7 @@ function getFirstScene () {
 function shouldActivateServiceWorker () {
   return (
     (location.protocol === 'https:' && location.host === 'bemuse.ninja') ||
-    (location.hostname === 'localhost')
+    location.hostname === 'localhost'
   )
 }
 

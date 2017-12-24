@@ -37,12 +37,12 @@ import { connectIO } from '../../impure-react/connectIO'
 const selectMusicSelectState = (() => {
   const selectLegacyServerObjectForCurrentCollection = createSelector(
     ReduxState.selectCurrentCollectionUrl,
-    (url) => ({ url })
+    url => ({ url })
   )
 
   const selectIsCurrentCollectionUnofficial = createSelector(
     ReduxState.selectCurrentCollectionUrl,
-    (url) => url !== OFFICIAL_SERVER_URL
+    url => url !== OFFICIAL_SERVER_URL
   )
 
   return createStructuredSelector({
@@ -62,24 +62,22 @@ const selectMusicSelectState = (() => {
 
 const enhance = compose(
   connectToLegacyStore({ user: online && online.user川 }),
-  connect((state) => ({
+  connect(state => ({
     musicSelect: selectMusicSelectState(state),
     collectionUrl: ReduxState.selectCurrentCollectionUrl(state),
     musicPreviewEnabled: Options.isPreviewEnabled(state.options)
   })),
   connectIO({
-    onSelectChart: () => (song, chart) => (
-      MusicSelectionIO.selectChart(song, chart)
-    ),
-    onSelectSong: () => (song) => (
-      MusicSelectionIO.selectSong(song)
-    ),
-    onFilterTextChange: () => (text) => (
-      MusicSearchIO.handleSearchTextType(text)
-    ),
-    onLaunchGame: ({ musicSelect }) => () => (
-      MusicSelectionIO.launchGame(musicSelect.server, musicSelect.song, musicSelect.chart)
-    )
+    onSelectChart: () => (song, chart) =>
+      MusicSelectionIO.selectChart(song, chart),
+    onSelectSong: () => song => MusicSelectionIO.selectSong(song),
+    onFilterTextChange: () => text => MusicSearchIO.handleSearchTextType(text),
+    onLaunchGame: ({ musicSelect }) => () =>
+      MusicSelectionIO.launchGame(
+        musicSelect.server,
+        musicSelect.song,
+        musicSelect.chart
+      )
   })
 )
 
@@ -113,71 +111,74 @@ class MusicSelectScene extends React.PureComponent {
 
   render () {
     let musicSelect = this.props.musicSelect
-    return <Scene
-      className='MusicSelectScene'
-      onDragEnter={this.handleCustomBMSOpen}
-    >
-      <SceneHeading>
-        Select Music
-        <input
-          type='text'
-          placeholder='Filter…'
-          className='MusicSelectSceneのsearch'
-          onChange={this.handleFilter}
-          value={musicSelect.filterText}
-        />
-      </SceneHeading>
+    return (
+      <Scene
+        className='MusicSelectScene'
+        onDragEnter={this.handleCustomBMSOpen}
+      >
+        <SceneHeading>
+          Select Music
+          <input
+            type='text'
+            placeholder='Filter…'
+            className='MusicSelectSceneのsearch'
+            onChange={this.handleFilter}
+            value={musicSelect.filterText}
+          />
+        </SceneHeading>
 
-      {this.renderUnofficialDisclaimer()}
+        {this.renderUnofficialDisclaimer()}
 
-      {this.renderMain()}
+        {this.renderMain()}
 
-      <SceneToolbar>
-        <a onClick={this.popScene} href='javascript://'>Exit</a>
-        <a
-          onClick={this.handleCustomBMSOpen}
-          href='javascript://'
+        <SceneToolbar>
+          <a onClick={this.popScene} href='javascript://'>
+            Exit
+          </a>
+          <a onClick={this.handleCustomBMSOpen} href='javascript://'>
+            Play Custom BMS
+          </a>
+          <SceneToolbar.Spacer />
+          {this.renderOnlineToolbarButtons()}
+          <a onClick={this.handleOptionsOpen} href='javascript://'>
+            Options
+          </a>
+        </SceneToolbar>
+
+        <ModalPopup
+          visible={this.state.optionsVisible}
+          onBackdropClick={this.handleOptionsClose}
         >
-          Play Custom BMS
-        </a>
-        <SceneToolbar.Spacer />
-        {this.renderOnlineToolbarButtons()}
-        <a onClick={this.handleOptionsOpen} href='javascript://'>Options</a>
-      </SceneToolbar>
+          <OptionsView onClose={this.handleOptionsClose} />
+        </ModalPopup>
 
-      <ModalPopup
-        visible={this.state.optionsVisible}
-        onBackdropClick={this.handleOptionsClose}
-      >
-        <OptionsView onClose={this.handleOptionsClose} />
-      </ModalPopup>
+        <ModalPopup
+          visible={this.state.customBMSVisible}
+          onBackdropClick={this.handleCustomBMSClose}
+        >
+          <div className='MusicSelectSceneのcustomBms'>
+            <CustomBMS onSongLoaded={this.handleCustomSong} />
+          </div>
+        </ModalPopup>
 
-      <ModalPopup
-        visible={this.state.customBMSVisible}
-        onBackdropClick={this.handleCustomBMSClose}
-      >
-        <div className='MusicSelectSceneのcustomBms'>
-          <CustomBMS onSongLoaded={this.handleCustomSong} />
-        </div>
-      </ModalPopup>
+        <ModalPopup
+          visible={this.state.unofficialDisclaimerVisible}
+          onBackdropClick={this.handleUnofficialClose}
+        >
+          <UnofficialPanel onClose={this.handleUnofficialClose} />
+        </ModalPopup>
 
-      <ModalPopup
-        visible={this.state.unofficialDisclaimerVisible}
-        onBackdropClick={this.handleUnofficialClose}
-      >
-        <UnofficialPanel onClose={this.handleUnofficialClose} />
-      </ModalPopup>
+        <AuthenticationPopup
+          visible={this.state.authenticationPopupVisible}
+          onFinish={this.handleAuthenticationFinish}
+          onBackdropClick={this.handleAuthenticationClose}
+        />
 
-      <AuthenticationPopup
-        visible={this.state.authenticationPopupVisible}
-        onFinish={this.handleAuthenticationFinish}
-        onBackdropClick={this.handleAuthenticationClose}
-      />
-
-      {!!this.props.musicPreviewEnabled &&
-        <MusicSelectPreviewer url={this.getPreviewUrl()} />
-      }
-    </Scene>
+        {!!this.props.musicPreviewEnabled && (
+          <MusicSelectPreviewer url={this.getPreviewUrl()} />
+        )}
+      </Scene>
+    )
   }
 
   renderUnofficialDisclaimer () {
@@ -198,14 +199,18 @@ class MusicSelectScene extends React.PureComponent {
       return <div className='MusicSelectSceneのloading'>Loading…</div>
     }
     if (musicSelect.error) {
-      return <div className='MusicSelectSceneのloading'>Cannot load collection!</div>
+      return (
+        <div className='MusicSelectSceneのloading'>Cannot load collection!</div>
+      )
     }
     if (musicSelect.groups.length === 0) {
       return <div className='MusicSelectSceneのloading'>No songs found!</div>
     }
     return (
       <div
-        className={c('MusicSelectSceneのmain', { 'is-in-song': this.state.inSong })}
+        className={c('MusicSelectSceneのmain', {
+          'is-in-song': this.state.inSong
+        })}
       >
         <MusicList
           groups={musicSelect.groups}
@@ -233,14 +238,21 @@ class MusicSelectScene extends React.PureComponent {
     let buttons = []
     if (this.props.user) {
       buttons.push(
-        <a onClick={this.handleLogout} href='javascript://online/logout' key='logout'>
-          Log Out
-          ({this.props.user.username})
+        <a
+          onClick={this.handleLogout}
+          href='javascript://online/logout'
+          key='logout'
+        >
+          Log Out ({this.props.user.username})
         </a>
       )
     } else {
       buttons.push(
-        <a onClick={this.handleAuthenticate} href='javascript://online/logout' key='auth'>
+        <a
+          onClick={this.handleAuthenticate}
+          href='javascript://online/logout'
+          key='auth'
+        >
           Log In / Create an Account
         </a>
       )
@@ -259,11 +271,14 @@ class MusicSelectScene extends React.PureComponent {
     if (!scroller) return
     const scrollerRect = scroller.getBoundingClientRect()
     const activeRect = active.getBoundingClientRect()
-    if (activeRect.bottom > scrollerRect.bottom || activeRect.top < scrollerRect.top) {
-      scroller.scrollTop += (
-        (activeRect.top + activeRect.height / 2) -
+    if (
+      activeRect.bottom > scrollerRect.bottom ||
+      activeRect.top < scrollerRect.top
+    ) {
+      scroller.scrollTop +=
+        activeRect.top +
+        activeRect.height / 2 -
         (scrollerRect.top + scrollerRect.height / 2)
-      )
     }
   }
   handleSongSelect = (song, chart) => {
@@ -279,7 +294,7 @@ class MusicSelectScene extends React.PureComponent {
   handleMusicListTouch = () => {
     this.setState({ inSong: false })
   }
-  handleChartClick = (chart) => {
+  handleChartClick = chart => {
     if (this.props.musicSelect.chart.md5 === chart.md5) {
       Analytics.send('MusicSelectScene', 'launch game')
       MusicPreviewer.go()
@@ -289,7 +304,7 @@ class MusicSelectScene extends React.PureComponent {
       this.props.onSelectChart(this.props.musicSelect.song, chart)
     }
   }
-  handleFilter = (e) => {
+  handleFilter = e => {
     this.props.onFilterTextChange(e.target.value)
   }
   handleOptionsOpen = () => {
@@ -306,7 +321,7 @@ class MusicSelectScene extends React.PureComponent {
   handleCustomBMSClose = () => {
     this.setState({ customBMSVisible: false })
   }
-  handleCustomSong = (song) => {
+  handleCustomSong = song => {
     this.setState({ customBMSVisible: false })
   }
   handleUnofficialClick = () => {

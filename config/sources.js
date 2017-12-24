@@ -1,4 +1,3 @@
-
 // This file holds the glob patterns for source code files.
 //
 

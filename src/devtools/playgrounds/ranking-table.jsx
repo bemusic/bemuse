@@ -1,4 +1,3 @@
-
 import React from 'react'
 import ReactDOM from 'react-dom'
 import MAIN from 'bemuse/utils/main-element'
@@ -10,8 +9,20 @@ const RankingTablePlayground = () => (
     <Ranking
       state={{
         data: [
-          { playerName: 'One', score: '543210', count: [5, 4, 3, 2, 1], total: 15, rank: 1 },
-          { playerName: 'Two', score: '123456', count: [1, 2, 3, 4, 5], total: 15, rank: 2 }
+          {
+            playerName: 'One',
+            score: '543210',
+            count: [5, 4, 3, 2, 1],
+            total: 15,
+            rank: 1
+          },
+          {
+            playerName: 'Two',
+            score: '123456',
+            count: [1, 2, 3, 4, 5],
+            total: 15,
+            rank: 2
+          }
         ],
         meta: {
           scoreboard: {
@@ -19,7 +30,13 @@ const RankingTablePlayground = () => (
           },
           submission: {
             status: 'completed',
-            record: { playerName: 'One', score: '543210', count: [5, 4, 3, 2, 1], total: 15, rank: 1 }
+            record: {
+              playerName: 'One',
+              score: '543210',
+              count: [5, 4, 3, 2, 1],
+              total: 15,
+              rank: 1
+            }
           }
         }
       }}
@@ -27,8 +44,20 @@ const RankingTablePlayground = () => (
     <Ranking
       state={{
         data: [
-          { playerName: 'One', score: '543210', count: [5, 4, 3, 2, 1], total: 15, rank: 1 },
-          { playerName: 'Two', score: '123456', count: [1, 2, 3, 4, 5], total: 15, rank: 2 }
+          {
+            playerName: 'One',
+            score: '543210',
+            count: [5, 4, 3, 2, 1],
+            total: 15,
+            rank: 1
+          },
+          {
+            playerName: 'Two',
+            score: '123456',
+            count: [1, 2, 3, 4, 5],
+            total: 15,
+            rank: 2
+          }
         ],
         meta: {
           scoreboard: {

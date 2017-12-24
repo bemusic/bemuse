@@ -8,8 +8,9 @@ import SamplingMaster, { canPlay } from 'bemuse/sampling-master'
 /**
  * The audio format to use (.ogg or .m4a)
  */
-let audioExt = once(() =>
-  canPlay('audio/ogg; codecs="vorbis"') ? '.ogg' : '.m4a')
+let audioExt = once(
+  () => (canPlay('audio/ogg; codecs="vorbis"') ? '.ogg' : '.m4a')
+)
 
 /**
  * The asset URL of these files...
@@ -31,14 +32,17 @@ let ASSET_URLS = {
 export function load () {
   return co(function * () {
     let master = new SamplingMaster(context)
-    let sample =
-          name => download(ASSET_URLS[`${name}${audioExt()}`])
-            .as('arraybuffer')
-            .then(buf => master.sample(buf))
+    let sample = name =>
+      download(ASSET_URLS[`${name}${audioExt()}`])
+        .as('arraybuffer')
+        .then(buf => master.sample(buf))
     let samples = _.fromPairs(
       yield Promise.all(
-        ['bgm', 'intro', 'kick', 'snare'].map(
-          name => sample(name).then(sampleObj => [name, sampleObj]))))
+        ['bgm', 'intro', 'kick', 'snare'].map(name =>
+          sample(name).then(sampleObj => [name, sampleObj])
+        )
+      )
+    )
     return music(master, samples)
   })
 }
@@ -104,7 +108,7 @@ function music (master, samples) {
 
 function beatSequencer (bpm, f) {
   let beat = -1
-  return (time) => {
+  return time => {
     let nowBeat = Math.floor((time + 0.1) * bpm / 60)
     while (beat < nowBeat) {
       beat += 1

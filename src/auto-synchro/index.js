@@ -1,4 +1,3 @@
-
 import * as Music from './music'
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -11,14 +10,17 @@ import { connect } from 'bemuse/flux'
 export function main () {
   const state口 = new Bacon.Bus()
 
-  const state川 = state口.scan({
-    loading: true,
-    started: false,
-    finished: false,
-    listening: false,
-    numSamples: 0,
-    latency: 0
-  }, (state, change) => _.assign({ }, state, change))
+  const state川 = state口.scan(
+    {
+      loading: true,
+      started: false,
+      finished: false,
+      listening: false,
+      numSamples: 0,
+      latency: 0
+    },
+    (state, change) => _.assign({}, state, change)
+  )
 
   const ConnectedExperimentScene = connect(state川)(ExperimentScene)
 
@@ -54,9 +56,12 @@ export function main () {
           let latency = Math.max(0, getLatency(samples))
           state口.push({ finished: true, latency })
           if (window.opener) {
-            window.opener.postMessage({
-              latency: latency
-            }, '*')
+            window.opener.postMessage(
+              {
+                latency: latency
+              },
+              '*'
+            )
           }
         }
       })

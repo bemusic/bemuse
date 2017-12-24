@@ -8,7 +8,7 @@
 // This module is implemented so that we can compare the difficulty
 // of grading system in Bemuse to Lunatic Rave 2’s.
 //
-export function getLR2Score (deltas, [ meticulousWindow, preciseWindow ]) {
+export function getLR2Score (deltas, [meticulousWindow, preciseWindow]) {
   let sum = 0
   for (const delta of deltas) {
     const difference = Math.abs(delta) * 1000

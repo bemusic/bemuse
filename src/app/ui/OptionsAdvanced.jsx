@@ -13,11 +13,11 @@ import OptionsButton from './OptionsButton'
 import OptionsInputField from './OptionsInputField'
 
 const enhance = compose(
-  connect((state) => ({
+  connect(state => ({
     options: state.options
   })),
   connectIO({
-    onUpdateOptions: () => (updater) => OptionsIO.updateOptions(updater)
+    onUpdateOptions: () => updater => OptionsIO.updateOptions(updater)
   }),
   pure
 )
@@ -35,25 +35,31 @@ class OptionsAdvanced extends React.Component {
   }
   render () {
     let options = this.props.options
-    return <div className='OptionsAdvanced'>
-      <LatencyMessageListener onLatency={this.handleAudioInputLatencyChange} />
-      <div className='OptionsAdvancedのgroup'>
-        <label>Latency</label>
-        <div className='OptionsAdvancedのgroupItem'>
-          <OptionsInputField
-            value={Options.audioInputLatency(options)}
-            parse={this.parseLatency}
-            stringify={this.stringifyLatency}
-            validator={/^\d+(?:ms)?$/}
-            onChange={this.handleAudioInputLatencyChange} />
-          <label>audio</label>
+    return (
+      <div className='OptionsAdvanced'>
+        <LatencyMessageListener
+          onLatency={this.handleAudioInputLatencyChange}
+        />
+        <div className='OptionsAdvancedのgroup'>
+          <label>Latency</label>
+          <div className='OptionsAdvancedのgroupItem'>
+            <OptionsInputField
+              value={Options.audioInputLatency(options)}
+              parse={this.parseLatency}
+              stringify={this.stringifyLatency}
+              validator={/^\d+(?:ms)?$/}
+              onChange={this.handleAudioInputLatencyChange}
+            />
+            <label>audio</label>
+          </div>
+          <OptionsButton onClick={this.handleCalibrateButtonClick}>
+            Calibrate
+          </OptionsButton>
         </div>
-        <OptionsButton
-          onClick={this.handleCalibrateButtonClick}>Calibrate</OptionsButton>
       </div>
-    </div>
+    )
   }
-  handleAudioInputLatencyChange = (value) => {
+  handleAudioInputLatencyChange = value => {
     this.props.onUpdateOptions(Options.changeAudioInputLatency(value))
   }
   handleCalibrateButtonClick = () => {
@@ -77,7 +83,7 @@ class LatencyMessageListener extends React.Component {
   componentWillUnmount () {
     window.removeEventListener('message', this.handleMessage)
   }
-  handleMessage = (event) => {
+  handleMessage = event => {
     if (event.data && typeof event.data.latency === 'number') {
       this.props.onLatency(event.data.latency)
     }

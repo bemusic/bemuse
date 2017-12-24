@@ -14,7 +14,9 @@ import ctx from 'bemuse/audio-context'
 import template from './template.jade'
 
 export function main (element) {
-  $(element).text('Technical Demo!').on('click', handler)
+  $(element)
+    .text('Technical Demo!')
+    .on('click', handler)
 
   function handler () {
     ui()
@@ -26,14 +28,12 @@ export function main (element) {
   function ui () {
     var el = $(template()).appendTo('body')
     el.find('.js-play').hide()
-    el
-      .on('dragover', () => false)
-      .on('drop', e => {
-        e.preventDefault()
-        let dndLoader = new DndResources(e.originalEvent)
-        go(dndLoader, el)
-        return false
-      })
+    el.on('dragover', () => false).on('drop', e => {
+      e.preventDefault()
+      let dndLoader = new DndResources(e.originalEvent)
+      go(dndLoader, el)
+      return false
+    })
   }
 }
 
@@ -56,7 +56,9 @@ function go (loader, element) {
     var timing = Timing.fromBMSChart(chart)
     var notes = Notes.fromBMSChart(chart)
     var info = SongInfo.fromBMSChart(chart)
-    $('<pre wrap></pre>').text(JSON.stringify(info, null, 2)).appendTo($sampler)
+    $('<pre wrap></pre>')
+      .text(JSON.stringify(info, null, 2))
+      .appendTo($sampler)
     log('Loading samples')
     var samples = yield loadSamples(notes, chart)
     log('Click the button to play!')
@@ -112,8 +114,11 @@ function go (loader, element) {
             .then(blob => master.sample(blob))
             .then(sample => (samples[keysound] = sample))
             .catch(e => console.error('Unable to load ' + keysound + ': ' + e))
-            .tap(() => log('[loaded ' + (++completed) + '/' + promises.length +
-              ' samples]'))
+            .tap(() =>
+              log(
+                '[loaded ' + ++completed + '/' + promises.length + ' samples]'
+              )
+            )
         )
       }
     }
@@ -123,7 +128,8 @@ function go (loader, element) {
 
   function loadKeysound (name) {
     if (typeof name !== 'string') return Promise.reject(new Error('Empty name'))
-    return loader.file(name)
+    return loader
+      .file(name)
       .catch(() => loader.file(name.replace(/\.\w+$/, '.ogg')))
       .catch(() => loader.file(name.replace(/\.\w+$/, '.mp3')))
       .catch(() => loader.file(name.replace(/\.\w+$/, '.wav')))

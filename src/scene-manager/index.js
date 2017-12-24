@@ -1,4 +1,3 @@
-
 import co from 'co'
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -62,34 +61,36 @@ export class SceneManager {
   }
 
   _transitionTo (getNextScene) {
-    return co(function * () {
-      if (this._transitioning) throw new Error('Scene is transitioning!')
-      try {
-        this._transitioning = true
+    return co(
+      function * () {
+        if (this._transitioning) throw new Error('Scene is transitioning!')
+        try {
+          this._transitioning = true
 
-        // detach the previous scene
-        if (this.currentSceneInstance) {
-          yield Promise.resolve(this.currentSceneInstance.teardown())
-          detach(this.currentElement)
+          // detach the previous scene
+          if (this.currentSceneInstance) {
+            yield Promise.resolve(this.currentSceneInstance.teardown())
+            detach(this.currentElement)
+          }
+
+          // obtain the next scene
+          let scene = getNextScene()
+
+          // coerce react elements
+          if (typeof scene !== 'function') { scene = new ReactScene(scene, this.ReactSceneContainer) }
+
+          // set up the next scene
+          var element = document.createElement('div')
+          element.className = 'scene-manager--scene'
+          MAIN.appendChild(element)
+          this.currentElement = element
+          this.currentScene = scene
+          this.currentSceneInstance = scene(element)
+        } finally {
+          this._transitioning = false
         }
-
-        // obtain the next scene
-        let scene = getNextScene()
-
-        // coerce react elements
-        if (typeof scene !== 'function') scene = new ReactScene(scene, this.ReactSceneContainer)
-
-        // set up the next scene
-        var element = document.createElement('div')
-        element.className = 'scene-manager--scene'
-        MAIN.appendChild(element)
-        this.currentElement = element
-        this.currentScene = scene
-        this.currentSceneInstance = scene(element)
-      } finally {
-        this._transitioning = false
-      }
-    }.bind(this))
+      }.bind(this)
+    )
   }
 }
 
@@ -106,16 +107,17 @@ export default instance
 
 function ReactScene (element, ReactSceneContainer) {
   return function instantiate (container) {
-    let teardown = () => { }
+    let teardown = () => {}
     const clonedElement = React.cloneElement(element, {
       scene: element,
-      registerTeardownCallback: (callback) => {
+      registerTeardownCallback: callback => {
         teardown = callback
       }
     })
-    const elementToDisplay = (ReactSceneContainer
-      ? <ReactSceneContainer>{clonedElement}</ReactSceneContainer>
-      : clonedElement
+    const elementToDisplay = ReactSceneContainer ? (
+      <ReactSceneContainer>{clonedElement}</ReactSceneContainer>
+    ) : (
+      clonedElement
     )
     ReactDOM.render(elementToDisplay, container)
     return {

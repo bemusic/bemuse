@@ -1,6 +1,5 @@
-
 export class WaveFactory {
-  constructor (master, samples, map, { volume } = { }) {
+  constructor (master, samples, map, { volume } = {}) {
     this._master = master
     this._samples = samples
     this._map = map

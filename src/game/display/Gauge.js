@@ -1,4 +1,3 @@
-
 export function getGauge (gaugeType) {
   if (gaugeType === 'hope') {
     return hopeGauge()
@@ -8,8 +7,7 @@ export function getGauge (gaugeType) {
 
 function nullGauge () {
   return {
-    update () {
-    },
+    update () {},
     shouldDisplay () {
       return false
     },

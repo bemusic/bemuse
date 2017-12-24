@@ -4,12 +4,9 @@ import PlayerStats from './player-stats'
 import { notechart } from '../test-helpers'
 
 describe('PlayerStats', function () {
-  const statsFor5Notes = () => (
-    new PlayerStats(notechart('#00111:1111111111'))
-  )
-  const statsFor1000Notes = () => (
+  const statsFor5Notes = () => new PlayerStats(notechart('#00111:1111111111'))
+  const statsFor1000Notes = () =>
     new PlayerStats(notechart('#00111:' + '11'.repeat(1000)))
-  )
 
   describe('#score', function () {
     it('returns the score', function () {
@@ -84,7 +81,7 @@ describe('PlayerStats', function () {
       stats.handleDelta(0.031)
       stats.handleDelta(0.001)
       stats.handleDelta(-0.031)
-      expect(stats.deltas).to.deep.equal([ 0.031, 0.001, -0.031 ])
+      expect(stats.deltas).to.deep.equal([0.031, 0.001, -0.031])
     })
   })
 

@@ -1,4 +1,3 @@
-
 export function calculateAccuracy (count, total) {
   return (count[0] + count[1] * 0.8 + count[2] * 0.5) / total
 }

@@ -1,10 +1,16 @@
 import _ from 'lodash'
 import invariant from 'invariant'
 
-export default (options) => {
+export default options => {
   invariant(typeof options.enabled === 'boolean', 'enabled must be a boolean')
-  invariant(typeof options.initialSpeed === 'number', 'initialSpeed must be a number')
-  invariant(typeof options.desiredLeadTime === 'number', 'desiredLeadTime must be a number')
+  invariant(
+    typeof options.initialSpeed === 'number',
+    'initialSpeed must be a number'
+  )
+  invariant(
+    typeof options.desiredLeadTime === 'number',
+    'desiredLeadTime must be a number'
+  )
   invariant(typeof options.songBPM === 'number', 'songBPM must be a number')
   if (options.enabled) {
     return autoVelocity({
@@ -31,9 +37,8 @@ function manualVelocity (initialSpeed) {
 function autoVelocity ({ songBPM, desiredLeadTime, laneCover }) {
   const visiblePortion = 1 - Math.abs(laneCover)
   const nominalSpeedLeadTime = 60000 * 5 / songBPM * visiblePortion
-  const initialSpeed = _.minBy(
-    _.range(1, 999).map(x => x / 10),
-    (speed) => Math.abs(desiredLeadTime - (nominalSpeedLeadTime / speed))
+  const initialSpeed = _.minBy(_.range(1, 999).map(x => x / 10), speed =>
+    Math.abs(desiredLeadTime - nominalSpeedLeadTime / speed)
   )
   return {
     getInitialSpeed () {

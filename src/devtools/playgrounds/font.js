@@ -1,4 +1,3 @@
-
 import * as PIXI from 'pixi.js'
 import MAIN from 'bemuse/utils/main-element'
 

@@ -43,11 +43,11 @@ describe('A keysound cache', function () {
   function setup () {
     const cache = createKeysoundCache()
     return {
-      startSong: (songId) => cache.receiveSongId(songId),
+      startSong: songId => cache.receiveSongId(songId),
       cache: (soundName, audioBuffer) => cache.cache(soundName, audioBuffer),
       isEmpty: () => cache.isEmpty(),
-      isCached: (soundName) => cache.isCached(soundName),
-      get: (soundName) => cache.get(soundName)
+      isCached: soundName => cache.isCached(soundName),
+      get: soundName => cache.get(soundName)
     }
   }
 })

@@ -13,50 +13,48 @@ class MusicListItem extends React.PureComponent {
       'is-active': this.props.selected,
       'js-active-song': this.props.selected
     })
-    return <li
-      className={className}
-      onClick={this.handleClick}>
-      {
-        song.tutorial
-          ? (
-            <div className='MusicListItemのtutorial'>
+    return (
+      <li className={className} onClick={this.handleClick}>
+        {song.tutorial ? (
+          <div className='MusicListItemのtutorial'>
+            <div className='MusicListItemのcharts'>
+              {this.renderChartlist()}
+            </div>
+            Tutorial
+          </div>
+        ) : (
+          <div className='MusicListItemのinfo'>
+            <div className='MusicListItemのinfo-top'>
+              <div className='MusicListItemのtitle'>
+                {this.renderHighlight(song.title)}
+              </div>
               <div className='MusicListItemのcharts'>
                 {this.renderChartlist()}
               </div>
-            Tutorial
             </div>
-          )
-          : (
-            <div className='MusicListItemのinfo'>
-              <div className='MusicListItemのinfo-top'>
-                <div className='MusicListItemのtitle'>
-                  {this.renderHighlight(song.title)}
-                </div>
-                <div className='MusicListItemのcharts'>
-                  {this.renderChartlist()}
-                </div>
+            <div className='MusicListItemのinfo-bottom'>
+              <div className='MusicListItemのartist'>
+                {this.renderHighlight(song.artist)}
               </div>
-              <div className='MusicListItemのinfo-bottom'>
-                <div className='MusicListItemのartist'>
-                  {this.renderHighlight(song.artist)}
-                </div>
-                <div className='MusicListItemのgenre'>
-                  {this.renderHighlight(song.genre)}
-                </div>
+              <div className='MusicListItemのgenre'>
+                {this.renderHighlight(song.genre)}
               </div>
             </div>
-          )
-      }
-    </li>
+          </div>
+        )}
+      </li>
+    )
   }
 
   renderChartlist () {
-    return <MusicListItemCharts
-      charts={getPlayableCharts(this.props.song.charts)}
-      selectedChart={this.props.selectedChart}
-      onChartClick={this.handleChartClick}
-      playMode={this.props.playMode}
-    />
+    return (
+      <MusicListItemCharts
+        charts={getPlayableCharts(this.props.song.charts)}
+        selectedChart={this.props.selectedChart}
+        onChartClick={this.handleChartClick}
+        playMode={this.props.playMode}
+      />
+    )
   }
 
   renderHighlight (text) {
@@ -71,8 +69,9 @@ class MusicListItem extends React.PureComponent {
       start += segments[i].length
       if (i !== segments.length - 1) {
         let highlightedText = text.substr(start, highlight.length)
-        output.push(<span
-          className='MusicListItemのhighlight'>{highlightedText}</span>)
+        output.push(
+          <span className='MusicListItemのhighlight'>{highlightedText}</span>
+        )
         start += highlight.length
       }
     }

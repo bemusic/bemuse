@@ -1,4 +1,3 @@
-
 // :doc:
 // Bootstraps the environment with:
 //
@@ -31,6 +30,7 @@ global.Promise = Bluebird
 //
 //    The Promise class is augmented with a ``log`` method that simply
 //    logs the value of the promise.
-Promise.prototype.log = function (...args) { // eslint-disable-line no-extend-native
+Promise.prototype.log = function (...args) {
+  // eslint-disable-line no-extend-native
   return this.tap(value => console.log(...args.concat([value])))
 }

@@ -1,4 +1,3 @@
-
 import Callbacks from 'bemuse/utils/callbacks'
 
 export class Instance {
@@ -6,8 +5,8 @@ export class Instance {
     this._context = options.context
     this._object = options.object
     this._children = options.children
-    this._bindings = [ ]
-    this._concerns = [ ]
+    this._bindings = []
+    this._concerns = []
     this.onData = new Callbacks(options.onData)
     this.onDestroy = new Callbacks(options.onDestroy)
     if (options.bindings) {
@@ -39,7 +38,7 @@ export class Instance {
       // just do it once
       sideEffect(pipeline[0]())
     } else {
-      this._bindings.push((value) => {
+      this._bindings.push(value => {
         for (var i = 0; i < pipeline.length; i++) {
           value = pipeline[i](value)
         }

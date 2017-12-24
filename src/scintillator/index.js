@@ -1,4 +1,3 @@
-
 import { load } from './loader'
 import { Context } from './context'
 

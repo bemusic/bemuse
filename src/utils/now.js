@@ -1,4 +1,3 @@
-
 // :doc:
 //
 // High-accuracy timer, optionally synchronized globally.

@@ -24,7 +24,7 @@ export function updateOptions (updater) {
   return createIO(({ store }) => {
     const currentOptions = store.getState().options
     const nextOptions = updater(currentOptions)
-    const changes = { }
+    const changes = {}
     for (const key of Object.keys(currentOptions)) {
       if (nextOptions[key] !== currentOptions[key]) {
         changes[key] = nextOptions[key]

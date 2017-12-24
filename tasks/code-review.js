@@ -1,4 +1,3 @@
-
 import gulp from 'gulp'
 import path from '../config/path'
 import { javascripts } from '../config/sources'
@@ -9,7 +8,8 @@ import _ from 'lodash'
 import fs from 'fs'
 
 gulp.task('code-review', function () {
-  return gulp.src(javascripts)
+  return gulp
+    .src(javascripts)
     .pipe(eslint({ quiet: true }))
     .pipe(codeReview())
     .pipe(formatReviewMessage())
@@ -29,13 +29,14 @@ function codeReview () {
 function formatReviewMessage () {
   let linkTo = repoPath => (text, extra) => {
     if (!process.env.TRAVIS_REPO_SLUG) return text
-    let url = [
-      'https://github.com',
-      process.env.TRAVIS_REPO_SLUG,
-      'blob',
-      process.env.TRAVIS_COMMIT,
-      repoPath
-    ].join('/') + extra
+    let url =
+      [
+        'https://github.com',
+        process.env.TRAVIS_REPO_SLUG,
+        'blob',
+        process.env.TRAVIS_COMMIT,
+        repoPath
+      ].join('/') + extra
     return `[${text}](${url})`
   }
   let problems = []
@@ -47,13 +48,15 @@ function formatReviewMessage () {
       let link = linkTo(filePath)
       lines.push('* ' + link(`__${filePath}__`, ''))
       for (var problem of _.sortBy(file.problems, 'line')) {
-        lines.push([
-          '    * ',
-          link(`line ${problem.line}`, `#L${problem.line}`),
-          ', ' + `col ${problem.col}`,
-          ': ',
-          `${problem.message} (${problem.code})`
-        ].join(''))
+        lines.push(
+          [
+            '    * ',
+            link(`line ${problem.line}`, `#L${problem.line}`),
+            ', ' + `col ${problem.col}`,
+            ': ',
+            `${problem.message} (${problem.code})`
+          ].join('')
+        )
       }
       problems.push(...lines)
       cb()
@@ -67,7 +70,9 @@ function formatReviewMessage () {
           'to detect potential errors ' +
           'and check for consistent coding style, ' +
           'and I found some problems with your code submission ' +
-          'in the commit ' + process.env.TRAVIS_COMMIT + ':',
+          'in the commit ' +
+          process.env.TRAVIS_COMMIT +
+          ':',
         ''
       ]
       text.push(...problems)

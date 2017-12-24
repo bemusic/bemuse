@@ -54,8 +54,8 @@ export function main () {
               '5': kbm[4] || 74,
               '6': kbm[5] || 75,
               '7': kbm[6] || 76,
-              'SC': kbm[7] || 65,
-              'SC2': kbm[8] || 16
+              SC: kbm[7] || 65,
+              SC2: kbm[8] || 16
             }
           }
         }
@@ -75,7 +75,7 @@ export function main () {
       bms: options.resource || new URLResource(url),
       assets: options.resources || new BemusePackageResources(assetsUrl),
       metadata: metadata,
-      options: Object.assign({ }, options.game, { players: options.players })
+      options: Object.assign({}, options.game, { players: options.players })
     }
     return loadSpec
   })
@@ -83,13 +83,14 @@ export function main () {
   co(function * () {
     let loadSpec = yield getSong()
     let { tasks, promise } = GameLoader.load(loadSpec)
-    yield SCENE_MANAGER.display(React.createElement(LoadingScene, {
-      tasks: tasks,
-      song: loadSpec.metadata
-    }))
+    yield SCENE_MANAGER.display(
+      React.createElement(LoadingScene, {
+        tasks: tasks,
+        song: loadSpec.metadata
+      })
+    )
     let controller = yield promise
     yield SCENE_MANAGER.display(new GameScene(controller.display))
     controller.start()
-  })
-    .done()
+  }).done()
 }

@@ -92,7 +92,7 @@ export function getStorage () {
 
 // Returns all the options.
 export function getAllCurrentOptions () {
-  let options = { }
+  let options = {}
   for (let key of keys()) options[key] = get(key)
   return options
 }

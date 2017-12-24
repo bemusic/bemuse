@@ -7,7 +7,8 @@ import * as authenticationFlow from './authenticationFlow'
 export default function createScoreboardClient ({
   server,
   auth,
-  log = (format, ...args) => console.log('[ScoreboardClient] ' + format, ...args)
+  log = (format, ...args) =>
+    console.log('[ScoreboardClient] ' + format, ...args)
 }) {
   const client = axios.create({
     baseURL: server
@@ -16,34 +17,40 @@ export default function createScoreboardClient ({
   function userSignUp (username, email, password, playerName) {
     return new Promise((resolve, reject) => {
       log('Signing up with Auth0')
-      auth.signup({
-        connection: 'Username-Password-Authentication',
-        email: email,
-        username: username,
-        password: password,
-        userMetadata: {
-          playerName: playerName
-        }
-      }, function (err) {
-        if (err) {
-          log('Auth0 signup error', err)
-          return reject(coerceAuth0ErrorToErrorObject(err))
-        }
-        log('Auth0 signup OK — now logging in')
-        auth.client.login({
-          realm: 'Username-Password-Authentication',
+      auth.signup(
+        {
+          connection: 'Username-Password-Authentication',
+          email: email,
           username: username,
           password: password,
-          scope: 'openid email profile'
-        }, function (err, authResult) {
+          userMetadata: {
+            playerName: playerName
+          }
+        },
+        function (err) {
           if (err) {
-            log('Auth0 login error', err)
+            log('Auth0 signup error', err)
             return reject(coerceAuth0ErrorToErrorObject(err))
           }
-          log('Auth result', authResult)
-          resolve({ idToken: authResult.idToken })
-        })
-      })
+          log('Auth0 signup OK — now logging in')
+          auth.client.login(
+            {
+              realm: 'Username-Password-Authentication',
+              username: username,
+              password: password,
+              scope: 'openid email profile'
+            },
+            function (err, authResult) {
+              if (err) {
+                log('Auth0 login error', err)
+                return reject(coerceAuth0ErrorToErrorObject(err))
+              }
+              log('Auth result', authResult)
+              resolve({ idToken: authResult.idToken })
+            }
+          )
+        }
+      )
     })
   }
 
@@ -56,19 +63,22 @@ export default function createScoreboardClient ({
   function usernamePasswordLogin (playerId, password) {
     return new Promise((resolve, reject) => {
       log('Auth0 log in')
-      auth.client.login({
-        realm: 'Username-Password-Authentication',
-        username: playerId,
-        password: password,
-        scope: 'openid email profile'
-      }, function (err, authResult) {
-        if (err) {
-          log('Auth0 login error', err)
-          return reject(coerceAuth0ErrorToErrorObject(err))
+      auth.client.login(
+        {
+          realm: 'Username-Password-Authentication',
+          username: playerId,
+          password: password,
+          scope: 'openid email profile'
+        },
+        function (err, authResult) {
+          if (err) {
+            log('Auth0 login error', err)
+            return reject(coerceAuth0ErrorToErrorObject(err))
+          }
+          log('Auth result', authResult)
+          resolve({ idToken: authResult.idToken })
         }
-        log('Auth result', authResult)
-        resolve({ idToken: authResult.idToken })
-      })
+      )
     })
   }
 
@@ -85,17 +95,16 @@ export default function createScoreboardClient ({
         variables: {
           name: playerName
         }
+      }).then(result => {
+        log('checkPlayerNameAvailability response', result)
+        if (result.data.player && result.data.player.linked) {
+          log('checkPlayerNameAvailability: Player name already taken.')
+          return false
+        } else {
+          log('checkPlayerNameAvailability: Player name is available!')
+          return true
+        }
       })
-        .then(result => {
-          log('checkPlayerNameAvailability response', result)
-          if (result.data.player && result.data.player.linked) {
-            log('checkPlayerNameAvailability: Player name already taken.')
-            return false
-          } else {
-            log('checkPlayerNameAvailability: Player name is available!')
-            return true
-          }
-        })
     )
   }
 
@@ -112,14 +121,13 @@ export default function createScoreboardClient ({
         variables: {
           name: playerName
         }
+      }).then(result => {
+        if (result.data.player === null) {
+          return { error: 'Player not found...' }
+        } else {
+          return { playerId: result.data.player.id }
+        }
       })
-        .then(result => {
-          if (result.data.player === null) {
-            return { error: 'Player not found...' }
-          } else {
-            return { playerId: result.data.player.id }
-          }
-        })
     )
   }
 
@@ -136,12 +144,11 @@ export default function createScoreboardClient ({
         variables: {
           name: playerName
         }
+      }).then(result => {
+        const playerId = result.data.registerPlayer.id
+        log('reservePlayerId response', result, 'playerId', playerId)
+        return playerId
       })
-        .then(result => {
-          const playerId = result.data.registerPlayer.id
-          log('reservePlayerId response', result, 'playerId', playerId)
-          return playerId
-        })
     )
   }
 
@@ -159,13 +166,12 @@ export default function createScoreboardClient ({
         variables: {
           jwt: idToken
         }
+      }).then(result => {
+        const playerId = result.data.linkPlayer.id
+        const playerName = result.data.linkPlayer.name
+        log('ensureLink response', result, 'playerId', playerId)
+        return { playerId, playerName }
       })
-        .then(result => {
-          const playerId = result.data.linkPlayer.id
-          const playerName = result.data.linkPlayer.name
-          log('ensureLink response', result, 'playerId', playerId)
-          return { playerId, playerName }
-        })
     )
   }
 
@@ -180,10 +186,9 @@ export default function createScoreboardClient ({
         variables: {
           jwt: idToken
         }
+      }).then(result => {
+        return result.data.authenticatePlayer.playerToken
       })
-        .then(result => {
-          return result.data.authenticatePlayer.playerToken
-        })
     )
   }
 
@@ -210,13 +215,18 @@ export default function createScoreboardClient ({
       invariant(typeof password === 'string', 'password must be a string')
       invariant(typeof email === 'string', 'email must be a string')
       return co(function * () {
-        const { idToken } = yield * authenticationFlow.signUp(username, email, password, {
-          log: (message) => log('[signUp]', message),
-          userSignUp,
-          checkPlayerNameAvailability,
-          reservePlayerId,
-          ensureLink
-        })
+        const { idToken } = yield * authenticationFlow.signUp(
+          username,
+          email,
+          password,
+          {
+            log: message => log('[signUp]', message),
+            userSignUp,
+            checkPlayerNameAvailability,
+            reservePlayerId,
+            ensureLink
+          }
+        )
         return { playerToken: yield resolvePlayerTokenFromIdToken(idToken) }
       })
     },
@@ -224,12 +234,16 @@ export default function createScoreboardClient ({
       invariant(typeof username === 'string', 'username must be a string')
       invariant(typeof password === 'string', 'password must be a string')
       return co(function * () {
-        const { idToken } = yield * authenticationFlow.loginByUsernamePassword(username, password, {
-          log: (message) => log('[loginByUsernamePassword]', message),
-          usernamePasswordLogin,
-          resolvePlayerId,
-          ensureLink
-        })
+        const { idToken } = yield * authenticationFlow.loginByUsernamePassword(
+          username,
+          password,
+          {
+            log: message => log('[loginByUsernamePassword]', message),
+            usernamePasswordLogin,
+            resolvePlayerId,
+            ensureLink
+          }
+        )
         return { playerToken: yield resolvePlayerTokenFromIdToken(idToken) }
       })
     },
@@ -314,8 +328,7 @@ export default function createScoreboardClient ({
           }
         `,
         variables: { playerToken }
-      })
-        .then(result => result.data.renewPlayerToken.playerToken)
+      }).then(result => result.data.renewPlayerToken.playerToken)
     }
   }
 
@@ -323,5 +336,7 @@ export default function createScoreboardClient ({
 }
 
 function coerceAuth0ErrorToErrorObject (err) {
-  return new Error(`Auth0 Error: ${err.statusCode} ${err.description} [${err.code}]`)
+  return new Error(
+    `Auth0 Error: ${err.statusCode} ${err.description} [${err.code}]`
+  )
 }

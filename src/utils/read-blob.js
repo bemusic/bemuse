@@ -1,4 +1,3 @@
-
 export default readBlob
 
 // Reads the blob as a specified type. The blob will not actually be read

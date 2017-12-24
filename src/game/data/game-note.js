@@ -1,4 +1,3 @@
-
 import DataStructure from 'data-structure'
 import Event from './event'
 

@@ -1,4 +1,3 @@
-
 /**
  * A SkinNode is an internal representation of a Skin.
  *

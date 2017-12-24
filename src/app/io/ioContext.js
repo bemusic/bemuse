@@ -1,4 +1,3 @@
-
 // The singleton IO context. This file is needed because many parts of
 // our application still depends on a singleton.
 //
@@ -14,15 +13,17 @@ import { loadSongFromResources } from '../song-loader'
 // Configure a collection loader, which loads the Bemuse music collection.
 const collectionLoader = createCollectionLoader({
   fetch: fetch,
-  onBeginLoading: (url) => store.dispatch({
-    type: ReduxState.COLLECTION_LOADING_BEGAN,
-    url: url
-  }),
-  onErrorLoading: (url, reason) => store.dispatch({
-    type: ReduxState.COLLECTION_LOADING_ERRORED,
-    url: url,
-    error: reason
-  }),
+  onBeginLoading: url =>
+    store.dispatch({
+      type: ReduxState.COLLECTION_LOADING_BEGAN,
+      url: url
+    }),
+  onErrorLoading: (url, reason) =>
+    store.dispatch({
+      type: ReduxState.COLLECTION_LOADING_ERRORED,
+      url: url,
+      error: reason
+    }),
   onLoad: (url, data) => {
     store.dispatch({
       type: ReduxState.COLLECTION_LOADED,
@@ -33,7 +34,7 @@ const collectionLoader = createCollectionLoader({
     if (initiallySelectedSong) {
       const matchingSong = findMatchingSong({
         songs: data.songs,
-        getTitle: (song) => song.title,
+        getTitle: song => song.title,
         title: initiallySelectedSong
       })
       if (matchingSong) {

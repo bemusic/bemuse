@@ -32,7 +32,7 @@ describe('PlayerState', function () {
       player = new Player(chart, 1, options)
       state = new PlayerState(player)
       input = new GameInput()
-      buttons = { }
+      buttons = {}
       input.use({ get: () => buttons })
     }
 
@@ -57,27 +57,31 @@ describe('PlayerState', function () {
         assert(state.stats.totalCombo === 2)
         assert(!state.notifications.judgments)
 
-        advance(1.999, { })
+        advance(1.999, {})
         assert(state.getNoteStatus(chart.notes[0]), 'unjudged')
 
-        advance(2, { 'p1_1': 1 })
+        advance(2, { p1_1: 1 })
         assert(state.getNoteStatus(chart.notes[0]), 'judged')
         assert(state.getNoteJudgment(chart.notes[0]), 1)
         assert(state.getNoteStatus(chart.notes[1]), 'unjudged')
-        assert.deepEqual(
-          state.notifications.judgments[0],
-          { judgment: 1, combo: 1, delta: 0, column }
-        )
+        assert.deepEqual(state.notifications.judgments[0], {
+          judgment: 1,
+          combo: 1,
+          delta: 0,
+          column
+        })
         assert(!state.stats.poor)
 
-        advance(2.1, { 'p1_1': 0 })
-        advance(5, { 'p1_1': 0 })
+        advance(2.1, { p1_1: 0 })
+        advance(5, { p1_1: 0 })
         assert(state.getNoteStatus(chart.notes[1]) === 'judged')
         assert(state.getNoteJudgment(chart.notes[1]) === -1)
-        assert.deepEqual(
-          state.notifications.judgments[0],
-          { judgment: -1, combo: 0, delta: 2, column }
-        )
+        assert.deepEqual(state.notifications.judgments[0], {
+          judgment: -1,
+          combo: 0,
+          delta: 2,
+          column
+        })
         assert(state.stats.poor === true)
       })
 
@@ -88,7 +92,7 @@ describe('PlayerState', function () {
           #00112:01
         `)
 
-        advance(2, { 'p1_1': 1, 'p1_2': 1 })
+        advance(2, { p1_1: 1, p1_2: 1 })
         assert(state.getNoteStatus(chart.notes[0]) === 'judged')
         assert(state.getNoteStatus(chart.notes[1]) === 'judged')
       })
@@ -99,17 +103,17 @@ describe('PlayerState', function () {
           #00111:01010100000000000000000000000000
         `)
 
-        advance(0.531, { 'p1_1': 1 })
+        advance(0.531, { p1_1: 1 })
         assert(state.getNoteStatus(chart.notes[0]) === 'judged')
         assert(state.getNoteStatus(chart.notes[1]) === 'unjudged')
         assert(state.getNoteStatus(chart.notes[2]) === 'unjudged')
-        advance(0.531, { 'p1_1': 0 })
-        advance(0.531, { 'p1_1': 1 })
+        advance(0.531, { p1_1: 0 })
+        advance(0.531, { p1_1: 1 })
         assert(state.getNoteStatus(chart.notes[0]) === 'judged')
         assert(state.getNoteStatus(chart.notes[1]) === 'judged')
         assert(state.getNoteStatus(chart.notes[2]) === 'unjudged')
-        advance(0.531, { 'p1_1': 0 })
-        advance(0.531, { 'p1_1': 1 })
+        advance(0.531, { p1_1: 0 })
+        advance(0.531, { p1_1: 1 })
         assert(state.getNoteStatus(chart.notes[0]) === 'judged')
         assert(state.getNoteStatus(chart.notes[1]) === 'judged')
         assert(state.getNoteStatus(chart.notes[2]) === 'judged')
@@ -125,7 +129,7 @@ describe('PlayerState', function () {
           #00111:01010100000000000000000000000000
         `)
 
-        advance(2.125, { 'p1_1': 1 })
+        advance(2.125, { p1_1: 1 })
         assert(state.getNoteStatus(chart.notes[0]) === 'unjudged')
         assert(state.getNoteStatus(chart.notes[1]) === 'judged')
         assert(state.getNoteStatus(chart.notes[2]) === 'unjudged')
@@ -137,7 +141,7 @@ describe('PlayerState', function () {
           #00111:01
         `)
         sinon.spy(state.stats, 'handleDelta')
-        advance(2.01, { 'p1_1': 1 })
+        advance(2.01, { p1_1: 1 })
         assert(state.stats.handleDelta.calledWith(2.01 - 2))
       })
 
@@ -147,7 +151,7 @@ describe('PlayerState', function () {
           #00111:01
         `)
         sinon.spy(state.stats, 'handleDelta')
-        advance(9, { 'p1_1': 1 })
+        advance(9, { p1_1: 1 })
         assert(state.stats.handleDelta.callCount === 0)
       })
 
@@ -161,58 +165,60 @@ describe('PlayerState', function () {
           note = chart.notes[0]
         })
         it('judges long note', function () {
-          advance(2, { 'p1_1': 1 })
+          advance(2, { p1_1: 1 })
           assert(state.getNoteStatus(note) === 'active')
           assert(state.getNoteJudgment(note) === 1)
           assert(state.notifications.judgments[0].judgment === 1)
-          advance(3, { 'p1_1': 0 })
+          advance(3, { p1_1: 0 })
           assert(state.getNoteStatus(note) === 'judged')
           assert(state.getNoteJudgment(note) === 1)
           assert(state.notifications.judgments[0].judgment === 1)
         })
         it('gives 2 discrete judgments, one for down and one for up', function () {
-          advance(2, { 'p1_1': 1 })
+          advance(2, { p1_1: 1 })
           assert(state.stats.numJudgments === 1)
-          advance(3, { 'p1_1': 0 })
+          advance(3, { p1_1: 0 })
           assert(state.stats.numJudgments === 2)
         })
         it('records delta once', function () {
           sinon.spy(state.stats, 'handleDelta')
-          advance(2, { 'p1_1': 1 })
-          advance(3, { 'p1_1': 0 })
+          advance(2, { p1_1: 1 })
+          advance(3, { p1_1: 0 })
           assert(state.stats.handleDelta.callCount === 1)
         })
         it('judges missed long note', function () {
-          advance(2.3, { 'p1_1': 1 })
+          advance(2.3, { p1_1: 1 })
           assert(state.getNoteStatus(note) === 'judged')
           assert(state.getNoteJudgment(note) === -1)
         })
         it('gives 2 missed judgment for missed longnote', function () {
-          advance(2.3, { 'p1_1': 1 })
+          advance(2.3, { p1_1: 1 })
           assert(state.stats.numJudgments === 2)
         })
         it('judges long note lifted too fast as missed', function () {
-          advance(2, { 'p1_1': 1 })
-          advance(2.01, { 'p1_1': 0 })
+          advance(2, { p1_1: 1 })
+          advance(2.01, { p1_1: 0 })
           assert(state.getNoteStatus(note) === 'judged')
           assert(state.getNoteJudgment(note) === -1)
           assert(state.stats.numJudgments === 2)
         })
         it('does not end automatically', function () {
-          advance(2, { 'p1_1': 1 })
-          advance(3.1, { 'p1_1': 1 })
+          advance(2, { p1_1: 1 })
+          advance(3.1, { p1_1: 1 })
           assert(state.getNoteStatus(note) === 'active')
           assert(state.stats.numJudgments === 1)
         })
         it('judges long note lifted too slow as missed', function () {
-          advance(2, { 'p1_1': 1 })
-          advance(4, { 'p1_1': 1 })
+          advance(2, { p1_1: 1 })
+          advance(4, { p1_1: 1 })
           assert(state.getNoteStatus(note) === 'judged')
           assert(state.getNoteJudgment(note) === -1)
-          assert.deepEqual(
-            state.notifications.judgments[0],
-            { judgment: -1, combo: 0, delta: 1, column: note.column }
-          )
+          assert.deepEqual(state.notifications.judgments[0], {
+            judgment: -1,
+            combo: 0,
+            delta: 1,
+            column: note.column
+          })
         })
       })
 
@@ -226,11 +232,11 @@ describe('PlayerState', function () {
           note = chart.notes[0]
         })
         it('ends automatically', function () {
-          advance(2, { 'p1_SC': 1 })
+          advance(2, { p1_SC: 1 })
           assert(state.getNoteStatus(note) === 'active')
           assert(state.getNoteJudgment(note) === 1)
           assert(state.notifications.judgments[0].judgment === 1)
-          advance(3.1, { 'p1_SC': 1 })
+          advance(3.1, { p1_SC: 1 })
           assert(state.getNoteStatus(note) === 'judged')
           assert(state.getNoteJudgment(note) === 1)
           assert(state.notifications.judgments[0].judgment === 1)
@@ -246,8 +252,8 @@ describe('PlayerState', function () {
           `)
         })
         it('should switch to next one on change', function () {
-          advance(2, { 'p1_SC': 1 })
-          advance(4, { 'p1_SC': -1 })
+          advance(2, { p1_SC: 1 })
+          advance(4, { p1_SC: -1 })
           assert(state.getNoteStatus(chart.notes[0]) === 'judged')
           assert(state.getNoteStatus(chart.notes[1]) === 'active')
         })
@@ -259,7 +265,7 @@ describe('PlayerState', function () {
             #BPM 120
             #00111:0102
           `)
-          advance(2, { 'p1_1': 1 })
+          advance(2, { p1_1: 1 })
           assert(state.notifications.sounds[0].note === chart.notes[0])
           assert(state.notifications.sounds[0].type === 'hit')
         })
@@ -268,7 +274,7 @@ describe('PlayerState', function () {
             #BPM 120
             #00111:01
           `)
-          advance(5, { 'p1_1': 0 })
+          advance(5, { p1_1: 0 })
           assert(state.notifications.sounds[0].note === chart.notes[0])
           assert(state.notifications.sounds[0].type === 'break')
         })
@@ -280,32 +286,32 @@ describe('PlayerState', function () {
           `)
 
           // hit the first note
-          advance(4, { 'p1_1': 1 })
-          advance(4, { 'p1_1': 0 })
+          advance(4, { p1_1: 1 })
+          advance(4, { p1_1: 0 })
 
           // hit the blank area
-          advance(4, { 'p1_1': 1 })
+          advance(4, { p1_1: 1 })
           assert(state.notifications.sounds[0].note === chart.notes[0])
           assert(state.notifications.sounds[0].type === 'free')
 
           // release the button
-          advance(4, { 'p1_1': 0 })
+          advance(4, { p1_1: 0 })
           assert(!state.notifications.sounds.length)
 
           // try again
-          advance(5, { 'p1_1': 1 })
+          advance(5, { p1_1: 1 })
           assert(state.notifications.sounds[0].note === chart.notes[0])
 
           // release the button
-          advance(5, { 'p1_1': 0 })
+          advance(5, { p1_1: 0 })
 
           // wait and try again.
-          advance(6.5, { 'p1_1': 1 })
+          advance(6.5, { p1_1: 1 })
           assert(state.notifications.sounds[0].note === chart.notes[0])
-          advance(6.5, { 'p1_1': 0 })
+          advance(6.5, { p1_1: 0 })
 
           // wait and try again. this time keysound should change
-          advance(7.5, { 'p1_1': 1 })
+          advance(7.5, { p1_1: 1 })
           assert(state.notifications.sounds[0].note === chart.notes[1])
         })
       })
@@ -318,20 +324,20 @@ describe('PlayerState', function () {
       })
       it('updates speed on dedicated buttons', function () {
         setup('', { speed: 2 })
-        advance(1.0, { 'p1_speedup': 1 })
+        advance(1.0, { p1_speedup: 1 })
         assert(state.speed === 2.5)
-        advance(1.2, { 'p1_speedup': 0, 'p1_speeddown': 1 })
+        advance(1.2, { p1_speedup: 0, p1_speeddown: 1 })
         assert(state.speed === 2)
       })
       it('supports fine-grained speed modifications', function () {
         setup('', { speed: 2 })
-        advance(1.0, { 'p1_speedup': 1, 'select': 1 })
+        advance(1.0, { p1_speedup: 1, select: 1 })
         assert(state.speed === 2.1)
       })
       it('supports pinching to zoom', function () {
         setup('', { speed: 2 })
-        advance(1.0, { 'p1_pinch': 300 })
-        advance(1.2, { 'p1_pinch': 450 })
+        advance(1.0, { p1_pinch: 300 })
+        advance(1.2, { p1_pinch: 450 })
         assert(state.speed === 3)
       })
     })
@@ -340,9 +346,9 @@ describe('PlayerState', function () {
       it('should become true when song is finished', function () {
         setup('#00111:0101')
         assert(state.finished === false)
-        advance(4.0, { })
+        advance(4.0, {})
         assert(state.finished === false)
-        advance(16.0, { })
+        advance(16.0, {})
         assert(state.finished === true)
       })
     })

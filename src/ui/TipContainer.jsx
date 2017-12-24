@@ -4,15 +4,12 @@ import './TipContainer.scss'
 
 const TipContainer = ({ children, tip, tipVisible = true }) => (
   <div className='TipContainer'>
-    <div className='TipContainerのchildren'>
-      {children}
-    </div>
-    {tipVisible
-      ? <span className='TipContainerのbubble'>
+    <div className='TipContainerのchildren'>{children}</div>
+    {tipVisible ? (
+      <span className='TipContainerのbubble'>
         <span className='TipContainerのbubbleContent'>{tip}</span>
       </span>
-      : null
-    }
+    ) : null}
   </div>
 )
 

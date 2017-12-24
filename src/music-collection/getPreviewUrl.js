@@ -1,4 +1,3 @@
-
 export function getPreviewUrl (serverUrl, song) {
   if (!song) return null
   if (song.tutorial) return null

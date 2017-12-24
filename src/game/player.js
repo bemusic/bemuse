@@ -1,4 +1,3 @@
-
 // The object representing the player's information, notechart and options.
 export class Player {
   constructor (notechart, playerNumber, options) {

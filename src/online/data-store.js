@@ -1,4 +1,3 @@
-
 import * as Immutable from 'immutable'
 
 import { INITIAL_OPERATION_STATE, transitionState } from './operations'
@@ -19,7 +18,9 @@ export function item川 (state川, id) {
 export function reduce (state = INITIAL_STATE, action) {
   switch (action.type) {
     case PUT: {
-      let stateChanges = new Immutable.Map(action.data).map(performTransition(state))
+      let stateChanges = new Immutable.Map(action.data).map(
+        performTransition(state)
+      )
       return state.merge(stateChanges)
     }
     case CLEAR: {

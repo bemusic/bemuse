@@ -1,4 +1,3 @@
-
 import './OptionsCheckbox.scss'
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -8,9 +7,7 @@ const OptionsCheckbox = ({ checked, children, onToggle }) => {
     <span className='OptionsCheckbox'>
       <label>
         <input type='checkbox' checked={checked} onChange={onToggle} />
-        <span className='OptionosCheckboxのレーベル'>
-          {' '}{children}
-        </span>
+        <span className='OptionosCheckboxのレーベル'> {children}</span>
       </label>
     </span>
   )

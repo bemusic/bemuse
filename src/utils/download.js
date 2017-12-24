@@ -1,4 +1,3 @@
-
 import { BYTES_FORMATTER } from 'bemuse/progress/formatters'
 
 // Downloads the file from the URL.

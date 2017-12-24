@@ -24,11 +24,10 @@ describe('Online DataStore', function () {
       it('should transition state of a record', function () {
         let action1 = DataStore.put('a', Operations.completedStateTransition(1))
         let action2 = DataStore.put('b', Operations.completedStateTransition(2))
-        let state = (_()
+        let state = _()
           .thru(state => DataStore.reduce(state, action1))
           .thru(state => DataStore.reduce(state, action2))
           .value()
-        )
         expect(DataStore.get(state, 'a').value).to.equal(1)
         expect(DataStore.get(state, 'b').value).to.equal(2)
       })
@@ -36,8 +35,8 @@ describe('Online DataStore', function () {
     describe('putMultiple', function () {
       it('should transition state of multiple records', function () {
         let action = DataStore.putMultiple({
-          'a': Operations.completedStateTransition(1),
-          'b': Operations.completedStateTransition(2)
+          a: Operations.completedStateTransition(1),
+          b: Operations.completedStateTransition(2)
         })
         let state = DataStore.reduce(undefined, action)
         expect(DataStore.get(state, 'a').value).to.equal(1)
@@ -49,10 +48,10 @@ describe('Online DataStore', function () {
   describe('with records', function () {
     beforeEach(function () {
       let action = DataStore.putMultiple({
-        'a': Operations.completedStateTransition(1),
-        'b': Operations.completedStateTransition(2),
-        'c': Operations.INITIAL_OPERATION_STATE,
-        'd': Operations.loadingStateTransition()
+        a: Operations.completedStateTransition(1),
+        b: Operations.completedStateTransition(2),
+        c: Operations.INITIAL_OPERATION_STATE,
+        d: Operations.loadingStateTransition()
       })
       this.state = DataStore.reduce(undefined, action)
     })

@@ -10,7 +10,7 @@ import { stringify } from 'qs'
 import getLR2Score from './interactors/getLR2Score'
 import getNonMissedDeltas from './interactors/getNonMissedDeltas'
 
-let ga = window.ga || function () { }
+let ga = window.ga || function () {}
 const startTime = Date.now()
 const sid = ObjectID.generate()
 
@@ -29,8 +29,12 @@ export function send (category, action, label, value, extra) {
   try {
     if (window.ga) {
       const sessionLength = Date.now() - startTime
-      const data = { info: { sid, category, action, label, value, extra, t: sessionLength } }
-      window.navigator.sendBeacon('https://analytics.bemuse.ninja/collect.php?' + stringify(data))
+      const data = {
+        info: { sid, category, action, label, value, extra, t: sessionLength }
+      }
+      window.navigator.sendBeacon(
+        'https://analytics.bemuse.ninja/collect.php?' + stringify(data)
+      )
     }
   } catch (e) {
     console.warn('[Analytics]', 'Cannot send', e)
@@ -70,11 +74,11 @@ export function gameFinish (song, chart, gameState, gameMode) {
     placement: player.options.placement,
     scratch: player.options.scratch,
     counts: {
-      'w1': stats.counts['1'],
-      'w2': stats.counts['2'],
-      'w3': stats.counts['3'],
-      'w4': stats.counts['4'],
-      'w5': stats.counts[MISSED]
+      w1: stats.counts['1'],
+      w2: stats.counts['2'],
+      w3: stats.counts['3'],
+      w4: stats.counts['4'],
+      w5: stats.counts[MISSED]
     }
   })
 }

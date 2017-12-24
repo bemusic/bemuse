@@ -1,11 +1,11 @@
-
 import PlayerState from './player-state'
 
 export class GameState {
   constructor (game) {
     this._game = game
-    this._players = new Map(game.players.map(player =>
-      [player, new PlayerState(player)]))
+    this._players = new Map(
+      game.players.map(player => [player, new PlayerState(player)])
+    )
   }
   // The `Game` object associated with this `GameState`.
   get game () {

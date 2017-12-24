@@ -1,4 +1,3 @@
-
 export class Control {
   constructor () {
     this.value = 0

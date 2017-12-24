@@ -1,4 +1,3 @@
-
 // !! avoid external dependencies since this is used in boot script!
 
 import Observable from 'bemuse/utils/observable'

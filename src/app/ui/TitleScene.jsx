@@ -34,14 +34,13 @@ const HAS_PARENT = (() => {
 
 const enhance = compose(
   connectIO({
-    onMarkChangelogAsSeen: () => () => (
+    onMarkChangelogAsSeen: () => () =>
       OptionsIO.updateOptions(Options.updateLastSeenVersion(version))
-    )
   }),
-  connect((state) => ({
+  connect(state => ({
     hasSeenChangelog: Options.lastSeenVersion(state.options) === version
-  })
-  ))
+  }))
+)
 
 class TitleScene extends React.Component {
   static propTypes = {
@@ -59,43 +58,67 @@ class TitleScene extends React.Component {
 
   render () {
     const shouldShowHomepage = !HAS_PARENT
-    return <Scene className='TitleScene'>
-      <div className='TitleSceneのimage' />
-      <div className='TitleSceneのpage'>
-        <div className='TitleSceneのpageTitle'>
-          <div className='TitleSceneのlogo'>
-            <div className='TitleSceneのtagline'>
-              online, web-based rhythm game
+    return (
+      <Scene className='TitleScene'>
+        <div className='TitleSceneのimage' />
+        <div className='TitleSceneのpage'>
+          <div className='TitleSceneのpageTitle'>
+            <div className='TitleSceneのlogo'>
+              <div className='TitleSceneのtagline'>
+                online, web-based rhythm game
+              </div>
+              <img src={require('./images/logo-with-shadow.svg')} />
             </div>
-            <img src={require('./images/logo-with-shadow.svg')} />
+            <div className='TitleSceneのenter'>
+              <a href='javascript://' onClick={this.enterGame}>
+                Enter Game
+              </a>
+            </div>
           </div>
-          <div className='TitleSceneのenter'>
-            <a href='javascript://' onClick={this.enterGame}>Enter Game</a>
-          </div>
+          {shouldShowHomepage ? (
+            <div className='TitleSceneのpageContents'>
+              <HomePage />
+            </div>
+          ) : null}
         </div>
-        {shouldShowHomepage ? <div className='TitleSceneのpageContents'><HomePage /></div> : null}
-      </div>
-      <SceneToolbar>
-        <a onClick={this.showAbout} href='javascript://'>About</a>
-        <a onClick={this.openLink} href='https://bemuse.readthedocs.org'>Docs</a>
-        <a onClick={() => this.viewChangelog()} href='javascript://'>{this.renderVersion()}</a>
-        <SceneToolbar.Spacer />
-        <a onClick={() => this.openLink()} href='https://www.facebook.com/bemusegame'>Facebook</a>
-        <a onClick={() => this.openTwitterLink()} href='https://twitter.com/bemusegame'>
-          <FirstTimeTip tip='Like & follow us :)' featureKey='twitter'>
-            Twitter
-          </FirstTimeTip>
-        </a>
-        <a onClick={this.openLink} href='https://github.com/bemusic/bemuse'>Fork me on GitHub</a>
-      </SceneToolbar>
-      <div className='TitleSceneのcurtain' />
-      <ModalPopup
-        visible={this.state.changelogModalVisible}
-        onBackdropClick={() => this.toggleChangelogModal()}
-      >
-        <ChangelogPanel />
-      </ModalPopup>
-    </Scene>
+        <SceneToolbar>
+          <a onClick={this.showAbout} href='javascript://'>
+            About
+          </a>
+          <a onClick={this.openLink} href='https://bemuse.readthedocs.org'>
+            Docs
+          </a>
+          <a onClick={() => this.viewChangelog()} href='javascript://'>
+            {this.renderVersion()}
+          </a>
+          <SceneToolbar.Spacer />
+          <a
+            onClick={() => this.openLink()}
+            href='https://www.facebook.com/bemusegame'
+          >
+            Facebook
+          </a>
+          <a
+            onClick={() => this.openTwitterLink()}
+            href='https://twitter.com/bemusegame'
+          >
+            <FirstTimeTip tip='Like & follow us :)' featureKey='twitter'>
+              Twitter
+            </FirstTimeTip>
+          </a>
+          <a onClick={this.openLink} href='https://github.com/bemusic/bemuse'>
+            Fork me on GitHub
+          </a>
+        </SceneToolbar>
+        <div className='TitleSceneのcurtain' />
+        <ModalPopup
+          visible={this.state.changelogModalVisible}
+          onBackdropClick={() => this.toggleChangelogModal()}
+        >
+          <ChangelogPanel />
+        </ModalPopup>
+      </Scene>
+    )
   }
 
   renderVersion () {
@@ -108,7 +131,12 @@ class TitleScene extends React.Component {
 
   openLink (e) {
     e.preventDefault()
-    window.open($(e.target).closest('a').get(0).href, '_blank')
+    window.open(
+      $(e.target)
+        .closest('a')
+        .get(0).href,
+      '_blank'
+    )
   }
 
   openTwitterLink (e) {
@@ -121,8 +149,8 @@ class TitleScene extends React.Component {
     Analytics.send('TitleScene', 'enter game')
     // go fullscreen
     if (screenfull.enabled && !shouldDisableFullScreen()) {
-      let safari = /Safari/.test(navigator.userAgent) &&
-                  !/Chrom/.test(navigator.userAgent)
+      let safari =
+        /Safari/.test(navigator.userAgent) && !/Chrom/.test(navigator.userAgent)
       if (!safari) screenfull.request()
     }
   }

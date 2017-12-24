@@ -5,13 +5,17 @@ import Worker from 'worker-loader?name=song-loader/[hash].worker.js!./worker.js'
 export function loadSongFromResources (resources, options = {}) {
   var onMessage = options.onMessage || (() => {})
   onMessage('Examining dropped items...')
-  return resources.fileList.then(fileList => {
-    return fileList.filter(filename => /\.(bms|bme|bml|bmson)$/i.test(filename))
-  })
+  return resources.fileList
+    .then(fileList => {
+      return fileList.filter(filename =>
+        /\.(bms|bme|bml|bmson)$/i.test(filename)
+      )
+    })
     .then(bmsFileList => {
       onMessage(bmsFileList.length + ' file(s) found. Reading them...')
       return Promise.map(bmsFileList, filename => {
-        return resources.file(filename)
+        return resources
+          .file(filename)
           .then(file => file.read())
           .then(arrayBuffer => ({
             name: filename,
@@ -29,8 +33,16 @@ export function loadSongFromResources (resources, options = {}) {
           } else if (data.type === 'started') {
             onMessage('Analyzing BMS files...')
           } else if (data.type === 'progress') {
-            onMessage('Loaded ' + data.file + ' ' +
-              '(' + data.current + '/' + data.total + ').')
+            onMessage(
+              'Loaded ' +
+                data.file +
+                ' ' +
+                '(' +
+                data.current +
+                '/' +
+                data.total +
+                ').'
+            )
           }
         }
         worker.onerror = function (e) {

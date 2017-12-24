@@ -1,4 +1,3 @@
-
 import Bacon from 'baconjs'
 import React from 'react'
 
@@ -10,7 +9,9 @@ export function Action (transform = x => x) {
   var bus = new Bacon.Bus()
   var action = function () {
     if (lock) {
-      throw new Error('An action should not fire another action! (' + lock.stack + ')')
+      throw new Error(
+        'An action should not fire another action! (' + lock.stack + ')'
+      )
     }
     try {
       let payload = transform.apply(null, arguments)
@@ -55,14 +56,16 @@ function toProperty (store) {
   }
 }
 
-export const connect = (props川) => (Component) => {
+export const connect = props川 => Component => {
   let propsProperty = toProperty(props川)
   return class extends React.Component {
     constructor (props) {
       super(props)
       this._unsubscribe = propsProperty.onValue(this.handleValue)
       let initialValue
-      const initialUnsubscribe = propsProperty.onValue(value => (initialValue = value))
+      const initialUnsubscribe = propsProperty.onValue(
+        value => (initialValue = value)
+      )
       initialUnsubscribe()
       this.state = { value: initialValue }
     }
@@ -76,12 +79,12 @@ export const connect = (props川) => (Component) => {
       this._mounted = true
     }
 
-    handleValue = (value) => {
+    handleValue = value => {
       if (this._mounted) this.setState({ value })
     }
 
     render () {
-      return <Component {...(this.state.value || { })} {...this.props} />
+      return <Component {...this.state.value || {}} {...this.props} />
     }
   }
 }

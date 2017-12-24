@@ -1,4 +1,3 @@
-
 // #region grade
 export function getGrade (stats) {
   let score = stats.score

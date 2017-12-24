@@ -12,7 +12,7 @@ function ChildManager (expr, child, poolSize) {
       initPool()
       return new Instance({
         context: context,
-        onData: (data) => {
+        onData: data => {
           update(expr(data))
         }
       })
@@ -66,8 +66,9 @@ export class ObjectNode extends SkinNode {
   compile (compiler, $el) {
     this.children = compiler.compileChildren($el)
     if (this.children.length !== 1) {
-      throw new Error('Expected exactly 1 children, ' +
-        this.children.length + ' given')
+      throw new Error(
+        'Expected exactly 1 children, ' + this.children.length + ' given'
+      )
     }
     this.pool = +$el.attr('pool') || 1
     this.key = new Expression($el.attr('key'))

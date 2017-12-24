@@ -3,11 +3,7 @@ import Auth0 from 'auth0-js'
 import createScoreboardClient from './createScoreboardClient'
 
 export class OnlineService {
-  constructor ({
-    server,
-    storagePrefix = 'scoreboard.auth',
-    authOptions
-  }) {
+  constructor ({ server, storagePrefix = 'scoreboard.auth', authOptions }) {
     const auth = new Auth0.WebAuth({
       ...authOptions,
       redirectUri: window.location.href,
@@ -16,7 +12,7 @@ export class OnlineService {
     this._scoreboardClient = createScoreboardClient({
       server,
       auth,
-      log: () => { }
+      log: () => {}
     })
     this._storagePrefix = storagePrefix
     this._updateUserFromStorage()
@@ -24,12 +20,13 @@ export class OnlineService {
   }
 
   _updateUserFromStorage () {
-    const loadUser = (text) => {
+    const loadUser = text => {
       if (!text) return null
       try {
         const data = JSON.parse(text)
         const playerToken = data.playerToken
-        const playerTokenExpires = JSON.parse(atob(playerToken.split('.')[1])).exp * 1000
+        const playerTokenExpires =
+          JSON.parse(atob(playerToken.split('.')[1])).exp * 1000
         if (Date.now() > playerTokenExpires - 86400e3) {
           console.warn('Authentication token is about to expire, skipping!')
           return null
@@ -46,7 +43,8 @@ export class OnlineService {
     const playerToken = this._currentUser && this._currentUser.playerToken
     if (!playerToken) return
     const username = this._currentUser.username
-    return this._scoreboardClient.renewPlayerToken({ playerToken })
+    return this._scoreboardClient
+      .renewPlayerToken({ playerToken })
       .then(newToken => {
         localStorage[`${this._storagePrefix}.id`] = JSON.stringify({
           username: username,
@@ -68,7 +66,8 @@ export class OnlineService {
   }
 
   signUp ({ username, password, email }) {
-    return this._scoreboardClient.signUp({ username, password, email })
+    return this._scoreboardClient
+      .signUp({ username, password, email })
       .then(signUpResult => {
         localStorage[`${this._storagePrefix}.id`] = JSON.stringify({
           username: username,
@@ -79,7 +78,8 @@ export class OnlineService {
   }
 
   logIn ({ username, password }) {
-    return this._scoreboardClient.loginByUsernamePassword({ username, password })
+    return this._scoreboardClient
+      .loginByUsernamePassword({ username, password })
       .then(loginResult => {
         localStorage[`${this._storagePrefix}.id`] = JSON.stringify({
           username: username,
@@ -129,16 +129,21 @@ export class OnlineService {
       playMode: level.playMode
     })
     const myRecord = result.data.chart.level.myRecord
-    return myRecord && {
-      md5: level.md5,
-      playMode: level.playMode,
-      ...toEntry(myRecord)
-    }
+    return (
+      myRecord && {
+        md5: level.md5,
+        playMode: level.playMode,
+        ...toEntry(myRecord)
+      }
+    )
   }
 
   // Retrieves the scoreboard
   async retrieveScoreboard ({ md5, playMode }) {
-    const result = await this._scoreboardClient.retrieveScoreboard({ md5, playMode })
+    const result = await this._scoreboardClient.retrieveScoreboard({
+      md5,
+      playMode
+    })
     return { data: result.data.chart.level.leaderboard.map(toEntry) }
   }
 

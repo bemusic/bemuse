@@ -1,4 +1,3 @@
-
 import 'bemuse/bootstrap'
 
 import prepareTestEnvironment from './prepareTestEnvironment'

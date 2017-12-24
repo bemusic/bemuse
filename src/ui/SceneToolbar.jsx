@@ -1,12 +1,9 @@
-
 import './SceneToolbar.scss'
 import React from 'react'
 
 export class SceneToolbar extends React.Component {
   render () {
-    return <div className='SceneToolbar'>
-      {this.props.children}
-    </div>
+    return <div className='SceneToolbar'>{this.props.children}</div>
   }
 }
 

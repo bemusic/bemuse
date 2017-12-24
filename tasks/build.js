@@ -13,11 +13,15 @@ import path from '../config/path'
 const readFile = Promise.promisify(fs.readFile, fs)
 const writeFile = Promise.promisify(fs.writeFile, fs)
 
-gulp.task('build', ['dist'], co.wrap(function * () {
-  let stats = yield Promise.promisify(webpack)(config)
-  gutil.log('[webpack]', stats.toString({ colors: true }))
-  yield postProcess()
-}))
+gulp.task(
+  'build',
+  ['dist'],
+  co.wrap(function * () {
+    let stats = yield Promise.promisify(webpack)(config)
+    gutil.log('[webpack]', stats.toString({ colors: true }))
+    yield postProcess()
+  })
+)
 
 function postProcess () {
   return readFile(path('dist', 'index.html'), 'utf-8')
@@ -28,13 +32,14 @@ function postProcess () {
 }
 
 function updateTitle (html) {
-  return html
-    .replace(/<title>Bemuse/, (a) => {
-      if (buildConfig.name === 'Bemuse') {
-        return a
-      }
-      return `<meta name="robots" content="noindex" /><title>${buildConfig.name} ${buildConfig.version}`
-    })
+  return html.replace(/<title>Bemuse/, a => {
+    if (buildConfig.name === 'Bemuse') {
+      return a
+    }
+    return `<meta name="robots" content="noindex" /><title>${
+      buildConfig.name
+    } ${buildConfig.version}`
+  })
 }
 
 function inlineBootScript (html) {

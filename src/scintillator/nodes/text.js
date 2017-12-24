@@ -1,4 +1,3 @@
-
 import * as PIXI from 'pixi.js'
 
 import SkinNode from './lib/base'
@@ -14,13 +13,8 @@ export class TextNode extends SkinNode {
     this.display = DisplayObject.compile(compiler, $el)
     this.ttf = !$el.attr('font-src')
     this.fill = $el.attr('fill')
-    this.align = (
-      $el.attr('align') === 'left'
-        ? 0
-        : $el.attr('align') === 'right'
-          ? 1
-          : 0.5
-    )
+    this.align =
+      $el.attr('align') === 'left' ? 0 : $el.attr('align') === 'right' ? 1 : 0.5
   }
   instantiate (context, container) {
     let text

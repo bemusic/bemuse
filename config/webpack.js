@@ -23,16 +23,14 @@ function generateBaseConfig () {
     },
     module: {
       loaders: generateLoadersConfig(),
-      noParse: [
-        /sinon\.js/
-      ]
+      noParse: [/sinon\.js/]
     },
     plugins: [
       new CompileProgressPlugin(),
       new LoadProgressPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
-          'NODE_ENV': JSON.stringify(String(process.env.NODE_ENV))
+          NODE_ENV: JSON.stringify(String(process.env.NODE_ENV))
         }
       }),
       new webpack.ProvidePlugin({
@@ -74,12 +72,14 @@ function generateLoadersConfig () {
     },
     {
       test: /\.scss$/,
-      loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 version' +
-              '!sass-loader?outputStyle=expanded'
+      loader:
+        'style-loader!css-loader!autoprefixer-loader?browsers=last 2 version' +
+        '!sass-loader?outputStyle=expanded'
     },
     {
       test: /\.css$/,
-      loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 version'
+      loader:
+        'style-loader!css-loader!autoprefixer-loader?browsers=last 2 version'
     },
     {
       test: /\.jade$/,
@@ -107,7 +107,7 @@ function generateLoadersConfig () {
 function applyWebConfig (config) {
   Object.assign(config, {
     entry: {
-      boot: [ './boot' ]
+      boot: ['./boot']
     },
     output: {
       path: path('dist', 'build'),
@@ -115,7 +115,8 @@ function applyWebConfig (config) {
       filename: '[name].js',
       chunkFilename: '[name]-[chunkhash].js',
       devtoolModuleFilenameTemplate: 'file://[absolute-resource-path]',
-      devtoolFallbackModuleFilenameTemplate: 'file://[absolute-resource-path]?[hash]'
+      devtoolFallbackModuleFilenameTemplate:
+        'file://[absolute-resource-path]?[hash]'
     }
   })
 
@@ -127,7 +128,10 @@ function applyWebConfig (config) {
     )
     config.entry.boot.unshift(
       'react-hot-loader/patch',
-      'webpack-dev-server/client?http://' + Env.serverHost() + ':' + Env.serverPort(),
+      'webpack-dev-server/client?http://' +
+        Env.serverHost() +
+        ':' +
+        Env.serverPort(),
       'webpack/hot/only-dev-server'
     )
   }
@@ -156,9 +160,15 @@ function applyTestBedConfig (config) {
 
 export const generateWebConfig = flowRight(applyWebConfig, generateBaseConfig)
 
-export const generateKarmaConfig = flowRight(applyKarmaConfig, generateBaseConfig)
+export const generateKarmaConfig = flowRight(
+  applyKarmaConfig,
+  generateBaseConfig
+)
 
-export const generateTestBedConfig = flowRight(applyTestBedConfig, generateBaseConfig)
+export const generateTestBedConfig = flowRight(
+  applyTestBedConfig,
+  generateBaseConfig
+)
 
 export default generateWebConfig()
 

@@ -1,4 +1,3 @@
-
 import './OptionsSpeed.scss'
 import OptionsButton from './OptionsButton'
 import OptionsInputField from './OptionsInputField'
@@ -21,24 +20,27 @@ class OptionsSpeed extends React.PureComponent {
     let nextSpeed = speed + (speed < 0.5 ? 0.3 : 0.5)
     this.props.onChange(this.stringifySpeed(nextSpeed))
   }
-  handleSpeedInputChange = (nextSpeed) => {
+  handleSpeedInputChange = nextSpeed => {
     this.props.onChange(this.stringifySpeed(nextSpeed))
   }
   render () {
-    return <div className='OptionsSpeed'>
-      <span className='OptionsSpeedのminus'>
-        <OptionsButton onClick={this.handleMinusButtonClick}>-</OptionsButton>
-      </span>
-      <OptionsInputField
-        value={this.parseSpeed(this.props.value)}
-        parse={this.parseSpeed}
-        stringify={this.stringifySpeed}
-        validator={/^\d+(?:\.\d)?$/}
-        onChange={this.handleSpeedInputChange} />
-      <span className='OptionsSpeedのplus'>
-        <OptionsButton onClick={this.handlePlusButtonClick}>+</OptionsButton>
-      </span>
-    </div>
+    return (
+      <div className='OptionsSpeed'>
+        <span className='OptionsSpeedのminus'>
+          <OptionsButton onClick={this.handleMinusButtonClick}>-</OptionsButton>
+        </span>
+        <OptionsInputField
+          value={this.parseSpeed(this.props.value)}
+          parse={this.parseSpeed}
+          stringify={this.stringifySpeed}
+          validator={/^\d+(?:\.\d)?$/}
+          onChange={this.handleSpeedInputChange}
+        />
+        <span className='OptionsSpeedのplus'>
+          <OptionsButton onClick={this.handlePlusButtonClick}>+</OptionsButton>
+        </span>
+      </div>
+    )
   }
 }
 

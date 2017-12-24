@@ -1,4 +1,3 @@
-
 import invariant from 'invariant'
 
 export function fromObject ({ md5, playMode }) {

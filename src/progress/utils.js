@@ -1,25 +1,23 @@
-
 import { BYTES_FORMATTER } from 'bemuse/progress/formatters'
 
 export function fixed (total, progress) {
   if (!progress) return () => {}
   let loaded = 0
   progress.report(0, total)
-  return (extra) => progress.report(++loaded, total, extra)
+  return extra => progress.report(++loaded, total, extra)
 }
 
 // Reports the progress as an atomic operation.
 export function atomic (progress, promise) {
   if (!progress) return promise
-  return Promise.resolve(promise)
-    .tap((data) => {
-      if (data && data.byteLength) {
-        progress.formatter = BYTES_FORMATTER
-        progress.report(data.byteLength, data.byteLength)
-      } else {
-        progress.report(1, 1)
-      }
-    })
+  return Promise.resolve(promise).tap(data => {
+    if (data && data.byteLength) {
+      progress.formatter = BYTES_FORMATTER
+      progress.report(data.byteLength, data.byteLength)
+    } else {
+      progress.report(1, 1)
+    }
+  })
 }
 
 export function wrapPromise (progress, f) {
@@ -27,8 +25,9 @@ export function wrapPromise (progress, f) {
   let total = 0
   return function () {
     progress.report(current, ++total)
-    return Promise.resolve(f.apply(this, arguments))
-      .tap(() => progress.report(++current, total))
+    return Promise.resolve(f.apply(this, arguments)).tap(() =>
+      progress.report(++current, total)
+    )
   }
 }
 
@@ -37,7 +36,7 @@ export function bind (from, to) {
 }
 
 export function simultaneous (target) {
-  let queue = [ ]
+  let queue = []
   let current
   let unsubscribe
   function update () {
