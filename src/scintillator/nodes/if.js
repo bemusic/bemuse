@@ -1,9 +1,9 @@
 
-import * as PIXI      from 'pixi.js'
+import * as PIXI from 'pixi.js'
 
-import SkinNode       from './lib/base'
-import Instance       from './lib/instance'
-import Expression     from '../expression'
+import SkinNode from './lib/base'
+import Instance from './lib/instance'
+import Expression from '../expression'
 
 export class IfNode extends SkinNode {
   compile (compiler, $el) {
@@ -12,20 +12,20 @@ export class IfNode extends SkinNode {
       throw new Error('Expected exactly 1 children, ' +
         children.length + ' found')
     }
-    this.child    = children[0]
-    this.key      = new Expression($el.attr('key'))
-    this.value    = String($el.attr('value'))
+    this.child = children[0]
+    this.key = new Expression($el.attr('key'))
+    this.value = String($el.attr('value'))
   }
   instantiate (context, container) {
-    let object    = new PIXI.Container()
-    let expr      = this.key
-    let value     = this.value
+    let object = new PIXI.Container()
+    let expr = this.key
+    let value = this.value
     let childNode = this.child
-    let child     = null
+    let child = null
     return new Instance({
-      context:  context,
-      parent:   container,
-      object:   object,
+      context: context,
+      parent: container,
+      object: object,
       onData: (data) => {
         if (String(expr(data)) === value) {
           if (child === null) {
@@ -38,10 +38,9 @@ export class IfNode extends SkinNode {
             child = null
           }
         }
-      },
+      }
     })
   }
 }
 
 export default IfNode
-

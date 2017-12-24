@@ -1,4 +1,4 @@
-import defaultAudioContext from 'audio-context'
+import defaultAudioContext from 'bemuse/audio-context'
 import readBlob from 'bemuse/utils/read-blob'
 
 export const FADE_LENGTH = 0.001
@@ -17,11 +17,11 @@ export function canPlay (type) {
 // - Playing the `Sample` and managing its lifecycle.
 export class SamplingMaster {
   constructor (audioContext) {
-    this._audioContext  = audioContext || defaultAudioContext
-    this._samples       = []
-    this._groups        = []
-    this._instances     = new Set()
-    this._destination   = this._audioContext.destination
+    this._audioContext = audioContext || defaultAudioContext
+    this._samples = []
+    this._groups = []
+    this._instances = new Set()
+    this._destination = this._audioContext.destination
   }
 
   // Connects a dummy node to the audio, thereby unmuting the audio system on
@@ -55,7 +55,7 @@ export class SamplingMaster {
   // Returns an AudioBuffer which can be re-used in other sampling masters.
   decode (blobOrArrayBuffer) {
     return this._coerceToArrayBuffer(blobOrArrayBuffer)
-    .then(arrayBuffer => this._decodeAudio(arrayBuffer))
+      .then(arrayBuffer => this._decodeAudio(arrayBuffer))
   }
 
   // Creates a `Sample` from a Blob or an ArrayBuffer or an AudioBuffer.
@@ -96,7 +96,7 @@ export class SamplingMaster {
           resolve(audioBuffer)
         },
         function decodeAudioDataFailure (e) {
-          reject('Unable to decode audio: ' + e)
+          reject(new Error('Unable to decode audio: ' + e))
         }
       )
     })
@@ -109,12 +109,10 @@ export class SamplingMaster {
   _stoppedPlaying (instance) {
     this._instances.delete(instance)
   }
-
 }
 
 // Sound group
 class SoundGroup {
-
   constructor (samplingMaster, { volume } = { }) {
     this._master = samplingMaster
     this._gain = this._master.audioContext.createGain()
@@ -130,7 +128,6 @@ class SoundGroup {
     this._gain.disconnect()
     this._gain = null
   }
-
 }
 
 // The Sample is created by and belongs to the `SamplingMaster`.
@@ -138,7 +135,6 @@ class SoundGroup {
 // You don't invoke this constructor directly; it is invoked by
 // `SamplingMaster#create`.
 class Sample {
-
   constructor (samplingMaster, audioBuffer) {
     this._master = samplingMaster
     this._buffer = audioBuffer
@@ -154,7 +150,6 @@ class Sample {
     this._master = null
     this._buffer = null
   }
-
 }
 
 // When a `Sample` is played, a PlayInstance is created.
@@ -226,7 +221,7 @@ class PlayInstance {
   bad () {
     if (!this._source) return
     this._source.playbackRate.value = (Math.random() < 0.5
-      ? Math.pow(2,  1 / 24)
+      ? Math.pow(2, 1 / 24)
       : Math.pow(2, -1 / 24)
     )
   }
@@ -235,7 +230,6 @@ class PlayInstance {
   destroy () {
     this.stop()
   }
-
 }
 
 export default SamplingMaster

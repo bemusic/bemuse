@@ -3,7 +3,7 @@ export function forModule (moduleName) {
   return {
     info: bindLogger(moduleName, 'info'),
     warn: bindLogger(moduleName, 'warn'),
-    error: bindLogger(moduleName, 'error'),
+    error: bindLogger(moduleName, 'error')
   }
 }
 

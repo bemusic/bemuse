@@ -45,7 +45,7 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
       loadSpec.bms = new URLResource(url)
       loadSpec.assets = new BemusePackageResources(assetsUrl, {
         fallback: url,
-        fallbackPattern: /\.(?:png|jpg|webm|mp4|m4v)/,
+        fallbackPattern: /\.(?:png|jpg|webm|mp4|m4v)/
       })
     }
 
@@ -76,10 +76,10 @@ export function launch ({ server, song, chart, options, saveSpeed, saveLeadTime 
           laneCover: Options.laneCover(options),
           gauge: Options.getGauge(options),
           input: {
-            keyboard: keyboardMapping,
-          },
-        },
-      ],
+            keyboard: keyboardMapping
+          }
+        }
+      ]
     }
 
     // set video options
@@ -182,29 +182,29 @@ function findVideoUrl (song, assets) {
 
 function showResult (player, playerState, chart) {
   return new Promise(resolve => {
-    let stats     = playerState.stats
-    let playMode  = playerState.player.options.scratch === 'off' ? 'KB' : 'BM'
+    let stats = playerState.stats
+    let playMode = playerState.player.options.scratch === 'off' ? 'KB' : 'BM'
     let props = {
       result: {
-        '1':          stats.counts['1'],
-        '2':          stats.counts['2'],
-        '3':          stats.counts['3'],
-        '4':          stats.counts['4'],
-        'missed':     stats.counts[MISSED],
-        'score':      stats.score,
-        'maxCombo':   stats.maxCombo,
-        'accuracy':   stats.accuracy,
+        '1': stats.counts['1'],
+        '2': stats.counts['2'],
+        '3': stats.counts['3'],
+        '4': stats.counts['4'],
+        'missed': stats.counts[MISSED],
+        'score': stats.score,
+        'maxCombo': stats.maxCombo,
+        'accuracy': stats.accuracy,
         'totalCombo': stats.totalCombo,
         'totalNotes': stats.totalNotes,
-        'log':        stats.log,
-        'deltas':     stats.deltas,
-        'grade':      getGrade(stats),
+        'log': stats.log,
+        'deltas': stats.deltas,
+        'grade': getGrade(stats)
       },
       chart: chart,
       playMode: playMode,
       lr2Timegate: player.notechart.expertJudgmentWindow,
       onExit: () => resolve({ replay: false }),
-      onReplay: () => resolve({ replay: true }),
+      onReplay: () => resolve({ replay: true })
     }
     SCENE_MANAGER.display(React.createElement(ResultScene, props)).done()
   })

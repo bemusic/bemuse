@@ -12,13 +12,13 @@ import TouchPlugin from './input/touch-plugin'
 export class GameController {
   constructor ({ game, display, audio }) {
     this._audioInputLatency = game.options.audioInputLatency
-    this._game    = game
+    this._game = game
     this._display = display
-    this._audio   = audio
-    this._clock   = new Clock(this._audio)
-    this._input   = new GameInput()
-    this._timer   = new GameTimer(this._clock, this._input)
-    this._state   = new GameState(game)
+    this._audio = audio
+    this._clock = new Clock(this._audio)
+    this._input = new GameInput()
+    this._timer = new GameTimer(this._clock, this._input)
+    this._state = new GameState(game)
     this._promise = new Promise(resolve => (this._resolvePromise = resolve))
     if (bench.enabled) this.enableBenchmark()
   }
@@ -116,8 +116,8 @@ export class GameController {
     let t = this._timer.time
     let A = this._audioInputLatency
     this._state.update(t - A, this._input, this._timer)
-    this._audio.update(t,     this._state)
-    this._display.update(t,   this._state)
+    this._audio.update(t, this._state)
+    this._display.update(t, this._state)
     if (this._state.finished && this._resolvePromise) {
       this._resolvePromise({ finished: true })
       this._resolvePromise = null
@@ -132,11 +132,10 @@ export class GameController {
     bench.benchmark('display_update', this._display, 'update')
     bench.benchmark('display_compute', this._display, '_getData')
     bench.benchmark('display_push',
-        this._display._context._instance, 'push')
+      this._display._context._instance, 'push')
     bench.benchmark('display_render',
-        this._display._context._renderer, 'render')
+      this._display._context._renderer, 'render')
   }
-
 }
 
 export default GameController

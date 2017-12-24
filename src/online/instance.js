@@ -1,8 +1,9 @@
-import config           from 'val-loader?cacheable!./config'
+/* eslint import/no-webpack-loader-syntax: off */
+import config from 'val-loader?cacheable!./config'
 
-import OfflineService   from './OfflineService'
-import Online           from './index'
-import OnlineService    from './scoreboard-system/OnlineService'
+import OfflineService from './OfflineService'
+import Online from './index'
+import OnlineService from './scoreboard-system/OnlineService'
 
 export let instance = null
 

@@ -1,8 +1,8 @@
 
 import './MusicInfoTabInformation.scss'
 
-import React      from 'react'
-import PropTypes  from 'prop-types'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 import connectIO from '../../impure-react/connectIO'
@@ -11,7 +11,7 @@ import * as ReadmeIO from '../io/ReadmeIO'
 import * as ReduxState from '../redux/ReduxState'
 
 import Markdown from 'bemuse/ui/Markdown'
-import YouTube  from 'bemuse/ui/YouTube'
+import YouTube from 'bemuse/ui/YouTube'
 
 const enhance = compose(
   connect((state) => ({
@@ -41,14 +41,14 @@ class MusicInfoTabInformation extends React.Component {
 
   render () {
     const song = this.props.song
-    return <div className="MusicInfoTabInformation">
+    return <div className='MusicInfoTabInformation'>
       {this.renderButtons()}
-      <p className="MusicInfoTabInformationのartist">
+      <p className='MusicInfoTabInformationのartist'>
         <span>Artist:</span>
         <strong>{link(song.artist, song.artist_url)}</strong>
       </p>
       {song.youtube_url ? <YouTube url={song.youtube_url} /> : null}
-      <section className="MusicInfoTabInformationのreadme">
+      <section className='MusicInfoTabInformationのreadme'>
         <Markdown source={this.props.readme} />
       </section>
     </div>
@@ -62,7 +62,7 @@ class MusicInfoTabInformation extends React.Component {
     }
     if (song.song_url) {
       let text = /soundcloud\.com/.test(song.song_url)
-          ? 'SoundCloud' : 'Song URL'
+        ? 'SoundCloud' : 'Song URL'
       buttons.push(link(text, song.song_url))
     }
     if (song.long_url) {
@@ -74,7 +74,7 @@ class MusicInfoTabInformation extends React.Component {
     if (buttons.length === 0) {
       return null
     } else {
-      return <p className="MusicInfoTabInformationのbuttons">{buttons}</p>
+      return <p className='MusicInfoTabInformationのbuttons'>{buttons}</p>
     }
   }
 }
@@ -84,7 +84,7 @@ export default enhance(MusicInfoTabInformation)
 function link (text, url) {
   return (
     url
-    ? <a key={text} href={url} target="_blank">{text}</a>
-    : text
+      ? <a key={text} href={url} target='_blank'>{text}</a>
+      : text
   )
 }

@@ -13,7 +13,7 @@ export function sortSongs (songs) {
       )
     },
     song => song.bpm,
-    song => song.title.toLowerCase(),
+    song => song.title.toLowerCase()
   ])
 }
 

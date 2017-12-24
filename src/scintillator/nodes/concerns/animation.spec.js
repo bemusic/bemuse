@@ -10,7 +10,6 @@ import assert from 'power-assert'
 let $xml = xml => $($.parseXML(xml).documentElement)
 
 describe('Scintillator::Animation', function () {
-
   describe('_attrs', function () {
     it('lists all attributes of an element', function () {
       let xml = $xml('<keyframe t="0" x="10" y="30" />')[0]
@@ -28,16 +27,18 @@ describe('Scintillator::Animation', function () {
       expect(_compile(xml)).to.deep.equal({
         on: '',
         data: [
-          { name: 'x', keyframes: [
+          { name: 'x',
+            keyframes: [
               { time: 0, value: 10, ease: 'linear' },
               { time: 2, value: 20, ease: 'linear' },
-              { time: 5, value: 15, ease: 'linear' },
-            ], },
-          { name: 'y', keyframes: [
+              { time: 5, value: 15, ease: 'linear' }
+            ] },
+          { name: 'y',
+            keyframes: [
               { time: 0, value: 30, ease: 'linear' },
-              { time: 5, value: 20, ease: 'linear' },
-            ], },
-        ],
+              { time: 5, value: 20, ease: 'linear' }
+            ] }
+        ]
       })
     })
     it('throws when there is no time', function () {
@@ -101,5 +102,4 @@ describe('Scintillator::Animation', function () {
       expect(anim._events).to.deep.equal(['', 'exit'])
     })
   })
-
 })

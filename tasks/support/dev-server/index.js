@@ -1,15 +1,22 @@
-
-import gutil            from 'gulp-util'
-import webpack          from 'webpack'
 import WebpackDevServer from 'webpack-dev-server'
-import express          from 'express'
+import chalk from 'chalk'
+import express from 'express'
+import gutil from 'gulp-util'
+import webpack from 'webpack'
 
-import config           from '../../../config/webpack'
-import routes           from '../../../config/routes'
-import path             from '../../../config/path'
-import * as Env         from '../../../config/env'
+import * as Env from '../../../config/env'
+import buildConfig from '../../../config/buildConfig'
+import config from '../../../config/webpack'
+import path from '../../../config/path'
+import routes from '../../../config/routes'
 
 export function start () {
+  console.log(
+    chalk.redBright('⬤'),
+    chalk.yellowBright('▗▚▚▚'),
+    chalk.bold(buildConfig.name),
+    chalk.cyan(buildConfig.version)
+  )
 
   let port = Env.serverPort()
   var compiler = webpack(config)

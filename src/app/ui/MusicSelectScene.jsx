@@ -92,17 +92,17 @@ class MusicSelectScene extends React.PureComponent {
     onFilterTextChange: PropTypes.func,
     onLaunchGame: PropTypes.func,
     collectionUrl: PropTypes.string,
-    musicPreviewEnabled: PropTypes.bool,
+    musicPreviewEnabled: PropTypes.bool
   }
 
   constructor (props) {
     super(props)
     this.state = {
-      optionsVisible:               shouldShowOptions(),
-      customBMSVisible:             false,
-      unofficialDisclaimerVisible:  false,
-      inSong:                       false,
-      authenticationPopupVisible:   false,
+      optionsVisible: shouldShowOptions(),
+      customBMSVisible: false,
+      unofficialDisclaimerVisible: false,
+      inSong: false,
+      authenticationPopupVisible: false
     }
   }
 
@@ -114,15 +114,15 @@ class MusicSelectScene extends React.PureComponent {
   render () {
     let musicSelect = this.props.musicSelect
     return <Scene
-      className="MusicSelectScene"
+      className='MusicSelectScene'
       onDragEnter={this.handleCustomBMSOpen}
     >
       <SceneHeading>
         Select Music
         <input
-          type="text"
-          placeholder="Filter…"
-          className="MusicSelectSceneのsearch"
+          type='text'
+          placeholder='Filter…'
+          className='MusicSelectSceneのsearch'
           onChange={this.handleFilter}
           value={musicSelect.filterText}
         />
@@ -133,16 +133,16 @@ class MusicSelectScene extends React.PureComponent {
       {this.renderMain()}
 
       <SceneToolbar>
-        <a onClick={this.popScene} href="javascript://">Exit</a>
+        <a onClick={this.popScene} href='javascript://'>Exit</a>
         <a
           onClick={this.handleCustomBMSOpen}
-          href="javascript://"
+          href='javascript://'
         >
           Play Custom BMS
         </a>
         <SceneToolbar.Spacer />
         {this.renderOnlineToolbarButtons()}
-        <a onClick={this.handleOptionsOpen} href="javascript://">Options</a>
+        <a onClick={this.handleOptionsOpen} href='javascript://'>Options</a>
       </SceneToolbar>
 
       <ModalPopup
@@ -156,7 +156,7 @@ class MusicSelectScene extends React.PureComponent {
         visible={this.state.customBMSVisible}
         onBackdropClick={this.handleCustomBMSClose}
       >
-        <div className="MusicSelectSceneのcustomBms">
+        <div className='MusicSelectSceneのcustomBms'>
           <CustomBMS onSongLoaded={this.handleCustomSong} />
         </div>
       </ModalPopup>
@@ -184,7 +184,7 @@ class MusicSelectScene extends React.PureComponent {
     if (!this.props.musicSelect.unofficial) return null
     return (
       <div
-        className="MusicSelectSceneのunofficialLabel"
+        className='MusicSelectSceneのunofficialLabel'
         onClick={this.handleUnofficialClick}
       >
         <b>Disclaimer:</b> Unofficial Server
@@ -195,13 +195,13 @@ class MusicSelectScene extends React.PureComponent {
   renderMain () {
     const musicSelect = this.props.musicSelect
     if (musicSelect.loading) {
-      return <div className="MusicSelectSceneのloading">Loading…</div>
+      return <div className='MusicSelectSceneのloading'>Loading…</div>
     }
     if (musicSelect.error) {
-      return <div className="MusicSelectSceneのloading">Cannot load collection!</div>
+      return <div className='MusicSelectSceneのloading'>Cannot load collection!</div>
     }
     if (musicSelect.groups.length === 0) {
-      return <div className="MusicSelectSceneのloading">No songs found!</div>
+      return <div className='MusicSelectSceneのloading'>No songs found!</div>
     }
     return (
       <div
@@ -233,14 +233,14 @@ class MusicSelectScene extends React.PureComponent {
     let buttons = []
     if (this.props.user) {
       buttons.push(
-        <a onClick={this.handleLogout} href="javascript://online/logout" key="logout">
+        <a onClick={this.handleLogout} href='javascript://online/logout' key='logout'>
           Log Out
           ({this.props.user.username})
         </a>
       )
     } else {
       buttons.push(
-        <a onClick={this.handleAuthenticate} href="javascript://online/logout" key="auth">
+        <a onClick={this.handleAuthenticate} href='javascript://online/logout' key='auth'>
           Log In / Create an Account
         </a>
       )

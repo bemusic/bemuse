@@ -1,9 +1,9 @@
 
 import './ModalPopup.scss'
-import React          from 'react'
-import PropTypes      from 'prop-types'
-import c              from 'classnames'
-import WarpContainer  from './WarpContainer'
+import React from 'react'
+import PropTypes from 'prop-types'
+import c from 'classnames'
+import WarpContainer from './WarpContainer'
 
 export default class ModalPopup extends React.Component {
   static propTypes = {
@@ -17,9 +17,9 @@ export default class ModalPopup extends React.Component {
     return <WarpContainer>
       <div className={c('ModalPopup',
         { 'is-visible': this.props.visible !== false })}>
-        <div className="ModalPopupのbackdrop"
-          onClick={this.props.onBackdropClick}></div>
-        <div className="ModalPopupのcontents">
+        <div className='ModalPopupのbackdrop'
+          onClick={this.props.onBackdropClick} />
+        <div className='ModalPopupのcontents'>
           {this.props.children}
         </div>
       </div>

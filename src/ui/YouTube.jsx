@@ -5,8 +5,8 @@ import ReactDOM from 'react-dom'
 
 export default class YouTube extends React.Component {
   render () {
-    return <iframe width="100%" className="YouTube"
-      src={this.getUrl()} frameBorder="0" allowFullScreen></iframe>
+    return <iframe width='100%' className='YouTube'
+      src={this.getUrl()} frameBorder='0' allowFullScreen />
   }
 
   getUrl = () => {

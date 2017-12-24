@@ -1,13 +1,13 @@
-
-import debug from 'debug/browser'
-let log = debug('scintillator:expression')
+import debug from 'debug'
 
 import parser from './parser.pegjs'
+
+const log = debug('scintillator:expression')
 
 function createFunction (code) {
   let fn = eval('(function(get) { return ' + code + ' })') // eslint-disable-line no-eval
   fn.displayName = '(' + code + ')'
-  fn.constant = !!/^[\-0-9\.]+$/.test(code)
+  fn.constant = !!/^[-0-9.]+$/.test(code)
   return fn
 }
 

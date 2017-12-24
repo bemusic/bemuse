@@ -1,15 +1,14 @@
 
-import * as Music       from './music'
-import React            from 'react'
-import ReactDOM         from 'react-dom'
-import ExperimentScene  from './ui/ExperimentScene.jsx'
-import $                from 'jquery'
-import _                from 'lodash'
-import Bacon            from 'baconjs'
-import { connect }      from 'bemuse/flux'
+import * as Music from './music'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import ExperimentScene from './ui/ExperimentScene.jsx'
+import $ from 'jquery'
+import _ from 'lodash'
+import Bacon from 'baconjs'
+import { connect } from 'bemuse/flux'
 
 export function main () {
-
   const state口 = new Bacon.Bus()
 
   const state川 = state口.scan({
@@ -18,13 +17,13 @@ export function main () {
     finished: false,
     listening: false,
     numSamples: 0,
-    latency: 0,
+    latency: 0
   }, (state, change) => _.assign({ }, state, change))
 
   const ConnectedExperimentScene = connect(state川)(ExperimentScene)
 
   const scene = React.createElement(ConnectedExperimentScene, {
-    onStart:  () => play(),
+    onStart: () => play()
   })
 
   ReactDOM.render(scene, $('<div></div>').appendTo('body')[0])
@@ -82,5 +81,4 @@ export function main () {
       }, 6675)
     }
   })
-
 }

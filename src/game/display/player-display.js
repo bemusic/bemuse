@@ -5,32 +5,32 @@ import { getGauge } from './Gauge'
 export class PlayerDisplay {
   constructor (player) {
     let notechart = player.notechart
-    this._currentSpeed  = 1
-    this._player        = player
-    this._noteArea      = new NoteArea(notechart.notes, notechart.barLines)
-    this._stateful      = { }
-    this._defaultData   = {
+    this._currentSpeed = 1
+    this._player = player
+    this._noteArea = new NoteArea(notechart.notes, notechart.barLines)
+    this._stateful = { }
+    this._defaultData = {
       placement: player.options.placement,
       scratch: player.options.scratch,
       key_mode: getKeyMode(notechart, player.options.scratch),
       lane_lift: Math.max(0, -player.options.laneCover),
-      lane_press: Math.max(0, player.options.laneCover),
+      lane_press: Math.max(0, player.options.laneCover)
     }
-    this._gauge         = getGauge(player.options.gauge)
+    this._gauge = getGauge(player.options.gauge)
   }
   update (time, gameTime, playerState) {
-    let player   = this._player
+    let player = this._player
     let noteArea = this._noteArea
     let stateful = this._stateful
-    let beat     = player.notechart.secondsToBeat(gameTime)
+    let beat = player.notechart.secondsToBeat(gameTime)
     let position = player.notechart.beatToPosition(beat)
-    let spacing  = player.notechart.spacingAtBeat(beat)
-    let data     = Object.assign({ }, this._defaultData)
-    let push     = (key, value) => (data[key] || (data[key] = [])).push(value)
-    let gauge    = this._gauge
+    let spacing = player.notechart.spacingAtBeat(beat)
+    let data = Object.assign({ }, this._defaultData)
+    let push = (key, value) => (data[key] || (data[key] = [])).push(value)
+    let gauge = this._gauge
 
     this._currentSpeed += (playerState.speed - this._currentSpeed) / 3
-    let speed    = this._currentSpeed * spacing
+    let speed = this._currentSpeed * spacing
 
     updateBeat()
     updateVisibleNotes()
@@ -68,23 +68,23 @@ export class PlayerDisplay {
     function updateVisibleNotes () {
       let entities = noteArea.getVisibleNotes(position, getUpperBound(), 1)
       for (let entity of entities) {
-        let note    = entity.note
-        let column  = note.column
+        let note = entity.note
+        let column = note.column
         if (entity.height) {
-          let judgment  = playerState.getNoteJudgment(note)
-          let status    = playerState.getNoteStatus(note)
+          let judgment = playerState.getNoteJudgment(note)
+          let status = playerState.getNoteStatus(note)
           push(`longnote_${column}`, {
-            key:    note.id,
-            y:      entity.y,
+            key: note.id,
+            y: entity.y,
             height: entity.height,
             active: judgment !== 0 && judgment !== MISSED,
-            missed: status === 'judged' && judgment === MISSED,
+            missed: status === 'judged' && judgment === MISSED
           })
         } else {
           if (playerState.getNoteStatus(note) !== 'judged') {
             push(`note_${column}`, {
-              key:    note.id,
-              y:      entity.y,
+              key: note.id,
+              y: entity.y
             })
           }
         }
@@ -119,14 +119,14 @@ export class PlayerDisplay {
       if (notification) {
         let name = (
           notification.judgment === -1
-          ? 'missed'
-          : `${notification.judgment}`
+            ? 'missed'
+            : `${notification.judgment}`
         )
         stateful[`judge_${name}`] = time
         let deviationMode = (
           notification.judgment === -1 || notification.judgment === 1
-          ? 'none'
-          : (notification.delta > 0 ? 'late' : notification.delta < 0 ? 'early' : 'none')
+            ? 'none'
+            : (notification.delta > 0 ? 'late' : notification.delta < 0 ? 'early' : 'none')
         )
         stateful[`judge_deviation_${deviationMode}`] = time
         stateful['combo'] = notification.combo
@@ -160,7 +160,6 @@ export class PlayerDisplay {
     function getUpperBound () {
       return position + (5 / speed)
     }
-
   }
 }
 

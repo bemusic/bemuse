@@ -6,7 +6,7 @@ import MusicListItemChartContainer from './MusicListItemChartContainer'
 
 export default class MusicListItemCharts extends React.Component {
   render () {
-    return <div className="MusicListItemCharts">
+    return <div className='MusicListItemCharts'>
       {this.props.charts.map((chart, index) =>
         <MusicListItemChartContainer
           key={index}

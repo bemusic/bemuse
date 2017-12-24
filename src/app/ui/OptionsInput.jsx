@@ -1,20 +1,19 @@
-import * as Options         from '../entities/Options'
-import * as OptionsIO       from '../io/OptionsIO'
 import './OptionsInput.scss'
 
-import _                    from 'lodash'
-import c                    from 'classnames'
-import React                from 'react'
-import PropTypes            from 'prop-types'
-import { key川 }            from 'bemuse/omni-input'
-import { getName }          from 'bemuse/omni-input'
-import { connect }          from 'react-redux'
-import { compose, withState, withHandlers } from 'recompose'
-import { createSelector }   from 'reselect'
+import _ from 'lodash'
+import PropTypes from 'prop-types'
+import React from 'react'
+import c from 'classnames'
+import { compose, withHandlers, withState } from 'recompose'
+import { connect } from 'react-redux'
+import { createSelector } from 'reselect'
+import { getName, key川 } from 'bemuse/omni-input'
 
-import connectIO            from '../../impure-react/connectIO'
-import OptionsInputKeys     from './OptionsInputKeys'
-import OptionsInputScratch  from './OptionsInputScratch'
+import * as Options from '../entities/Options'
+import * as OptionsIO from '../io/OptionsIO'
+import OptionsInputKeys from './OptionsInputKeys'
+import OptionsInputScratch from './OptionsInputScratch'
+import connectIO from '../../impure-react/connectIO'
 
 const selectKeyboardMapping = createSelector(
   (state) => state.options,
@@ -30,7 +29,7 @@ const enhance = compose(
   connect((state) => ({
     scratch: Options.scratchPosition(state.options),
     texts: selectKeyboardMappingTexts(state),
-    mode: Options.playMode(state.options),
+    mode: Options.playMode(state.options)
   })),
   withState('editing', 'setEditing', null),
   connectIO({
@@ -60,8 +59,8 @@ class OptionsInput extends React.Component {
     scratch: PropTypes.string,
     texts: PropTypes.object,
     editing: PropTypes.string,
-    mode: PropTypes.string,
-    onEdit: PropTypes.func
+    onEdit: PropTypes.func,
+    onKey: PropTypes.func
   }
   render () {
     const className = c('OptionsInput', {
@@ -70,31 +69,31 @@ class OptionsInput extends React.Component {
     return <div className={className}>
       {
         this.props.scratch !== 'off'
-        ? (
-          <div className="OptionsInputのzone is-scratch">
-            <div className="OptionsInputのcontrol">
-              <OptionsInputScratch
-                text={[this.props.texts['SC'], this.props.texts['SC2']]}
-                isEditing={
-                  this.props.editing === 'SC' ||
+          ? (
+            <div className='OptionsInputのzone is-scratch'>
+              <div className='OptionsInputのcontrol'>
+                <OptionsInputScratch
+                  text={[this.props.texts['SC'], this.props.texts['SC2']]}
+                  isEditing={
+                    this.props.editing === 'SC' ||
                   this.props.editing === 'SC2'
-                }
-                editIndex={this.props.editing === 'SC'
-                  ? 0
-                  : this.props.editing === 'SC2' ? 1 : -1
-                }
-                onEdit={this.handleEdit}
-              />
-            </div>
-            <div className="OptionsInputのtitle">
+                  }
+                  editIndex={this.props.editing === 'SC'
+                    ? 0
+                    : this.props.editing === 'SC2' ? 1 : -1
+                  }
+                  onEdit={this.handleEdit}
+                />
+              </div>
+              <div className='OptionsInputのtitle'>
               Scratch
+              </div>
             </div>
-          </div>
-        )
-        : null
+          )
+          : null
       }
-      <div className="OptionsInputのzone">
-        <div className="OptionsInputのcontrol">
+      <div className='OptionsInputのzone'>
+        <div className='OptionsInputのcontrol'>
           <OptionsInputKeys
             keyboardMode={this.props.scratch === 'off'}
             texts={this.props.texts}
@@ -102,7 +101,7 @@ class OptionsInput extends React.Component {
             onEdit={this.handleEdit}
           />
         </div>
-        <div className="OptionsInputのtitle">
+        <div className='OptionsInputのtitle'>
           Keys
         </div>
       </div>

@@ -1,9 +1,7 @@
-
-import Progress         from './'
-import * as Formatters  from './formatters'
+import * as Formatters from './formatters'
+import Progress from './'
 
 describe('ProgressFormatters', function () {
-
   describe('BYTES_FORMATTER', function () {
     it('should return blank for indeterminate', function () {
       let p = new Progress()
@@ -12,7 +10,7 @@ describe('ProgressFormatters', function () {
     it('should format as human readable size', function () {
       let p = new Progress()
       p.report(1, 1024)
-      expect(Formatters.BYTES_FORMATTER(p)).to.equal('1B / 1kB')
+      expect(Formatters.BYTES_FORMATTER(p)).to.equal('1B / 1KB')
     })
   })
 
@@ -23,5 +21,4 @@ describe('ProgressFormatters', function () {
       expect(Formatters.EXTRA_FORMATTER(p)).to.equal('one.wav')
     })
   })
-
 })

@@ -1,9 +1,8 @@
 import assert from 'power-assert'
 
-import SamplesLoader  from './samples-loader'
+import SamplesLoader from './samples-loader'
 
 describe('SamplesLoader', function () {
-
   var assets
   var master
   var loader
@@ -18,7 +17,7 @@ describe('SamplesLoader', function () {
 
   describe('#loadFiles', function () {
     it('should not include undecodable audio', function () {
-      assets.file.returns(Promise.reject())
+      assets.file.returns(Promise.reject(new Error('cannot decode')))
       assets.file.withArgs('a.wav').returns(Promise.resolve({
         read: () => Promise.resolve('ok1')
       }))
@@ -27,7 +26,7 @@ describe('SamplesLoader', function () {
     })
 
     it('should cache', function () {
-      assets.file.returns(Promise.reject())
+      assets.file.returns(Promise.reject(new Error('invalid filename')))
       assets.file.withArgs('a.wav').returns(Promise.resolve({
         read: () => Promise.resolve('ok1')
       }))
@@ -40,7 +39,7 @@ describe('SamplesLoader', function () {
     })
 
     it('should use cache', function () {
-      assets.file.returns(Promise.reject())
+      assets.file.returns(Promise.reject(new Error('unexpected call')))
       keysoundCache.isCached = (name) => name === 'name.wav'
       keysoundCache.get = (name) => {
         if (name === 'name.wav') return 'buffer'
@@ -53,7 +52,7 @@ describe('SamplesLoader', function () {
     })
 
     it('should try mp3', function () {
-      assets.file.returns(Promise.reject())
+      assets.file.returns(Promise.reject(new Error('invalid filename')))
       assets.file.withArgs('a.mp3').returns(Promise.resolve({
         read: () => Promise.resolve('ok1')
       }))
@@ -65,10 +64,8 @@ describe('SamplesLoader', function () {
     })
 
     it('should not include failed matches', function () {
-      assets.file.returns(Promise.reject())
+      assets.file.returns(Promise.reject(new Error('i give up')))
       return expect(loader.loadFiles(['a.wav'])).to.eventually.deep.eq({ })
     })
-
   })
-
 })

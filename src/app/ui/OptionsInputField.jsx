@@ -11,24 +11,24 @@ class OptionsInputField extends React.PureComponent {
     parse: PropTypes.func,
     onChange: PropTypes.func,
     validator: PropTypes.object,
-    value: PropTypes.any,
+    value: PropTypes.any
   }
   static defaultProps = {
     stringify: x => `${x}`,
-    parse:     x => x,
-    onChange: () => {},
+    parse: x => x,
+    onChange: () => {}
   }
 
   render () {
     return <input
       {..._.omit(this.props, ['stringify', 'parse', 'onChange', 'validator', 'value'])}
-      type="text"
-      ref="input"
+      type='text'
+      ref='input'
       defaultValue={this.props.stringify(this.props.value)}
       onChange={this.handleInputChange}
       onKeyDown={this.handleInputKeyDown}
       onBlur={this.handleInputBlur}
-      className="OptionsInputField" />
+      className='OptionsInputField' />
   }
   handleInputChange = (e) => {
     let input = e.target

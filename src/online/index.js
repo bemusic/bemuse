@@ -1,20 +1,19 @@
-import _          from 'lodash'
-import Bacon      from 'baconjs'
-import Immutable  from 'immutable'
+import _ from 'lodash'
+import Bacon from 'baconjs'
+import Immutable from 'immutable'
 
 import * as DataStore from './data-store'
-import * as Level     from './level'
-import id             from './id'
+import * as Level from './level'
+import id from './id'
 import {
   INITIAL_OPERATION_STATE,
   completedStateTransition,
   isWaiting,
   operationState川,
-  transition川FromPromise,
+  transition川FromPromise
 } from './operations'
 
 export function Online (service) {
-
   const user口 = new Bacon.Bus()
   const seen口 = new Bacon.Bus()
   const submitted口 = new Bacon.Bus()
@@ -22,8 +21,8 @@ export function Online (service) {
   const user川 = (
     user口
     // https://github.com/baconjs/bacon.js/issues/536
-    .toProperty(null)
-    .map(user => user || service.getCurrentUser())
+      .toProperty(null)
+      .map(user => user || service.getCurrentUser())
   )
 
   function signUp (options) {
@@ -110,7 +109,6 @@ export function Online (service) {
   }
 
   function Ranking (data) {
-
     const level = Level.fromObject(data)
     const retrySelf口 = new Bacon.Bus()
     const retryScoreboard口 = new Bacon.Bus()
@@ -128,14 +126,14 @@ export function Online (service) {
       const state川 = (
         Bacon.combineTemplate({
           self: self川,
-          scoreboard: scoreboard川,
+          scoreboard: scoreboard川
         })
-        .map(conformState)
+          .map(conformState)
       )
       return {
         state川,
-        resubmit:         () => retrySelf口.push(),
-        reloadScoreboard: () => retryScoreboard口.push(),
+        resubmit: () => retrySelf口.push(),
+        reloadScoreboard: () => retryScoreboard口.push()
       }
     }
 
@@ -145,8 +143,8 @@ export function Online (service) {
         data: state.scoreboard.value && state.scoreboard.value.data,
         meta: {
           scoreboard: _.omit(state.scoreboard, 'value'),
-          submission: state.self,
-        },
+          submission: state.self
+        }
       }
     }
 
@@ -162,15 +160,15 @@ export function Online (service) {
       return {
         self川: Bacon.constant({
           status: 'unauthenticated',
-          error:  null,
-          record: null,
+          error: null,
+          record: null
         }),
         scoreboardTrigger川: Bacon.once({ force: false })
       }
     }
 
     function submissionModel (user) {
-      const self川     = submitScoreState川(user)
+      const self川 = submitScoreState川(user)
       const selfDone川 = self川.toEventStream().filter(state => !isWaiting(state))
       return {
         self川,
@@ -228,7 +226,7 @@ export function Online (service) {
     scoreboard: getScoreboard,
     Ranking,
     seen,
-    dispose,
+    dispose
   }
 }
 

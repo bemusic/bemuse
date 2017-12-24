@@ -126,7 +126,7 @@ export class OnlineService {
     const result = await this._scoreboardClient.retrieveRecord({
       playerToken: this._currentUser.playerToken,
       md5: level.md5,
-      playMode: level.playMode,
+      playMode: level.playMode
     })
     const myRecord = result.data.chart.level.myRecord
     return myRecord && {

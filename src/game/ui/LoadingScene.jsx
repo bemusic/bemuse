@@ -14,18 +14,18 @@ export default class LoadingScene extends React.Component {
     song: PropTypes.object,
     tasks: PropTypes.object,
     eyecatchImagePromise: PropTypes.object,
-    registerTeardownCallback: PropTypes.func,
+    registerTeardownCallback: PropTypes.func
   }
 
   render () {
-    return <Scene className="LoadingScene" ref="scene">
-      <div className="LoadingSceneのimage" ref="eyecatch"></div>
-      <div className="LoadingSceneのinfo">
+    return <Scene className='LoadingScene' ref='scene'>
+      <div className='LoadingSceneのimage' ref='eyecatch' />
+      <div className='LoadingSceneのinfo'>
         <LoadingSceneSongInfo song={this.props.song} />
       </div>
       <LoadingSceneProgress tasks={this.props.tasks} />
-      <div className="LoadingSceneのflash"></div>
-      <div className="LoadingSceneのcover"></div>
+      <div className='LoadingSceneのflash' />
+      <div className='LoadingSceneのcover' />
     </Scene>
   }
 

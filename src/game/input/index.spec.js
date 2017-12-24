@@ -2,7 +2,6 @@
 import GameInput from './'
 
 describe('GameInput', function () {
-
   let input
   let plugin
 
@@ -12,7 +11,7 @@ describe('GameInput', function () {
       out: { },
       get () {
         return this.out
-      },
+      }
     }
     input.use(plugin)
   })
@@ -52,5 +51,4 @@ describe('GameInput', function () {
       expect(input.get('wow').changed).to.equal(true)
     })
   })
-
 })

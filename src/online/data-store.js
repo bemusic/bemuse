@@ -3,7 +3,7 @@ import * as Immutable from 'immutable'
 
 import { INITIAL_OPERATION_STATE, transitionState } from './operations'
 
-const PUT   = 'PUT'
+const PUT = 'PUT'
 const CLEAR = 'CLEAR'
 
 export const INITIAL_STATE = new Immutable.Map()

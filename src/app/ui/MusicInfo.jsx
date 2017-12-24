@@ -2,14 +2,14 @@
 import './MusicInfo.scss'
 
 import React from 'react'
-import MusicChartInfo     from './MusicChartInfo.jsx'
+import MusicChartInfo from './MusicChartInfo.jsx'
 import MusicChartSelector from './MusicChartSelector.jsx'
-import MusicInfoTabs      from './MusicInfoTabs.jsx'
+import MusicInfoTabs from './MusicInfoTabs.jsx'
 
 class MusicInfo extends React.PureComponent {
   render () {
     const { song, chart } = this.props
-    return <section className="MusicInfo">
+    return <section className='MusicInfo'>
       <MusicChartInfo info={chart.info} />
       <MusicChartSelector
         song={song}

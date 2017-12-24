@@ -5,58 +5,58 @@ let storage = localStorage
 // The structure of this may change in the future, so I'll keep this private.
 export const DEFAULTS = {
   // Game mode (KB, BM)
-  'player.P1.mode':             'KB',
+  'player.P1.mode': 'KB',
 
   // Keyboard mapping
-  'input.P1.keyboard.BM.SC':    '16',
-  'input.P1.keyboard.BM.SC2':   '65',
-  'input.P1.keyboard.BM.1':     '90',
-  'input.P1.keyboard.BM.2':     '83',
-  'input.P1.keyboard.BM.3':     '88',
-  'input.P1.keyboard.BM.4':     '68',
-  'input.P1.keyboard.BM.5':     '67',
-  'input.P1.keyboard.BM.6':     '70',
-  'input.P1.keyboard.BM.7':     '86',
+  'input.P1.keyboard.BM.SC': '16',
+  'input.P1.keyboard.BM.SC2': '65',
+  'input.P1.keyboard.BM.1': '90',
+  'input.P1.keyboard.BM.2': '83',
+  'input.P1.keyboard.BM.3': '88',
+  'input.P1.keyboard.BM.4': '68',
+  'input.P1.keyboard.BM.5': '67',
+  'input.P1.keyboard.BM.6': '70',
+  'input.P1.keyboard.BM.7': '86',
 
-  'input.P1.keyboard.KB.1':     '83',
-  'input.P1.keyboard.KB.2':     '68',
-  'input.P1.keyboard.KB.3':     '70',
-  'input.P1.keyboard.KB.4':     '32',
-  'input.P1.keyboard.KB.5':     '74',
-  'input.P1.keyboard.KB.6':     '75',
-  'input.P1.keyboard.KB.7':     '76',
+  'input.P1.keyboard.KB.1': '83',
+  'input.P1.keyboard.KB.2': '68',
+  'input.P1.keyboard.KB.3': '70',
+  'input.P1.keyboard.KB.4': '32',
+  'input.P1.keyboard.KB.5': '74',
+  'input.P1.keyboard.KB.6': '75',
+  'input.P1.keyboard.KB.7': '76',
 
   // Note speed
-  'player.P1.speed':            '1.0',
-  'player.P1.lane-cover':       '0',
-  'player.P1.lead-time':        '1685',
-  'player.P1.auto-velocity':    '0',
+  'player.P1.speed': '1.0',
+  'player.P1.lane-cover': '0',
+  'player.P1.lead-time': '1685',
+  'player.P1.auto-velocity': '0',
 
   // Scratch placement (left, right, off)
-  'player.P1.scratch':          'left',
+  'player.P1.scratch': 'left',
 
   // Panel placement (left, center, right)
-  'player.P1.panel':            'center',
+  'player.P1.panel': 'center',
 
   // Gauge type (off, hope)
-  'player.P1.gauge':            'off',
+  'player.P1.gauge': 'off',
 
   // Offsets
-  'system.offset.audio-input':  '0',
+  'system.offset.audio-input': '0',
   'system.offset.audio-visual': '0',
 
   // BGA
-  'system.bga.enabled':         '1',
-  'system.preview.enabled':     '1',
+  'system.bga.enabled': '1',
+  'system.preview.enabled': '1',
 
   // Version
-  'system.last-seen-version':   '0.0.0',
+  'system.last-seen-version': '0.0.0',
 
   // Acknowledgements (guide texts)
-  'system.ack.twitter':         '0',
-  'system.ack.deltas':          '0',
-  'system.ack.finishGame':      '0',
-  'system.ack.replayGame':      '0'
+  'system.ack.twitter': '0',
+  'system.ack.deltas': '0',
+  'system.ack.finishGame': '0',
+  'system.ack.replayGame': '0'
 }
 
 export const events = new EventEmitter()

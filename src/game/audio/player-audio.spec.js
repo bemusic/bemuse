@@ -1,36 +1,35 @@
 
-import PlayerAudio  from './player-audio'
+import PlayerAudio from './player-audio'
 import { playerWithBMS } from '../test-helpers'
 
 describe('PlayerAudio', function () {
-
   let player
   let audio
   let waveFactory
 
   function setup (_player) {
-    player      = _player
+    player = _player
     waveFactory = {
       playAuto: sinon.stub().returns({}),
       playNote: sinon.stub().returns({}),
-      playFree: sinon.stub().returns({}),
+      playFree: sinon.stub().returns({})
     }
-    audio       = new PlayerAudio({ player, waveFactory })
+    audio = new PlayerAudio({ player, waveFactory })
   }
 
   it('should play autokeysounds on correct time', function () {
     setup({
       notechart: {
         autos: [
-          { time: 1, keysound: '0x', },
-          { time: 2, keysound: '0y', },
-          { time: 2, keysound: '0z', },
+          { time: 1, keysound: '0x' },
+          { time: 2, keysound: '0y' },
+          { time: 2, keysound: '0z' }
         ],
-        notes: [],
+        notes: []
       },
       options: {
-        autosound: false,
-      },
+        autosound: false
+      }
     })
     audio.update(0)
     expect(waveFactory.playAuto).to.have.callCount(0)
@@ -46,12 +45,12 @@ describe('PlayerAudio', function () {
       notechart: {
         autos: [ ],
         notes: [
-          { time: 1, keysound: '0x', },
-        ],
+          { time: 1, keysound: '0x' }
+        ]
       },
       options: {
-        autosound: true,
-      },
+        autosound: true
+      }
     })
     audio.update(1)
     expect(waveFactory.playNote).to.have.been.calledWithMatch({ keysound: '0x' })
@@ -62,11 +61,11 @@ describe('PlayerAudio', function () {
       notechart: {
         autos: [ ],
         notes: [
-          { time: 1, keysound: '0x', },
-        ],
+          { time: 1, keysound: '0x' }
+        ]
       },
       options: {
-      },
+      }
     })
     audio.update(1)
     void expect(waveFactory.playNote).to.not.have.been.called
@@ -75,10 +74,10 @@ describe('PlayerAudio', function () {
   it('should play notes ahead of time', function () {
     setup({
       notechart: {
-        autos: [ { time: 1, keysound: '0x', }, ],
-        notes: [],
+        autos: [ { time: 1, keysound: '0x' } ],
+        notes: []
       },
-      options: { },
+      options: { }
     })
     audio.update(0.999)
     expect(waveFactory.playAuto).to.have.been.calledWithMatch({ keysound: '0x' })
@@ -93,7 +92,7 @@ describe('PlayerAudio', function () {
           { note: { keysound: '0x' }, type: 'hit', judgment: 1 }
         ]
       },
-      stats: { },
+      stats: { }
     })
     expect(waveFactory.playNote).to.have.been.calledWithMatch({ keysound: '0x' })
   })
@@ -110,7 +109,7 @@ describe('PlayerAudio', function () {
           { note: { keysound: '0x' }, type: 'hit', judgment: 4 }
         ]
       },
-      stats: { },
+      stats: { }
     })
     void expect(instance.bad).to.have.been.called
   })
@@ -124,7 +123,7 @@ describe('PlayerAudio', function () {
           { note: { keysound: '0x' }, type: 'hit', judgment: 4 }
         ]
       },
-      stats: { },
+      stats: { }
     })
   })
 
@@ -137,13 +136,13 @@ describe('PlayerAudio', function () {
       notifications: {
         sounds: [ { note: note, type: 'hit' } ]
       },
-      stats: { },
+      stats: { }
     })
     audio.update(1.100, {
       notifications: {
         sounds: [ { note: note, type: 'break' } ]
       },
-      stats: { },
+      stats: { }
     })
     void expect(instance.stop).to.have.been.called
   })
@@ -154,9 +153,9 @@ describe('PlayerAudio', function () {
       notifications: {
         sounds: [
           { note: { keysound: '0x' }, type: 'free' }
-        ],
+        ]
       },
-      stats: { },
+      stats: { }
     })
     expect(waveFactory.playFree).to.have.been.calledWithMatch({ keysound: '0x' })
   })
@@ -166,17 +165,16 @@ describe('PlayerAudio', function () {
     let note = { keysound: '0x' }
     audio.update(0.999, {
       notifications: {
-        sounds: [ { note: note, type: 'hit' } ],
+        sounds: [ { note: note, type: 'hit' } ]
       },
-      stats: { },
+      stats: { }
     })
     audio.update(1.000, {
       notifications: {
-        sounds: [ { note: note, type: 'hit' } ],
+        sounds: [ { note: note, type: 'hit' } ]
       },
-      stats: { },
+      stats: { }
     })
     expect(waveFactory.playNote).to.have.callCount(1)
   })
-
 })

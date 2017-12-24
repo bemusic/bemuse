@@ -1,5 +1,5 @@
 
-/*global AudioContext, WebAudioTestAPI*/
+/* global AudioContext, WebAudioTestAPI */
 
 import 'web-audio-test-api'
 
@@ -8,13 +8,12 @@ import assert from 'power-assert'
 import SamplingMaster, { FADE_LENGTH } from './'
 
 describe('SamplingMaster', function () {
-
   let context
   let master
   before(() => { WebAudioTestAPI.use() })
   beforeEach(() => {
     context = new AudioContext()
-    master  = new SamplingMaster(context)
+    master = new SamplingMaster(context)
   })
 
   describe('#unmute', function () {
@@ -69,7 +68,7 @@ describe('SamplingMaster', function () {
       context.DECODE_AUDIO_DATA_FAILED = true
       return expect(master.sample(new ArrayBuffer(0))
         .finally(() => (context.DECODE_AUDIO_DATA_FAILED = false)))
-          .to.be.rejected
+        .to.be.rejected
     })
     describe('#play', function () {
       let sample
@@ -191,5 +190,4 @@ describe('SamplingMaster', function () {
   })
 
   after(() => { WebAudioTestAPI.unuse() })
-
 })

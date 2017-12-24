@@ -7,12 +7,12 @@ import PlayerDisplay from './player-display'
 
 export class GameDisplay {
   constructor ({ game, context, backgroundImagePromise, video }) {
-    this._game      = game
-    this._context   = context
-    this._players   = new Map(game.players.map(player =>
-        [player, new PlayerDisplay(player)]))
-    this._stateful  = { }
-    this._wrapper   = this._createWrapper({
+    this._game = game
+    this._context = context
+    this._players = new Map(game.players.map(player =>
+      [player, new PlayerDisplay(player)]))
+    this._stateful = { }
+    this._wrapper = this._createWrapper({
       backgroundImagePromise,
       video,
       panelPlacement: game.players[0].options.placement
@@ -20,9 +20,9 @@ export class GameDisplay {
   }
   start () {
     this._started = new Date().getTime()
-    let player    = this._game.players[0]
-    let songInfo  = player.notechart.songInfo
-    this._stateful['song_title']  = songInfo.title
+    let player = this._game.players[0]
+    let songInfo = player.notechart.songInfo
+    this._stateful['song_title'] = songInfo.title
     this._stateful['song_artist'] = songInfo.artist
     this._duration = player.notechart.duration
   }
@@ -43,10 +43,10 @@ export class GameDisplay {
   }
   _getData (time, gameTime, gameState) {
     let data = { }
-    data['tutorial']  = this._game.options.tutorial ? 'yes' : 'no'
-    data['t']         = time
-    data['gameTime']  = gameTime
-    data['ready']     = this._getReady(gameState)
+    data['tutorial'] = this._game.options.tutorial ? 'yes' : 'no'
+    data['t'] = time
+    data['gameTime'] = gameTime
+    data['ready'] = this._getReady(gameState)
     data['song_time'] = this._getSongTime(gameTime)
     for (let [player, playerDisplay] of this._players) {
       let playerState = gameState.player(player)
@@ -68,7 +68,7 @@ export class GameDisplay {
   }
   _getSongTime (gameTime) {
     return (
-        formatTime(Math.min(this._duration, Math.max(0, gameTime))) +
+      formatTime(Math.min(this._duration, Math.max(0, gameTime))) +
         ' / ' + formatTime(this._duration))
   }
   _getReady (gameState) {

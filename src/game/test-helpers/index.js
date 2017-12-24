@@ -1,8 +1,8 @@
 
-import BMS              from 'bms'
+import BMS from 'bms'
 import { fromBMSChart } from 'bemuse-notechart/loader/BMSNotechartLoader'
-import Player           from '../player'
-import _                from 'lodash'
+import Player from '../player'
+import _ from 'lodash'
 
 export let tap = _.tap
 

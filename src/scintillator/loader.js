@@ -1,25 +1,23 @@
-
-import debug from 'debug/browser'
-let log = debug('scintillator:loader')
-
-import $         from 'jquery'
-import url       from 'url'
-import co        from 'co'
 import * as PIXI from 'pixi.js'
+import $ from 'jquery'
+import co from 'co'
+import debug from 'debug'
+import url from 'url'
 import { PERCENTAGE_FORMATTER } from 'bemuse/progress/formatters'
 
-import Resources  from './resources'
-import Compiler   from './compiler'
+import Compiler from './compiler'
+import Resources from './resources'
+
+const log = debug('scintillator:loader')
 
 export function load (xmlPath, progress) {
   return co(function * () {
-
     log('load XML from %s', xmlPath)
     let $xml = yield loadXml(xmlPath)
 
     // scan all images
     let resources = new Resources()
-    let paths     = new Set()
+    let paths = new Set()
     for (let element of Array.from($xml.find('[image]'))) {
       paths.add($(element).attr('image'))
     }
@@ -39,7 +37,6 @@ export function load (xmlPath, progress) {
     let skin = new Compiler({ resources }).compile($xml)
 
     return skin
-
   })
 }
 

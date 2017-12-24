@@ -1,25 +1,23 @@
-
-import debug from 'debug/browser'
-let log = debug('scintillator:compiler')
-
 import $ from 'jquery'
+import debug from 'debug'
 
+import GroupNode from './nodes/group'
+import IfNode from './nodes/if'
+import ObjectNode from './nodes/object'
 import SkinRootNode from './nodes/skin-root'
-import SpriteNode   from './nodes/sprite'
-import GroupNode    from './nodes/group'
-import ObjectNode   from './nodes/object'
-import TextNode     from './nodes/text'
-import IfNode       from './nodes/if'
+import SpriteNode from './nodes/sprite'
+import TextNode from './nodes/text'
+
+const log = debug('scintillator:compiler')
 
 let NODES = {
-  'skin':   SkinRootNode,
+  'skin': SkinRootNode,
   'sprite': SpriteNode,
-  'group':  GroupNode,
+  'group': GroupNode,
   'object': ObjectNode,
-  'text':   TextNode,
-  'if':     IfNode,
+  'text': TextNode,
+  'if': IfNode
 }
-
 
 /**
  * A Compiler compiles the $xml theme file into SkinNode.

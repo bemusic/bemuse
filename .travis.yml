@@ -1,11 +1,15 @@
 language: node_js
 sudo: false
+dist: trusty
+addons:
+  apt:
+    packages:
+      # This is required to run new chrome on old trusty
+      - libnss3
 env:
   global:
     # CODECLIMATE_REPO_TOKEN
     - secure: "vWu/FG20Uc1JgcUmzH467bZ82BKLuRU0wfKnA6f4CGfOIHsiAL62MDA3KRqfsRpsss9JTyERQ2zm7iLEVXu4dOcKody9AsrZRWtC+wvuKBoAllUt6jZnNOgs7Hjac50TI68E0p4Hrz+0xqV+YlppU5I34mGlZ2EhmSTnZ0zdIgw="
-    - BROWSER=Chrome_travis_ci
-    - CHROME_BIN=chromium-browser
     - NODE_ENV=test
     - CXX=g++-4.8
 addons:
@@ -15,7 +19,6 @@ addons:
     packages:
       - g++-4.8
 node_js:
-  - "6"
   - "8"
 before_install:
   - "export DISPLAY=:99.0"
@@ -30,7 +33,6 @@ script:
   - BEMUSE_COV=true gulp test
 after_success:
   - codecov
-  - 'cat coverage/lcov.info | ./node_modules/.bin/coveralls'
   - 'cat coverage/lcov.info | ./node_modules/.bin/codeclimate'
 notifications:
   webhooks:

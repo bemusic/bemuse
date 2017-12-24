@@ -3,7 +3,6 @@ import _ from 'lodash'
 import Bacon from 'baconjs'
 import getMidi川 from './midi'
 
-
 // Public: OmniInput is a poll-based class that handles the key-pressed state of
 // multiple inputs.
 //
@@ -33,8 +32,8 @@ export class OmniInput {
     this._exclusive = !!options.exclusive
     this._disposables = [
       listen(win, 'keydown', e => this._handleKeyDown(e)),
-      listen(win, 'keyup',   e => this._handleKeyUp(e)),
-      midi川.onValue(e => this._handleMIDIMessage(e)),
+      listen(win, 'keyup', e => this._handleKeyUp(e)),
+      midi川.onValue(e => this._handleMIDIMessage(e))
     ]
     this._status = { }
   }
@@ -109,7 +108,6 @@ export class OmniInput {
   }
 }
 
-
 // Public: Returns a Bacon EventStream of keys pressed.
 //
 export function key川 (input = new OmniInput(), win = window) {
@@ -123,7 +121,6 @@ export function key川 (input = new OmniInput(), win = window) {
   )
 }
 
-
 export function _key川ForUpdate川 (update川) {
   return (update川
     .map(update => Object.keys(update).filter(key => update[key]))
@@ -132,9 +129,7 @@ export function _key川ForUpdate川 (update川) {
   )
 }
 
-
 export default OmniInput
-
 
 const knownMidiIds = { }
 
@@ -179,7 +174,6 @@ export function getName (key) {
   }
   return `${String(key).replace(/\./g, ' ')}?`
 }
-
 
 function listen (subject, eventName, listener) {
   subject.addEventListener(eventName, listener)

@@ -1,7 +1,7 @@
-
 require('./node-environment')
 
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'test'
+process.env.CHROME_BIN = require('puppeteer').executablePath()
 
 module.exports = function (config) {
   config.set({
@@ -9,16 +9,21 @@ module.exports = function (config) {
     frameworks: ['mocha'],
     files: [
       'src/test/karma.js',
-      { pattern: 'src/**/*', watched: false, included: false, served: true, nocache: true },
+      {
+        pattern: 'src/**/*',
+        watched: false,
+        included: false,
+        served: true,
+        nocache: true
+      }
     ],
     proxies: {
       '/spec/': '/base/spec/',
       '/src/': '/base/src/'
     },
-    exclude: [
-    ],
+    exclude: [],
     preprocessors: {
-      'src/test/karma.js': ['webpack', 'sourcemap'],
+      'src/test/karma.js': ['webpack', 'sourcemap']
     },
     webpack: require('./config/webpack').generateKarmaConfig(),
     webpackMiddleware: {
@@ -28,21 +33,14 @@ module.exports = function (config) {
     coverageReporter: {
       type: 'lcov',
       dir: 'coverage',
-      subdir: '.',
+      subdir: '.'
     },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: [ process.env.BROWSER || 'Chrome' ],
+    browsers: [process.env.BROWSER || 'ChromeHeadless'],
     singleRun: false,
-    concurrency: Infinity,
-    customLaunchers: {
-      // http://stackoverflow.com/a/27873086/559913
-      Chrome_travis_ci: {
-        base: 'Chrome',
-        flags: [ '--no-sandbox' ]
-      }
-    }
+    concurrency: Infinity
   })
 }

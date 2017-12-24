@@ -4,7 +4,7 @@ import React from 'react'
 
 export class SceneToolbar extends React.Component {
   render () {
-    return <div className="SceneToolbar">
+    return <div className='SceneToolbar'>
       {this.props.children}
     </div>
   }
@@ -12,7 +12,7 @@ export class SceneToolbar extends React.Component {
 
 SceneToolbar.Spacer = class SceneToolbarSpacer extends React.Component {
   render () {
-    return <div className="SceneToolbarのspacer"></div>
+    return <div className='SceneToolbarのspacer' />
   }
 }
 

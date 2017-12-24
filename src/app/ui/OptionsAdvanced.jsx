@@ -1,16 +1,16 @@
-import * as Options          from '../entities/Options'
-import * as OptionsIO        from '../io/OptionsIO'
+import * as Options from '../entities/Options'
+import * as OptionsIO from '../io/OptionsIO'
 import './OptionsAdvanced.scss'
 
-import compose    from 'recompose/compose'
-import pure       from 'recompose/pure'
-import React      from 'react'
-import PropTypes  from 'prop-types'
-import { connect }           from 'react-redux'
+import compose from 'recompose/compose'
+import pure from 'recompose/pure'
+import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-import connectIO             from '../../impure-react/connectIO'
-import OptionsButton         from './OptionsButton'
-import OptionsInputField     from './OptionsInputField'
+import connectIO from '../../impure-react/connectIO'
+import OptionsButton from './OptionsButton'
+import OptionsInputField from './OptionsInputField'
 
 const enhance = compose(
   connect((state) => ({
@@ -35,11 +35,11 @@ class OptionsAdvanced extends React.Component {
   }
   render () {
     let options = this.props.options
-    return <div className="OptionsAdvanced">
+    return <div className='OptionsAdvanced'>
       <LatencyMessageListener onLatency={this.handleAudioInputLatencyChange} />
-      <div className="OptionsAdvancedのgroup">
+      <div className='OptionsAdvancedのgroup'>
         <label>Latency</label>
-        <div className="OptionsAdvancedのgroupItem">
+        <div className='OptionsAdvancedのgroupItem'>
           <OptionsInputField
             value={Options.audioInputLatency(options)}
             parse={this.parseLatency}

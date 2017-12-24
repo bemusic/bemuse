@@ -7,7 +7,7 @@ import AuthenticationPanel from './AuthenticationPanel'
 export default class AuthenticationPopup extends React.Component {
   render () {
     return <ModalPopup {...this.props}>
-      <div className="AuthenticationPopup">
+      <div className='AuthenticationPopup'>
         <AuthenticationPanel onFinish={this.props.onFinish} />
       </div>
     </ModalPopup>

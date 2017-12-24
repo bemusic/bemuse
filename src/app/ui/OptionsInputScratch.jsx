@@ -1,20 +1,20 @@
 
 import './OptionsInputScratch.scss'
 import React from 'react'
-import c     from 'classnames'
+import c from 'classnames'
 
 class OptionsInputScratch extends React.PureComponent {
   render () {
     return <div
       className={c('OptionsInputScratch',
-            { 'is-editing': this.props.isEditing })}
+        { 'is-editing': this.props.isEditing })}
       onClick={this.handleClick}>
-      <svg viewBox="-100 -100 200 200">
-        <path d={star()} className="OptionsInputScratchのstar" />
+      <svg viewBox='-100 -100 200 200'>
+        <path d={star()} className='OptionsInputScratchのstar' />
       </svg>
-      <div className="OptionsInputScratchのtext">
+      <div className='OptionsInputScratchのtext'>
         <div className={this.renderKeyClass(0)}>{this.props.text[0]}</div>
-        <div className="OptionsInputScratchのkeySeparator">or</div>
+        <div className='OptionsInputScratchのkeySeparator'>or</div>
         <div className={this.renderKeyClass(1)}>{this.props.text[1]}</div>
       </div>
     </div>

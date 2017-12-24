@@ -1,10 +1,13 @@
+import PropTypes from 'prop-types'
+import React from 'react'
 import mean from 'mean'
 import variance from 'variance'
-import React from 'react'
-import PropTypes from 'prop-types'
 import { createSelector, createStructuredSelector } from 'reselect'
 
 import getNonMissedDeltas from '../interactors/getNonMissedDeltas'
+
+// Disabling this rule because we are using reselect to compute data from props.
+/* eslint react/no-unused-prop-types: off */
 
 export default class ResultExpertInfo extends React.Component {
   static propTypes = {
@@ -34,7 +37,7 @@ export default class ResultExpertInfo extends React.Component {
     return <span>
       <span
         style={{ cursor: 'help' }}
-        title="Average and standard deviation of your keypresses."
+        title='Average and standard deviation of your keypresses.'
       >
         {formatOffset(stats.mean)} ± {formatDuration(stats.standardDeviation)}ms
       </span>

@@ -1,20 +1,20 @@
-import * as PIXI      from 'pixi.js'
+import * as PIXI from 'pixi.js'
 
-import Expression     from '../expression'
-import Instance       from './lib/instance'
-import SkinNode       from './lib/base'
+import Expression from '../expression'
+import Instance from './lib/instance'
+import SkinNode from './lib/base'
 
 function ChildManager (expr, child, poolSize) {
   return {
     instantiate (context, subject) {
       let instances = new Map()
-      let pool      = []
+      let pool = []
       initPool()
       return new Instance({
-        context:  context,
-        onData:   (data) => {
+        context: context,
+        onData: (data) => {
           update(expr(data))
-        },
+        }
       })
       function initPool () {
         var instance
@@ -31,7 +31,7 @@ function ChildManager (expr, child, poolSize) {
         var instance
         if (!array) array = []
         for (var i = 0; i < array.length; i++) {
-          item  = array[i]
+          item = array[i]
           key = item.key
           if (instances.has(key)) {
             instance = instances.get(key)
@@ -69,20 +69,20 @@ export class ObjectNode extends SkinNode {
       throw new Error('Expected exactly 1 children, ' +
         this.children.length + ' given')
     }
-    this.pool     = +$el.attr('pool') || 1
-    this.key      = new Expression($el.attr('key'))
+    this.pool = +$el.attr('pool') || 1
+    this.key = new Expression($el.attr('key'))
   }
   instantiate (context, container) {
     let batch = new PIXI.ParticleContainer(null, {
       position: true,
-      alpha:    true,
+      alpha: true
     })
     let manager = new ChildManager(this.key, this.children[0], this.pool)
     return new Instance({
-      context:  context,
-      parent:   container,
-      object:   batch,
-      concerns: [manager],
+      context: context,
+      parent: container,
+      object: batch,
+      concerns: [manager]
     })
   }
 }

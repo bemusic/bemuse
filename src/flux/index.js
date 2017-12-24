@@ -1,6 +1,6 @@
 
-import Bacon        from 'baconjs'
-import React        from 'react'
+import Bacon from 'baconjs'
+import React from 'react'
 
 export { Bacon }
 

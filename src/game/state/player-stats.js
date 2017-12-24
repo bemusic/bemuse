@@ -8,8 +8,8 @@ const getComboScore = (sum, total) => Math.floor(sum * 55555 / total)
 export class PlayerStats {
   constructor (notechart) {
     this.totalCombo = _(notechart.notes)
-        .map(note => notechart.info(note).combos)
-        .sum()
+      .map(note => notechart.info(note).combos)
+      .sum()
     this.totalNotes = notechart.notes.length
     this.combo = 0
     this.maxCombo = 0
@@ -17,16 +17,16 @@ export class PlayerStats {
     this.rawTotalComboScore = this._calculateRawTotalComboScore(this.totalCombo)
     this._remainingMaxPossibleRawComboScore = this.rawTotalComboScore
     this.rawSumComboScore = 0
-    this.counts = { [Judgments.MISSED]: 0, '1': 0, '2': 0, '3': 0, '4': 0, }
+    this.counts = { [Judgments.MISSED]: 0, '1': 0, '2': 0, '3': 0, '4': 0 }
     this.numJudgments = 0
     this.poor = false
     this._log = [ ]
     this.deltas = [ ]
   }
   get score () {
-    //#region score
+    // #region score
     return this.accuracyScore + this.comboScore
-    //#endregion
+    // #endregion
   }
   get accuracyScore () {
     return getAccuracyScore(this.accuracy)
@@ -61,7 +61,7 @@ export class PlayerStats {
       this._log.map(({ character, count }) =>
         `${count > 1 ? count : ''}${character}`
       )
-      .join('')
+        .join('')
     )
   }
   handleJudgment (judgment) {
@@ -96,14 +96,14 @@ export class PlayerStats {
     return sum
   }
   _calculateRawComboScore (i) {
-    //#region combo
+    // #region combo
     if (i === 0) return 0
     if (i < 23) return 1
     if (i < 51) return 2
     if (i < 92) return 3
     if (i < 161) return 4
     return 5
-    //#endregion
+    // #endregion
   }
   _recordLog (judgment) {
     let character = this._getLogCharacter(judgment)

@@ -1,8 +1,8 @@
-import * as ProgressUtils   from 'bemuse/progress/utils'
-import _                    from 'lodash'
+import * as ProgressUtils from 'bemuse/progress/utils'
+import _ from 'lodash'
 import defaultKeysoundCache from 'bemuse/keysound-cache'
-import { EXTRA_FORMATTER }  from 'bemuse/progress/formatters'
-import { canPlay }          from 'bemuse/sampling-master'
+import { EXTRA_FORMATTER } from 'bemuse/progress/formatters'
+import { canPlay } from 'bemuse/sampling-master'
 
 export class SamplesLoader {
   constructor (assets, master, { keysoundCache = defaultKeysoundCache } = { }) {
@@ -11,16 +11,16 @@ export class SamplesLoader {
     this._keysoundCache = keysoundCache
   }
   loadFiles (files, loadProgress, decodeProgress) {
-    let onload    = ProgressUtils.fixed(files.length, loadProgress)
-    let ondecode  = ProgressUtils.fixed(files.length, decodeProgress)
-    let load      = name => new Promise((resolve) => {
+    let onload = ProgressUtils.fixed(files.length, loadProgress)
+    let ondecode = ProgressUtils.fixed(files.length, decodeProgress)
+    let load = name => new Promise((resolve) => {
       requestAnimationFrame(() => {
         resolve(this._loadSample(name, onload, ondecode))
       })
     })
     if (decodeProgress) decodeProgress.formatter = EXTRA_FORMATTER
     return Promise.map(files, load, { concurrency: 64 })
-        .then(arr => _(arr).filter().fromPairs().value())
+      .then(arr => _(arr).filter().fromPairs().value())
   }
   _loadSample (name, onload, ondecode) {
     const audioBufferPromise = (() => {
@@ -61,9 +61,9 @@ export class SamplesLoader {
       }
       return this._assets.file(name.replace(/\.\w+$/, '.ogg'))
     })
-    .catch(() => this._assets.file(name.replace(/\.\w+$/, '.m4a')))
-    .catch(() => this._assets.file(name.replace(/\.\w+$/, '.mp3')))
-    .catch(() => this._assets.file(name))
+      .catch(() => this._assets.file(name.replace(/\.\w+$/, '.m4a')))
+      .catch(() => this._assets.file(name.replace(/\.\w+$/, '.mp3')))
+      .catch(() => this._assets.file(name))
   }
 }
 

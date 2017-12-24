@@ -3,8 +3,8 @@ import _ from 'lodash'
 
 export class NoteArea {
   constructor (notes, barLines) {
-    this._notes     = _.sortBy(notes, position)
-    this._barLines  = _(barLines).map('position').sortBy().value()
+    this._notes = _.sortBy(notes, position)
+    this._barLines = _(barLines).map('position').sortBy().value()
   }
   getVisibleNotes (lower, upper, headroom) {
     let out = []
@@ -23,8 +23,8 @@ export class NoteArea {
         } else {
           let head = y(lower, upper, note.position)
           let tail = y(lower, upper, note.end.position)
-          entity.y       = Math.min(head, tail)
-          entity.height  = Math.abs(head - tail)
+          entity.y = Math.min(head, tail)
+          entity.height = Math.abs(head - tail)
         }
         out.push(entity)
       }
@@ -34,8 +34,8 @@ export class NoteArea {
   getVisibleBarLines (lower, upper, headroom) {
     if (!headroom) headroom = 0
     return this._barLines
-        .filter(pos => (lower - headroom <= pos && pos <= upper))
-        .map(pos => ({ id: pos, y: y(lower, upper, pos) }))
+      .filter(pos => (lower - headroom <= pos && pos <= upper))
+      .map(pos => ({ id: pos, y: y(lower, upper, pos) }))
   }
 }
 

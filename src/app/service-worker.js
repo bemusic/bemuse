@@ -1,5 +1,5 @@
 
-/*global caches*/
+/* global caches */
 
 import version from 'bemuse/utils/version'
 
@@ -18,8 +18,8 @@ var SONG_CACHE_KEY = 'songs'
 self.addEventListener('install', function (event) {
   event.waitUntil(
     caches.open(SITE_CACHE_KEY)
-    .then((cache) => cache.addAll([ '/' ]))
-    .then(() => self.skipWaiting())
+      .then((cache) => cache.addAll([ '/' ]))
+      .then(() => self.skipWaiting())
   )
 })
 
@@ -44,7 +44,7 @@ self.addEventListener('fetch', function (event) {
       return cacheForever(event, APP_CACHE_KEY)
     }
   }
-  if (request.url.match(/assets\/[^\/]+\.bemuse$/)) {
+  if (request.url.match(/assets\/[^/]+\.bemuse$/)) {
     return cacheForever(event, SONG_CACHE_KEY)
   }
   if (request.url.match(/\.(bms|bme|bml)$/)) {

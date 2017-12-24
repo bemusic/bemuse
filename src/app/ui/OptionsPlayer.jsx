@@ -16,7 +16,7 @@ import connectIO from '../../impure-react/connectIO'
 
 const SettingRow = compose(
   connect((state) => ({ options: state.options })),
-  connectIO({ onUpdateOptions: () => (updater) => OptionsIO.updateOptions(updater) }),
+  connectIO({ onUpdateOptions: () => (updater) => OptionsIO.updateOptions(updater) })
 )((props) => {
   const { label, isVisible, help, renderControl } = props // user-supplied
   const { options, onUpdateOptions } = props // from higher-order component
@@ -25,7 +25,7 @@ const SettingRow = compose(
   return (
     <OptionsPlayer.Row label={label} hidden={!visible}>
       {control}
-      {!!help && <div className="OptionsPlayerのhelp">{help}</div>}
+      {!!help && <div className='OptionsPlayerのhelp'>{help}</div>}
     </OptionsPlayer.Row>
   )
 })
@@ -35,9 +35,9 @@ class OptionsPlayer extends React.Component {
     onClose: PropTypes.func
   }
   render () {
-    return <div className="OptionsPlayer">
+    return <div className='OptionsPlayer'>
       <SettingRow
-        label="Speed"
+        label='Speed'
         isVisible={(options) => !Options.isAutoVelocityEnabled(options)}
         renderControl={(options, onUpdateOptions) => (
           <OptionsSpeed
@@ -51,7 +51,7 @@ class OptionsPlayer extends React.Component {
       />
 
       <SettingRow
-        label="LeadTime"
+        label='LeadTime'
         isVisible={(options) => Options.isAutoVelocityEnabled(options)}
         renderControl={(options, onUpdateOptions) => (
           <OptionsInputField
@@ -69,13 +69,13 @@ class OptionsPlayer extends React.Component {
       />
 
       <SettingRow
-        label="Scratch"
+        label='Scratch'
         renderControl={(options, onUpdateOptions) => (
-          <OptionsPlayerSelector type="scratch"
+          <OptionsPlayerSelector type='scratch'
             options={[
-              { value: 'left', label: 'Left', },
-              { value: 'right', label: 'Right', },
-              { value: 'off', label: 'Disabled', },
+              { value: 'left', label: 'Left' },
+              { value: 'right', label: 'Right' },
+              { value: 'off', label: 'Disabled' }
             ]}
             value={Options.scratchPosition(options)}
             onSelect={(position) => onUpdateOptions(Options.changeScratchPosition(position))}
@@ -84,13 +84,13 @@ class OptionsPlayer extends React.Component {
       />
 
       <SettingRow
-        label="Panel"
+        label='Panel'
         renderControl={(options, onUpdateOptions) => (
-          <OptionsPlayerSelector type="panel"
+          <OptionsPlayerSelector type='panel'
             options={[
-              { value: 'left', label: 'Left', },
-              { value: 'center', label: 'Center', },
-              { value: 'right', label: 'Right', },
+              { value: 'left', label: 'Left' },
+              { value: 'center', label: 'Center' },
+              { value: 'right', label: 'Right' }
             ]}
             onSelect={(value) => onUpdateOptions(Options.changePanelPlacement(value))}
             value={Options.panelPlacement(options)}
@@ -99,7 +99,7 @@ class OptionsPlayer extends React.Component {
       />
 
       <SettingRow
-        label="Cover"
+        label='Cover'
         renderControl={(options, onUpdateOptions) => (
           <OptionsInputField
             parse={str => parseInt(str, 10) / 100}
@@ -113,43 +113,43 @@ class OptionsPlayer extends React.Component {
       />
 
       <SettingRow
-        label="BGA"
+        label='BGA'
         renderControl={(options, onUpdateOptions) => (
           <OptionsCheckbox
             checked={Options.isBackgroundAnimationsEnabled(options)}
             onToggle={() => onUpdateOptions(Options.toggleBackgroundAnimations)}
           >
-            Enable background animations <span className="OptionsPlayerのhint">(720p, alpha)</span>
+            Enable background animations <span className='OptionsPlayerのhint'>(720p, alpha)</span>
           </OptionsCheckbox>
         )}
       />
 
       <SettingRow
-        label="AutoVel"
+        label='AutoVel'
         renderControl={(options, onUpdateOptions) => (
           <OptionsCheckbox
             checked={Options.isAutoVelocityEnabled(options)}
             onToggle={() => onUpdateOptions(Options.toggleAutoVelocity)}
           >
-            Maintain absolute note velocity <span className="OptionsPlayerのhint">(advanced)</span>
+            Maintain absolute note velocity <span className='OptionsPlayerのhint'>(advanced)</span>
           </OptionsCheckbox>
         )}
       />
 
       <SettingRow
-        label="Gauge"
+        label='Gauge'
         renderControl={(options, onUpdateOptions) => (
           <OptionsCheckbox
             checked={Options.isGaugeEnabled(options)}
             onToggle={() => onUpdateOptions(Options.toggleGauge)}
           >
-            Show expert gauge <span className="OptionsPlayerのhint">(experimental)</span>
+            Show expert gauge <span className='OptionsPlayerのhint'>(experimental)</span>
           </OptionsCheckbox>
         )}
       />
 
       <SettingRow
-        label="Preview"
+        label='Preview'
         renderControl={(options, onUpdateOptions) => (
           <OptionsCheckbox
             checked={Options.isPreviewEnabled(options)}
@@ -160,7 +160,7 @@ class OptionsPlayer extends React.Component {
         )}
       />
 
-      <div className="OptionsPlayerのbuttons">
+      <div className='OptionsPlayerのbuttons'>
         <OptionsButton onClick={this.props.onClose}>Save & Exit</OptionsButton>
       </div>
     </div>
@@ -175,7 +175,7 @@ class OptionsPlayerRow extends React.Component {
   }
   render () {
     return <div
-      className="OptionsPlayerのrow"
+      className='OptionsPlayerのrow'
       style={{ display: this.props.hidden ? 'none' : '' }}
     >
       <label>{this.props.label}</label>

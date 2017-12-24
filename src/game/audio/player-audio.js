@@ -1,7 +1,7 @@
-import _            from 'lodash'
+import _ from 'lodash'
 
-import WaveFactory  from './wave-factory'
-import { isBad }    from '../judgments'
+import WaveFactory from './wave-factory'
+import { isBad } from '../judgments'
 
 function autoplayer (array) {
   array = _.sortBy(array, 'time')
@@ -22,10 +22,10 @@ export class PlayerAudio {
     let notechart = player.notechart
     this._waveFactory = waveFactory ||
         new WaveFactory(master, samples, notechart.keysounds, { volume })
-    this._autos       = autoplayer(notechart.autos)
-    this._notes       = autoplayer(notechart.notes)
-    this._played      = new Map()
-    this._autosound   = !!player.options.autosound
+    this._autos = autoplayer(notechart.autos)
+    this._notes = autoplayer(notechart.notes)
+    this._played = new Map()
+    this._autosound = !!player.options.autosound
   }
   update (time, state) {
     this._playAutokeysounds(time)
@@ -39,7 +39,7 @@ export class PlayerAudio {
   }
   _playAutosounds (time, state) {
     let autosounds = this._notes.next(time + 1 / 30)
-    let poor       = state && state.stats.poor
+    let poor = state && state.stats.poor
     let shouldPlay = this._autosound && !poor
     if (!shouldPlay) return
     for (let note of autosounds) {

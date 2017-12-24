@@ -1,13 +1,13 @@
 
 import './MusicInfoTabStats.scss'
 
-import React            from 'react'
-import _                from 'lodash'
-import * as ReduxState  from '../redux/ReduxState'
-import * as DataStore   from 'bemuse/online/data-store'
-import online           from 'bemuse/online/instance'
-import { isWaiting }    from 'bemuse/online/operations'
-import id               from 'bemuse/online/id'
+import React from 'react'
+import _ from 'lodash'
+import * as ReduxState from '../redux/ReduxState'
+import * as DataStore from 'bemuse/online/data-store'
+import online from 'bemuse/online/instance'
+import { isWaiting } from 'bemuse/online/operations'
+import id from 'bemuse/online/id'
 
 import { connect } from 'react-redux'
 import { connect as legacyConnect } from 'bemuse/flux'
@@ -16,8 +16,8 @@ import { compose } from 'recompose'
 export function withPersonalRecord (Component) {
   const enhance = compose(
     legacyConnect({
-      user:          online.user川,
-      onlineRecords: online.records川,
+      user: online.user川,
+      onlineRecords: online.records川
     }),
     connect((state) => ({
       playMode: ReduxState.selectPlayMode(state)

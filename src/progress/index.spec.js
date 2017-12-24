@@ -2,7 +2,6 @@
 import Progress from './'
 
 describe('Progress', function () {
-
   describe('#watch', function () {
     it('should report current progress when watched', function () {
       let progress = new Progress()
@@ -67,5 +66,4 @@ describe('Progress', function () {
       expect(progress.progress).to.equal(null)
     })
   })
-
 })

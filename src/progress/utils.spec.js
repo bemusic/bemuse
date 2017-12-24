@@ -3,7 +3,6 @@ import Progress from './'
 import * as ProgressUtils from './utils'
 
 describe('ProgressUtils', function () {
-
   describe('.fixed', function () {
     it('should report for fixed number of items', function () {
       let progress = new Progress()
@@ -71,5 +70,4 @@ describe('ProgressUtils', function () {
       expect(out.total).to.equal(30)
     })
   })
-
 })

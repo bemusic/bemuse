@@ -3,16 +3,16 @@
 export class Player {
   constructor (notechart, playerNumber, options) {
     this._notechart = notechart
-    this._number    = playerNumber
-    this._options   = {
+    this._number = playerNumber
+    this._options = {
       autosound: !!options.autosound,
-      speed:      +options.speed,
-      placement:   options.placement || 'center',
-      scratch:     options.scratch || 'left',
-      input:       options.input,
-      laneCover:  +options.laneCover || 0,
-      gauge:       options.gauge,
-      tutorial:  !!options.tutorial
+      speed: +options.speed,
+      placement: options.placement || 'center',
+      scratch: options.scratch || 'left',
+      input: options.input,
+      laneCover: +options.laneCover || 0,
+      gauge: options.gauge,
+      tutorial: !!options.tutorial
     }
   }
 
@@ -35,7 +35,6 @@ export class Player {
   get options () {
     return this._options
   }
-
 }
 
 export default Player

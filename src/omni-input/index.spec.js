@@ -1,9 +1,8 @@
-
-import { OmniInput, getName, key川, _key川ForUpdate川 } from './'
-import { EventEmitter } from 'events'
-import assert from 'power-assert'
 import Bacon from 'baconjs'
+import assert from 'power-assert'
+import { EventEmitter } from 'events'
 
+import { OmniInput, _key川ForUpdate川, getName, key川 } from './'
 
 function fakeWindow () {
   const events = new EventEmitter()
@@ -41,9 +40,7 @@ function fakeWindow () {
   }
 }
 
-
 describe('OmniInput', function () {
-
   beforeEach(function () {
     this.window = fakeWindow()
     this.midi口 = new Bacon.Bus()
@@ -53,7 +50,7 @@ describe('OmniInput', function () {
     this.midi = (...args) => {
       this.midi口.push({
         data: args,
-        target: { id: '1234' },
+        target: { id: '1234' }
       })
     }
   })
@@ -66,7 +63,7 @@ describe('OmniInput', function () {
     const basicWindow = {
       addEventListener () { },
       removeEventListener () { },
-      navigator: { },
+      navigator: { }
     }
     const input = new OmniInput(basicWindow)
     void input
@@ -91,13 +88,13 @@ describe('OmniInput', function () {
         index: 1,
         buttons: [
           { },
-          { value: 0.9 },
+          { value: 0.9 }
         ],
         axes: [
           0,
           0.9,
-          -0.9,
-        ],
+          -0.9
+        ]
       })
       const data = this.input.update()
       assert(!data['gamepad.1.button.0'])
@@ -146,7 +143,7 @@ describe('OmniInput', function () {
     it('returns the key name', function () {
       assert(getName('midi.1234.12.note.60').match(/C4/))
       assert(getName('midi.1234.12.pitch.up').match(/Pitch\+/))
-      assert(getName('midi.1234.12.pitch.down').match(/Pitch\-/))
+      assert(getName('midi.1234.12.pitch.down').match(/Pitch-/))
       assert(getName('midi.1234.12.sustain').match(/Sustain/))
       assert(getName('midi.1234.12.mod').match(/Mod/))
     })

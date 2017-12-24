@@ -1,7 +1,7 @@
 import configureStore from 'bemuse/app/redux/configureStore'
-import React            from 'react'
-import ResultScene      from 'bemuse/app/ui/ResultScene'
-import SCENE_MANAGER    from 'bemuse/scene-manager'
+import React from 'react'
+import ResultScene from 'bemuse/app/ui/ResultScene'
+import SCENE_MANAGER from 'bemuse/scene-manager'
 import { Provider } from 'react-redux'
 
 export function main () {
@@ -26,14 +26,14 @@ export function main () {
         artist: 'iaht',
         subartists: ['obj.flicknote'],
         genre: 'Frantic Hardcore',
-        level: 17,
+        level: 17
       },
-      md5: '12345670123456789abcdef89abemuse',
+      md5: '12345670123456789abcdef89abemuse'
     },
     lr2Timegate: [ 20, 40 ],
     onExit: () => alert('Exit!'),
     onReplay: () => alert('Replay!'),
-    playMode: 'BM',
+    playMode: 'BM'
   }
   SCENE_MANAGER.display(
     <Provider store={configureStore()}><ResultScene {...props} /></Provider>

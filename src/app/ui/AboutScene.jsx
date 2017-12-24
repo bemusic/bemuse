@@ -1,11 +1,11 @@
 
 import './AboutScene.scss'
 
-import React            from 'react'
-import Scene            from 'bemuse/ui/Scene'
-import SceneHeading     from 'bemuse/ui/SceneHeading'
-import SceneToolbar     from 'bemuse/ui/SceneToolbar'
-import SCENE_MANAGER    from 'bemuse/scene-manager'
+import React from 'react'
+import Scene from 'bemuse/ui/Scene'
+import SceneHeading from 'bemuse/ui/SceneHeading'
+import SceneToolbar from 'bemuse/ui/SceneToolbar'
+import SCENE_MANAGER from 'bemuse/scene-manager'
 
 class AboutScene extends React.Component {
   constructor (props) {
@@ -21,14 +21,14 @@ class AboutScene extends React.Component {
   }
 
   render () {
-    return <Scene className="AboutScene">
+    return <Scene className='AboutScene'>
       <SceneHeading>
         About
       </SceneHeading>
       <section>
         <article>
-          <div className="AboutSceneのlogo">
-            <img src="/res/logo.png" alt="Bemuse" />
+          <div className='AboutSceneのlogo'>
+            <img src='/res/logo.png' alt='Bemuse' />
           </div>
           <p>
             Bemuse is a web-based rhythm game, a BMS player.
@@ -47,31 +47,31 @@ class AboutScene extends React.Component {
             Bemuse is a free and open source game and is licensed under
             GNU Affero General Public License, version 3.
             The source code is available on <a
-              href="https://github.com/bemusic/bemuse">GitHub</a>.
+              href='https://github.com/bemusic/bemuse'>GitHub</a>.
           </p>
-          <div className="AboutSceneのdjbm">
-            <img src={require('./about-scene/DJBM.png')} alt="DJ Bemuse" />
+          <div className='AboutSceneのdjbm'>
+            <img src={require('./about-scene/DJBM.png')} alt='DJ Bemuse' />
           </div>
         </article>
         <article>
 
           <h2>Credits and Acknowledgements</h2>
           <strong>Development Team</strong>
-          <ul className="AboutSceneのteamList">
+          <ul className='AboutSceneのteamList'>
             <li>
-              <a href="https://github.com/dtinth">@dtinth</a>
+              <a href='https://github.com/dtinth'>@dtinth</a>
               {' '}(Thai Pangsakulyanont)
             </li>
             <li>
-              <a href="https://github.com/Nachanok">@Nachanok</a>
+              <a href='https://github.com/Nachanok'>@Nachanok</a>
               {' '}(Nachanok Suktarachan)
             </li>
           </ul>
 
           <strong>Project Advisor</strong>
-          <ul className="AboutSceneのteamList">
+          <ul className='AboutSceneのteamList'>
             <li>
-              <a href="https://github.com/jittat">@jittat</a>
+              <a href='https://github.com/jittat'>@jittat</a>
               {' '}(Asst.Prof.Dr. Jittat Fakcharoenphol)
             </li>
           </ul>
@@ -85,7 +85,7 @@ class AboutScene extends React.Component {
           </p>
 
           <p>We{"'"}d like to thank <a
-            href="http://hitkey.nekokan.dyndns.info/">hitkey</a> for
+            href='http://hitkey.nekokan.dyndns.info/'>hitkey</a> for
           providing us with a comprehensive reference on the BMS file format
           and for giving us suggestions.
           We{"'"}d also like to thank the following artists
@@ -96,35 +96,35 @@ class AboutScene extends React.Component {
           many open source projects for development to make this possible.</p>
           <ul>
             <li>
-              We use <a href="http://www.pixijs.com/">Pixi.js</a>,
+              We use <a href='http://www.pixijs.com/'>Pixi.js</a>,
               which provides a super-fast graphics engine.
             </li>
-            <li>We use <a href="https://facebook.github.io/react/">React</a>,
+            <li>We use <a href='https://facebook.github.io/react/'>React</a>,
               a library for building modular and composable user interfaces.
               React helps us build the UI more quickly than with traditional
               HTML and CSS.
             </li>
             <li>
-              We use <a href="http://webpack.github.io/">Webpack</a>,
+              We use <a href='http://webpack.github.io/'>Webpack</a>,
               which efficiently packages the source code modules, assets,
               and libraries we use into standalone web packages.
             </li>
             <li>
-              We use <a href="https://babeljs.io/">Babel</a> so that we can
+              We use <a href='https://babeljs.io/'>Babel</a> so that we can
               write our code in future JavaScript dialect and have it translate
               our code for today{"'"}s browsers.
             </li>
             <li>We use <a
-              href="https://www.npmjs.com/package/node-sass">node-sass</a> to
+              href='https://www.npmjs.com/package/node-sass'>node-sass</a> to
               be able to write our CSS more efficiently.
             </li>
             <li>
-              We use <a href="http://gulpjs.com/">Gulp</a> to help automate
+              We use <a href='http://gulpjs.com/'>Gulp</a> to help automate
               our workflow.
             </li>
             <li>
               And we use a lot more, which you can find on <a
-                href="https://david-dm.org/bemusic/bemuse">david-dm</a>.
+                href='https://david-dm.org/bemusic/bemuse'>david-dm</a>.
             </li>
           </ul>
 
@@ -134,22 +134,22 @@ class AboutScene extends React.Component {
           </p>
           <ul>
             <li>
-              <a href="https://pages.github.com/">GitHub Pages</a> provides
+              <a href='https://pages.github.com/'>GitHub Pages</a> provides
               free hosting for this project.
             </li>
             <li>
-              <a href="https://github.com/">GitHub</a> hosts our
+              <a href='https://github.com/'>GitHub</a> hosts our
               source code repository.
             </li>
             <li>
-              <a href="https://travis-ci.org/">Travis CI</a> and <a
-                href="https://circleci.com/">CircleCI</a> continuously runs
+              <a href='https://travis-ci.org/'>Travis CI</a> and <a
+                href='https://circleci.com/'>CircleCI</a> continuously runs
               our automated tests and notifies us when our new code breaks
               existing features. CircleCI also builds and deploys new version
               of the game automatically for us.
             </li>
             <li>
-              <a href="https://waffle.io/">Waffle.io</a> helps us manage
+              <a href='https://waffle.io/'>Waffle.io</a> helps us manage
               the project.
             </li>
           </ul>
@@ -157,7 +157,7 @@ class AboutScene extends React.Component {
         </article>
       </section>
       <SceneToolbar>
-        <a onClick={this.handleBack} href="javascript://">Back</a>
+        <a onClick={this.handleBack} href='javascript://'>Back</a>
       </SceneToolbar>
     </Scene>
   }

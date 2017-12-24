@@ -1,20 +1,20 @@
 
-import _        from 'lodash'
-import $        from 'jquery'
-import keytime  from 'keytime'
+import _ from 'lodash'
+import $ from 'jquery'
+import keytime from 'keytime'
 
 let createKeytime = def => Object.assign({ }, def, { data: keytime(def.data) })
 
 export class Animation {
   constructor (animations, timeKey) {
-    this._timeKey     = timeKey || 't'
-    this._properties  = _(animations)
-        .map(animation => _.map(animation.data, 'name'))
-        .flatten()
-        .thru(array => new Set(array))
-        .value()
-    this._animations  = _.map(animations, createKeytime)
-    this._events      = _.uniq(_.map(animations, 'on'))
+    this._timeKey = timeKey || 't'
+    this._properties = _(animations)
+      .map(animation => _.map(animation.data, 'name'))
+      .flatten()
+      .thru(array => new Set(array))
+      .value()
+    this._animations = _.map(animations, createKeytime)
+    this._events = _.uniq(_.map(animations, 'on'))
   }
   prop (name, fallback) {
     if (!this._properties.has(name)) {
@@ -30,12 +30,12 @@ export class Animation {
     }
   }
   _getAnimation (data) {
-    let event       = _(this._events)
-        .filter(e => e === '' || e in data)
-        .maxBy(e => data[e] || 0)
-    let t           = data[this._timeKey] - (data[event] || 0)
-    let animations  = this._animations.filter(a => a.on === event)
-    let values      = animations.map(a => a.data.values(t))
+    let event = _(this._events)
+      .filter(e => e === '' || e in data)
+      .maxBy(e => data[e] || 0)
+    let t = data[this._timeKey] - (data[event] || 0)
+    let animations = this._animations.filter(a => a.on === event)
+    let values = animations.map(a => a.data.values(t))
     return Object.assign({}, ...values)
   }
   static compile (compiler, $el) {
@@ -61,8 +61,8 @@ export function _compile ($el) {
     }
   }
   return {
-    on:   $el.attr('on') || '',
-    data: _.values(attrs),
+    on: $el.attr('on') || '',
+    data: _.values(attrs)
   }
 }
 
@@ -72,9 +72,9 @@ function _createKeyframes (name) {
 
 export function _attrs (el) {
   return _(el.attributes)
-      .map(n => [n.name.toLowerCase(), n.value])
-      .fromPairs()
-      .value()
+    .map(n => [n.name.toLowerCase(), n.value])
+    .fromPairs()
+    .value()
 }
 
 export default Animation

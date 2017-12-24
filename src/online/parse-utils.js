@@ -16,8 +16,8 @@ export function unwrapUser (parseUser) {
   if (!parseUser) return null
   return {
     username: parseUser.get('username'),
-    email:    parseUser.get('email'),
-    id:       parseUser.id,
+    email: parseUser.get('email'),
+    id: parseUser.id
   }
 }
 

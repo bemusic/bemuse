@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import './TipContainer.scss'
 
 const TipContainer = ({ children, tip, tipVisible = true }) => (
-  <div className="TipContainer">
-    <div className="TipContainerのchildren">
+  <div className='TipContainer'>
+    <div className='TipContainerのchildren'>
       {children}
     </div>
     {tipVisible
-      ? <span className="TipContainerのbubble">
-        <span className="TipContainerのbubbleContent">{tip}</span>
+      ? <span className='TipContainerのbubble'>
+        <span className='TipContainerのbubbleContent'>{tip}</span>
       </span>
       : null
     }

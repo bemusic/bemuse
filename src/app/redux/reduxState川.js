@@ -5,5 +5,5 @@ import Bacon from 'baconjs'
 export default Bacon.fromBinder((sink) => {
   store.subscribe(() => sink({ }))
 })
-.toProperty({ })
-.map(() => store.getState())
+  .toProperty({ })
+  .map(() => store.getState())

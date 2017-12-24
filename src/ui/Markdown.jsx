@@ -1,24 +1,24 @@
 
-import Markdown   from 'markdown-it'
-import React      from 'react'
-import ReactDOM   from 'react-dom'
+import Markdown from 'markdown-it'
+import React from 'react'
+import ReactDOM from 'react-dom'
 
 const markdown = new Markdown({
   linkify: true,
   breaks: true,
-  typographer: true,
+  typographer: true
 })
 
 const safeMarkdown = new Markdown({
   html: true,
   linkify: true,
   breaks: true,
-  typographer: true,
+  typographer: true
 })
 
 export default class MarkdownContent extends React.Component {
   render () {
-    return <article className="Markdown" dangerouslySetInnerHTML={this.renderHTML()}></article>
+    return <article className='Markdown' dangerouslySetInnerHTML={this.renderHTML()} />
   }
 
   componentDidMount () {

@@ -1,7 +1,7 @@
-import assert         from 'power-assert'
+import assert from 'power-assert'
 
-import PlayerStats    from './player-stats'
-import { notechart }  from '../test-helpers'
+import PlayerStats from './player-stats'
+import { notechart } from '../test-helpers'
 
 describe('PlayerStats', function () {
   const statsFor5Notes = () => (

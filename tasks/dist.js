@@ -1,9 +1,9 @@
 
-import gulp    from 'gulp'
-import merge   from 'merge-stream'
+import gulp from 'gulp'
+import merge from 'merge-stream'
 
-import routes  from '../config/routes'
-import path    from '../config/path'
+import routes from '../config/routes'
+import path from '../config/path'
 
 gulp.task('dist', function () {
   let streams = routes.map(route => {
@@ -12,5 +12,3 @@ gulp.task('dist', function () {
   })
   return merge(...streams)
 })
-
-

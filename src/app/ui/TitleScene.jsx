@@ -3,8 +3,8 @@ import './TitleScene.scss'
 import $ from 'jquery'
 import HomePage from 'bemuse/site/HomePage'
 import ModalPopup from 'bemuse/ui/ModalPopup'
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 import Scene from 'bemuse/ui/Scene'
 import SceneToolbar from 'bemuse/ui/SceneToolbar'
@@ -41,54 +41,54 @@ const enhance = compose(
   connect((state) => ({
     hasSeenChangelog: Options.lastSeenVersion(state.options) === version
   })
-))
+  ))
 
 class TitleScene extends React.Component {
   static propTypes = {
     hasSeenChangelog: PropTypes.bool,
-    clickedTwitterButton: PropTypes.bool,
-    onMarkChangelogAsSeen: PropTypes.func.isRequired,
+    onTwitterButtonClick: PropTypes.func,
+    onMarkChangelogAsSeen: PropTypes.func.isRequired
   }
 
   constructor (props) {
     super(props)
     this.state = {
-      changelogModalVisible: false,
+      changelogModalVisible: false
     }
   }
 
   render () {
     const shouldShowHomepage = !HAS_PARENT
-    return <Scene className="TitleScene">
-      <div className="TitleSceneのimage"></div>
-      <div className="TitleSceneのpage">
-        <div className="TitleSceneのpageTitle">
-          <div className="TitleSceneのlogo">
-            <div className="TitleSceneのtagline">
+    return <Scene className='TitleScene'>
+      <div className='TitleSceneのimage' />
+      <div className='TitleSceneのpage'>
+        <div className='TitleSceneのpageTitle'>
+          <div className='TitleSceneのlogo'>
+            <div className='TitleSceneのtagline'>
               online, web-based rhythm game
             </div>
             <img src={require('./images/logo-with-shadow.svg')} />
           </div>
-          <div className="TitleSceneのenter">
-            <a href="javascript://" onClick={this.enterGame}>Enter Game</a>
+          <div className='TitleSceneのenter'>
+            <a href='javascript://' onClick={this.enterGame}>Enter Game</a>
           </div>
         </div>
-        {shouldShowHomepage ? <div className="TitleSceneのpageContents"><HomePage /></div> : null}
+        {shouldShowHomepage ? <div className='TitleSceneのpageContents'><HomePage /></div> : null}
       </div>
       <SceneToolbar>
-        <a onClick={this.showAbout} href="javascript://">About</a>
-        <a onClick={this.openLink} href="https://bemuse.readthedocs.org">Docs</a>
-        <a onClick={() => this.viewChangelog()} href="javascript://">{this.renderVersion()}</a>
+        <a onClick={this.showAbout} href='javascript://'>About</a>
+        <a onClick={this.openLink} href='https://bemuse.readthedocs.org'>Docs</a>
+        <a onClick={() => this.viewChangelog()} href='javascript://'>{this.renderVersion()}</a>
         <SceneToolbar.Spacer />
-        <a onClick={() => this.openLink()} href="https://www.facebook.com/bemusegame">Facebook</a>
-        <a onClick={() => this.openTwitterLink()} href="https://twitter.com/bemusegame">
-          <FirstTimeTip tip="Like & follow us :)" featureKey="twitter">
+        <a onClick={() => this.openLink()} href='https://www.facebook.com/bemusegame'>Facebook</a>
+        <a onClick={() => this.openTwitterLink()} href='https://twitter.com/bemusegame'>
+          <FirstTimeTip tip='Like & follow us :)' featureKey='twitter'>
             Twitter
           </FirstTimeTip>
         </a>
-        <a onClick={this.openLink} href="https://github.com/bemusic/bemuse">Fork me on GitHub</a>
+        <a onClick={this.openLink} href='https://github.com/bemusic/bemuse'>Fork me on GitHub</a>
       </SceneToolbar>
-      <div className="TitleSceneのcurtain"></div>
+      <div className='TitleSceneのcurtain' />
       <ModalPopup
         visible={this.state.changelogModalVisible}
         onBackdropClick={() => this.toggleChangelogModal()}
@@ -100,7 +100,7 @@ class TitleScene extends React.Component {
 
   renderVersion () {
     return (
-      <TipContainer tip="What’s new?" tipVisible={!this.props.hasSeenChangelog}>
+      <TipContainer tip='What’s new?' tipVisible={!this.props.hasSeenChangelog}>
         <strong>Bemuse</strong> v{version}
       </TipContainer>
     )
@@ -141,7 +141,6 @@ class TitleScene extends React.Component {
   toggleChangelogModal () {
     this.setState({ changelogModalVisible: !this.state.changelogModalVisible })
   }
-
 }
 
 export default enhance(TitleScene)

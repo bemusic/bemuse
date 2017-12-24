@@ -20,12 +20,12 @@ export function readBlob (blob) {
           reject(new Error('Unable to read from Blob'))
         }
         switch (type) {
-        case 'arraybuffer':
-          reader.readAsArrayBuffer(blob)
-          break
-        case 'text':
-          reader.readAsText(blob)
-          break
+          case 'arraybuffer':
+            reader.readAsArrayBuffer(blob)
+            break
+          case 'text':
+            reader.readAsText(blob)
+            break
         }
       })
     }

@@ -14,7 +14,7 @@ class MusicChartSelector extends React.Component {
   }
 
   render () {
-    return <ul className="MusicChartSelector">
+    return <ul className='MusicChartSelector'>
       {this.props.charts.map((chart, index) =>
         <MusicChartSelectorItem
           key={index}

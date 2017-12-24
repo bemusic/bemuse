@@ -1,2 +1,3 @@
-
-module.exports = require('val-loader!./version-loader')
+/* eslint import/no-webpack-loader-syntax: off */
+import version from 'val-loader!./version-loader'
+export default version
