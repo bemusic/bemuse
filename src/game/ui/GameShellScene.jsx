@@ -90,7 +90,8 @@ class CustomChartSelector extends React.Component {
 
 export default class GameShellScene extends React.Component {
   static propTypes = {
-    options: PropTypes.object
+    options: PropTypes.object,
+    play: PropTypes.func
   }
 
   constructor (props) {
