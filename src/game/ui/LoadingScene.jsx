@@ -10,7 +10,15 @@ import LoadingSceneProgress from './LoadingSceneProgress.jsx'
 
 export default class LoadingScene extends React.Component {
   static propTypes = {
-    song: PropTypes.object,
+    song: PropTypes.shape({
+      title: PropTypes.string,
+      artist: PropTypes.string,
+      genre: PropTypes.string,
+      subtitles: PropTypes.arrayOf(PropTypes.string),
+      subartists: PropTypes.arrayOf(PropTypes.string),
+      difficulty: PropTypes.number,
+      level: PropTypes.number
+    }),
     tasks: PropTypes.object,
     eyecatchImagePromise: PropTypes.object,
     registerTeardownCallback: PropTypes.func

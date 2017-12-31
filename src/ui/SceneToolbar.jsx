@@ -3,7 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 export class SceneToolbar extends React.Component {
-  static PropTypes = {
+  static propTypes = {
     children: PropTypes.node
   }
 

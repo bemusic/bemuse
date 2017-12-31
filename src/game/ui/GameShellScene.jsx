@@ -1,9 +1,15 @@
 import './GameShellScene.scss'
 import React from 'react'
+import PropTypes from 'prop-types'
 import DndResources from 'bemuse/resources/dnd-resources'
 import c from 'classnames'
 
 class CustomChartSelector extends React.Component {
+  static propTypes = {
+    selectedResource: PropTypes.any,
+    onSelect: PropTypes.func
+  }
+
   constructor (props) {
     super(props)
     this.state = {
@@ -83,6 +89,10 @@ class CustomChartSelector extends React.Component {
 }
 
 export default class GameShellScene extends React.Component {
+  static propTypes = {
+    options: PropTypes.object
+  }
+
   constructor (props) {
     super(props)
     this.state = {
