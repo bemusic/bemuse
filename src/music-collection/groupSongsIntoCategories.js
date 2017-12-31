@@ -5,9 +5,9 @@ const grouping = [
   { title: 'Tutorial', criteria: song => song.tutorial },
   { title: 'Unreleased', criteria: song => song.unreleased },
   {
-    title: 'New Songs',
+    title: 'Recently Added Songs',
     criteria: song =>
-      song.added && Date.now() - Date.parse(song.added) < 14 * 86400000,
+      song.added && Date.now() - Date.parse(song.added) < 60 * 86400000,
     sort: song => song.added,
     reverse: true
   },
