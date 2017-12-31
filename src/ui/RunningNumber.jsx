@@ -1,9 +1,15 @@
 import './RunningNumber.scss'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 import now from 'bemuse/utils/now'
 
 export default class RunningNumber extends React.Component {
+  static propTypes = {
+    formatter: PropTypes.func,
+    value: PropTypes.number.isRequired
+  }
+
   render () {
     return <span className='RunningNumber' />
   }

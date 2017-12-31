@@ -6,7 +6,7 @@ import WARP from 'bemuse/utils/warp-element'
 
 export default class WarpContainer extends React.Component {
   static propTypes = {
-    children: PropTypes.any
+    children: PropTypes.node
   }
 
   constructor (props) {

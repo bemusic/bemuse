@@ -1,8 +1,13 @@
 import './YouTube.scss'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 
 export default class YouTube extends React.Component {
+  static propTypes = {
+    url: PropTypes.string
+  }
+
   render () {
     return (
       <iframe
