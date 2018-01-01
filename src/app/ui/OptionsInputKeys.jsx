@@ -1,9 +1,17 @@
 import './OptionsInputKeys.scss'
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import OptionsInputKey from './OptionsInputKey'
 
 class OptionsInputKeys extends React.PureComponent {
+  static propTypes = {
+    texts: PropTypes.arrayOf(PropTypes.string),
+    editing: PropTypes.string,
+    onEdit: PropTypes.func,
+    keyboardMode: PropTypes.bool
+  }
+
   render () {
     let keys = []
     for (let i = 1; i <= 7; i++) {

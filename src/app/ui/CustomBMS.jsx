@@ -2,6 +2,7 @@ import './CustomBMS.scss'
 
 import Panel from 'bemuse/ui/Panel'
 import React from 'react'
+import PropTypes from 'prop-types'
 import c from 'classnames'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
@@ -21,6 +22,12 @@ const enhance = compose(
 )
 
 class CustomBMS extends React.Component {
+  static propTypes = {
+    log: PropTypes.arrayOf(PropTypes.string),
+    onFileDrop: PropTypes.func,
+    onSongLoaded: PropTypes.func
+  }
+
   constructor (props) {
     super(props)
     this.state = { hover: false }
