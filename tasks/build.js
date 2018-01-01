@@ -5,7 +5,6 @@ import gulp from 'gulp'
 import gutil from 'gulp-util'
 import webpack from 'webpack'
 
-import * as Env from '../config/env'
 import buildConfig from '../config/buildConfig'
 import config from '../config/webpack'
 import path from '../config/path'
