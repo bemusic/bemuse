@@ -5,7 +5,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 class OptionsSpeed extends React.PureComponent {
-  static PropTypes = {
+  static propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func
   }

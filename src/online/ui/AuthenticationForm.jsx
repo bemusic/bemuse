@@ -1,10 +1,16 @@
 import './AuthenticationForm.scss'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 import OptionsButton from 'bemuse/app/ui/OptionsButton'
 import $ from 'jquery'
 
 export default class AuthenticationForm extends React.Component {
+  static propTypes = {
+    onSubmit: PropTypes.func,
+    mode: PropTypes.string
+  }
+
   onButtonClick = e => {
     e.preventDefault()
     this.props.onSubmit({
