@@ -1,10 +1,23 @@
 import './Ranking.scss'
 import React from 'react'
+import PropTypes from 'prop-types'
 import RankingTable from './RankingTable'
 import AuthenticationPopup from 'bemuse/online/ui/AuthenticationPopup'
 import { isWaiting } from 'bemuse/online/operations'
 
 export default class Ranking extends React.Component {
+  static propTypes = {
+    state: PropTypes.shape({
+      data: PropTypes.arrayOf(PropTypes.object),
+      meta: PropTypes.shape({
+        scoreboard: PropTypes.object,
+        submission: PropTypes.object
+      })
+    }),
+    onReloadScoreboardRequest: PropTypes.func,
+    onResubmitScoreRequest: PropTypes.func
+  }
+
   constructor (props) {
     super(props)
     this.state = {
