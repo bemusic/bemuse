@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 export default class LoadingSceneProgressBar extends React.Component {
   static propTypes = {
-    width: PropTypes.number.isRequired
+    width: PropTypes.any.isRequired
   }
 
   render () {
