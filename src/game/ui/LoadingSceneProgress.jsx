@@ -18,7 +18,7 @@ export default class LoadingSceneProgress extends React.Component {
   }
 
   renderItem = ({ text, progressText, progress }) => {
-    let width = Math.round(progress * 100 || 0) + '%'
+    let width = Math.round(progress * 100 || 0).toString() + '%'
     let extra = progressText ? ` (${progressText})` : ''
     return (
       <div key={text} className='LoadingSceneProgressのitem'>
