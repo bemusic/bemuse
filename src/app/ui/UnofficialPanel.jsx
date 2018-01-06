@@ -1,9 +1,14 @@
 import './UnofficialPanel.scss'
 import React from 'react'
+import PropTypes from 'prop-types'
 import Panel from 'bemuse/ui/Panel'
 import OptionsButton from './OptionsButton'
 
 class UnofficialPanel extends React.Component {
+  static propTypes = {
+    onClose: PropTypes.func.isRequired
+  }
+
   render () {
     return (
       <div className='UnofficialPanel'>

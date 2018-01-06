@@ -1,9 +1,20 @@
 import './ExperimentScene.scss'
 import React from 'react'
+import PropTypes from 'prop-types'
 import c from 'classnames'
 import Loading from 'bemuse/ui/Loading'
 
 export default class ExperimentScene extends React.Component {
+  static propTypes = {
+    finished: PropTypes.bool,
+    loading: PropTypes.bool,
+    started: PropTypes.bool,
+    listening: PropTypes.bool,
+    onStart: PropTypes.func,
+    numSamples: PropTypes.number,
+    latency: PropTypes.number
+  }
+
   render () {
     return (
       <div

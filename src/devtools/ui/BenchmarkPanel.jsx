@@ -1,7 +1,12 @@
 import './BenchmarkPanel.scss'
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export default class BenchmarkPanel extends React.Component {
+  static propTypes = {
+    bench: PropTypes.object
+  }
+
   constructor (props) {
     super(props)
     this.state = {

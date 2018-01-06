@@ -1,5 +1,6 @@
 import './OptionsPlayerGraphics.scss'
 import React from 'react'
+import PropTypes from 'prop-types'
 import c from 'classnames'
 
 const PANEL_PATH = (function () {
@@ -20,6 +21,12 @@ const PANEL_PATH = (function () {
 })()
 
 export default class OptionsPlayerGraphics extends React.Component {
+  static propTypes = {
+    type: PropTypes.string,
+    active: PropTypes.bool,
+    value: PropTypes.string
+  }
+
   render () {
     let svg =
       this.props.type === 'scratch' ? this.renderScratch() : this.renderPanel()

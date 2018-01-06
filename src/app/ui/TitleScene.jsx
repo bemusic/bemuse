@@ -88,21 +88,21 @@ class TitleScene extends React.Component {
           <a onClick={this.openLink} href='https://bemuse.readthedocs.org'>
             Docs
           </a>
-          <a onClick={() => this.viewChangelog()} href='javascript://'>
+          <a onClick={this.viewChangelog} href='javascript://'>
             {this.renderVersion()}
           </a>
           <SceneToolbar.Spacer />
           <a
-            onClick={() => this.openLink()}
+            onClick={this.openLink}
             href='https://www.facebook.com/bemusegame'
           >
             Facebook
           </a>
           <a
-            onClick={() => this.openTwitterLink()}
+            onClick={this.openTwitterLink}
             href='https://twitter.com/bemusegame'
           >
-            <FirstTimeTip tip='Like & follow us :)' featureKey='twitter'>
+            <FirstTimeTip tip='Like &amp; follow us :)' featureKey='twitter'>
               Twitter
             </FirstTimeTip>
           </a>
@@ -129,7 +129,7 @@ class TitleScene extends React.Component {
     )
   }
 
-  openLink (e) {
+  openLink = (e) => {
     e.preventDefault()
     window.open(
       $(e.target)
@@ -139,9 +139,9 @@ class TitleScene extends React.Component {
     )
   }
 
-  openTwitterLink (e) {
+  openTwitterLink = (e) => {
     this.openLink(e)
-    this.props.onTwitterButtonClick()
+    if (this.props.onTwitterButtonClick) this.props.onTwitterButtonClick()
   }
 
   enterGame () {
@@ -160,7 +160,7 @@ class TitleScene extends React.Component {
     Analytics.send('TitleScene', 'show about')
   }
 
-  viewChangelog () {
+  viewChangelog = () => {
     this.toggleChangelogModal()
     this.props.onMarkChangelogAsSeen()
     Analytics.send('TitleScene', 'view changelog')

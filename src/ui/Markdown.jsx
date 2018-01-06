@@ -1,6 +1,7 @@
 import Markdown from 'markdown-it'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 
 const markdown = new Markdown({
   linkify: true,
@@ -16,6 +17,11 @@ const safeMarkdown = new Markdown({
 })
 
 export default class MarkdownContent extends React.Component {
+  static propTypes = {
+    safe: PropTypes.bool,
+    source: PropTypes.string.isRequired
+  }
+
   render () {
     return (
       <article

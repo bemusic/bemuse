@@ -1,5 +1,6 @@
 import './BrowserSupportWarningScene.scss'
 import React from 'react'
+import PropTypes from 'prop-types'
 import Scene from 'bemuse/ui/Scene'
 
 import OptionsButton from './OptionsButton'
@@ -7,6 +8,10 @@ import { SUPPORTED } from '../browser-support'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 
 class BrowserSupportWarningScene extends React.Component {
+  static propTypes = {
+    next: PropTypes.element.isRequired
+  }
+
   render () {
     return (
       <Scene className='BrowserSupportWarningScene'>

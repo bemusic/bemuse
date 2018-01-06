@@ -1,6 +1,7 @@
 import './AuthenticationPanel.scss'
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import c from 'classnames'
 
 import Panel from 'bemuse/ui/Panel'
@@ -10,6 +11,10 @@ import online from 'bemuse/online/instance'
 import AuthenticationForm from './AuthenticationForm'
 
 export default class AuthenticationPanel extends React.Component {
+  static propTypes = {
+    onFinish: PropTypes.func
+  }
+
   constructor (props) {
     super(props)
     this.state = {

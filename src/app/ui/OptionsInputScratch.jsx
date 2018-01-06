@@ -1,8 +1,16 @@
 import './OptionsInputScratch.scss'
 import React from 'react'
+import PropTypes from 'prop-types'
 import c from 'classnames'
 
 class OptionsInputScratch extends React.PureComponent {
+  static propTypes = {
+    text: PropTypes.arrayOf(PropTypes.string),
+    editIndex: PropTypes.number,
+    isEditing: PropTypes.bool,
+    onEdit: PropTypes.func
+  }
+
   render () {
     return (
       <div

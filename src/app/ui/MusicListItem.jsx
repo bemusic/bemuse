@@ -1,12 +1,45 @@
 import './MusicListItem.scss'
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import c from 'classnames'
 import getPlayableCharts from 'bemuse/music-collection/getPlayableCharts'
 
 import MusicListItemCharts from './MusicListItemCharts'
 
+const chartPropType = PropTypes.shape({
+  bpm: PropTypes.shape({
+    init: PropTypes.number,
+    max: PropTypes.number,
+    median: PropTypes.number,
+    min: PropTypes.number
+  }),
+  duration: PropTypes.number,
+  file: PropTypes.string,
+  info: PropTypes.shape({
+    title: PropTypes.string,
+    artist: PropTypes.string,
+    genre: PropTypes.string,
+    subtitles: PropTypes.arrayOf(PropTypes.string),
+    subartists: PropTypes.arrayOf(PropTypes.string),
+    difficulty: PropTypes.number,
+    level: PropTypes.number
+  }),
+  keys: PropTypes.string,
+  md5: PropTypes.string,
+  noteCount: PropTypes.number
+})
+
 class MusicListItem extends React.PureComponent {
+  static propTypes = {
+    song: PropTypes.object,
+    selected: PropTypes.bool,
+    selectedChart: chartPropType,
+    playMode: PropTypes.string,
+    onSelect: PropTypes.func,
+    highlight: PropTypes.string
+  }
+
   render () {
     const song = this.props.song
     const className = c('MusicListItem', {

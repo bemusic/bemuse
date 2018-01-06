@@ -1,9 +1,14 @@
 import './LoadingSceneProgress.scss'
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import LoadingSceneProgressBar from './LoadingSceneProgressBar.jsx'
 
 export default class LoadingSceneProgress extends React.Component {
+  static propTypes = {
+    tasks: PropTypes.object
+  }
+
   render () {
     return (
       <div className='LoadingSceneProgress'>
@@ -13,7 +18,7 @@ export default class LoadingSceneProgress extends React.Component {
   }
 
   renderItem = ({ text, progressText, progress }) => {
-    let width = Math.round(progress * 100 || 0) + '%'
+    let width = Math.round(progress * 100 || 0).toString() + '%'
     let extra = progressText ? ` (${progressText})` : ''
     return (
       <div key={text} className='LoadingSceneProgressのitem'>

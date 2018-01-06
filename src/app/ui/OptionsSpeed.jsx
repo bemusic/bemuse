@@ -2,8 +2,14 @@ import './OptionsSpeed.scss'
 import OptionsButton from './OptionsButton'
 import OptionsInputField from './OptionsInputField'
 import React from 'react'
+import PropTypes from 'prop-types'
 
 class OptionsSpeed extends React.PureComponent {
+  static propTypes = {
+    value: PropTypes.string,
+    onChange: PropTypes.func
+  }
+
   parseSpeed (speedString) {
     return +(+speedString || 1.0).toFixed(1)
   }

@@ -1,11 +1,16 @@
 import './Options.scss'
 import React from 'react'
+import PropTypes from 'prop-types'
 import Panel from 'bemuse/ui/Panel'
 import OptionsPlayer from './OptionsPlayer'
 import OptionsInput from './OptionsInput'
 import OptionsAdvanced from './OptionsAdvanced'
 
 export default class Options extends React.Component {
+  static propTypes = {
+    onClose: PropTypes.func
+  }
+
   render () {
     return (
       <div className='Options'>
