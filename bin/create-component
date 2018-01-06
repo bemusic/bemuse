@@ -4,9 +4,9 @@ import { writeFileSync } from 'fs'
 import { basename } from 'path'
 
 let path = process.argv[2]
-let jsx   = path + '.jsx'
-let scss  = path + '.scss'
-let 名    = basename(path)
+let jsx = path + '.jsx'
+let scss = path + '.scss'
+let 名 = basename(path)
 
 let jsxData = `
 import './名.scss'
@@ -30,7 +30,7 @@ let scssData = `
 write(jsx, jsxData)
 write(scss, scssData)
 
-function write(target, content) {
+function write (target, content) {
   console.log('Writing: ' + target)
   writeFileSync(target, content)
 }
