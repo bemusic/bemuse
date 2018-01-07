@@ -24,6 +24,7 @@ export function load (spec) {
         let context = new LoadingContext(progress)
         context.use(function () {
           import(/* webpackChunkName: 'gameEngine' */ 'bemuse/scintillator')
+            .then(loadedModule => resolve(loadedModule))
         })
       })
     })
