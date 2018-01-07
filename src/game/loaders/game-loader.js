@@ -23,11 +23,7 @@ export function load (spec) {
       return new Promise(resolve => {
         let context = new LoadingContext(progress)
         context.use(function () {
-          require.ensure(
-            ['bemuse/scintillator'],
-            require => resolve(require('bemuse/scintillator')),
-            'gameEngine'
-          )
+          import(/* webpackChunkName: 'gameEngine' */ 'bemuse/scintillator')
         })
       })
     })

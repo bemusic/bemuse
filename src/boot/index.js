@@ -14,6 +14,7 @@ import query from 'bemuse/utils/query'
 
 import * as Boot from './ui/Boot'
 import * as ErrorDialog from './ui/ErrorDialog'
+import loadModule from './loader'
 import LoadingContext from './loading-context'
 
 window.onerror = function (message, url, line, col, e) {
@@ -28,12 +29,8 @@ window.onerror = function (message, url, line, col, e) {
 
 let mode = query.mode || 'app'
 
-require.ensure(
-  ['./environment'],
-  function (require) {
-    require('./environment')
-    var loadModule = require('val-loader!./loader.js')
-
+import(/* webpackChunkName: 'environment' */ './environment')
+  .then(_ => {
     if (loadModule[mode]) {
       let progress = new Progress()
       let context = new LoadingContext(progress)
@@ -49,14 +46,12 @@ require.ensure(
         //
         // .. codedoc:: boot/modes
         //
-        loadModule[mode](function (loadedModule) {
+        loadModule[mode].then(loadedModule => {
           Boot.hide()
           loadedModule.main()
-        })
+        }).catch(err => console.error('An error occurred while loading the mode', err))
       })
     } else {
       console.error('Invalid mode:', mode)
     }
-  },
-  'environment'
-)
+  }).catch(err => console.error('An error occurred while loading the component', err))
