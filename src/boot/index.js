@@ -46,7 +46,7 @@ import(/* webpackChunkName: 'environment' */ './environment')
         //
         // .. codedoc:: boot/modes
         //
-        loadModule[mode].then(loadedModule => {
+        loadModule[mode]().then(loadedModule => {
           Boot.hide()
           loadedModule.main()
         }).catch(err => console.error('An error occurred while loading the mode', err))
