@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<skin width="768" height="928">
+<skin width="768" height="928" data-main-input-device="touch">
   <defs>
     <group id="dxbuttons">
           <group x="72" y="160">

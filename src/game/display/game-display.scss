@@ -1,4 +1,3 @@
-
 .game-display {
   display: block;
   margin: 0 auto;
@@ -32,10 +31,10 @@
       opacity: 1;
     }
   }
-  &[data-panel-placement="left"] &--video-bg {
+  &[data-panel-placement='left'] &--video-bg {
     transform: translateX(13.671875%) scale(0.87);
   }
-  &[data-panel-placement="right"] &--video-bg {
+  &[data-panel-placement='right'] &--video-bg {
     transform: translateX(13.671875%) scale(0.87);
   }
 
@@ -51,6 +50,13 @@
   > canvas {
     position: relative;
     z-index: 100;
+  }
+
+  &--escape {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 110;
   }
 }
 

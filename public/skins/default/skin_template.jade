@@ -1,7 +1,7 @@
 doctype xml
 include _lib/common
 
-+media('screen', 1280, 720)
++media('screen', 1280, 720, { 'data-main-input-device': 'keyboard' })
 
   defs
     +all-note-area(id='note-area')
@@ -59,7 +59,7 @@ include _lib/common
   // tutorial
   +tutorial(width=1280)
 
-+media('touch', 768, 928)
++media('touch', 768, 928, { 'data-main-input-device': 'touch' })
 
   - var width = 768
   - var height = 928
@@ -148,7 +148,7 @@ include _lib/common
 
   +tutorial(width=768 touch=true)
 
-+media('touch3d', 1280, 720, { 'data-display-mode': 'touch3d' })
++media('touch3d', 1280, 720, { 'data-display-mode': 'touch3d', 'data-main-input-device': 'touch' })
   group(y='-12')
     animation
       keyframe(t='0' y='-104')

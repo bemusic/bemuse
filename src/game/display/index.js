@@ -19,6 +19,12 @@ export class GameDisplay {
       video,
       panelPlacement: game.players[0].options.placement
     })
+    if (skinData.mainInputDevice === 'touch') {
+      this._createEscapeButton()
+    }
+  }
+  setEscapeHandler (escapeHandler) {
+    this._onEscape = escapeHandler
   }
   start () {
     this._started = new Date().getTime()
@@ -97,6 +103,23 @@ export class GameDisplay {
         .appendTo($wrapper)
     }
     return $wrapper[0]
+  }
+  _createEscapeButton () {
+    let esc = document.createElement('button')
+    esc.addEventListener(
+      'touchstart',
+      e => {
+        e.stopPropagation()
+      },
+      true
+    )
+    esc.onclick = e => {
+      e.preventDefault()
+      this._onEscape()
+    }
+    esc.className = 'game-display--escape'
+    esc.appendChild(document.createTextNode('Quit'))
+    this.wrapper.appendChild(esc)
   }
   get context () {
     return this._context

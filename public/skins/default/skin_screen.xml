@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<skin width="1280" height="720">
+<skin width="1280" height="720" data-main-input-device="keyboard">
   <defs>
     <group id="note-area">
       <if key="p1_scratch" value="left">
