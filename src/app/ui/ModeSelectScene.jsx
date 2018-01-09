@@ -1,20 +1,25 @@
-import * as Analytics from '../analytics'
-import * as Options from '../entities/Options'
-import * as OptionsIO from '../io/OptionsIO'
 import './ModeSelectScene.scss'
 
-import React from 'react'
 import PropTypes from 'prop-types'
-import Scene from 'bemuse/ui/Scene'
+import React from 'react'
 import SCENE_MANAGER from 'bemuse/scene-manager'
+import Scene from 'bemuse/ui/Scene'
 import SceneHeading from 'bemuse/ui/SceneHeading'
 import SceneToolbar from 'bemuse/ui/SceneToolbar'
 
-import connectIO from '../../impure-react/connectIO'
+import * as Analytics from '../analytics'
+import * as Options from '../entities/Options'
+import * as OptionsIO from '../io/OptionsIO'
 import MusicSelectScene from './MusicSelectScene'
+import connectIO from '../../impure-react/connectIO'
 
 const enhance = connectIO({
-  onSetMode: () => mode => OptionsIO.updateOptions(Options.changePlayMode(mode))
+  onSetMode: () => (mode, playDevice) =>
+    OptionsIO.updateOptions(
+      playDevice === 'touch' && mode === 'KB'
+        ? Options.changePanelPlacement('3d')
+        : Options.changePlayMode(mode)
+    )
 })
 
 class ModeSelectScene extends React.Component {
@@ -27,7 +32,11 @@ class ModeSelectScene extends React.Component {
       <Scene className='ModeSelectScene'>
         <SceneHeading>Select Mode</SceneHeading>
         <div className='ModeSelectSceneのmain'>
-          <div className='ModeSelectSceneのcontent'>
+          <div
+            className='ModeSelectSceneのcontent'
+            onTouchStart={() => this.setPlayDevice('touch')}
+            onMouseDown={() => this.setPlayDevice('keyboard')}
+          >
             <div className='ModeSelectSceneのitem' onClick={this.handleKB}>
               {this.renderKBGraphics()}
               <h2>Keyboard Mode</h2>
@@ -126,8 +135,15 @@ class ModeSelectScene extends React.Component {
     )
   }
 
+  setPlayDevice (device) {
+    console.log('Set play device to', device)
+    if (!this._playDevice) {
+      this._playDevice = device
+    }
+  }
+
   handleKB = () => {
-    this.props.onSetMode('KB')
+    this.props.onSetMode('KB', this._playDevice)
     SCENE_MANAGER.display(<MusicSelectScene />).done()
     Analytics.send('ModeSelectScene', 'select mode', 'KB')
   }

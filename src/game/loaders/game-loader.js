@@ -36,7 +36,12 @@ export function load (spec) {
       Scintillator,
       progress
     ) {
-      return Scintillator.load(Scintillator.getSkinUrl(), progress)
+      return Scintillator.load(
+        Scintillator.getSkinUrl({
+          displayMode: spec.displayMode
+        }),
+        progress
+      )
     })
 
     task('SkinContext', null, ['Scintillator', 'Skin'], function (

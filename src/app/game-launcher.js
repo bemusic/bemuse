@@ -91,6 +91,10 @@ export function launch ({
       ]
     }
 
+    if (options['player.P1.panel'] === '3d') {
+      loadSpec.displayMode = 'touch3d'
+    }
+
     // set video options
     if (Options.isBackgroundAnimationsEnabled(options)) {
       loadSpec.videoUrl = yield findVideoUrl(song, loadSpec.assets)

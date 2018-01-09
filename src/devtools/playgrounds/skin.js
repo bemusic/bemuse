@@ -44,7 +44,11 @@ export function main () {
       players: [{ speed: 2 }]
     })
 
-    let skin = yield Scintillator.load(Scintillator.getSkinUrl())
+    let skin = yield Scintillator.load(
+      Scintillator.getSkinUrl({
+        displayMode: 'touch3d'
+      })
+    )
     let context = new Scintillator.Context(skin)
     let display = new GameDisplay({ game, skin, context })
     let state = new GameState(game)

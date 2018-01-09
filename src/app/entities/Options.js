@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import u from 'updeep'
 
 import * as options from '../options'
@@ -23,7 +24,12 @@ export const changeKeyMapping = (mode, key, keyCode) =>
 
 // Play mode
 export const playMode = state => state['player.P1.mode']
-export const changePlayMode = mode => u({ 'player.P1.mode': mode })
+export const changePlayMode = mode =>
+  u({
+    'player.P1.mode': mode,
+    'player.P1.panel': panel =>
+      panel === '3d' && mode !== 'KB' ? 'center' : panel
+  })
 
 // Speed
 export const speed = state => state['player.P1.speed']
@@ -48,19 +54,20 @@ export const scratchPosition = state => {
 }
 export const changeScratchPosition = position => {
   if (position === 'off') {
-    return u({ 'player.P1.mode': 'KB' })
+    return changePlayMode('KB')
   } else {
-    return u({
-      'player.P1.mode': 'BM',
-      'player.P1.scratch': position
-    })
+    return _.flow(changePlayMode('BM'), u({ 'player.P1.scratch': position }))
   }
 }
 
 // Panel
 export const panelPlacement = state => state['player.P1.panel']
 export const changePanelPlacement = placement =>
-  u({ 'player.P1.panel': placement })
+  u({
+    'player.P1.panel': placement,
+    'player.P1.mode': mode =>
+      placement === '3d' && mode !== 'KB' ? 'KB' : mode
+  })
 
 // Lane cover
 export const laneCover = state => {

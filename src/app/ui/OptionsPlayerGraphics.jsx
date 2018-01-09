@@ -1,6 +1,8 @@
 import './OptionsPlayerGraphics.scss'
-import React from 'react'
+
+import * as touch3d from 'bemuse/game/display/touch3d'
 import PropTypes from 'prop-types'
+import React from 'react'
 import c from 'classnames'
 
 const PANEL_PATH = (function () {
@@ -18,6 +20,19 @@ const PANEL_PATH = (function () {
   const y4 = 56
   return `M${x1} ${y1} L${x1} ${y2} L${x2} ${y3} L${x2} ${y4}
           L${x4} ${y4} L${x4} ${y3} L${x3} ${y2} L${x3} ${y1}`
+})()
+
+const PANEL_3D_PATH = (function () {
+  const down = []
+  const up = []
+  for (let i = 0; i <= 11; i++) {
+    const row = touch3d.getRow(i / 10)
+    const y = row.y * 0.075
+    const dx = touch3d.PLAY_AREA_WIDTH * row.projection * 0.075
+    down.push(`${i === 0 ? 'M' : 'L'}${48 - dx} ${y}`)
+    up.push(`L${48 + dx} ${y}`)
+  }
+  return [...down, ...up.reverse()].join(' ')
 })()
 
 export default class OptionsPlayerGraphics extends React.Component {
@@ -95,13 +110,21 @@ export default class OptionsPlayerGraphics extends React.Component {
     let tx = p === 'left' ? -35 : p === 'right' ? 35 : 0
     return (
       <svg width='96' height='54'>
-        <g transform={'translate(' + tx + ' 0)'}>
+        {p === '3d' ? (
           <path
             className='OptionsPlayerGraphicsのline'
-            d={PANEL_PATH}
+            d={PANEL_3D_PATH}
             style={{ fill: 'rgba(255,255,255,0.1)' }}
           />
-        </g>
+        ) : (
+          <g transform={'translate(' + tx + ' 0)'}>
+            <path
+              className='OptionsPlayerGraphicsのline'
+              d={PANEL_PATH}
+              style={{ fill: 'rgba(255,255,255,0.1)' }}
+            />
+          </g>
+        )}
       </svg>
     )
   }
