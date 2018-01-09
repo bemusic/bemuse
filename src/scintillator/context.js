@@ -26,6 +26,7 @@ export class Context {
     this._renderer = createRenderer(skin.width, skin.height)
     this.stage = this._instance.object
     this.view = this._renderer.view
+    this.skinData = skin.data
     this._setupInteractivity()
   }
   render (data) {

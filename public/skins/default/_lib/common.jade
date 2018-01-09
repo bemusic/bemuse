@@ -1,7 +1,7 @@
 
-mixin media(type, width, height)
+mixin media(type, width, height, extra)
   if media == type
-    skin(width=width height=height)
+    skin(width=width height=height)&attributes(Object.assign({ }, extra || { }))
       block
 
 mixin longnote(key, x, cur, add, visible)

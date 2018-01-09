@@ -1,5 +1,7 @@
 import bench from 'bemuse/devtools/benchmark'
 
+import * as touch3d from '../display/touch3d'
+
 let BUTTONS = ['p1_1', 'p1_2', 'p1_3', 'p1_4', 'p1_5', 'p1_6', 'p1_7', 'start']
 
 window.BEMUSE_TOUCH_STATS = []
@@ -20,27 +22,6 @@ function StatsRecorder () {
     }
   }
 }
-function getRow (i) {
-  let excess = Math.max(0, i - 1)
-  if (i < 0) i = 0
-  if (i > 1) i = 1
-  let theta = TD_CONF.t0 + (TD_CONF.t1 - TD_CONF.t0) * i
-  let pointX = TD_CONF.cx + Math.cos(theta) * TD_CONF.r
-  let pointY = TD_CONF.cy - Math.sin(theta) * TD_CONF.r
-  let projection = TD_CONF.p / (TD_CONF.p - pointX)
-  let screenY = pointY * projection + 720 / 2
-  return { y: screenY + excess * 1280, projection }
-}
-
-const TD_CONF = {
-  cx: 1024,
-  cy: -975,
-  r: 1024,
-  p: 960,
-  w: 60,
-  t0: 3.922,
-  t1: 4.555
-}
 
 export function TouchPlugin (context) {
   let scratchStartY = null
@@ -50,6 +31,7 @@ export function TouchPlugin (context) {
   let getButton = bench.wrap('input:touch:B', _getButton)
   let getPinch = bench.wrap('input:touch:P', _getPinch)
   let statsRecorder = new StatsRecorder()
+  const touch3dMode = context.skinData.displayMode === 'touch3d'
   return {
     name: 'TouchPlugin',
     get () {
@@ -61,31 +43,14 @@ export function TouchPlugin (context) {
       for (let button of BUTTONS) {
         output[button] = getButton(input, button)
       }
-      for (let p of input) {
-        let min = 0.75
-        let max = 1
-        let mid
-        let row
-        for (let i = 0; i < 8; i++) {
-          mid = (min + max) / 2
-          row = getRow(mid)
-          if (row.y > p.y) {
-            max = mid
-          } else {
-            min = mid
-          }
+      if (touch3dMode) {
+        for (let p of input) {
+          const lane = touch3d.getTouchedColumn(p.x, p.y)
+          if (lane) output['p1_' + lane] = 1
         }
-        if (mid < 0.8) continue
-        let x0 = 1280 / 2 + row.projection * -TD_CONF.w
-        let x1 = 1280 / 2 + row.projection * TD_CONF.w
-        let pos = Math.floor((p.x - x0) / (x1 - x0) * 7)
-        if (pos >= -1 && pos <= 7) {
-          if (pos < 0) pos = 0
-          if (pos > 6) pos = 6
-          output['p1_' + (pos + 1)] = 1
-        }
+      } else {
+        output['p1_pinch'] = getPinch(input)
       }
-      output['p1_pinch'] = getPinch(input)
       return output
     },
     destroy () {
@@ -149,8 +114,9 @@ export function TouchPlugin (context) {
   function _getPinch (input) {
     let a = null
     let b = null
+    const pinchThreshold = touch3dMode ? touch3d.getRow(0.8).y : 550
     for (let p of input) {
-      if (p.y < getRow(0.8).y /* 550 */) {
+      if (p.y < pinchThreshold) {
         if (a === null) {
           a = p.y
         } else if (b === null) {
