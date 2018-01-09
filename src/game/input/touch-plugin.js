@@ -32,6 +32,7 @@ export function TouchPlugin (context) {
   let getPinch = bench.wrap('input:touch:P', _getPinch)
   let statsRecorder = new StatsRecorder()
   const touch3dMode = context.skinData.displayMode === 'touch3d'
+  const pinchThreshold = touch3dMode ? touch3d.getRow(0.8).y : 550
   return {
     name: 'TouchPlugin',
     get () {
@@ -48,9 +49,8 @@ export function TouchPlugin (context) {
           const lane = touch3d.getTouchedColumn(p.x, p.y)
           if (lane) output['p1_' + lane] = 1
         }
-      } else {
-        output['p1_pinch'] = getPinch(input)
       }
+      output['p1_pinch'] = getPinch(input)
       return output
     },
     destroy () {
@@ -114,7 +114,6 @@ export function TouchPlugin (context) {
   function _getPinch (input) {
     let a = null
     let b = null
-    const pinchThreshold = touch3dMode ? touch3d.getRow(0.8).y : 550
     for (let p of input) {
       if (p.y < pinchThreshold) {
         if (a === null) {
