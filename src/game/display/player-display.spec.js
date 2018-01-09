@@ -8,7 +8,7 @@ describe('PlayerDisplay', function () {
   let data
 
   function setup (player) {
-    display = new PlayerDisplay(player)
+    display = new PlayerDisplay(player, { })
   }
 
   function update (t1, t2, state) {
