@@ -4,7 +4,7 @@ import { MISSED, breaksCombo } from '../judgments'
 import { getGauge } from './Gauge'
 
 export class PlayerDisplay {
-  constructor (player) {
+  constructor (player, skinData) {
     let notechart = player.notechart
     this._currentSpeed = 1
     this._player = player
@@ -18,8 +18,10 @@ export class PlayerDisplay {
       lane_press: Math.max(0, player.options.laneCover)
     }
     this._gauge = getGauge(player.options.gauge)
+    this._touch3dMode = skinData.displayMode === 'touch3d'
   }
   update (time, gameTime, playerState) {
+    const touch3dMode = this._touch3dMode
     let player = this._player
     let noteArea = this._noteArea
     let stateful = this._stateful
@@ -67,9 +69,8 @@ export class PlayerDisplay {
     }
 
     function updateVisibleNotes () {
-      const THREED = true
       let entities = noteArea.getVisibleNotes(position, getUpperBound(), 1)
-      if (THREED) {
+      if (touch3dMode) {
         const putNote = (id, noteY, column, scale = 1) => {
           const row = touch3d.getRow(noteY - 0.01)
           const xPos = +column || -1
@@ -141,14 +142,17 @@ export class PlayerDisplay {
     function updateBarLines () {
       let entities = noteArea.getVisibleBarLines(position, getUpperBound(), 1)
       for (let entity of entities) {
-        push('barlines', { key: entity.id, y: entity.y })
-        const row = touch3d.getRow(entity.y - 0.01)
-        push('barlines3d', {
-          key: entity.id,
-          y: row.y,
-          x: row.projection * -touch3d.PLAY_AREA_WIDTH.w + 1280 / 2,
-          s: row.projection * touch3d.PLAY_AREA_WIDTH.w * 2 / 282
-        })
+        if (touch3dMode) {
+          const row = touch3d.getRow(entity.y - 0.01)
+          push('barlines3d', {
+            key: entity.id,
+            y: row.y,
+            x: row.projection * -touch3d.PLAY_AREA_WIDTH.w + 1280 / 2,
+            s: row.projection * touch3d.PLAY_AREA_WIDTH.w * 2 / 282
+          })
+        } else {
+          push('barlines', { key: entity.id, y: entity.y })
+        }
       }
     }
 

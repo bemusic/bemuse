@@ -2,15 +2,16 @@ import './game-display.scss'
 
 import $ from 'jquery'
 
-import formatTime from '../../utils/formatTime'
 import PlayerDisplay from './player-display'
+import formatTime from '../../utils/formatTime'
 
 export class GameDisplay {
   constructor ({ game, context, backgroundImagePromise, video }) {
     this._game = game
     this._context = context
+    const skinData = context.skinData
     this._players = new Map(
-      game.players.map(player => [player, new PlayerDisplay(player)])
+      game.players.map(player => [player, new PlayerDisplay(player, skinData)])
     )
     this._stateful = {}
     this._wrapper = this._createWrapper({
