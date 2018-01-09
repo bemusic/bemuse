@@ -17,7 +17,8 @@ export class GameDisplay {
     this._wrapper = this._createWrapper({
       backgroundImagePromise,
       video,
-      panelPlacement: game.players[0].options.placement
+      panelPlacement: game.players[0].options.placement,
+      infoPanelPosition: skinData.infoPanelPosition
     })
     if (skinData.mainInputDevice === 'touch') {
       this._createEscapeButton()
@@ -85,9 +86,15 @@ export class GameDisplay {
     let f = gameState.readyFraction
     return f > 0.5 ? Math.pow(1 - (f - 0.5) / 0.5, 2) : 0
   }
-  _createWrapper ({ backgroundImagePromise, video, panelPlacement }) {
+  _createWrapper ({
+    backgroundImagePromise,
+    video,
+    panelPlacement,
+    infoPanelPosition
+  }) {
     var $wrapper = $('<div class="game-display"></div>')
       .attr('data-panel-placement', panelPlacement)
+      .attr('data-info-panel-position', infoPanelPosition)
       .append('<div class="game-display--bg js-back-image"></div>')
       .append(this.view)
     if (backgroundImagePromise) {

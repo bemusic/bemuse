@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<skin width="1280" height="720" data-display-mode="touch3d" data-main-input-device="touch">
+<skin width="1280" height="720" data-display-mode="touch3d" data-main-input-device="touch" data-info-panel-position="top">
   <group y="-12">
     <animation>
       <keyframe t="0" y="-104"></keyframe>
@@ -25,184 +25,184 @@
       <keyframe t="0.6" alpha="1" ease="quadOut"></keyframe>
     </animation>
     <sprite image="Touch3D/Lane.png" x="0" y="0"></sprite>
-  </group>
-  <object key="p1_barlines3d" pool="24">
-    <sprite image="NoteArea/Bar.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
-  </object>
-  <sprite image="Touch3D/Long1.png" blend="screen">
-    <animation>
-      <keyframe t="0" alpha="0"></keyframe>
-    </animation>
-    <animation on="p1_1_down">
-      <keyframe t="0" alpha="0.3"></keyframe>
-    </animation>
-    <animation on="p1_1_up">
-      <keyframe t="0" alpha="0.3"></keyframe>
-      <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
-    </animation>
-  </sprite>
-  <object key="p1_note3d_1" pool="24">
-    <sprite image="Touch3D/NoteWhite.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
-  </object>
-  <group y="689" x="159.99999999999994">
-    <animation>
-      <keyframe t="0" alpha="0" scale-x="2" scale-y="2"></keyframe>
-    </animation>
-    <animation on="p1_1_explode">
-      <keyframe t="0" alpha="1" scale-x="4" scale-y="2"></keyframe>
-      <keyframe t="0.18" alpha="0" scale-x="4" scale-y="4"></keyframe>
-    </animation>
-    <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
-  </group>
-  <sprite image="Touch3D/Long2.png" blend="screen">
-    <animation>
-      <keyframe t="0" alpha="0"></keyframe>
-    </animation>
-    <animation on="p1_2_down">
-      <keyframe t="0" alpha="0.3"></keyframe>
-    </animation>
-    <animation on="p1_2_up">
-      <keyframe t="0" alpha="0.3"></keyframe>
-      <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
-    </animation>
-  </sprite>
-  <object key="p1_note3d_2" pool="24">
-    <sprite image="Touch3D/NoteBlue.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
-  </object>
-  <group y="689" x="320">
-    <animation>
-      <keyframe t="0" alpha="0" scale-x="2" scale-y="2"></keyframe>
-    </animation>
-    <animation on="p1_2_explode">
-      <keyframe t="0" alpha="1" scale-x="4" scale-y="2"></keyframe>
-      <keyframe t="0.18" alpha="0" scale-x="4" scale-y="4"></keyframe>
-    </animation>
-    <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
-  </group>
-  <sprite image="Touch3D/Long3.png" blend="screen">
-    <animation>
-      <keyframe t="0" alpha="0"></keyframe>
-    </animation>
-    <animation on="p1_3_down">
-      <keyframe t="0" alpha="0.3"></keyframe>
-    </animation>
-    <animation on="p1_3_up">
-      <keyframe t="0" alpha="0.3"></keyframe>
-      <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
-    </animation>
-  </sprite>
-  <object key="p1_note3d_3" pool="24">
-    <sprite image="Touch3D/NoteWhite.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
-  </object>
-  <group y="689" x="480">
-    <animation>
-      <keyframe t="0" alpha="0" scale-x="2" scale-y="2"></keyframe>
-    </animation>
-    <animation on="p1_3_explode">
-      <keyframe t="0" alpha="1" scale-x="4" scale-y="2"></keyframe>
-      <keyframe t="0.18" alpha="0" scale-x="4" scale-y="4"></keyframe>
-    </animation>
-    <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
-  </group>
-  <sprite image="Touch3D/Long4.png" blend="screen">
-    <animation>
-      <keyframe t="0" alpha="0"></keyframe>
-    </animation>
-    <animation on="p1_4_down">
-      <keyframe t="0" alpha="0.3"></keyframe>
-    </animation>
-    <animation on="p1_4_up">
-      <keyframe t="0" alpha="0.3"></keyframe>
-      <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
-    </animation>
-  </sprite>
-  <object key="p1_note3d_4" pool="24">
-    <sprite image="Touch3D/NoteGreen.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
-  </object>
-  <group y="689" x="640">
-    <animation>
-      <keyframe t="0" alpha="0" scale-x="2" scale-y="2"></keyframe>
-    </animation>
-    <animation on="p1_4_explode">
-      <keyframe t="0" alpha="1" scale-x="4" scale-y="2"></keyframe>
-      <keyframe t="0.18" alpha="0" scale-x="4" scale-y="4"></keyframe>
-    </animation>
-    <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
-  </group>
-  <sprite image="Touch3D/Long5.png" blend="screen">
-    <animation>
-      <keyframe t="0" alpha="0"></keyframe>
-    </animation>
-    <animation on="p1_5_down">
-      <keyframe t="0" alpha="0.3"></keyframe>
-    </animation>
-    <animation on="p1_5_up">
-      <keyframe t="0" alpha="0.3"></keyframe>
-      <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
-    </animation>
-  </sprite>
-  <object key="p1_note3d_5" pool="24">
-    <sprite image="Touch3D/NoteWhite.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
-  </object>
-  <group y="689" x="800">
-    <animation>
-      <keyframe t="0" alpha="0" scale-x="2" scale-y="2"></keyframe>
-    </animation>
-    <animation on="p1_5_explode">
-      <keyframe t="0" alpha="1" scale-x="4" scale-y="2"></keyframe>
-      <keyframe t="0.18" alpha="0" scale-x="4" scale-y="4"></keyframe>
-    </animation>
-    <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
-  </group>
-  <sprite image="Touch3D/Long6.png" blend="screen">
-    <animation>
-      <keyframe t="0" alpha="0"></keyframe>
-    </animation>
-    <animation on="p1_6_down">
-      <keyframe t="0" alpha="0.3"></keyframe>
-    </animation>
-    <animation on="p1_6_up">
-      <keyframe t="0" alpha="0.3"></keyframe>
-      <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
-    </animation>
-  </sprite>
-  <object key="p1_note3d_6" pool="24">
-    <sprite image="Touch3D/NoteBlue.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
-  </object>
-  <group y="689" x="960">
-    <animation>
-      <keyframe t="0" alpha="0" scale-x="2" scale-y="2"></keyframe>
-    </animation>
-    <animation on="p1_6_explode">
-      <keyframe t="0" alpha="1" scale-x="4" scale-y="2"></keyframe>
-      <keyframe t="0.18" alpha="0" scale-x="4" scale-y="4"></keyframe>
-    </animation>
-    <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
-  </group>
-  <sprite image="Touch3D/Long7.png" blend="screen">
-    <animation>
-      <keyframe t="0" alpha="0"></keyframe>
-    </animation>
-    <animation on="p1_7_down">
-      <keyframe t="0" alpha="0.3"></keyframe>
-    </animation>
-    <animation on="p1_7_up">
-      <keyframe t="0" alpha="0.3"></keyframe>
-      <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
-    </animation>
-  </sprite>
-  <object key="p1_note3d_7" pool="24">
-    <sprite image="Touch3D/NoteWhite.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
-  </object>
-  <group y="689" x="1120">
-    <animation>
-      <keyframe t="0" alpha="0" scale-x="2" scale-y="2"></keyframe>
-    </animation>
-    <animation on="p1_7_explode">
-      <keyframe t="0" alpha="1" scale-x="4" scale-y="2"></keyframe>
-      <keyframe t="0.18" alpha="0" scale-x="4" scale-y="4"></keyframe>
-    </animation>
-    <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+    <object key="p1_barlines3d" pool="24">
+      <sprite image="NoteArea/Bar.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
+    </object>
+    <sprite image="Touch3D/Long1.png" blend="screen">
+      <animation>
+        <keyframe t="0" alpha="0"></keyframe>
+      </animation>
+      <animation on="p1_1_down">
+        <keyframe t="0" alpha="0.3"></keyframe>
+      </animation>
+      <animation on="p1_1_up">
+        <keyframe t="0" alpha="0.3"></keyframe>
+        <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
+      </animation>
+    </sprite>
+    <object key="p1_note3d_1" pool="24">
+      <sprite image="Touch3D/NoteWhite.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
+    </object>
+    <group y="689" x="159.99999999999994">
+      <animation>
+        <keyframe t="0" alpha="0" scale-x="2" scale-y="2"></keyframe>
+      </animation>
+      <animation on="p1_1_explode">
+        <keyframe t="0" alpha="1" scale-x="4" scale-y="2"></keyframe>
+        <keyframe t="0.18" alpha="0" scale-x="4" scale-y="4"></keyframe>
+      </animation>
+      <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+    </group>
+    <sprite image="Touch3D/Long2.png" blend="screen">
+      <animation>
+        <keyframe t="0" alpha="0"></keyframe>
+      </animation>
+      <animation on="p1_2_down">
+        <keyframe t="0" alpha="0.3"></keyframe>
+      </animation>
+      <animation on="p1_2_up">
+        <keyframe t="0" alpha="0.3"></keyframe>
+        <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
+      </animation>
+    </sprite>
+    <object key="p1_note3d_2" pool="24">
+      <sprite image="Touch3D/NoteBlue.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
+    </object>
+    <group y="689" x="320">
+      <animation>
+        <keyframe t="0" alpha="0" scale-x="2" scale-y="2"></keyframe>
+      </animation>
+      <animation on="p1_2_explode">
+        <keyframe t="0" alpha="1" scale-x="4" scale-y="2"></keyframe>
+        <keyframe t="0.18" alpha="0" scale-x="4" scale-y="4"></keyframe>
+      </animation>
+      <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+    </group>
+    <sprite image="Touch3D/Long3.png" blend="screen">
+      <animation>
+        <keyframe t="0" alpha="0"></keyframe>
+      </animation>
+      <animation on="p1_3_down">
+        <keyframe t="0" alpha="0.3"></keyframe>
+      </animation>
+      <animation on="p1_3_up">
+        <keyframe t="0" alpha="0.3"></keyframe>
+        <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
+      </animation>
+    </sprite>
+    <object key="p1_note3d_3" pool="24">
+      <sprite image="Touch3D/NoteWhite.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
+    </object>
+    <group y="689" x="480">
+      <animation>
+        <keyframe t="0" alpha="0" scale-x="2" scale-y="2"></keyframe>
+      </animation>
+      <animation on="p1_3_explode">
+        <keyframe t="0" alpha="1" scale-x="4" scale-y="2"></keyframe>
+        <keyframe t="0.18" alpha="0" scale-x="4" scale-y="4"></keyframe>
+      </animation>
+      <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+    </group>
+    <sprite image="Touch3D/Long4.png" blend="screen">
+      <animation>
+        <keyframe t="0" alpha="0"></keyframe>
+      </animation>
+      <animation on="p1_4_down">
+        <keyframe t="0" alpha="0.3"></keyframe>
+      </animation>
+      <animation on="p1_4_up">
+        <keyframe t="0" alpha="0.3"></keyframe>
+        <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
+      </animation>
+    </sprite>
+    <object key="p1_note3d_4" pool="24">
+      <sprite image="Touch3D/NoteGreen.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
+    </object>
+    <group y="689" x="640">
+      <animation>
+        <keyframe t="0" alpha="0" scale-x="2" scale-y="2"></keyframe>
+      </animation>
+      <animation on="p1_4_explode">
+        <keyframe t="0" alpha="1" scale-x="4" scale-y="2"></keyframe>
+        <keyframe t="0.18" alpha="0" scale-x="4" scale-y="4"></keyframe>
+      </animation>
+      <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+    </group>
+    <sprite image="Touch3D/Long5.png" blend="screen">
+      <animation>
+        <keyframe t="0" alpha="0"></keyframe>
+      </animation>
+      <animation on="p1_5_down">
+        <keyframe t="0" alpha="0.3"></keyframe>
+      </animation>
+      <animation on="p1_5_up">
+        <keyframe t="0" alpha="0.3"></keyframe>
+        <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
+      </animation>
+    </sprite>
+    <object key="p1_note3d_5" pool="24">
+      <sprite image="Touch3D/NoteWhite.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
+    </object>
+    <group y="689" x="800">
+      <animation>
+        <keyframe t="0" alpha="0" scale-x="2" scale-y="2"></keyframe>
+      </animation>
+      <animation on="p1_5_explode">
+        <keyframe t="0" alpha="1" scale-x="4" scale-y="2"></keyframe>
+        <keyframe t="0.18" alpha="0" scale-x="4" scale-y="4"></keyframe>
+      </animation>
+      <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+    </group>
+    <sprite image="Touch3D/Long6.png" blend="screen">
+      <animation>
+        <keyframe t="0" alpha="0"></keyframe>
+      </animation>
+      <animation on="p1_6_down">
+        <keyframe t="0" alpha="0.3"></keyframe>
+      </animation>
+      <animation on="p1_6_up">
+        <keyframe t="0" alpha="0.3"></keyframe>
+        <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
+      </animation>
+    </sprite>
+    <object key="p1_note3d_6" pool="24">
+      <sprite image="Touch3D/NoteBlue.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
+    </object>
+    <group y="689" x="960">
+      <animation>
+        <keyframe t="0" alpha="0" scale-x="2" scale-y="2"></keyframe>
+      </animation>
+      <animation on="p1_6_explode">
+        <keyframe t="0" alpha="1" scale-x="4" scale-y="2"></keyframe>
+        <keyframe t="0.18" alpha="0" scale-x="4" scale-y="4"></keyframe>
+      </animation>
+      <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+    </group>
+    <sprite image="Touch3D/Long7.png" blend="screen">
+      <animation>
+        <keyframe t="0" alpha="0"></keyframe>
+      </animation>
+      <animation on="p1_7_down">
+        <keyframe t="0" alpha="0.3"></keyframe>
+      </animation>
+      <animation on="p1_7_up">
+        <keyframe t="0" alpha="0.3"></keyframe>
+        <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
+      </animation>
+    </sprite>
+    <object key="p1_note3d_7" pool="24">
+      <sprite image="Touch3D/NoteWhite.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
+    </object>
+    <group y="689" x="1120">
+      <animation>
+        <keyframe t="0" alpha="0" scale-x="2" scale-y="2"></keyframe>
+      </animation>
+      <animation on="p1_7_explode">
+        <keyframe t="0" alpha="1" scale-x="4" scale-y="2"></keyframe>
+        <keyframe t="0.18" alpha="0" scale-x="4" scale-y="4"></keyframe>
+      </animation>
+      <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+    </group>
   </group>
   <group x="498">
     <group alpha="0.6 + ready*0.4">

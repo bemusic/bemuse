@@ -1,7 +1,7 @@
 doctype xml
 include _lib/common
 
-+media('screen', 1280, 720, { 'data-main-input-device': 'keyboard' })
++media('screen', 1280, 720, { 'data-main-input-device': 'keyboard', 'data-info-panel-position': 'bottom' })
 
   defs
     +all-note-area(id='note-area')
@@ -59,7 +59,7 @@ include _lib/common
   // tutorial
   +tutorial(width=1280)
 
-+media('touch', 768, 928, { 'data-main-input-device': 'touch' })
++media('touch', 768, 928, { 'data-main-input-device': 'touch', 'data-info-panel-position': 'bottom' })
 
   - var width = 768
   - var height = 928
@@ -148,7 +148,7 @@ include _lib/common
 
   +tutorial(width=768 touch=true)
 
-+media('touch3d', 1280, 720, { 'data-display-mode': 'touch3d', 'data-main-input-device': 'touch' })
++media('touch3d', 1280, 720, { 'data-display-mode': 'touch3d', 'data-main-input-device': 'touch', 'data-info-panel-position': 'top' })
   group(y='-12')
     animation
       keyframe(t='0' y='-104')
@@ -166,23 +166,6 @@ include _lib/common
     text(x='387' y='29' text='%s' data='p1_stat_4' font='StatNumber' font-src='Fonts/StatNumber.fnt' align='right')
     text(x='387' y='47' text='%s' data='p1_stat_missed' font='StatNumber' font-src='Fonts/StatNumber.fnt' align='right')
     text(x='387' y='65' text='%s' data='p1_stat_acc' font='StatNumber' font-src='Fonts/StatNumber.fnt' align='right')
-
-  group
-    animation
-      keyframe(t='0.25' alpha='0')
-      keyframe(t='0.6' alpha='1' ease='quadOut')
-    sprite(image='Touch3D/Lane.png' x='0' y='0')
-
-    object(key=('p1_barlines3d') pool='24')
-      sprite(image='NoteArea/Bar.png' x='x' y='y' scale-x='s' scale-y='s')
-
-    +my-note(1, 'Touch3D/NoteWhite.png')
-    +my-note(2, 'Touch3D/NoteBlue.png')
-    +my-note(3, 'Touch3D/NoteWhite.png')
-    +my-note(4, 'Touch3D/NoteGreen.png')
-    +my-note(5, 'Touch3D/NoteWhite.png')
-    +my-note(6, 'Touch3D/NoteBlue.png')
-    +my-note(7, 'Touch3D/NoteWhite.png')
 
   mixin my-note(column, file)
     sprite(image=('Touch3D/Long' + column + '.png') blend='screen')
@@ -202,6 +185,23 @@ include _lib/common
         keyframe(t='0' alpha='1' scale-x='4' scale-y='2')
         keyframe(t='0.18' alpha='0' scale-x='4' scale-y='4')
       sprite(image='Explosion/NoteExplosion.png' x='-25' y='-25' blend='screen')
+
+  group
+    animation
+      keyframe(t='0.25' alpha='0')
+      keyframe(t='0.6' alpha='1' ease='quadOut')
+    sprite(image='Touch3D/Lane.png' x='0' y='0')
+
+    object(key=('p1_barlines3d') pool='24')
+      sprite(image='NoteArea/Bar.png' x='x' y='y' scale-x='s' scale-y='s')
+
+    +my-note(1, 'Touch3D/NoteWhite.png')
+    +my-note(2, 'Touch3D/NoteBlue.png')
+    +my-note(3, 'Touch3D/NoteWhite.png')
+    +my-note(4, 'Touch3D/NoteGreen.png')
+    +my-note(5, 'Touch3D/NoteWhite.png')
+    +my-note(6, 'Touch3D/NoteBlue.png')
+    +my-note(7, 'Touch3D/NoteWhite.png')
 
   group(x='498')
     +press-start
