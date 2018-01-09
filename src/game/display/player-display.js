@@ -147,8 +147,8 @@ export class PlayerDisplay {
           push('barlines3d', {
             key: entity.id,
             y: row.y,
-            x: row.projection * -touch3d.PLAY_AREA_WIDTH.w + 1280 / 2,
-            s: row.projection * touch3d.PLAY_AREA_WIDTH.w * 2 / 282
+            x: row.projection * -touch3d.PLAY_AREA_WIDTH + 1280 / 2,
+            s: row.projection * touch3d.PLAY_AREA_WIDTH * 2 / 282
           })
         } else {
           push('barlines', { key: entity.id, y: entity.y })
