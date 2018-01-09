@@ -147,3 +147,60 @@ include _lib/common
           sprite(image='Touch/Buttons/SActive.png' x='-1' y='-1' alpha='p1_4_active')
 
   +tutorial(width=768 touch=true)
+
++media('touch3d', 1280, 720)
+  group(y='-12')
+    animation
+      keyframe(t='0' y='-104')
+      keyframe(t='0.3' y='-12' ease='quadOut')
+    sprite(image='InfoPanel/Background.png')
+    sprite(image='InfoPanel/Template.png' y='1')
+    text(x='176' y='22' text='%s' data='p1_score' font='ScoreNumber' font-src='Fonts/ScoreNumber.fnt' align='right')
+    text(x='824' y='33' alpha='0.8' text='%s' data='song_title' font='bold 16px Roboto' fill='white' align='left')
+    text(x='824' y='55' alpha='0.6' text='%s' data='song_artist' font='13px Roboto' fill='white' align='left')
+    text(x='824' y='70' alpha='0.6' text='%s' data='song_time' font='13px Roboto' fill='white' align='left')
+    text(x='1160' y='22' text='%s' data='p1_speed' font='ScoreNumber' font-src='Fonts/ScoreNumber.fnt' align='left')
+    text(x='260' y='29' text='%s' data='p1_stat_1' font='StatNumber' font-src='Fonts/StatNumber.fnt' align='right')
+    text(x='260' y='47' text='%s' data='p1_stat_2' font='StatNumber' font-src='Fonts/StatNumber.fnt' align='right')
+    text(x='260' y='65' text='%s' data='p1_stat_3' font='StatNumber' font-src='Fonts/StatNumber.fnt' align='right')
+    text(x='387' y='29' text='%s' data='p1_stat_4' font='StatNumber' font-src='Fonts/StatNumber.fnt' align='right')
+    text(x='387' y='47' text='%s' data='p1_stat_missed' font='StatNumber' font-src='Fonts/StatNumber.fnt' align='right')
+    text(x='387' y='65' text='%s' data='p1_stat_acc' font='StatNumber' font-src='Fonts/StatNumber.fnt' align='right')
+
+  group
+    animation
+      keyframe(t='0.25' alpha='0')
+      keyframe(t='0.6' alpha='1' ease='quadOut')
+    sprite(image='Touch3D/Lane.png' x='0' y='0')
+
+  mixin my-note(column, file)
+    sprite(image=('Touch3D/Long' + column + '.png') blend='screen')
+      animation
+        keyframe(t='0' alpha='0')
+      animation(on='p1_' + column + '_down')
+        keyframe(t='0' alpha='0.3')
+      animation(on='p1_' + column + '_up')
+        keyframe(t='0' alpha='0.3')
+        keyframe(t='0.18' ease='quadOut' alpha='0')
+    object(key=('p1_note3d_' + column) pool='24')
+      sprite(image=(file) x='x' y='y' scale-x='s' scale-y='s')
+
+  object(key=('p1_barlines3d') pool='24')
+    sprite(image='NoteArea/Bar.png' x='x' y='y' scale-x='s' scale-y='s')
+  +my-note(1, 'Touch3D/NoteWhite.png')
+  +my-note(2, 'Touch3D/NoteBlue.png')
+  +my-note(3, 'Touch3D/NoteWhite.png')
+  +my-note(4, 'Touch3D/NoteGreen.png')
+  +my-note(5, 'Touch3D/NoteWhite.png')
+  +my-note(6, 'Touch3D/NoteBlue.png')
+  +my-note(7, 'Touch3D/NoteWhite.png')
+
+  group(x='498')
+    +press-start
+    group(y='400')
+      +judgments
+    group(y='440')
+      +judgment-deviations
+
+  // tutorial
+  +tutorial(width=1280)

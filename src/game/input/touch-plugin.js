@@ -20,6 +20,27 @@ function StatsRecorder () {
     }
   }
 }
+function getRow (i) {
+  let excess = Math.max(0, i - 1)
+  if (i < 0) i = 0
+  if (i > 1) i = 1
+  let theta = TD_CONF.t0 + (TD_CONF.t1 - TD_CONF.t0) * i
+  let pointX = TD_CONF.cx + Math.cos(theta) * TD_CONF.r
+  let pointY = TD_CONF.cy - Math.sin(theta) * TD_CONF.r
+  let projection = TD_CONF.p / (TD_CONF.p - pointX)
+  let screenY = pointY * projection + 720 / 2
+  return { y: screenY + excess * 1280, projection }
+}
+
+const TD_CONF = {
+  cx: 1024,
+  cy: -975,
+  r: 1024,
+  p: 960,
+  w: 60,
+  t0: 3.922,
+  t1: 4.555
+}
 
 export function TouchPlugin (context) {
   let scratchStartY = null
@@ -39,6 +60,30 @@ export function TouchPlugin (context) {
       output['p1_SC'] = getScratch(input)
       for (let button of BUTTONS) {
         output[button] = getButton(input, button)
+      }
+      for (let p of input) {
+        let min = 0.75
+        let max = 1
+        let mid
+        let row
+        for (let i = 0; i < 8; i++) {
+          mid = (min + max) / 2
+          row = getRow(mid)
+          if (row.y > p.y) {
+            max = mid
+          } else {
+            min = mid
+          }
+        }
+        if (mid < 0.8) continue
+        let x0 = 1280 / 2 + row.projection * -TD_CONF.w
+        let x1 = 1280 / 2 + row.projection * TD_CONF.w
+        let pos = Math.floor((p.x - x0) / (x1 - x0) * 7)
+        if (pos >= -1 && pos <= 7) {
+          if (pos < 0) pos = 0
+          if (pos > 6) pos = 6
+          output['p1_' + (pos + 1)] = 1
+        }
       }
       output['p1_pinch'] = getPinch(input)
       return output
@@ -105,7 +150,7 @@ export function TouchPlugin (context) {
     let a = null
     let b = null
     for (let p of input) {
-      if (p.y < 550) {
+      if (p.y < getRow(0.8).y /* 550 */) {
         if (a === null) {
           a = p.y
         } else if (b === null) {

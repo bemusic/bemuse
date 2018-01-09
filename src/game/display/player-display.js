@@ -2,6 +2,16 @@ import NoteArea from './note-area'
 import { MISSED, breaksCombo } from '../judgments'
 import { getGauge } from './Gauge'
 
+const TD_CONF = {
+  cx: 1024,
+  cy: -975,
+  r: 1024,
+  p: 960,
+  w: 60,
+  t0: 3.922,
+  t1: 4.555
+}
+
 export class PlayerDisplay {
   constructor (player) {
     let notechart = player.notechart
@@ -65,27 +75,83 @@ export class PlayerDisplay {
       return ((playerState.stats.currentAccuracy || 0) * 100).toFixed(2) + '%'
     }
 
+    function getRow (i) {
+      let excess = Math.max(0, i - 1)
+      if (i < 0) i = 0
+      if (i > 1) i = 1
+      let theta = TD_CONF.t0 + (TD_CONF.t1 - TD_CONF.t0) * i
+      let pointX = TD_CONF.cx + Math.cos(theta) * TD_CONF.r
+      let pointY = TD_CONF.cy - Math.sin(theta) * TD_CONF.r
+      let projection = TD_CONF.p / (TD_CONF.p - pointX)
+      let screenY = pointY * projection + 720 / 2
+      return { y: screenY + excess * 2048, projection }
+    }
+
     function updateVisibleNotes () {
+      const THREED = true
       let entities = noteArea.getVisibleNotes(position, getUpperBound(), 1)
-      for (let entity of entities) {
-        let note = entity.note
-        let column = note.column
-        if (entity.height) {
-          let judgment = playerState.getNoteJudgment(note)
-          let status = playerState.getNoteStatus(note)
-          push(`longnote_${column}`, {
-            key: note.id,
-            y: entity.y,
-            height: entity.height,
-            active: judgment !== 0 && judgment !== MISSED,
-            missed: status === 'judged' && judgment === MISSED
+      if (THREED) {
+        const putNote = (id, noteY, column, scale = 1) => {
+          const row = getRow(noteY - 0.01)
+          const xPos = +column || -1
+          const noteScale = 0.64 * scale
+          push(`note3d_${column}`, {
+            key: id,
+            y: row.y - 12 * row.projection * noteScale,
+            x:
+              row.projection * TD_CONF.w * (2 * ((xPos - 0.5) / 7) - 1) +
+              1280 / 2 -
+              26 * row.projection / 2 * noteScale,
+            s: row.projection * noteScale
           })
-        } else {
-          if (playerState.getNoteStatus(note) !== 'judged') {
-            push(`note_${column}`, {
+        }
+        let longNoteStep = 3 / 128
+        for (let entity of entities) {
+          let note = entity.note
+          let column = note.column
+          if (entity.height) {
+            let c = 0
+            let start = entity.y + entity.height
+            for (
+              let i =
+                start -
+                Math.max(
+                  0,
+                  Math.floor((start - 1) / longNoteStep) * longNoteStep
+                );
+              i >= 0 && i >= entity.y;
+              i -= longNoteStep
+            ) {
+              putNote(note.id + 'x' + c++, i, column, 0.8)
+            }
+            putNote(note.id, entity.y + entity.height, column)
+          } else {
+            if (playerState.getNoteStatus(note) !== 'judged') {
+              putNote(note.id, entity.y, column)
+            }
+          }
+        }
+      } else {
+        for (let entity of entities) {
+          let note = entity.note
+          let column = note.column
+          if (entity.height) {
+            let judgment = playerState.getNoteJudgment(note)
+            let status = playerState.getNoteStatus(note)
+            push(`longnote_${column}`, {
               key: note.id,
-              y: entity.y
+              y: entity.y,
+              height: entity.height,
+              active: judgment !== 0 && judgment !== MISSED,
+              missed: status === 'judged' && judgment === MISSED
             })
+          } else {
+            if (playerState.getNoteStatus(note) !== 'judged') {
+              push(`note_${column}`, {
+                key: note.id,
+                y: entity.y
+              })
+            }
           }
         }
       }
@@ -95,6 +161,13 @@ export class PlayerDisplay {
       let entities = noteArea.getVisibleBarLines(position, getUpperBound(), 1)
       for (let entity of entities) {
         push('barlines', { key: entity.id, y: entity.y })
+        const row = getRow(entity.y - 0.01)
+        push('barlines3d', {
+          key: entity.id,
+          y: row.y,
+          x: row.projection * -TD_CONF.w + 1280 / 2,
+          s: row.projection * TD_CONF.w * 2 / 282
+        })
       }
     }
 
