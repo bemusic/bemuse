@@ -5,9 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Bemuse Touch3D mode image generator</title>
-<style>canvas { max-width: 100%; height: auto; background: #353433; }</style>
+<style>
+canvas { max-width: 100%; height: auto; background: #353433; }
+button { font-size: 30px; }
+</style>
 </head>
 <body>
+<div id="buttons">
+</div>
 <canvas id="canvas" width="1280" height="720"></canvas>
 <script>
 var canvas = document.querySelector('#canvas')
@@ -15,14 +20,25 @@ var ctx = canvas.getContext('2d')
 
 function main () {
   // Comment / uncomment to render the graphic you want!
-  drawPanel()
-  drawLane(1, '#87EAF5')
-  drawLane(3, '#D7F05C')
-  drawLane(5, '#87EAF5')
-  drawLane(0, '#DFD1C1')
-  drawLane(2, '#DFD1C1')
-  drawLane(4, '#DFD1C1')
-  drawLane(6, '#DFD1C1')
+  const button = (name, action) => {
+    const el = document.createElement('button')
+    el.textContent = name
+    el.onclick = (e) => {
+      e.preventDefault()
+      ctx.clearRect(0, 0, 1280, 720)
+      action()
+    }
+    document.querySelector('#buttons').appendChild(el)
+  }
+  button('Panel', drawPanel)
+  button('HL1', () => drawHighlight(0, '#551800'))
+  button('HL2', () => drawHighlight(1, '#432273'))
+  button('HL3', () => drawHighlight(2, '#551800'))
+  button('HL4', () => drawHighlight(3, '#124B0F'))
+  button('HL5', () => drawHighlight(4, '#551800'))
+  button('HL6', () => drawHighlight(5, '#432273'))
+  button('HL7', () => drawHighlight(6, '#551800'))
+  button('Flash', drawFlash)
 }
 
 const config = {
@@ -67,6 +83,29 @@ function curve (posA, posB, minP = 0, maxP = 100) {
 function drawLane (i, color) {
   ctx.fillStyle = color
   curve(i / 7 + 0.005, (i + 1) / 7 - 0.005)
+}
+
+function drawHighlight (i, color) {
+  const grad = ctx.createLinearGradient(0, 720, 0, 0)
+  grad.addColorStop(0, color)
+  grad.addColorStop(1, 'black')
+  ctx.fillStyle = '#000'
+  curve(-0.01, 1.01)
+  ctx.fillStyle = grad
+  curve(i / 7 + 0.005, (i + 1) / 7 - 0.005)
+}
+
+function drawFlash () {
+  const grad = ctx.createLinearGradient(0, 720, 0, 600)
+  const f = t => Math.floor(t)
+  for (let i = 0; i <= 20; i++) {
+    const m = (1 - i / 20) ** 2
+    grad.addColorStop(i / 20, `rgb(${f(114 * m)}, ${f(83 * m)}, 0)`)
+  }
+  ctx.fillStyle = '#000'
+  curve(-0.01, 1.01)
+  ctx.fillStyle = grad
+  curve(0, 1)
 }
 
 function drawPanel () {

@@ -25,18 +25,19 @@
       <keyframe t="0.6" alpha="1" ease="quadOut"></keyframe>
     </animation>
     <sprite image="Touch3D/Lane.png" x="0" y="0"></sprite>
+    <sprite image="Touch3D/Flash.png" x="0" y="0" blend="screen" alpha="1 - (p1_beat % 1)"></sprite>
     <object key="p1_barlines3d" pool="24">
       <sprite image="NoteArea/Bar.png" x="x" y="y" scale-x="width / 282" scale-y="width / 282"></sprite>
     </object>
-    <sprite image="Touch3D/Long1.png" blend="screen">
+    <sprite image="Touch3D/Highlight1.png" blend="screen">
       <animation>
         <keyframe t="0" alpha="0"></keyframe>
       </animation>
       <animation on="p1_1_down">
-        <keyframe t="0" alpha="0.3"></keyframe>
+        <keyframe t="0" alpha="1"></keyframe>
       </animation>
       <animation on="p1_1_up">
-        <keyframe t="0" alpha="0.3"></keyframe>
+        <keyframe t="0" alpha="1"></keyframe>
         <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
       </animation>
     </sprite>
@@ -53,15 +54,15 @@
       </animation>
       <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
     </group>
-    <sprite image="Touch3D/Long2.png" blend="screen">
+    <sprite image="Touch3D/Highlight2.png" blend="screen">
       <animation>
         <keyframe t="0" alpha="0"></keyframe>
       </animation>
       <animation on="p1_2_down">
-        <keyframe t="0" alpha="0.3"></keyframe>
+        <keyframe t="0" alpha="1"></keyframe>
       </animation>
       <animation on="p1_2_up">
-        <keyframe t="0" alpha="0.3"></keyframe>
+        <keyframe t="0" alpha="1"></keyframe>
         <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
       </animation>
     </sprite>
@@ -78,15 +79,15 @@
       </animation>
       <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
     </group>
-    <sprite image="Touch3D/Long3.png" blend="screen">
+    <sprite image="Touch3D/Highlight3.png" blend="screen">
       <animation>
         <keyframe t="0" alpha="0"></keyframe>
       </animation>
       <animation on="p1_3_down">
-        <keyframe t="0" alpha="0.3"></keyframe>
+        <keyframe t="0" alpha="1"></keyframe>
       </animation>
       <animation on="p1_3_up">
-        <keyframe t="0" alpha="0.3"></keyframe>
+        <keyframe t="0" alpha="1"></keyframe>
         <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
       </animation>
     </sprite>
@@ -103,15 +104,15 @@
       </animation>
       <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
     </group>
-    <sprite image="Touch3D/Long4.png" blend="screen">
+    <sprite image="Touch3D/Highlight4.png" blend="screen">
       <animation>
         <keyframe t="0" alpha="0"></keyframe>
       </animation>
       <animation on="p1_4_down">
-        <keyframe t="0" alpha="0.3"></keyframe>
+        <keyframe t="0" alpha="1"></keyframe>
       </animation>
       <animation on="p1_4_up">
-        <keyframe t="0" alpha="0.3"></keyframe>
+        <keyframe t="0" alpha="1"></keyframe>
         <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
       </animation>
     </sprite>
@@ -128,15 +129,15 @@
       </animation>
       <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
     </group>
-    <sprite image="Touch3D/Long5.png" blend="screen">
+    <sprite image="Touch3D/Highlight5.png" blend="screen">
       <animation>
         <keyframe t="0" alpha="0"></keyframe>
       </animation>
       <animation on="p1_5_down">
-        <keyframe t="0" alpha="0.3"></keyframe>
+        <keyframe t="0" alpha="1"></keyframe>
       </animation>
       <animation on="p1_5_up">
-        <keyframe t="0" alpha="0.3"></keyframe>
+        <keyframe t="0" alpha="1"></keyframe>
         <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
       </animation>
     </sprite>
@@ -153,15 +154,15 @@
       </animation>
       <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
     </group>
-    <sprite image="Touch3D/Long6.png" blend="screen">
+    <sprite image="Touch3D/Highlight6.png" blend="screen">
       <animation>
         <keyframe t="0" alpha="0"></keyframe>
       </animation>
       <animation on="p1_6_down">
-        <keyframe t="0" alpha="0.3"></keyframe>
+        <keyframe t="0" alpha="1"></keyframe>
       </animation>
       <animation on="p1_6_up">
-        <keyframe t="0" alpha="0.3"></keyframe>
+        <keyframe t="0" alpha="1"></keyframe>
         <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
       </animation>
     </sprite>
@@ -178,15 +179,15 @@
       </animation>
       <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
     </group>
-    <sprite image="Touch3D/Long7.png" blend="screen">
+    <sprite image="Touch3D/Highlight7.png" blend="screen">
       <animation>
         <keyframe t="0" alpha="0"></keyframe>
       </animation>
       <animation on="p1_7_down">
-        <keyframe t="0" alpha="0.3"></keyframe>
+        <keyframe t="0" alpha="1"></keyframe>
       </animation>
       <animation on="p1_7_up">
-        <keyframe t="0" alpha="0.3"></keyframe>
+        <keyframe t="0" alpha="1"></keyframe>
         <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
       </animation>
     </sprite>
