@@ -1,19 +1,22 @@
 import * as PIXI from 'pixi.js'
 
-import SkinNode from './lib/base'
-import Instance from './lib/instance'
-import { parseFrame } from './lib/utils'
-
 import DisplayObject from './concerns/display-object'
+import Instance from './lib/instance'
+import SkinNode from './lib/base'
+import { parseFrame } from './lib/utils'
 
 export class SpriteNode extends SkinNode {
   compile (compiler, $el) {
     this.url = compiler.resources.get($el.attr('image'))
     this.display = DisplayObject.compile(compiler, $el)
     this.frame = parseFrame($el.attr('frame') || '')
+    this.anchorX = +$el.attr('anchor-x') || 0
+    this.anchorY = +$el.attr('anchor-y') || 0
   }
   instantiate (context, container) {
     let sprite = new PIXI.Sprite(this.getTexture())
+    sprite.anchor.x = this.anchorX
+    sprite.anchor.y = this.anchorY
     return new Instance({
       context: context,
       object: sprite,
