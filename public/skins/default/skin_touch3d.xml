@@ -26,7 +26,7 @@
     </animation>
     <sprite image="Touch3D/Lane.png" x="0" y="0"></sprite>
     <object key="p1_barlines3d" pool="24">
-      <sprite image="NoteArea/Bar.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
+      <sprite image="NoteArea/Bar.png" x="x" y="y" scale-x="width / 282" scale-y="width / 282"></sprite>
     </object>
     <sprite image="Touch3D/Long1.png" blend="screen">
       <animation>
@@ -41,7 +41,7 @@
       </animation>
     </sprite>
     <object key="p1_note3d_1" pool="24">
-      <sprite image="Touch3D/NoteWhite.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
+      <sprite image="Touch3D/NoteWhite.png" x="x" y="y" anchor-x="0.5" anchor-y="1" scale-x="width / 28" scale-y="width / 28"></sprite>
     </object>
     <group y="689" x="159.99999999999994">
       <animation>
@@ -66,7 +66,7 @@
       </animation>
     </sprite>
     <object key="p1_note3d_2" pool="24">
-      <sprite image="Touch3D/NoteBlue.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
+      <sprite image="Touch3D/NoteBlue.png" x="x" y="y" anchor-x="0.5" anchor-y="1" scale-x="width / 28" scale-y="width / 28"></sprite>
     </object>
     <group y="689" x="320">
       <animation>
@@ -91,7 +91,7 @@
       </animation>
     </sprite>
     <object key="p1_note3d_3" pool="24">
-      <sprite image="Touch3D/NoteWhite.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
+      <sprite image="Touch3D/NoteWhite.png" x="x" y="y" anchor-x="0.5" anchor-y="1" scale-x="width / 28" scale-y="width / 28"></sprite>
     </object>
     <group y="689" x="480">
       <animation>
@@ -116,7 +116,7 @@
       </animation>
     </sprite>
     <object key="p1_note3d_4" pool="24">
-      <sprite image="Touch3D/NoteGreen.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
+      <sprite image="Touch3D/NoteGreen.png" x="x" y="y" anchor-x="0.5" anchor-y="1" scale-x="width / 28" scale-y="width / 28"></sprite>
     </object>
     <group y="689" x="640">
       <animation>
@@ -141,7 +141,7 @@
       </animation>
     </sprite>
     <object key="p1_note3d_5" pool="24">
-      <sprite image="Touch3D/NoteWhite.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
+      <sprite image="Touch3D/NoteWhite.png" x="x" y="y" anchor-x="0.5" anchor-y="1" scale-x="width / 28" scale-y="width / 28"></sprite>
     </object>
     <group y="689" x="800">
       <animation>
@@ -166,7 +166,7 @@
       </animation>
     </sprite>
     <object key="p1_note3d_6" pool="24">
-      <sprite image="Touch3D/NoteBlue.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
+      <sprite image="Touch3D/NoteBlue.png" x="x" y="y" anchor-x="0.5" anchor-y="1" scale-x="width / 28" scale-y="width / 28"></sprite>
     </object>
     <group y="689" x="960">
       <animation>
@@ -191,7 +191,7 @@
       </animation>
     </sprite>
     <object key="p1_note3d_7" pool="24">
-      <sprite image="Touch3D/NoteWhite.png" x="x" y="y" scale-x="s" scale-y="s"></sprite>
+      <sprite image="Touch3D/NoteWhite.png" x="x" y="y" anchor-x="0.5" anchor-y="1" scale-x="width / 28" scale-y="width / 28"></sprite>
     </object>
     <group y="689" x="1120">
       <animation>

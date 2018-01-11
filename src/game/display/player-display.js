@@ -73,18 +73,15 @@ export class PlayerDisplay {
       if (touch3dMode) {
         const putNote = (id, noteY, column, scale = 1) => {
           const row = touch3d.getRow(noteY - 0.01)
-          const xPos = +column || -1
-          const noteScale = 0.64 * scale
+          const columnIndex = +column || -1
+          const areaWidth = touch3d.PLAY_AREA_WIDTH
+          const xOffset = row.projection * areaWidth * (2 * (columnIndex - 0.5) / 7 - 1)
+          const desiredWidth = row.projection * scale * areaWidth * 2 / 7
           push(`note3d_${column}`, {
             key: id,
-            y: row.y - 12 * row.projection * noteScale,
-            x:
-              row.projection *
-                touch3d.PLAY_AREA_WIDTH *
-                (2 * ((xPos - 0.5) / 7) - 1) +
-              1280 / 2 -
-              26 * row.projection / 2 * noteScale,
-            s: row.projection * noteScale
+            y: row.y,
+            x: xOffset + 1280 / 2,
+            width: desiredWidth
           })
         }
         let longNoteStep = 3 / 128
@@ -148,7 +145,7 @@ export class PlayerDisplay {
             key: entity.id,
             y: row.y,
             x: row.projection * -touch3d.PLAY_AREA_WIDTH + 1280 / 2,
-            s: row.projection * touch3d.PLAY_AREA_WIDTH * 2 / 282
+            width: row.projection * touch3d.PLAY_AREA_WIDTH * 2
           })
         } else {
           push('barlines', { key: entity.id, y: entity.y })
