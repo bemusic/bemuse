@@ -106,7 +106,7 @@ class OptionsPlayer extends React.Component {
                 { value: 'left', label: 'Left' },
                 { value: 'center', label: 'Center' },
                 { value: 'right', label: 'Right' },
-                { value: '3d', label: '3D' }
+                { value: '3d', label: '3D [Beta]' }
               ]}
               onSelect={value =>
                 onUpdateOptions(Options.changePanelPlacement(value))

@@ -75,7 +75,7 @@ mixin note-hints(modeObject)
     - var ch = column.channel
     group(x=(x))
       sprite(image=('NoteHint/Normal/' + cur.image)
-              x=(cur.xoffset) y=(cur.yoffset))
+              x=(cur.xoffset) y=(cur.yoffset) ref=('p1_' + ch))
       sprite(image=('NoteHint/Active/' + cur.image)
               x=(cur.xoffset - 1) y=(cur.yoffset - 1))
         animation

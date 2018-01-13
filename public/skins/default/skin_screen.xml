@@ -1469,7 +1469,7 @@
         <group>
           <group y="556">
             <group x="3">
-              <sprite image="NoteHint/Normal/Scratch.png" x="0" y="1"></sprite>
+              <sprite image="NoteHint/Normal/Scratch.png" x="0" y="1" ref="p1_SC"></sprite>
               <sprite image="NoteHint/Active/Scratch.png" x="-1" y="0">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1484,7 +1484,7 @@
               </sprite>
             </group>
             <group x="67">
-              <sprite image="NoteHint/Normal/Note.png" x="0" y="6"></sprite>
+              <sprite image="NoteHint/Normal/Note.png" x="0" y="6" ref="p1_1"></sprite>
               <sprite image="NoteHint/Active/Note.png" x="-1" y="5">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1499,7 +1499,7 @@
               </sprite>
             </group>
             <group x="98">
-              <sprite image="NoteHint/Normal/Note.png" x="0" y="0"></sprite>
+              <sprite image="NoteHint/Normal/Note.png" x="0" y="0" ref="p1_2"></sprite>
               <sprite image="NoteHint/Active/Note.png" x="-1" y="-1">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1514,7 +1514,7 @@
               </sprite>
             </group>
             <group x="129">
-              <sprite image="NoteHint/Normal/Note.png" x="0" y="6"></sprite>
+              <sprite image="NoteHint/Normal/Note.png" x="0" y="6" ref="p1_3"></sprite>
               <sprite image="NoteHint/Active/Note.png" x="-1" y="5">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1529,7 +1529,7 @@
               </sprite>
             </group>
             <group x="160">
-              <sprite image="NoteHint/Normal/Note.png" x="0" y="0"></sprite>
+              <sprite image="NoteHint/Normal/Note.png" x="0" y="0" ref="p1_4"></sprite>
               <sprite image="NoteHint/Active/Note.png" x="-1" y="-1">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1544,7 +1544,7 @@
               </sprite>
             </group>
             <group x="191">
-              <sprite image="NoteHint/Normal/Note.png" x="0" y="6"></sprite>
+              <sprite image="NoteHint/Normal/Note.png" x="0" y="6" ref="p1_5"></sprite>
               <sprite image="NoteHint/Active/Note.png" x="-1" y="5">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1559,7 +1559,7 @@
               </sprite>
             </group>
             <group x="222">
-              <sprite image="NoteHint/Normal/Note.png" x="0" y="0"></sprite>
+              <sprite image="NoteHint/Normal/Note.png" x="0" y="0" ref="p1_6"></sprite>
               <sprite image="NoteHint/Active/Note.png" x="-1" y="-1">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1574,7 +1574,7 @@
               </sprite>
             </group>
             <group x="253">
-              <sprite image="NoteHint/Normal/Note.png" x="0" y="6"></sprite>
+              <sprite image="NoteHint/Normal/Note.png" x="0" y="6" ref="p1_7"></sprite>
               <sprite image="NoteHint/Active/Note.png" x="-1" y="5">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1595,7 +1595,7 @@
         <group>
           <group y="556">
             <group x="3">
-              <sprite image="NoteHint/Normal/Note.png" x="0" y="6"></sprite>
+              <sprite image="NoteHint/Normal/Note.png" x="0" y="6" ref="p1_1"></sprite>
               <sprite image="NoteHint/Active/Note.png" x="-1" y="5">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1610,7 +1610,7 @@
               </sprite>
             </group>
             <group x="34">
-              <sprite image="NoteHint/Normal/Note.png" x="0" y="0"></sprite>
+              <sprite image="NoteHint/Normal/Note.png" x="0" y="0" ref="p1_2"></sprite>
               <sprite image="NoteHint/Active/Note.png" x="-1" y="-1">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1625,7 +1625,7 @@
               </sprite>
             </group>
             <group x="65">
-              <sprite image="NoteHint/Normal/Note.png" x="0" y="6"></sprite>
+              <sprite image="NoteHint/Normal/Note.png" x="0" y="6" ref="p1_3"></sprite>
               <sprite image="NoteHint/Active/Note.png" x="-1" y="5">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1640,7 +1640,7 @@
               </sprite>
             </group>
             <group x="96">
-              <sprite image="NoteHint/Normal/Note.png" x="0" y="0"></sprite>
+              <sprite image="NoteHint/Normal/Note.png" x="0" y="0" ref="p1_4"></sprite>
               <sprite image="NoteHint/Active/Note.png" x="-1" y="-1">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1655,7 +1655,7 @@
               </sprite>
             </group>
             <group x="127">
-              <sprite image="NoteHint/Normal/Note.png" x="0" y="6"></sprite>
+              <sprite image="NoteHint/Normal/Note.png" x="0" y="6" ref="p1_5"></sprite>
               <sprite image="NoteHint/Active/Note.png" x="-1" y="5">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1670,7 +1670,7 @@
               </sprite>
             </group>
             <group x="158">
-              <sprite image="NoteHint/Normal/Note.png" x="0" y="0"></sprite>
+              <sprite image="NoteHint/Normal/Note.png" x="0" y="0" ref="p1_6"></sprite>
               <sprite image="NoteHint/Active/Note.png" x="-1" y="-1">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1685,7 +1685,7 @@
               </sprite>
             </group>
             <group x="189">
-              <sprite image="NoteHint/Normal/Note.png" x="0" y="6"></sprite>
+              <sprite image="NoteHint/Normal/Note.png" x="0" y="6" ref="p1_7"></sprite>
               <sprite image="NoteHint/Active/Note.png" x="-1" y="5">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1700,7 +1700,7 @@
               </sprite>
             </group>
             <group x="220">
-              <sprite image="NoteHint/Normal/Scratch.png" x="0" y="1"></sprite>
+              <sprite image="NoteHint/Normal/Scratch.png" x="0" y="1" ref="p1_SC"></sprite>
               <sprite image="NoteHint/Active/Scratch.png" x="-1" y="0">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1721,7 +1721,7 @@
         <group>
           <group y="556">
             <group x="0">
-              <sprite image="NoteHint/Normal/LNote.png" x="0" y="6"></sprite>
+              <sprite image="NoteHint/Normal/LNote.png" x="0" y="6" ref="p1_1"></sprite>
               <sprite image="NoteHint/Active/LNote.png" x="-1" y="5">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1736,7 +1736,7 @@
               </sprite>
             </group>
             <group x="41">
-              <sprite image="NoteHint/Normal/LNote.png" x="0" y="0"></sprite>
+              <sprite image="NoteHint/Normal/LNote.png" x="0" y="0" ref="p1_2"></sprite>
               <sprite image="NoteHint/Active/LNote.png" x="-1" y="-1">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1751,7 +1751,7 @@
               </sprite>
             </group>
             <group x="82">
-              <sprite image="NoteHint/Normal/LNote.png" x="0" y="6"></sprite>
+              <sprite image="NoteHint/Normal/LNote.png" x="0" y="6" ref="p1_3"></sprite>
               <sprite image="NoteHint/Active/LNote.png" x="-1" y="5">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1766,7 +1766,7 @@
               </sprite>
             </group>
             <group x="123">
-              <sprite image="NoteHint/Normal/LNote.png" x="0" y="0"></sprite>
+              <sprite image="NoteHint/Normal/LNote.png" x="0" y="0" ref="p1_4"></sprite>
               <sprite image="NoteHint/Active/LNote.png" x="-1" y="-1">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1781,7 +1781,7 @@
               </sprite>
             </group>
             <group x="164">
-              <sprite image="NoteHint/Normal/LNote.png" x="0" y="6"></sprite>
+              <sprite image="NoteHint/Normal/LNote.png" x="0" y="6" ref="p1_5"></sprite>
               <sprite image="NoteHint/Active/LNote.png" x="-1" y="5">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1796,7 +1796,7 @@
               </sprite>
             </group>
             <group x="205">
-              <sprite image="NoteHint/Normal/LNote.png" x="0" y="0"></sprite>
+              <sprite image="NoteHint/Normal/LNote.png" x="0" y="0" ref="p1_6"></sprite>
               <sprite image="NoteHint/Active/LNote.png" x="-1" y="-1">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
@@ -1811,7 +1811,7 @@
               </sprite>
             </group>
             <group x="246">
-              <sprite image="NoteHint/Normal/LNote.png" x="0" y="6"></sprite>
+              <sprite image="NoteHint/Normal/LNote.png" x="0" y="6" ref="p1_7"></sprite>
               <sprite image="NoteHint/Active/LNote.png" x="-1" y="5">
                 <animation>
                   <keyframe t="0" alpha="0"></keyframe>
