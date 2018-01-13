@@ -20,12 +20,8 @@ export class GameController {
     this._timer = new GameTimer(this._clock, this._input)
     this._state = new GameState(game)
     this._promise = new Promise(resolve => (this._resolvePromise = resolve))
-    this._display.setEscapeHandler(() => {
-      this._resolvePromise({ finished: false, replay: false })
-    })
-    this._display.setReplayHandler(() => {
-      this._resolvePromise({ finished: false, replay: true })
-    })
+    this._display.setEscapeHandler(() => this._quitGame())
+    this._display.setReplayHandler(() => this._replayGame())
     if (bench.enabled) this.enableBenchmark()
   }
   get game () {
@@ -68,11 +64,11 @@ export class GameController {
       if (e.keyCode === ESCAPE_KEY) {
         e.preventDefault()
         e.stopPropagation()
-        this._resolvePromise({ finished: false, replay: false })
+        this._quitGame()
       } else if (e.keyCode === F1_KEY) {
         e.preventDefault()
         e.stopPropagation()
-        this._resolvePromise({ finished: false, replay: true })
+        this._replayGame()
       }
     }
     window.addEventListener('keydown', onKeyDown, true)
@@ -81,6 +77,13 @@ export class GameController {
         window.removeEventListener('keydown', onKeyDown, true)
       })
       .done()
+  }
+
+  _quitGame () {
+    this._resolvePromise({ finished: false, replay: false })
+  }
+  _replayGame () {
+    this._resolvePromise({ finished: false, replay: true })
   }
 
   // Destroy the game.
