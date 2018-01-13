@@ -16,7 +16,9 @@ import connectIO from '../../impure-react/connectIO'
 const enhance = connectIO({
   onSetMode: () => (mode, playDevice) =>
     OptionsIO.updateOptions(
-      playDevice === 'touch' && mode === 'KB'
+      playDevice === 'touch' &&
+      window.innerWidth >= window.innerHeight &&
+      mode === 'KB'
         ? Options.changePanelPlacement('3d')
         : Options.changePlayMode(mode)
     )
