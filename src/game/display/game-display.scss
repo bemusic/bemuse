@@ -1,4 +1,3 @@
-
 .game-display {
   display: block;
   margin: 0 auto;
@@ -17,6 +16,9 @@
     animation: 1.5s game-display--bg-default;
     animation-fill-mode: both;
   }
+  &[data-info-panel-position='top'] &--bg {
+    animation-name: game-display--bg-down;
+  }
 
   &--video-bg {
     width: 100%;
@@ -32,10 +34,10 @@
       opacity: 1;
     }
   }
-  &[data-panel-placement="left"] &--video-bg {
+  &[data-panel-placement='left'] &--video-bg {
     transform: translateX(13.671875%) scale(0.87);
   }
-  &[data-panel-placement="right"] &--video-bg {
+  &[data-panel-placement='right'] &--video-bg {
     transform: translateX(13.671875%) scale(0.87);
   }
 
@@ -47,10 +49,43 @@
     animation: 1.2s game-display--bg-default;
     animation-fill-mode: both;
   }
+  &[data-info-panel-position='top'] &--bg img {
+    animation-name: game-display--bg-down;
+  }
 
   > canvas {
     position: relative;
     z-index: 100;
+  }
+
+  &--touch-buttons {
+    position: fixed;
+    transform: translateZ(0);
+    top: 0; left: 0;
+    opacity: 0;
+    z-index: 110;
+  }
+  &--touch-buttons.is-visible {
+    opacity: 1;
+  }
+  &--touch-escape-button, &--touch-replay-button {
+    position: absolute;
+    top: 12px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: 32px;
+    height: 32px;
+    background: transparent center center no-repeat;
+    background-size: 32px 32px;
+  }
+  &--touch-escape-button {
+    background-image: url(./touch-escape.png);
+    left: 12px;
+  }
+  &--touch-replay-button {
+    background-image: url(./touch-replay.png);
+    left: 56px;
   }
 }
 
@@ -61,6 +96,17 @@
   }
   to {
     transform: translate(0, -35px);
+    opacity: 1;
+  }
+}
+
+@keyframes game-display--bg-down {
+  from {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate(0, 35px);
     opacity: 1;
   }
 }

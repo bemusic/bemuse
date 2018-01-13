@@ -1,9 +1,10 @@
+import * as touch3d from './touch3d'
 import NoteArea from './note-area'
 import { MISSED, breaksCombo } from '../judgments'
 import { getGauge } from './Gauge'
 
 export class PlayerDisplay {
-  constructor (player) {
+  constructor (player, skinData) {
     let notechart = player.notechart
     this._currentSpeed = 1
     this._player = player
@@ -17,8 +18,10 @@ export class PlayerDisplay {
       lane_press: Math.max(0, player.options.laneCover)
     }
     this._gauge = getGauge(player.options.gauge)
+    this._touch3dMode = skinData.displayMode === 'touch3d'
   }
   update (time, gameTime, playerState) {
+    const touch3dMode = this._touch3dMode
     let player = this._player
     let noteArea = this._noteArea
     let stateful = this._stateful
@@ -67,25 +70,67 @@ export class PlayerDisplay {
 
     function updateVisibleNotes () {
       let entities = noteArea.getVisibleNotes(position, getUpperBound(), 1)
-      for (let entity of entities) {
-        let note = entity.note
-        let column = note.column
-        if (entity.height) {
-          let judgment = playerState.getNoteJudgment(note)
-          let status = playerState.getNoteStatus(note)
-          push(`longnote_${column}`, {
-            key: note.id,
-            y: entity.y,
-            height: entity.height,
-            active: judgment !== 0 && judgment !== MISSED,
-            missed: status === 'judged' && judgment === MISSED
+      if (touch3dMode) {
+        const putNote = (id, noteY, column, scale = 1) => {
+          const row = touch3d.getRow(noteY - 0.01)
+          const columnIndex = +column || -1
+          const areaWidth = touch3d.PLAY_AREA_WIDTH
+          const xOffset = row.projection * areaWidth * (2 * (columnIndex - 0.5) / 7 - 1)
+          const desiredWidth = row.projection * scale * areaWidth * 2 / 7
+          push(`note3d_${column}`, {
+            key: id,
+            y: row.y,
+            x: xOffset + 1280 / 2,
+            width: desiredWidth
           })
-        } else {
-          if (playerState.getNoteStatus(note) !== 'judged') {
-            push(`note_${column}`, {
+        }
+        let longNoteStep = 3 / 128
+        for (let entity of entities) {
+          let note = entity.note
+          let column = note.column
+          if (entity.height) {
+            let c = 0
+            let start = entity.y + entity.height
+            for (
+              let i =
+                start -
+                Math.max(
+                  0,
+                  Math.floor((start - 1) / longNoteStep) * longNoteStep
+                );
+              i >= 0 && i >= entity.y;
+              i -= longNoteStep
+            ) {
+              putNote(note.id + 'x' + c++, i, column, 0.8)
+            }
+            putNote(note.id, entity.y + entity.height, column)
+          } else {
+            if (playerState.getNoteStatus(note) !== 'judged') {
+              putNote(note.id, entity.y, column)
+            }
+          }
+        }
+      } else {
+        for (let entity of entities) {
+          let note = entity.note
+          let column = note.column
+          if (entity.height) {
+            let judgment = playerState.getNoteJudgment(note)
+            let status = playerState.getNoteStatus(note)
+            push(`longnote_${column}`, {
               key: note.id,
-              y: entity.y
+              y: entity.y,
+              height: entity.height,
+              active: judgment !== 0 && judgment !== MISSED,
+              missed: status === 'judged' && judgment === MISSED
             })
+          } else {
+            if (playerState.getNoteStatus(note) !== 'judged') {
+              push(`note_${column}`, {
+                key: note.id,
+                y: entity.y
+              })
+            }
           }
         }
       }
@@ -94,7 +139,17 @@ export class PlayerDisplay {
     function updateBarLines () {
       let entities = noteArea.getVisibleBarLines(position, getUpperBound(), 1)
       for (let entity of entities) {
-        push('barlines', { key: entity.id, y: entity.y })
+        if (touch3dMode) {
+          const row = touch3d.getRow(entity.y - 0.01)
+          push('barlines3d', {
+            key: entity.id,
+            y: row.y,
+            x: row.projection * -touch3d.PLAY_AREA_WIDTH + 1280 / 2,
+            width: row.projection * touch3d.PLAY_AREA_WIDTH * 2
+          })
+        } else {
+          push('barlines', { key: entity.id, y: entity.y })
+        }
       }
     }
 

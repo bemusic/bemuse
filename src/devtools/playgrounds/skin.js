@@ -1,15 +1,13 @@
 import * as Scintillator from 'bemuse/scintillator'
-
-import co from 'co'
 import $ from 'jquery'
-
 import BMS from 'bms'
 import Game from 'bemuse/game/game'
-import Notechart from 'bemuse-notechart'
-import GameState from 'bemuse/game/state'
-import GameInput from 'bemuse/game/input'
 import GameDisplay from 'bemuse/game/display'
+import GameInput from 'bemuse/game/input'
+import GameState from 'bemuse/game/state'
 import MAIN from 'bemuse/utils/main-element'
+import co from 'co'
+import { fromBMSChart } from 'bemuse-notechart/loader/BMSNotechartLoader'
 
 export function main () {
   co(function * () {
@@ -31,15 +29,26 @@ export function main () {
       #00155:0001010000000000
       #00158:0001010000000000
       #00159:0001010000000000
-      #00156:0001010000000000`).chart
+      #00156:0001010000000000
+      #00211:010000000000000000010000
+      #00212:000100000000000000010000
+      #00213:010001000000000000010000
+      #00214:010000010000000001000001
+      #00215:010000000100000100000100
+      #00218:010000000010010001000100
+      #00219:010000000001000100000100`).chart
 
-    let notecharts = [Notechart.fromBMSChart(chart)]
+    let notecharts = [fromBMSChart(chart)]
 
     let game = new Game(notecharts, {
       players: [{ speed: 2 }]
     })
 
-    let skin = yield Scintillator.load(Scintillator.getSkinUrl())
+    let skin = yield Scintillator.load(
+      Scintillator.getSkinUrl({
+        displayMode: 'touch3d'
+      })
+    )
     let context = new Scintillator.Context(skin)
     let display = new GameDisplay({ game, skin, context })
     let state = new GameState(game)
@@ -56,7 +65,7 @@ export function main () {
       function () {
         let result = getData.apply(display, arguments)
         result['p1_score'] = (new Date().getTime() - started) % 555556
-        console.log(result)
+        window.LATEST_DATA = result
         return result
       })(display._getData)
     let draw = () => {

@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<skin width="1280" height="720" data-display-mode="touch3d" data-main-input-device="touch" data-info-panel-position="top">
+  <group y="-12">
+    <animation>
+      <keyframe t="0" y="-104"></keyframe>
+      <keyframe t="0.3" y="-12" ease="quadOut"></keyframe>
+    </animation>
+    <sprite image="InfoPanel/Background.png"></sprite>
+    <sprite image="InfoPanel/Template.png" y="1"></sprite>
+    <text x="176" y="22" text="%s" data="p1_score" font="ScoreNumber" font-src="Fonts/ScoreNumber.fnt" align="right"></text>
+    <text x="824" y="33" alpha="0.8" text="%s" data="song_title" font="bold 16px Roboto" fill="white" align="left"></text>
+    <text x="824" y="55" alpha="0.6" text="%s" data="song_artist" font="13px Roboto" fill="white" align="left"></text>
+    <text x="824" y="70" alpha="0.6" text="%s" data="song_time" font="13px Roboto" fill="white" align="left"></text>
+    <text x="1160" y="22" text="%s" data="p1_speed" font="ScoreNumber" font-src="Fonts/ScoreNumber.fnt" align="left"></text>
+    <text x="1099" y="34" text="%s" data="p1_bpm" font="StatNumber" font-src="Fonts/StatNumber.fnt" align="left"></text>
+    <text x="260" y="29" text="%s" data="p1_stat_1" font="StatNumber" font-src="Fonts/StatNumber.fnt" align="right"></text>
+    <text x="260" y="47" text="%s" data="p1_stat_2" font="StatNumber" font-src="Fonts/StatNumber.fnt" align="right"></text>
+    <text x="260" y="65" text="%s" data="p1_stat_3" font="StatNumber" font-src="Fonts/StatNumber.fnt" align="right"></text>
+    <text x="387" y="29" text="%s" data="p1_stat_4" font="StatNumber" font-src="Fonts/StatNumber.fnt" align="right"></text>
+    <text x="387" y="47" text="%s" data="p1_stat_missed" font="StatNumber" font-src="Fonts/StatNumber.fnt" align="right"></text>
+    <text x="387" y="65" text="%s" data="p1_stat_acc" font="StatNumber" font-src="Fonts/StatNumber.fnt" align="right"></text>
+  </group>
+  <group>
+    <animation>
+      <keyframe t="0.25" alpha="0"></keyframe>
+      <keyframe t="0.6" alpha="1" ease="quadOut"></keyframe>
+    </animation>
+    <sprite image="Touch3D/Lane.png" x="0" y="0"></sprite>
+    <sprite image="Touch3D/Flash.png" x="0" y="0" blend="screen" alpha="1 - (p1_beat % 1)"></sprite>
+    <object key="p1_barlines3d" pool="24">
+      <sprite image="NoteArea/Bar.png" x="x" y="y" scale-x="width / 282" scale-y="width / 282"></sprite>
+    </object>
+    <sprite image="Touch3D/Highlight1.png" blend="screen">
+      <animation>
+        <keyframe t="0" alpha="0"></keyframe>
+      </animation>
+      <animation on="p1_1_down">
+        <keyframe t="0" alpha="1"></keyframe>
+      </animation>
+      <animation on="p1_1_up">
+        <keyframe t="0" alpha="1"></keyframe>
+        <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
+      </animation>
+    </sprite>
+    <object key="p1_note3d_1" pool="24">
+      <sprite image="Touch3D/NoteWhite.png" x="x" y="y" anchor-x="0.5" anchor-y="1" scale-x="width / 26.5" scale-y="width / 28"></sprite>
+    </object>
+    <group y="689" x="159.99999999999994">
+      <animation>
+        <keyframe t="0" alpha="0" scale-x="2" scale-y="2"></keyframe>
+      </animation>
+      <animation on="p1_1_explode">
+        <keyframe t="0" alpha="1" scale-x="4" scale-y="2"></keyframe>
+        <keyframe t="0.18" alpha="0" scale-x="4" scale-y="4"></keyframe>
+      </animation>
+      <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+    </group>
+    <sprite image="Touch3D/Highlight2.png" blend="screen">
+      <animation>
+        <keyframe t="0" alpha="0"></keyframe>
+      </animation>
+      <animation on="p1_2_down">
+        <keyframe t="0" alpha="1"></keyframe>
+      </animation>
+      <animation on="p1_2_up">
+        <keyframe t="0" alpha="1"></keyframe>
+        <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
+      </animation>
+    </sprite>
+    <object key="p1_note3d_2" pool="24">
+      <sprite image="Touch3D/NoteBlue.png" x="x" y="y" anchor-x="0.5" anchor-y="1" scale-x="width / 26.5" scale-y="width / 28"></sprite>
+    </object>
+    <group y="689" x="320">
+      <animation>
+        <keyframe t="0" alpha="0" scale-x="2" scale-y="2"></keyframe>
+      </animation>
+      <animation on="p1_2_explode">
+        <keyframe t="0" alpha="1" scale-x="4" scale-y="2"></keyframe>
+        <keyframe t="0.18" alpha="0" scale-x="4" scale-y="4"></keyframe>
+      </animation>
+      <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+    </group>
+    <sprite image="Touch3D/Highlight3.png" blend="screen">
+      <animation>
+        <keyframe t="0" alpha="0"></keyframe>
+      </animation>
+      <animation on="p1_3_down">
+        <keyframe t="0" alpha="1"></keyframe>
+      </animation>
+      <animation on="p1_3_up">
+        <keyframe t="0" alpha="1"></keyframe>
+        <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
+      </animation>
+    </sprite>
+    <object key="p1_note3d_3" pool="24">
+      <sprite image="Touch3D/NoteWhite.png" x="x" y="y" anchor-x="0.5" anchor-y="1" scale-x="width / 26.5" scale-y="width / 28"></sprite>
+    </object>
+    <group y="689" x="480">
+      <animation>
+        <keyframe t="0" alpha="0" scale-x="2" scale-y="2"></keyframe>
+      </animation>
+      <animation on="p1_3_explode">
+        <keyframe t="0" alpha="1" scale-x="4" scale-y="2"></keyframe>
+        <keyframe t="0.18" alpha="0" scale-x="4" scale-y="4"></keyframe>
+      </animation>
+      <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+    </group>
+    <sprite image="Touch3D/Highlight4.png" blend="screen">
+      <animation>
+        <keyframe t="0" alpha="0"></keyframe>
+      </animation>
+      <animation on="p1_4_down">
+        <keyframe t="0" alpha="1"></keyframe>
+      </animation>
+      <animation on="p1_4_up">
+        <keyframe t="0" alpha="1"></keyframe>
+        <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
+      </animation>
+    </sprite>
+    <object key="p1_note3d_4" pool="24">
+      <sprite image="Touch3D/NoteGreen.png" x="x" y="y" anchor-x="0.5" anchor-y="1" scale-x="width / 26.5" scale-y="width / 28"></sprite>
+    </object>
+    <group y="689" x="640">
+      <animation>
+        <keyframe t="0" alpha="0" scale-x="2" scale-y="2"></keyframe>
+      </animation>
+      <animation on="p1_4_explode">
+        <keyframe t="0" alpha="1" scale-x="4" scale-y="2"></keyframe>
+        <keyframe t="0.18" alpha="0" scale-x="4" scale-y="4"></keyframe>
+      </animation>
+      <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+    </group>
+    <sprite image="Touch3D/Highlight5.png" blend="screen">
+      <animation>
+        <keyframe t="0" alpha="0"></keyframe>
+      </animation>
+      <animation on="p1_5_down">
+        <keyframe t="0" alpha="1"></keyframe>
+      </animation>
+      <animation on="p1_5_up">
+        <keyframe t="0" alpha="1"></keyframe>
+        <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
+      </animation>
+    </sprite>
+    <object key="p1_note3d_5" pool="24">
+      <sprite image="Touch3D/NoteWhite.png" x="x" y="y" anchor-x="0.5" anchor-y="1" scale-x="width / 26.5" scale-y="width / 28"></sprite>
+    </object>
+    <group y="689" x="800">
+      <animation>
+        <keyframe t="0" alpha="0" scale-x="2" scale-y="2"></keyframe>
+      </animation>
+      <animation on="p1_5_explode">
+        <keyframe t="0" alpha="1" scale-x="4" scale-y="2"></keyframe>
+        <keyframe t="0.18" alpha="0" scale-x="4" scale-y="4"></keyframe>
+      </animation>
+      <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+    </group>
+    <sprite image="Touch3D/Highlight6.png" blend="screen">
+      <animation>
+        <keyframe t="0" alpha="0"></keyframe>
+      </animation>
+      <animation on="p1_6_down">
+        <keyframe t="0" alpha="1"></keyframe>
+      </animation>
+      <animation on="p1_6_up">
+        <keyframe t="0" alpha="1"></keyframe>
+        <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
+      </animation>
+    </sprite>
+    <object key="p1_note3d_6" pool="24">
+      <sprite image="Touch3D/NoteBlue.png" x="x" y="y" anchor-x="0.5" anchor-y="1" scale-x="width / 26.5" scale-y="width / 28"></sprite>
+    </object>
+    <group y="689" x="960">
+      <animation>
+        <keyframe t="0" alpha="0" scale-x="2" scale-y="2"></keyframe>
+      </animation>
+      <animation on="p1_6_explode">
+        <keyframe t="0" alpha="1" scale-x="4" scale-y="2"></keyframe>
+        <keyframe t="0.18" alpha="0" scale-x="4" scale-y="4"></keyframe>
+      </animation>
+      <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+    </group>
+    <sprite image="Touch3D/Highlight7.png" blend="screen">
+      <animation>
+        <keyframe t="0" alpha="0"></keyframe>
+      </animation>
+      <animation on="p1_7_down">
+        <keyframe t="0" alpha="1"></keyframe>
+      </animation>
+      <animation on="p1_7_up">
+        <keyframe t="0" alpha="1"></keyframe>
+        <keyframe t="0.18" ease="quadOut" alpha="0"></keyframe>
+      </animation>
+    </sprite>
+    <object key="p1_note3d_7" pool="24">
+      <sprite image="Touch3D/NoteWhite.png" x="x" y="y" anchor-x="0.5" anchor-y="1" scale-x="width / 26.5" scale-y="width / 28"></sprite>
+    </object>
+    <group y="689" x="1120">
+      <animation>
+        <keyframe t="0" alpha="0" scale-x="2" scale-y="2"></keyframe>
+      </animation>
+      <animation on="p1_7_explode">
+        <keyframe t="0" alpha="1" scale-x="4" scale-y="2"></keyframe>
+        <keyframe t="0.18" alpha="0" scale-x="4" scale-y="4"></keyframe>
+      </animation>
+      <sprite image="Explosion/NoteExplosion.png" x="-25" y="-25" blend="screen"></sprite>
+    </group>
+  </group>
+  <group x="498">
+    <group alpha="0.6 + ready*0.4">
+      <group x="143" y="400" alpha="1">
+        <animation>
+          <keyframe t="0" alpha="1"></keyframe>
+        </animation>
+        <animation on="gettingStarted">
+          <keyframe t="0" alpha="1" scale-x="1" scale-y="1"></keyframe>
+          <keyframe t="0.1" alpha="1" scale-x="0.9" scale-y="0.9"></keyframe>
+        </animation>
+        <animation on="started">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <sprite image="NotePanel/PressStart.png" x="-107" y="-40" ref="start"></sprite>
+      </group>
+      <group x="143" y="400" alpha="0">
+        <animation on="started">
+          <keyframe t="0" alpha="0.5" scale-x="0.9" scale-y="0.9"></keyframe>
+          <keyframe t="0.3" alpha="0" scale-x="1.5" scale-y="1.5"></keyframe>
+        </animation>
+        <sprite image="NotePanel/PressStart.png" x="-107" y="-40" blend="screen"></sprite>
+      </group>
+      <group x="143" y="400" alpha="0">
+        <animation on="started">
+          <keyframe t="0" alpha="0.5" scale-x="0.9" scale-y="0.9"></keyframe>
+          <keyframe t="0.3" alpha="0" scale-x="0.67" scale-y="0.67"></keyframe>
+        </animation>
+        <sprite image="NotePanel/PressStart.png" x="-107" y="-40" blend="screen"></sprite>
+      </group>
+    </group>
+    <group x="6" y="6">
+      <sprite image="Hope/HopeBar.png"></sprite>
+      <sprite image="Hope/HopeA.png" x="3" y="3" width="p1_gauge_secondary*263" height="5"></sprite>
+      <sprite image="Hope/Hope.png" x="3" y="3" width="p1_gauge_primary*263" height="5"></sprite>
+      <animation>
+        <keyframe t="0" y="-20"></keyframe>
+      </animation>
+      <animation on="p1_gauge_enter">
+        <keyframe t="0" y="-20"></keyframe>
+        <keyframe t="0.5" y="-20" ease="quadOut"></keyframe>
+        <keyframe t="1" y="6" ease="quadOut"></keyframe>
+      </animation>
+      <animation on="p1_gauge_exit">
+        <keyframe t="0" y="6"></keyframe>
+        <keyframe t="0.5" y="-20" ease="quadIn"></keyframe>
+      </animation>
+    </group>
+    <group y="400">
+      <group alpha="0">
+        <animation on="p1_judge_1">
+          <keyframe t="0" y="-16" alpha="1"></keyframe>
+          <keyframe t="0.1" y="0" ease="quadOut"></keyframe>
+          <keyframe t="0.6" alpha="1"></keyframe>
+          <keyframe t="1" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_2">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_3">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_4">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_missed">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <text x="141" align="center" font="BemuseDefault-Meticulous" font-src="Fonts/BemuseDefault-Meticulous.fnt" text="*%s" data="p1_combo"></text>
+        <text x="141" align="center" font="BemuseDefault-MeticulousGlow" font-src="Fonts/BemuseDefault-MeticulousGlow.fnt" text="*%s" data="p1_combo" alpha="1 - ((t * 10) % 1)" blend="screen"></text>
+      </group>
+      <group alpha="0">
+        <animation on="p1_judge_1">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_2">
+          <keyframe t="0" y="-16" alpha="1"></keyframe>
+          <keyframe t="0.1" y="0" ease="quadOut"></keyframe>
+          <keyframe t="0.6" alpha="1"></keyframe>
+          <keyframe t="1" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_3">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_4">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_missed">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <text x="141" align="center" font="BemuseDefault-Precise" font-src="Fonts/BemuseDefault-Precise.fnt" text="*%s" data="p1_combo"></text>
+      </group>
+      <group alpha="0">
+        <animation on="p1_judge_1">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_2">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_3">
+          <keyframe t="0" y="-16" alpha="1"></keyframe>
+          <keyframe t="0.1" y="0" ease="quadOut"></keyframe>
+          <keyframe t="0.6" alpha="1"></keyframe>
+          <keyframe t="1" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_4">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_missed">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <text x="141" align="center" font="BemuseDefault-Good" font-src="Fonts/BemuseDefault-Good.fnt" text="*%s" data="p1_combo"></text>
+      </group>
+      <group alpha="0">
+        <animation on="p1_judge_1">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_2">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_3">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_4">
+          <keyframe t="0" y="-16" alpha="1"></keyframe>
+          <keyframe t="0.1" y="0" ease="quadOut"></keyframe>
+          <keyframe t="0.6" alpha="1"></keyframe>
+          <keyframe t="1" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_missed">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <text x="141" align="center" font="BemuseDefault-Other" font-src="Fonts/BemuseDefault-Other.fnt" text="1"></text>
+      </group>
+      <group alpha="0">
+        <animation on="p1_judge_1">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_2">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_3">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_4">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_missed">
+          <keyframe t="0" y="-16" alpha="1"></keyframe>
+          <keyframe t="0.1" y="0" ease="quadOut"></keyframe>
+          <keyframe t="0.6" alpha="1"></keyframe>
+          <keyframe t="1" alpha="0"></keyframe>
+        </animation>
+        <text x="141" align="center" font="BemuseDefault-Other" font-src="Fonts/BemuseDefault-Other.fnt" text="0"></text>
+      </group>
+    </group>
+    <group y="440">
+      <group alpha="0">
+        <animation on="p1_judge_deviation_none">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_deviation_late">
+          <keyframe t="0" y="-16" alpha="1"></keyframe>
+          <keyframe t="0.1" y="0" ease="quadOut"></keyframe>
+          <keyframe t="0.6" alpha="1"></keyframe>
+          <keyframe t="1" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_deviation_early">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <sprite image="Deviation/Late.png" x="117"></sprite>
+      </group>
+      <group alpha="0">
+        <animation on="p1_judge_deviation_none">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_deviation_late">
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+        <animation on="p1_judge_deviation_early">
+          <keyframe t="0" y="-16" alpha="1"></keyframe>
+          <keyframe t="0.1" y="0" ease="quadOut"></keyframe>
+          <keyframe t="0.6" alpha="1"></keyframe>
+          <keyframe t="1" alpha="0"></keyframe>
+        </animation>
+        <sprite image="Deviation/Early.png" x="111"></sprite>
+      </group>
+    </group>
+  </group>
+  <!-- tutorial-->
+  <if key="tutorial" value="yes">
+    <group>
+      <sprite image="Tutorial/Page0.png" x="64" y="64" t="gameTime">
+        <animation>
+          <keyframe t="-1.348314606741573" alpha="0"></keyframe>
+          <keyframe t="-1.148314606741573" alpha="1"></keyframe>
+          <keyframe t="-0.2" alpha="1"></keyframe>
+          <keyframe t="0" alpha="0"></keyframe>
+        </animation>
+      </sprite>
+      <sprite image="Tutorial/Page1.png" x="64" y="64" t="gameTime">
+        <animation>
+          <keyframe t="0" alpha="0"></keyframe>
+          <keyframe t="0.2" alpha="1"></keyframe>
+          <keyframe t="3.844943820224719" alpha="1"></keyframe>
+          <keyframe t="4.044943820224719" alpha="0"></keyframe>
+        </animation>
+      </sprite>
+      <group t="gameTime">
+        <animation>
+          <keyframe t="25.617977528089888" alpha="0"></keyframe>
+          <keyframe t="25.817977528089887" alpha="1"></keyframe>
+          <keyframe t="36.20449438202247" alpha="1"></keyframe>
+          <keyframe t="36.40449438202247" alpha="0"></keyframe>
+        </animation>
+        <if key="p1_scratch" value="left">
+          <sprite image="Tutorial/Page2.png" x="64" y="64"></sprite>
+        </if>
+        <if key="p1_scratch" value="right">
+          <sprite image="Tutorial/Page2.png" x="64" y="64"></sprite>
+        </if>
+        <if key="p1_scratch" value="off">
+          <sprite image="Tutorial/Page2KB.png" x="64" y="64"></sprite>
+        </if>
+      </group>
+      <sprite image="Tutorial/Page3.png" x="64" y="64" t="gameTime">
+        <animation>
+          <keyframe t="36.40449438202247" alpha="0"></keyframe>
+          <keyframe t="36.60449438202247" alpha="1"></keyframe>
+          <keyframe t="44.29438202247191" alpha="1"></keyframe>
+          <keyframe t="44.49438202247191" alpha="0"></keyframe>
+        </animation>
+      </sprite>
+      <group x="640" y="360" t="gameTime">
+        <animation>
+          <keyframe t="44.49438202247191" alpha="0" scale-x="1.2" scale-y="1.2"></keyframe>
+          <keyframe t="44.69438202247191" alpha="1"></keyframe>
+          <keyframe t="44.96853932584269" alpha="1"></keyframe>
+          <keyframe t="45.168539325842694" alpha="0" scale-x="0.8" scale-y="0.8"></keyframe>
+        </animation>
+        <sprite image="Tutorial/Ready.png" x="-330.5" y="-85" frame="661x170+0+0"></sprite>
+      </group>
+      <group x="640" y="360" t="gameTime">
+        <animation>
+          <keyframe t="45.168539325842694" alpha="0" scale-x="1.2" scale-y="1.2"></keyframe>
+          <keyframe t="45.3685393258427" alpha="1"></keyframe>
+          <keyframe t="45.64269662921348" alpha="1"></keyframe>
+          <keyframe t="45.842696629213485" alpha="0" scale-x="0.8" scale-y="0.8"></keyframe>
+        </animation>
+        <sprite image="Tutorial/Ready.png" x="-115.5" y="-124" frame="231x248+9+176"></sprite>
+      </group>
+      <group x="640" y="360" t="gameTime">
+        <animation>
+          <keyframe t="45.842696629213485" alpha="0" scale-x="1.2" scale-y="1.2"></keyframe>
+          <keyframe t="46.04269662921349" alpha="1"></keyframe>
+          <keyframe t="46.316853932584266" alpha="1"></keyframe>
+          <keyframe t="46.51685393258427" alpha="0" scale-x="0.8" scale-y="0.8"></keyframe>
+        </animation>
+        <sprite image="Tutorial/Ready.png" x="-115.5" y="-124" frame="231x248+228+176"></sprite>
+      </group>
+      <group x="640" y="360" t="gameTime">
+        <animation>
+          <keyframe t="46.51685393258427" alpha="0" scale-x="1.2" scale-y="1.2"></keyframe>
+          <keyframe t="46.71685393258427" alpha="1"></keyframe>
+          <keyframe t="46.99101123595506" alpha="1"></keyframe>
+          <keyframe t="47.19101123595506" alpha="0" scale-x="0.8" scale-y="0.8"></keyframe>
+        </animation>
+        <sprite image="Tutorial/Ready.png" x="-66.5" y="-124" frame="133x248+483+176"></sprite>
+      </group>
+      <sprite image="Tutorial/Page4.png" x="64" y="64" t="gameTime">
+        <animation>
+          <keyframe t="57.97752808988764" alpha="0"></keyframe>
+          <keyframe t="58.177528089887645" alpha="1"></keyframe>
+          <keyframe t="65.86741573033707" alpha="1"></keyframe>
+          <keyframe t="66.06741573033707" alpha="0"></keyframe>
+        </animation>
+      </sprite>
+      <group x="640" y="360" t="gameTime">
+        <animation>
+          <keyframe t="66.06741573033707" alpha="0" scale-x="1.2" scale-y="1.2"></keyframe>
+          <keyframe t="66.26741573033708" alpha="1"></keyframe>
+          <keyframe t="66.54157303370786" alpha="1"></keyframe>
+          <keyframe t="66.74157303370787" alpha="0" scale-x="0.8" scale-y="0.8"></keyframe>
+        </animation>
+        <sprite image="Tutorial/Ready.png" x="-330.5" y="-85" frame="661x170+0+0"></sprite>
+      </group>
+      <group x="640" y="360" t="gameTime">
+        <animation>
+          <keyframe t="66.74157303370787" alpha="0" scale-x="1.2" scale-y="1.2"></keyframe>
+          <keyframe t="66.94157303370787" alpha="1"></keyframe>
+          <keyframe t="67.21573033707865" alpha="1"></keyframe>
+          <keyframe t="67.41573033707866" alpha="0" scale-x="0.8" scale-y="0.8"></keyframe>
+        </animation>
+        <sprite image="Tutorial/Ready.png" x="-115.5" y="-124" frame="231x248+9+176"></sprite>
+      </group>
+      <group x="640" y="360" t="gameTime">
+        <animation>
+          <keyframe t="67.41573033707866" alpha="0" scale-x="1.2" scale-y="1.2"></keyframe>
+          <keyframe t="67.61573033707866" alpha="1"></keyframe>
+          <keyframe t="67.88988764044943" alpha="1"></keyframe>
+          <keyframe t="68.08988764044943" alpha="0" scale-x="0.8" scale-y="0.8"></keyframe>
+        </animation>
+        <sprite image="Tutorial/Ready.png" x="-115.5" y="-124" frame="231x248+228+176"></sprite>
+      </group>
+      <group x="640" y="360" t="gameTime">
+        <animation>
+          <keyframe t="68.08988764044943" alpha="0" scale-x="1.2" scale-y="1.2"></keyframe>
+          <keyframe t="68.28988764044944" alpha="1"></keyframe>
+          <keyframe t="68.56404494382022" alpha="1"></keyframe>
+          <keyframe t="68.76404494382022" alpha="0" scale-x="0.8" scale-y="0.8"></keyframe>
+        </animation>
+        <sprite image="Tutorial/Ready.png" x="-66.5" y="-124" frame="133x248+483+176"></sprite>
+      </group>
+      <sprite image="Tutorial/Page5.png" x="64" y="64" t="gameTime">
+        <animation>
+          <keyframe t="74.15730337078652" alpha="0"></keyframe>
+          <keyframe t="74.35730337078652" alpha="1"></keyframe>
+          <keyframe t="76.65393258426965" alpha="1"></keyframe>
+          <keyframe t="76.85393258426966" alpha="0"></keyframe>
+        </animation>
+      </sprite>
+      <group x="640" y="360" t="gameTime">
+        <animation>
+          <keyframe t="76.85393258426966" alpha="0" scale-x="1.2" scale-y="1.2"></keyframe>
+          <keyframe t="77.05393258426966" alpha="1"></keyframe>
+          <keyframe t="77.32808988764044" alpha="1"></keyframe>
+          <keyframe t="77.52808988764045" alpha="0" scale-x="0.8" scale-y="0.8"></keyframe>
+        </animation>
+        <sprite image="Tutorial/Ready.png" x="-330.5" y="-85" frame="661x170+0+0"></sprite>
+      </group>
+      <group x="640" y="360" t="gameTime">
+        <animation>
+          <keyframe t="77.52808988764045" alpha="0" scale-x="1.2" scale-y="1.2"></keyframe>
+          <keyframe t="77.72808988764045" alpha="1"></keyframe>
+          <keyframe t="78.00224719101124" alpha="1"></keyframe>
+          <keyframe t="78.20224719101124" alpha="0" scale-x="0.8" scale-y="0.8"></keyframe>
+        </animation>
+        <sprite image="Tutorial/Ready.png" x="-115.5" y="-124" frame="231x248+9+176"></sprite>
+      </group>
+      <group x="640" y="360" t="gameTime">
+        <animation>
+          <keyframe t="78.20224719101124" alpha="0" scale-x="1.2" scale-y="1.2"></keyframe>
+          <keyframe t="78.40224719101124" alpha="1"></keyframe>
+          <keyframe t="78.67640449438203" alpha="1"></keyframe>
+          <keyframe t="78.87640449438203" alpha="0" scale-x="0.8" scale-y="0.8"></keyframe>
+        </animation>
+        <sprite image="Tutorial/Ready.png" x="-115.5" y="-124" frame="231x248+228+176"></sprite>
+      </group>
+      <group x="640" y="360" t="gameTime">
+        <animation>
+          <keyframe t="78.87640449438203" alpha="0" scale-x="1.2" scale-y="1.2"></keyframe>
+          <keyframe t="79.07640449438203" alpha="1"></keyframe>
+          <keyframe t="79.3505617977528" alpha="1"></keyframe>
+          <keyframe t="79.5505617977528" alpha="0" scale-x="0.8" scale-y="0.8"></keyframe>
+        </animation>
+        <sprite image="Tutorial/Ready.png" x="-66.5" y="-124" frame="133x248+483+176"></sprite>
+      </group>
+      <sprite image="Tutorial/Page6.png" x="64" y="64" t="gameTime">
+        <animation>
+          <keyframe t="90.33707865168539" alpha="0"></keyframe>
+          <keyframe t="90.53707865168539" alpha="1"></keyframe>
+          <keyframe t="98.22696629213483" alpha="1"></keyframe>
+          <keyframe t="98.42696629213484" alpha="0"></keyframe>
+        </animation>
+      </sprite>
+      <group x="640" y="360" t="gameTime">
+        <animation>
+          <keyframe t="98.42696629213484" alpha="0" scale-x="1.2" scale-y="1.2"></keyframe>
+          <keyframe t="98.62696629213484" alpha="1"></keyframe>
+          <keyframe t="98.90112359550561" alpha="1"></keyframe>
+          <keyframe t="99.10112359550561" alpha="0" scale-x="0.8" scale-y="0.8"></keyframe>
+        </animation>
+        <sprite image="Tutorial/Ready.png" x="-330.5" y="-85" frame="661x170+0+0"></sprite>
+      </group>
+      <group x="640" y="360" t="gameTime">
+        <animation>
+          <keyframe t="99.10112359550561" alpha="0" scale-x="1.2" scale-y="1.2"></keyframe>
+          <keyframe t="99.30112359550562" alpha="1"></keyframe>
+          <keyframe t="99.5752808988764" alpha="1"></keyframe>
+          <keyframe t="99.7752808988764" alpha="0" scale-x="0.8" scale-y="0.8"></keyframe>
+        </animation>
+        <sprite image="Tutorial/Ready.png" x="-115.5" y="-124" frame="231x248+9+176"></sprite>
+      </group>
+      <group x="640" y="360" t="gameTime">
+        <animation>
+          <keyframe t="99.7752808988764" alpha="0" scale-x="1.2" scale-y="1.2"></keyframe>
+          <keyframe t="99.9752808988764" alpha="1"></keyframe>
+          <keyframe t="100.24943820224719" alpha="1"></keyframe>
+          <keyframe t="100.4494382022472" alpha="0" scale-x="0.8" scale-y="0.8"></keyframe>
+        </animation>
+        <sprite image="Tutorial/Ready.png" x="-115.5" y="-124" frame="231x248+228+176"></sprite>
+      </group>
+      <group x="640" y="360" t="gameTime">
+        <animation>
+          <keyframe t="100.4494382022472" alpha="0" scale-x="1.2" scale-y="1.2"></keyframe>
+          <keyframe t="100.6494382022472" alpha="1"></keyframe>
+          <keyframe t="100.92359550561797" alpha="1"></keyframe>
+          <keyframe t="101.12359550561797" alpha="0" scale-x="0.8" scale-y="0.8"></keyframe>
+        </animation>
+        <sprite image="Tutorial/Ready.png" x="-66.5" y="-124" frame="133x248+483+176"></sprite>
+      </group>
+    </group>
+  </if>
+</skin>

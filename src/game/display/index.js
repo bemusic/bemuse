@@ -2,22 +2,33 @@ import './game-display.scss'
 
 import $ from 'jquery'
 
-import formatTime from '../../utils/formatTime'
 import PlayerDisplay from './player-display'
+import formatTime from '../../utils/formatTime'
 
 export class GameDisplay {
   constructor ({ game, context, backgroundImagePromise, video }) {
     this._game = game
     this._context = context
+    const skinData = context.skinData
     this._players = new Map(
-      game.players.map(player => [player, new PlayerDisplay(player)])
+      game.players.map(player => [player, new PlayerDisplay(player, skinData)])
     )
     this._stateful = {}
     this._wrapper = this._createWrapper({
       backgroundImagePromise,
       video,
-      panelPlacement: game.players[0].options.placement
+      panelPlacement: game.players[0].options.placement,
+      infoPanelPosition: skinData.infoPanelPosition
     })
+    this._createTouchEscapeButton({
+      displayByDefault: skinData.mainInputDevice === 'touch'
+    })
+  }
+  setEscapeHandler (escapeHandler) {
+    this._onEscape = escapeHandler
+  }
+  setReplayHandler (replayHandler) {
+    this._onReplay = replayHandler
   }
   start () {
     this._started = new Date().getTime()
@@ -78,9 +89,15 @@ export class GameDisplay {
     let f = gameState.readyFraction
     return f > 0.5 ? Math.pow(1 - (f - 0.5) / 0.5, 2) : 0
   }
-  _createWrapper ({ backgroundImagePromise, video, panelPlacement }) {
+  _createWrapper ({
+    backgroundImagePromise,
+    video,
+    panelPlacement,
+    infoPanelPosition
+  }) {
     var $wrapper = $('<div class="game-display"></div>')
       .attr('data-panel-placement', panelPlacement)
+      .attr('data-info-panel-position', infoPanelPosition)
       .append('<div class="game-display--bg js-back-image"></div>')
       .append(this.view)
     if (backgroundImagePromise) {
@@ -96,6 +113,39 @@ export class GameDisplay {
         .appendTo($wrapper)
     }
     return $wrapper[0]
+  }
+  _createTouchEscapeButton ({ displayByDefault }) {
+    const touchButtons = document.createElement('div')
+    touchButtons.className = 'game-display--touch-buttons'
+    this.wrapper.appendChild(touchButtons)
+    if (displayByDefault) {
+      touchButtons.classList.add('is-visible')
+    } else {
+      let shown = false
+      this.wrapper.addEventListener('touchstart', () => {
+        if (shown) return
+        shown = true
+        touchButtons.classList.add('is-visible')
+      }, true)
+    }
+    const createTouchButton = (className, onClick) => {
+      let button = document.createElement('button')
+      button.addEventListener(
+        'touchstart',
+        e => {
+          e.stopPropagation()
+        },
+        true
+      )
+      button.onclick = e => {
+        e.preventDefault()
+        onClick()
+      }
+      button.className = className
+      touchButtons.appendChild(button)
+    }
+    createTouchButton('game-display--touch-escape-button', () => this._onEscape())
+    createTouchButton('game-display--touch-replay-button', () => this._onReplay())
   }
   get context () {
     return this._context

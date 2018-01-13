@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Bemuse Touch3D mode image generator</title>
+<style>
+canvas { max-width: 100%; height: auto; background: #353433; }
+button { font-size: 30px; }
+</style>
+</head>
+<body>
+<div id="buttons">
+</div>
+<canvas id="canvas" width="1280" height="720"></canvas>
+<script>
+var canvas = document.querySelector('#canvas')
+var ctx = canvas.getContext('2d')
+
+function main () {
+  // Comment / uncomment to render the graphic you want!
+  const button = (name, action) => {
+    const el = document.createElement('button')
+    el.textContent = name
+    el.onclick = (e) => {
+      e.preventDefault()
+      ctx.clearRect(0, 0, 1280, 720)
+      action()
+    }
+    document.querySelector('#buttons').appendChild(el)
+  }
+  button('Panel', drawPanel)
+  button('HL1', () => drawHighlight(0, '#551800'))
+  button('HL2', () => drawHighlight(1, '#432273'))
+  button('HL3', () => drawHighlight(2, '#551800'))
+  button('HL4', () => drawHighlight(3, '#124B0F'))
+  button('HL5', () => drawHighlight(4, '#551800'))
+  button('HL6', () => drawHighlight(5, '#432273'))
+  button('HL7', () => drawHighlight(6, '#551800'))
+  button('Flash', drawFlash)
+}
+
+const config = {
+  cx: 1024,
+  cy: -975,
+  r: 1024,
+  p: 960,
+  w: 60,
+  t0: 3.922,
+  t1: 4.555
+}
+function getRow (i) {
+  let theta = config.t0 + (config.t1 - config.t0) * i
+  let pointX = config.cx + Math.cos(theta) * config.r
+  let pointY = config.cy - Math.sin(theta) * config.r
+  let projection = config.p / (config.p - pointX)
+  let screenY = pointY * projection + 720 / 2
+  return { y: screenY, projection }
+}
+
+ctx.clearRect(0, 0, 1280, 720)
+
+function curve (posA, posB, minP = 0, maxP = 100) {
+  ctx.beginPath()
+  for (let i = minP; i <= maxP; i += 1) {
+    const { y, projection } = getRow(i / 100)
+    const x = config.w * (2 * posA - 1) * projection + 1280 / 2
+    if (i === 0) {
+      ctx.moveTo(x, y)
+    } else {
+      ctx.lineTo(x, y)
+    }
+  }
+  for (let i = maxP; i >= minP; i -= 1) {
+    const { y, projection } = getRow(i / 100)
+    const x = config.w * (2 * posB - 1) * projection + 1280 / 2
+    ctx.lineTo(x, y)
+  }
+  ctx.fill()
+}
+
+function drawLane (i, color) {
+  ctx.fillStyle = color
+  curve(i / 7 + 0.005, (i + 1) / 7 - 0.005)
+}
+
+function drawHighlight (i, color) {
+  const grad = ctx.createLinearGradient(0, 720, 0, 0)
+  grad.addColorStop(0, color)
+  grad.addColorStop(1, 'black')
+  ctx.fillStyle = '#000'
+  curve(-0.01, 1.01)
+  ctx.fillStyle = grad
+  curve(i / 7 + 0.005, (i + 1) / 7 - 0.005)
+}
+
+function drawFlash () {
+  const grad = ctx.createLinearGradient(0, 720, 0, 600)
+  const f = t => Math.floor(t)
+  for (let i = 0; i <= 20; i++) {
+    const m = (1 - i / 20) ** 2
+    grad.addColorStop(i / 20, `rgb(${f(114 * m)}, ${f(83 * m)}, 0)`)
+  }
+  ctx.fillStyle = '#000'
+  curve(-0.01, 1.01)
+  ctx.fillStyle = grad
+  curve(0, 1)
+}
+
+function drawPanel () {
+  ctx.fillStyle = '#8E96A0'
+  curve(-0.05, 1.05)
+
+  ctx.fillStyle = '#26221E'
+  curve(0, 1)
+
+  ctx.fillStyle = '#090807'
+  curve(1 / 7, 2 / 7)
+  curve(3 / 7, 4 / 7)
+  curve(5 / 7, 6 / 7)
+
+  ctx.fillStyle = '#4D453D'
+  for (let i = 1; i <= 6; i++) curve(i / 7 - 0.002, i / 7 + 0.002)
+
+  ctx.fillStyle = 'rgba(77,69,61,0.5)'
+  curve(0, 1, 97)
+}
+
+main()
+</script>
+</body>
+</html>

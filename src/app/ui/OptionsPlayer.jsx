@@ -1,7 +1,7 @@
 import './OptionsPlayer.scss'
 
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 import compose from 'recompose/compose'
 import { connect } from 'react-redux'
 
@@ -105,7 +105,8 @@ class OptionsPlayer extends React.Component {
               options={[
                 { value: 'left', label: 'Left' },
                 { value: 'center', label: 'Center' },
-                { value: 'right', label: 'Right' }
+                { value: 'right', label: 'Right' },
+                { value: '3d', label: '3D [Beta]' }
               ]}
               onSelect={value =>
                 onUpdateOptions(Options.changePanelPlacement(value))

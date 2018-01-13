@@ -1,7 +1,7 @@
 
-mixin media(type, width, height)
+mixin media(type, width, height, extra)
   if media == type
-    skin(width=width height=height)
+    skin(width=width height=height)&attributes(Object.assign({ }, extra || { }))
       block
 
 mixin longnote(key, x, cur, add, visible)
@@ -75,7 +75,7 @@ mixin note-hints(modeObject)
     - var ch = column.channel
     group(x=(x))
       sprite(image=('NoteHint/Normal/' + cur.image)
-              x=(cur.xoffset) y=(cur.yoffset))
+              x=(cur.xoffset) y=(cur.yoffset) ref=('p1_' + ch))
       sprite(image=('NoteHint/Active/' + cur.image)
               x=(cur.xoffset - 1) y=(cur.yoffset - 1))
         animation
@@ -145,19 +145,23 @@ mixin all-note-area
         +judgments
       group(y='440')
         +judgment-deviations
-    group(x='6' y='6')
-      sprite(image='Hope/HopeBar.png')
-      sprite(image='Hope/HopeA.png' x='3' y='3' width='p1_gauge_secondary*263' height='5')
-      sprite(image='Hope/Hope.png' x='3' y='3' width='p1_gauge_primary*263' height='5')
-      animation
-        keyframe(t='0' y='-20')
-      animation(on='p1_gauge_enter')
-        keyframe(t='0' y='-20')
-        keyframe(t='0.5' y='-20' ease='quadOut')
-        keyframe(t='1' y='6' ease='quadOut')
-      animation(on='p1_gauge_exit')
-        keyframe(t='0' y='6')
-        keyframe(t='0.5' y='-20' ease='quadIn')
+    +hope-gauge
+
+mixin hope-gauge
+  group(x='6' y='6')
+    sprite(image='Hope/HopeBar.png')
+    sprite(image='Hope/HopeA.png' x='3' y='3' width='p1_gauge_secondary*263' height='5')
+    sprite(image='Hope/Hope.png' x='3' y='3' width='p1_gauge_primary*263' height='5')
+    animation
+      keyframe(t='0' y='-20')
+    animation(on='p1_gauge_enter')
+      keyframe(t='0' y='-20')
+      keyframe(t='0.5' y='-20' ease='quadOut')
+      keyframe(t='1' y='6' ease='quadOut')
+    animation(on='p1_gauge_exit')
+      keyframe(t='0' y='6')
+      keyframe(t='0.5' y='-20' ease='quadIn')
+
 
 mixin press-start
   group(alpha='0.6 + ready*0.4')

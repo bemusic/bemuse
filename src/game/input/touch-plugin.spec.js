@@ -4,6 +4,7 @@ import TouchPlugin from './touch-plugin'
 describe('TouchPlugin', function () {
   it('should get value when touching', function () {
     let instance = new TouchPlugin({
+      skinData: { },
       refs: {
         p1_1: new Set([
           { getBounds: () => new PIXI.Rectangle(64, 64, 64, 64) }

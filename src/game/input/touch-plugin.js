@@ -1,5 +1,7 @@
 import bench from 'bemuse/devtools/benchmark'
 
+import * as touch3d from '../display/touch3d'
+
 let BUTTONS = ['p1_1', 'p1_2', 'p1_3', 'p1_4', 'p1_5', 'p1_6', 'p1_7', 'start']
 
 window.BEMUSE_TOUCH_STATS = []
@@ -29,6 +31,8 @@ export function TouchPlugin (context) {
   let getButton = bench.wrap('input:touch:B', _getButton)
   let getPinch = bench.wrap('input:touch:P', _getPinch)
   let statsRecorder = new StatsRecorder()
+  const touch3dMode = context.skinData.displayMode === 'touch3d'
+  const pinchThreshold = touch3dMode ? touch3d.getRow(0.8).y : 550
   return {
     name: 'TouchPlugin',
     get () {
@@ -39,6 +43,12 @@ export function TouchPlugin (context) {
       output['p1_SC'] = getScratch(input)
       for (let button of BUTTONS) {
         output[button] = getButton(input, button)
+      }
+      if (touch3dMode) {
+        for (let p of input) {
+          const lane = touch3d.getTouchedColumn(p.x, p.y)
+          if (lane) output['p1_' + lane] = 1
+        }
       }
       output['p1_pinch'] = getPinch(input)
       return output
@@ -105,7 +115,7 @@ export function TouchPlugin (context) {
     let a = null
     let b = null
     for (let p of input) {
-      if (p.y < 550) {
+      if (p.y < pinchThreshold) {
         if (a === null) {
           a = p.y
         } else if (b === null) {
