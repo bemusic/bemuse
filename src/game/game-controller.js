@@ -23,6 +23,9 @@ export class GameController {
     this._display.setEscapeHandler(() => {
       this._resolvePromise({ finished: false, replay: false })
     })
+    this._display.setReplayHandler(() => {
+      this._resolvePromise({ finished: false, replay: true })
+    })
     if (bench.enabled) this.enableBenchmark()
   }
   get game () {

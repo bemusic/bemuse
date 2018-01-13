@@ -58,11 +58,34 @@
     z-index: 100;
   }
 
-  &--escape {
+  &--touch-buttons {
     position: fixed;
-    top: 10px;
-    left: 10px;
+    transform: translateZ(0);
+    top: 0; left: 0;
+    opacity: 0;
     z-index: 110;
+  }
+  &--touch-buttons.is-visible {
+    opacity: 1;
+  }
+  &--touch-escape-button, &--touch-replay-button {
+    position: absolute;
+    top: 12px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: 32px;
+    height: 32px;
+    background: transparent center center no-repeat;
+    background-size: 32px 32px;
+  }
+  &--touch-escape-button {
+    background-image: url(./touch-escape.png);
+    left: 12px;
+  }
+  &--touch-replay-button {
+    background-image: url(./touch-replay.png);
+    left: 56px;
   }
 }
 

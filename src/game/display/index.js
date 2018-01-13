@@ -20,12 +20,13 @@ export class GameDisplay {
       panelPlacement: game.players[0].options.placement,
       infoPanelPosition: skinData.infoPanelPosition
     })
-    if (skinData.mainInputDevice === 'touch') {
-      this._createEscapeButton()
-    }
+    this._createTouchEscapeButton()
   }
   setEscapeHandler (escapeHandler) {
     this._onEscape = escapeHandler
+  }
+  setReplayHandler (replayHandler) {
+    this._onReplay = replayHandler
   }
   start () {
     this._started = new Date().getTime()
@@ -111,22 +112,34 @@ export class GameDisplay {
     }
     return $wrapper[0]
   }
-  _createEscapeButton () {
-    let esc = document.createElement('button')
-    esc.addEventListener(
-      'touchstart',
-      e => {
-        e.stopPropagation()
-      },
-      true
-    )
-    esc.onclick = e => {
-      e.preventDefault()
-      this._onEscape()
+  _createTouchEscapeButton () {
+    let shown = false
+    const touchButtons = document.createElement('div')
+    touchButtons.className = 'game-display--touch-buttons'
+    this.wrapper.appendChild(touchButtons)
+    this.wrapper.addEventListener('touchstart', () => {
+      if (shown) return
+      shown = true
+      touchButtons.classList.add('is-visible')
+    }, true)
+    const createTouchButton = (className, onClick) => {
+      let button = document.createElement('button')
+      button.addEventListener(
+        'touchstart',
+        e => {
+          e.stopPropagation()
+        },
+        true
+      )
+      button.onclick = e => {
+        e.preventDefault()
+        onClick()
+      }
+      button.className = className
+      touchButtons.appendChild(button)
     }
-    esc.className = 'game-display--escape'
-    esc.appendChild(document.createTextNode('Quit'))
-    this.wrapper.appendChild(esc)
+    createTouchButton('game-display--touch-escape-button', () => this._onEscape())
+    createTouchButton('game-display--touch-replay-button', () => this._onReplay())
   }
   get context () {
     return this._context
