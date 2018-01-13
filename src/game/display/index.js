@@ -20,7 +20,9 @@ export class GameDisplay {
       panelPlacement: game.players[0].options.placement,
       infoPanelPosition: skinData.infoPanelPosition
     })
-    this._createTouchEscapeButton()
+    this._createTouchEscapeButton({
+      displayByDefault: skinData.mainInputDevice === 'touch'
+    })
   }
   setEscapeHandler (escapeHandler) {
     this._onEscape = escapeHandler
@@ -112,16 +114,20 @@ export class GameDisplay {
     }
     return $wrapper[0]
   }
-  _createTouchEscapeButton () {
-    let shown = false
+  _createTouchEscapeButton ({ displayByDefault }) {
     const touchButtons = document.createElement('div')
     touchButtons.className = 'game-display--touch-buttons'
     this.wrapper.appendChild(touchButtons)
-    this.wrapper.addEventListener('touchstart', () => {
-      if (shown) return
-      shown = true
+    if (displayByDefault) {
       touchButtons.classList.add('is-visible')
-    }, true)
+    } else {
+      let shown = false
+      this.wrapper.addEventListener('touchstart', () => {
+        if (shown) return
+        shown = true
+        touchButtons.classList.add('is-visible')
+      }, true)
+    }
     const createTouchButton = (className, onClick) => {
       let button = document.createElement('button')
       button.addEventListener(
