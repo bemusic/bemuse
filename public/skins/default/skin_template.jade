@@ -160,6 +160,7 @@ include _lib/common
     text(x='824' y='55' alpha='0.6' text='%s' data='song_artist' font='13px Roboto' fill='white' align='left')
     text(x='824' y='70' alpha='0.6' text='%s' data='song_time' font='13px Roboto' fill='white' align='left')
     text(x='1160' y='22' text='%s' data='p1_speed' font='ScoreNumber' font-src='Fonts/ScoreNumber.fnt' align='left')
+    text(x='1099' y='34' text='%s' data='p1_bpm' font='StatNumber' font-src='Fonts/StatNumber.fnt' align='left')
     text(x='260' y='29' text='%s' data='p1_stat_1' font='StatNumber' font-src='Fonts/StatNumber.fnt' align='right')
     text(x='260' y='47' text='%s' data='p1_stat_2' font='StatNumber' font-src='Fonts/StatNumber.fnt' align='right')
     text(x='260' y='65' text='%s' data='p1_stat_3' font='StatNumber' font-src='Fonts/StatNumber.fnt' align='right')
@@ -178,7 +179,7 @@ include _lib/common
         keyframe(t='0.18' ease='quadOut' alpha='0')
     object(key=('p1_note3d_' + column) pool='24')
       sprite(image=(file) x='x' y='y' anchor-x='0.5' anchor-y='1'
-        scale-x='width / 28' scale-y='width / 28')
+        scale-x='width / 26.5' scale-y='width / 28')
     group(y='689' x=(560 * ((column - 0.5) / 7 * 2 - 1) + 1280 / 2))
       animation
         keyframe(t='0' alpha='0' scale-x='2' scale-y='2')
