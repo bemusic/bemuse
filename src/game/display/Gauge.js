@@ -23,6 +23,7 @@ function nullGauge () {
 function hopeGauge () {
   let primary
   let secondary
+  let extra
   return {
     update (playerState) {
       const stats = playerState.stats
@@ -32,8 +33,9 @@ function hopeGauge () {
         const maxPossibleScore = stats.maxPossibleScore
         return Math.max(0, (maxPossibleScore - min) / (max - min))
       }
-      const hopeS = Math.min(1, getHope(500000, 555555, 510000) * 0.5)
-      primary = hopeS
+      const hopeS = getHope(500000, 555555, 510000) * 0.5
+      primary = Math.min(1, hopeS)
+      extra = Math.max(0, Math.min(1, hopeS - 1))
       if (hopeS > 0) {
         secondary = 0
       } else {
@@ -49,6 +51,9 @@ function hopeGauge () {
     },
     getSecondary () {
       return secondary
+    },
+    getExtra () {
+      return extra
     }
   }
 }

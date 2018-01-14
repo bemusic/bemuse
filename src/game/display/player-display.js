@@ -198,6 +198,7 @@ export class PlayerDisplay {
       }
       data['gauge_primary'] = gauge.getPrimary()
       data['gauge_secondary'] = gauge.getSecondary()
+      data['gauge_extra'] = gauge.getExtra()
     }
 
     function updateExplode () {

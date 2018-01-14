@@ -62,4 +62,24 @@ describe('a hope gauge', () => {
       assert(gauge.getSecondary() === 0)
     })
   })
+  describe('extra', () => {
+    it('starts at 0', () => {
+      const gauge = setup(555555, [0, 100])
+      assert(gauge.getExtra() === 0)
+    })
+    it('is not activated if hoped score would not exceed 520000', () => {
+      const gauge = setup(519999, [100, 100])
+      assert(gauge.getExtra() === 0)
+    })
+    it('is activated if hoped score would exceed 520000', () => {
+      const gauge = setup(520001, [100, 100])
+      assert(gauge.getExtra() > 0)
+    })
+    it('completely fills in if player finishes with ≥540000', () => {
+      const preGauge = setup(539999, [100, 100])
+      assert(preGauge.getExtra() < 1)
+      const gauge = setup(540000, [100, 100])
+      assert(gauge.getExtra() === 1)
+    })
+  })
 })
