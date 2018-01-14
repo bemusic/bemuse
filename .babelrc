@@ -1,6 +1,6 @@
 {
   "presets": [
-    "es2015", "es2016", "react", "stage-2"
+    "env", "react", "stage-2"
   ],
   "plugins": [
     "babel-plugin-espower"
