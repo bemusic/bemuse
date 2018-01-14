@@ -16,6 +16,9 @@ function nullGauge () {
     },
     getSecondary () {
       return 0
+    },
+    getExtra () {
+      return 0
     }
   }
 }
