@@ -1,5 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto eol=lf
+*.png binary
 
 # *.bat files must always use CRLF line endings
 *.bat text eol=crlf
