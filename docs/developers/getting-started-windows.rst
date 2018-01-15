@@ -1,7 +1,7 @@
 Getting Started (Windows)
 =========================
 
-This setup guide is based on Windows 8.1.
+This setup guide is based on Windows 10, but should also work on Windows 7 or above.
 This guide assumes some command-line knowledge.
 
 Installing Prerequisites
@@ -14,38 +14,22 @@ GitHub for Windows makes it easy to get started using Git and GitHub on Windows.
 Download GitHub for Windows from https://windows.github.com/.
 Install it and sign in using your GitHub account.
 
-Chocolatey
-~~~~~~~~~~
-
-Chocolatey lets you install applications from the Command Prompt.
-To install Chocolatey, visit https://chocolatey.org/.
-
 Node.js
 ~~~~~~~
 
 Node.js is a JavaScript runtime outside the browser.
 We use it to perform build tasks (such as compiling the source codes, running tests, static analysis, and performing deployment tasks).
-Open Command Prompt as Administrator and install Node.js using::
+Download the Node.js installer from https://nodejs.org
 
-   choco install nodejs.install
+Git for Windows
+~~~~~~~~~~~~~~~
 
-Install Git for Windows
-~~~~~~~~~~~~~~~~~~~~~~~
+While GitHub for Windows provides a nice GUI to work with git, since Bemuse is developed on multiple platforms, we recommend that we work with git using the ``git`` command-line, so we willl use Git for Windows.
+Download the Git for Windows installer from http://gitforwindows.org/.
 
-GitHub for Windows comes with PowerShell-based Git Shell, only available on Windows.
+When installing, make sure to check the "Use Git from the Windows Command Prompt" option, to add the ``git`` command to your PATH. This allows you to access the ``git``. CLI from your ``cmd`` or PowerShell.
 
-However, Bemuse is developed on multiple platforms, so we prefer to use a shell that can be used on all platforms.
-One of it is the "bash" shell.
-The easiest way to install a bash shell is to install Git for Windows::
-
-   choco install git.install
-
-Install Google Chrome
-~~~~~~~~~~~~~~~~~~~~~
-
-Google Chrome is used for automated testing, so make sure you have it installed::
-
-   choco install google-chrome-x64
+This should also install the "Git Bash", a ``bash`` environment for Windows which we will use in this guide.
 
 Restart Your Computer
 ~~~~~~~~~~~~~~~~~~~~~
@@ -63,32 +47,40 @@ then clone the following repositories into that folder using GitHub for Windows:
 
 :github:`bemusic/bemuse`
   The game repository.
-:github:`bemusic/music`
-  The music repository. This repository is huge, so it will take a while.
 
-After cloning them,
-right click the ``bemuse`` project folder and select "Git Bash here."
+After cloning them, open the root project folder with your preferred command-line.
 
-Install ``npm``
-~~~~~~~~~~~~~~~
+For ``cmd`` or PowerShell, ``cd`` into the Bemuse repository::
 
-Even though npm is already installed with Node.js,
-`the installer is buggy <http://stackoverflow.com/questions/25093276/node-js-windows-error-enoent-stat-c-users-rt-appdata-roaming-npm>`_,
-causing npm not to run.
-To fix, use ``npm`` to install itself::
+   cd bemuse
 
-   npm install npm -g
+For ``bash``, right click the ``bemuse`` project folder and select "Git Bash here."
+
+Install ``yarn``
+~~~~~~~~~~~~~~~~
+
+Note that we use ``yarn`` to install our Node.js dependencies, not ``npm``.
+
+   npm install -g yarn
 
 Install Project Dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The Bemuse project depends on hundreds of other free software projects.
-To install them, use the ``npm`` command line tool to install::
 
-   npm install
+The Bemuse project depends on hundreds of other free software projects.
+Install these dependencies by running the following command::
+
+   yarn
 
 Start the Development Server
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To start the development server, type in::
 
-   npm start
+   yarn start
+
+The game should be accessible at ``http://localhost:8080/``.
+
+Run Unit Tests
+~~~~~~~~~~~~~~
+
+To run unit tests, go to ``http://localhost:8080/?mode=test``.
