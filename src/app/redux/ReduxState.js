@@ -197,3 +197,5 @@ export const {
 export const selectReadmeTextForSelectedSong = state => state.currentSongReadme
 
 export const selectPlayMode = store => Options.playMode(store.options)
+
+export const selectRageQuittedFlag = store => store.rageQuit

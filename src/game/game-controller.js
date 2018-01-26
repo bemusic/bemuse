@@ -39,6 +39,9 @@ export class GameController {
   get state () {
     return this._state
   }
+  get latestGameTime () {
+    return this._latestGameTime
+  }
 
   // Initializes the game components and kickstarts the game loop.
   start () {
@@ -126,6 +129,7 @@ export class GameController {
     this._timer.update()
     let t = this._timer.time
     let A = this._audioInputLatency
+    this._latestGameTime = t
     this._state.update(t - A, this._input, this._timer)
     this._audio.update(t, this._state)
     this._display.update(t, this._state)
