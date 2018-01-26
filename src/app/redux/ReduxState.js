@@ -40,6 +40,8 @@ export const OPTIONS_LOADED_FROM_STORAGE = 'OPTIONS_LOADED_FROM_STORAGE'
 export const README_LOADING_STARTED = 'README_LOADING_STARTED'
 export const README_LOADED = 'README_LOADED'
 export const README_LOADING_ERRORED = 'README_LOADING_ERRORED'
+export const RAGEQUITTED = 'RAGEQUITTED'
+export const RAGEQUIT_DISMISSED = 'RAGEQUIT_DISMISSED'
 
 // Reducer
 export const reducer = combineReducers({
@@ -94,6 +96,10 @@ export const reducer = combineReducers({
     [README_LOADING_ERRORED]: action => state =>
       'Cannot download ' + action.url,
     [README_LOADED]: action => state => action.text
+  }),
+  rageQuit: createReducer(false, {
+    [RAGEQUITTED]: action => state => true,
+    [RAGEQUIT_DISMISSED]: action => state => false
   })
 })
 
