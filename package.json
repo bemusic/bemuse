@@ -166,6 +166,7 @@
     "reselect": "^2.5.1",
     "rxjs": "^5.0.0-beta.9",
     "screenfull": "^3.0.0",
+    "styled-components": "^3.0.2",
     "test-bed": "^0.77.77",
     "throat": "^2.0.2",
     "timesynchro": "^1.0.1",
