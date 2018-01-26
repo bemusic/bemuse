@@ -30,7 +30,8 @@ export function launch ({
   chart,
   options,
   saveSpeed,
-  saveLeadTime
+  saveLeadTime,
+  onRagequitted
 }) {
   // Unmute audio immediately so that it sounds on iOS.
   unmuteAudio()
@@ -101,7 +102,6 @@ export function launch ({
       loadSpec.videoOffset = +song.video_offset
     }
 
-    // allow replays...
     let replay = false
 
     do {
@@ -168,6 +168,9 @@ export function launch ({
       } else {
         Analytics.gameEscape(song, chart, state)
         replay = playResult.replay
+        if (!replay) {
+          if (song.tutorial && controller.latestGameTime > 96) onRagequitted()
+        }
       }
       controller.destroy()
     } while (replay)

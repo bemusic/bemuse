@@ -1,7 +1,10 @@
 import './UnofficialPanel.scss'
-import React from 'react'
-import PropTypes from 'prop-types'
+
+import DialogContent from 'bemuse/ui/DialogContent'
 import Panel from 'bemuse/ui/Panel'
+import PropTypes from 'prop-types'
+import React from 'react'
+
 import OptionsButton from './OptionsButton'
 
 class UnofficialPanel extends React.Component {
@@ -11,18 +14,18 @@ class UnofficialPanel extends React.Component {
 
   render () {
     return (
-      <div className='UnofficialPanel'>
+      <div style={{ maxWidth: '30em' }}>
         <Panel title='Unofficial Music Server'>
-          <div className='UnofficialPanelのcontent'>
+          <DialogContent>
             <p>
               You are now playing in an <strong>unofficial music server</strong>.
               This music server is not maintained or endorsed by Bemuse or
               Bemuse’s developers.
             </p>
-            <p className='UnofficialPanelのbuttons'>
+            <DialogContent.Buttons>
               <OptionsButton onClick={this.props.onClose}>Close</OptionsButton>
-            </p>
-          </div>
+            </DialogContent.Buttons>
+          </DialogContent>
         </Panel>
       </div>
     )

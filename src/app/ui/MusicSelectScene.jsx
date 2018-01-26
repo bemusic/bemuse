@@ -5,9 +5,9 @@ import $ from 'jquery'
 import AuthenticationPopup from 'bemuse/online/ui/AuthenticationPopup'
 import ModalPopup from 'bemuse/ui/ModalPopup'
 import MusicSelectPreviewer from 'bemuse/music-previewer/MusicSelectPreviewer'
+import PropTypes from 'prop-types'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 import Scene from 'bemuse/ui/Scene'
 import SceneHeading from 'bemuse/ui/SceneHeading'
@@ -31,6 +31,7 @@ import CustomBMS from './CustomBMS'
 import MusicInfo from './MusicInfo'
 import MusicList from './MusicList'
 import OptionsView from './Options'
+import RageQuitPopup from './RageQuitPopup'
 import UnofficialPanel from './UnofficialPanel'
 import { connectIO } from '../../impure-react/connectIO'
 
@@ -173,6 +174,8 @@ class MusicSelectScene extends React.PureComponent {
           onFinish={this.handleAuthenticationFinish}
           onBackdropClick={this.handleAuthenticationClose}
         />
+
+        <RageQuitPopup />
 
         {!!this.props.musicPreviewEnabled && (
           <MusicSelectPreviewer url={this.getPreviewUrl()} />

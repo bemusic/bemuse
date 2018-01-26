@@ -1,9 +1,9 @@
-import * as Options from '../entities/Options'
-import * as GameLauncher from '../game-launcher'
-import * as ReduxState from '../redux/ReduxState'
-import * as OptionsIO from './OptionsIO'
-
 import { createIO } from 'impure'
+
+import * as GameLauncher from '../game-launcher'
+import * as Options from '../entities/Options'
+import * as OptionsIO from './OptionsIO'
+import * as ReduxState from '../redux/ReduxState'
 
 export function selectSong (song) {
   return createIO(({ store }) => {
@@ -38,6 +38,9 @@ export function launchGame (server, song, chart) {
         },
         saveLeadTime: leadTime => {
           run(OptionsIO.updateOptions(Options.changeLeadTime(leadTime)))
+        },
+        onRagequitted: () => {
+          store.dispatch({ type: ReduxState.RAGEQUITTED })
         }
       })
     ).done()
