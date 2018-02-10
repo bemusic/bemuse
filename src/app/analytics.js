@@ -1,12 +1,11 @@
-import * as Options from './entities/Options'
-
+import ObjectID from 'bson-objectid'
 import mean from 'mean'
 import median from 'median'
 import variance from 'variance'
-import ObjectID from 'bson-objectid'
 import { MISSED } from 'bemuse/game/judgments'
 import { stringify } from 'qs'
 
+import * as Options from './entities/Options'
 import getLR2Score from './interactors/getLR2Score'
 import getNonMissedDeltas from './interactors/getNonMissedDeltas'
 
@@ -37,7 +36,18 @@ export function send (category, action, label, value, extra) {
       )
     }
   } catch (e) {
-    console.warn('[Analytics]', 'Cannot send', e)
+    console.warn('[Analytics]', 'Cannot send beacon:', e)
+  }
+  try {
+    if (window.amplitude) {
+      window.amplitude.getInstance().logEvent(`${category} / ${action}`, {
+        label,
+        value,
+        ...extra
+      })
+    }
+  } catch (e) {
+    console.warn('[Analytics]', 'Cannot send to Amplitude:', e)
   }
 }
 
