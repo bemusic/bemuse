@@ -9,6 +9,7 @@ import webpackResolve from './webpackResolve'
 
 function generateBaseConfig () {
   let config = {
+    mode: Env.production() ? 'production' : 'development',
     context: path('src'),
     resolve: webpackResolve,
     resolveLoader: {
@@ -22,7 +23,7 @@ function generateBaseConfig () {
       stats: { colors: true, chunkModules: false }
     },
     module: {
-      loaders: generateLoadersConfig(),
+      rules: generateLoadersConfig(),
       noParse: [/sinon\.js/]
     },
     plugins: [
@@ -55,15 +56,22 @@ function generateLoadersConfig () {
     {
       test: /\.jsx?$/,
       include: [path('src'), path('spec')],
-      loader: 'babel-loader?cacheDirectory'
+      use: {
+        loader: 'babel-loader',
+        options: {
+          cacheDirectory: true
+        }
+      }
     },
     {
       test: /\.js$/,
+      type: 'javascript/esm',
       include: [path('node_modules', 'pixi.js')],
       loader: 'transform-loader/cacheable?brfs'
     },
     {
       test: /\.json$/,
+      type: 'javascript/auto',
       loader: 'json-loader'
     },
     {
@@ -123,8 +131,7 @@ function applyWebConfig (config) {
   if (Env.hotModeEnabled()) {
     config.devServer.hot = true
     config.plugins.push(
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.NamedModulesPlugin()
+      new webpack.HotModuleReplacementPlugin()
     )
     config.entry.boot.unshift(
       'react-hot-loader/patch',
@@ -134,10 +141,6 @@ function applyWebConfig (config) {
         Env.serverPort(),
       'webpack/hot/only-dev-server'
     )
-  }
-
-  if (Env.production()) {
-    config.plugins.push(new webpack.optimize.UglifyJsPlugin())
   }
 
   return config
