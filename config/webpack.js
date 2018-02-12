@@ -29,11 +29,6 @@ function generateBaseConfig () {
     plugins: [
       new CompileProgressPlugin(),
       new LoadProgressPlugin(),
-      new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: JSON.stringify(String(process.env.NODE_ENV))
-        }
-      }),
       new webpack.ProvidePlugin({
         BemuseLogger: 'bemuse/logger'
       }),
@@ -72,7 +67,7 @@ function generateLoadersConfig () {
     },
     {
       test: /\.js$/,
-      type: 'javascript/esm',
+      type: 'javascript/auto',
       include: [path('node_modules', 'pixi.js')],
       loader: 'transform-loader/cacheable?brfs'
     },
