@@ -36,6 +36,13 @@ function generateBaseConfig () {
       }),
       new webpack.ProvidePlugin({
         BemuseLogger: 'bemuse/logger'
+      }),
+      // Workaround A for `file-loader` (TODO: remove this when possible):
+      // https://github.com/webpack/webpack/issues/6064
+      new webpack.LoaderOptionsPlugin({
+        options: {
+          context: process.cwd()
+        }
       })
     ]
   }
@@ -70,6 +77,10 @@ function generateLoadersConfig () {
       loader: 'transform-loader/cacheable?brfs'
     },
     {
+      test: /\.worker\.js$/,
+      use: { loader: 'worker-loader' }
+    },
+    {
       test: /\.json$/,
       type: 'javascript/auto',
       loader: 'json-loader'
@@ -80,14 +91,59 @@ function generateLoadersConfig () {
     },
     {
       test: /\.scss$/,
-      loader:
-        'style-loader!css-loader!autoprefixer-loader?browsers=last 2 version' +
-        '!sass-loader?outputStyle=expanded'
+      use: [
+        'style-loader',
+        {
+          loader: 'css-loader',
+          options: {
+            importLoaders: 1
+          }
+        },
+        {
+          loader: 'postcss-loader',
+          options: {
+            ident: 'postcss',
+            plugins: () => [
+              require('postcss-flexbugs-fixes'),
+              require('autoprefixer')({
+                browsers: ['last 2 versions'],
+                flexbox: 'no-2009'
+              })
+            ]
+          }
+        },
+        {
+          loader: 'sass-loader',
+          options: {
+            outputStyle: 'expanded'
+          }
+        }
+      ]
     },
     {
       test: /\.css$/,
-      loader:
-        'style-loader!css-loader!autoprefixer-loader?browsers=last 2 version'
+      use: [
+        'style-loader',
+        {
+          loader: 'css-loader',
+          options: {
+            importLoaders: 1
+          }
+        },
+        {
+          loader: 'postcss-loader',
+          options: {
+            ident: 'postcss',
+            plugins: () => [
+              require('postcss-flexbugs-fixes'),
+              require('autoprefixer')({
+                browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1'],
+                flexbox: 'no-2009'
+              })
+            ]
+          }
+        }
+      ]
     },
     {
       test: /\.jade$/,
@@ -95,7 +151,11 @@ function generateLoadersConfig () {
     },
     {
       test: /\.png$/,
-      loader: 'url-loader?limit=100000&mimetype=image/png'
+      loader: 'url-loader',
+      options: {
+        limit: 100000,
+        mimetype: 'image/png'
+      }
     },
     {
       test: /\.jpg$/,
@@ -107,7 +167,10 @@ function generateLoadersConfig () {
     },
     {
       test: /\.(otf|eot|svg|ttf|woff|woff2)(?:$|\?)/,
-      loader: 'url-loader?limit=8192'
+      loader: 'url-loader',
+      options: {
+        limit: 8192
+      }
     }
   ]
 }

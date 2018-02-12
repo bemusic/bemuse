@@ -1,4 +1,4 @@
-import Worker from 'worker-loader?name=song-loader/[hash].worker.js!./worker.js'
+import Worker from './song-loader.worker.js'
 
 /* eslint import/no-webpack-loader-syntax: off */
 
