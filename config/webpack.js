@@ -69,7 +69,12 @@ function generateLoadersConfig () {
       test: /\.js$/,
       type: 'javascript/auto',
       include: [path('node_modules', 'pixi.js')],
-      loader: 'transform-loader/cacheable?brfs'
+      use: {
+        loader: 'transform-loader/cacheable',
+        options: {
+          brfs: true
+        }
+      }
     },
     {
       test: /\.worker\.js$/,
