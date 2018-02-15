@@ -2,6 +2,7 @@ import gulp from 'gulp'
 import fs from 'fs'
 import path from '../config/path'
 import co from 'co'
+import Promise from 'bluebird'
 
 const readFile = Promise.promisify(fs.readFile, fs)
 
