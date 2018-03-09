@@ -6,7 +6,7 @@
 // We need this file to load as soon as possible, therefore,
 // we minimize the amount of third-party dependencies.
 
-import 'style-loader?-singleton!bemuse/ui/fonts.scss'
+import 'bemuse/ui/fonts.scss'
 import 'bemuse/ui/global.scss'
 
 import Progress from 'bemuse/progress'

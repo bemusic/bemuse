@@ -9,6 +9,7 @@ import webpackResolve from './webpackResolve'
 
 function generateBaseConfig () {
   let config = {
+    mode: Env.production() ? 'production' : 'development',
     context: path('src'),
     resolve: webpackResolve,
     resolveLoader: {
@@ -22,19 +23,21 @@ function generateBaseConfig () {
       stats: { colors: true, chunkModules: false }
     },
     module: {
-      loaders: generateLoadersConfig(),
+      rules: generateLoadersConfig(),
       noParse: [/sinon\.js/]
     },
     plugins: [
       new CompileProgressPlugin(),
       new LoadProgressPlugin(),
-      new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: JSON.stringify(String(process.env.NODE_ENV))
-        }
-      }),
       new webpack.ProvidePlugin({
         BemuseLogger: 'bemuse/logger'
+      }),
+      // Workaround A for `file-loader` (TODO: remove this when possible):
+      // https://github.com/webpack/webpack/issues/6064
+      new webpack.LoaderOptionsPlugin({
+        options: {
+          context: process.cwd()
+        }
       })
     ]
   }
@@ -55,15 +58,31 @@ function generateLoadersConfig () {
     {
       test: /\.jsx?$/,
       include: [path('src'), path('spec')],
-      loader: 'babel-loader?cacheDirectory'
+      use: {
+        loader: 'babel-loader',
+        options: {
+          cacheDirectory: true
+        }
+      }
     },
     {
       test: /\.js$/,
+      type: 'javascript/auto',
       include: [path('node_modules', 'pixi.js')],
-      loader: 'transform-loader/cacheable?brfs'
+      use: {
+        loader: 'transform-loader/cacheable',
+        options: {
+          brfs: true
+        }
+      }
+    },
+    {
+      test: /\.worker\.js$/,
+      use: { loader: 'worker-loader' }
     },
     {
       test: /\.json$/,
+      type: 'javascript/auto',
       loader: 'json-loader'
     },
     {
@@ -72,14 +91,59 @@ function generateLoadersConfig () {
     },
     {
       test: /\.scss$/,
-      loader:
-        'style-loader!css-loader!autoprefixer-loader?browsers=last 2 version' +
-        '!sass-loader?outputStyle=expanded'
+      use: [
+        'style-loader',
+        {
+          loader: 'css-loader',
+          options: {
+            importLoaders: 1
+          }
+        },
+        {
+          loader: 'postcss-loader',
+          options: {
+            ident: 'postcss',
+            plugins: () => [
+              require('postcss-flexbugs-fixes'),
+              require('autoprefixer')({
+                browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1'],
+                flexbox: 'no-2009'
+              })
+            ]
+          }
+        },
+        {
+          loader: 'sass-loader',
+          options: {
+            outputStyle: 'expanded'
+          }
+        }
+      ]
     },
     {
       test: /\.css$/,
-      loader:
-        'style-loader!css-loader!autoprefixer-loader?browsers=last 2 version'
+      use: [
+        'style-loader',
+        {
+          loader: 'css-loader',
+          options: {
+            importLoaders: 1
+          }
+        },
+        {
+          loader: 'postcss-loader',
+          options: {
+            ident: 'postcss',
+            plugins: () => [
+              require('postcss-flexbugs-fixes'),
+              require('autoprefixer')({
+                browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1'],
+                flexbox: 'no-2009'
+              })
+            ]
+          }
+        }
+      ]
     },
     {
       test: /\.jade$/,
@@ -87,7 +151,11 @@ function generateLoadersConfig () {
     },
     {
       test: /\.png$/,
-      loader: 'url-loader?limit=100000&mimetype=image/png'
+      loader: 'url-loader',
+      options: {
+        limit: 100000,
+        mimetype: 'image/png'
+      }
     },
     {
       test: /\.jpg$/,
@@ -99,7 +167,10 @@ function generateLoadersConfig () {
     },
     {
       test: /\.(otf|eot|svg|ttf|woff|woff2)(?:$|\?)/,
-      loader: 'url-loader?limit=8192'
+      loader: 'url-loader',
+      options: {
+        limit: 8192
+      }
     }
   ]
 }
@@ -123,8 +194,7 @@ function applyWebConfig (config) {
   if (Env.hotModeEnabled()) {
     config.devServer.hot = true
     config.plugins.push(
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.NamedModulesPlugin()
+      new webpack.HotModuleReplacementPlugin()
     )
     config.entry.boot.unshift(
       'react-hot-loader/patch',
@@ -134,10 +204,6 @@ function applyWebConfig (config) {
         Env.serverPort(),
       'webpack/hot/only-dev-server'
     )
-  }
-
-  if (Env.production()) {
-    config.plugins.push(new webpack.optimize.UglifyJsPlugin())
   }
 
   return config

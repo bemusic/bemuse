@@ -2,7 +2,4 @@
 
 const path = require('path')
 
-const join = path.join
-const dirname = path.dirname
-
-module.exports = (...segments) => join(dirname(__dirname), ...segments)
+module.exports = (...segments) => path.resolve(process.cwd(), ...segments)
