@@ -132,7 +132,7 @@ export class GameController {
     this._latestGameTime = t
     this._state.update(t - A, this._input, this._timer)
     this._audio.update(t, this._state)
-    this._display.update(t, this._state)
+    this._display.update(t - A, this._state)
     if (this._state.finished && this._resolvePromise) {
       this._resolvePromise({ finished: true })
       this._resolvePromise = null
