@@ -11,9 +11,9 @@ const users = [
     caption: 'User1',
     image: '/test-site/img/docusaurus.svg',
     infoLink: 'https://www.facebook.com',
-    pinned: true,
-  },
-];
+    pinned: true
+  }
+]
 
 const siteConfig = {
   title: 'Test Site' /* title for your website */,
@@ -22,8 +22,8 @@ const siteConfig = {
   baseUrl: '/test-site/' /* base url for your project */,
   projectName: 'test-site',
   headerLinks: [
-    {doc: 'users-gameplay', label: 'User docs'},
-    {doc: 'developers-getting-started', label: 'Developer docs'}
+    { doc: 'users-gameplay', label: 'User docs' },
+    { doc: 'developers-getting-started', label: 'Developer docs' }
   ],
   users,
   /* path to images for header/footer */
@@ -33,10 +33,10 @@ const siteConfig = {
   /* colors for website */
   colors: {
     primaryColor: '#2E8555',
-    secondaryColor: '#205C3B',
+    secondaryColor: '#205C3B'
   },
   /* custom fonts for website */
-  /*fonts: {
+  /* fonts: {
     myFont: [
       "Times New Roman",
       "Serif"
@@ -45,7 +45,7 @@ const siteConfig = {
       "-apple-system",
       "system-ui"
     ]
-  },*/
+  }, */
   // This copyright info is used in /core/Footer.js and blog rss/atom feeds.
   copyright:
     'Copyright © ' +
@@ -55,13 +55,13 @@ const siteConfig = {
   // projectName: 'test-site', // or set an env variable PROJECT_NAME
   highlight: {
     // Highlight.js theme to use for syntax highlighting in code blocks
-    theme: 'default',
+    theme: 'default'
   },
   scripts: ['https://buttons.github.io/buttons.js'],
   // You may provide arbitrary config keys to be used as needed by your template.
-  repoUrl: 'https://github.com/facebook/test-site',
+  repoUrl: 'https://github.com/facebook/test-site'
   /* On page navigation for the current documentation page */
   // onPageNav: 'separate',
-};
+}
 
-module.exports = siteConfig;
+module.exports = siteConfig
