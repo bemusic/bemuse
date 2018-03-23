@@ -1,10 +1,20 @@
 {
   "docs": {
-    "Docusaurus": ["doc1"],
-    "First Category": ["doc2"],
-    "Second Category": ["doc3"]
-  },
-  "docs-other": {
-    "First Category": ["doc4", "doc5"]
+    "Users": [
+      "users-gameplay",
+      "users-scoring-and-judgment",
+      "users-music-server",
+      "users-bms-support",
+      "users-bms-extensions"
+    ],
+    "Developers": [
+      "developers-getting-started",
+      "developers-getting-started-windows",
+      "developers-architecture",
+      "developers-documentation",
+      "developers-game-loop",
+      "developers-skinning",
+      "developers-options"
+    ]
   }
 }
