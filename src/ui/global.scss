@@ -21,16 +21,11 @@ a {
 }
 
 :root {
-  @media (min-aspect-ratio: 1/1) {
-    @media (max-width: 920px) {
-      font-size: 12px;
-    }
-    @media (min-width: 920px) {
-      font-size: (12 / 920) * 100vw;
-    }
+  @media (max-width: 1154px) {
+    font-size: 15px;
   }
-  @media (max-aspect-ratio: 1/1) {
-    font-size: (12 / 600) * 100vw;
+  @media (min-width: 1154px) {
+    font-size: 1.3vw;
   }
   body {
     font-size: 1rem;

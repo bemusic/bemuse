@@ -6,6 +6,9 @@
   background: white;
   margin: 0; padding: 0 4rem;
   font: bold 3.6rem $ui-font;
-  line-height: 6rem;
+  line-height: 1.67em;
   color: black;
+  @media (max-width: 800px) {
+    font-size: 6.75vw;
+  }
 }

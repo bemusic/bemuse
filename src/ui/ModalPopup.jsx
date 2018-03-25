@@ -19,12 +19,15 @@ export default class ModalPopup extends React.Component {
           className={c('ModalPopup', {
             'is-visible': this.props.visible !== false
           })}
+          onClick={this.props.onBackdropClick}
         >
-          <div
-            className='ModalPopupのbackdrop'
-            onClick={this.props.onBackdropClick}
-          />
-          <div className='ModalPopupのcontents'>{this.props.children}</div>
+          <div className='ModalPopupのscroller'>
+            <div className='ModalPopupのcontentsContainer'>
+              <div className='ModalPopupのcontents' onClick={e => e.stopPropagation()}>
+                {this.props.children}
+              </div>
+            </div>
+          </div>
         </div>
       </WarpContainer>
     )

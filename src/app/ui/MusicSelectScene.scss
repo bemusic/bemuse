@@ -71,7 +71,7 @@
     padding-bottom: 3rem;
   }
 
-  @media (orientation: portrait) {
+  @media (max-width: 1000px) {
     &のmain {
       transform: translateX(0);
       transition: 0.3s transform;
