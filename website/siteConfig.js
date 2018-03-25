@@ -1,9 +1,4 @@
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
+'use strict'
 
 /* List of projects/orgs using your project for the users page */
 const users = [
@@ -16,11 +11,11 @@ const users = [
 ]
 
 const siteConfig = {
-  title: 'Test Site' /* title for your website */,
-  tagline: 'A website for testing',
-  url: 'https://facebook.github.io' /* your website url */,
-  baseUrl: '/test-site/' /* base url for your project */,
-  projectName: 'test-site',
+  title: 'Bemuse' /* title for your website */,
+  tagline: 'online, web-based rhythm game',
+  url: 'https://bemusic.github.io' /* your website url */,
+  baseUrl: '/bemuse/' /* base url for your project */,
+  projectName: 'bemuse',
   headerLinks: [
     { doc: 'users-gameplay', label: 'User docs' },
     { doc: 'developers-getting-started', label: 'Developer docs' }
