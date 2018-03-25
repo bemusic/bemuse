@@ -4,6 +4,7 @@
 .SceneToolbar {
   background: rgba(black, 0.7);
   display: flex;
+  flex-wrap: wrap;
   padding: 0 0.5rem;
   font-size: 1rem;
   > a, > span {

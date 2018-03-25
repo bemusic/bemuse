@@ -2,7 +2,7 @@
 @import "~bemuse/ui/common";
 
 .MusicListItemChart {
-  $size: 5vmin;
+  $size: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,7 +11,7 @@
   height: $size;
   border: 1px solid rgba(#000, 0.3);
   border-radius: $size / 5;
-  font-size: 2.5vmin;
+  font-size: 1rem;
   color: rgba(#000, 0.6);
   text-align: center;
   &.is-played {
@@ -23,7 +23,7 @@
     font-weight: bold;
   }
   &.is-selected {
-    box-shadow: inset 0 0 1vmin rgba(white, 0.5);
+    box-shadow: inset 0 0 0.4rem rgba(white, 0.5);
     border-width: 2px;
   }
 }
