@@ -8,47 +8,55 @@ This page lists various options for configuring game objects.
 
 ## Options for Loading Game
 
-  - bms  
-    A `Resource` object for the BMS file to play.
+<dl>
+  <dt>bms</dt>
+  <dd>A <code>Resource</code> object for the BMS file to play.</dd>
 
-  - assets  
-    A `Resources` object that contains the BMS resources needed by the
-    BMS file: keysounds, images, and movies, for example.
+  <dt>assets</dt>
+  <dd>A <code>Resources</code> object that contains the BMS resources needed by the
+    BMS file: keysounds, images, and movies, for example.</dd>
 
-  - metadata  
-    An `Object` containing [song metadata](#song-metadata).
+  <dt>metadata</dt>
+  <dd>An <code>Object</code> containing <a href="#song-metadata">song metadata</a>.</dd>
 
-  - options  
-    An `Object` containing [game options](#game-options).
+  <dt>options</dt>
+  <dd>An <code>Object</code> containing <a href="#game-options">game options</a>.</dd>
+</dl>
 
 ## Song Metadata
 
-  - title  
-    A `String` representing the song title.
+<dl>
+  <dt>title</dt>
+  <dd>A <code>String</code> representing the song title.</dd>
 
-  - artist  
-    A `String` representing the song's artist.
+  <dt>artist</dt>
+  <dd>A <code>String</code> representing the song's artist.</dd>
 
-  - genre  
-    A `String` representing the song's genre.
+  <dt>genre</dt>
+  <dd>A <code>String</code> representing the song's genre.</dd>
 
-  - subtitles  
-    A `Array` of `String` representing the song's subtitles.
+  <dt>subtitles</dt>
+  <dd>A <code>Array</code> of <code>String</code> representing the song's subtitles.</dd>
 
-  - subartists  
-    A `Array` of `String` representing the song's sub-artists. This may
-    include BGA maker and note charter.
+  <dt>subartists</dt>
+  <dd>A <code>Array</code> of <code>String</code> representing the song's sub-artists. This may
+    include BGA maker and note charter.</dd>
 
-  - volwav  
-    The playback volume of the BMS. This metadata overrides the [BMS
-    \#VOLWAV](http://hitkey.nekokan.dyndns.info/cmds.htm#VOLWAV) header.
+  <dt>volwav</dt>
+  <dd>The playback volume of the BMS. This metadata overrides the
+    <a href="http://hitkey.nekokan.dyndns.info/cmds.htm#VOLWAV">BMS #VOLWAV</a> header.</dd>
+</dl>
 
 ## Game Options
 
-  - players  
-    An `array` of [player options](#player-options).
+<dl>
+  <dt>players</dt>
+  <dd>An <code>Array</code> of <a href="#player-options">player options</a>.</dd>
+</dl>
 
 ## Player Options
 
-  - speed  
-    The speed effector.
+<dl>
+  <dt>speed</dt>
+  <dd>The speed effector.</dd>
+</dl>

@@ -7,6 +7,18 @@ h1, h2, h3, h4 {
   font-family: $baseFont;
 }
 
+dl {
+  padding-top: 10px;
+  line-height: 1.7;
+}
+dl dt {
+  font-weight: bold;
+}
+dl dd {
+  padding-left: 24px;
+  margin-bottom: 10px;
+}
+
 .fixedHeaderContainer header h2 {
   font-family: $baseFont;
 }
