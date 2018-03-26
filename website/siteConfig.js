@@ -27,20 +27,20 @@ const siteConfig = {
   favicon: 'img/favicon.png',
   /* colors for website */
   colors: {
-    primaryColor: '#f08fab',
-    secondaryColor: '#dd819b'
+    primaryColor: '#bc6374',
+    secondaryColor: '#9d233c',
+    greenColor: '#ac8',
+    blueColor: '#8ac'
   },
   /* custom fonts for website */
-  /* fonts: {
-    myFont: [
-      "Times New Roman",
-      "Serif"
-    ],
-    myOtherFont: [
-      "-apple-system",
-      "system-ui"
+  fonts: {
+    baseFont: [
+      'Source Sans Pro',
+      'Segoe UI',
+      'Helvetica Neue',
+      'sans-serif'
     ]
-  }, */
+  },
   // This copyright info is used in /core/Footer.js and blog rss/atom feeds.
   copyright:
     'Copyright © ' +
@@ -52,6 +52,9 @@ const siteConfig = {
     // Highlight.js theme to use for syntax highlighting in code blocks
     theme: 'default'
   },
+  stylesheets: [
+    'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300italic'
+  ],
   scripts: [
     'https://buttons.github.io/buttons.js',
     'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML'

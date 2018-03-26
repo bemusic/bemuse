@@ -35,21 +35,15 @@ class Footer extends React.Component {
           </a>
           <div>
             <h5>Docs</h5>
-            <a href={this.docUrl('doc1.html', this.props.language)}>
-              Getting Started (or other categories)
+            <a href={this.docUrl('users-gameplay.html', this.props.language)}>
+              User Documentation
             </a>
-            <a href={this.docUrl('doc2.html', this.props.language)}>
-              Guides (or other categories)
-            </a>
-            <a href={this.docUrl('doc3.html', this.props.language)}>
-              API Reference (or other categories)
+            <a href={this.docUrl('developers-getting-started.html', this.props.language)}>
+              Developer Documentation
             </a>
           </div>
           <div>
             <h5>Community</h5>
-            <a href={this.pageUrl('users.html', this.props.language)}>
-              User Showcase
-            </a>
             <a
               href='http://stackoverflow.com/questions/tagged/'
               target='_blank'
@@ -63,19 +57,7 @@ class Footer extends React.Component {
           </div>
           <div>
             <h5>More</h5>
-            <a href={this.props.config.baseUrl + 'blog'}>Blog</a>
-            <a href='https://github.com/'>GitHub</a>
-            <a
-              className='github-button'
-              href={this.props.config.repoUrl}
-              data-icon='octicon-star'
-              data-count-href='/facebook/docusaurus/stargazers'
-              data-show-count={true}
-              data-count-aria-label='# stargazers on GitHub'
-              aria-label='Star this project on GitHub'
-            >
-              Star
-            </a>
+            <a href={this.props.config.repoUrl}>GitHub</a>
           </div>
         </section>
 

@@ -1,7 +1,88 @@
-/* Prevent MathJax wrapper from overlapping */
-.math {
-  max-width: 100%;
-  overflow-x: auto;
+/* Font resets */
+html, body {
+  font-family: $baseFont;
+}
+
+h1, h2, h3, h4 {
+  font-family: $baseFont;
+}
+
+.fixedHeaderContainer header h2 {
+  font-family: $baseFont;
+}
+
+.container .wrapper .imageAlignSide p {
+  text-align: left;
+}
+
+/* Overridden Docusaurus styles */
+
+/**
+ * 1. Create a background-opacity effect.
+ */
+.homeContainer {
+  background-size: cover;
+  background-position: bottom;
+}
+.homeContainer .homeSplashFade {
+  background-color: rgba(0, 0, 0, 0.4); /* 1 */
+}
+
+@media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
+}
+
+@media only screen and (min-width: 1024px) {
+  .button {
+    font-size: 18px;
+    padding: 12px 24px;
+  }
+}
+
+@media only screen and (max-width: 1023px) {
+  /* Prevent MathJax wrapper from overlapping */
+  .math {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .homeContainer .homeWrapper .projectLogo {
+    flex-direction: column;
+    position: initial;
+    justify-content: center;
+  }
+
+  .homeContainer .homeWrapper .projectLogo .tagline {
+    display: block;
+    font-size: 1.5em;
+    line-height: 1em;
+    font-weight: 300;
+    color: #e9e8e7;
+    font-style: italic;
+    margin: 0;
+  }
+
+  .projectTitle {
+    display: none;
+  }
+
+  /* Feature block */
+  .container .wrapper h2 {
+    font-size: 32px;
+  }
+
+  /* Product showcase */
+  .productShowcaseSection h2 {
+    font-size: 38px;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+}
+
+@media only screen and (min-width: 1500px) {
 }
 
 /* Admonition styles copied over from Sphinx's base CSS */
@@ -20,6 +101,7 @@
 .admonition .admonition-title {
   font-weight: bold;
   display: block;
+  max-width: 100% !important;
   margin: -12px;
   padding: 6px 12px !important;
   margin-bottom: 12px;
@@ -66,6 +148,10 @@
   padding: 12px;
   margin-bottom: 24px;
 }
+.admonition.srcref .admonition-title {
+  background: #ccc;
+  color: #666;
+}
 .admonition.srcref.outdated {
   background: #c55;
   color: #fff;
@@ -92,19 +178,4 @@
 }
 .admonition.srcref li a {
   font-style: normal;
-}
-
-@media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
-}
-
-@media only screen and (min-width: 1024px) {
-}
-
-@media only screen and (max-width: 1023px) {
-}
-
-@media only screen and (min-width: 1400px) {
-}
-
-@media only screen and (min-width: 1500px) {
 }

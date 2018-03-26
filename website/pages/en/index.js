@@ -1,9 +1,4 @@
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
+'use strict'
 
 const React = require('react')
 
@@ -43,7 +38,9 @@ Button.defaultProps = {
 }
 
 const SplashContainer = props => (
-  <div className='homeContainer'>
+  <div className='homeContainer' style={{
+    backgroundImage: `url(${imgUrl('bg-title.jpg')})`
+  }}>
     <div className='homeSplashFade'>
       <div className='wrapper homeWrapper'>{props.children}</div>
     </div>
@@ -52,6 +49,7 @@ const SplashContainer = props => (
 
 const Logo = props => (
   <div className='projectLogo'>
+    {siteConfig.tagline && <div className='tagline'>{siteConfig.tagline}</div>}
     <img src={props.img_src} />
   </div>
 )
@@ -76,13 +74,13 @@ class HomeSplash extends React.Component {
     let language = this.props.language || ''
     return (
       <SplashContainer>
-        <Logo img_src={imgUrl('docusaurus.svg')} />
+        <Logo img_src={imgUrl('logo.png')} />
         <div className='inner'>
           <ProjectTitle />
           <PromoSection>
-            <Button href='#try'>Try It Out</Button>
-            <Button href={docUrl('doc1.html', language)}>Example Link</Button>
-            <Button href={docUrl('doc2.html', language)}>Example Link 2</Button>
+            <Button href='https://bemuse.ninja' target='blank' rel='noopener noreferrer'>Try It Out</Button>
+            <Button href={docUrl('users-gameplay.html', language)}>Read User Docs</Button>
+            <Button href={docUrl('developers-getting-started.html', language)}>Read Developer Docs</Button>
           </PromoSection>
         </div>
       </SplashContainer>
@@ -104,16 +102,16 @@ const Features = props => (
   <Block layout='fourColumn'>
     {[
       {
-        content: 'This is the content of my feature',
+        content: 'Spanning multiple genres, instantly on your browser.',
         image: imgUrl('docusaurus.svg'),
         imageAlign: 'top',
-        title: 'Feature One'
+        title: '50+ Songs'
       },
       {
-        content: 'The content of my second feature',
+        content: 'Play directly from your browser. No extra plugins required.',
         image: imgUrl('docusaurus.svg'),
         imageAlign: 'top',
-        title: 'Feature Two'
+        title: 'Web-based'
       }
     ]}
   </Block>
@@ -124,8 +122,10 @@ const FeatureCallout = props => (
     className='productShowcaseSection paddingBottom'
     style={{ textAlign: 'center' }}
   >
-    <h2>Feature Callout</h2>
-    <MarkdownBlock>These are features of this project</MarkdownBlock>
+    <h2>Main feature TODO</h2>
+    <MarkdownBlock>
+      {'Brief description of the game TODO'}
+    </MarkdownBlock>
   </div>
 )
 
@@ -208,10 +208,9 @@ class Index extends React.Component {
         <div className='mainContainer'>
           <Features />
           <FeatureCallout />
+          <Description />
           <LearnHow />
           <TryOut />
-          <Description />
-          <Showcase language={language} />
         </div>
       </div>
     )

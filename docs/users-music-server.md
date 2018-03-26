@@ -81,25 +81,27 @@ distributed through npm. First, you need to install
 SoX is a tool to process and convert audio files. Bemuse tools uses it
 to convert the keysounds into a web-friendly format.
 
-Windows users should list SoX in their System PATH by going to Control
-Panel\>System and Security\>System\>Advanced System
-Setitngs\>Environment Variables or by setting the PATH variable in CMD.
-Please see TechNet documentation for more info:
+Windows users should list SoX in their System PATH by going to
+`Control Panel > System and Security > System > Advanced System Settings > Environment Variables`
+or by setting the PATH variable in CMD.
+
+Please see TechNet documentation for more info:<br>
 <https://technet.microsoft.com/en-us/library/bb490963.aspx?f=255&MSPPError=-2147217396>
 
 ### QuickTime and qaac (Windows only)
 
 Mac OS X already comes with QuickTime and a command-line M4A encoder.
-Windows, on the other hand, does not. Therefore, Windows users needs to
+Windows, on the other hand, does not. Therefore, Windows users need to
 install [qaac](https://sites.google.com/site/qaacpage/). It is a command
 to convert audio files into MP4 audio (AAC) for browsers that doesn't
 support OGG. Currently, Bemuse Tools looks for the 32-bit executable for
 qaac; don't just install the 64-bit executable.
 
-Windows users should list qaac in their System PATH by going to Control
-Panel\>System and Security\>System\>Advanced System
-Setitngs\>Environment Variables or by setting the PATH variable in CMD.
-Please see TechNet documentation for more info:
+Windows users should list qaac in their System PATH by going to
+`Control Panel > System and Security > System > Advanced System Setitngs > Environment Variables`
+or by setting the PATH variable in CMD.
+
+Please see TechNet documentation for more info:<br>
 <https://technet.microsoft.com/en-us/library/bb490963.aspx?f=255&MSPPError=-2147217396>
 
 ## Installing Bemuse Tools
