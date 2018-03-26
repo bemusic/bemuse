@@ -7,9 +7,7 @@
 /* Admonition styles copied over from Sphinx's base CSS */
 
 .admonition {
-  background: #eee;
   font-size: 0.9em;
-  color: #777;
   padding: 12px;
   margin-top: 24px;
 }
@@ -22,8 +20,6 @@
 .admonition .admonition-title {
   font-weight: bold;
   display: block;
-  background: #ccc;
-  color: #666;
   margin: -12px;
   padding: 6px 12px !important;
   margin-bottom: 12px;
@@ -37,6 +33,17 @@
 
 .admonition.warning .admonition-title {
   background: #f0b37e;
+}
+
+/* Admonition: important */
+
+.admonition.important {
+  background: #dbfaf4;
+}
+
+.admonition.important .admonition-title {
+  background: #1abc9c;
+  color: #fff;
 }
 
 /* Admonition: note */
