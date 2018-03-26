@@ -195,11 +195,11 @@ table tr th {
   color: #666;
 }
 .admonition.srcref.outdated {
-  background: #c55;
+  background: #e99;
   color: #fff;
 }
 .admonition.srcref.outdated .admonition-title {
-  background: #e99;
+  background: #c55;
   color: #fcc;
 }
 .admonition .srcref.outdated a {

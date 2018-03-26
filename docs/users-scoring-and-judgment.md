@@ -20,10 +20,10 @@ according to this table:
 |     MISSED!    |                  -- |             0% |
 
 <div class="srcref admonition">
-<p class="admonition-title">Source code reference</p>
-<ul>
-<li>src/game/judgments.js @ judgment timegate @ 705acbb3</li>
-<li>src/game/judgments.js @ judgment weight @ 75a77b67</li>
+<p class="first admonition-title">Source code reference</p>
+<ul class="last simple">
+<li>Defined at <a class="reference external" href="https://github.com/bemusic/bemuse/blob/bf96099/src/game/judgments.js#L7-14">src/game/judgments.js:7-14</a> (judgment timegate)</li>
+<li>Defined at <a class="reference external" href="https://github.com/bemusic/bemuse/blob/bf96099/src/game/judgments.js#L51-58">src/game/judgments.js:51-58</a> (judgment weight)</li>
 </ul>
 </div>
 
@@ -68,11 +68,11 @@ that level gradually decreases. Therefore, the minimum combo is
 |           4 |              40% |          92 |
 |           5 |              20% |         161 |
 
-<div class="srcref admonition">
-<p class="admonition-title">Source code reference</p>
-<ul>
-<li>src/game/state/player-stats.js @ score @ 8e0de318</li>
-<li>src/game/state/player-stats.js @ combo @ 382c4ed7</li>
+<div class="srcref outdated admonition">
+<p class="first admonition-title">Source code reference</p>
+<ul class="last simple">
+<li class="outdated">Defined at <a class="reference external" href="https://github.com/bemusic/bemuse/blob/bf96099/src/game/state/player-stats.js#L27-29">src/game/state/player-stats.js:27-29</a> (score) [outdated: 17be8477]</li>
+<li>Defined at <a class="reference external" href="https://github.com/bemusic/bemuse/blob/bf96099/src/game/state/player-stats.js#L99-106">src/game/state/player-stats.js:99-106</a> (combo)</li>
 </ul>
 </div>
 
@@ -90,8 +90,8 @@ After playing the game, the grade is calculated according to this table:
 |   S   |        500000 |
 
 <div class="srcref admonition">
-<p class="admonition-title">Source code reference</p>
-<ul>
-<li>src/rules/grade.js @ grade @ a8658ca8</li>
+<p class="first admonition-title">Source code reference</p>
+<ul class="last simple">
+<li>Defined at <a class="reference external" href="https://github.com/bemusic/bemuse/blob/bf96099/src/rules/grade.js#L2-12">src/rules/grade.js:2-12</a> (grade)</li>
 </ul>
 </div>
