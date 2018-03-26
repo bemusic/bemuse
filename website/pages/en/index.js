@@ -99,16 +99,22 @@ const Block = props => (
 )
 
 const Features = props => (
-  <Block layout='fourColumn'>
+  <Block background='highlight' layout='threeColumn'>
     {[
       {
-        content: 'Spanning multiple genres, instantly on your browser.',
+        content: 'Handpicked from various genres.',
         image: imgUrl('docusaurus.svg'),
         imageAlign: 'top',
         title: '50+ Songs'
       },
       {
-        content: 'Play directly from your browser. No extra plugins required.',
+        content: 'Compete with other players online.',
+        image: imgUrl('docusaurus.svg'),
+        imageAlign: 'top',
+        title: 'Online Rankings'
+      },
+      {
+        content: 'Play instantly from your browser.<br>No extra plugins required.',
         image: imgUrl('docusaurus.svg'),
         imageAlign: 'top',
         title: 'Web-based'
@@ -119,24 +125,51 @@ const Features = props => (
 
 const FeatureCallout = props => (
   <div
-    className='productShowcaseSection paddingBottom'
+    className='productShowcaseSection highlightBackground'
     style={{ textAlign: 'center' }}
   >
-    <h2>Main feature TODO</h2>
-    <MarkdownBlock>
-      {'Brief description of the game TODO'}
-    </MarkdownBlock>
+    <PromoSection>
+      <Button href='https://bemuse.ninja' target='blank' rel='noopener noreferrer'>Try It Out</Button>
+      <Button href={docUrl('users-gameplay.html', props.language || '')}>Read User Docs</Button>
+      <Button href={docUrl('developers-getting-started.html', props.language || '')}>Read Developer Docs</Button>
+    </PromoSection>
   </div>
+)
+
+const BMSMode = props => (
+  <Block background='light'>
+    {[
+      {
+        content: `You can play using an [IIDX controller](https://www.youtube.com/watch?v=EOgI37Myqvk) or [MIDI controller](https://www.facebook.com/bemusegame/videos/985712734835136/).`,
+        image: imgUrl('screenshots/gameplay-bms.jpg'),
+        imageAlign: 'right',
+        title: 'BMS Mode'
+      }
+    ]}
+  </Block>
+)
+
+const KeyboardMode = props => (
+  <Block>
+    {[
+      {
+        content: 'Play along the music with your keyboard.',
+        image: imgUrl('screenshots/gameplay-kbd.jpg'),
+        imageAlign: 'left',
+        title: 'Keyboard Mode'
+      }
+    ]}
+  </Block>
 )
 
 const LearnHow = props => (
   <Block background='light'>
     {[
       {
-        content: 'Talk about learning how to use this',
-        image: imgUrl('docusaurus.svg'),
+        content: 'TODO: Custom server setup',
+        image: imgUrl('screenshots/music-select.jpg'),
         imageAlign: 'right',
-        title: 'Learn How'
+        title: 'Custom Servers'
       }
     ]}
   </Block>
@@ -146,57 +179,14 @@ const TryOut = props => (
   <Block id='try'>
     {[
       {
-        content: 'Talk about trying this out',
-        image: imgUrl('docusaurus.svg'),
+        content: `Bemuse is free and open source (licensed under [AGPLv3](https://github.com/bemusic/bemuse/blob/master/LICENSE)).\n\nContributing is also easy! Read through our [developer documentation](${docUrl('developers-getting-started.html')}) for more info.`,
+        image: imgUrl('screenshots/oss.png'),
         imageAlign: 'left',
-        title: 'Try it Out'
+        title: 'Open Source'
       }
     ]}
   </Block>
 )
-
-const Description = props => (
-  <Block background='dark'>
-    {[
-      {
-        content: 'This is another description of how this project is useful',
-        image: imgUrl('docusaurus.svg'),
-        imageAlign: 'right',
-        title: 'Description'
-      }
-    ]}
-  </Block>
-)
-
-const Showcase = props => {
-  if ((siteConfig.users || []).length === 0) {
-    return null
-  }
-  const showcase = siteConfig.users
-    .filter(user => {
-      return user.pinned
-    })
-    .map((user, i) => {
-      return (
-        <a href={user.infoLink} key={i}>
-          <img src={user.image} title={user.caption} />
-        </a>
-      )
-    })
-
-  return (
-    <div className='productShowcaseSection paddingBottom'>
-      <h2>{"Who's Using This?"}</h2>
-      <p>This project is used by all these people</p>
-      <div className='logos'>{showcase}</div>
-      <div className='more-users'>
-        <a className='button' href={pageUrl('users.html', props.language)}>
-          More {siteConfig.title} Users
-        </a>
-      </div>
-    </div>
-  )
-}
 
 class Index extends React.Component {
   render () {
@@ -207,10 +197,11 @@ class Index extends React.Component {
         <HomeSplash language={language} />
         <div className='mainContainer'>
           <Features />
-          <FeatureCallout />
-          <Description />
+          <BMSMode />
+          <KeyboardMode />
           <LearnHow />
           <TryOut />
+          <FeatureCallout />
         </div>
       </div>
     )

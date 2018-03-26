@@ -19,6 +19,10 @@ dl dd {
   margin-bottom: 10px;
 }
 
+table tr th {
+  font-family: $baseFont;
+}
+
 .fixedHeaderContainer header h2 {
   font-family: $baseFont;
 }
@@ -40,12 +44,30 @@ dl dd {
   background-color: rgba(0, 0, 0, 0.4); /* 1 */
 }
 
+.productShowcaseSection {
+  padding: 20px !important;
+}
+.productShowcaseSection.highlightBackground h2 {
+  color: #fff;
+  font-size: 30px;
+  line-height: 1em;
+  margin-top: 20px;
+  text-align: center;
+  padding: 10px 0;
+}
+
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
 }
 
 @media only screen and (max-width: 735px) {
   footer .sitemap div {
     padding-top: 10px;
+  }
+
+  .gridBlock .twoByGridBlock,
+  .gridBlock .threeByGridBlock,
+  .gridBlock .fourByGridBlock {
+    padding: 20px 0 !important;
   }
 }
 
@@ -70,7 +92,7 @@ dl dd {
 
   .homeContainer .homeWrapper .projectLogo .tagline {
     display: block;
-    font-size: 1.5em;
+    font-size: 2em;
     line-height: 1em;
     font-weight: 300;
     color: #e9e8e7;
