@@ -19,9 +19,12 @@ according to this table:
 |     OFFBEAT!   |                 200 |             0% |
 |     MISSED!    |                  -- |             0% |
 
-<div class="src">
-src/game/judgments.js @ judgment timegate @ 705acbb3
-src/game/judgments.js @ judgment weight @ 75a77b67
+<div class="srcref admonition">
+<p class="admonition-title">Source code reference</p>
+<ul>
+<li>src/game/judgments.js @ judgment timegate @ 705acbb3</li>
+<li>src/game/judgments.js @ judgment weight @ 75a77b67</li>
+</ul>
 </div>
 
 ## Scoring
@@ -29,34 +32,33 @@ src/game/judgments.js @ judgment weight @ 75a77b67
 The player's score is calculated from this formula:
 
 
-```
-.. math::
+<div class="math">
+  \[\begin{split}\text{score} &amp;= 500000 \times \text{accuracy}
+    + 55555 \times \text{combo bonus} \\[10pt]
+  \text{accuracy} &amp;= \frac{
+    \sum\text{accuracy score}
+  }{\sum\text{total combos}} \\[10pt]
+  \text{combo bonus} &amp;= \frac{
+    \sum_{c \in \text{combos}}{\text{combo level}(c)}
+  }{\sum_{i = 1}^{\text{total combos}}{\text{combo level}(i)}} \\[10pt]
+  \text{combo level}(c) &amp;= \begin{cases}
+    0 &amp; c = 0 \\
+    1 &amp; 1 \leq c \leq 22 \\
+    2 &amp; 23 \leq c \leq 50 \\
+    3 &amp; 51 \leq c \leq 91 \\
+    4 &amp; 92 \leq c \leq 160 \\
+    6 &amp; 161 \leq c
+  \end{cases}\end{split}\]
+</div>
 
-   \text{score} &= 500000 \times \text{accuracy}
-     + 55555 \times \text{combo bonus} \\[10pt]
-   \text{accuracy} &= \frac{
-     \sum\text{accuracy score}
-   }{\sum\text{total combos}} \\[10pt]
-   \text{combo bonus} &= \frac{
-     \sum_{c \in \text{combos}}{\text{combo level}(c)}
-   }{\sum_{i = 1}^{\text{total combos}}{\text{combo level}(i)}} \\[10pt]
-   \text{combo level}(c) &= \begin{cases}
-     0 & c = 0 \\
-     1 & 1 \leq c \leq 22 \\
-     2 & 23 \leq c \leq 50 \\
-     3 & 51 \leq c \leq 91 \\
-     4 & 92 \leq c \leq 160 \\
-     6 & 161 \leq c
-   \end{cases}
-```
 
 Here's how the combo level formula comes from. Let's assume, for
 simplicity, a player with 99% hit rate, regardless of difficulty. The
-probability that the player will attain \(c\) combos is \(0.99^c\).
+probability that the player will attain \\(c\\) combos is \\(0.99^c\\).
 
 Now we have 6 combo levels. The probability that the player will attain
 that level gradually decreases. Therefore, the minimum combo is
-\(\left\lceil\log_{0.99} p\right\rceil\).
+\\(\left\lceil\log_{0.99} p\right\rceil\\).
 
 | Combo Level | Max. Probability |  Min. Combo |
 | -----------:| ----------------:| -----------:|
@@ -66,11 +68,12 @@ that level gradually decreases. Therefore, the minimum combo is
 |           4 |              40% |          92 |
 |           5 |              20% |         161 |
 
-<div class="src">
-
-src/game/state/player-stats.js @ score @ 8e0de318
-src/game/state/player-stats.js @ combo @ 382c4ed7
-
+<div class="srcref admonition">
+<p class="admonition-title">Source code reference</p>
+<ul>
+<li>src/game/state/player-stats.js @ score @ 8e0de318</li>
+<li>src/game/state/player-stats.js @ combo @ 382c4ed7</li>
+</ul>
 </div>
 
 # Grading
@@ -86,8 +89,9 @@ After playing the game, the grade is calculated according to this table:
 |   A   |        450000 |
 |   S   |        500000 |
 
-<div class="src">
-
-src/rules/grade.js @ grade @ a8658ca8
-
+<div class="srcref admonition">
+<p class="admonition-title">Source code reference</p>
+<ul>
+<li>src/rules/grade.js @ grade @ a8658ca8</li>
+</ul>
 </div>

@@ -1,5 +1,87 @@
 /* your custom css */
 
+/* Admonition styles copied over from Sphinx's base CSS */
+
+.admonition {
+  background: #eee;
+  font-size: 0.9em;
+  color: #777;
+  padding: 12px;
+  margin-top: 24px;
+}
+
+/* First paragraph after `.admonition-title` */
+.admonition p:nth-child(2) {
+  padding-top: 0 !important;
+}
+
+.admonition .admonition-title {
+  font-weight: bold;
+  display: block;
+  background: #ccc;
+  color: #666;
+  margin: -12px;
+  padding: 6px 12px !important;
+  margin-bottom: 12px;
+}
+
+/* Admonition: warning */
+
+.admonition.warning {
+  background: #ffedcc;
+}
+
+.admonition.warning .admonition-title {
+  background: #f0b37e;
+}
+
+/* Admonition: note */
+
+.admonition.note {
+  background: #e7f2fa;
+}
+
+.admonition.note .admonition-title {
+  background: #6ab0de;
+}
+
+/* Admonition: srcref */
+
+.admonition.srcref {
+  background: #eee;
+  font-size: 0.9em;
+  color: #777;
+  padding: 12px;
+  margin-bottom: 24px;
+}
+.admonition.srcref.outdated {
+  background: #c55;
+  color: #fff;
+}
+.admonition.srcref.outdated .admonition-title {
+  background: #e99;
+  color: #fcc;
+}
+.admonition .srcref.outdated a {
+  color: #ffa;
+}
+.admonition.srcref ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.admonition.srcref ul li {
+  font-style: italic;
+  list-style: none;
+  margin: 0;
+}
+.admonition.srcref ul li.outdated {
+  text-shadow: 0 0 1px red, 0 0 3px red, 0 0 5px red;
+}
+.admonition.srcref li a {
+  font-style: normal;
+}
+
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
 }
 

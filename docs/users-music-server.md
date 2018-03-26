@@ -4,18 +4,9 @@ title: Running Your Own Music Server
 sidebar_label: Music Server
 ---
 
-# Running Your Own Music Server
-
-<div class="warning">
-
-<div class="admonition-title">
-
-Warning
-
-</div>
-
-This section is under construction.
-
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This section is under construction.</p>
 </div>
 
 Bemuse comes with a default music server to help new players get
@@ -30,16 +21,18 @@ A music server is simply a web server that hosts the files in a specific
 structure, which allows Bemuse to find the list of songs and the song
 data. A Bemuse music server has the following structure:
 
-  - (root of the server)
-      - index.json
-      - song1/
-          - bms1.bme
-          - bms2.bml
-          - assets/
-              - metadata.json
-              - (something).bemuse
+```
+(root of the server)
+|-- index.json
+`-- song1/
+    |-- bms1.bme
+    |-- bms2.bml
+    `-- assets/
+        |-- metadata.json
+        `-- (something).bemuse
+```
 
-### index.json
+### `index.json`
 
 This file holds the list of all available songs and charts in this
 server. It also includes some metadata information.
@@ -153,5 +146,4 @@ Upload the files to the web server. Also set up CORS on the server to
 allow Bemuse to access.
 
 Direct players to your server with the following url:
-[http://bemuse.ninja/?server=\[SERVER](http://bemuse.ninja/?server=%5BSERVER)
-URL\] **TODO**: More detailed instructions
+`http://bemuse.ninja/?server=[SERVER_URL]` **TODO**: More detailed instructions

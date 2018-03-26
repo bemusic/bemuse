@@ -14,12 +14,9 @@ development.
 
 ## Setting Up the Project
 
-<div class="note">
-<div class="admonition-title">
-Note
-</div>
-
-For Windows users, there (will be) a dedicated quick-start guide.
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For Windows users, there (will be) a dedicated quick-start guide.</p>
 </div>
 
 First, you should create a folder for Bemuse development:

@@ -27,8 +27,8 @@ const siteConfig = {
   favicon: 'img/favicon.png',
   /* colors for website */
   colors: {
-    primaryColor: '#2E8555',
-    secondaryColor: '#205C3B'
+    primaryColor: '#f08fab',
+    secondaryColor: '#dd819b'
   },
   /* custom fonts for website */
   /* fonts: {
@@ -52,9 +52,12 @@ const siteConfig = {
     // Highlight.js theme to use for syntax highlighting in code blocks
     theme: 'default'
   },
-  scripts: ['https://buttons.github.io/buttons.js'],
+  scripts: [
+    'https://buttons.github.io/buttons.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+  ],
   // You may provide arbitrary config keys to be used as needed by your template.
-  repoUrl: 'https://github.com/facebook/test-site'
+  repoUrl: 'https://github.com/bemusic/bemuse'
   /* On page navigation for the current documentation page */
   // onPageNav: 'separate',
 }
