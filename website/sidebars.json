@@ -14,7 +14,8 @@
       "developers-documentation",
       "developers-game-loop",
       "developers-skinning",
-      "developers-options"
+      "developers-options",
+      "developers-colors"
     ]
   }
 }
