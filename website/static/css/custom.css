@@ -45,15 +45,17 @@ table tr th {
 }
 
 .productShowcaseSection {
-  padding: 20px !important;
+  padding: 20px;
 }
-.productShowcaseSection.highlightBackground h2 {
-  color: #fff;
+.productShowcaseSection h2 {
   font-size: 30px;
   line-height: 1em;
   margin-top: 20px;
   text-align: center;
   padding: 10px 0;
+}
+.productShowcaseSection.highlightBackground h2 {
+  color: #fff;
 }
 
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {

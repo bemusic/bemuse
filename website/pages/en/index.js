@@ -99,7 +99,7 @@ const Block = props => (
 )
 
 const Features = props => (
-  <Block background='highlight' layout='threeColumn'>
+  <Block background='highlight' layout='twoColumn'>
     {[
       {
         content: 'Handpicked from various genres.',
@@ -112,18 +112,22 @@ const Features = props => (
         image: imgUrl('docusaurus.svg'),
         imageAlign: 'top',
         title: 'Online Rankings'
-      },
-      {
-        content: 'Play instantly from your browser.<br>No extra plugins required.',
-        image: imgUrl('docusaurus.svg'),
-        imageAlign: 'top',
-        title: 'Web-based'
       }
     ]}
   </Block>
 )
 
 const FeatureCallout = props => (
+  <div
+    className='productShowcaseSection highlightBackground paddingBottom'
+    style={{ textAlign: 'center' }}
+  >
+    <h2>Web-based</h2>
+    <MarkdownBlock>{'Play instantly from your browser.<br>No extra plugins required.'}</MarkdownBlock>
+  </div>
+)
+
+const FooterButtons = props => (
   <div
     className='productShowcaseSection highlightBackground'
     style={{ textAlign: 'center' }}
@@ -197,11 +201,12 @@ class Index extends React.Component {
         <HomeSplash language={language} />
         <div className='mainContainer'>
           <Features />
+          <FeatureCallout />
           <BMSMode />
           <KeyboardMode />
           <LearnHow />
           <TryOut />
-          <FeatureCallout />
+          <FooterButtons />
         </div>
       </div>
     )
