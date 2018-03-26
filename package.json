@@ -3,6 +3,10 @@
   "version": "40.0.0",
   "description": "BEAT☆MUSIC☆SEQUENCE, a web-based music game of the future",
   "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "website"
+  ],
   "scripts": {
     "build": "gulp build",
     "build:ios": "cross-env NODE_ENV=ios gulp build",

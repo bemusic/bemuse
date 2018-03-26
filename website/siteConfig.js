@@ -14,7 +14,7 @@ const siteConfig = {
   title: 'Bemuse' /* title for your website */,
   tagline: 'online, web-based rhythm game',
   url: 'https://bemusic.github.io' /* your website url */,
-  baseUrl: '/bemuse/' /* base url for your project */,
+  baseUrl: '/project/' /* base url for your project */,
   projectName: 'bemuse',
   headerLinks: [
     { doc: 'users-gameplay', label: 'User docs' },
