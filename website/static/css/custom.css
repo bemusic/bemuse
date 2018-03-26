@@ -1,4 +1,8 @@
-/* your custom css */
+/* Prevent MathJax wrapper from overlapping */
+.math {
+  max-width: 100%;
+  overflow-x: auto;
+}
 
 /* Admonition styles copied over from Sphinx's base CSS */
 
@@ -43,6 +47,7 @@
 
 .admonition.note .admonition-title {
   background: #6ab0de;
+  color: #fff;
 }
 
 /* Admonition: srcref */
