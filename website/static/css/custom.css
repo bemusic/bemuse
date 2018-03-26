@@ -43,11 +43,13 @@ dl dd {
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
 }
 
-@media only screen and (min-width: 1024px) {
-  .button {
-    font-size: 18px;
-    padding: 12px 24px;
+@media only screen and (max-width: 735px) {
+  footer .sitemap div {
+    padding-top: 10px;
   }
+}
+
+@media only screen and (min-width: 1024px) {
 }
 
 @media only screen and (max-width: 1023px) {
@@ -74,10 +76,16 @@ dl dd {
     color: #e9e8e7;
     font-style: italic;
     margin: 0;
+    margin-bottom: 10px;
   }
 
   .projectTitle {
     display: none;
+  }
+
+  .button {
+    font-size: 18px;
+    padding: 12px 24px;
   }
 
   /* Feature block */
