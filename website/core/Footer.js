@@ -44,37 +44,19 @@ class Footer extends React.Component {
           </div>
           <div>
             <h5>Community</h5>
-            <a
-              href='http://stackoverflow.com/questions/tagged/'
-              target='_blank'
-            >
-              Stack Overflow
-            </a>
-            <a href='https://discordapp.com/'>Project Chat</a>
-            <a href='https://twitter.com/' target='_blank'>
-              Twitter
-            </a>
+            <a href={this.props.config.repoUrl}>GitHub Project</a>
+            <a href='https://discord.gg/aB6ucmx'>Chat on Discord</a>
           </div>
           <div>
-            <h5>More</h5>
-            <a href={this.props.config.repoUrl}>GitHub</a>
+            <h5>Social</h5>
+            <a href='https://twitter.com/bemusegame' target='_blank'>
+              Twitter @bemusegame
+            </a>
           </div>
         </section>
 
-        <a
-          href='https://code.facebook.com/projects/'
-          target='_blank'
-          className='fbOpenSource'
-        >
-          <img
-            src={this.props.config.baseUrl + 'img/oss_logo.png'}
-            alt='Facebook Open Source'
-            width='170'
-            height='45'
-          />
-        </a>
         <section className='copyright'>
-          Copyright &copy; {currentYear} Facebook Inc.
+          Copyright &copy; {currentYear} Bemuse Team
         </section>
       </footer>
     )
