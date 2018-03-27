@@ -79,8 +79,8 @@ class HomeSplash extends React.Component {
           <ProjectTitle />
           <PromoSection>
             <Button href='https://bemuse.ninja' target='blank' rel='noopener noreferrer'>Try It Out</Button>
-            <Button href={docUrl('users-gameplay.html', language)}>Read User Docs</Button>
-            <Button href={docUrl('developers-getting-started.html', language)}>Read Developer Docs</Button>
+            <Button href={docUrl('users-gameplay.html', language)}>Read the Docs</Button>
+            <Button href={pageUrl('contribute.html', language)}>Contribute</Button>
           </PromoSection>
         </div>
       </SplashContainer>
@@ -105,8 +105,8 @@ const FooterButtons = props => (
   >
     <PromoSection>
       <Button href='https://bemuse.ninja' target='blank' rel='noopener noreferrer'>Try It Out</Button>
-      <Button href={docUrl('users-gameplay.html', props.language || '')}>Read User Docs</Button>
-      <Button href={docUrl('developers-getting-started.html', props.language || '')}>Read Developer Docs</Button>
+      <Button href={docUrl('users-gameplay.html', props.language || '')}>Read the Docs</Button>
+      <Button href={pageUrl('contribute.html', props.language || '')}>Contribute</Button>
     </PromoSection>
   </div>
 )
