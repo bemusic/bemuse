@@ -74,7 +74,7 @@ class HomeSplash extends React.Component {
     let language = this.props.language || ''
     return (
       <SplashContainer>
-        <Logo img_src={imgUrl('logo.png')} />
+        <Logo img_src={imgUrl('logo-with-shadow.svg')} />
         <div className='inner'>
           <ProjectTitle />
           <PromoSection>
@@ -183,7 +183,7 @@ const TryOut = props => (
   <Block id='try'>
     {[
       {
-        content: `Bemuse is free and open source (licensed under [AGPLv3](https://github.com/bemusic/bemuse/blob/master/LICENSE)).\n\nContributing is also easy! Read through our [developer documentation](${docUrl('developers-getting-started.html')}) for more info.`,
+        content: `Bemuse is free and open source (licensed under [AGPLv3](https://github.com/bemusic/bemuse/blob/master/LICENSE)).\n\nContributions are welcome! Read through our [developer documentation](${docUrl('developers-getting-started.html')}) to get started, and have a look at our [issues page](https://github.com/bemusic/bemuse/issues).`,
         image: imgUrl('screenshots/oss.png'),
         imageAlign: 'left',
         title: 'Open Source'

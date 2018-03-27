@@ -33,6 +33,10 @@ table tr th {
 
 /* Overridden Docusaurus styles */
 
+.highlightBackground a:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
 /**
  * 1. Create a background-opacity effect.
  */
@@ -94,10 +98,10 @@ table tr th {
 
   .homeContainer .homeWrapper .projectLogo .tagline {
     display: block;
-    font-size: 2em;
+    font-size: 1.75em;
     line-height: 1em;
     font-weight: 300;
-    color: #e9e8e7;
+    color: rgba(233, 232, 231, 0.6);
     font-style: italic;
     margin: 0;
     margin-bottom: 10px;
