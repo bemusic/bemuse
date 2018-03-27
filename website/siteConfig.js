@@ -1,12 +1,18 @@
 'use strict'
 
 /* List of projects/orgs using your project for the users page */
-const users = [
+const artists = [
   {
-    caption: 'User1',
-    image: '/test-site/img/docusaurus.svg',
-    infoLink: 'https://www.facebook.com',
-    pinned: true
+    name: '5argon vs encX',
+    url: 'https://soundcloud.com/5argon'
+  },
+  {
+    name: '5argon',
+    url: 'https://soundcloud.com/5argon'
+  },
+  {
+    name: 'a_hisa',
+    url: 'http://hisaweb.6.ql.bz/'
   }
 ]
 
@@ -17,10 +23,14 @@ const siteConfig = {
   baseUrl: '/project/' /* base url for your project */,
   projectName: 'bemuse',
   headerLinks: [
-    { doc: 'users-gameplay', label: 'User docs' },
-    { doc: 'developers-getting-started', label: 'Developer docs' }
+    {
+      href: 'https://bemuse.ninja',
+      label: 'Play'
+    },
+    { doc: 'users-gameplay', label: 'Docs' },
+    { page: 'contribute', label: 'Contribute' }
   ],
-  users,
+  users: artists,
   /* path to images for header/footer */
   headerIcon: 'img/docusaurus.svg',
   footerIcon: 'img/docusaurus.svg',

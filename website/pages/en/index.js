@@ -140,57 +140,80 @@ const FooterButtons = props => (
   </div>
 )
 
-const BMSMode = props => (
-  <Block background='light'>
-    {[
-      {
-        content: `You can play using an [IIDX controller](https://www.youtube.com/watch?v=EOgI37Myqvk) or [MIDI controller](https://www.facebook.com/bemusegame/videos/985712734835136/).\n\nThis mode is similar to beatmaniaIIDX and LR2.`,
-        image: imgUrl('screenshots/gameplay-bms.jpg'),
-        imageAlign: 'right',
-        title: 'BMS Mode'
-      }
-    ]}
-  </Block>
+const FeatureTour = props => (
+  <React.Fragment>
+    <Block background='light'>
+      {[
+        {
+          content: `You can play using an [IIDX controller](https://www.youtube.com/watch?v=EOgI37Myqvk) or [MIDI controller](https://www.facebook.com/bemusegame/videos/985712734835136/).\n\nThis mode is similar to beatmaniaIIDX and LR2.`,
+          image: imgUrl('screenshots/gameplay-bms.jpg'),
+          imageAlign: 'right',
+          title: 'BMS Mode'
+        }
+      ]}
+    </Block>
+    <Block>
+      {[
+        {
+          content: 'Play along the music with your keyboard.\n\nThis mode is similar to O2Jam.',
+          image: imgUrl('screenshots/gameplay-kbd.jpg'),
+          imageAlign: 'left',
+          title: 'Keyboard Mode'
+        }
+      ]}
+    </Block>
+    <Block background='light'>
+      {[
+        {
+          content: `If you would like to host your own music server with custom song packs, you can! [Click here](${docUrl('users-music-server.html', props.language || '')}) to learn how.`,
+          image: imgUrl('screenshots/music-select.jpg'),
+          imageAlign: 'right',
+          title: 'Custom Servers'
+        }
+      ]}
+    </Block>
+    <Block>
+      {[
+        {
+          content: `Bemuse is free and open source (licensed under [AGPLv3](https://github.com/bemusic/bemuse/blob/master/LICENSE)), made awesome by [our contributors](https://github.com/bemusic/bemuse/graphs/contributors).\n\nContributions are welcome! [Click here](${pageUrl('contribute.html', props.language || '')}) to get started, and have a look at our [issues page](https://github.com/bemusic/bemuse/issues).`,
+          image: imgUrl('screenshots/oss.png'),
+          imageAlign: 'left',
+          title: 'Open Source'
+        }
+      ]}
+    </Block>
+  </React.Fragment>
 )
 
-const KeyboardMode = props => (
-  <Block>
-    {[
-      {
-        content: 'Play along the music with your keyboard.\n\nThis mode is similar to O2Jam.',
-        image: imgUrl('screenshots/gameplay-kbd.jpg'),
-        imageAlign: 'left',
-        title: 'Keyboard Mode'
-      }
-    ]}
-  </Block>
-)
+const ArtistShowcase = props => {
+  if ((siteConfig.users || []).length === 0) {
+    return null
+  }
+  const showcase = siteConfig.users
+    .filter(artist => {
+      return artist.pinned
+    })
+    .map((artist, i) => {
+      return (
+        <a href={artist.url} key={i}>
+          {artist.name}
+        </a>
+      )
+    })
 
-const LearnHow = props => (
-  <Block background='light'>
-    {[
-      {
-        content: `If you would like to host your own music server with custom song packs, you can! [Click here](${docUrl('users-music-server.html')}) to learn how.`,
-        image: imgUrl('screenshots/music-select.jpg'),
-        imageAlign: 'right',
-        title: 'Custom Servers'
-      }
-    ]}
-  </Block>
-)
-
-const TryOut = props => (
-  <Block id='try'>
-    {[
-      {
-        content: `Bemuse is free and open source (licensed under [AGPLv3](https://github.com/bemusic/bemuse/blob/master/LICENSE)).\n\nContributions are welcome! Read through our [developer documentation](${docUrl('developers-getting-started.html')}) to get started, and have a look at our [issues page](https://github.com/bemusic/bemuse/issues).`,
-        image: imgUrl('screenshots/oss.png'),
-        imageAlign: 'left',
-        title: 'Open Source'
-      }
-    ]}
-  </Block>
-)
+  return (
+    <div className='productShowcaseSection paddingBottom'>
+      <h2>{'Featured Artists'}</h2>
+      <p>We'd like to thank the following artists for letting us use their songs in the game.</p>
+      <div className='logos'>{showcase}</div>
+      <div className='more-users'>
+        <a className='button' href={pageUrl('music.html', props.language)}>
+          More Artists
+        </a>
+      </div>
+    </div>
+  )
+}
 
 class Index extends React.Component {
   render () {
@@ -200,12 +223,8 @@ class Index extends React.Component {
       <div>
         <HomeSplash language={language} />
         <div className='mainContainer'>
-          <Features />
-          <FeatureCallout />
-          <BMSMode />
-          <KeyboardMode />
-          <LearnHow />
-          <TryOut />
+          <FeatureTour />
+          <ArtistShowcase />
           <FooterButtons />
         </div>
       </div>
