@@ -3,7 +3,7 @@
 const React = require('react')
 
 const CompLibrary = require('../../core/CompLibrary.js')
-const MarkdownBlock = CompLibrary.MarkdownBlock /* Used to read markdown */
+// const MarkdownBlock = CompLibrary.MarkdownBlock /* Used to read markdown */
 const Container = CompLibrary.Container
 const GridBlock = CompLibrary.GridBlock
 
@@ -98,35 +98,6 @@ const Block = props => (
   </Container>
 )
 
-const Features = props => (
-  <Block background='highlight' layout='twoColumn'>
-    {[
-      {
-        content: 'Handpicked from various genres.',
-        image: imgUrl('docusaurus.svg'),
-        imageAlign: 'top',
-        title: '50+ Songs'
-      },
-      {
-        content: 'Compete with other players online.',
-        image: imgUrl('docusaurus.svg'),
-        imageAlign: 'top',
-        title: 'Online Rankings'
-      }
-    ]}
-  </Block>
-)
-
-const FeatureCallout = props => (
-  <div
-    className='productShowcaseSection highlightBackground paddingBottom'
-    style={{ textAlign: 'center' }}
-  >
-    <h2>Web-based</h2>
-    <MarkdownBlock>{'Play instantly from your browser.<br>No extra plugins required.'}</MarkdownBlock>
-  </div>
-)
-
 const FooterButtons = props => (
   <div
     className='productShowcaseSection highlightBackground'
@@ -141,7 +112,7 @@ const FooterButtons = props => (
 )
 
 const FeatureTour = props => (
-  <React.Fragment>
+  <div>
     <Block background='light'>
       {[
         {
@@ -182,38 +153,8 @@ const FeatureTour = props => (
         }
       ]}
     </Block>
-  </React.Fragment>
+  </div>
 )
-
-const ArtistShowcase = props => {
-  if ((siteConfig.users || []).length === 0) {
-    return null
-  }
-  const showcase = siteConfig.users
-    .filter(artist => {
-      return artist.pinned
-    })
-    .map((artist, i) => {
-      return (
-        <a href={artist.url} key={i}>
-          {artist.name}
-        </a>
-      )
-    })
-
-  return (
-    <div className='productShowcaseSection paddingBottom'>
-      <h2>{'Featured Artists'}</h2>
-      <p>We'd like to thank the following artists for letting us use their songs in the game.</p>
-      <div className='logos'>{showcase}</div>
-      <div className='more-users'>
-        <a className='button' href={pageUrl('music.html', props.language)}>
-          More Artists
-        </a>
-      </div>
-    </div>
-  )
-}
 
 class Index extends React.Component {
   render () {
@@ -224,7 +165,6 @@ class Index extends React.Component {
         <HomeSplash language={language} />
         <div className='mainContainer'>
           <FeatureTour />
-          <ArtistShowcase />
           <FooterButtons />
         </div>
       </div>

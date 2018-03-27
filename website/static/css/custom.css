@@ -37,6 +37,10 @@ table tr th {
   background: rgba(0, 0, 0, 0.1);
 }
 
+.showcaseSection .prose h1 {
+  font-family: $baseFont;
+}
+
 /**
  * 1. Create a background-opacity effect.
  */

@@ -14,10 +14,10 @@ const siteConfig = require(process.cwd() + '/siteConfig.js')
 
 class Music extends React.Component {
   render () {
-    if ((siteConfig.users || []).length === 0) {
+    if ((siteConfig.artists || []).length === 0) {
       return null
     }
-    const showcase = siteConfig.users.map((artist, i) => {
+    const showcase = siteConfig.artists.map((artist, i) => {
       return (
         <a href={artist.url} key={i}>
           {artist.name}

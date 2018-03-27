@@ -1,18 +1,22 @@
 'use strict'
 
-/* List of projects/orgs using your project for the users page */
+/* List of artists used for the /music.html page */
+/* TODO: Fetch from the artists.json file dynamically  */
 const artists = [
   {
     name: '5argon vs encX',
-    url: 'https://soundcloud.com/5argon'
+    url: 'https://soundcloud.com/5argon',
+    pinned: true
   },
   {
     name: '5argon',
-    url: 'https://soundcloud.com/5argon'
+    url: 'https://soundcloud.com/5argon',
+    pinned: true
   },
   {
     name: 'a_hisa',
-    url: 'http://hisaweb.6.ql.bz/'
+    url: 'http://hisaweb.6.ql.bz/',
+    pinned: true
   }
 ]
 
@@ -30,7 +34,7 @@ const siteConfig = {
     { doc: 'users-gameplay', label: 'Docs' },
     { page: 'contribute', label: 'Contribute' }
   ],
-  users: artists,
+  artists,
   /* path to images for header/footer */
   headerIcon: 'img/docusaurus.svg',
   footerIcon: 'img/docusaurus.svg',
