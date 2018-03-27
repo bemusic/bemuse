@@ -44,20 +44,20 @@ class Footer extends React.Component {
           </div>
           <div>
             <h5>Community</h5>
-            <a
-              href='http://stackoverflow.com/questions/tagged/'
-              target='_blank'
-            >
-              Stack Overflow
+            <a href='https://www.facebook.com/bemusegame' target='_blank'>
+              Facebook
             </a>
-            <a href='https://discordapp.com/'>Project Chat</a>
-            <a href='https://twitter.com/' target='_blank'>
+            <a href='https://twitter.com/bemusegame' target='_blank'>
               Twitter
             </a>
           </div>
           <div>
-            <h5>More</h5>
+            <h5>Contribute</h5>
             <a href={this.props.config.repoUrl}>GitHub</a>
+            <a href={this.props.config.repoUrl + '/issues'}>Issues</a>
+            <a href='https://waffle.io/bemusic/bemuse' target='_blank'>
+              Project Board
+            </a>
           </div>
         </section>
 

@@ -17,7 +17,7 @@ function docUrl (doc, language) {
   return siteConfig.baseUrl + 'docs/' + (language ? language + '/' : '') + doc
 }
 
-function pageUrl (page, language) {
+function pageUrl (page, language) { // eslint-disable-line
   return siteConfig.baseUrl + (language ? language + '/' : '') + page
 }
 
@@ -144,7 +144,7 @@ const BMSMode = props => (
   <Block background='light'>
     {[
       {
-        content: `You can play using an [IIDX controller](https://www.youtube.com/watch?v=EOgI37Myqvk) or [MIDI controller](https://www.facebook.com/bemusegame/videos/985712734835136/).`,
+        content: `You can play using an [IIDX controller](https://www.youtube.com/watch?v=EOgI37Myqvk) or [MIDI controller](https://www.facebook.com/bemusegame/videos/985712734835136/).\n\nThis mode is similar to beatmaniaIIDX and LR2.`,
         image: imgUrl('screenshots/gameplay-bms.jpg'),
         imageAlign: 'right',
         title: 'BMS Mode'
@@ -157,7 +157,7 @@ const KeyboardMode = props => (
   <Block>
     {[
       {
-        content: 'Play along the music with your keyboard.',
+        content: 'Play along the music with your keyboard.\n\nThis mode is similar to O2Jam.',
         image: imgUrl('screenshots/gameplay-kbd.jpg'),
         imageAlign: 'left',
         title: 'Keyboard Mode'
@@ -170,7 +170,7 @@ const LearnHow = props => (
   <Block background='light'>
     {[
       {
-        content: 'TODO: Custom server setup',
+        content: `If you would like to host your own music server with custom song packs, you can! [Click here](${docUrl('users-music-server.html')}) to learn how.`,
         image: imgUrl('screenshots/music-select.jpg'),
         imageAlign: 'right',
         title: 'Custom Servers'
