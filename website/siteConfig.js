@@ -13,7 +13,7 @@ const users = [
 const siteConfig = {
   title: 'Bemuse' /* title for your website */,
   tagline: 'online, web-based rhythm game',
-  url: 'https://bemusic.github.io' /* your website url */,
+  url: 'https://bemuse.ninja' /* your website url */,
   baseUrl: '/project/' /* base url for your project */,
   projectName: 'bemuse',
   headerLinks: [
