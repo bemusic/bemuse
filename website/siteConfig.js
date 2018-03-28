@@ -27,12 +27,11 @@ const siteConfig = {
   baseUrl: '/project/' /* base url for your project */,
   projectName: 'bemuse',
   headerLinks: [
-    {
-      href: 'https://bemuse.ninja',
-      label: 'Play'
-    },
+    { href: 'https://bemuse.ninja', label: 'Play' },
     { doc: 'user-guide', label: 'Docs' },
-    { page: 'contribute', label: 'Contribute' }
+    { page: 'contribute', label: 'Contribute' },
+    { href: 'https://discord.gg/aB6ucmx', label: 'Discord' },
+    { href: 'https://github.com/bemusic/bemuse', label: 'GitHub' }
   ],
   artists,
   /* path to images for header/footer */
@@ -48,12 +47,7 @@ const siteConfig = {
   },
   /* custom fonts for website */
   fonts: {
-    baseFont: [
-      'Source Sans Pro',
-      'Segoe UI',
-      'Helvetica Neue',
-      'sans-serif'
-    ]
+    baseFont: ['Source Sans Pro', 'Segoe UI', 'Helvetica Neue', 'sans-serif']
   },
   // This copyright info is used in /core/Footer.js and blog rss/atom feeds.
   copyright:
