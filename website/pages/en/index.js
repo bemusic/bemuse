@@ -69,6 +69,14 @@ const PromoSection = props => (
   </div>
 )
 
+const CTAButtons = props => (
+  <PromoSection>
+    <Button href='https://bemuse.ninja' target='blank' rel='noopener noreferrer'>Play Now</Button>
+    <Button href={docUrl('users-gameplay.html', props.language || '')}>Read the Docs</Button>
+    <Button href={pageUrl('contribute.html', props.language || '')}>Contribute</Button>
+  </PromoSection>
+)
+
 class HomeSplash extends React.Component {
   render () {
     let language = this.props.language || ''
@@ -77,11 +85,7 @@ class HomeSplash extends React.Component {
         <Logo img_src={imgUrl('logo-with-shadow.svg')} />
         <div className='inner'>
           <ProjectTitle />
-          <PromoSection>
-            <Button href='https://bemuse.ninja' target='blank' rel='noopener noreferrer'>Try It Out</Button>
-            <Button href={docUrl('users-gameplay.html', language)}>Read the Docs</Button>
-            <Button href={pageUrl('contribute.html', language)}>Contribute</Button>
-          </PromoSection>
+          <CTAButtons language={language} />
         </div>
       </SplashContainer>
     )
@@ -103,11 +107,7 @@ const FooterButtons = props => (
     className='productShowcaseSection highlightBackground'
     style={{ textAlign: 'center' }}
   >
-    <PromoSection>
-      <Button href='https://bemuse.ninja' target='blank' rel='noopener noreferrer'>Try It Out</Button>
-      <Button href={docUrl('users-gameplay.html', props.language || '')}>Read the Docs</Button>
-      <Button href={pageUrl('contribute.html', props.language || '')}>Contribute</Button>
-    </PromoSection>
+    <CTAButtons language={props.language || ''} />
   </div>
 )
 
