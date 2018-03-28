@@ -72,7 +72,7 @@ const PromoSection = props => (
 const CTAButtons = props => (
   <PromoSection>
     <Button href='https://bemuse.ninja' target='blank' rel='noopener noreferrer'>Play Now</Button>
-    <Button href={docUrl('users-gameplay.html', props.language || '')}>Read the Docs</Button>
+    <Button href={docUrl('user-guide.html', props.language || '')}>Read the Docs</Button>
     <Button href={pageUrl('contribute.html', props.language || '')}>Contribute</Button>
   </PromoSection>
 )
@@ -116,39 +116,49 @@ const FeatureTour = props => (
     <Block background='light'>
       {[
         {
-          content: `You can play using an [IIDX controller](https://www.youtube.com/watch?v=EOgI37Myqvk) or [MIDI controller](https://www.facebook.com/bemusegame/videos/985712734835136/).\n\nThis mode is similar to beatmaniaIIDX and LR2.`,
-          image: imgUrl('screenshots/gameplay-bms.jpg'),
+          content: 'Hit the notes with your keyboard to recreate the song.\n\nPlay more accurately to get higher score!',
+          image: imgUrl('screenshots/gameplay-kbd.jpg'),
           imageAlign: 'right',
-          title: 'BMS Mode'
+          title: 'Play with your keyboard'
         }
       ]}
     </Block>
     <Block>
       {[
         {
-          content: 'Play along the music with your keyboard.\n\nThis mode is similar to O2Jam.',
-          image: imgUrl('screenshots/gameplay-kbd.jpg'),
+          content: `More challenge with an extra turntable lane!\n\nYou can also play using an [IIDX controller](https://www.youtube.com/watch?v=EOgI37Myqvk) or [MIDI controller](https://www.facebook.com/bemusegame/videos/985712734835136/).\n\nThis mode is similar to beatmaniaIIDX and LR2.`,
+          image: imgUrl('screenshots/gameplay-bms.jpg'),
           imageAlign: 'left',
-          title: 'Keyboard Mode'
+          title: 'BMS Mode'
         }
       ]}
     </Block>
     <Block background='light'>
       {[
         {
-          content: `If you would like to host your own music server with custom song packs, you can! [Click here](${docUrl('users-music-server.html', props.language || '')}) to learn how.`,
+          content: `More than [50 songs](/project/music.html) to choose, handpicked from various genres.`,
           image: imgUrl('screenshots/music-select.jpg'),
           imageAlign: 'right',
-          title: 'Custom Servers'
+          title: 'Wide variety of music'
         }
       ]}
     </Block>
     <Block>
       {[
         {
+          content: `If you would like to host your own music server with custom song sets, you can! [Click here](${docUrl('users-music-server.html', props.language || '')}) to learn how.`,
+          image: imgUrl('screenshots/music-select.jpg'),
+          imageAlign: 'left',
+          title: 'Custom Servers'
+        }
+      ]}
+    </Block>
+    <Block background='light'>
+      {[
+        {
           content: `Bemuse is free and open source (licensed under [AGPLv3](https://github.com/bemusic/bemuse/blob/master/LICENSE)), made awesome by [our contributors](https://github.com/bemusic/bemuse/graphs/contributors).\n\nContributions are welcome! [Click here](${pageUrl('contribute.html', props.language || '')}) to get started, and have a look at our [issues page](https://github.com/bemusic/bemuse/issues).`,
           image: imgUrl('screenshots/oss.png'),
-          imageAlign: 'left',
+          imageAlign: 'right',
           title: 'Open Source'
         }
       ]}

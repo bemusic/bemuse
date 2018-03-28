@@ -31,7 +31,7 @@ const siteConfig = {
       href: 'https://bemuse.ninja',
       label: 'Play'
     },
-    { doc: 'users-gameplay', label: 'Docs' },
+    { doc: 'user-guide', label: 'Docs' },
     { page: 'contribute', label: 'Contribute' }
   ],
   artists,

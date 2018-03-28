@@ -1,9 +1,13 @@
 /* Font resets */
-html, body {
+html,
+body {
   font-family: $baseFont;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: $baseFont;
 }
 
@@ -29,6 +33,14 @@ table tr th {
 
 .container .wrapper .imageAlignSide p {
   text-align: left;
+}
+
+.container .wrapper h2 {
+  margin-top: 60px;
+}
+
+.container .wrapper h3 {
+  margin-top: 40px;
 }
 
 /* Overridden Docusaurus styles */

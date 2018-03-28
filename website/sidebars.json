@@ -1,6 +1,7 @@
 {
   "docs": {
     "Users": [
+      "user-guide",
       "users-gameplay",
       "users-scoring-and-judgment",
       "users-music-server",
