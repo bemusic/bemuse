@@ -35,14 +35,6 @@ table tr th {
   text-align: left;
 }
 
-.container .wrapper .blockElement.imageAlignSide h2 {
-  margin-top: 60px;
-}
-
-.container .wrapper .blockElement.imageAlignSide h3 {
-  margin-top: 40px;
-}
-
 /* Overridden Docusaurus styles */
 
 .highlightBackground a:hover {
@@ -78,7 +70,7 @@ table tr th {
   color: #fff;
 }
 
-@media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
+@media only screen and (min-device-width: 360px) and (max-device-width: 735px) {
 }
 
 @media only screen and (max-width: 735px) {
@@ -90,6 +82,17 @@ table tr th {
   .gridBlock .threeByGridBlock,
   .gridBlock .fourByGridBlock {
     padding: 20px 0 !important;
+  }
+}
+
+/* Center-ish the feature block text when image is visible */
+@media only screen and (min-width: 736px) {
+  .container .wrapper .blockElement.imageAlignSide h2 {
+    margin-top: 60px;
+  }
+  
+  .container .wrapper .blockElement.imageAlignSide h3 {
+    margin-top: 40px;
   }
 }
 
