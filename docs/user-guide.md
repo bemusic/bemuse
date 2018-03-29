@@ -197,11 +197,83 @@ After finishing a song, you will see the result screen:
 
 6.  Click on the **Chart Level** to play this level again.
 
-7.  The **Leaderboard** shows the top scorers of this level.
+7.  The **Leaderboard** shows the top scorers of this level. You have to login
+    or register in order to save your score and have it ranked on the
+    leaderboard.
+
+### View the accuracy data
+
+You can click on the accuracy number to see detailed **accuracy data.**
+
+<div class="browser-screenshot">
+
+![Accuracy data in the result screen](assets/user-guide/accuracy-data.jpg)
+
+</div>
+
+This accuracy data is calculated from the **delta time** of each note, measured
+in milliseconds.
+
+* If you hit the note too early, the delta time for that note is negative.
+* If you hit the note too late, the delta time for that note is positive.
+
+The numbers at the top shows how many notes you hit too early or too late to get
+the best (Meticulous) judgment. The histogram shows the distribution of the
+delta times. Finally, the numbers at the bottom shows the statistical
+[accuracy and precision](https://en.wikipedia.org/wiki/Accuracy_and_precision)
+of your gameplay.
 
 ## Adjusting options
 
-TODO
+You can access the options panel from the Music Selection Screen by clicking the
+**Options** button.
+
+<div class="browser-screenshot">
+
+![Options panel](assets/user-guide/options.jpg)
+
+</div>
+
+The **Player Settings** lets you customize the in-game experience.
+
+* **Speed** lets you control the note speed modifier. You can also
+  [adjust the speed in-game](#adjusting-note-speed).
+
+* **Scratch** lets you decide whether and where to put the turntable lane in the
+  game. If turntable lane is active, it’s called **BMS Mode**. Otherwise, it’s
+  the normal **Keyboard Mode**. Since different modes results in different
+  number of notes, they are considered different levels and have a different
+  leaderboard.
+
+* **Panel** lets you pick where to place the panel. The **3D** placement is only
+  available in Keyboard Mode (turntable lane will have to be deactivated).
+
+* Some people find the play area too high, making it hard to read the notes.
+  **Cover** lets you cover part of the play area, in case it is too high. It
+  [helps you concentrate more](https://www.facebook.com/bemusegame/photos/a.872468499492894.1073741828.815335081872903/956741924398884/?type=3&permPage=1)
+  on the notes at the bottom of the screen. _Not compatible with 3D mode._
+
+* **BGA** lets you turn the background animations on and off.
+
+* Each song have different tempo, and therefore notes scroll at a different
+  speed. **AutoVel** (auto-velocity), when turned on, automatically adjusts the
+  note speed modifier so that the note scrolling speed is the same as the last
+  song, regardless of song tempo. The Speed option also changes into
+  **LeadTime** which lets you specify how long it should take for the note to
+  scroll across the screen.
+
+* **Gauge**, when turned on, displays a score gauge at the top of the screen. If
+  the gauge runs out the first time, then you missed your chance to get the ‘S’
+  grade. If the gauge runs out the second time, then you missed your chance to
+  get the ‘A’ grade.
+
+* **Preview** music can be turned on and off.
+
+The **Input Settings** lets you choose which keys you will use to hit the note
+in each column.
+
+The **Advanced Settings** lets you set up the game to compensate for audio
+latency.
 
 ## Ranking system
 
