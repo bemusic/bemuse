@@ -1,5 +1,5 @@
 ---
-id: developers-game-loop
+id: game-loop
 title: The Game Loop
 ---
 

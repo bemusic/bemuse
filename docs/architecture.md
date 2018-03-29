@@ -1,5 +1,5 @@
 ---
-id: developers-architecture
+id: architecture
 title: Project Architecture
 sidebar_label: Architecture
 ---

@@ -1,5 +1,5 @@
 ---
-id: developers-skinning
+id: skinning
 title: Skinning
 ---
 

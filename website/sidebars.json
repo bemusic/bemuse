@@ -2,21 +2,21 @@
   "docs": {
     "Users": [
       "user-guide",
-      "users-gameplay",
-      "users-scoring-and-judgment",
-      "users-music-server",
-      "users-bms-support",
-      "users-bms-extensions"
+      "gameplay",
+      "scoring-and-judgment",
+      "music-server",
+      "bms-support",
+      "bms-extensions"
     ],
     "Developers": [
-      "developers-getting-started",
-      "developers-getting-started-windows",
-      "developers-architecture",
-      "developers-documentation",
-      "developers-game-loop",
-      "developers-skinning",
-      "developers-options",
-      "developers-colors"
+      "getting-started",
+      "getting-started-windows",
+      "architecture",
+      "documentation",
+      "game-loop",
+      "skinning",
+      "options",
+      "colors"
     ]
   }
 }

@@ -1,5 +1,5 @@
 ---
-id: developers-colors
+id: colors
 title: Colors
 ---
 

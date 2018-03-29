@@ -1,5 +1,5 @@
 ---
-id: developers-getting-started-windows
+id: getting-started-windows
 title: Getting Started (Windows)
 ---
 

@@ -156,7 +156,7 @@ const FeatureTour = props => (
     <Block>
       {[
         {
-          content: `If you would like to host your own music server with custom song sets, you can! [Click here](${docUrl('users-music-server.html', props.language || '')}) to learn how.`,
+          content: `If you would like to host your own music server with custom song sets, you can! [Click here](${docUrl('music-server.html', props.language || '')}) to learn how.`,
           image: imgUrl('screenshots/music-select.jpg'),
           imageAlign: 'left',
           title: 'Custom Servers'

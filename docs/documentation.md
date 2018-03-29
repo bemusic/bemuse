@@ -1,5 +1,5 @@
 ---
-id: developers-documentation
+id: documentation
 title: Documentation
 ---
 

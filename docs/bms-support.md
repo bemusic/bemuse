@@ -1,5 +1,5 @@
 ---
-id: users-bms-support
+id: bms-support
 title: BMS Support in Bemuse
 sidebar_label: BMS Support
 ---
@@ -34,7 +34,7 @@ supported.
 **RANK**
 
 -  Bemuse does not support #RANK.
--  Judgment timegate is described at [scoring and judgment](users-scoring-and-judgment.md) section.
+-  Judgment timegate is described at [scoring and judgment](scoring-and-judgment.md) section.
 -  Bemuse judge notes per unit time.
 
 **TOTAL**

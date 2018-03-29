@@ -1,5 +1,5 @@
 ---
-id: users-bms-extensions
+id: bms-extensions
 title: Bemuse's BMS Extensions
 sidebar_label: BMS Extensions
 ---

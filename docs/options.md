@@ -1,5 +1,5 @@
 ---
-id: developers-options
+id: options
 title: Game Options and Configuration
 sidebar_label: Options
 ---

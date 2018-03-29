@@ -1,5 +1,5 @@
 ---
-id: users-gameplay
+id: gameplay
 title: Gameplay
 ---
 

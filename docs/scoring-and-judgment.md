@@ -1,5 +1,5 @@
 ---
-id: users-scoring-and-judgment
+id: scoring-and-judgment
 title: Scoring and Judgment
 ---
 

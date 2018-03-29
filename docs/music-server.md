@@ -1,5 +1,5 @@
 ---
-id: users-music-server
+id: music-server
 title: Running Your Own Music Server
 sidebar_label: Music Server
 ---
