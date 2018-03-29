@@ -174,7 +174,7 @@ After finishing a song, you will see the result screen:
     * The **Total Score** shows the final score of your performance.
 
     For more information, see the dedicated page on
-    [Scoring and Judgment](./users-scoring-and-judgment.md).
+    [Scoring and Judgment](./scoring-and-judgment.md).
 
 2.  The **Grade** shows the result grade calculated from the score, according to
     the grading table:
