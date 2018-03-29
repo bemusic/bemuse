@@ -1,6 +1,6 @@
 ---
 id: music-server
-title: Running Your Own Music Server
+title: How to Host a Music Server
 sidebar_label: Music Server
 ---
 
@@ -12,8 +12,111 @@ sidebar_label: Music Server
 Bemuse comes with a default music server to help new players get
 started. This default music server contains a selection of songs that I
 think are really nice. You can also run your own music server and play
-it in Bemuse. This page describes how you can do it. This page assumes
-some knowledge about using the command line and web hosting.
+it in Bemuse. This page describes how you can do it.
+
+This page assumes some knowledge about using the command line and web hosting.
+
+## Prerequisites
+
+### macOS
+
+- [Homebrew](http://brew.sh/)
+- [Node.js](https://nodejs.org/)
+- [SoX](http://sox.sourceforge.net/): `brew install sox --with-libvorbis`
+
+#### Prerequisite Check
+
+Run these commands inside the Terminal.
+
+**Node.js**: You should see the version number:
+
+```bash
+$ node -v
+# v9.8.0
+```
+
+**SoX**: You should see the SoX version:
+
+```bash
+$ sox --version
+# sox:      SoX v14.4.2
+```
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On some devices, the SoX version number may not be displayed.</p>
+</div>
+
+### Windows
+
+- [Node.js](https://nodejs.org/)
+- [SoX](http://sox.sourceforge.net/): Download from http://sourceforge.net/projects/sox/files/sox/
+- [QuickTime Player](http://www.apple.com/quicktime/download/) or [iTunes](http://www.apple.com/itunes/download/)
+- [qaac](https://sites.google.com/site/qaacpage/)
+
+#### Installation
+
+Create a directory to store the program files. For example: `C:\Bemuse\vendor\bin`. Extract files into that folder. Your tree should look like this:
+
+    C:
+    └── Bemuse
+        └── vendor
+            └── bin
+                ├── libflac-8.dll
+                ├── libgcc_s_sjlj-1.dll
+                ├── libgomp-1.dll
+                ├── libid3tag-0.dll
+                ├── libogg-0.dll
+                ├── libpng16-16.dll
+                ├── libsox-3.dll
+                ├── libsoxconvolver64.dll
+                ├── libsoxr64.dll
+                ├── libssp-0.dll
+                ├── libvorbis-0.dll
+                ├── libvorbisenc-2.dll
+                ├── libvorbisfile-3.dll
+                ├── libwavpack-1.dll
+                ├── libwinpthread-1.dll
+                ├── qaac.exe
+                ├── refalac.exe
+                ├── sox.exe
+                ├── wget.exe
+                ├── wget.ini
+                └── zlib1.dll
+
+#### Prerequisite Check
+
+Open **PowerShell** (or Command Prompt) and add the PATH variable:
+
+```powershell
+PS> $env:Path += ";C:\Bemuse\vendor\bin"
+```
+
+**Node.js**: You should see the version number:
+
+```powershell
+PS> node -v
+# v9.8.0
+```
+
+**SoX**: You should see the version number:
+
+```powershell
+PS> sox --version
+# C:\Bemuse\vendor\bin\sox.exe:      SoX v14.4.2
+```
+
+**qaac**: You should see the help text:
+
+```powershell
+PS> qaac
+# qaac 2.47
+# Usage: qaac [options] infiles....
+# 
+# ...
+# ...
+# ...
+```
 
 ## A Music Server
 
@@ -21,16 +124,17 @@ A music server is simply a web server that hosts the files in a specific
 structure, which allows Bemuse to find the list of songs and the song
 data. A Bemuse music server has the following structure:
 
-```
-(root of the server)
-|-- index.json
-`-- song1/
-    |-- bms1.bme
-    |-- bms2.bml
-    `-- assets/
-        |-- metadata.json
-        `-- (something).bemuse
-```
+
+    (root of the server)
+    ├── index.cache
+    ├── index.json
+    └── [song_title]/
+        ├── bms1.bme
+        ├── bms2.bml
+        └── assets/
+            ├── metadata.json
+            └── (something).bemuse
+
 
 ### `index.json`
 
@@ -65,76 +169,146 @@ large.
 The Bemuse assets package is also generated using the Bemuse tools,
 which we will cover in the next section.
 
-## Prerequisites
+## Install Bemuse Tools
 
-Bemuse tools work on Windows and Mac OS X. Before that, you need to
-install:
+Bemuse Tools is a command line application to help you generate files for Bemuse music server. Install it using the **npm** command, which comes with Node.js:
 
-### Node.js
+```powershell
+PS> npm install -g bemuse-tools
+```
 
-Bemuse tools is written in JavaScript for the Node.js platform and
-distributed through npm. First, you need to install
-[Node.js](https://nodejs.org/), which also includes npm.
+### Installation Check
 
-### SoX
+Run the following command:
 
-SoX is a tool to process and convert audio files. Bemuse tools uses it
-to convert the keysounds into a web-friendly format.
+```powershell
+PS> bemuse-tools
+```
 
-Windows users should list SoX in their System PATH by going to
-`Control Panel > System and Security > System > Advanced System Settings > Environment Variables`
-or by setting the PATH variable in CMD.
+It should display the version:
 
-Please see TechNet documentation for more info:<br>
-<https://technet.microsoft.com/en-us/library/bb490963.aspx?f=255&MSPPError=-2147217396>
+    This is bemuse-tools v1.1.0-beta.1
 
-### QuickTime and qaac (Windows only)
+      bemuse-tools: Tools for Bemuse
 
-Mac OS X already comes with QuickTime and a command-line M4A encoder.
-Windows, on the other hand, does not. Therefore, Windows users need to
-install [qaac](https://sites.google.com/site/qaacpage/). It is a command
-to convert audio files into MP4 audio (AAC) for browsers that doesn't
-support OGG. Currently, Bemuse Tools looks for the 32-bit executable for
-qaac; don't just install the 64-bit executable.
+      index [-r] — Index BMS files in current directory
+      pack <path> — Packs sounds and BGAs into assets folder
+      server <path> — Serves a Bemuse server (no indexing or conversion)
 
-Windows users should list qaac in their System PATH by going to
-`Control Panel > System and Security > System > Advanced System Setitngs > Environment Variables`
-or by setting the PATH variable in CMD.
+## Creating Your Server Folder
 
-Please see TechNet documentation for more info:<br>
-<https://technet.microsoft.com/en-us/library/bb490963.aspx?f=255&MSPPError=-2147217396>
+Extract your BMS files into a folder. One song per folder. For example:
 
-## Installing Bemuse Tools
+    C:
+    └── Bemuse
+        └── myserver
+            ├── song1
+            │   ├── song1_N.bms
+            │   ├── song1_H.bms
+            │   ├── song1_A.bms
+            │   ├── bass.wav
+            │   └── kick.wav
+            └── song2
+                ├── song2_N.bms
+                ├── song2_H.bms
+                ├── song2_A.bms
+                ├── go.wav
+                ├── back.wav
+                ├── to.wav
+                ├── your.wav
+                └── rave.wav
 
-Bemuse tools is distributed via npm. To install Bemuse tools, use the
-following command:
+## Creating Bemuse Packages
 
-    npm install -g bemuse-tools
+Normally, a BMS package comes in `.rar` or `.zip `format. Inside that package, there are few BMS files and hundreds of sound files.
 
-If you get a permission error on Windows, try running the above command
-in an Administrator command prompt.
+It's not practical to extract `.rar` or `.zip` files in the browser. It's also not practical to download hundreds of small files (very slow).
 
-If you get a permission error on Mac OS X, try:
+In Bemuse, keysounds are packed into `.bemuse` format. They are split into many parts. Each part is about 1.4mb.
 
-    sudo npm install -g bemuse-tools
+Inside Terminal or Powershell, `cd` to the server folder:
 
-## Using Bemuse Tools
+```powershell
+PS> cd C:\Bemuse\myserver
+```
 
-First, you will want to create a folder to hold your music server.
+Then invoke `bemuse-tools pack` with the folder you want to pack:
 
-**TODO**: More detailed instructions
+```powershell
+PS> bemuse-tools pack 'Lapis - SHIKI'
+# -> Loading audios
+# -> Loading movies
+# -> Loading and converting images
+# 
+# -> Converting audio to ogg [better audio performance]
+# .....................................................................................................
+# ..................................................
+# -> Converting audio to m4a [for iOS and Safari]
+# .....................................................................................................
+# ..................................................
+# -> Writing...
+# Written m4a.1.550eda0a.bemuse
+# Written m4a.2.50a08444.bemuse
+# Written m4a.3.6b0990a9.bemuse
+# ...
+# Written metadata.json
+```
 
-### Generating Bemuse assets package
+Now if you look at your song folder, you should see a new folder called **assets**:
 
-Use this command:
+    Lapis - SHIKI
+    ├── assets
+    │   ├── bga.1.e0a51d24.bemuse
+    │   ├── bga.2.d582293b.bemuse
+    │   ├── bga.3.28d51957.bemuse
+    │   │   ...
+    │   ├── m4a.1.550eda0a.bemuse
+    │   ├── m4a.2.50a08444.bemuse
+    │   ├── m4a.3.6b0990a9.bemuse
+    │   │   ...
+    │   ├── metadata.json
+    │   ├── ogg.1.d9bfef56.bemuse
+    │   ├── ogg.2.2105f7cc.bemuse
+    │   └── ogg.3.766f65d4.bemuse
+    │       ...
+    ├── ba11.ogg
+    ├── ba12.ogg
+    ├── ba13.ogg
+    │   ...
+    ├── lapis5key.bms
+    ├── lapis7keya.bme
+    ├── lapis7keyl.bme
+    │   ...
+    ├── syn9.ogg
+    └── synpad.ogg
 
-    bemuse-tools pack songdir
+## Creating Index File
 
-### Generating index file
+Now, the client needs to know what songs are available in the server. You need to create an index file. You can do it by running this command in the server folder:
 
-Use this command:
+```powershell
+PS> bemuse-tools index
+# 
+# Absurd Gaff - siromaru       160bpm [schranz] siromaru / BMSSP-Absurd Gaff 3 6 8 10 10 21 [no-meta]
+# ametsuchi - stereoberry      122bpm [discopunk / shoegazer] stereoberry / BMSSP-ametsuchi 1 3 5 5 8 [no-meta]
+# atonement you you - unknown  197bpm [NO GENRE] Unknown Artist / BMSSP-atonement you you 4 6 [no-meta]
+# AVALON - Team.SASAKURATION   200bpm [Ω] Team:SASAKURATION-AVALON 0 5 6 10 10 12 12 [no-me ta]
+# ...
+```
 
-    bemuse-tools index
+After running, you will see these `index.json` and `index.cache` appear in your folder:
+
+    myserver
+    ├── AVALON - Team.SASAKURATION
+    ├── Absurd Gaff - siromaru
+    ├── Declinin' - ____(sta)
+    ├── HE is an Energizer - Mr.ABC
+    ├── I'll_forget_you_you'll_never_forget_me - mommy
+    ├── Lapis - SHIKI
+    │   ...
+    ├── index.cache
+    └── index.json
+
 
 ## Hosting
 
@@ -144,8 +318,8 @@ TODO
 
 ### On a Web Server
 
-Upload the files to the web server. Also set up CORS on the server to
-allow Bemuse to access.
+Upload `index.json`, all `*.bemuse` and `*.bms/bme/bml` files to a web server. Make sure the directory layout is the same. [Enable cross-origin resource sharing](http://enable-cors.org/) on your web server to allow Bemuse client to connect.
 
-Direct players to your server with the following url:
-`http://bemuse.ninja/?server=[SERVER_URL]` **TODO**: More detailed instructions
+To connect to the music server, go to `http://bemuse.ninja/?server=<your URL>`.
+
+Example: http://bemuse.ninja/?server=http://flicknote.bemuse.ninja/bemuse/mumei12
