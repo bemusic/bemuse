@@ -35,11 +35,11 @@ table tr th {
   text-align: left;
 }
 
-.container .wrapper h2 {
+.container .wrapper .blockElement.imageAlignSide h2 {
   margin-top: 60px;
 }
 
-.container .wrapper h3 {
+.container .wrapper .blockElement.imageAlignSide h3 {
   margin-top: 40px;
 }
 
