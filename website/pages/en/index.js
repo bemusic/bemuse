@@ -117,7 +117,7 @@ const FeatureTour = props => (
       {[
         {
           content: 'Play instantly from your browser.\n\nNo plugins required.',
-          image: imgUrl('screenshots/gameplay-kbd.jpg'),
+          image: imgUrl('screenshots/mode-select.jpg'),
           imageAlign: 'left',
           title: 'Web-based'
         }
