@@ -34,6 +34,11 @@ table tr th {
 .container .wrapper .imageAlignSide p {
   text-align: left;
 }
+  
+.container .wrapper .imageAlignSide h2,
+.container .wrapper .imageAlignSide h3 {
+  margin-top: 0;
+}
 
 /* Overridden Docusaurus styles */
 
@@ -87,12 +92,10 @@ table tr th {
 
 /* Center-ish the feature block text when image is visible */
 @media only screen and (min-width: 736px) {
-  .container .wrapper .blockElement.imageAlignSide h2 {
-    margin-top: 60px;
-  }
-  
-  .container .wrapper .blockElement.imageAlignSide h3 {
-    margin-top: 40px;
+  .container .wrapper .imageAlignSide .blockContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 }
 
