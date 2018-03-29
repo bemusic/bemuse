@@ -113,6 +113,16 @@ const FooterButtons = props => (
 
 const FeatureTour = props => (
   <div>
+    <Block>
+      {[
+        {
+          content: 'Play instantly from your browser.\n\nNo plugins required.',
+          image: imgUrl('screenshots/gameplay-kbd.jpg'),
+          imageAlign: 'left',
+          title: 'Web-based'
+        }
+      ]}
+    </Block>
     <Block background='light'>
       {[
         {
