@@ -15,31 +15,36 @@ development.
 
 ## Setting Up the Project
 
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>For Windows users, there (will be) a dedicated quick-start guide.</p>
-</div>
-
 First, you should create a folder for Bemuse development:
 
-    mkdir Bemuse
-    cd Bemuse
+```bash
+mkdir Bemuse
+cd Bemuse
+```
 
 Then, clone the Bemuse repository:
 
-    git clone git@github.com:bemusic/bemuse.git
+```bash
+git clone git@github.com:bemusic/bemuse.git
+```
 
 After these repository has been cloned, `cd` into the Bemuse repository:
 
-    cd bemuse
+```bash
+cd bemuse
+```
 
 Install the project's dependencies:
 
-    yarn
+```bash
+yarn
+```
 
 When it finishes installing, start the development server:
 
-    yarn start
+```bash
+yarn start
+```
 
 The game should be accessible at `http://localhost:8080/`.
 
@@ -53,16 +58,27 @@ by some test. This helps us be more confident in modifying our code.
 To turn on the coverage mode, start the server with the `BEMUSE_COV` environment
 variable set to `true`:
 
-    BEMUSE_COV=true npm start
+```bash
+BEMUSE_COV=true npm start
+```
 
 Then run the unit tests. After the unit tests are run, the coverage report will
 be generated. They can be viewed at `http://localhost:8080/coverage/`.
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For Windows users, use the following command:</p>
+<pre><code class="hljs css bat"><span class="hljs-built_in">set</span> "BEMUSE_COV=true" &amp;&amp; npm <span class="hljs-built_in">start</span>
+</code></pre>
+</div>
 
 ## Building
 
 To build the source code into a static web application, run:
 
-    npm run build
+```bash
+yarn build
+```
 
 The built files will reside in the `build` directory.
 
@@ -70,7 +86,9 @@ The built files will reside in the `build` directory.
 
 You can run tests from the command line by running:
 
-    npm test
+```bash
+yarn test
+```
 
 This will effectively
 
