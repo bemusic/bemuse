@@ -70,6 +70,7 @@ be generated. They can be viewed at `http://localhost:8080/coverage/`.
 <p>For Windows users, use the following command:</p>
 <pre><code class="hljs css bat"><span class="hljs-built_in">set</span> "BEMUSE_COV=true" &amp;&amp; npm <span class="hljs-built_in">start</span>
 </code></pre>
+<p>You can also use <code>cross-env</code> for a cross-platform solution for defining environment variables.</p>
 </div>
 
 ## Building
