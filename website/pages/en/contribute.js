@@ -35,11 +35,11 @@ class Help extends React.Component {
     const supportLinks = [
       {
         content:
-          `Follow the [developer documentation](${docUrl('developer-guide.html')}) to get started.`,
+          `Follow the [developer documentation](${docUrl('developer-guide.html')}) to get started. Don't forget to read our [coding guidelines](https://github.com/bemusic/bemuse/blob/master/CONTRIBUTING.md) as well.`,
         title: 'Read the docs'
       },
       {
-        content: 'Read through our [issues thread](https://github.com/bemusic/bemuse/issues) and pick an issue.\n\nWe recommend starting out with [these issues](https://github.com/bemusic/bemuse/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22).',
+        content: 'Read through our [issues thread](https://github.com/bemusic/bemuse/issues) and pick an issue. If you\'re confused, we recommend starting out with [these issues](https://github.com/bemusic/bemuse/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22).',
         title: 'Pick an issue'
       },
       {
