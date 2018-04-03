@@ -1,6 +1,6 @@
 ---
-id: getting-started
-title: Getting Started
+id: developer-guide
+title: Developer Guide
 ---
 
 This page describes how to setup the project on your computer for local

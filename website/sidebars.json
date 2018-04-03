@@ -9,7 +9,7 @@
       "bms-extensions"
     ],
     "Developers": [
-      "getting-started",
+      "developer-guide",
       "architecture",
       "game-loop",
       "skinning",
