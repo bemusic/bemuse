@@ -15,7 +15,7 @@ notes correctly to recreate the song!
 Go to [bemuse.ninja](https://bemuse.ninja/) in your web browser. You will see
 the title screen:
 
-<div class="browser-screenshot">
+<div class="BrowserScreenshot">
 
 ![Title screen](assets/user-guide/title.jpg)
 
@@ -34,7 +34,7 @@ Click the **Enter Game** button.
 
 Next, you will see the **game mode selection screen.**
 
-<div class="browser-screenshot">
+<div class="BrowserScreenshot">
 
 ![Game mode selection screen](assets/user-guide/mode-selection.jpg)
 
@@ -47,7 +47,7 @@ Select the game mode you want to play. If you are a newcomer, select the
 
 Next, you will the **music selection screen**, containing a list of songs:
 
-<div class="browser-screenshot">
+<div class="BrowserScreenshot">
 
 ![Music selection screen](assets/user-guide/music-selection.jpg)
 
@@ -58,7 +58,7 @@ Next, you will the **music selection screen**, containing a list of songs:
 The first song in the list is the **Tutorial.** Click the **“Start Tutorial (5
 keys)”** button to start it:
 
-<div class="browser-screenshot">
+<div class="BrowserScreenshot">
 
 ![Music selection screen](assets/user-guide/start-tutorial.jpg)
 
@@ -70,7 +70,7 @@ The tutorial will start loading. Once the tutorial is loaded, press
 The tutorial will then teach you some basic gameplay. While inside the game, you
 can press the <kbd>Esc</kbd> key a couple of times to exit the tutorial.
 
-<div class="browser-screenshot">
+<div class="BrowserScreenshot">
 
 ![Tutorial](assets/user-guide/tutorial.jpg)
 
@@ -87,7 +87,7 @@ Now you can start playing more songs!
 2.  Select the chart by clicking on it.
 3.  Click on that chart again to play it.
 
-<div class="browser-screenshot">
+<div class="BrowserScreenshot">
 
 ![Music selection screen](assets/user-guide/chart-selection.jpg)
 
@@ -99,7 +99,7 @@ After the song finish loading, press <kbd>Enter</kbd> to begin playing the song.
 
 There are many elements in the gameplay screen:
 
-<div class="browser-screenshot">
+<div class="BrowserScreenshot">
 
 ![Gameplay screen](assets/user-guide/gameplay.jpg)
 
@@ -137,7 +137,7 @@ To make it easier to read the notes, you can increase the **note speed.** The
 note speed multiplier makes note fall down faster, but it also means notes are
 more spaced apart:
 
-<div class="browser-screenshot">
+<div class="BrowserScreenshot">
 
 ![Gameplay screen, comparing speed 1.0x and 3.0x](assets/user-guide/speed.jpg)
 
@@ -156,7 +156,7 @@ To adjust the note speed in-game, use these keys:
 
 After finishing a song, you will see the result screen:
 
-<div class="browser-screenshot">
+<div class="BrowserScreenshot">
 
 ![Result screen](assets/user-guide/result.jpg)
 
@@ -205,7 +205,7 @@ After finishing a song, you will see the result screen:
 
 You can click on the accuracy number to see detailed **accuracy data.**
 
-<div class="browser-screenshot">
+<div class="BrowserScreenshot">
 
 ![Accuracy data in the result screen](assets/user-guide/accuracy-data.jpg)
 
@@ -228,7 +228,7 @@ of your gameplay.
 You can access the options panel from the Music Selection Screen by clicking the
 **Options** button.
 
-<div class="browser-screenshot">
+<div class="BrowserScreenshot">
 
 ![Options panel](assets/user-guide/options.jpg)
 
