@@ -56,6 +56,9 @@ class CustomBMS extends React.Component {
           <div className='CustomBMSのremark'>
             Please don’t play unauthorized / illegally obtained BMS files.
           </div>
+          <div className='CustomBMSのremark'>
+            Experimental: You can paste IPFS path/URL here.
+          </div>
           <div
             className={c('CustomBMSのdropzone', {
               'is-hover': this.state.hover

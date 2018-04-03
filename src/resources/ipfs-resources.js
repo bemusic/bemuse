@@ -4,11 +4,13 @@ import axios from 'axios'
 import URLResource from './url'
 
 export class IPFSResources {
-  constructor (ipfsPath, gateway = IPFSResources.DEFAULT_GATEWAY) {
+  constructor (ipfsPath, gateway = IPFSResources.getDefaultGateway()) {
     this._path = ipfsPath
     this._gateway = gateway
   }
-  static DEFAULT_GATEWAY = 'https://gateway.ipfs.io'
+  static getDefaultGateway () {
+    return 'https://gateway.ipfs.io'
+  }
   _throat = throat(5)
   async _loadLinks () {
     const url = `${this._gateway}/api/v0/object/get?arg=${encodeURIComponent(this._path)}`

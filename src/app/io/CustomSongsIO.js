@@ -26,7 +26,7 @@ export function handleClipboardPaste (e) {
         'Loading from IPFS path ' + path + '...',
         gateway
           ? `(Using gateway "${gateway}")`
-          : `(Using default gateway "${IPFSResources.DEFAULT_GATEWAY}")`
+          : `(Using default gateway "${IPFSResources.getDefaultGateway()}")`
       ]
       if (/^http:/.test(gateway) && window.location.protocol === 'https:') {
         initialLog.push(store, 'WARNING: Loading http URL from https. This will likely fail!')
