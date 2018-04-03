@@ -1,0 +1,37 @@
+.mainContainer .wrapper .BrowserScreenshot {
+  max-width: 640px;
+  margin: 0 auto 0;
+}
+.mainContainer .wrapper .post .BrowserScreenshot {
+  margin-top: 1.6em;
+  margin-bottom: 0.8em;
+}
+.mainContainer .wrapper .BrowserScreenshot > p {
+  height: 0;
+  box-shadow: 0 1px 7px rgba(0, 0, 0, 0.25);
+  box-sizing: content-box;
+  overflow: hidden;
+  background: #c6c6c6;
+  padding-top: 24px;
+  padding-bottom: 56.25%;
+  position: relative;
+  border-radius: 4px;
+}
+.mainContainer .wrapper .BrowserScreenshot > p::before {
+  content: '';
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  background: #999;
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  box-shadow: inset 0 0 0.5px rgba(0, 0, 0, 0.4);
+}
+.mainContainer .wrapper .BrowserScreenshot > p > img {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin: 0;
+}

@@ -3,7 +3,7 @@
 const React = require('react')
 
 const CompLibrary = require('../../core/CompLibrary.js')
-// const MarkdownBlock = CompLibrary.MarkdownBlock /* Used to read markdown */
+const MarkdownBlock = CompLibrary.MarkdownBlock
 const Container = CompLibrary.Container
 const GridBlock = CompLibrary.GridBlock
 
@@ -17,7 +17,8 @@ function docUrl (doc, language) {
   return siteConfig.baseUrl + 'docs/' + (language ? language + '/' : '') + doc
 }
 
-function pageUrl (page, language) { // eslint-disable-line
+function pageUrl (page, language) {
+  // eslint-disable-line
   return siteConfig.baseUrl + (language ? language + '/' : '') + page
 }
 
@@ -38,9 +39,12 @@ Button.defaultProps = {
 }
 
 const SplashContainer = props => (
-  <div className='homeContainer' style={{
-    backgroundImage: `url(${imgUrl('bg-title.jpg')})`
-  }}>
+  <div
+    className='homeContainer'
+    style={{
+      backgroundImage: `url(${imgUrl('bg-title.jpg')})`
+    }}
+  >
     <div className='homeSplashFade'>
       <div className='wrapper homeWrapper'>{props.children}</div>
     </div>
@@ -71,9 +75,19 @@ const PromoSection = props => (
 
 const CTAButtons = props => (
   <PromoSection>
-    <Button href='https://bemuse.ninja' target='blank' rel='noopener noreferrer'>Play Now</Button>
-    <Button href={docUrl('user-guide.html', props.language || '')}>Read the Docs</Button>
-    <Button href={pageUrl('contribute.html', props.language || '')}>Contribute</Button>
+    <Button
+      href='https://bemuse.ninja'
+      target='blank'
+      rel='noopener noreferrer'
+    >
+      Play Now
+    </Button>
+    <Button href={docUrl('user-guide.html', props.language || '')}>
+      Read the Docs
+    </Button>
+    <Button href={pageUrl('contribute.html', props.language || '')}>
+      Contribute
+    </Button>
   </PromoSection>
 )
 
@@ -92,6 +106,15 @@ class HomeSplash extends React.Component {
   }
 }
 
+const FooterButtons = props => (
+  <div
+    className='productShowcaseSection highlightBackground'
+    style={{ textAlign: 'center' }}
+  >
+    <CTAButtons language={props.language || ''} />
+  </div>
+)
+
 const Block = props => (
   <Container
     padding={['bottom', 'top']}
@@ -102,77 +125,121 @@ const Block = props => (
   </Container>
 )
 
-const FooterButtons = props => (
-  <div
-    className='productShowcaseSection highlightBackground'
-    style={{ textAlign: 'center' }}
+const FeatureBlock = props => (
+  <Container
+    padding={['bottom', 'top']}
+    id={props.id}
+    background={props.background}
   >
-    <CTAButtons language={props.language || ''} />
+    <div className='FeatureBlock' data-image-align={props.imageAlign}>
+      <div className='FeatureBlockのcontent'>
+        <h2>{props.title}</h2>
+        {props.children}
+      </div>
+      <div className='FeatureBlockのimage'>{props.image}</div>
+    </div>
+  </Container>
+)
+
+const BrowserScreenshot = props => (
+  <div className='BrowserScreenshot'>
+    <p>
+      <img {...props} />
+    </p>
   </div>
 )
 
 const FeatureTour = props => (
   <div>
-    <Block>
-      {[
-        {
-          content: 'Play instantly from your browser.\n\nNo plugins required.',
-          image: imgUrl('screenshots/mode-select.jpg'),
-          imageAlign: 'left',
-          title: 'Web-based'
-        }
-      ]}
-    </Block>
-    <Block background='light'>
-      {[
-        {
-          content: 'Hit the notes with your keyboard to recreate the song.\n\nPlay more accurately to get higher score!',
-          image: imgUrl('screenshots/gameplay-kbd.jpg'),
-          imageAlign: 'right',
-          title: 'Play with your keyboard'
-        }
-      ]}
-    </Block>
-    <Block>
-      {[
-        {
-          content: `More challenge with an extra turntable lane!\n\nYou can also play using an [IIDX controller](https://www.youtube.com/watch?v=EOgI37Myqvk) or [MIDI controller](https://www.facebook.com/bemusegame/videos/985712734835136/).\n\nThis mode is similar to beatmaniaIIDX and LR2.`,
-          image: imgUrl('screenshots/gameplay-bms.jpg'),
-          imageAlign: 'left',
-          title: 'BMS Mode'
-        }
-      ]}
-    </Block>
-    <Block background='light'>
-      {[
-        {
-          content: `More than [50 songs](/project/music.html) to choose, handpicked from various genres.`,
-          image: imgUrl('screenshots/music-select.jpg'),
-          imageAlign: 'right',
-          title: 'Wide variety of music'
-        }
-      ]}
-    </Block>
-    <Block>
-      {[
-        {
-          content: `If you would like to host your own music server with custom song sets, you can! [Click here](${docUrl('music-server.html', props.language || '')}) to learn how.`,
-          image: imgUrl('screenshots/music-select.jpg'),
-          imageAlign: 'left',
-          title: 'Custom Servers'
-        }
-      ]}
-    </Block>
-    <Block background='light'>
-      {[
-        {
-          content: `Bemuse is free and open source (licensed under [AGPLv3](https://github.com/bemusic/bemuse/blob/master/LICENSE)), made awesome by [our contributors](https://github.com/bemusic/bemuse/graphs/contributors).\n\nContributions are welcome! [Click here](${pageUrl('contribute.html', props.language || '')}) to get started, and have a look at our [issues page](https://github.com/bemusic/bemuse/issues).`,
-          image: imgUrl('screenshots/oss.png'),
-          imageAlign: 'right',
-          title: 'Open Source'
-        }
-      ]}
-    </Block>
+    <FeatureBlock
+      title='Web-based'
+      image={
+        <BrowserScreenshot
+          alt='Screenshot'
+          src={imgUrl('screenshots/mode-select.jpg')}
+        />
+      }
+      imageAlign='left'
+    >
+      Play instantly from your browser.
+      <br />
+      No plugins required.
+    </FeatureBlock>
+
+    <FeatureBlock
+      background='light'
+      title='Play with your keyboard'
+      image={
+        <BrowserScreenshot
+          alt='Screenshot'
+          src={imgUrl('screenshots/gameplay-kbd.jpg')}
+        />
+      }
+      imageAlign='right'
+    >
+      Hit the notes with your keyboard to recreate the song.
+      <br />
+      Play more accurately to get higher score!
+    </FeatureBlock>
+
+    <FeatureBlock
+      title='BMS Mode'
+      image={
+        <BrowserScreenshot
+          alt='Screenshot'
+          src={imgUrl('screenshots/gameplay-bms.jpg')}
+        />
+      }
+      imageAlign='left'
+    >
+      <MarkdownBlock
+      >{`More challenge with an extra turntable lane! \\\nYou can also play using an [IIDX controller](https://www.youtube.com/watch?v=EOgI37Myqvk) or [MIDI controller](https://www.facebook.com/bemusegame/videos/985712734835136/). \\\nThis mode is similar to beatmaniaIIDX and LR2.`}</MarkdownBlock>
+    </FeatureBlock>
+
+    <FeatureBlock
+      background='light'
+      title='Wide variety of music'
+      image={
+        <BrowserScreenshot
+          alt='Screenshot'
+          src={imgUrl('screenshots/music-select.jpg')}
+        />
+      }
+      imageAlign='right'
+    >
+      <MarkdownBlock
+      >{`More than [50 songs](/project/music.html) to choose, handpicked from various genres.`}</MarkdownBlock>
+    </FeatureBlock>
+
+    <FeatureBlock
+      title='Custom Servers'
+      image={
+        <BrowserScreenshot
+          alt='Screenshot'
+          src={imgUrl('screenshots/music-select.jpg')}
+        />
+      }
+      imageAlign='left'
+    >
+      <MarkdownBlock
+      >{`If you would like to host your own music server with custom song sets, you can! [Click here](${docUrl(
+          'music-server.html',
+          props.language || ''
+        )}) to learn how.`}</MarkdownBlock>
+    </FeatureBlock>
+
+    <FeatureBlock
+      background='light'
+      title='Open Source'
+      image={<img alt='Screenshot' src={imgUrl('screenshots/oss.png')} />}
+      imageAlign='right'
+    >
+      <MarkdownBlock
+      >{`Bemuse is free and open source (licensed under [AGPLv3](https://github.com/bemusic/bemuse/blob/master/LICENSE)), made awesome by [our contributors](https://github.com/bemusic/bemuse/graphs/contributors).\n\nContributions are welcome! [Click here](${pageUrl(
+          'contribute.html',
+          props.language || ''
+        )}) to get started, and have a look at our [issues page](https://github.com/bemusic/bemuse/issues).`}</MarkdownBlock>
+    </FeatureBlock>
   </div>
 )
 
