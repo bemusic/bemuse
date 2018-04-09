@@ -277,8 +277,41 @@ latency.
 
 ## Ranking system
 
-TODO
+Bemuse has its own **internet ranking system.**
 
-## Custom songs
+To get started, find the **“Log In / Create an Account”** button at the bottom right of the music selection screen:
 
-TODO
+<div class="BrowserScreenshot">
+
+![Music selection screen, showing where to click the login button](assets/user-guide/how-to-login.jpg)
+
+</div>
+
+Create an account or log in:
+
+<div class="BrowserScreenshot">
+
+![Login dialog](assets/user-guide/login.jpg)
+
+</div>
+
+When you are logged in, your play statistics are saved automatically,
+and you can view them in the music selection screen:
+
+<div class="BrowserScreenshot">
+
+![Music selection screen with recorded play stats](assets/user-guide/play-stats.jpg)
+
+</div>
+
+You can also find the ranking table in the ranking tab:
+
+<div class="BrowserScreenshot">
+
+![Ranking table in each level](assets/user-guide/ranking.jpg)
+
+</div>
+
+<!--
+@todo #473 Add a section about playing custom songs.
+-->
