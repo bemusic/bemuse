@@ -29,6 +29,12 @@ describe('Notes', function () {
     expect(notes.all()).to.have.length(3)
   })
 
+  it('should be able to process dtx format', function () {
+    var chart = Compiler.compile('#00101: 01020300', { format: 'dtx' }).chart
+    var notes = Notes.fromBMSChart(chart)
+    expect(notes.all()).to.have.length(3)
+  })
+
   describe('custom mapping', function () {
 
     it('allows custom mapping', function () {
