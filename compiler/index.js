@@ -30,6 +30,7 @@ var matchers = {
 //
 // * `text` {String} representing the BMS notechart
 // * `options` (optional) {Object} representing additional parser options
+//   * `format` (option) {String} file format. Should be 'bms' or 'dtx'. 'bms' is used by default.
 //   * `rng` (option) {Function} that generates a random number.
 //     It is used when processing `#RANDOM n` directive.
 //     This function should return an integer number between 1 and `n`.
@@ -51,11 +52,7 @@ exports.compile = function (text, options) {
     return 1 + Math.floor(Math.random() * max)
   }
 
-  var matcher = matchers.bms
-
-  if (options.format === 'dtx') {
-    matcher = matchers.dtx
-  }
+  var matcher = matchers[options.format] || matchers.bms
 
   var randomStack = []
   var skipStack = [false]
