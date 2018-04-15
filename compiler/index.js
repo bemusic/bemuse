@@ -6,11 +6,31 @@
 var match = require('../util/match')
 var BMSChart = require('../bms/chart')
 
+var matchers = {
+  bms: {
+    random: /^#RANDOM\s+(\d+)$/i,
+    if: /^#IF\s+(\d+)$/i,
+    endif: /^#ENDIF$/i,
+    timeSignature: /^#(\d\d\d)02:(\S*)$/,
+    channel: /^#(?:EXT\s+#)?(\d\d\d)(\S\S):(\S*)$/,
+    header: /^#(\w+)(?:\s+(\S.*))?$/
+  },
+  dtx: {
+    random: /^#RANDOM\s+(\d+)$/i,
+    if: /^#IF\s+(\d+)$/i,
+    endif: /^#ENDIF$/i,
+    timeSignature: /^#(\d\d\d)02:\s*(\S*)$/,
+    channel: /^#(?:EXT\s+#)?(\d\d\d)(\S\S):\s*(\S*)$/,
+    header: /^#(\w+):(?:\s+(\S.*))?$/
+  }
+}
+
 // Public: Reads the string representing the BMS notechart, parses it,
 // and compiles into a {BMSChart}.
 //
 // * `text` {String} representing the BMS notechart
 // * `options` (optional) {Object} representing additional parser options
+//   * `format` (option) {String} file format. Should be 'bms' or 'dtx'. 'bms' is used by default.
 //   * `rng` (option) {Function} that generates a random number.
 //     It is used when processing `#RANDOM n` directive.
 //     This function should return an integer number between 1 and `n`.
@@ -32,6 +52,8 @@ exports.compile = function (text, options) {
     return 1 + Math.floor(Math.random() * max)
   }
 
+  var matcher = matchers[options.format] || matchers.bms
+
   var randomStack = []
   var skipStack = [false]
 
@@ -49,15 +71,15 @@ exports.compile = function (text, options) {
     var flow = true
     if (text.charAt(0) !== '#') return
     match(text)
-    .when(/^#RANDOM\s+(\d+)$/i, function (m) {
+    .when(matcher.random, function (m) {
       result.controlSentences += 1
       randomStack.push(rng(+m[1]))
     })
-    .when(/^#IF\s+(\d+)$/i, function (m) {
+    .when(matcher.if, function (m) {
       result.controlSentences += 1
       skipStack.push(randomStack[randomStack.length - 1] !== +m[1])
     })
-    .when(/^#ENDIF$/i, function (m) {
+    .when(matcher.endif, function (m) {
       result.controlSentences += 1
       skipStack.pop()
     })
@@ -67,15 +89,15 @@ exports.compile = function (text, options) {
     if (flow) return
     var skipped = skipStack[skipStack.length - 1]
     match(text)
-    .when(/^#(\d\d\d)02:(\S*)$/, function (m) {
+    .when(matcher.timeSignature, function (m) {
       result.channelSentences += 1
       if (!skipped) chart.timeSignatures.set(+m[1], +m[2])
     })
-    .when(/^#(?:EXT\s+#)?(\d\d\d)(\S\S):(\S*)$/, function (m) {
+    .when(matcher.channel, function (m) {
       result.channelSentences += 1
       if (!skipped) handleChannelSentence(+m[1], m[2], m[3], lineNumber)
     })
-    .when(/^#(\w+)(?:\s+(\S.*))?$/, function (m) {
+    .when(matcher.header, function (m) {
       result.headerSentences += 1
       if (!skipped) chart.headers.set(m[1], m[2])
     })
