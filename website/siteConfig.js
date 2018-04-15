@@ -35,8 +35,8 @@ const siteConfig = {
   ],
   artists,
   /* path to images for header/footer */
-  headerIcon: 'img/docusaurus.svg',
-  footerIcon: 'img/docusaurus.svg',
+  headerIcon: 'img/white-logo.png',
+  footerIcon: 'img/white-logo.png',
   favicon: 'img/favicon.png',
   /* colors for website */
   colors: {
