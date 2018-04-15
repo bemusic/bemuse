@@ -1,0 +1,251 @@
+/* Font resets */
+html,
+body {
+  font-family: $baseFont;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: $baseFont;
+}
+
+dl {
+  padding-top: 10px;
+  line-height: 1.7;
+}
+dl dt {
+  font-weight: bold;
+}
+dl dd {
+  padding-left: 24px;
+  margin-bottom: 10px;
+}
+
+table tr th {
+  font-family: $baseFont;
+}
+
+.fixedHeaderContainer header h2 {
+  font-family: $baseFont;
+}
+
+.container .wrapper .imageAlignSide p {
+  text-align: left;
+}
+
+.container .wrapper .imageAlignSide h2,
+.container .wrapper .imageAlignSide h3 {
+  margin-top: 0;
+}
+
+/* Overridden Docusaurus styles */
+
+.highlightBackground a:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.showcaseSection .prose h1 {
+  font-family: $baseFont;
+}
+
+/**
+ * 1. Create a background-opacity effect.
+ */
+.homeContainer {
+  background-size: cover;
+  background-position: bottom;
+}
+.homeContainer .homeSplashFade {
+  background-color: rgba(0, 0, 0, 0.4); /* 1 */
+}
+
+.productShowcaseSection {
+  padding: 20px;
+}
+.productShowcaseSection h2 {
+  font-size: 30px;
+  line-height: 1em;
+  margin-top: 20px;
+  text-align: center;
+  padding: 10px 0;
+}
+.productShowcaseSection.highlightBackground h2 {
+  color: #fff;
+}
+
+@media only screen and (min-device-width: 360px) and (max-device-width: 735px) {
+}
+
+@media only screen and (max-width: 735px) {
+  footer .sitemap div {
+    padding-top: 10px;
+  }
+
+  .gridBlock .twoByGridBlock,
+  .gridBlock .threeByGridBlock,
+  .gridBlock .fourByGridBlock {
+    padding: 20px 0 !important;
+  }
+}
+
+/* Center-ish the feature block text when image is visible */
+@media only screen and (min-width: 736px) {
+  .container .wrapper .imageAlignSide .blockContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+}
+
+@media only screen and (max-width: 1023px) {
+  /* Prevent MathJax wrapper from overlapping */
+  .math {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .homeContainer .homeWrapper .projectLogo {
+    flex-direction: column;
+    position: initial;
+    justify-content: center;
+  }
+
+  .homeContainer .homeWrapper .projectLogo .tagline {
+    display: block;
+    font-size: 1.75em;
+    line-height: 1em;
+    font-weight: 300;
+    color: rgba(233, 232, 231, 0.6);
+    font-style: italic;
+    margin: 0;
+    margin-bottom: 10px;
+  }
+
+  .projectTitle {
+    display: none;
+  }
+
+  .button {
+    font-size: 18px;
+    padding: 12px 24px;
+  }
+
+  /* Feature block */
+  .container .wrapper h2 {
+    font-size: 32px;
+  }
+
+  /* Product showcase */
+  .productShowcaseSection h2 {
+    font-size: 38px;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+}
+
+@media only screen and (min-width: 1500px) {
+}
+
+/* Admonition styles copied over from Sphinx's base CSS */
+
+.admonition {
+  font-size: 0.9em;
+  padding: 12px;
+  margin-top: 24px;
+}
+
+/* First paragraph after `.admonition-title` */
+.admonition p:nth-child(2) {
+  padding-top: 0 !important;
+}
+
+.admonition .admonition-title {
+  font-weight: bold;
+  display: block;
+  max-width: 100% !important;
+  margin: -12px;
+  padding: 6px 12px !important;
+  margin-bottom: 12px;
+}
+
+/* Admonition: warning */
+
+.admonition.warning {
+  background: #ffedcc;
+}
+
+.admonition.warning .admonition-title {
+  background: #f0b37e;
+}
+
+/* Admonition: important */
+
+.admonition.important {
+  background: #dbfaf4;
+}
+
+.admonition.important .admonition-title {
+  background: #1abc9c;
+  color: #fff;
+}
+
+/* Admonition: note */
+
+.admonition.note {
+  background: #e7f2fa;
+}
+
+.admonition.note .admonition-title {
+  background: #6ab0de;
+  color: #fff;
+}
+
+/* Admonition: srcref */
+
+.admonition.srcref {
+  background: #eee;
+  font-size: 0.9em;
+  color: #777;
+  padding: 12px;
+  margin-bottom: 24px;
+}
+.admonition.srcref .admonition-title {
+  background: #ccc;
+  color: #666;
+}
+.admonition.srcref.outdated {
+  background: #e99;
+  color: #fff;
+}
+.admonition.srcref.outdated .admonition-title {
+  background: #c55;
+  color: #fcc;
+}
+.admonition .srcref.outdated a {
+  color: #ffa;
+}
+.admonition.srcref ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.admonition.srcref ul li {
+  font-style: italic;
+  list-style: none;
+  margin: 0;
+}
+.admonition.srcref ul li.outdated {
+  text-shadow: 0 0 1px red, 0 0 3px red, 0 0 5px red;
+}
+.admonition.srcref li a {
+  font-style: normal;
+}
