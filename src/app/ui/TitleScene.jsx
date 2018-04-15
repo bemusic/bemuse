@@ -85,13 +85,21 @@ class TitleScene extends React.Component {
           <a onClick={this.showAbout} href='javascript://'>
             About
           </a>
-          <a onClick={this.openLink} href='https://bemuse.readthedocs.org'>
+          <a onClick={this.openLink} href='/project/'>
             Docs
           </a>
           <a onClick={this.viewChangelog} href='javascript://'>
             {this.renderVersion()}
           </a>
           <SceneToolbar.Spacer />
+          <a
+            onClick={this.openLink}
+            href='https://discord.gg/aB6ucmx'
+          >
+            <FirstTimeTip tip='Join our Discord server' featureKey='discord'>
+              Discord
+            </FirstTimeTip>
+          </a>
           <a
             onClick={this.openLink}
             href='https://www.facebook.com/bemusegame'
@@ -102,7 +110,7 @@ class TitleScene extends React.Component {
             onClick={this.openTwitterLink}
             href='https://twitter.com/bemusegame'
           >
-            <FirstTimeTip tip='Like &amp; follow us :)' featureKey='twitter'>
+            <FirstTimeTip tip='Follow us :)' featureKey='twitter'>
               Twitter
             </FirstTimeTip>
           </a>
