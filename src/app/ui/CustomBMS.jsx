@@ -17,7 +17,8 @@ const enhance = compose(
     log: ReduxState.selectCustomSongLoaderLog(state)
   })),
   connectIO({
-    onFileDrop: () => event => CustomSongsIO.handleCustomSongFolderDrop(event)
+    onFileDrop: () => event => CustomSongsIO.handleCustomSongFolderDrop(event),
+    onPaste: () => e => CustomSongsIO.handleClipboardPaste(e)
   })
 )
 
@@ -25,12 +26,21 @@ class CustomBMS extends React.Component {
   static propTypes = {
     log: PropTypes.arrayOf(PropTypes.string),
     onFileDrop: PropTypes.func,
+    onPaste: PropTypes.func,
     onSongLoaded: PropTypes.func
   }
 
   constructor (props) {
     super(props)
     this.state = { hover: false }
+  }
+
+  componentDidMount () {
+    window.addEventListener('paste', this.handlePaste)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('paste', this.handlePaste)
   }
 
   render () {
@@ -41,10 +51,13 @@ class CustomBMS extends React.Component {
             Please drag and drop a BMS folder into the drop zone below.
           </div>
           <div className='CustomBMSのremark'>
-            This feature is only supported in Google Chrome.
+            This feature is only supported in Google Chrome and Firefox.
           </div>
           <div className='CustomBMSのremark'>
             Please don’t play unauthorized / illegally obtained BMS files.
+          </div>
+          <div className='CustomBMSのremark'>
+            Experimental: You can paste IPFS path/URL here.
           </div>
           <div
             className={c('CustomBMSのdropzone', {
@@ -58,7 +71,7 @@ class CustomBMS extends React.Component {
             {this.props.log ? (
               this.props.log.length ? (
                 <div className='CustomBMSのlog'>
-                  {this.props.log.map(text => <p>{text}</p>)}
+                  {this.props.log.map((text, i) => <p key={i}>{text}</p>)}
                 </div>
               ) : (
                 <div className='CustomBMSのlog'>
@@ -98,6 +111,13 @@ class CustomBMS extends React.Component {
     promise.then(song => {
       if (this.props.onSongLoaded) this.props.onSongLoaded(song)
     })
+  }
+
+  handlePaste = async e => {
+    const song = await this.props.onPaste(e)
+    if (song) {
+      if (this.props.onSongLoaded) this.props.onSongLoaded(song)
+    }
   }
 }
 

@@ -15,11 +15,12 @@ const writeFile = Promise.promisify(fs.writeFile, fs)
 gulp.task(
   'build',
   ['dist'],
-  co.wrap(function * () {
-    let stats = yield Promise.promisify(webpack)(config)
+  async function () {
+    const stats = await Promise.promisify(webpack)(config)
     gutil.log('[webpack]', stats.toString({ colors: true }))
-    yield postProcess()
-  })
+    await postProcess()
+    await generateDocs()
+  }
 )
 
 function postProcess () {
@@ -54,4 +55,17 @@ function ssi (html) {
 
 function scriptTag (text) {
   return `<script>${text}</script>`
+}
+
+async function generateDocs () {
+  require('child_process').execSync('yarn build', {
+    cwd: path('website'),
+    stdio: 'inherit'
+  })
+  await new Promise((resolve, reject) => {
+    gulp.src(path('website', 'build', 'bemuse', '**', '*'))
+      .on('error', reject)
+      .pipe(gulp.dest(path('dist', 'project')))
+      .on('end', resolve)
+  })
 }

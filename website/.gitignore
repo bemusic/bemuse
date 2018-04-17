@@ -1,0 +1,9 @@
+node_modules
+.DS_Store
+lib/core/metadata.js
+lib/core/MetadataBlog.js
+translated_docs
+build/
+
+i18n/*
+!i18n/en.json
