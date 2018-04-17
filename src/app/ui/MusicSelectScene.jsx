@@ -17,6 +17,7 @@ import compose from 'recompose/compose'
 import getPreviewUrl from 'bemuse/music-collection/getPreviewUrl'
 import online from 'bemuse/online/instance'
 import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
+import { hot } from 'react-hot-loader'
 import { connect } from 'react-redux'
 import { connect as connectToLegacyStore } from 'bemuse/flux'
 import { createSelector, createStructuredSelector } from 'reselect'
@@ -62,6 +63,7 @@ const selectMusicSelectState = (() => {
 })()
 
 const enhance = compose(
+  hot(module),
   connectToLegacyStore({ user: online && online.user川 }),
   connect(state => ({
     musicSelect: selectMusicSelectState(state),

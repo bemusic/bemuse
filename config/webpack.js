@@ -197,7 +197,6 @@ function applyWebConfig (config) {
       new webpack.HotModuleReplacementPlugin()
     )
     config.entry.boot.unshift(
-      'react-hot-loader/patch',
       'webpack-dev-server/client?http://' +
         Env.serverHost() +
         ':' +
