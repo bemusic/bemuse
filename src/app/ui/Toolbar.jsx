@@ -14,6 +14,7 @@ function Toolbar ({ items }) {
   return (
     <WindowSize
       render={({ width, height }) => (
+        console.log(width, height),
         width < 720
           ? <MobileToolbar items={items} />
           : <DesktopToolbar items={items} />
@@ -46,11 +47,11 @@ class DesktopToolbar extends React.PureComponent {
   render () {
     return (
       <SceneToolbar>
-        {this.props.items.map(element => {
+        {this.props.items.map((element, index) => {
           if (element.type === 'item') {
-            return this.renderItem(element)
+            return <React.Fragment key={index}>{this.renderItem(element)}</React.Fragment>
           } else {
-            return this.renderSpacer()
+            return <React.Fragment key={index}>{this.renderSpacer()}</React.Fragment>
           }
         })}
       </SceneToolbar>
@@ -93,11 +94,11 @@ class MobileToolbar extends React.PureComponent {
       <Toggle>{({ on, getTogglerProps }) => (
         <React.Fragment>
           <FloatingMobileMenu visible={on}>
-            {this.props.items.map(element => {
+            {this.props.items.map((element, index) => {
               if (element.type === 'item') {
-                return this.renderItem(element)
+                return <React.Fragment key={index}>{this.renderItem(element)}</React.Fragment>
               } else {
-                return this.renderSpacer()
+                return <React.Fragment key={index}>{this.renderSeparator()}</React.Fragment>
               }
             })}
           </FloatingMobileMenu>
@@ -117,7 +118,7 @@ class MobileToolbar extends React.PureComponent {
       </a>
     )
   }
-  renderSpacer () {
+  renderSeparator () {
     return <FloatingMobileMenu.Separator />
   }
 }

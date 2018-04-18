@@ -4,11 +4,14 @@
 .SceneHeading {
   @include soft-shadow;
   background: white;
-  margin: 0; padding: 0 4rem;
-  font: bold 3.6rem $ui-font;
-  line-height: 1.67em;
+  margin: 0; padding: 0 20px;
+  font: bold 2rem $ui-font;
+  line-height: 40px;
   color: black;
-  @media (max-width: 800px) {
-    font-size: 6.75vw;
+  padding-left: 70px;
+  @media (min-width: 720px) {
+    font-size: 3.6rem;
+    padding: 0 4rem;
+    line-height: 1.67em;
   }
 }

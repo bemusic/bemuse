@@ -183,6 +183,7 @@ function applyWebConfig (config) {
     output: {
       path: path('dist', 'build'),
       publicPath: 'build/',
+      globalObject: 'this',
       filename: '[name].js',
       chunkFilename: '[name]-[chunkhash].js',
       devtoolModuleFilenameTemplate: 'file://[absolute-resource-path]',

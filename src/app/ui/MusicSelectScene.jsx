@@ -35,6 +35,7 @@ import OptionsView from './Options'
 import RageQuitPopup from './RageQuitPopup'
 import UnofficialPanel from './UnofficialPanel'
 import { connectIO } from '../../impure-react/connectIO'
+import Toolbar from './Toolbar'
 
 const selectMusicSelectState = (() => {
   const selectLegacyServerObjectForCurrentCollection = createSelector(
@@ -134,19 +135,7 @@ class MusicSelectScene extends React.PureComponent {
 
         {this.renderMain()}
 
-        <SceneToolbar>
-          <a onClick={this.popScene} href='javascript://'>
-            Exit
-          </a>
-          <a onClick={this.handleCustomBMSOpen} href='javascript://'>
-            Play Custom BMS
-          </a>
-          <SceneToolbar.Spacer />
-          {this.renderOnlineToolbarButtons()}
-          <a onClick={this.handleOptionsOpen} href='javascript://'>
-            Options
-          </a>
-        </SceneToolbar>
+        <Toolbar items={this.getToolbarItems()} />
 
         <ModalPopup
           visible={this.state.optionsVisible}
@@ -238,33 +227,37 @@ class MusicSelectScene extends React.PureComponent {
     )
   }
 
-  renderOnlineToolbarButtons () {
-    if (!online) return null
-    let buttons = []
-    if (this.props.user) {
-      buttons.push(
-        <a
-          onClick={this.handleLogout}
-          href='javascript://online/logout'
-          key='logout'
-        >
-          Log Out ({this.props.user.username})
-        </a>
-      )
-    } else {
-      buttons.push(
-        <a
-          onClick={this.handleAuthenticate}
-          href='javascript://online/logout'
-          key='auth'
-        >
-          Log In / Create an Account
-        </a>
-      )
-    }
-    return buttons
+  getToolbarItems () {
+    return [
+      Toolbar.item('Exit', {
+        onClick: this.popScene
+      }),
+      Toolbar.item('Play Custom BMS', {
+        onClick: this.handleCustomBMSOpen
+      }),
+      Toolbar.spacer(),
+      ...this.getOnlineToolbarButtons(),
+      Toolbar.item('Options', {
+        onClick: this.handleOptionsOpen
+      })
+    ]
   }
-
+  getOnlineToolbarButtons () {
+    if (!online) return [ ]
+    if (this.props.user) {
+      return [
+        Toolbar.item(<span>Log Out ({this.props.user.username})</span>, {
+          onClick: this.handleLogout
+        })
+      ]
+    } else {
+      return [
+        Toolbar.item('Log In / Create an Account', {
+          onClick: this.handleAuthenticate
+        })
+      ]
+    }
+  }
   componentDidMount () {
     this.ensureSelectedSongInView()
   }
