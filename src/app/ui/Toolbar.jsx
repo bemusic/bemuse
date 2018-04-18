@@ -6,6 +6,9 @@ import $ from 'jquery'
 import FirstTimeTip from './FirstTimeTip'
 import Icon from 'react-fa'
 import { WindowSize } from 'react-fns'
+import FloatingMobileButton from 'bemuse/ui/FloatingMobileButton'
+import FloatingMobileMenu from 'bemuse/ui/FloatingMobileMenu'
+import Toggle from 'react-toggled'
 
 function Toolbar ({ items }) {
   return (
@@ -86,26 +89,36 @@ class MobileToolbar extends React.PureComponent {
     items: PropTypes.array.isRequired
   }
   render () {
-    void this.props.items
     return (
-      <div
-        style={{
-          position: 'fixed',
-          top: 20,
-          left: 20,
-          width: 40,
-          height: 40,
-          background: 'rgba(0,0,0,0.5)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '24px'
-        }}
-        onClick={() => window.alert('Mobile toolbar is not working yet ^_^')}
-      >
-        <Icon name='bars' />
-      </div>
+      <Toggle>{({ on, getTogglerProps }) => (
+        <React.Fragment>
+          <FloatingMobileMenu visible={on}>
+            {this.props.items.map(element => {
+              if (element.type === 'item') {
+                return this.renderItem(element)
+              } else {
+                return this.renderSpacer()
+              }
+            })}
+          </FloatingMobileMenu>
+          <FloatingMobileButton
+            buttonProps={getTogglerProps()}
+          >
+            <Icon name='bars' />
+          </FloatingMobileButton>
+        </React.Fragment>
+      )}</Toggle>
     )
+  }
+  renderItem (item) {
+    return (
+      <a onClick={item.onClick} href={item.href}>
+        {item.text}
+      </a>
+    )
+  }
+  renderSpacer () {
+    return <FloatingMobileMenu.Separator />
   }
 }
 

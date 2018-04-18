@@ -1,0 +1,40 @@
+
+@import "~bemuse/ui/common";
+
+.FloatingMobileMenu {
+  position: fixed;
+  top: 0; left: 0; right: 0; padding-top: 70px; padding-bottom: 20px;
+  background: rgba(0, 0, 0, 0.75);
+  font-size: 18px;
+
+  &.is-hidden {
+    display: none;
+  }
+  &:not(.is-hidden) {
+    animation: 0.3s FloatingMobileMenuのanimation;
+  }
+
+  > a {
+    display: block;
+    padding: 4px 20px 4px 32px;
+    text-decoration: none;
+    color: #e9e8e7;
+  }
+
+  &のseparator {
+    height: 0;
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+  }
+}
+
+@keyframes FloatingMobileMenuのanimation {
+  from {
+    opacity: 0;
+    transform: translate(0, -50%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}

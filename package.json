@@ -168,6 +168,7 @@
     "react-fns": "^1.4.0",
     "react-hot-loader": "^4.0.1",
     "react-redux": "^5.0.6",
+    "react-toggled": "^1.2.6",
     "recompose": "^0.26.0",
     "redux": "^3.7.2",
     "reselect": "^2.5.1",
