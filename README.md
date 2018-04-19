@@ -1,4 +1,4 @@
-<h1 align="center"><a href="https://bemuse.ninja/"><img src="docs/images/logo.png" alt="Bemuse 〜beat☆music☆sequence〜" width="551" height="162" /></a></h1>
+<h1 align="center"><a href="https://bemuse.ninja/"><img src="website/static/img/logo-with-shadow.svg" alt="Bemuse 〜beat☆music☆sequence〜" height="162" /></a></h1>
 
 <h2 align="center">open-source web-based online rhythm game</h2>
 
@@ -27,7 +27,7 @@ It is recommended to play this game on Google Chrome.
 
 ## Quick Tour
 
-![Music selection](docs/images/screenshots/music-select.jpg)
+![Music selection](website/static/img/screenshots/music-select.jpg)
 
 - You can play __online songs__ instantly in your browser.
 
@@ -38,7 +38,7 @@ It is recommended to play this game on Google Chrome.
 - It has an __insane tutorial.__
 
 
-![Gameplay](docs/images/screenshots/gameplay-kbd.jpg)
+![Gameplay](website/static/img/screenshots/gameplay-kbd.jpg)
 
 - __Keyboard mode__ (7-keys). Play along the music with your keyboard.
 
@@ -53,7 +53,7 @@ It is recommended to play this game on Google Chrome.
 - [__Scoring and grading system.__](http://bemuse.readthedocs.io/en/latest/users/scoring-and-judgment.html) Master the song to get the S grade (score over 500000).
 
 
-![Gameplay](docs/images/screenshots/gameplay-bms.jpg)
+![Gameplay](website/static/img/screenshots/gameplay-bms.jpg)
 
 - __BMS mode__ (7-keys + turntable). You can play using an [IIDX controller](https://www.youtube.com/watch?v=EOgI37Myqvk) or [MIDI controller](https://www.facebook.com/bemusegame/videos/985712734835136/).
 
@@ -65,7 +65,7 @@ It is recommended to play this game on Google Chrome.
 
 
 
-![Options](docs/images/screenshots/options.jpg)
+![Options](website/static/img/screenshots/options.jpg)
 
 - __Adjustable panel position.__ You can position the note panel on either side of the screen, or put it at the center.
 
