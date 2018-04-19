@@ -1,4 +1,4 @@
-<h1 align="center"><a href="https://bemuse.ninja/"><img src="website/static/img/logo-with-shadow.svg" alt="Bemuse 〜beat☆music☆sequence〜" height="162" /></a></h1>
+<h1 align="center"><a href="https://bemuse.ninja/"><img src="website/static/img/logo.png" alt="Bemuse 〜beat☆music☆sequence〜" height="162" /></a></h1>
 
 <h2 align="center">open-source web-based online rhythm game</h2>
 
