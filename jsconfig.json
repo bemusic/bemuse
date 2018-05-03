@@ -1,0 +1,10 @@
+{
+  "exclude": ["node_modules", "website/node_modules"],
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "bemuse/*": ["./src/*"]
+    }
+  }
+}
