@@ -1,18 +1,21 @@
 {
-  "presets": [
-    "env", "react", "stage-2"
-  ],
-  "plugins": [
-    "babel-plugin-espower"
-  ],
+  "presets": ["env", "react", "stage-2"],
+  "plugins": ["emotion", "espower"],
   "env": {
     "test": {
-      "plugins": [ "istanbul" ]
+      "plugins": [
+        ["emotion", { "sourceMap": true, "autoLabel": true }],
+        "istanbul"
+      ]
     },
     "development": {
       "plugins": [
-        [ "react-hot-loader/babel" ]
+        ["emotion", { "sourceMap": true, "autoLabel": true }],
+        "react-hot-loader/babel"
       ]
+    },
+    "production": {
+      "plugins": [["emotion", { "hoist": true }]]
     }
   }
 }

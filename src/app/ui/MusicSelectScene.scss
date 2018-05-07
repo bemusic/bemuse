@@ -71,20 +71,31 @@
     padding-bottom: 3rem;
   }
 
-  @media (orientation: portrait) {
+  @media (max-width: 1000px) {
     &のmain {
       transform: translateX(0);
       transition: 0.3s transform;
       &.is-in-song {
-        transform: translateX(-70vw);
+        transform: translateX(calc(-100vw + 20px));
+        @media (min-width: 600px) {
+          transform: translateX(-70vw);
+        }
       }
     }
     .MusicList {
-      padding: 25vmin 10vw 3vmin;
+      padding: 10rem 2rem 1.2rem;
+      @media (min-width: 600px) {
+        padding-left: 7.5rem;
+        padding-right: 7.5rem;
+      }
     }
     .MusicInfo {
       right: auto;
-      left: 100vw; width: 70vw;
+      left: 100vw;
+      width: calc(100vw - 20px);
+      @media (min-width: 600px) {
+        width: 70vw;
+      }
     }
   }
 

@@ -183,6 +183,7 @@ function applyWebConfig (config) {
     output: {
       path: path('dist', 'build'),
       publicPath: 'build/',
+      globalObject: 'this',
       filename: '[name].js',
       chunkFilename: '[name]-[chunkhash].js',
       devtoolModuleFilenameTemplate: 'file://[absolute-resource-path]',
@@ -197,7 +198,6 @@ function applyWebConfig (config) {
       new webpack.HotModuleReplacementPlugin()
     )
     config.entry.boot.unshift(
-      'react-hot-loader/patch',
       'webpack-dev-server/client?http://' +
         Env.serverHost() +
         ':' +

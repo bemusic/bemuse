@@ -7,22 +7,21 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 import Scene from 'bemuse/ui/Scene'
-import SceneToolbar from 'bemuse/ui/SceneToolbar'
-import TipContainer from 'bemuse/ui/TipContainer'
 import screenfull from 'screenfull'
 import version from 'bemuse/utils/version'
+import { hot } from 'react-hot-loader'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import { shouldDisableFullScreen } from 'bemuse/devtools/query-flags'
+import connectIO from 'bemuse/impure-react/connectIO'
 
 import * as Analytics from '../analytics'
 import * as Options from '../entities/Options'
 import * as OptionsIO from '../io/OptionsIO'
 import AboutScene from './AboutScene'
 import ChangelogPanel from './ChangelogPanel'
-import FirstTimeTip from './FirstTimeTip'
 import ModeSelectScene from './ModeSelectScene'
-import connectIO from '../../impure-react/connectIO'
+import Toolbar from './Toolbar'
 
 const HAS_PARENT = (() => {
   try {
@@ -33,6 +32,7 @@ const HAS_PARENT = (() => {
 })()
 
 const enhance = compose(
+  hot(module),
   connectIO({
     onMarkChangelogAsSeen: () => () =>
       OptionsIO.updateOptions(Options.updateLastSeenVersion(version))
@@ -54,6 +54,39 @@ class TitleScene extends React.Component {
     this.state = {
       changelogModalVisible: false
     }
+  }
+
+  getToolbarItems () {
+    return [
+      Toolbar.item('About', {
+        onClick: this.showAbout
+      }),
+      Toolbar.item('Docs', {
+        href: '/project/'
+      }),
+      Toolbar.item(this.renderVersion(), {
+        onClick: this.viewChangelog,
+        tip: 'What’s new?',
+        tipVisible: !this.props.hasSeenChangelog
+      }),
+      Toolbar.spacer(),
+      Toolbar.item('Discord', {
+        href: 'https://discord.gg/aB6ucmx',
+        tip: 'Join our Discord server',
+        tipFeatureKey: 'discord'
+      }),
+      Toolbar.item('Facebook', {
+        href: 'https://www.facebook.com/bemusegame'
+      }),
+      Toolbar.item('Twitter', {
+        href: 'https://twitter.com/bemusegame',
+        tip: 'Follow us :)',
+        tipFeatureKey: 'twitter'
+      }),
+      Toolbar.item('Fork me on GitHub', {
+        href: 'https://github.com/bemusic/bemuse'
+      })
+    ]
   }
 
   render () {
@@ -81,43 +114,7 @@ class TitleScene extends React.Component {
             </div>
           ) : null}
         </div>
-        <SceneToolbar>
-          <a onClick={this.showAbout} href='javascript://'>
-            About
-          </a>
-          <a onClick={this.openLink} href='/project/'>
-            Docs
-          </a>
-          <a onClick={this.viewChangelog} href='javascript://'>
-            {this.renderVersion()}
-          </a>
-          <SceneToolbar.Spacer />
-          <a
-            onClick={this.openLink}
-            href='https://discord.gg/aB6ucmx'
-          >
-            <FirstTimeTip tip='Join our Discord server' featureKey='discord'>
-              Discord
-            </FirstTimeTip>
-          </a>
-          <a
-            onClick={this.openLink}
-            href='https://www.facebook.com/bemusegame'
-          >
-            Facebook
-          </a>
-          <a
-            onClick={this.openTwitterLink}
-            href='https://twitter.com/bemusegame'
-          >
-            <FirstTimeTip tip='Follow us :)' featureKey='twitter'>
-              Twitter
-            </FirstTimeTip>
-          </a>
-          <a onClick={this.openLink} href='https://github.com/bemusic/bemuse'>
-            Fork me on GitHub
-          </a>
-        </SceneToolbar>
+        <Toolbar items={this.getToolbarItems()} />
         <div className='TitleSceneのcurtain' />
         <ModalPopup
           visible={this.state.changelogModalVisible}
@@ -131,9 +128,9 @@ class TitleScene extends React.Component {
 
   renderVersion () {
     return (
-      <TipContainer tip='What’s new?' tipVisible={!this.props.hasSeenChangelog}>
+      <React.Fragment>
         <strong>Bemuse</strong> v{version}
-      </TipContainer>
+      </React.Fragment>
     )
   }
 

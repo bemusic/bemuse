@@ -1,5 +1,4 @@
-
-@import "~bemuse/ui/common";
+@import '~bemuse/ui/common';
 
 .ResultScene {
   @include scene-background(url(~bemuse/ui/images/bg/b.jpg));
@@ -13,17 +12,29 @@
 
   &のreport {
     position: absolute;
-    top: 10rem; right: calc(50vw + 1rem); bottom: 3rem; left: 4rem;
+    top: 9rem;
+    right: calc(50vw + 1rem);
+    bottom: 3rem;
+    left: 4rem;
+    @media (min-height: 480px) {
+      top: 10rem;
+    }
   }
 
   &のinformation {
     background: rgba(white, 0.8);
     position: absolute;
-    top: 0; right: 4rem; bottom: 0; left: calc(50vw + 1rem);
-    padding-top: 10rem;
+    top: 0;
+    right: 4rem;
+    bottom: 0;
+    left: calc(50vw + 1rem);
+    padding-top: 9rem;
     padding-bottom: $bottom-padding;
     display: flex;
     flex-direction: column;
+    @media (min-height: 480px) {
+      padding-top: 10rem;
+    }
     @media (orientation: portrait) {
       right: 0;
     }
@@ -35,17 +46,24 @@
 
   &のinformationBody {
     flex: 1 1 auto;
-    margin: 4vh 0 4vh;
     background: rgba(white, 0.6);
     overflow-y: auto;
     overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    margin: 0.5rem 0 0.5rem;
+    @media (min-height: 480px) {
+      margin: 4vh 0 4vh;
+    }
   }
 
   &のinformationFooter {
     flex: 0 0 auto;
-    padding: 0 2vw;
     display: flex;
     justify-content: flex-end;
+    padding: 0 0.5rem;
+    @media (min-height: 480px) {
+      padding: 0 2vw;
+    }
   }
 
   .MusicChartInfo {
@@ -58,8 +76,10 @@
 
   .ResultGrade {
     position: absolute;
-    bottom: $bottom-padding; right: 52vw;
-    width: 20vh; height: 20vh;
+    bottom: $bottom-padding;
+    right: 52vw;
+    width: 20vh;
+    height: 20vh;
   }
 
   &のchart {
@@ -93,7 +113,7 @@
     color: #fff;
     padding: 1ex 2ex;
     cursor: pointer;
-    border-radius: 2vmin;
+    border-radius: 0.8rem;
   }
 
   &のexit {
@@ -103,5 +123,4 @@
   &のtweet {
     @include button(#54abee);
   }
-
 }

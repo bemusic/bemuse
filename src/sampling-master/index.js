@@ -236,10 +236,16 @@ class PlayInstance {
 
 export default SamplingMaster
 
-// Enables Web Audio on iOS. By default, on iOS, audio is disabled.
-// This function must be called before audio will start working. It must be
-// called as a response to some user interaction (e.g. touchstart).
-//
+/**
+ * Enables Web Audio on iOS. By default, on iOS, audio is disabled.
+ * This function must be called before audio will start working. It must be
+ * called as a response to some user interaction (e.g. touchstart).
+ *
+ * Also, there’s now Chrome autoplay policy taking effect.
+ * https://developers.google.com/web/updates/2017/09/autoplay-policy-changes
+ *
+ * @param {AudioContext} ctx The AudioContext to be unmuted.
+ */
 export function unmuteAudio (ctx = defaultAudioContext) {
   // Perform some strange magic to unmute the audio on iOS devices.
   // This code doesn’t make sense at all, you know.
@@ -250,4 +256,10 @@ export function unmuteAudio (ctx = defaultAudioContext) {
   osc.stop(ctx.currentTime + 0.1)
   gain.connect(ctx.destination)
   gain.disconnect()
+
+  try {
+    ctx.resume()
+  } catch (e) {
+    console.error('[sampling-master] Cannot resume AudioContext', e)
+  }
 }

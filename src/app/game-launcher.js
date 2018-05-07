@@ -33,7 +33,7 @@ export function launch ({
   saveLeadTime,
   onRagequitted
 }) {
-  // Unmute audio immediately so that it sounds on iOS.
+  // Unmute audio immediately so that it sounds on iOS and Chrome and some other browsers as well!
   unmuteAudio()
 
   return co(function * () {
@@ -216,7 +216,8 @@ function showResult (player, playerState, chart) {
         totalNotes: stats.totalNotes,
         log: stats.log,
         deltas: stats.deltas,
-        grade: getGrade(stats)
+        tainted: playerState.tainted,
+        grade: playerState.tainted ? 'AUTOPLAY' : getGrade(stats)
       },
       chart: chart,
       playMode: playMode,
