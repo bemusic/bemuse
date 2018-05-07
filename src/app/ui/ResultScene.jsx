@@ -23,7 +23,8 @@ export default class ResultScene extends React.Component {
       grade: PropTypes.string,
       score: PropTypes.number,
       deltas: PropTypes.array,
-      totalNotes: PropTypes.number
+      totalNotes: PropTypes.number,
+      tainted: PropTypes.bool
     }),
     playMode: PropTypes.string,
     lr2Timegate: PropTypes.array,
@@ -61,7 +62,7 @@ export default class ResultScene extends React.Component {
           </div>
           <div className='ResultSceneのinformationBody'>
             <RankingContainer
-              result={this.props.result}
+              result={this.props.result.tainted ? undefined : this.props.result}
               chart={this.props.chart}
               playMode={this.props.playMode}
             />

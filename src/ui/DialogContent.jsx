@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'react-emotion'
 
 const DialogContent = styled.div`
   padding: 1em;

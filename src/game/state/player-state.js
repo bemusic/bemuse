@@ -38,6 +38,9 @@ export class PlayerState {
 
     // ``true`` if finished playing, ``false`` otherwise.
     this.finished = false
+
+    // `true` if score is invalid due to autoplay being activated. `false` otherwise.
+    this.tainted = false
   }
 
   // The `Player` associated with this `PlayerState`.
@@ -136,16 +139,20 @@ export class PlayerState {
     let judgedNote
     let judgment
     let notes = buffer.notes
+    let autoPlayed = false
     for (let i = buffer.startIndex; i < notes.length; i++) {
       let note = notes[i]
       if (this._shouldJudge(note, control, buffer)) {
         let shouldBreak = this.getNoteStatus(note) !== 'active'
         judgedNote = note
         judgment = this._judgeNote(note)
+        if (window.BEMUSE_AUTOPLAY) {
+          autoPlayed = true
+        }
         if (shouldBreak) break
       }
     }
-    if (control.justPressed) {
+    if (control.justPressed || autoPlayed) {
       if (judgedNote) {
         this.notifications.sounds.push({
           note: judgedNote,
@@ -173,6 +180,10 @@ export class PlayerState {
   _shouldJudge (note, control, buffer) {
     let status = this.getNoteStatus(note)
     if (status === 'unjudged') {
+      if (window.BEMUSE_AUTOPLAY && this._gameTime >= note.time) {
+        this.tainted = true
+        return true
+      }
       let judgment = judgeTime(this._gameTime, note.time, this._judge)
       let missed = judgment === MISSED
       let hit = judgment > 0 && control.changed && control.value
@@ -181,6 +192,10 @@ export class PlayerState {
       }
       return missed || hit
     } else if (status === 'active') {
+      if (window.BEMUSE_AUTOPLAY && this._gameTime >= note.end.time) {
+        this.tainted = true
+        return true
+      }
       let judgment = judgeEndTime(this._gameTime, note.end.time, this._judge)
       let missed = judgment === MISSED
       let lifted = control.changed
@@ -197,6 +212,9 @@ export class PlayerState {
     let result = this._noteResult.get(note)
     let isDown = !result || result.status === 'unjudged'
     let isUp = result && result.status === 'active'
+    if (window.BEMUSE_AUTOPLAY && judgment >= 1) {
+      judgment = 1
+    }
     if (note.end) {
       if (isDown) {
         let status = judgment === MISSED ? 'judged' : 'active'

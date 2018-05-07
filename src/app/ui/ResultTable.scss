@@ -1,5 +1,4 @@
-
-@import "~bemuse/ui/common";
+@import '~bemuse/ui/common';
 
 .ResultTable {
   &のtable {
@@ -8,9 +7,13 @@
     text-shadow: 2px 2px 0 rgba(black, 0.2);
   }
   &のtable > tbody > tr {
-    > th, > td {
-      font-size: 1.6rem;
+    > th,
+    > td {
+      font-size: 1.25rem;
       font-weight: normal;
+      @media (min-height: 480px) {
+        font-size: 1.6rem;
+      }
     }
     > th {
       text-align: left;
@@ -30,6 +33,9 @@
     }
   }
   table.ResultTableのtotal > tbody > tr {
-    > th, > td { font-weight: bold; }
+    > th,
+    > td {
+      font-weight: bold;
+    }
   }
 }
