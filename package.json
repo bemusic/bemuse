@@ -137,7 +137,7 @@
   },
   "dependencies": {
     "audio-context": "^1.0.1",
-    "auth0-js": "^8.1.2",
+    "auth0-js": "^9.5.1",
     "axios": "^0.17.1",
     "baconjs": "^0.7.75",
     "bemuse-indexer": "^3.1.0",
