@@ -18,5 +18,5 @@ var DataStructure = require('data-structure')
 module.exports = new DataStructure({
   t: 'number',
   x: 'number',
-  dx: 'number',
+  dx: 'number'
 })

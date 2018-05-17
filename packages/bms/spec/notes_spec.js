@@ -1,9 +1,8 @@
 
-var Compiler  = require('../compiler')
-var Notes     = require('../notes')
+var Compiler = require('../compiler')
+var Notes = require('../notes')
 
 describe('Notes', function () {
-
   it('should be able to process normal notes', function () {
     var chart = Compiler.compile('#00111:01020300').chart
     var notes = Notes.fromBMSChart(chart)
@@ -36,7 +35,6 @@ describe('Notes', function () {
   })
 
   describe('custom mapping', function () {
-
     it('allows custom mapping', function () {
       var chart = Compiler.compile('#00112:01').chart
       var notes = Notes.fromBMSChart(chart, { mapping: { '12': 'A' } })
@@ -55,5 +53,4 @@ describe('Notes', function () {
       expect(notes.all()[0].column).to.equal('A')
     })
   })
-
 })

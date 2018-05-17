@@ -1,15 +1,14 @@
-import _          from 'lodash'
-import invariant  from 'invariant'
+import _ from 'lodash'
+import invariant from 'invariant'
 import BMS from 'bms'
 
-import GameEvent  from './data/GameEvent'
-import GameNote   from './data/GameNote'
+import GameEvent from './data/GameEvent'
+import GameNote from './data/GameNote'
 
 // A notechart holds every info about a single player's note chart that the
 // game will ever need.
 export class Notechart {
   constructor (data, playerOptions = { }) {
-
     let {
       notes: bmsNotes,
       timing,
@@ -22,31 +21,31 @@ export class Notechart {
       expertJudgmentWindow
     } = data
 
-    invariant(bmsNotes,     'Expected "data.notes"')
-    invariant(timing,       'Expected "data.timing"')
-    invariant(keysounds,    'Expected "data.keysounds"')
-    invariant(songInfo,     'Expected "data.songInfo"')
-    invariant(positioning,  'Expected "data.positioning"')
-    invariant(spacing,      'Expected "data.spacing"')
-    invariant(barLines,     'Expected "data.barLines"')
+    invariant(bmsNotes, 'Expected "data.notes"')
+    invariant(timing, 'Expected "data.timing"')
+    invariant(keysounds, 'Expected "data.keysounds"')
+    invariant(songInfo, 'Expected "data.songInfo"')
+    invariant(positioning, 'Expected "data.positioning"')
+    invariant(spacing, 'Expected "data.spacing"')
+    invariant(barLines, 'Expected "data.barLines"')
 
     this.expertJudgmentWindow = expertJudgmentWindow
 
     bmsNotes = this._preTransform(bmsNotes, playerOptions)
 
-    this._timing      = timing
+    this._timing = timing
     this._positioning = positioning
-    this._spacing     = spacing
-    this._keysounds   = keysounds
-    this._duration    = 0
-    this._notes       = this._generatePlayableNotesFromBMS(bmsNotes)
-    this._autos       = this._generateAutoKeysoundEventsFromBMS(bmsNotes)
-    this._barLines    = this._generateBarLineEvents(barLines)
-    this._samples     = this._generateKeysoundFiles(keysounds)
-    this._infos       = new Map(this._notes.map(
-        note => [note, this._getNoteInfo(note)]))
-    this._songInfo    = songInfo
-    this._images      = images
+    this._spacing = spacing
+    this._keysounds = keysounds
+    this._duration = 0
+    this._notes = this._generatePlayableNotesFromBMS(bmsNotes)
+    this._autos = this._generateAutoKeysoundEventsFromBMS(bmsNotes)
+    this._barLines = this._generateBarLineEvents(barLines)
+    this._samples = this._generateKeysoundFiles(keysounds)
+    this._infos = new Map(this._notes.map(
+      note => [note, this._getNoteInfo(note)]))
+    this._songInfo = songInfo
+    this._images = images
   }
 
   // An Array of note events.
@@ -147,7 +146,7 @@ export class Notechart {
 
   _preTransform (bmsNotes, playerOptions) {
     let chain = _.chain(bmsNotes)
-    let keys  = getKeys(bmsNotes)
+    let keys = getKeys(bmsNotes)
     if (playerOptions.scratch === 'off') {
       chain = chain.map(note => {
         if (note.column && note.column === 'SC') {
@@ -186,23 +185,23 @@ export class Notechart {
   _generatePlayableNotesFromBMS (bmsNotes) {
     let nextId = 1
     return bmsNotes
-    .filter(note => note.column)
-    .map(note => {
-      let spec = this._generateEvent(note.beat)
-      spec.id       = nextId++
-      spec.column   = note.column
-      spec.keysound       = note.keysound
-      spec.keysoundStart  = note.keysoundStart
-      spec.keysoundEnd    = note.keysoundEnd
-      this._updateDuration(spec)
-      if (note.endBeat !== undefined) {
-        spec.end = this._generateEvent(note.endBeat)
-        this._updateDuration(spec.end)
-      } else {
-        spec.end = undefined
-      }
-      return new GameNote(spec)
-    })
+      .filter(note => note.column)
+      .map(note => {
+        let spec = this._generateEvent(note.beat)
+        spec.id = nextId++
+        spec.column = note.column
+        spec.keysound = note.keysound
+        spec.keysoundStart = note.keysoundStart
+        spec.keysoundEnd = note.keysoundEnd
+        this._updateDuration(spec)
+        if (note.endBeat !== undefined) {
+          spec.end = this._generateEvent(note.endBeat)
+          this._updateDuration(spec.end)
+        } else {
+          spec.end = undefined
+        }
+        return new GameNote(spec)
+      })
   }
 
   _updateDuration (event) {
@@ -211,14 +210,14 @@ export class Notechart {
 
   _generateAutoKeysoundEventsFromBMS (bmsNotes) {
     return bmsNotes
-    .filter(note => !note.column)
-    .map(note => {
-      let spec = this._generateEvent(note.beat)
-      spec.keysound       = note.keysound
-      spec.keysoundStart  = note.keysoundStart
-      spec.keysoundEnd    = note.keysoundEnd
-      return new GameEvent(spec)
-    })
+      .filter(note => !note.column)
+      .map(note => {
+        let spec = this._generateEvent(note.beat)
+        spec.keysound = note.keysound
+        spec.keysoundStart = note.keysoundStart
+        spec.keysoundEnd = note.keysoundEnd
+        return new GameEvent(spec)
+      })
   }
 
   _generateKeysoundFiles (keysounds) {
@@ -238,9 +237,9 @@ export class Notechart {
 
   _generateEvent (beat) {
     return {
-      beat:     beat,
-      time:     this.beatToSeconds(beat),
-      position: this.beatToPosition(beat),
+      beat: beat,
+      time: this.beatToSeconds(beat),
+      position: this.beatToPosition(beat)
     }
   }
 
@@ -251,7 +250,6 @@ export class Notechart {
 }
 
 export default Notechart
-
 
 function getKeys (bmsNotes) {
   for (let note of bmsNotes) {

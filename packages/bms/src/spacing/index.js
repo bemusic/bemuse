@@ -81,7 +81,7 @@ Spacing.fromBMSChart = function (chart) {
         t: beat,
         x: factor,
         dx: 0,
-        inclusive: true,
+        inclusive: true
       })
     }
   })
@@ -91,7 +91,7 @@ Spacing.fromBMSChart = function (chart) {
       t: 0,
       x: segments[0].x,
       dx: 0,
-      inclusive: true,
+      inclusive: true
     })
   }
 

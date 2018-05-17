@@ -3,12 +3,11 @@ var Timing = require('../timing')
 var Compiler = require('../compiler')
 
 describe('Timing', function () {
-
   function case1 () {
     return new Timing(120, [
       { type: 'bpm', beat: 3, bpm: 90 },
       { type: 'stop', beat: 4, stopBeats: 1 },
-      { type: 'bpm', beat: 4, bpm: 180 },
+      { type: 'bpm', beat: 4, bpm: 180 }
     ])
   }
 
@@ -19,10 +18,10 @@ describe('Timing', function () {
 
   it('should convert beats to seconds', function () {
     var t = case1()
-    expect(t.beatToSeconds(0)).to.be.closeTo(0,     1e-2)
-    expect(t.beatToSeconds(1)).to.be.closeTo(0.5,   1e-2)
-    expect(t.beatToSeconds(2)).to.be.closeTo(1,     1e-2)
-    expect(t.beatToSeconds(3)).to.be.closeTo(1.5,   1e-2)
+    expect(t.beatToSeconds(0)).to.be.closeTo(0, 1e-2)
+    expect(t.beatToSeconds(1)).to.be.closeTo(0.5, 1e-2)
+    expect(t.beatToSeconds(2)).to.be.closeTo(1, 1e-2)
+    expect(t.beatToSeconds(3)).to.be.closeTo(1.5, 1e-2)
     expect(t.beatToSeconds(4)).to.be.closeTo(2.167, 1e-2)
     expect(t.beatToSeconds(5)).to.be.closeTo(2.833, 1e-2)
   })
@@ -55,6 +54,4 @@ describe('Timing', function () {
       expect(t.bpmAtBeat(5)).to.equal(123.45)
     })
   })
-
 })
-

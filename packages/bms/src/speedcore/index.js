@@ -84,7 +84,7 @@ var X = function (segment) { return segment.x }
 Speedcore.prototype._reached = function (index, typeFn, position) {
   if (index >= this._segments.length) return false
   var segment = this._segments[index]
-  var target  = typeFn(segment)
+  var target = typeFn(segment)
   return segment.inclusive ? position >= target : position > target
 }
 

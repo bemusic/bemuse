@@ -1,12 +1,11 @@
 
-import assert     from 'power-assert'
-import BMS        from 'bms'
+import assert from 'power-assert'
+import BMS from 'bms'
 
 import * as bmson from '../index'
 
 /* global describe, it */
 describe('legacy bmson', function () {
-
   describe('songInfoForBmson', function () {
     it('should return a song info', function () {
       const info = bmson.songInfoForBmson({
@@ -14,7 +13,7 @@ describe('legacy bmson', function () {
           title: 'Reminiscentia',
           artist: 'flicknote',
           genre: 'Dramatic Trance',
-          initBPM: 160,
+          initBPM: 160
         }
       })
       assert(info.title === 'Reminiscentia')
@@ -25,13 +24,12 @@ describe('legacy bmson', function () {
   })
 
   describe('barLinesForBmson', function () {
-
     it('should return barlines in beat', function () {
       const beats = bmson.barLinesForBmson({
         lines: [
           { y: 0, k: 0 },
           { y: 960, k: 0 },
-          { y: 1920, k: 0 },
+          { y: 1920, k: 0 }
         ]
       })
       assert.deepEqual(beats, [0, 4, 8])
@@ -39,7 +37,6 @@ describe('legacy bmson', function () {
   })
 
   describe('timingInfoForBmson', function () {
-
     it('should return timing of initial bpm', function () {
       let { initialBPM } = bmson.timingInfoForBmson({
         info: { initBPM: 180 }
@@ -78,7 +75,7 @@ describe('legacy bmson', function () {
     function setup (notes) {
       let data = {
         info: {
-          initBPM: 100,
+          initBPM: 100
         },
         soundChannel: [
           {
@@ -101,8 +98,12 @@ describe('legacy bmson', function () {
       ])
       assert.deepEqual(score.notes.all(), [
         {
-          column: '1', beat: 1, endBeat: undefined, keysound: '0001',
-          keysoundStart: 0, keysoundEnd: undefined,
+          column: '1',
+          beat: 1,
+          endBeat: undefined,
+          keysound: '0001',
+          keysoundStart: 0,
+          keysoundEnd: undefined
         }
       ])
       assert(score.keysounds.get('0001') === 'piano.wav')
@@ -114,8 +115,12 @@ describe('legacy bmson', function () {
       ])
       assert.deepEqual(score.notes.all(), [
         {
-          column: '1', beat: 1, endBeat: 3, keysound: '0001',
-          keysoundStart: 0, keysoundEnd: undefined,
+          column: '1',
+          beat: 1,
+          endBeat: 3,
+          keysound: '0001',
+          keysoundStart: 0,
+          keysoundEnd: undefined
         }
       ])
     })
@@ -123,7 +128,7 @@ describe('legacy bmson', function () {
     it('handles keysound slices', function () {
       let score = setup([
         { x: 1, y: 240, l: 0, c: false },
-        { x: 1, y: 480, l: 0, c: true },
+        { x: 1, y: 480, l: 0, c: true }
       ])
       let notes = score.notes.all()
       assert(notes[0].keysoundStart === 0)
@@ -134,9 +139,7 @@ describe('legacy bmson', function () {
   })
 
   describe('_slicesForNotesAndTiming (private)', function () {
-
     it('returns sound slices by y', function () {
-
       let timing = new BMS.Timing(100, [ ])
 
       let slices = bmson._slicesForNotesAndTiming([
@@ -146,7 +149,7 @@ describe('legacy bmson', function () {
         { x: 0, y: 960, l: 0, c: true },
         { x: 1, y: 1200, l: 0, c: true },
         { x: 1, y: 1440, l: 0, c: false },
-        { x: 1, y: 1680, l: 0, c: true },
+        { x: 1, y: 1680, l: 0, c: true }
       ], timing)
 
       function check (y, start, end) {
@@ -174,7 +177,7 @@ describe('legacy bmson', function () {
       const data = {
         soundChannel: [
           { notes: [ { x: 1 } ] },
-          { notes: [ { x: 3 }, { x: 8 } ] },
+          { notes: [ { x: 3 }, { x: 8 } ] }
         ]
       }
       assert(bmson.hasScratch(data))
@@ -183,7 +186,7 @@ describe('legacy bmson', function () {
       const data = {
         soundChannel: [
           { notes: [ { x: 1 } ] },
-          { notes: [ { x: 13 }, { x: 18 } ] },
+          { notes: [ { x: 13 }, { x: 18 } ] }
         ]
       }
       assert(bmson.hasScratch(data))
@@ -192,7 +195,7 @@ describe('legacy bmson', function () {
       const data = {
         soundChannel: [
           { notes: [ { x: 1 } ] },
-          { notes: [ { x: 3 }, { x: 7 } ] },
+          { notes: [ { x: 3 }, { x: 7 } ] }
         ]
       }
       assert(!bmson.hasScratch(data))

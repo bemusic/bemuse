@@ -1,27 +1,27 @@
 
-import Promise    from 'bluebird'
-import co         from 'co'
-import fs         from 'fs'
-import Throat     from 'throat'
-import { cpus }   from 'os'
-import endpoint   from 'endpoint'
+import Promise from 'bluebird'
+import co from 'co'
+import fs from 'fs'
+import Throat from 'throat'
+import { cpus } from 'os'
+import endpoint from 'endpoint'
 import { spawn, execFile as _execFile } from 'child_process'
 import { extname, basename } from 'path'
 
-import tmp        from './temporary'
+import tmp from './temporary'
 
-let readFile  = Promise.promisify(fs.readFile, fs)
+let readFile = Promise.promisify(fs.readFile, fs)
 let writeFile = Promise.promisify(fs.writeFile, fs)
-let execFile  = Promise.promisify(_execFile)
+let execFile = Promise.promisify(_execFile)
 
 let throat = new Throat(cpus().length || 1)
 
 export class AudioConvertor {
-  constructor(type, ...extra) {
+  constructor (type, ...extra) {
     this._target = type
     this._extra = extra
   }
-  convert(file) {
+  convert (file) {
     let ext = extname(file.name).toLowerCase()
     if (ext === '.' + this._target && !this.force) {
       return Promise.resolve(file)
@@ -31,9 +31,9 @@ export class AudioConvertor {
         .then(buffer => file.derive(name, buffer))
     }
   }
-  _doConvert(path, type) {
+  _doConvert (path, type) {
     if (type === 'm4a') {
-      return co(function*() {
+      return co(function * () {
         let wav = yield this._SoX(path, 'wav')
         let prefix = tmp()
         let wavPath = prefix + '.wav'
@@ -43,7 +43,7 @@ export class AudioConvertor {
           yield execFile('qaac', ['-o', m4aPath, '-c', '128', wavPath])
         } else {
           yield execFile('afconvert', [wavPath, m4aPath, '-f', 'm4af',
-                  '-b', '128000', '-q', '127', '-s', '2'])
+            '-b', '128000', '-q', '127', '-s', '2'])
         }
         return yield readFile(m4aPath)
       }.bind(this))
@@ -51,8 +51,8 @@ export class AudioConvertor {
       return this._SoX(path, type)
     }
   }
-  _SoX(path, type) {
-    return co(function*() {
+  _SoX (path, type) {
+    return co(function * () {
       let typeArgs = [ ]
       try {
         let fd = yield Promise.promisify(fs.open, fs)(path, 'r')
@@ -72,9 +72,9 @@ export class AudioConvertor {
         console.error('[WARN] Unable to detect file type!')
       }
       return yield this._doSoX(path, type, typeArgs)
-    }.bind(this));
+    }.bind(this))
   }
-  _doSoX(path, type, inputTypeArgs) {
+  _doSoX (path, type, inputTypeArgs) {
     return throat(() => new Promise((resolve, reject) => {
       let sox = spawn('sox', [...inputTypeArgs, path, '-t', type, ...this._extra, '-'])
       sox.stdin.end()

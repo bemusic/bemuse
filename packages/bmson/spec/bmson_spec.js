@@ -1,10 +1,9 @@
 
-import assert     from 'power-assert'
+import assert from 'power-assert'
 import * as bmson from '../index'
 
 /* global describe, it */
 describe('bmson v1.0.0', function () {
-
   describe('songInfoForBmson', function () {
     it('should return a song info', function () {
       const info = bmson.songInfoForBmson({
@@ -13,7 +12,7 @@ describe('bmson v1.0.0', function () {
           title: 'Reminiscentia',
           artist: 'flicknote',
           genre: 'Dramatic Trance',
-          init_bpm: 160,
+          init_bpm: 160
         }
       })
       assert(info.title === 'Reminiscentia')
@@ -24,7 +23,7 @@ describe('bmson v1.0.0', function () {
       const info = bmson.songInfoForBmson({
         version: '1.0.0',
         info: {
-          chart_name: 'FOUR DIMENSIONS',
+          chart_name: 'FOUR DIMENSIONS'
         }
       })
       assert.deepEqual(info.subtitles, [ 'FOUR DIMENSIONS' ])
@@ -33,7 +32,7 @@ describe('bmson v1.0.0', function () {
       const info = bmson.songInfoForBmson({
         version: '1.0.0',
         info: {
-          subtitle: 'First Episode\nreturn of the cat meow',
+          subtitle: 'First Episode\nreturn of the cat meow'
         }
       })
       assert.deepEqual(info.subtitles, [ 'First Episode', 'return of the cat meow' ])
@@ -43,7 +42,7 @@ describe('bmson v1.0.0', function () {
         version: '1.0.0',
         info: {
           subtitle: '',
-          chart_name: '',
+          chart_name: ''
         }
       })
       assert.deepEqual(info.subtitles, [ ])
@@ -53,7 +52,7 @@ describe('bmson v1.0.0', function () {
         version: '1.0.0',
         info: {
           title: 'Running Out 2015',
-          subartists: [ 'music:flicknote', 'bga:5argon' ],
+          subartists: [ 'music:flicknote', 'bga:5argon' ]
         }
       })
       assert.deepEqual(info.subartists, [ 'music:flicknote', 'bga:5argon' ])
@@ -65,12 +64,12 @@ describe('bmson v1.0.0', function () {
       const beats = bmson.barLinesForBmson({
         version: '1.0.0',
         info: {
-          resolution: 3,
+          resolution: 3
         },
         lines: [
           { y: 0 },
           { y: 12 },
-          { y: 24 },
+          { y: 24 }
         ]
       })
       assert.deepEqual(beats, [0, 4, 8])
@@ -78,7 +77,6 @@ describe('bmson v1.0.0', function () {
   })
 
   describe('timingInfoForBmson', function () {
-
     it('should return timing of initial bpm', function () {
       let { initialBPM } = bmson.timingInfoForBmson({
         version: '1.0.0',
@@ -124,7 +122,7 @@ describe('bmson v1.0.0', function () {
         version: '1.0.0',
         info: {
           init_bpm: 100,
-          resolution: 24,
+          resolution: 24
         },
         sound_channels: [
           {
@@ -148,8 +146,12 @@ describe('bmson v1.0.0', function () {
       ])
       assert.deepEqual(score.notes.all(), [
         {
-          column: '1', beat: 1, endBeat: void 0, keysound: '0001',
-          keysoundStart: 0, keysoundEnd: void 0,
+          column: '1',
+          beat: 1,
+          endBeat: void 0,
+          keysound: '0001',
+          keysoundStart: 0,
+          keysoundEnd: void 0
         }
       ])
       assert(score.keysounds.get('0001') === 'piano.wav')
@@ -161,8 +163,12 @@ describe('bmson v1.0.0', function () {
       ])
       assert.deepEqual(score.notes.all(), [
         {
-          column: '1', beat: 1, endBeat: 3, keysound: '0001',
-          keysoundStart: 0, keysoundEnd: void 0,
+          column: '1',
+          beat: 1,
+          endBeat: 3,
+          keysound: '0001',
+          keysoundStart: 0,
+          keysoundEnd: void 0
         }
       ])
     })
@@ -170,7 +176,7 @@ describe('bmson v1.0.0', function () {
     it('handles keysound slices', function () {
       let score = setup([
         { x: 1, y: 24, l: 0, c: false },
-        { x: 1, y: 48, l: 0, c: true },
+        { x: 1, y: 48, l: 0, c: true }
       ])
       let notes = score.notes.all()
       assert(notes[0].keysoundStart === 0)
@@ -186,7 +192,7 @@ describe('bmson v1.0.0', function () {
         version: '1.0.0',
         sound_channels: [
           { notes: [ { x: 1 } ] },
-          { notes: [ { x: 3 }, { x: 8 } ] },
+          { notes: [ { x: 3 }, { x: 8 } ] }
         ]
       }
       assert(bmson.hasScratch(data))
@@ -196,7 +202,7 @@ describe('bmson v1.0.0', function () {
         version: '1.0.0',
         sound_channels: [
           { notes: [ { x: 1 } ] },
-          { notes: [ { x: 13 }, { x: 18 } ] },
+          { notes: [ { x: 13 }, { x: 18 } ] }
         ]
       }
       assert(bmson.hasScratch(data))
@@ -206,7 +212,7 @@ describe('bmson v1.0.0', function () {
         version: '1.0.0',
         sound_channels: [
           { notes: [ { x: 1 } ] },
-          { notes: [ { x: 3 }, { x: 7 } ] },
+          { notes: [ { x: 3 }, { x: 7 } ] }
         ]
       }
       assert(!bmson.hasScratch(data))

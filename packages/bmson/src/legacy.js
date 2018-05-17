@@ -10,18 +10,18 @@ export function barLinesForBmson (bmson) {
 export function timingInfoForBmson (bmson) {
   return {
     initialBPM: bmson.info.initBPM,
-    actions:    [
+    actions: [
       ...(bmson.bpmNotes || []).map(({ y, v }) => ({
         type: 'bpm',
         beat: beatForLoc(y),
-        bpm: v,
+        bpm: v
       })),
       ...(bmson.stopNotes || []).map(({ y, v }) => ({
         type: 'stop',
         beat: beatForLoc(y),
-        stopBeats: beatForLoc(Math.floor(v)),
-      })),
-    ],
+        stopBeats: beatForLoc(Math.floor(v))
+      }))
+    ]
   }
 }
 

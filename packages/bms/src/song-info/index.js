@@ -29,7 +29,7 @@
 /* class SongInfo */
 
 var match = require('../util/match')
-var _     = require('../util/lodash')
+var _ = require('../util/lodash')
 
 module.exports = SongInfo
 
@@ -38,20 +38,19 @@ module.exports = SongInfo
 // * `info` {Object} representing the properties to set on this new instance
 //
 function SongInfo (info) {
-
   // Public: {String} representing the song title
-  this.title      = 'NO TITLE'
+  this.title = 'NO TITLE'
 
   // Public: {String} representing the song artist
-  this.artist     = 'NO ARTIST'
+  this.artist = 'NO ARTIST'
 
   // Public: {String} representing the song genre
-  this.genre      = 'NO GENRE'
+  this.genre = 'NO GENRE'
 
   // Public: {Array} representing the song's subtitles, one line per element.
   // The subtitle may be used to represent the difficulty name, such as
   // NORMAL, HYPER, ANOTHER.
-  this.subtitles  = []
+  this.subtitles = []
 
   // Public: {Array} representing the song's other artists,
   // one artist per element.
@@ -72,7 +71,7 @@ function SongInfo (info) {
 
   // Public: {Number} representing the level of the song.
   // When converted from a BMS chart, this is the value of `#PLAYLEVEL` header.
-  this.level      = 0
+  this.level = 0
 
   if (info) _.assign(this, info)
 }
@@ -84,13 +83,13 @@ function SongInfo (info) {
 // Returns a {SongInfo} object
 //
 SongInfo.fromBMSChart = function (chart) {
-  var info       = { }
-  var title      = chart.headers.get('title')
-  var artist     = chart.headers.get('artist')
-  var genre      = chart.headers.get('genre')
+  var info = { }
+  var title = chart.headers.get('title')
+  var artist = chart.headers.get('artist')
+  var genre = chart.headers.get('genre')
   var difficulty = +chart.headers.get('difficulty')
-  var level      = +chart.headers.get('playlevel')
-  var subtitles  = chart.headers.getAll('subtitle')
+  var level = +chart.headers.get('playlevel')
+  var subtitles = chart.headers.getAll('subtitle')
   var subartists = chart.headers.getAll('subartist')
   if (typeof title === 'string' && !subtitles) {
     var extractSubtitle = function (m) {
@@ -98,18 +97,18 @@ SongInfo.fromBMSChart = function (chart) {
       subtitles = [m[2]]
     }
     match(title)
-    .when(/^(.*\S)\s*-(.+?)-$/,   extractSubtitle)
-    .when(/^(.*\S)\s*～(.+?)～$/, extractSubtitle)
-    .when(/^(.*\S)\s*\((.+?)\)$/, extractSubtitle)
-    .when(/^(.*\S)\s*\[(.+?)\]$/, extractSubtitle)
-    .when(/^(.*\S)\s*<(.+?)>$/,   extractSubtitle)
+      .when(/^(.*\S)\s*-(.+?)-$/, extractSubtitle)
+      .when(/^(.*\S)\s*～(.+?)～$/, extractSubtitle)
+      .when(/^(.*\S)\s*\((.+?)\)$/, extractSubtitle)
+      .when(/^(.*\S)\s*\[(.+?)\]$/, extractSubtitle)
+      .when(/^(.*\S)\s*<(.+?)>$/, extractSubtitle)
   }
-  if (title)      info.title      = title
-  if (artist)     info.artist     = artist
-  if (genre)      info.genre      = genre
-  if (subtitles)  info.subtitles  = subtitles
+  if (title) info.title = title
+  if (artist) info.artist = artist
+  if (genre) info.genre = genre
+  if (subtitles) info.subtitles = subtitles
   if (subartists) info.subartists = subartists
   if (difficulty) info.difficulty = difficulty
-  if (level)      info.level      = level
+  if (level) info.level = level
   return new SongInfo(info)
 }

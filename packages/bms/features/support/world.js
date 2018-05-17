@@ -2,7 +2,6 @@
 var lazy = require('lazy-property')
 
 module.exports = function () {
-
   if (this.World.plugins) return
 
   function World (callback) {
@@ -26,5 +25,4 @@ module.exports = function () {
       this.prop(name, getter)
     })
   }
-
 }

@@ -1,20 +1,20 @@
 
-import Promise                from 'bluebird'
-import co                     from 'co'
-import { join }               from 'path'
-import { createWriteStream }  from 'fs'
-import fs                     from 'fs'
-import Payload                from './payload'
+import Promise from 'bluebird'
+import co from 'co'
+import { join } from 'path'
+import { createWriteStream } from 'fs'
+import fs from 'fs'
+import Payload from './payload'
 
 let writeFile = Promise.promisify(fs.writeFile, fs)
 
 export class BemusePacker {
-  constructor() {
-    this._refs  = []
+  constructor () {
+    this._refs = []
   }
-  pack(name, files) {
-    let max   = 1474560
-    let cur   = null
+  pack (name, files) {
+    let max = 1474560
+    let cur = null
     files = files.slice()
     files.sort((a, b) => b.size - a.size)
     for (let file of files) {
@@ -24,13 +24,13 @@ export class BemusePacker {
       cur.add(file)
     }
   }
-  ref(name) {
+  ref (name) {
     let ref = new Ref(name, this._refs.length)
     this._refs.push(ref)
     return ref
   }
-  write(folder) {
-    return co(function*() {
+  write (folder) {
+    return co(function * () {
       let files = []
       let refs = []
       let nums = {}
@@ -41,9 +41,9 @@ export class BemusePacker {
           files.push({ name: file.name, ref: [ref.index, start, end] })
         }
         let hash = payload.hash
-        let num  = (nums[ref.name] || 0) + 1
+        let num = (nums[ref.name] || 0) + 1
         nums[ref.name] = num
-        let out   = ref.name + '.' + num + '.' +
+        let out = ref.name + '.' + num + '.' +
                     hash.substr(0, 8) + '.bemuse'
         refs.push({ path: out, hash: hash })
         yield this._writeBin(join(folder, out), new Buffer(0), payload)
@@ -54,7 +54,7 @@ export class BemusePacker {
       console.log(`Written metadata.json`)
     }.bind(this))
   }
-  _writeBin(path, metadataBuffer, payload) {
+  _writeBin (path, metadataBuffer, payload) {
     let file = createWriteStream(path)
     let size = new Buffer(4)
     size.writeUInt32LE(metadataBuffer.length, 0)
@@ -69,13 +69,13 @@ export class BemusePacker {
 }
 
 export class Ref {
-  constructor(name, index) {
+  constructor (name, index) {
     this.name = name
     this.index = index
     this.size = 0
     this.files = []
   }
-  add(file) {
+  add (file) {
     this.files.push(file)
     this.size += file.size
   }

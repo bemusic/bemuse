@@ -1,7 +1,7 @@
 
 var _ = require('lodash')
 
-function getDuration(notes, timing) {
+function getDuration (notes, timing) {
   var maxBeat = _(notes.all()).pluck('beat').max()
   return timing.beatToSeconds(maxBeat)
 }

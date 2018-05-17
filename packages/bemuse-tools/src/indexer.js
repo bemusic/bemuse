@@ -1,26 +1,25 @@
 
-import Promise    from 'bluebird'
-import co         from 'co'
-import fs         from 'fs'
-import _          from 'lodash'
-import chalk      from 'chalk'
-import json       from 'format-json'
-import yaml       from 'js-yaml'
+import Promise from 'bluebird'
+import co from 'co'
+import fs from 'fs'
+import _ from 'lodash'
+import chalk from 'chalk'
+import json from 'format-json'
+import yaml from 'js-yaml'
 
 import { getSongInfo } from 'bemuse-indexer'
-import { join, dirname, basename }   from 'path'
+import { join, dirname, basename } from 'path'
 
-let fileStat  = Promise.promisify(fs.stat, fs)
-let readFile  = Promise.promisify(fs.readFile, fs)
+let fileStat = Promise.promisify(fs.stat, fs)
+let readFile = Promise.promisify(fs.readFile, fs)
 let writeFile = Promise.promisify(fs.writeFile, fs)
-let glob      = Promise.promisify(require('glob'))
+let glob = Promise.promisify(require('glob'))
 
-function Cache(path) {
-
+function Cache (path) {
   let data = load()
   let stream = fs.createWriteStream(path, { encoding: 'utf-8', 'flags': 'a' })
 
-  function load() {
+  function load () {
     let out = { }
     let text
     try {
@@ -28,7 +27,7 @@ function Cache(path) {
     } catch (e) {
       return out
     }
-    text.split(/\n/).forEach(function(line) {
+    text.split(/\n/).forEach(function (line) {
       if (line.length < 34) return
       let md5 = line.substr(0, 32)
       let payload = JSON.parse(line.substr(33))
@@ -38,22 +37,20 @@ function Cache(path) {
   }
 
   return {
-    get: function(key) {
+    get: function (key) {
       return data[key]
     },
-    put: function(key, value) {
+    put: function (key, value) {
       if (key.length !== 32) throw new Error('Keys should be 32 chars only')
       data[key] = value
       stream.write(key + ' ' + JSON.stringify(value) + '\n')
       return value
-    },
+    }
   }
-
 }
 
-export function index(path, { recursive }) {
-  return co(function*() {
-
+export function index (path, { recursive }) {
+  return co(function * () {
     let stat = yield fileStat(path)
     if (!stat.isDirectory()) throw new Error('Not a directory: ' + path)
 
@@ -70,7 +67,6 @@ export function index(path, { recursive }) {
     let songs = []
     let maxDirLength = _(Array.from(dirs.keys())).map('length').max()
     for (let [dir, files] of dirs) {
-
       let filesToParse = [ ]
 
       for (let file of files) {
@@ -83,15 +79,15 @@ export function index(path, { recursive }) {
       }
 
       let extra = yield getExtra(dir)
-      let song  = yield getSongInfo(filesToParse, { cache, extra })
+      let song = yield getSongInfo(filesToParse, { cache, extra })
       song.id = dir
       song.path = dir
 
       let levels = _(song.charts).sortBy(chart => chart.info.level).map(chart => {
-        let ch =  chart.keys === '5K' ? chalk.gray :
-                  chart.keys === '7K' ? chalk.green :
-                  chart.keys === '10K' ? chalk.magenta :
-                  chart.keys === '14K' ? chalk.red : chalk.inverse
+        let ch = chart.keys === '5K' ? chalk.gray
+          : chart.keys === '7K' ? chalk.green
+            : chart.keys === '10K' ? chalk.magenta
+              : chart.keys === '14K' ? chalk.red : chalk.inverse
         return ch(chart.info.level)
       })
       console.log(
@@ -106,16 +102,15 @@ export function index(path, { recursive }) {
     }
 
     let collection = {
-      songs: songs,
+      songs: songs
     }
 
     writeFile(join(path, 'index.json'), json.diffy(collection))
-
   })
 }
 
-function getExtra(dir) {
-  return co(function*() {
+function getExtra (dir) {
+  return co(function * () {
     let readme
     let extra = { }
     try {
@@ -136,7 +131,7 @@ function getExtra(dir) {
   })
 }
 
-function put(map, key, f) {
+function put (map, key, f) {
   if (map.has(key)) {
     return map.get(key)
   } else {

@@ -1,14 +1,14 @@
 
-import Throat                 from 'throat'
-import { spawn }              from 'child_process'
-import { cpus }               from 'os'
-import endpoint               from 'endpoint'
-import { realpathSync }       from 'fs'
-import { extname, basename }  from 'path'
+import Throat from 'throat'
+import { spawn } from 'child_process'
+import { cpus } from 'os'
+import endpoint from 'endpoint'
+import { realpathSync } from 'fs'
+import { extname, basename } from 'path'
 
 let throat = new Throat(cpus().length || 1)
 
-export function bmp2png(file) {
+export function bmp2png (file) {
   return throat(() => new Promise((resolve, reject) => {
     let convert = spawn('convert', [realpathSync(file.path), 'png:-'])
     convert.stdin.end()
@@ -37,4 +37,3 @@ export function bmp2png(file) {
 }
 
 export default bmp2png
-

@@ -7,9 +7,7 @@ function fixture (name) {
 }
 
 describe('bms.Reader', function () {
-
   describe('encoding detection', function () {
-
     it('should detect 7-bit', function () {
       expect(Reader.read(fixture('en'))).to.match(/Hello/)
     })
@@ -34,19 +32,17 @@ describe('bms.Reader', function () {
     it('should detect UTF-16LE', function () {
       expect(Reader.read(fixture('jp.utf16le'))).to.match(/色は匂へど/)
       expect(Reader.read(fixture('jp.utf16le')).charCodeAt(0)
-            ).not.to.equal(0xFEFF)
+      ).not.to.equal(0xFEFF)
     })
 
     it('should detect UTF-16BE', function () {
       expect(Reader.read(fixture('jp.utf16be'))).to.match(/色は匂へど/)
       expect(Reader.read(fixture('jp.utf16be')).charCodeAt(0)
-            ).not.to.equal(0xFEFF)
+      ).not.to.equal(0xFEFF)
     })
-
   })
 
   describe('asynchronous detection', function () {
-
     it('should work', function (done) {
       var x = false
       Reader.readAsync(fixture('en'), function (err, result) {
@@ -57,7 +53,5 @@ describe('bms.Reader', function () {
       })
       expect(x).to.be.false()
     })
-
   })
-
 })

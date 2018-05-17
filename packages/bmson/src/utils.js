@@ -17,11 +17,10 @@ import _ from 'lodash'
 //   This may be `undefined` to indicate that the sound file should play until the end.
 //
 export function slicesForNotesAndTiming (notes, timing, options) {
-
   const { beatForPulse } = options
 
-  let all     = new Set()
-  let play    = new Set()
+  let all = new Set()
+  let play = new Set()
   let restart = new Set()
 
   for (let { x, y, c } of notes) {
@@ -34,9 +33,9 @@ export function slicesForNotesAndTiming (notes, timing, options) {
     }
   }
 
-  let result    = new Map()
+  let result = new Map()
   let soundTime = null
-  let mustAdd   = true
+  let mustAdd = true
   let tʹ
   let lastAdded
 

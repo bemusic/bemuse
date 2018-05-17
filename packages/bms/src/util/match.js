@@ -19,4 +19,3 @@ function match (text) {
     }
   }
 }
-

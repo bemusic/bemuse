@@ -1,8 +1,8 @@
 
-import _           from 'lodash'
-import BMS         from 'bms'
+import _ from 'lodash'
+import BMS from 'bms'
 import * as legacy from './legacy'
-import * as utils  from './utils'
+import * as utils from './utils'
 
 // Public: Returns a BMS.SongInfo corresponding to this BMS file.
 //
@@ -11,10 +11,10 @@ import * as utils  from './utils'
 export function songInfoForBmson (bmson) {
   const bmsonInfo = bmson.info
   let info = { }
-  if (bmsonInfo.title)  info.title  = bmsonInfo.title
+  if (bmsonInfo.title) info.title = bmsonInfo.title
   if (bmsonInfo.artist) info.artist = bmsonInfo.artist
-  if (bmsonInfo.genre)  info.genre  = bmsonInfo.genre
-  if (bmsonInfo.level)  info.level  = bmsonInfo.level
+  if (bmsonInfo.genre) info.genre = bmsonInfo.genre
+  if (bmsonInfo.level) info.level = bmsonInfo.level
   info.subtitles = getSubtitles()
   if (bmsonInfo.subartists) info.subartists = bmsonInfo.subartists
   return new BMS.SongInfo(info)
@@ -53,18 +53,18 @@ export function timingInfoForBmson (bmson) {
   let beatForPulse = beatForPulseForBmson(bmson)
   return {
     initialBPM: bmson.info.init_bpm,
-    actions:    [
+    actions: [
       ...(bmson.bpm_events || []).map(({ y, bpm }) => ({
         type: 'bpm',
         beat: beatForPulse(y),
-        bpm: bpm,
+        bpm: bpm
       })),
       ...(bmson.stop_events || []).map(({ y, duration }) => ({
         type: 'stop',
         beat: beatForPulse(y),
-        stopBeats: beatForPulse(Math.floor(duration)),
-      })),
-    ],
+        stopBeats: beatForPulse(Math.floor(duration))
+      }))
+    ]
   }
 }
 
@@ -89,14 +89,14 @@ function timingForBmson (bmson) {
 // * `timing` The {BMS.Timing} object for this musical score.
 //
 export function musicalScoreForBmson (bmson) {
-  let timing    = timingForBmson(bmson)
+  let timing = timingForBmson(bmson)
   let { notes, keysounds } = (
     notesDataAndKeysoundsDataForBmsonAndTiming(bmson, timing)
   )
   return {
     timing,
-    notes:      new BMS.Notes(notes),
-    keysounds:  new BMS.Keysounds(keysounds),
+    notes: new BMS.Notes(notes),
+    keysounds: new BMS.Keysounds(keysounds)
   }
 }
 
@@ -105,29 +105,28 @@ function soundChannelsForBmson (bmson) {
 }
 
 function notesDataAndKeysoundsDataForBmsonAndTiming (bmson, timing) {
-  let nextKeysoundNumber  = 1
-  let beatForPulse        = beatForPulseForBmson(bmson)
-  let notes               = [ ]
-  let keysounds           = { }
-  let soundChannels       = soundChannelsForBmson(bmson)
+  let nextKeysoundNumber = 1
+  let beatForPulse = beatForPulseForBmson(bmson)
+  let notes = [ ]
+  let keysounds = { }
+  let soundChannels = soundChannelsForBmson(bmson)
   if (soundChannels) {
     for (let { name, notes: soundChannelNotes } of soundChannels) {
-
-      let sortedNotes     = _.sortBy(soundChannelNotes, 'y')
-      let keysoundNumber  = nextKeysoundNumber++
-      let keysoundId      = _.padLeft('' + keysoundNumber, 4, '0')
-      let slices          = utils.slicesForNotesAndTiming(soundChannelNotes, timing, {
-        beatForPulse: beatForPulse,
+      let sortedNotes = _.sortBy(soundChannelNotes, 'y')
+      let keysoundNumber = nextKeysoundNumber++
+      let keysoundId = _.padLeft('' + keysoundNumber, 4, '0')
+      let slices = utils.slicesForNotesAndTiming(soundChannelNotes, timing, {
+        beatForPulse: beatForPulse
       })
 
       keysounds[keysoundId] = name
 
       for (let { x, y, l } of sortedNotes) {
         let note = {
-          column:     getColumn(x),
-          beat:       beatForPulse(y),
-          keysound:   keysoundId,
-          endBeat:    undefined,
+          column: getColumn(x),
+          beat: beatForPulse(y),
+          keysound: keysoundId,
+          endBeat: undefined
         }
         if (l > 0) {
           note.endBeat = beatForPulse(y + l)

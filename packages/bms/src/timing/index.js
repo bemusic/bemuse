@@ -42,51 +42,51 @@ function Timing (initialBPM, actions) {
     x: 0,
     dx: state.bpm / 60,
     bpm: state.bpm,
-    inclusive: true,
+    inclusive: true
   })
   actions = actions.slice()
   actions.sort(function (a, b) {
     return a.beat - b.beat || precedence[a.type] - precedence[b.type]
   })
   actions.forEach(function (action) {
-    var beat    = action.beat
+    var beat = action.beat
     var seconds = state.seconds + (beat - state.beat) * 60 / state.bpm
     switch (action.type) {
-    case 'bpm':
-      state.bpm = action.bpm
-      segments.push({
-        t: seconds,
-        x: beat,
-        dx: state.bpm / 60,
-        bpm: state.bpm,
-        inclusive: true,
-      })
-      break
-    case 'stop':
-      segments.push({
-        t: seconds,
-        x: beat,
-        dx: 0,
-        bpm: state.bpm,
-        inclusive: true,
-      })
-      seconds += (action.stopBeats || 0) * 60 / state.bpm
-      segments.push({
-        t: seconds,
-        x: beat,
-        dx: state.bpm / 60,
-        bpm: state.bpm,
-        inclusive: false,
-      })
-      break
-    default:
-      throw new Error('Unrecognized segment object!')
+      case 'bpm':
+        state.bpm = action.bpm
+        segments.push({
+          t: seconds,
+          x: beat,
+          dx: state.bpm / 60,
+          bpm: state.bpm,
+          inclusive: true
+        })
+        break
+      case 'stop':
+        segments.push({
+          t: seconds,
+          x: beat,
+          dx: 0,
+          bpm: state.bpm,
+          inclusive: true
+        })
+        seconds += (action.stopBeats || 0) * 60 / state.bpm
+        segments.push({
+          t: seconds,
+          x: beat,
+          dx: state.bpm / 60,
+          bpm: state.bpm,
+          inclusive: false
+        })
+        break
+      default:
+        throw new Error('Unrecognized segment object!')
     }
-    state.beat    = beat
+    state.beat = beat
     state.seconds = seconds
   })
-  this._speedcore   = new Speedcore(segments)
-  this._eventBeats  = _.uniq(_.pluck(actions, 'beat'), true)
+  this._speedcore = new Speedcore(segments)
+  this._eventBeats = _.uniq(_.pluck(actions, 'beat'), true)
 }
 
 // Public: Convert the given beat into seconds.

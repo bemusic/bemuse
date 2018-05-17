@@ -1,16 +1,15 @@
 
 var bms = require('../..')
 
-var Compiler    = bms.Compiler
-var Timing      = bms.Timing
-var Notes       = bms.Notes
-var SongInfo    = bms.SongInfo
-var Keysounds   = bms.Keysounds
+var Compiler = bms.Compiler
+var Timing = bms.Timing
+var Notes = bms.Notes
+var SongInfo = bms.SongInfo
+var Keysounds = bms.Keysounds
 var Positioning = bms.Positioning
-var Spacing     = bms.Spacing
+var Spacing = bms.Spacing
 
 module.exports = function () {
-
   var World = this.World
 
   World.plug(function () {
@@ -20,7 +19,7 @@ module.exports = function () {
   World.prototype.parseBMS = function (string) {
     this.source = string
     this.result = Compiler.compile(this.source, this.parseOptions)
-    this.chart  = this.result.chart
+    this.chart = this.result.chart
   }
 
   World.prototype.getObject = function (value) {
@@ -62,5 +61,4 @@ module.exports = function () {
   World.prop('spacing', function () {
     return Spacing.fromBMSChart(this.chart)
   })
-
 }

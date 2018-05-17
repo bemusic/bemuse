@@ -24,7 +24,6 @@ module.exports = BMSChart
 // Public: Constructs an empty {BMSChart}
 //
 function BMSChart () {
-
   // Public: {BMSHeaders} representing the BMS-specific headers of this notechart
   this.headers = new BMSHeaders()
 

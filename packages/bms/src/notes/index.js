@@ -99,12 +99,12 @@ BMSNoteBuilder.prototype._handle = function (object) {
     this._handleNormalNote(object)
   } else {
     switch (object.channel.charAt(0)) {
-    case '1': case '2':
-      this._handleNormalNote(object)
-      break
-    case '5': case '6':
-      this._handleLongNote(object)
-      break
+      case '1': case '2':
+        this._handleNormalNote(object)
+        break
+      case '5': case '6':
+        this._handleLongNote(object)
+        break
     }
   }
 }
@@ -121,7 +121,7 @@ BMSNoteBuilder.prototype._handleNormalNote = function (object) {
       beat: beat,
       endBeat: undefined,
       keysound: object.value,
-      column: this._getColumn(channel),
+      column: this._getColumn(channel)
     }
     this._lastNote[channel] = note
     this._notes.push(note)
@@ -135,12 +135,12 @@ BMSNoteBuilder.prototype._handleLongNote = function (object) {
     var note = this._activeLN[channel]
     note.endBeat = beat
     this._notes.push(note)
-    ;delete this._activeLN[channel]
+    delete this._activeLN[channel]
   } else {
     this._activeLN[channel] = {
       beat: beat,
       keysound: object.value,
-      column: this._getColumn(channel),
+      column: this._getColumn(channel)
     }
   }
 }

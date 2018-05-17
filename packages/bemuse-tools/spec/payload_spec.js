@@ -1,14 +1,12 @@
 
 import Payload from '../src/payload'
 
-describe('Payload', function() {
-
+describe('Payload', function () {
   var payload
 
   beforeEach(() => payload = new Payload())
 
-  describe('with 2 buffers added: "hello" and ", "', function() {
-
+  describe('with 2 buffers added: "hello" and ", "', function () {
     beforeEach(() => {
       payload.add(new Buffer('hello'))
       payload.add(new Buffer(', '))
@@ -21,7 +19,5 @@ describe('Payload', function() {
 
     it('should return slicing for new buffers', () =>
       expect(payload.add(new Buffer('world!'))).to.deep.equal([7, 13]))
-
   })
-
 })

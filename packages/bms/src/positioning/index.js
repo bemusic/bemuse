@@ -60,7 +60,7 @@ Positioning.fromBMSChart = function (chart) {
     t: 0,
     x: x,
     dx: 1,
-    inclusive: true,
+    inclusive: true
   })
 
   chart.objects.allSorted().forEach(function (object) {
@@ -77,7 +77,7 @@ Positioning.fromBMSChart = function (chart) {
           t: beat,
           x: x,
           dx: dx,
-          inclusive: true,
+          inclusive: true
         })
       }
     }

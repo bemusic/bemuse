@@ -20,7 +20,7 @@ var files = {
     'speedcore/*.js',
     'time-signatures/*.js',
     'timing/*.js',
-    'util/*.js',
+    'util/*.js'
   ],
   get features () {
     var home = process.env.BMSPEC_HOME
@@ -90,8 +90,8 @@ function cucumberTest (callback) {
       steps: 'features/step_definitions/**/*_steps.js',
       support: [
         'features/support/world.js',
-        'features/support/*.js',
-      ],
+        'features/support/*.js'
+      ]
     }))
     .on('end', callback)
     .on('error', callback)
@@ -103,4 +103,3 @@ function mochaThenCucumberTest (callback) {
     cucumberTest(callback)
   })
 }
-

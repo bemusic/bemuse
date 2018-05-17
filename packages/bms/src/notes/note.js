@@ -19,5 +19,5 @@ module.exports = new DataStructure({
   beat: 'number',
   endBeat: DataStructure.maybe('number'),
   column: DataStructure.maybe('string'),
-  keysound: 'string',
+  keysound: 'string'
 })
