@@ -1,51 +1,29 @@
-// Public: A module that exposes {Timing}.
-/* module */
-
-// Public: A Timing represents the timing information of a musical score.
-// A Timing object provides facilities to synchronize between
-// metric time (seconds) and musical time (beats).
-//
-// A Timing are created from a series of actions:
-//
-// - BPM changes.
-// - STOP action.
-//
-/* class Timing */
-
 import { Speedcore } from '../speedcore'
 import { uniq, pluck } from '../util/lodash'
+import { BMSChart } from '../bms/chart'
 
 var precedence = { bpm: 1, stop: 2 }
 
-// Public: Constructs a Timing from a specified actions.
-//
-// Generally, you would use `Timing.fromBMSChart` to create an instance
-// from a BMSChart, but the constructor may also be used in other situations
-// unrelated to the BMS file format.
-//
-// * `initialBPM` {Number} The initial BPM of this song
-// * `actions` An {Array} of actions objects.
-//   Each action object has these properties:
-//   * `type` {String} representing action type. `bpm` for BPM change, and `stop` for stop
-//   * `beat` {Number} representing beat where this action occurs
-//   * `bpm` {Number} representing BPM to change to (only for `bpm` type)
-//   * `stopBeats` {Number} of beats to stop (only for `stop` type)
-//
-// Public: Constructs a Timing from a specified actions.
-//
-// Generally, you would use `Timing.fromBMSChart` to create an instance
-// from a BMSChart, but the constructor may also be used in other situations
-// unrelated to the BMS file format.
-//
-// * `initialBPM` {Number} The initial BPM of this song
-// * `actions` An {Array} of actions objects.
-//   Each action object has these properties:
-//   * `type` {String} representing action type. `bpm` for BPM change, and `stop` for stop
-//   * `beat` {Number} representing beat where this action occurs
-//   * `bpm` {Number} representing BPM to change to (only for `bpm` type)
-//   * `stopBeats` {Number} of beats to stop (only for `stop` type)
-//
+/**
+ * A Timing represents the timing information of a musical score.
+ * A Timing object provides facilities to synchronize between
+ * metric time (seconds) and musical time (beats).
+ *
+ * A Timing are created from a series of actions:
+ *
+ * - BPM changes.
+ * - STOP action.
+ */
 export class Timing {
+  /**
+   * Constructs a Timing with an initial BPM and specified actions.
+   *
+   * Generally, you would use `Timing.fromBMSChart` to create an instance
+   * from a BMSChart, but the constructor may also be used in other situations
+   * unrelated to the BMS file format. (e.g. bmson package)
+   * @param {number} initialBPM
+   * @param {TimingAction[]} actions
+   */
   constructor (initialBPM, actions) {
     var state = { bpm: initialBPM, beat: 0, seconds: 0 }
     var segments = []
@@ -98,31 +76,49 @@ export class Timing {
       state.seconds = seconds
     })
     this._speedcore = new Speedcore(segments)
+    /**
+     * @type {number[]}
+     */
     this._eventBeats = uniq(pluck(actions, 'beat'), true)
   }
-  // Public: Convert the given beat into seconds.
-  //
+
+  /**
+   * Convert the given beat into seconds.
+   * @param {number} beat
+   */
   beatToSeconds (beat) {
     return this._speedcore.t(beat)
   }
-  // Public: Convert the given second into beats.
-  //
+
+  /**
+   * Convert the given second into beats.
+   * @param {number} seconds
+   */
   secondsToBeat (seconds) {
     return this._speedcore.x(seconds)
   }
-  // Public: Returns the BPM at the specified beat.
-  //
+
+  /**
+   * Returns the BPM at the specified beat.
+   * @param {number} beat
+   */
   bpmAtBeat (beat) {
     return this._speedcore.segmentAtX(beat).bpm
   }
-  // Public: Returns an array representing the beats where there are events.
-  //
-  getEventBeats (beat) {
+
+  /**
+   * Returns an array representing the beats where there are events.
+   */
+  getEventBeats () {
     return this._eventBeats
   }
-  // Public: Creates a Timing instance from a BMSChart.
-  //
+
+  /**
+   * Creates a Timing instance from a BMSChart.
+   * @param {BMSChart} chart
+   */
   static fromBMSChart (chart) {
+    void BMSChart
     var actions = []
     chart.objects.all().forEach(function (object) {
       var bpm
@@ -141,3 +137,11 @@ export class Timing {
     return new Timing(+chart.headers.get('bpm') || 60, actions)
   }
 }
+
+/**
+ * @typedef {Object} TimingAction represent timing change
+ * @property {'bpm' | 'stop'} type `bpm` for BPM change, and `stop` for stop
+ * @property {number} beat where this action occurs
+ * @property {number} [bpm] BPM to change to (only for `bpm` type)
+ * @property {number} [stopBeats] number of beats to stop (only for `stop` type)
+ */
