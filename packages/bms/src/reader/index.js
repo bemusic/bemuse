@@ -8,13 +8,12 @@
 var chardet = require('bemuse-chardet/bemuse-chardet')
 var iconv = require('iconv-lite')
 
-// Public: Reads the buffer, detect the character set, and returns the decoded
-// string synchronously.
-//
-// * `buffer` {Buffer} representing the BMS file
-//
-// Returns a {String} representing the decoded text
-//
+/**
+ * Reads the buffer, detect the character set, and returns the decoded
+ * string synchronously.
+ * @param {Buffer} buffer
+ * @returns {string} the decoded text
+ */
 export function read (buffer) {
   var charset = chardet.detect(buffer)
   var text = iconv.decode(buffer, charset)
@@ -26,13 +25,11 @@ export function read (buffer) {
   }
 }
 
-// Public: Like `read(buffer)`, but this is the asynchronous version.
-//
-// * `buffer` {Buffer} representing the BMS file
-// * `callback` {Function} that will be called when finished
-//   * `error` {Error} in case of failure
-//   * `value` {String} representing the decoded text
-//
+/**
+ * Like `read(buffer)`, but this is the asynchronous version.
+ * @param {Buffer} buffer
+ * @param {(error: Error | null, value?: string) => any} callback
+ */
 export function readAsync (buffer, callback) {
   setTimeout(function () {
     var result

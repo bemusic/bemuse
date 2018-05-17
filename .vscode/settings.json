@@ -6,6 +6,7 @@
   "editor.formatOnSave": true,
   "prettier.eslintIntegration": true,
   "cSpell.words": [
+    "IIDX",
     "bemusic",
     "bmson",
     "chardet",

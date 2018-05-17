@@ -1,82 +1,83 @@
-// Public: A module that exposes {SongInfo}
-/* module */
-
-// Public: A SongInfo represents the song info, such as title, artist, genre.
-//
-// ## Example
-//
-// If you have a BMS like this:
-//
-// ```
-// #TITLE Exargon [HYPER]
-// ```
-//
-// Having parsed it using a {Compiler} into a {BMSChart},
-// you can create a {SongInfo} using `fromBMSChart()`:
-//
-// ```js
-// var info = SongInfo.fromBMSChart(bmsChart)
-// ```
-//
-// Then you can query the song information by accessing its properties.
-//
-// ```js
-// info.title     // => 'Exargon'
-// info.subtitles // => ['HYPER']
-// ```
-//
-/* class SongInfo */
-
 import { match } from '../util/match'
 import { assign } from '../util/lodash'
+import { BMSChart } from '../bms/chart'
 
-// Public: Constructs a SongInfo with information given by `info` parameter.
-//
-// * `info` {Object} representing the properties to set on this new instance
-//
-// Public: Constructs a SongInfo with information given by `info` parameter.
-//
-// * `info` {Object} representing the properties to set on this new instance
-//
+/**
+ * A SongInfo represents the song info, such as title, artist, genre.
+ *
+ * ## Example
+ *
+ * If you have a BMS like this:
+ *
+ * ```
+ * #TITLE Exargon [HYPER]
+ * ```
+ *
+ * Having parsed it using a {Compiler} into a {BMSChart},
+ * you can create a {SongInfo} using `fromBMSChart()`:
+ *
+ * ```js
+ * var info = SongInfo.fromBMSChart(bmsChart)
+ * ```
+ *
+ * Then you can query the song information by accessing its properties.
+ *
+ * ```js
+ * info.title     // => 'Exargon'
+ * info.subtitles // => ['HYPER']
+ * ```
+ */
 export class SongInfo {
+  /**
+   * Constructs a SongInfo with given data
+   * @param {{ [propertyName: string]: any }} info the properties to set on this new instance
+   */
   constructor (info) {
-    // Public: {String} representing the song title
+    /** the song title */
     this.title = 'NO TITLE'
-    // Public: {String} representing the song artist
+    /** the song artist */
     this.artist = 'NO ARTIST'
-    // Public: {String} representing the song genre
+    /** the song genre */
     this.genre = 'NO GENRE'
-    // Public: {Array} representing the song's subtitles, one line per element.
-    // The subtitle may be used to represent the difficulty name, such as
-    // NORMAL, HYPER, ANOTHER.
+    /**
+     * the song's subtitles, one line per element.
+     * The subtitle may be used to represent the difficulty name,
+     * such as NORMAL, HYPER, ANOTHER.
+     * @type {string[]}
+     */
     this.subtitles = []
-    // Public: {Array} representing the song's other artists,
-    // one artist per element.
+    /**
+     * the song's other artists, one artist per element.
+     * @type {string[]}
+     */
     this.subartists = []
-    // Public: {Number} representing the difficulty.
-    // Meaning of the number is same as BMS's [`#DIFFICULTY`](http://hitkey.nekokan.dyndns.info/cmds.htm#DIFFICULTY) header.
-    //
-    // | difficulty | meaning  |
-    // | ----------:|:--------:|
-    // |          1 | BEGINNER |
-    // |          2 | NORMAL   |
-    // |          3 | HYPER    |
-    // |          4 | ANOTHER  |
-    // |          5 | INSANE   |
-    //
+    /**
+     * the difficulty.
+     * Meaning of the number is same as BMS's [`#DIFFICULTY`](http:*hitkey.nekokan.dyndns.info/cmds.htm#DIFFICULTY) header.
+     *
+     * | difficulty | meaning  |
+     * | ----------:|:--------:|
+     * |          1 | BEGINNER |
+     * |          2 | NORMAL   |
+     * |          3 | HYPER    |
+     * |          4 | ANOTHER  |
+     * |          5 | INSANE   |
+     */
     this.difficulty = 0
-    // Public: {Number} representing the level of the song.
-    // When converted from a BMS chart, this is the value of `#PLAYLEVEL` header.
+    /**
+     * the level of the song.
+     * When converted from a BMS chart, this is the value of `#PLAYLEVEL` header.
+     */
     this.level = 0
     if (info) assign(this, info)
   }
-  // Public: Constructs a new {SongInfo} object from a {BMSChart}.
-  //
-  // * `chart` A {BMSChart} to construct a {SongInfo} from
-  //
-  // Returns a {SongInfo} object
-  //
+
+  /**
+   * Constructs a new {SongInfo} object from a {BMSChart}.
+   * @param {BMSChart} chart A {BMSChart} to construct a {SongInfo} from
+   */
   static fromBMSChart (chart) {
+    void BMSChart
     var info = {}
     var title = chart.headers.get('title')
     var artist = chart.headers.get('artist')

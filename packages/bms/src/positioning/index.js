@@ -1,63 +1,44 @@
-// Public: A module that exposes {Positioning}
-/* module */
-
-// Public: A Positioning represents the relation between song beats and
-// display position, and provides a way to convert between them.
-//
-// In some rhythm games, the amount of scrolling per beat may be different.
-// StepMania’s `#SCROLL` segments is an example.
-//
-/* class Positioning */
-
 import { Speedcore } from '../speedcore'
+import { BMSChart } from '../bms/chart'
 
-// Public: Constructs a Positioning from the given `segments`.
-//
-// * `segments` An {Array} of segment objects. Each segment {Object} contains:
-//   * `t` {Number} representing the beat number
-//   * `x` {Number} representing the total elapsed amount of scrolling at beat `t`
-//   * `dx` {Number} representing the amount of scrolling per beat
-//   * `inclusive` {Boolean} representing whether or not to include the
-//     starting beat `t` as part of the segment
-//
-// Public: Constructs a Positioning from the given `segments`.
-//
-// * `segments` An {Array} of segment objects. Each segment {Object} contains:
-//   * `t` {Number} representing the beat number
-//   * `x` {Number} representing the total elapsed amount of scrolling at beat `t`
-//   * `dx` {Number} representing the amount of scrolling per beat
-//   * `inclusive` {Boolean} representing whether or not to include the
-//     starting beat `t` as part of the segment
-//
+/**
+ * A Positioning represents the relation between song beats and
+ * display position, and provides a way to convert between them.
+ *
+ * In some rhythm games, the amount of scrolling per beat may be different.
+ * StepMania’s `#SCROLL` segments is an example.
+ */
 export class Positioning {
+  /**
+   * Constructs a Positioning from the given `segments`.
+   * @param {PositioningSegment[]} segments
+   */
   constructor (segments) {
     this._speedcore = new Speedcore(segments)
   }
-  // Public: Returns the scrolling speed at specified beat.
-  //
-  // * `beat` {Number} representing the beat number
-  //
-  // Returns a {Number} representing the amount of scrolling per beat
-  //
+
+  /**
+   * Returns the scrolling speed at specified beat.
+   * @param {number} beat the beat number
+   */
   speed (beat) {
     return this._speedcore.dx(beat)
   }
-  // Public: Returns the total elapsed scrolling amount at specified beat.
-  //
-  // * `beat` {Number} representing the beat number
-  //
-  // Returns a {Number} representing the total elapsed scrolling amount
-  //
+
+  /**
+   * Returns the total elapsed scrolling amount at specified beat.
+   * @param {number} beat the beat number
+   */
   position (beat) {
     return this._speedcore.x(beat)
   }
-  // Public: Creates a {Positioning} object from the {BMSChart}.
-  //
-  // * `chart` A {BMSChart} to construct a {Positioning} from
-  //
-  // Returns a {Positioning} object
-  //
+
+  /**
+   * Creates a {Positioning} object from the {BMSChart}.
+   * @param {BMSChart} chart A {BMSChart} to construct a {Positioning} from
+   */
   static fromBMSChart (chart) {
+    void BMSChart
     var segments = []
     var x = 0
     segments.push({
@@ -88,3 +69,12 @@ export class Positioning {
     return new Positioning(segments)
   }
 }
+
+/**
+ * @typedef PositioningSegment
+ * @property {number} t the beat number
+ * @property {number} x the total elapsed amount of scrolling at beat `t`
+ * @property {number} dx the amount of scrolling per beat
+ * @property {boolean} inclusive whether or not to include the
+ *  starting beat `t` as part of the segment
+ */

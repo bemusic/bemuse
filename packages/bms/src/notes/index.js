@@ -1,95 +1,64 @@
-// Public: This module exposes the {Notes} class.
-
 import { Note } from './note'
 import invariant from 'invariant'
 import * as ChannelMapping from './channels'
+import { BMSChart } from '../bms/chart'
 
-// Public: A Notes holds the {Note} objects in the game.
-// A note object may or may not be playable.
-//
-// ## Example
-//
-// If you have a BMS like this:
-//
-// ```
-// #00111:AA
-// ```
-//
-// Having parsed it using a {Compiler} into a {BMSChart},
-// you can create a {Notes} using `fromBMSChart()`:
-//
-// ```js
-// var notes = Notes.fromBMSChart(bmsChart)
-// ```
-//
-// Then you can get all notes using `.all()` method
-//
-// ```js
-// notes.all()
-// ```
-//
-/* class Notes */
-// Public: Constructs a Notes object.
-//
-// * `notes` {Array} containing the {Note} objects
-//
-// Public: A Notes holds the {Note} objects in the game.
-// A note object may or may not be playable.
-//
-// ## Example
-//
-// If you have a BMS like this:
-//
-// ```
-// #00111:AA
-// ```
-//
-// Having parsed it using a {Compiler} into a {BMSChart},
-// you can create a {Notes} using `fromBMSChart()`:
-//
-// ```js
-// var notes = Notes.fromBMSChart(bmsChart)
-// ```
-//
-// Then you can get all notes using `.all()` method
-//
-// ```js
-// notes.all()
-// ```
-//
-/* class Notes */
-// Public: Constructs a Notes object.
-//
-// * `notes` {Array} containing the {Note} objects
-//
+/**
+ * A Notes holds the {Note} objects in the game.
+ * A note object may or may not be playable.
+ *
+ * ## Example
+ *
+ * If you have a BMS like this:
+ *
+ * ```
+ * #00111:AA
+ * ```
+ *
+ * Having parsed it using a {Compiler} into a {BMSChart},
+ * you can create a {Notes} using `fromBMSChart()`:
+ *
+ * ```js
+ * var notes = Notes.fromBMSChart(bmsChart)
+ * ```
+ *
+ * Then you can get all notes using `.all()` method
+ *
+ * ```js
+ * notes.all()
+ * ```
+ */
 export class Notes {
+  /**
+   * @param {BMSNote[]} notes An array of Note objects
+   */
   constructor (notes) {
     notes.forEach(Note)
     this._notes = notes
   }
-  // Public: Returns the number of notes in this object, counting both playable
-  // and non-playable notes.
-  //
-  // Returns a {Number} representing the note count
-  //
+
+  /**
+   * Returns the number of notes in this object,
+   * counting both playable and non-playable notes.
+   */
   count () {
     return this._notes.length
   }
-  // Public: Returns an Array of all notes.
-  //
-  // Returns an {Array} of all notes
-  //
+
+  /**
+   * Returns an Array of all notes.
+   */
   all () {
     return this._notes.slice()
   }
-  // Public: Creates a Notes object from a BMSChart.
-  //
-  // * `chart` {BMSChart} to process
-  // * `options` {Object} representing the processing options
-  //   * `mapping` (optional) {Object} representing the mapping from BMS channel
-  //     to game channel. Default value is the IIDX_P1 mapping.
-  //
+
+  /**
+   * Creates a Notes object from a BMSChart.
+   * @param {BMSChart} chart the chart to process
+   * @param {BMSChartOptions} options options
+   */
   static fromBMSChart (chart, options) {
+    void BMSChart
     options = options || {}
     var mapping = options.mapping || Notes.CHANNEL_MAPPING.IIDX_P1
     var builder = new BMSNoteBuilder(chart, { mapping: mapping })
@@ -183,3 +152,16 @@ class BMSNoteBuilder {
     return channel.replace(/^5/, '1').replace(/^6/, '2')
   }
 }
+/**
+ * @typedef {Object} BMSNote A single note in a notechart.
+ * @property {number} beat
+ * @property {number} [endBeat]
+ * @property {string} [column]
+ * @property {string} keysound
+ */
+/**
+ * @typedef {Object} BMSChartOptions
+ * @property {{[channel: string]: string}} [mapping]
+ *  the mapping from BMS channel to game channel.
+ *  Default value is the IIDX_P1 mapping.
+ */
