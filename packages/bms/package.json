@@ -2,7 +2,7 @@
   "name": "bms",
   "version": "3.0.0-0",
   "description": "BMS Parser for JavaScript",
-  "main": "lib/index.js",
+  "main": "./lib/index.js",
   "scripts": {
     "prepare": "tsc",
     "test": "nyc gulp test"
