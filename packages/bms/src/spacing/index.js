@@ -10,7 +10,7 @@
 //
 /* class Spacing */
 
-import Speedcore from '../speedcore'
+import { Speedcore } from '../speedcore'
 
 // Public: Constructs a Spacing from the given `segments`.
 //

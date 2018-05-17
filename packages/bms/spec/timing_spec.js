@@ -1,6 +1,4 @@
-
-var Timing = require('../timing')
-var Compiler = require('../compiler')
+var { Timing, Compiler } = require('../lib')
 
 describe('Timing', function () {
   function case1 () {
@@ -35,15 +33,15 @@ describe('Timing', function () {
 
   it('should convert seconds to beat', function () {
     var t = case1()
-    expect(t.secondsToBeat(0.000)).to.be.closeTo(0, 1e-2)
-    expect(t.secondsToBeat(0.500)).to.be.closeTo(1, 1e-2)
-    expect(t.secondsToBeat(1.000)).to.be.closeTo(2, 1e-2)
-    expect(t.secondsToBeat(1.500)).to.be.closeTo(3, 1e-2)
+    expect(t.secondsToBeat(0.0)).to.be.closeTo(0, 1e-2)
+    expect(t.secondsToBeat(0.5)).to.be.closeTo(1, 1e-2)
+    expect(t.secondsToBeat(1.0)).to.be.closeTo(2, 1e-2)
+    expect(t.secondsToBeat(1.5)).to.be.closeTo(3, 1e-2)
     expect(t.secondsToBeat(2.167)).to.be.closeTo(4, 1e-2)
-    expect(t.secondsToBeat(2.200)).to.be.closeTo(4, 1e-2)
-    expect(t.secondsToBeat(2.300)).to.be.closeTo(4, 1e-2)
-    expect(t.secondsToBeat(2.400)).to.be.closeTo(4, 1e-2)
-    expect(t.secondsToBeat(2.500)).to.be.closeTo(4, 1e-2)
+    expect(t.secondsToBeat(2.2)).to.be.closeTo(4, 1e-2)
+    expect(t.secondsToBeat(2.3)).to.be.closeTo(4, 1e-2)
+    expect(t.secondsToBeat(2.4)).to.be.closeTo(4, 1e-2)
+    expect(t.secondsToBeat(2.5)).to.be.closeTo(4, 1e-2)
     expect(t.secondsToBeat(2.833)).to.be.closeTo(5, 1e-2)
   })
 

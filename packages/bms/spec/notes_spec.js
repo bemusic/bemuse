@@ -1,6 +1,4 @@
-
-var Compiler = require('../compiler')
-var Notes = require('../notes')
+var { Compiler, Notes } = require('../lib')
 
 describe('Notes', function () {
   it('should be able to process normal notes', function () {

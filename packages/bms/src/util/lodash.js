@@ -1,5 +1,7 @@
 // A subset of lodash that we actually use.
-export { default as uniq } from 'lodash.uniq'
-export { default as pluck } from 'lodash.pluck'
-export { default as values } from 'lodash.values'
-export { default as assign } from 'lodash.assign'
+import uniq from 'lodash.uniq'
+import pluck from 'lodash.pluck'
+import values from 'lodash.values'
+import assign from 'lodash.assign'
+
+export { uniq, pluck, values, assign }

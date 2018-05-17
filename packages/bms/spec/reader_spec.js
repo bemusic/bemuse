@@ -1,4 +1,4 @@
-var Reader = require('../reader')
+var { Reader } = require('../lib')
 var fs = require('fs')
 var path = require('path')
 
@@ -48,12 +48,12 @@ describe('bms.Reader', function () {
     it('should work', function (done) {
       var x = false
       Reader.readAsync(fixture('en'), function (err, result) {
-        expect(err).to.be.null()
+        void expect(err).to.be.null
         expect(result).to.match(/Hello/)
         x = true
         done()
       })
-      expect(x).to.be.false()
+      void expect(x).to.be.false
     })
   })
 })
