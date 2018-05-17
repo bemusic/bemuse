@@ -1,6 +1,6 @@
 {
   "extends": "../.eslintrc",
   "rules": {
-    "react/prop-types": false
+    "react/prop-types": "off"
   }
 }
