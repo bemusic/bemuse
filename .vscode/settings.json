@@ -4,5 +4,12 @@
     "titleBar.activeForeground": "#FEE4ED"
   },
   "editor.formatOnSave": true,
-  "prettier.eslintIntegration": true
+  "prettier.eslintIntegration": true,
+  "cSpell.words": [
+    "bmson",
+    "keysound",
+    "keysounds",
+    "notechart",
+    "speedcore"
+  ]
 }
