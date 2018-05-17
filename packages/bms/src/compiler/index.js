@@ -23,23 +23,12 @@ var matchers = {
   }
 }
 
-// Public: Reads the string representing the BMS notechart, parses it,
-// and compiles into a {BMSChart}.
-//
-// * `text` {String} representing the BMS notechart
-// * `options` (optional) {Object} representing additional parser options
-//   * `format` (option) {String} file format. Should be 'bms' or 'dtx'. 'bms' is used by default.
-//   * `rng` (option) {Function} that generates a random number.
-//     It is used when processing `#RANDOM n` directive.
-//     This function should return an integer number between 1 and `n`.
-//     * `max` {Number} representing the maximum value.
-//
-// Returns an {Object} with these keys:
-//   * `chart` {BMSChart} representing the resulting chart
-//   * `warnings` {Array} of warnings. Each warning is an {Object} with these keys:
-//     * `lineNumber` {Number} representing the line number where this warning occurred
-//     * `message` {String} representing the warning message
-//
+/**
+ * Reads the string representing the BMS notechart, parses it,
+ * and compiles into a {BMSChart}.
+ * @param {string} text the BMS notechart
+ * @param {BMSCompileOptions} options additional parser options
+ */
 export function compile (text, options) {
   options = options || {}
 
@@ -62,7 +51,16 @@ export function compile (text, options) {
     controlSentences: 0,
     skippedSentences: 0,
     malformedSentences: 0,
+
+    /**
+     * The resulting chart
+     */
     chart: chart,
+
+    /**
+     * Warnings found during compilation
+     * @type {{lineNumber: number, message: string}[]}
+     */
     warnings: []
   }
 
@@ -142,3 +140,11 @@ function eachLine (text, callback) {
       callback(line, index + 1)
     })
 }
+
+/**
+ * @typedef {Object} BMSCompileOptions
+ * @property {'bms' | 'dtx'} [format='bms'] File format
+ * @property {(max: number): number} [rng] A function that generates a random number.
+ *  It is used when processing `#RANDOM n` directive.
+ *  This function should return an integer number between 1 and `n`.
+ */
