@@ -1,24 +1,18 @@
-// Public: A module that exposes {BMSObjects}.
-/* module */
-// Public: A BMSObjects holds a collection of objects inside a BMS notechart.
-/* class BMSObjects */
-// Public: Constructs an empty BMSObjects.
-// Public: A module that exposes {BMSObjects}.
-/* module */
-// Public: A BMSObjects holds a collection of objects inside a BMS notechart.
-/* class BMSObjects */
-// Public: Constructs an empty BMSObjects.
+/**
+ * BMSObjects holds a collection of objects inside a BMS notechart.
+ */
 export class BMSObjects {
   constructor () {
+    /** @type {BMSObject[]} */
     this._objects = []
   }
-  // Public: Adds a new object to this collection.
-  //
-  // If an object already exists on the same channel and position,
-  // the object is replaced (except for autokeysound tracks).
-  //
-  // * `object` {BMSObject} to add
-  //
+
+  /**
+   * Adds a new object to this collection.
+   * If an object already exists on the same channel and position,
+   * the object is replaced (except for autokeysound tracks).
+   * @param {BMSObject} object the object to add
+   */
   add (object) {
     if (object.channel !== '01') {
       for (var i = 0; i < this._objects.length; i++) {
@@ -35,17 +29,17 @@ export class BMSObjects {
     }
     this._objects.push(object)
   }
-  // Public: Returns an array of all objects.
-  //
-  // Returns an {Array} of {BMSObject} objects
-  //
+
+  /**
+   * Returns an array of all objects.
+   */
   all () {
     return this._objects.slice()
   }
-  // Public: Returns a sorted array of all objects.
-  //
-  // Returns an {Array} of {BMSObject} objects
-  //
+
+  /**
+   * Returns a sorted array of all objects.
+   */
   allSorted () {
     var list = this.all()
     list.sort(function (a, b) {
@@ -55,16 +49,13 @@ export class BMSObjects {
   }
 }
 
-// Public: A BMSObject data structure represents an object inside a {BMSChart}.
-//
-// It is a plain object with the following fields:
-//
-// * `channel` A {String} representing the raw two-character BMS channel of this object
-// * `measure` A {Number} representing the measure number, starting at 0 (corresponds to `#000`)
-// * `fraction` A {Number} representing the fractional position inside the measure,
-//   ranging from 0 (inclusive) to 1 (exclusive).
-//   0 means that the object is at the start of the measure,
-//   whereas 1 means that the object is at the end of the measure.
-// * `value` A {String} representing the raw value of the BMS object.
-//
-/* data BMSObject */
+/**
+ * @typedef {Object} BMSObject An object inside a {BMSChart}.
+ * @property {string} channel the raw two-character BMS channel of this object
+ * @property {number} measure the measure number, starting at 0 (corresponds to `#000`)
+ * @property {number} fraction the fractional position inside the measure,
+ *  ranging from 0 (inclusive) to 1 (exclusive).
+ *  0 means that the object is at the start of the measure,
+ *  whereas 1 means that the object is at the end of the measure.
+ * @property {string} value the raw value of the BMS object.
+ */
