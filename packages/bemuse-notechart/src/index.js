@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import invariant from 'invariant'
-import BMS from 'bms'
 
 import GameEvent from './data/GameEvent'
 import GameNote from './data/GameNote'

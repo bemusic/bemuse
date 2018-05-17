@@ -1,4 +1,3 @@
-
 import Promise from 'bluebird'
 import express from 'express'
 import cors from 'cors'
@@ -27,7 +26,7 @@ function bemuseAssets (dir) {
   let serveSongAssets = createAssetServer()
   dir = path.normalize(fs.realpathSync(dir))
   return function (req, res, next) {
-    let match = req.path.match(/^\/+(.+)\/assets\/([^\/]+)$/)
+    let match = req.path.match(/^\/+(.+)\/assets\/([^/]+)$/)
     if (!match) return next()
     let song = decodeURIComponent(match[1])
     let file = match[2]
@@ -38,16 +37,24 @@ function bemuseAssets (dir) {
 }
 
 function createAssetServer () {
-  var songCache = { }
+  var songCache = {}
   return function (target, file, res, next) {
-    void (songCache[target] || (songCache[target] = createSongServer(target)))(file, res, next)
+    void (songCache[target] || (songCache[target] = createSongServer(target)))(
+      file,
+      res,
+      next
+    )
   }
 }
 
 function createSongServer (dir) {
   let promise = glob('**/*.{wav,ogg,mp3,m4a}', { cwd: dir })
-    .map(name => stat(path.join(dir, name))
-      .then(stats => ({ name: name, size: stats.size })))
+    .map(name =>
+      stat(path.join(dir, name)).then(stats => ({
+        name: name,
+        size: stats.size
+      }))
+    )
     .then(files => {
       let ref = { path: 'data.bemuse' }
       let metadata = { files: [], refs: [ref] }
@@ -59,19 +66,29 @@ function createSongServer (dir) {
         metadata.files.push(entry)
         current = right
       }
-      console.log('Serving ' + dir + ' (' + files.length + ' files, ' + bytes(current) + ')')
+      console.log(
+        'Serving ' +
+          dir +
+          ' (' +
+          files.length +
+          ' files, ' +
+          bytes(current) +
+          ')'
+      )
       return { metadata, files }
     })
   return function (file, res, next) {
-    promise.then(function ({ metadata, files }) {
-      if (file === 'metadata.json') {
-        res.json(metadata)
-      } else if (file === 'data.bemuse') {
-        streamFiles(dir, files, res)
-      } else {
-        throw new Error('Invalid file!')
-      }
-    }).catch(e => next(e))
+    promise
+      .then(function ({ metadata, files }) {
+        if (file === 'metadata.json') {
+          res.json(metadata)
+        } else if (file === 'data.bemuse') {
+          streamFiles(dir, files, res)
+        } else {
+          throw new Error('Invalid file!')
+        }
+      })
+      .catch(e => next(e))
   }
 }
 
@@ -94,7 +111,6 @@ function streamFile (dir, file) {
     stream.on('data', b => observer.onNext(b))
     stream.on('end', () => observer.onCompleted())
     stream.on('error', e => observer.onError(e))
-    return function () {
-    }
+    return function () {}
   })
 }

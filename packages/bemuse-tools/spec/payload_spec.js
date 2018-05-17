@@ -4,7 +4,9 @@ import Payload from '../src/payload'
 describe('Payload', function () {
   var payload
 
-  beforeEach(() => payload = new Payload())
+  beforeEach(() => {
+    payload = new Payload()
+  })
 
   describe('with 2 buffers added: "hello" and ", "', function () {
     beforeEach(() => {

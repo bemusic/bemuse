@@ -1,9 +1,9 @@
-
 var Reader = require('../reader')
 var fs = require('fs')
+var path = require('path')
 
 function fixture (name) {
-  return fs.readFileSync(__dirname + '/fixtures/' + name)
+  return fs.readFileSync(path.resolve(__dirname, 'fixtures/' + name))
 }
 
 describe('bms.Reader', function () {
@@ -31,14 +31,16 @@ describe('bms.Reader', function () {
 
     it('should detect UTF-16LE', function () {
       expect(Reader.read(fixture('jp.utf16le'))).to.match(/色は匂へど/)
-      expect(Reader.read(fixture('jp.utf16le')).charCodeAt(0)
-      ).not.to.equal(0xFEFF)
+      expect(Reader.read(fixture('jp.utf16le')).charCodeAt(0)).not.to.equal(
+        0xfeff
+      )
     })
 
     it('should detect UTF-16BE', function () {
       expect(Reader.read(fixture('jp.utf16be'))).to.match(/色は匂へど/)
-      expect(Reader.read(fixture('jp.utf16be')).charCodeAt(0)
-      ).not.to.equal(0xFEFF)
+      expect(Reader.read(fixture('jp.utf16be')).charCodeAt(0)).not.to.equal(
+        0xfeff
+      )
     })
   })
 

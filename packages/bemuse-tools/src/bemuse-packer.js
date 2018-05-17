@@ -1,9 +1,7 @@
-
 import Promise from 'bluebird'
 import co from 'co'
 import { join } from 'path'
-import { createWriteStream } from 'fs'
-import fs from 'fs'
+import fs, { createWriteStream } from 'fs'
 import Payload from './payload'
 
 let writeFile = Promise.promisify(fs.writeFile, fs)
@@ -30,29 +28,30 @@ export class BemusePacker {
     return ref
   }
   write (folder) {
-    return co(function * () {
-      let files = []
-      let refs = []
-      let nums = {}
-      for (let ref of this._refs) {
-        let payload = new Payload()
-        for (let file of ref.files) {
-          let [start, end] = payload.add(file.buffer)
-          files.push({ name: file.name, ref: [ref.index, start, end] })
+    return co(
+      function * () {
+        let files = []
+        let refs = []
+        let nums = {}
+        for (let ref of this._refs) {
+          let payload = new Payload()
+          for (let file of ref.files) {
+            let [start, end] = payload.add(file.buffer)
+            files.push({ name: file.name, ref: [ref.index, start, end] })
+          }
+          let hash = payload.hash
+          let num = (nums[ref.name] || 0) + 1
+          nums[ref.name] = num
+          let out = ref.name + '.' + num + '.' + hash.substr(0, 8) + '.bemuse'
+          refs.push({ path: out, hash: hash })
+          yield this._writeBin(join(folder, out), new Buffer(0), payload)
+          console.log(`Written ${out}`)
         }
-        let hash = payload.hash
-        let num = (nums[ref.name] || 0) + 1
-        nums[ref.name] = num
-        let out = ref.name + '.' + num + '.' +
-                    hash.substr(0, 8) + '.bemuse'
-        refs.push({ path: out, hash: hash })
-        yield this._writeBin(join(folder, out), new Buffer(0), payload)
-        console.log(`Written ${out}`)
-      }
-      let metadata = { files, refs }
-      yield writeFile(join(folder, 'metadata.json'), JSON.stringify(metadata))
-      console.log(`Written metadata.json`)
-    }.bind(this))
+        let metadata = { files, refs }
+        yield writeFile(join(folder, 'metadata.json'), JSON.stringify(metadata))
+        console.log(`Written metadata.json`)
+      }.bind(this)
+    )
   }
   _writeBin (path, metadataBuffer, payload) {
     let file = createWriteStream(path)
