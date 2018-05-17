@@ -1,7 +1,4 @@
-
-module.exports = match
-
-function match (text) {
+export function match (text) {
   var matched = false
   return {
     when: function (pattern, callback) {

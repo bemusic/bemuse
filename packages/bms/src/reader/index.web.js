@@ -1,12 +1,11 @@
-
 /* global FileReader, Blob */
 var chardet = require('bemuse-chardet/bemuse-chardet')
 
-exports.read = function read (buffer) {
+export function read (buffer) {
   throw new Error('Synchronous read unsupported in browser!')
 }
 
-exports.readAsync = function read (buffer, callback) {
+export function readAsync (buffer, callback) {
   var charset = chardet.detect(buffer)
   var reader = new FileReader()
   reader.onload = function () {

@@ -1,4 +1,3 @@
-
 // Public: A module that exposes {Speedcore}
 /* module */
 
@@ -68,69 +67,68 @@
 //
 /* class Speedcore */
 
-var Segment = require('./segment')
-module.exports = Speedcore
+import { Segment } from './segment'
 
 // Public: Constructs a new `Speedcore` from given segments.
 //
 // * `segments` {Array} of {Segment} objects
 //
-function Speedcore (segments) {
-  this._segments = segments.map(Segment)
-}
-
-var T = function (segment) { return segment.t }
-var X = function (segment) { return segment.x }
-Speedcore.prototype._reached = function (index, typeFn, position) {
-  if (index >= this._segments.length) return false
-  var segment = this._segments[index]
-  var target = typeFn(segment)
-  return segment.inclusive ? position >= target : position > target
-}
-
-Speedcore.prototype._segmentAt = function (typeFn, position) {
-  for (var i = 0; i < this._segments.length; i++) {
-    if (!this._reached(i + 1, typeFn, position)) return this._segments[i]
+export class Speedcore {
+  constructor (segments) {
+    this._segments = segments.map(Segment)
+  }
+  _reached (index, typeFn, position) {
+    if (index >= this._segments.length) return false
+    var segment = this._segments[index]
+    var target = typeFn(segment)
+    return segment.inclusive ? position >= target : position > target
+  }
+  _segmentAt (typeFn, position) {
+    for (var i = 0; i < this._segments.length; i++) {
+      if (!this._reached(i + 1, typeFn, position)) return this._segments[i]
+    }
+  }
+  segmentAtX (x) {
+    return this._segmentAt(X, x)
+  }
+  segmentAtT (t) {
+    return this._segmentAt(T, t)
+  }
+  // Public: Calculates the _t_, given _x_.
+  //
+  // * `x` {Number} representing the value of _x_
+  //
+  // Returns {Number} _t_
+  //
+  t (x) {
+    var segment = this.segmentAtX(x)
+    return segment.t + (x - segment.x) / (segment.dx || 1)
+  }
+  // Public: Calculates the _x_, given _t_.
+  //
+  // * `t` {Number} representing the value of _t_
+  //
+  // Returns {Number} _x_
+  //
+  x (t) {
+    var segment = this.segmentAtT(t)
+    return segment.x + (t - segment.t) * segment.dx
+  }
+  // Public: Finds the _dx_, given _t_.
+  //
+  // * `t` {Number} representing the value of _t_
+  //
+  // Returns {Number} _dx_
+  //
+  dx (t) {
+    var segment = this.segmentAtT(t)
+    return segment.dx
   }
 }
 
-Speedcore.prototype.segmentAtX = function (x) {
-  return this._segmentAt(X, x)
+var T = function (segment) {
+  return segment.t
 }
-
-Speedcore.prototype.segmentAtT = function (t) {
-  return this._segmentAt(T, t)
-}
-
-// Public: Calculates the _t_, given _x_.
-//
-// * `x` {Number} representing the value of _x_
-//
-// Returns {Number} _t_
-//
-Speedcore.prototype.t = function (x) {
-  var segment = this.segmentAtX(x)
-  return segment.t + (x - segment.x) / (segment.dx || 1)
-}
-
-// Public: Calculates the _x_, given _t_.
-//
-// * `t` {Number} representing the value of _t_
-//
-// Returns {Number} _x_
-//
-Speedcore.prototype.x = function (t) {
-  var segment = this.segmentAtT(t)
-  return segment.x + (t - segment.t) * segment.dx
-}
-
-// Public: Finds the _dx_, given _t_.
-//
-// * `t` {Number} representing the value of _t_
-//
-// Returns {Number} _dx_
-//
-Speedcore.prototype.dx = function (t) {
-  var segment = this.segmentAtT(t)
-  return segment.dx
+var X = function (segment) {
+  return segment.x
 }

@@ -1,11 +1,9 @@
-
 // Public: A module that takes a buffer, detects the character set, and
 // returns the decoded string.
 //
 // The Reader follows [ruv-it!’s algorithm](http://hitkey.nekokan.dyndns.info/cmds.htm#CHARSET)
 // for detecting the character set.
 //
-/* module */
 
 var chardet = require('bemuse-chardet/bemuse-chardet')
 var iconv = require('iconv-lite')
@@ -17,10 +15,11 @@ var iconv = require('iconv-lite')
 //
 // Returns a {String} representing the decoded text
 //
-exports.read = function read (buffer) {
+export function read (buffer) {
   var charset = chardet.detect(buffer)
   var text = iconv.decode(buffer, charset)
-  if (text.charCodeAt(0) === 0xFEFF) { // BOM?!
+  if (text.charCodeAt(0) === 0xfeff) {
+    // BOM?!
     return text.substr(1)
   } else {
     return text
@@ -34,7 +33,7 @@ exports.read = function read (buffer) {
 //   * `error` {Error} in case of failure
 //   * `value` {String} representing the decoded text
 //
-exports.readAsync = function read (buffer, callback) {
+export function readAsync (buffer, callback) {
   setTimeout(function () {
     var result
     try {

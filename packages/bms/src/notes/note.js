@@ -1,5 +1,4 @@
-
-var DataStructure = require('data-structure')
+import DataStructure from 'data-structure'
 
 // Public: The Note data structure represents a single note in a notechart.
 //
@@ -15,7 +14,7 @@ var DataStructure = require('data-structure')
 //   You may use a {Keysounds} to resolve the keysound ID into filename.
 //
 /* data Note */
-module.exports = new DataStructure({
+export const Note = new DataStructure({
   beat: 'number',
   endBeat: DataStructure.maybe('number'),
   column: DataStructure.maybe('string'),

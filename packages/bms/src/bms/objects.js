@@ -1,57 +1,58 @@
-
 // Public: A module that exposes {BMSObjects}.
 /* module */
-
-module.exports = BMSObjects
-
 // Public: A BMSObjects holds a collection of objects inside a BMS notechart.
 /* class BMSObjects */
-
 // Public: Constructs an empty BMSObjects.
-function BMSObjects () {
-  this._objects = []
-}
-
-// Public: Adds a new object to this collection.
-//
-// If an object already exists on the same channel and position,
-// the object is replaced (except for autokeysound tracks).
-//
-// * `object` {BMSObject} to add
-//
-BMSObjects.prototype.add = function (object) {
-  if (object.channel !== '01') {
-    for (var i = 0; i < this._objects.length; i++) {
-      var test = this._objects[i]
-      if (test.channel === object.channel &&
+// Public: A module that exposes {BMSObjects}.
+/* module */
+// Public: A BMSObjects holds a collection of objects inside a BMS notechart.
+/* class BMSObjects */
+// Public: Constructs an empty BMSObjects.
+export class BMSObjects {
+  constructor () {
+    this._objects = []
+  }
+  // Public: Adds a new object to this collection.
+  //
+  // If an object already exists on the same channel and position,
+  // the object is replaced (except for autokeysound tracks).
+  //
+  // * `object` {BMSObject} to add
+  //
+  add (object) {
+    if (object.channel !== '01') {
+      for (var i = 0; i < this._objects.length; i++) {
+        var test = this._objects[i]
+        if (
+          test.channel === object.channel &&
           test.measure === object.measure &&
-          test.fraction === object.fraction) {
-        this._objects[i] = object
-        return
+          test.fraction === object.fraction
+        ) {
+          this._objects[i] = object
+          return
+        }
       }
     }
+    this._objects.push(object)
   }
-  this._objects.push(object)
-}
-
-// Public: Returns an array of all objects.
-//
-// Returns an {Array} of {BMSObject} objects
-//
-BMSObjects.prototype.all = function () {
-  return this._objects.slice()
-}
-
-// Public: Returns a sorted array of all objects.
-//
-// Returns an {Array} of {BMSObject} objects
-//
-BMSObjects.prototype.allSorted = function () {
-  var list = this.all()
-  list.sort(function (a, b) {
-    return (a.measure + a.fraction) - (b.measure + b.fraction)
-  })
-  return list
+  // Public: Returns an array of all objects.
+  //
+  // Returns an {Array} of {BMSObject} objects
+  //
+  all () {
+    return this._objects.slice()
+  }
+  // Public: Returns a sorted array of all objects.
+  //
+  // Returns an {Array} of {BMSObject} objects
+  //
+  allSorted () {
+    var list = this.all()
+    list.sort(function (a, b) {
+      return a.measure + a.fraction - (b.measure + b.fraction)
+    })
+    return list
+  }
 }
 
 // Public: A BMSObject data structure represents an object inside a {BMSChart}.

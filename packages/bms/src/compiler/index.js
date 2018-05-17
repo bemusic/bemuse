@@ -1,10 +1,8 @@
-
 // Public: A module that takes a string representing the BMS notechart,
 // parses it, and compiles into a {BMSChart}.
 /* module */
-
-var match = require('../util/match')
-var BMSChart = require('../bms/chart')
+import { match } from '../util/match'
+import { BMSChart } from '../bms/chart'
 
 var matchers = {
   bms: {
@@ -42,14 +40,16 @@ var matchers = {
 //     * `lineNumber` {Number} representing the line number where this warning occurred
 //     * `message` {String} representing the warning message
 //
-exports.compile = function (text, options) {
-  options = options || { }
+export function compile (text, options) {
+  options = options || {}
 
   var chart = new BMSChart()
 
-  var rng = options.rng || function (max) {
-    return 1 + Math.floor(Math.random() * max)
-  }
+  var rng =
+    options.rng ||
+    function (max) {
+      return 1 + Math.floor(Math.random() * max)
+    }
 
   var matcher = matchers[options.format] || matchers.bms
 
@@ -133,8 +133,11 @@ exports.compile = function (text, options) {
 }
 
 function eachLine (text, callback) {
-  text.split(/\r\n|\r|\n/)
-    .map(function (line) { return line.trim() })
+  text
+    .split(/\r\n|\r|\n/)
+    .map(function (line) {
+      return line.trim()
+    })
     .forEach(function (line, index) {
       callback(line, index + 1)
     })

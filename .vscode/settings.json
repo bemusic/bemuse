@@ -6,7 +6,9 @@
   "editor.formatOnSave": true,
   "prettier.eslintIntegration": true,
   "cSpell.words": [
+    "bemusic",
     "bmson",
+    "chardet",
     "es",
     "interop",
     "keysound",

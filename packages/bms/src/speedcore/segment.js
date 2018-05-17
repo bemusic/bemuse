@@ -1,5 +1,4 @@
-
-var DataStructure = require('data-structure')
+import DataStructure from 'data-structure'
 
 // Public: The Segment data structure represents a single speedcore segment.
 //
@@ -15,7 +14,7 @@ var DataStructure = require('data-structure')
 // See the {Speedcore} documentation for a more elaborate explanation.
 //
 /* data Note */
-module.exports = new DataStructure({
+export const Segment = new DataStructure({
   t: 'number',
   x: 'number',
   dx: 'number'
