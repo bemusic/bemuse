@@ -1,0 +1,53 @@
+{
+  "name": "bemuse-tools",
+  "version": "2.0.0",
+  "description": "bemuse-tools: Tools for Bemuse",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -r ./spec/support/es6 spec/*_spec.js",
+    "prepublish": "gulp compile"
+  },
+  "bin": {
+    "bemuse-tools": "./bin/bemuse-tools"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bemusic/bemuse-tools.git"
+  },
+  "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bemusic/bemuse-tools/issues"
+  },
+  "homepage": "https://github.com/bemusic/bemuse-tools",
+  "dependencies": {
+    "babel": "^5.4.3",
+    "bemuse-indexer": "^3.1.0",
+    "bluebird": "^2.9.9",
+    "bytes": "^1.0.0",
+    "chalk": "^1.0.0",
+    "co": "^4.0.2",
+    "cors": "^2.7.1",
+    "endpoint": "^0.4.2",
+    "express": "^4.12.4",
+    "format-json": "^1.0.3",
+    "glob": "^4.3.5",
+    "gulp-util": "^3.0.1",
+    "js-yaml": "^3.2.7",
+    "lodash": "^3.6.0",
+    "meow": "^3.1.0",
+    "mime": "^1.2.11",
+    "mkdirp": "^0.5.0",
+    "rx": "^2.5.3",
+    "temp": "^0.8.1",
+    "throat": "^1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
+    "jscs": "^1.9.0",
+    "jshint": "^2.6.3",
+    "mocha": "^2.1.0"
+  }
+}

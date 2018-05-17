@@ -1,0 +1,16 @@
+{
+  "asi": true,
+  "esnext": true,
+  "eqeqeq": true,
+  "camelcase": true,
+  "funcscope": true,
+  "immed": true,
+  "latedef": false,
+  "noarg": true,
+  "sub": true,
+  "unused": true,
+
+  "browser": true,
+  "devel": true,
+  "node": true
+}
