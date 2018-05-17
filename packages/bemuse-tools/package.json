@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha -r ./spec/support/es6 spec/*_spec.js",
-    "prepublish": "gulp compile"
+    "prepare": "tsc"
   },
   "bin": {
     "bemuse-tools": "./bin/bemuse-tools"
@@ -21,7 +21,6 @@
   },
   "homepage": "https://github.com/bemusic/bemuse-tools",
   "dependencies": {
-    "babel": "^5.4.3",
     "bemuse-indexer": "^3.1.0",
     "bluebird": "^2.9.9",
     "bytes": "^1.0.0",
@@ -44,10 +43,6 @@
   },
   "devDependencies": {
     "chai": "^1.10.0",
-    "gulp": "^3.9.0",
-    "gulp-babel": "^5.2.1",
-    "jscs": "^1.9.0",
-    "jshint": "^2.6.3",
     "mocha": "^2.1.0"
   }
 }

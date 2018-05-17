@@ -4,20 +4,12 @@
   "description": "Bemuse notechart data structure, supports BMS and bmsons.",
   "main": "index.js",
   "scripts": {
-    "prepublish": "env NODE_ENV=production babel src -d .",
+    "prepare": "tsc",
     "test": "nyc -r text -r lcov -- mocha -r ./node-environment --reporter spec"
   },
   "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.5.1",
-    "babel-core": "^6.5.2",
-    "babel-plugin-__coverage__": "^0.111.0",
-    "babel-plugin-espower": "^2.1.2",
-    "babel-polyfill": "^6.5.0",
-    "babel-preset-es2015": "^6.5.0",
-    "babel-preset-stage-2": "^6.5.0",
-    "babel-register": "^6.5.2",
     "bluebird": "^3.4.6",
     "chai": "^3.5.0",
     "eslint": "^2.2.0",
@@ -37,13 +29,7 @@
     "bluebird": "^3.4.6"
   },
   "nyc": {
-    "include": [
-      "/"
-    ]
+    "include": ["/"]
   },
-  "files": [
-    "data",
-    "index.js",
-    "loader"
-  ]
+  "files": ["data", "index.js", "loader"]
 }

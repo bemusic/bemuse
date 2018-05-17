@@ -7,8 +7,11 @@
   "prettier.eslintIntegration": true,
   "cSpell.words": [
     "bmson",
+    "es",
+    "interop",
     "keysound",
     "keysounds",
+    "module",
     "notechart",
     "speedcore"
   ]

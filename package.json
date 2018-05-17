@@ -123,6 +123,7 @@
     "style-loader": "^0.20.2",
     "through2": "^2.0.0",
     "transform-loader": "^0.2.4",
+    "typescript": "^2.8.3",
     "url-loader": "^1.0.1",
     "val-loader": "^1.1.0",
     "web-audio-test-api": "^0.5.2",
