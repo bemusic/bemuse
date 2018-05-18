@@ -4,7 +4,10 @@
   "description": "BEAT☆MUSIC☆SEQUENCE, a web-based music game of the future",
   "main": "index.js",
   "private": true,
-  "workspaces": ["website", "packages/*"],
+  "workspaces": [
+    "website",
+    "packages/*"
+  ],
   "scripts": {
     "build": "gulp build",
     "pre-deploy": "gulp pre-deploy",
@@ -31,7 +34,9 @@
     "type": "git",
     "url": "https://github.com/spacetme/bemuse.git"
   },
-  "keywords": ["bms"],
+  "keywords": [
+    "bms"
+  ],
   "author": "Thai Pangsakulyanont <dtinth@spacet.me> (http://dt.in.th/)",
   "license": "AGPL-1.0",
   "bugs": {
@@ -100,6 +105,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.13",
     "lerna": "^2.11.0",
+    "markdown-toc": "^1.2.0",
     "merge-stream": "^1.0.0",
     "mocha": "^2.1.0",
     "node-env": "^0.1.6",
