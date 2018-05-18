@@ -9,7 +9,7 @@ references:
   bootstrap: &bootstrap
     run:
       name: lerna bootstrap
-      command: lerna bootstrap
+      command: lerna bootstrap && lerna run prepare
   save_node_modules_cache: &save_node_modules_cache
     save_cache:
       key: deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
