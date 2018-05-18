@@ -19,7 +19,7 @@ BMS format (See:
 
 It is recommended to play this game on Google Chrome.
 
-** Table of contents:**
+**Table of contents:**
 
 <!-- toc -->
 
