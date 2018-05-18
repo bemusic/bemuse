@@ -23,6 +23,7 @@ function generateBaseConfig () {
       stats: { colors: true, chunkModules: false }
     },
     module: {
+      strictExportPresence: true,
       rules: generateLoadersConfig(),
       noParse: [/sinon\.js/]
     },
@@ -106,7 +107,12 @@ function generateLoadersConfig () {
             plugins: () => [
               require('postcss-flexbugs-fixes'),
               require('autoprefixer')({
-                browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1'],
+                browsers: [
+                  '> 1%',
+                  'last 2 versions',
+                  'Firefox ESR',
+                  'Opera 12.1'
+                ],
                 flexbox: 'no-2009'
               })
             ]
@@ -137,7 +143,12 @@ function generateLoadersConfig () {
             plugins: () => [
               require('postcss-flexbugs-fixes'),
               require('autoprefixer')({
-                browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1'],
+                browsers: [
+                  '> 1%',
+                  'last 2 versions',
+                  'Firefox ESR',
+                  'Opera 12.1'
+                ],
                 flexbox: 'no-2009'
               })
             ]
@@ -194,9 +205,7 @@ function applyWebConfig (config) {
 
   if (Env.hotModeEnabled()) {
     config.devServer.hot = true
-    config.plugins.push(
-      new webpack.HotModuleReplacementPlugin()
-    )
+    config.plugins.push(new webpack.HotModuleReplacementPlugin())
     config.entry.boot.unshift(
       'webpack-dev-server/client?http://' +
         Env.serverHost() +
