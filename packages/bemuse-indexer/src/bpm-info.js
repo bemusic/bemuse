@@ -19,12 +19,12 @@ export function getBpmInfo (notes, timing) {
     var bpm = timing.bpmAtBeat(beats[i])
     data.push([bpm, length])
   }
-  var perc = percentile(data)
+  var getPercentile = percentile(data)
   return {
     init: timing.bpmAtBeat(0),
-    min: perc(2),
-    median: perc(50),
-    max: perc(98)
+    min: getPercentile(2),
+    median: getPercentile(50),
+    max: getPercentile(98)
   }
 }
 
