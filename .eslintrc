@@ -33,3 +33,4 @@ rules:
   no-mixed-operators: off
   node/no-deprecated-api: warn
   no-sequences: off
+  import/named: warn

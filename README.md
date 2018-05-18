@@ -10,13 +10,27 @@
   <br>
   <a href="https://bemuse.ninja/project"><img src="https://img.shields.io/badge/read%20the-docs-brightgreen.svg?style=flat" alt="Docs"></a>
   <a href="https://david-dm.org/bemusic/bemuse" title="Dependency status"><img src="https://david-dm.org/bemusic/bemuse.svg" alt="david-dm Dependency Status"></a>
-  <a href="https://david-dm.org/bemusic/bemuse#info=devDependencies" title="devDependency status"><img src="https://david-dm.org/bemusic/bemuse/dev-status.svg" alt="david-dm Development Depedency Status"></a>
+  <a href="https://david-dm.org/bemusic/bemuse#info=devDependencies" title="devDependency status"><img src="https://david-dm.org/bemusic/bemuse/dev-status.svg" alt="david-dm Development Dependency Status"></a>
 </p>
 
-__Bemuse__ is an open-source, online, web-based rhythm game.
-It plays songs in BMS format (See: [Introduction to BMS](https://www.youtube.com/watch?v=Guv1vRAKanY)).
+**Bemuse** is an open-source, online, web-based rhythm game. It plays songs in
+BMS format (See:
+[Introduction to BMS](https://www.youtube.com/watch?v=Guv1vRAKanY)).
 
 It is recommended to play this game on Google Chrome.
+
+**Table of contents:**
+
+<!-- toc -->
+
+- [Video Demo](#video-demo)
+- [Quick Tour](#quick-tour)
+- [Technology](#technology)
+- [Development](#development)
+- [Sub-projects](#sub-projects)
+- [License](#license)
+
+<!-- tocstop -->
 
 ## Video Demo
 
@@ -28,65 +42,78 @@ It is recommended to play this game on Google Chrome.
 
 ![Music selection](website/static/img/screenshots/music-select.jpg)
 
-- You can play __online songs__ instantly in your browser.
+* You can play **online songs** instantly in your browser.
 
-- You can play __custom songs__ by dragging a folder containing BMS files into this screen. There are over 5,000 songs published in BMS format by the community worldwide. You can find them using [BMS Search](http://bmssearch.net/).
+* You can play **custom songs** by dragging a folder containing BMS files into
+  this screen. There are over 5,000 songs published in BMS format by the
+  community worldwide. You can find them using
+  [BMS Search](http://bmssearch.net/).
 
-- There’s an __online internet ranking__ system. You can compete with other players and see your rank online.
+* There’s an **online internet ranking** system. You can compete with other
+  players and see your rank online.
 
-- It has an __insane tutorial.__
-
+* It has an **insane tutorial.**
 
 ![Gameplay](website/static/img/screenshots/gameplay-kbd.jpg)
 
-- __Keyboard mode__ (7-keys). Play along the music with your keyboard.
+* **Keyboard mode** (7-keys). Play along the music with your keyboard.
 
-- __Fully key-sounded.__ Each note has its own sound. The music will be affected by your game play.
+* **Fully key-sounded.** Each note has its own sound. The music will be affected
+  by your game play.
 
-- Player together with friends using [__party mode.__](https://www.youtube.com/watch?v=hiJzFRIhiiA) It helps you start the game at the exact same time.
+* Player together with friends using
+  [**party mode.**](https://www.youtube.com/watch?v=hiJzFRIhiiA) It helps you
+  start the game at the exact same time.
 
-- __Multiple difficulties.__ Each song has multiple difficulties to accommodate every player skill levels.
+* **Multiple difficulties.** Each song has multiple difficulties to accommodate
+  every player skill levels.
 
-- __Adjustable speed.__ You can adjust the speed (spacing) of the notes to make it easy-to-sightread. This does not affect the speed of the song; lowering the speed causes notes to become more dense on-screen.
+* **Adjustable speed.** You can adjust the speed (spacing) of the notes to make
+  it easy-to-sightread. This does not affect the speed of the song; lowering the
+  speed causes notes to become more dense on-screen.
 
-- [__Scoring and grading system.__](http://bemuse.readthedocs.io/en/latest/users/scoring-and-judgment.html) Master the song to get the S grade (score over 500000).
-
+* [**Scoring and grading system.**](http://bemuse.readthedocs.io/en/latest/users/scoring-and-judgment.html)
+  Master the song to get the S grade (score over 500000).
 
 ![Gameplay](website/static/img/screenshots/gameplay-bms.jpg)
 
-- __BMS mode__ (7-keys + turntable). You can play using an [IIDX controller](https://www.youtube.com/watch?v=EOgI37Myqvk) or [MIDI controller](https://www.facebook.com/bemusegame/videos/985712734835136/).
+* **BMS mode** (7-keys + turntable). You can play using an
+  [IIDX controller](https://www.youtube.com/watch?v=EOgI37Myqvk) or
+  [MIDI controller](https://www.facebook.com/bemusegame/videos/985712734835136/).
 
-- __HD video support.__ Some songs will have a background animation in high-definition (720p).
+* **HD video support.** Some songs will have a background animation in
+  high-definition (720p).
 
-- __Adjustable play area size.__ If the gameplay area is too long, you can adjust the cover it to make the play area more easy-to-sightread.
+* **Adjustable play area size.** If the gameplay area is too long, you can
+  adjust the cover it to make the play area more easy-to-sightread.
 
-- __Early/Late indicator.__ Bemuse will tell you if you press the note too early or too late.
-
-
+* **Early/Late indicator.** Bemuse will tell you if you press the note too early
+  or too late.
 
 ![Options](website/static/img/screenshots/options.jpg)
 
-- __Adjustable panel position.__ You can position the note panel on either side of the screen, or put it at the center.
+* **Adjustable panel position.** You can position the note panel on either side
+  of the screen, or put it at the center.
 
-- __Adjustable turntable position.__ You can put turntable on the left or on the right (BMS mode only).
+* **Adjustable turntable position.** You can put turntable on the left or on the
+  right (BMS mode only).
 
-- __Audio latency compensation.__ Some systems may have audio latency. Bemuse contains a calibration system to compensate for the audio latency.
+* **Audio latency compensation.** Some systems may have audio latency. Bemuse
+  contains a calibration system to compensate for the audio latency.
 
-
-__Play now at https://bemuse.ninja/.__
-
+**Play now at https://bemuse.ninja/.**
 
 ## Technology
 
-- The web application is powered by __[React](https://facebook.github.io/react/) and [Redux](http://redux.js.org/).__
+* The web application is powered by **[React](https://facebook.github.io/react/)
+  and [Redux](http://redux.js.org/).**
 
-- The game engine is powered by __[PixiJS](http://www.pixijs.com/).__
-
-
+* The game engine is powered by **[PixiJS](http://www.pixijs.com/).**
 
 ## Development
 
-Install [Node.js](https://nodejs.org/en/) and [Yarn](https://github.com/yarnpkg).
+Install [Node.js](https://nodejs.org/en/) and
+[Yarn](https://github.com/yarnpkg).
 
 ```
 # Clone Bemuse
@@ -104,9 +131,22 @@ npm start
 
 Note: Online ranking features are not available.
 
+## Sub-projects
 
+This repository holds the code for other sub-projects, which are available for
+use on npm.
+
+| Project name                                      | Badge                                                                                                  | Description                                                                                     |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| [**bms**](packages/bms)                           | [![npm](https://img.shields.io/npm/v/bms.svg)](http://npmjs.com/package/bms)                           | JavaScript [BMS](https://hitkey.nekokan.dyndns.info/cmds.htm) parser                            |
+| [**bmson**](packages/bmson)                       | [![npm](https://img.shields.io/npm/v/bmson.svg)](http://npmjs.com/package/bmson)                       | JavaScript [bmson](https://bmson.nekokan.dyndns.info/) parser                                   |
+| [**bemuse-tools**](packages/bemuse-tools)         | [![npm](https://img.shields.io/npm/v/bemuse-tools.svg)](http://npmjs.com/package/bemuse-tools)         | Tools for [hosting your own music server](https://bemuse.ninja/project/docs/music-server.html). |
+| [**bemuse-indexer**](packages/bemuse-indexer)     | [![npm](https://img.shields.io/npm/v/bemuse-indexer.svg)](http://npmjs.com/package/bemuse-indexer)     | Library for scanning a directory for BMS/bmson files and generate a metadata.                   |
+| [**bemuse-notechart**](packages/bemuse-notechart) | [![npm](https://img.shields.io/npm/v/bemuse-notechart.svg)](http://npmjs.com/package/bemuse-notechart) | Library for loading a notechart for use in game.                                                |
 
 ## License
 
-[AGPLv3](LICENSE), for now.
-After the project matures, it may be released into a more permissive license.
+[AGPLv3](LICENSE), for now. After the project matures, it may be released into a
+more permissive license. Note that this license only applies to the main Bemuse
+project, not the [sub-projects](#sub-projects), which has its own license terms
+(mostly MIT).

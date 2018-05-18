@@ -1,5 +1,5 @@
-import BMS from 'bms'
-import { fromBMSChart } from 'bemuse-notechart/loader/BMSNotechartLoader'
+import * as BMS from 'bms'
+import { fromBMSChart } from 'bemuse-notechart/lib/loader/BMSNotechartLoader'
 import Player from '../player'
 import _ from 'lodash'
 

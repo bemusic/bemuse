@@ -7,7 +7,7 @@ import GameInput from 'bemuse/game/input'
 import GameState from 'bemuse/game/state'
 import MAIN from 'bemuse/utils/main-element'
 import co from 'co'
-import { fromBMSChart } from 'bemuse-notechart/loader/BMSNotechartLoader'
+import { fromBMSChart } from 'bemuse-notechart/lib/loader/BMSNotechartLoader'
 
 export function main () {
   co(function * () {

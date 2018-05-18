@@ -1,4 +1,4 @@
-
+/* global importScripts */
 // Script to load the service worker.
 
 void (function () {

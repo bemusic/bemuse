@@ -1,13 +1,9 @@
 import './style.scss'
 
 import $ from 'jquery'
-import Compiler from 'bms/compiler'
+import { Compiler, Notes, Reader, SongInfo, Timing } from 'bms'
 import DndResources from 'bemuse/resources/dnd-resources'
-import Notes from 'bms/notes'
-import Reader from 'bms/reader'
 import SamplingMaster from 'bemuse/sampling-master'
-import SongInfo from 'bms/song-info'
-import Timing from 'bms/timing'
 import co from 'co'
 import ctx from 'bemuse/audio-context'
 

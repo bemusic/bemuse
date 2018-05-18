@@ -1,5 +1,4 @@
 import Promise from 'bluebird'
-import co from 'co'
 import fs from 'fs'
 import gulp from 'gulp'
 import gutil from 'gulp-util'
@@ -12,16 +11,17 @@ import path from '../config/path'
 const readFile = Promise.promisify(fs.readFile, fs)
 const writeFile = Promise.promisify(fs.writeFile, fs)
 
-gulp.task(
-  'build',
-  ['dist'],
-  async function () {
-    const stats = await Promise.promisify(webpack)(config)
-    gutil.log('[webpack]', stats.toString({ colors: true }))
-    await postProcess()
-    await generateDocs()
+gulp.task('build', ['dist'], async function () {
+  const stats = await Promise.promisify(webpack)(config)
+  gutil.log('[webpack]', stats.toString({ colors: true }))
+  if (stats.hasErrors()) {
+    throw new Error(
+      'Failed to build Bemuse, please check the logs above.... T_T'
+    )
   }
-)
+  await postProcess()
+  await generateDocs()
+})
 
 function postProcess () {
   return readFile(path('dist', 'index.html'), 'utf-8')
@@ -63,7 +63,8 @@ async function generateDocs () {
     stdio: 'inherit'
   })
   await new Promise((resolve, reject) => {
-    gulp.src(path('website', 'build', 'bemuse', '**', '*'))
+    gulp
+      .src(path('website', 'build', 'bemuse', '**', '*'))
       .on('error', reject)
       .pipe(gulp.dest(path('dist', 'project')))
       .on('end', resolve)

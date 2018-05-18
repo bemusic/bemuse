@@ -2,6 +2,12 @@
 * text=auto eol=lf
 *.png binary
 *.jpg binary
+.gitignore binary
+.npmignore binary
+*.bmglyph binary
+*.m4a binary
+*.ogg binary
+*.bemuse binary
 
 # *.bat files must always use CRLF line endings
 *.bat text eol=crlf

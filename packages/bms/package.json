@@ -1,0 +1,53 @@
+{
+  "name": "bms",
+  "version": "3.0.0-2",
+  "description": "BMS Parser for JavaScript",
+  "main": "./lib/index.js",
+  "files": [
+    "src",
+    "lib"
+  ],
+  "scripts": {
+    "prepare": "rm -rf lib && tsc",
+    "test": "nyc -r text -r lcov gulp test",
+    "pretest": "gulp bmspec:update"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bemusic/bms-js.git"
+  },
+  "keywords": [
+    "BMS"
+  ],
+  "browser": {
+    "./reader/index.js": "./reader/index.web.js"
+  },
+  "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bemusic/bms-js/issues"
+  },
+  "homepage": "https://github.com/bemusic/bms-js",
+  "devDependencies": {
+    "artstep": "^5555.0.0",
+    "bluebird": "^3.5.1",
+    "chai": "^4.1.2",
+    "codeclimate-test-reporter": "0.0.4",
+    "gulp": "^3.9.1",
+    "gulp-cucumber": "git://github.com/dtinth/gulp-cucumber",
+    "gulp-mocha": "^5.0.0",
+    "hide-stack-frames-from": "^1.0.0",
+    "lazy-property": "^1.0.0",
+    "stack-chain": "^1.3.0"
+  },
+  "dependencies": {
+    "bemuse-chardet": "0.0.8",
+    "data-structure": "^1.2.0",
+    "iconv-lite": "^0.4.5",
+    "invariant": "^2.1.0",
+    "lodash.assign": "^4.2.0",
+    "lodash.map": "^4.6.0",
+    "lodash.uniq": "^4.5.0",
+    "lodash.values": "^4.3.0"
+  }
+}

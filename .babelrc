@@ -1,5 +1,9 @@
 {
-  "presets": ["env", "react", "stage-2"],
+  "presets": [
+    ["env", { "modules": false }],
+    "react",
+    "stage-2"
+  ],
   "plugins": ["emotion", "espower"],
   "env": {
     "test": {

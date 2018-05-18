@@ -1,5 +1,5 @@
 import LoadingContext from 'bemuse/boot/loading-context'
-import NotechartLoader from 'bemuse-notechart/loader'
+import NotechartLoader from 'bemuse-notechart/lib/loader'
 import Progress from 'bemuse/progress'
 import SamplingMaster from 'bemuse/sampling-master'
 import co from 'co'
@@ -23,8 +23,9 @@ export function load (spec) {
       return new Promise(resolve => {
         let context = new LoadingContext(progress)
         context.use(function () {
-          import(/* webpackChunkName: 'gameEngine' */ 'bemuse/scintillator')
-            .then(loadedModule => resolve(loadedModule))
+          import(/* webpackChunkName: 'gameEngine' */ 'bemuse/scintillator').then(
+            loadedModule => resolve(loadedModule)
+          )
         })
       })
     })

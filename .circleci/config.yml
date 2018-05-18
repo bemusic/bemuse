@@ -1,0 +1,115 @@
+version: 2
+references:
+  restore_node_modules_cache: &restore_node_modules_cache
+    restore_cache:
+      keys:
+        - deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
+        - deps-{{ .Branch }}-
+        - deps-
+  bootstrap: &bootstrap
+    run:
+      name: lerna bootstrap
+      command: lerna bootstrap && lerna run prepare
+  save_node_modules_cache: &save_node_modules_cache
+    save_cache:
+      key: deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      paths:
+        - ./node_modules
+        - ./packages/bemuse-indexer/node_modules
+        - ./packages/bemuse-notechart/node_modules
+        - ./packages/bemuse-tools/node_modules
+        - ./packages/bms/node_modules
+        - ./packages/bmson/node_modules
+jobs:
+  lint:
+    working_directory: ~/bemuse
+    environment:
+      FORCE_COLOR: '1'
+    docker:
+      - image: circleci/node:8-browsers
+    steps:
+      - run: sudo npm i -g lerna
+      - checkout
+      - *restore_node_modules_cache
+      - *bootstrap
+      - *save_node_modules_cache
+      - run:
+          name: danger
+          command: yarn danger ci
+  test:
+    working_directory: ~/bemuse
+    environment:
+      FORCE_COLOR: '1'
+    docker:
+      - image: circleci/node:8-browsers
+    steps:
+      - run: sudo npm i -g lerna
+      - checkout
+      - *restore_node_modules_cache
+      - *bootstrap
+      - *save_node_modules_cache
+      - run:
+          name: test
+          command: yarn test
+      - run:
+          name: codecov
+          command: yarn codecov
+  test_packages:
+    working_directory: ~/bemuse
+    environment:
+      FORCE_COLOR: '1'
+    docker:
+      - image: circleci/node:8-browsers
+    steps:
+      - run: sudo npm i -g lerna
+      - checkout
+      - *restore_node_modules_cache
+      - *bootstrap
+      - *save_node_modules_cache
+      - run:
+          name: lerna run test
+          command: lerna run test
+      - run:
+          name: codecov
+          command: yarn codecov
+  build:
+    working_directory: ~/bemuse
+    environment:
+      FORCE_COLOR: '1'
+    docker:
+      - image: circleci/node:8-browsers
+    steps:
+      - run: sudo npm i -g lerna
+      - checkout
+      - add_ssh_keys
+      - *restore_node_modules_cache
+      - *bootstrap
+      - *save_node_modules_cache
+      - run:
+          name: build
+          command: |
+            rm -rf dist
+            env NODE_ENV=production yarn build
+      - run:
+          name: checks
+          command: yarn pre-deploy
+      - run:
+          name: deploy
+          command: |
+            if git log --format=%B -n 1 | egrep '^:bookmark: [0-9]+\.[0-9]+\.[0-9]+'
+            then
+              git remote add www https://akibot:$GH_TOKEN@github.com/bemusic/bemusic.github.io.git
+              git config --global user.email "aki@spacet.me"
+              git config --global user.name "Aki running on CircleCI"
+              ./node_modules/.bin/gulp deploy
+            else
+              echo 'Not a release commit, skipped!'
+            fi
+workflows:
+  version: 2
+  tests:
+    jobs:
+      - lint
+      - test
+      - test_packages
+      - build
