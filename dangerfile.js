@@ -1,7 +1,7 @@
-import * as fs from 'fs'
-import toc from 'markdown-toc'
-import { danger, warn, fail } from 'danger'
-import { CLIEngine } from 'eslint'
+const { danger, warn, fail } = require('danger')
+const { CLIEngine } = require('eslint')
+const fs = require('fs')
+const toc = require('markdown-toc')
 
 // No PR is too small to include a description of why you made a change
 if (danger.github.pr.body.length < 10) {
@@ -9,7 +9,7 @@ if (danger.github.pr.body.length < 10) {
 }
 
 // ESLint
-const cli = new CLIEngine({} as any)
+const cli = new CLIEngine({})
 const filesToLint = danger.git.created_files
   .concat(danger.git.modified_files)
   .filter(path => !cli.isPathIgnored(path))
