@@ -1,0 +1,66 @@
+version: 2
+references:
+  restore_node_modules_cache: &restore_node_modules_cache
+    restore_cache:
+      keys:
+        - deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
+        - deps-{{ .Branch }}-
+        - deps-
+  bootstrap: &bootstrap
+    run:
+      name: lerna bootstrap
+      command: lerna bootstrap
+  save_node_modules_cache: &save_node_modules_cache
+    save_cache:
+      key: deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      paths:
+        - ./node_modules
+        - ./packages/bemuse-indexer/node_modules
+        - ./packages/bemuse-notechart/node_modules
+        - ./packages/bemuse-tools/node_modules
+        - ./packages/bms/node_modules
+        - ./packages/bmson/node_modules
+jobs:
+  lint:
+    working_directory: ~/bemuse
+    environment:
+      FORCE_COLOR: '1'
+    docker:
+      - image: circleci/node:8-browsers
+    steps:
+      - checkout
+      - *restore_node_modules_cache
+      - *bootstrap
+      - *save_node_modules_cache
+      - run:
+          name: test
+          command: yarn danger
+  test:
+    working_directory: ~/bemuse
+    environment:
+      FORCE_COLOR: '1'
+    docker:
+      - image: circleci/node:8-browsers
+    steps:
+      - checkout
+      - *restore_node_modules_cache
+      - *bootstrap
+      - *save_node_modules_cache
+      - run:
+          name: test
+          command: yarn test
+      - run:
+          name: build
+          command: |
+            rm -rf dist
+            env NODE_ENV=production yarn build
+            yarn pre-deploy
+      - run:
+          name: codecov
+          command: yarn codecov
+workflows:
+  version: 2
+  tests:
+    jobs:
+      - test
+      - lint

@@ -10,6 +10,8 @@
   ],
   "scripts": {
     "build": "gulp build",
+    "pre-deploy": "gulp pre-deploy",
+    "codecov": "codecov",
     "build:ios": "cross-env NODE_ENV=ios gulp build",
     "ci:code-review": "npm run code-review; ./bin/upload-code-review",
     "code-review": "gulp code-review",
@@ -35,7 +37,7 @@
   "keywords": [
     "bms"
   ],
-  "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
+  "author": "Thai Pangsakulyanont <dtinth@spacet.me> (http://dt.in.th/)",
   "license": "AGPL-1.0",
   "bugs": {
     "url": "https://github.com/spacetme/bemuse/issues"
@@ -67,6 +69,8 @@
     "connect": "^3.3.3",
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.10",
+    "danger": "^3.7.0",
+    "danger-plugin-eslint": "^0.1.0",
     "dotenv": "^2.0.0",
     "eslint": "^4.14.0",
     "eslint-config-bemuse": "^4.0.2",
