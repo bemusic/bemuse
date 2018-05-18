@@ -1,3 +1,11 @@
 {
-  "extends": "./tsconfig.base.json"
+  "extends": "./tsconfig.base.json",
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "website/node_modules"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "bemuse/*": ["./src/*"]
+    }
+  }
 }
