@@ -8,7 +8,7 @@ describe('NotechartLoader', function () {
       let loader = new NotechartLoader()
       let buffer = new Buffer(`#TITLE meow`)
 
-      return loader.load(buffer, { name: 'wow.bms' }, { }).then(notechart => {
+      return loader.load(buffer, { name: 'wow.bms' }, {}).then(notechart => {
         expect(notechart.songInfo.title).to.equal('meow')
       })
     })
@@ -16,7 +16,7 @@ describe('NotechartLoader', function () {
       let loader = new NotechartLoader()
       let buffer = new Buffer(`#RANK 1`)
 
-      return loader.load(buffer, { name: 'wow.bms' }, { }).then(notechart => {
+      return loader.load(buffer, { name: 'wow.bms' }, {}).then(notechart => {
         expect(notechart.expertJudgmentWindow[0]).to.equal(15)
         expect(notechart.expertJudgmentWindow[1]).to.equal(30)
       })
@@ -31,7 +31,7 @@ describe('NotechartLoader', function () {
       }
       let buffer = new Buffer(JSON.stringify(data))
 
-      return loader.load(buffer, { name: 'wow.bmson' }, { }).then(notechart => {
+      return loader.load(buffer, { name: 'wow.bmson' }, {}).then(notechart => {
         expect(notechart.songInfo.title).to.equal('Running Out')
       })
     })
@@ -42,7 +42,7 @@ describe('NotechartLoader', function () {
       }
       let buffer = new Buffer(JSON.stringify(data))
 
-      return loader.load(buffer, { name: 'wow.bmson' }, { }).then(notechart => {
+      return loader.load(buffer, { name: 'wow.bmson' }, {}).then(notechart => {
         expect(notechart.expertJudgmentWindow[0]).to.equal(36)
         expect(notechart.expertJudgmentWindow[1]).to.equal(80)
       })
