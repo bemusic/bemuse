@@ -1,4 +1,4 @@
-import fs from 'fs'
+import * as fs from 'fs'
 import toc from 'markdown-toc'
 import { danger, warn, fail } from 'danger'
 import { CLIEngine } from 'eslint'
