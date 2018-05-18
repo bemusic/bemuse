@@ -1,7 +1,7 @@
 import 'bemuse/bootstrap'
 
 import Promise from 'bluebird'
-import indexer from 'bemuse-indexer'
+import * as indexer from 'bemuse-indexer'
 
 /* global FileReaderSync */
 if (
@@ -41,8 +41,8 @@ addEventListener('message', function ({ data }) {
       })
       postMessage({ type: 'result', song: song })
     })
-    .catch(function () {
-      console.error('CAUGHT')
+    .catch(function (e) {
+      console.error('CAUGHT', e)
     })
     .done()
 })
