@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "files": ["lib"],
   "scripts": {
-    "prepare": "tsc",
+    "prepare": "rm -rf lib && tsc",
     "test": "nyc mocha -r ts-node/register"
   },
   "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",

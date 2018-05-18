@@ -5,7 +5,7 @@
   "files": ["src", "lib", "bin"],
   "scripts": {
     "test": "mocha -r ts-node/register spec/*_spec.js",
-    "prepare": "tsc"
+    "prepare": "rm -rf lib && tsc"
   },
   "bin": {
     "bemuse-tools": "./bin/bemuse-tools"

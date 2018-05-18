@@ -5,7 +5,7 @@
   "main": "./lib/index.js",
   "files": ["src", "lib"],
   "scripts": {
-    "prepare": "tsc",
+    "prepare": "rm -rf lib && tsc",
     "test": "nyc gulp test"
   },
   "repository": {

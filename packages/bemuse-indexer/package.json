@@ -6,7 +6,7 @@
   "files": ["src", "lib"],
   "scripts": {
     "test": "nyc mocha src/test.js -r ts-node/register",
-    "prepare": "tsc"
+    "prepare": "rm -rf lib && tsc"
   },
   "repository": {
     "type": "git",
