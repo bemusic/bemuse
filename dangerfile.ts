@@ -1,3 +1,5 @@
+import fs from 'fs'
+import toc from 'markdown-toc'
 import { danger, warn, fail } from 'danger'
 import { CLIEngine } from 'eslint'
 
@@ -25,3 +27,11 @@ report.results.forEach(result => {
     }
   })
 })
+
+// Readme
+const readme = fs.readFileSync('README.md', 'utf8')
+if (toc.insert(readme) !== readme) {
+  fail(
+    'Please update README file with up-to-date table of contents: `yarn readme:toc`'
+  )
+}
