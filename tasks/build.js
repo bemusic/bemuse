@@ -14,6 +14,11 @@ const writeFile = Promise.promisify(fs.writeFile, fs)
 gulp.task('build', ['dist'], async function () {
   const stats = await Promise.promisify(webpack)(config)
   gutil.log('[webpack]', stats.toString({ colors: true }))
+  if (stats.hasErrors()) {
+    throw new Error(
+      'Failed to build Bemuse, please check the logs above.... T_T'
+    )
+  }
   await postProcess()
   await generateDocs()
 })
