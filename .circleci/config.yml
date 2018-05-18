@@ -28,6 +28,7 @@ jobs:
     docker:
       - image: circleci/node:8-browsers
     steps:
+      - run: npm i -g lerna
       - checkout
       - *restore_node_modules_cache
       - *bootstrap
@@ -42,6 +43,7 @@ jobs:
     docker:
       - image: circleci/node:8-browsers
     steps:
+      - run: npm i -g lerna
       - checkout
       - *restore_node_modules_cache
       - *bootstrap
