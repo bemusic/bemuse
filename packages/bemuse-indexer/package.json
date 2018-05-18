@@ -2,7 +2,8 @@
   "name": "bemuse-indexer",
   "version": "4.0.0-0",
   "description": "Parse and index BMS notecharts",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "files": ["src", "lib"],
   "scripts": {
     "test": "nyc mocha src/test.js -r ts-node/register",
     "prepare": "tsc"
