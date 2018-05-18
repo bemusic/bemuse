@@ -4,10 +4,12 @@ import invariant from 'invariant'
 import GameEvent from './data/GameEvent'
 import GameNote from './data/GameNote'
 
-// A notechart holds every info about a single player's note chart that the
-// game will ever need.
+/**
+ * A notechart holds every info about a single player's note chart that the
+ * game will ever need.
+ */
 export class Notechart {
-  constructor (data, playerOptions = { }) {
+  constructor (data, playerOptions = {}) {
     let {
       notes: bmsNotes,
       timing,
@@ -41,104 +43,144 @@ export class Notechart {
     this._autos = this._generateAutoKeysoundEventsFromBMS(bmsNotes)
     this._barLines = this._generateBarLineEvents(barLines)
     this._samples = this._generateKeysoundFiles(keysounds)
-    this._infos = new Map(this._notes.map(
-      note => [note, this._getNoteInfo(note)]))
+    this._infos = new Map(
+      this._notes.map(note => [note, this._getNoteInfo(note)])
+    )
     this._songInfo = songInfo
     this._images = images
   }
 
-  // An Array of note events.
+  /**
+   * An Array of note events.
+   */
   get notes () {
     return this._notes
   }
 
-  // An Array of auto-keysound events.
+  /**
+   * An Array of auto-keysound events.
+   */
   get autos () {
     return this._autos
   }
 
-  // An Array of all the sample files to use.
+  /**
+   * An Array of all the sample files to use.
+   */
   get samples () {
     return this._samples
   }
 
-  // An Object containing the mapping from keysound ID to keysound filename.
+  /**
+   * An Object containing the mapping from keysound ID to keysound filename.
+   */
   get keysounds () {
     return this._keysounds.all()
   }
 
-  // An Object representing the bar line events.
+  /**
+   * An Object representing the bar line events.
+   */
   get barLines () {
     return this._barLines
   }
 
-  // An Array of all column names in this notechart.
+  /**
+   * An Array of all column names in this notechart.
+   */
   get columns () {
     return ['SC', '1', '2', '3', '4', '5', '6', '7']
   }
 
-  // Notechart's duration (time of last event)
+  /**
+   * Notechart's duration (time of last event)
+   */
   get duration () {
     return this._duration
   }
 
-  // Notechart's song info
+  /**
+   * Notechart's song info
+   */
   get songInfo () {
     return this._songInfo
   }
 
-  // Eyecatch image
+  /**
+   * Eyecatch image
+   */
   get eyecatchImage () {
     return (this._images && this._images.eyecatch) || 'eyecatch_image.png'
   }
 
-  // Background image
+  /**
+   * Background image
+   */
   get backgroundImage () {
     return (this._images && this._images.background) || 'back_image.png'
   }
 
-  // Returns the characteristic of the note as an Object.
-  // The returned object includes the following properties:
-  //
-  // combos
-  //   The maximum amount of judgments this note may give. Usually it is 1
-  //   for normal notes and 2 for long notes.
-  //
+  /**
+   * Returns the characteristic of the note as an Object.
+   * @param {GameNote} note
+   * @returns {GameNoteCharacteristic | undefined}
+   */
   info (note) {
     return this._infos.get(note)
   }
 
-  // Converts the beat number to in-song position (seconds)
+  /**
+   * Converts the beat number to in-song position (seconds)
+   * @param {number} beat
+   */
   beatToSeconds (beat) {
     return this._timing.beatToSeconds(beat)
   }
 
-  // Converts the beat number to in-game position.
+  /**
+   * Converts the beat number to in-game position.
+   * @param {number} beat
+   */
   beatToPosition (beat) {
     return this._positioning.position(beat)
   }
 
-  // Converts the in-song position to beat number.
+  /**
+   * Converts the in-song position to beat number.
+   * @param {number} seconds
+   */
   secondsToBeat (seconds) {
     return this._timing.secondsToBeat(seconds)
   }
 
-  // Conerts the in-song position to in-game position.
+  /**
+   * Converts the in-song position to in-game position.
+   * @param {number} seconds
+   */
   secondsToPosition (seconds) {
     return this.beatToPosition(this.secondsToBeat(seconds))
   }
 
-  // Converts the beat number to in-song position (seconds)
+  /**
+   * Finds BPM at the specified beat.
+   * @param {number} beat
+   */
   bpmAtBeat (beat) {
     return this._timing.bpmAtBeat(beat)
   }
 
-  // Converts the beat number to in-song position (seconds)
+  /**
+   * Finds the scrolling speed at the specified beat.
+   * @param {*} beat
+   */
   scrollSpeedAtBeat (beat) {
     return this._positioning.speed(beat)
   }
 
-  // Returns the note spacing factor at the specified beat
+  /**
+   * Calculates the note spacing factor at the specified beat.
+   * @param {*} beat
+   */
   spacingAtBeat (beat) {
     return this._spacing.factor(beat)
   }
@@ -149,7 +191,7 @@ export class Notechart {
     if (playerOptions.scratch === 'off') {
       chain = chain.map(note => {
         if (note.column && note.column === 'SC') {
-          return Object.assign({ }, note, { column: null })
+          return Object.assign({}, note, { column: null })
         } else {
           return note
         }
@@ -167,7 +209,7 @@ export class Notechart {
               'Weird. Columns must not shift beyond available column'
             )
             let newColumn = columnsToShift[newIndex]
-            return Object.assign({ }, note, { column: newColumn })
+            return Object.assign({}, note, { column: newColumn })
           }
         }
         return note
@@ -183,24 +225,22 @@ export class Notechart {
 
   _generatePlayableNotesFromBMS (bmsNotes) {
     let nextId = 1
-    return bmsNotes
-      .filter(note => note.column)
-      .map(note => {
-        let spec = this._generateEvent(note.beat)
-        spec.id = nextId++
-        spec.column = note.column
-        spec.keysound = note.keysound
-        spec.keysoundStart = note.keysoundStart
-        spec.keysoundEnd = note.keysoundEnd
-        this._updateDuration(spec)
-        if (note.endBeat !== undefined) {
-          spec.end = this._generateEvent(note.endBeat)
-          this._updateDuration(spec.end)
-        } else {
-          spec.end = undefined
-        }
-        return new GameNote(spec)
-      })
+    return bmsNotes.filter(note => note.column).map(note => {
+      let spec = this._generateEvent(note.beat)
+      spec.id = nextId++
+      spec.column = note.column
+      spec.keysound = note.keysound
+      spec.keysoundStart = note.keysoundStart
+      spec.keysoundEnd = note.keysoundEnd
+      this._updateDuration(spec)
+      if (note.endBeat !== undefined) {
+        spec.end = this._generateEvent(note.endBeat)
+        this._updateDuration(spec.end)
+      } else {
+        spec.end = undefined
+      }
+      return new GameNote(spec)
+    })
   }
 
   _updateDuration (event) {
@@ -208,15 +248,13 @@ export class Notechart {
   }
 
   _generateAutoKeysoundEventsFromBMS (bmsNotes) {
-    return bmsNotes
-      .filter(note => !note.column)
-      .map(note => {
-        let spec = this._generateEvent(note.beat)
-        spec.keysound = note.keysound
-        spec.keysoundStart = note.keysoundStart
-        spec.keysoundEnd = note.keysoundEnd
-        return new GameEvent(spec)
-      })
+    return bmsNotes.filter(note => !note.column).map(note => {
+      let spec = this._generateEvent(note.beat)
+      spec.keysound = note.keysound
+      spec.keysoundStart = note.keysoundStart
+      spec.keysoundEnd = note.keysoundEnd
+      return new GameEvent(spec)
+    })
   }
 
   _generateKeysoundFiles (keysounds) {
@@ -258,3 +296,10 @@ function getKeys (bmsNotes) {
   }
   return '5K'
 }
+
+/**
+ * @typedef {Object} GameNoteCharacteristic
+ * @property {number} combos
+ *  The maximum amount of judgments this note may give. Usually it is 1
+ *  for normal notes and 2 for long notes.
+ */
