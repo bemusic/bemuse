@@ -1,5 +1,5 @@
 import assert from 'power-assert'
-import * as bmson from '../lib'
+import * as bmson from '../src'
 
 /* global describe, it */
 describe('bmson v1.0.0', function () {

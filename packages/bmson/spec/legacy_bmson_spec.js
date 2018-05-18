@@ -1,7 +1,7 @@
 import assert from 'power-assert'
 import BMS from 'bms'
 
-import * as bmson from '../lib'
+import * as bmson from '../src'
 
 /* global describe, it */
 describe('legacy bmson', function () {
