@@ -23,12 +23,12 @@ It is recommended to play this game on Google Chrome.
 
 <!-- toc -->
 
-- [Video Demo](#video-demo)
-- [Quick Tour](#quick-tour)
-- [Technology](#technology)
-- [Development](#development)
-- [Sub-projects](#sub-projects)
-- [License](#license)
+* [Video Demo](#video-demo)
+* [Quick Tour](#quick-tour)
+* [Technology](#technology)
+* [Development](#development)
+* [Sub-projects](#sub-projects)
+* [License](#license)
 
 <!-- tocstop -->
 
@@ -125,8 +125,11 @@ cd bemuse
 # Install the dependencies
 yarn
 
+# Prepare all sub-projects
+yarn lerna run prepare
+
 # Start development server
-npm start
+yarn start
 ```
 
 Note: Online ranking features are not available.
