@@ -1,4 +1,3 @@
-
 import Promise from 'bluebird'
 import co from 'co'
 import fs from 'fs'
@@ -17,10 +16,10 @@ let glob = Promise.promisify(require('glob'))
 
 function Cache (path) {
   let data = load()
-  let stream = fs.createWriteStream(path, { encoding: 'utf-8', 'flags': 'a' })
+  let stream = fs.createWriteStream(path, { encoding: 'utf-8', flags: 'a' })
 
   function load () {
-    let out = { }
+    let out = {}
     let text
     try {
       text = fs.readFileSync(path, 'utf-8')
@@ -65,9 +64,11 @@ export function index (path, { recursive }) {
     }
 
     let songs = []
-    let maxDirLength = _(Array.from(dirs.keys())).map('length').max()
+    let maxDirLength = _(Array.from(dirs.keys()))
+      .map('length')
+      .max()
     for (let [dir, files] of dirs) {
-      let filesToParse = [ ]
+      let filesToParse = []
 
       for (let file of files) {
         let buf = yield readFile(join(dir, file))
@@ -83,16 +84,22 @@ export function index (path, { recursive }) {
       song.id = dir
       song.path = dir
 
-      let levels = _(song.charts).sortBy(chart => chart.info.level).map(chart => {
-        let ch = chart.keys === '5K' ? chalk.gray
-          : chart.keys === '7K' ? chalk.green
-            : chart.keys === '10K' ? chalk.magenta
-              : chart.keys === '14K' ? chalk.red : chalk.inverse
-        return ch(chart.info.level)
-      })
+      let levels = _(song.charts)
+        .sortBy(chart => chart.info.level)
+        .map(chart => {
+          let ch =
+            chart.keys === '5K'
+              ? chalk.gray
+              : chart.keys === '7K'
+                ? chalk.green
+                : chart.keys === '10K'
+                  ? chalk.magenta
+                  : chart.keys === '14K' ? chalk.red : chalk.inverse
+          return ch(chart.info.level)
+        })
       console.log(
-        chalk.dim(_.padRight(dir, maxDirLength)),
-        chalk.yellow(_.padLeft(Math.round(song.bpm) + 'bpm', 7)),
+        chalk.dim(_.padEnd(dir, maxDirLength)),
+        chalk.yellow(_.padStart(Math.round(song.bpm) + 'bpm', 7)),
         chalk.cyan('[' + song.genre + ']'),
         song.artist + '-' + song.title,
         levels.join(' '),
@@ -112,7 +119,7 @@ export function index (path, { recursive }) {
 function getExtra (dir) {
   return co(function * () {
     let readme
-    let extra = { }
+    let extra = {}
     try {
       readme = yield readFile(join(dir, 'README.md'), 'utf-8')
       extra.readme = 'README.md'
@@ -122,7 +129,7 @@ function getExtra (dir) {
     if (readme !== null) {
       try {
         let meta = yaml.safeLoad(readme.substr(0, readme.indexOf('---', 3)))
-        extra = Object.assign({ }, meta, extra)
+        extra = Object.assign({}, meta, extra)
       } catch (e) {
         console.error(chalk.red('Unable to read metadata:'), '' + e)
       }

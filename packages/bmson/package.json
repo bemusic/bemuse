@@ -2,10 +2,10 @@
   "name": "bmson",
   "version": "4.0.0-0",
   "description": "BMSON support for Bemuse",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "scripts": {
     "prepare": "tsc",
-    "test": "gulp compile compile-spec && mocha"
+    "test": "nyc mocha -r ts-node/register spec"
   },
   "keywords": ["BMS", "Bemuse", "bmson"],
   "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
@@ -28,6 +28,6 @@
     "bms": "^2.0.0"
   },
   "dependencies": {
-    "lodash": "^3.10.1"
+    "lodash": "^4.17.10"
   }
 }

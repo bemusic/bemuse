@@ -1,5 +1,5 @@
 import { Speedcore } from '../speedcore'
-import { uniq, pluck } from '../util/lodash'
+import { uniq, map } from '../util/lodash'
 import { BMSChart } from '../bms/chart'
 
 var precedence = { bpm: 1, stop: 2 }
@@ -79,7 +79,7 @@ export class Timing {
     /**
      * @type {number[]}
      */
-    this._eventBeats = uniq(pluck(actions, 'beat'), true)
+    this._eventBeats = uniq(map(actions, 'beat'), true)
   }
 
   /**
