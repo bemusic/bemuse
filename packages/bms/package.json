@@ -1,9 +1,12 @@
 {
   "name": "bms",
-  "version": "3.0.0-0",
+  "version": "3.0.0-1",
   "description": "BMS Parser for JavaScript",
   "main": "./lib/index.js",
-  "files": ["src", "lib"],
+  "files": [
+    "src",
+    "lib"
+  ],
   "scripts": {
     "prepare": "rm -rf lib && tsc",
     "test": "nyc -r text -r lcov gulp test",
@@ -13,7 +16,9 @@
     "type": "git",
     "url": "git://github.com/bemusic/bms-js.git"
   },
-  "keywords": ["BMS"],
+  "keywords": [
+    "BMS"
+  ],
   "browser": {
     "./reader/index.js": "./reader/index.web.js"
   },

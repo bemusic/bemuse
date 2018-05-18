@@ -1,14 +1,21 @@
 {
   "name": "bmson",
-  "version": "4.0.0-0",
+  "version": "4.0.0-1",
   "description": "BMSON support for Bemuse",
   "main": "./lib/index.js",
-  "files": ["src", "lib"],
+  "files": [
+    "src",
+    "lib"
+  ],
   "scripts": {
     "prepare": "rm -rf lib && tsc",
     "test": "nyc -r text -r lcov mocha -r ts-node/register spec"
   },
-  "keywords": ["BMS", "Bemuse", "bmson"],
+  "keywords": [
+    "BMS",
+    "Bemuse",
+    "bmson"
+  ],
   "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
   "license": "MIT",
   "repository": {
