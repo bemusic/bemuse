@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "build": "gulp build",
+    "build:netlify": "./bin/netlify-build",
     "pre-deploy": "gulp pre-deploy",
     "codecov": "codecov",
     "build:ios": "cross-env NODE_ENV=ios gulp build",
