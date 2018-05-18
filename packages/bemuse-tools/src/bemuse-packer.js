@@ -44,7 +44,7 @@ export class BemusePacker {
           nums[ref.name] = num
           let out = ref.name + '.' + num + '.' + hash.substr(0, 8) + '.bemuse'
           refs.push({ path: out, hash: hash })
-          yield this._writeBin(join(folder, out), new Buffer(0), payload)
+          yield this._writeBin(join(folder, out), Buffer.alloc(0), payload)
           console.log(`Written ${out}`)
         }
         let metadata = { files, refs }
@@ -55,9 +55,9 @@ export class BemusePacker {
   }
   _writeBin (path, metadataBuffer, payload) {
     let file = createWriteStream(path)
-    let size = new Buffer(4)
+    let size = Buffer.alloc(4)
     size.writeUInt32LE(metadataBuffer.length, 0)
-    file.write(new Buffer('BEMUSEPACK'))
+    file.write(Buffer.from('BEMUSEPACK'))
     file.write(size)
     file.write(metadataBuffer)
     for (let buffer of payload.buffers) {

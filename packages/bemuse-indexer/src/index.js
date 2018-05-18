@@ -41,7 +41,7 @@ _extensions['.bms'] = function (source) {
 
 _extensions['.bmson'] = function (source) {
   return Promise.try(function () {
-    return new Buffer(source).toString('utf8')
+    return Buffer.from(source).toString('utf8')
   })
     .then(function (string) {
       return JSON.parse(string)

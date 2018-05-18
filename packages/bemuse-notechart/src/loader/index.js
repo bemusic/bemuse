@@ -1,13 +1,12 @@
-
 import BMS from 'bms'
 import * as BMSNotechartLoader from './BMSNotechartLoader'
 import * as BmsonNotechartLoader from './BmsonNotechartLoader'
 import Promise from 'bluebird'
 
-const coerceToBuffer = bufferOrArrayBuffer => (Buffer.isBuffer(bufferOrArrayBuffer)
-  ? bufferOrArrayBuffer
-  : new Buffer(new Uint8Array(bufferOrArrayBuffer))
-)
+const coerceToBuffer = bufferOrArrayBuffer =>
+  Buffer.isBuffer(bufferOrArrayBuffer)
+    ? bufferOrArrayBuffer
+    : Buffer.from(new Uint8Array(bufferOrArrayBuffer))
 
 export class NotechartLoader {
   load (arraybuffer, resource, options) {

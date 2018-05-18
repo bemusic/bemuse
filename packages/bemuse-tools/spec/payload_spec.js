@@ -10,8 +10,8 @@ describe('Payload', function () {
 
   describe('with 2 buffers added: "hello" and ", "', function () {
     beforeEach(() => {
-      payload.add(new Buffer('hello'))
-      payload.add(new Buffer(', '))
+      payload.add(Buffer.from('hello'))
+      payload.add(Buffer.from(', '))
     })
 
     it('should have size of 7', () => expect(payload.size).to.equal(7))
@@ -20,6 +20,6 @@ describe('Payload', function () {
       expect(payload.hash).to.equal('0b76896c047e4a9070813cfe8bdd83f5'))
 
     it('should return slicing for new buffers', () =>
-      expect(payload.add(new Buffer('world!'))).to.deep.equal([7, 13]))
+      expect(payload.add(Buffer.from('world!'))).to.deep.equal([7, 13]))
   })
 })

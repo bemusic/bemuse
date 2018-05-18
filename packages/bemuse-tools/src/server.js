@@ -94,8 +94,8 @@ function createSongServer (dir) {
 
 function streamFiles (dir, files, res) {
   let stream = Rx.Observable.concat([
-    Rx.Observable.just(new Buffer('BEMUSEPACK')),
-    Rx.Observable.just(new Buffer([0, 0, 0, 0])),
+    Rx.Observable.just(Buffer.from('BEMUSEPACK')),
+    Rx.Observable.just(Buffer.from([0, 0, 0, 0])),
     Rx.Observable.concat(files.map(file => streamFile(dir, file)))
   ])
   stream.subscribe(

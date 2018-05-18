@@ -1,4 +1,3 @@
-
 import Promise from 'bluebird'
 import co from 'co'
 import fs from 'fs'
@@ -27,77 +26,121 @@ export class AudioConvertor {
       return Promise.resolve(file)
     } else {
       let name = basename(file.name, ext) + '.' + this._target
-      return this._doConvert(file.path, this._target)
-        .then(buffer => file.derive(name, buffer))
+      return this._doConvert(file.path, this._target).then(buffer =>
+        file.derive(name, buffer)
+      )
     }
   }
   _doConvert (path, type) {
     if (type === 'm4a') {
-      return co(function * () {
-        let wav = yield this._SoX(path, 'wav')
-        let prefix = tmp()
-        let wavPath = prefix + '.wav'
-        let m4aPath = prefix + '.m4a'
-        yield writeFile(wavPath, wav)
-        if (process.platform.match(/^win/)) {
-          yield execFile('qaac', ['-o', m4aPath, '-c', '128', wavPath])
-        } else {
-          yield execFile('afconvert', [wavPath, m4aPath, '-f', 'm4af',
-            '-b', '128000', '-q', '127', '-s', '2'])
-        }
-        return yield readFile(m4aPath)
-      }.bind(this))
+      return co(
+        function * () {
+          let wav = yield this._SoX(path, 'wav')
+          let prefix = tmp()
+          let wavPath = prefix + '.wav'
+          let m4aPath = prefix + '.m4a'
+          yield writeFile(wavPath, wav)
+          if (process.platform.match(/^win/)) {
+            yield execFile('qaac', ['-o', m4aPath, '-c', '128', wavPath])
+          } else {
+            yield execFile('afconvert', [
+              wavPath,
+              m4aPath,
+              '-f',
+              'm4af',
+              '-b',
+              '128000',
+              '-q',
+              '127',
+              '-s',
+              '2'
+            ])
+          }
+          return yield readFile(m4aPath)
+        }.bind(this)
+      )
     } else {
       return this._SoX(path, type)
     }
   }
   _SoX (path, type) {
-    return co(function * () {
-      let typeArgs = [ ]
-      try {
-        let fd = yield Promise.promisify(fs.open, fs)(path, 'r')
-        let buffer = new Buffer(4)
-        let read = yield Promise.promisify(fs.read, fs)(fd, buffer, 0, 4, null)
-        yield Promise.promisify(fs.close, fs)(fd)
-        if (read === 0) {
-          console.error('[WARN] Empty keysound file.')
-        } else if (buffer[0] === 0x49 && buffer[1] === 0x44 && buffer[2] === 0x33) {
-          typeArgs = [ '-t', 'mp3' ]
-        } else if (buffer[0] === 0xFF && buffer[1] === 0xFB) {
-          typeArgs = [ '-t', 'mp3' ]
-        } else if (buffer[0] === 0x4F && buffer[1] === 0x67 && buffer[2] === 0x67 && buffer[3] === 0x53) {
-          typeArgs = [ '-t', 'ogg' ]
+    return co(
+      function * () {
+        let typeArgs = []
+        try {
+          let fd = yield Promise.promisify(fs.open, fs)(path, 'r')
+          let buffer = Buffer.alloc(4)
+          let read = yield Promise.promisify(fs.read, fs)(
+            fd,
+            buffer,
+            0,
+            4,
+            null
+          )
+          yield Promise.promisify(fs.close, fs)(fd)
+          if (read === 0) {
+            console.error('[WARN] Empty keysound file.')
+          } else if (
+            buffer[0] === 0x49 &&
+            buffer[1] === 0x44 &&
+            buffer[2] === 0x33
+          ) {
+            typeArgs = ['-t', 'mp3']
+          } else if (buffer[0] === 0xff && buffer[1] === 0xfb) {
+            typeArgs = ['-t', 'mp3']
+          } else if (
+            buffer[0] === 0x4f &&
+            buffer[1] === 0x67 &&
+            buffer[2] === 0x67 &&
+            buffer[3] === 0x53
+          ) {
+            typeArgs = ['-t', 'ogg']
+          }
+        } catch (e) {
+          console.error('[WARN] Unable to detect file type!')
         }
-      } catch (e) {
-        console.error('[WARN] Unable to detect file type!')
-      }
-      return yield this._doSoX(path, type, typeArgs)
-    }.bind(this))
+        return yield this._doSoX(path, type, typeArgs)
+      }.bind(this)
+    )
   }
   _doSoX (path, type, inputTypeArgs) {
-    return throat(() => new Promise((resolve, reject) => {
-      let sox = spawn('sox', [...inputTypeArgs, path, '-t', type, ...this._extra, '-'])
-      sox.stdin.end()
-      sox.stderr.on('data', x => process.stderr.write(x))
-      let data = new Promise((resolve, reject) => {
-        sox.stdout.pipe(endpoint((err, buffer) => {
-          if (err) {
-            console.error('Error reading audio!')
-            reject(err)
-          } else {
-            resolve(buffer)
-          }
-        }))
-      })
-      sox.on('close', (code) => {
-        if (code === 0) {
-          resolve(data)
-        } else {
-          console.error('Unable to convert audio file -- SoX exited ' + code)
-          reject(new Error('SoX process exited: ' + code))
-        }
-      })
-    }))
+    return throat(
+      () =>
+        new Promise((resolve, reject) => {
+          let sox = spawn('sox', [
+            ...inputTypeArgs,
+            path,
+            '-t',
+            type,
+            ...this._extra,
+            '-'
+          ])
+          sox.stdin.end()
+          sox.stderr.on('data', x => process.stderr.write(x))
+          let data = new Promise((resolve, reject) => {
+            sox.stdout.pipe(
+              endpoint((err, buffer) => {
+                if (err) {
+                  console.error('Error reading audio!')
+                  reject(err)
+                } else {
+                  resolve(buffer)
+                }
+              })
+            )
+          })
+          sox.on('close', code => {
+            if (code === 0) {
+              resolve(data)
+            } else {
+              console.error(
+                'Unable to convert audio file -- SoX exited ' + code
+              )
+              reject(new Error('SoX process exited: ' + code))
+            }
+          })
+        })
+    )
   }
 }
 

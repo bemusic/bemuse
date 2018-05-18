@@ -1,4 +1,3 @@
-
 var expect = require('chai').expect
 var indexer = require('./')
 
@@ -7,21 +6,25 @@ require('./lcs_spec')
 
 describe('getFileInfo (bms)', function () {
   function info (source) {
-    return indexer.getFileInfo(new Buffer(source), { name: 'meow.bms' })
+    return indexer.getFileInfo(Buffer.from(source), { name: 'meow.bms' })
   }
 
   describe('.md5', function () {
     it('should return hash', function () {
-      return expect(info('').get('md5'))
-        .to.eventually.equal('d41d8cd98f00b204e9800998ecf8427e')
+      return expect(info('').get('md5')).to.eventually.equal(
+        'd41d8cd98f00b204e9800998ecf8427e'
+      )
     })
   })
 
   describe('.info', function () {
     it('should return song info', function () {
       var source = '#TITLE meow'
-      return expect(info(source).get('info').get('title'))
-        .to.eventually.equal('meow')
+      return expect(
+        info(source)
+          .get('info')
+          .get('title')
+      ).to.eventually.equal('meow')
     })
   })
 
@@ -53,18 +56,11 @@ describe('getFileInfo (bms)', function () {
       return expect(info(source).get('keys')).to.eventually.equal('empty')
     })
     it('should be 7K on normal chart', function () {
-      var source = [
-        '#00111:01',
-        '#00114:01',
-        '#00159:0101'
-      ].join('\n')
+      var source = ['#00111:01', '#00114:01', '#00159:0101'].join('\n')
       return expect(info(source).get('keys')).to.eventually.equal('7K')
     })
     it('should be 5K when 6th and 7th keys not detected', function () {
-      var source = [
-        '#00111:01',
-        '#00114:01'
-      ].join('\n')
+      var source = ['#00111:01', '#00114:01'].join('\n')
       return expect(info(source).get('keys')).to.eventually.equal('5K')
     })
     it('should be 14K on doubles chart', function () {
@@ -78,24 +74,20 @@ describe('getFileInfo (bms)', function () {
       ].join('\n')
       return expect(info(source).get('keys')).to.eventually.equal('14K')
     })
-    it('should be 10K when 2 players and ' +
-        '6th and 7th keys not detected', function () {
-      var source = [
-        '#00111:01',
-        '#00114:01',
-        '#00121:01',
-        '#00124:01'
-      ].join('\n')
-      return expect(info(source).get('keys')).to.eventually.equal('10K')
-    })
+    it(
+      'should be 10K when 2 players and ' + '6th and 7th keys not detected',
+      function () {
+        var source = ['#00111:01', '#00114:01', '#00121:01', '#00124:01'].join(
+          '\n'
+        )
+        return expect(info(source).get('keys')).to.eventually.equal('10K')
+      }
+    )
   })
 
   describe('.duration', function () {
     it('should be correct', function () {
-      var source = [
-        '#BPM 120',
-        '#00111:0101'
-      ].join('\n')
+      var source = ['#BPM 120', '#00111:0101'].join('\n')
       return expect(info(source).get('duration')).to.eventually.equal(3)
     })
   })
@@ -114,7 +106,11 @@ describe('getFileInfo (bms)', function () {
     var bpm
 
     beforeEach(function () {
-      return info(source).get('bpm').tap(function (x) { bpm = x })
+      return info(source)
+        .get('bpm')
+        .tap(function (x) {
+          bpm = x
+        })
     })
 
     it('init should be the BPM at first beat', function () {
@@ -135,29 +131,24 @@ describe('getFileInfo (bms)', function () {
 describe('getFileInfo (bmson)', function () {
   function info (bmson) {
     var source = JSON.stringify(bmson)
-    return indexer.getFileInfo(new Buffer(source), { name: 'meow.bmson' })
+    return indexer.getFileInfo(Buffer.from(source), { name: 'meow.bmson' })
   }
 
   describe('.info', function () {
     it('should return song info', function () {
-      return (
-        expect(info({ info: { title: 'Running Out' } })
+      return expect(
+        info({ info: { title: 'Running Out' } })
           .get('info')
           .get('title')
-        )
-          .to.eventually.equal('Running Out')
-      )
+      ).to.eventually.equal('Running Out')
     })
   })
 
   describe('.bga', function () {
     it('is undefined if no bga', function () {
-      return (
-        expect(info({ info: { title: 'Running Out' } })
-          .get('bga')
-        )
-          .to.eventually.equal(undefined)
-      )
+      return expect(
+        info({ info: { title: 'Running Out' } }).get('bga')
+      ).to.eventually.equal(undefined)
     })
     it('has timing ', function () {
       var bmsonData = {
@@ -167,17 +158,14 @@ describe('getFileInfo (bmson)', function () {
           init_bpm: 42
         },
         bga: {
-          bga_events: [ { id: 1, y: 240 } ],
-          bga_header: [ { id: 1, name: 'meow.mp4' } ]
+          bga_events: [{ id: 1, y: 240 }],
+          bga_header: [{ id: 1, name: 'meow.mp4' }]
         }
       }
-      return (
-        expect(info(bmsonData).get('bga'))
-          .to.eventually.deep.equal({
-            file: 'meow.mp4',
-            offset: 60 / 42
-          })
-      )
+      return expect(info(bmsonData).get('bga')).to.eventually.deep.equal({
+        file: 'meow.mp4',
+        offset: 60 / 42
+      })
     })
   })
 })
@@ -187,37 +175,42 @@ describe('getSongInfo', function () {
     var files = [
       {
         name: '01.bms',
-        data: new Buffer(
+        data: Buffer.from(
           '#TITLE meow [NORMAL]\n' +
             '#ARTIST lol\n' +
             '#PLAYLEVEL 5\n' +
             '#BPM 123\n' +
-            '#00111:1111')
+            '#00111:1111'
+        )
       },
       {
         name: '02.bms',
-        data: new Buffer(
+        data: Buffer.from(
           '#TITLE meow [HYPER]\n' +
             '#ARTIST lol\n' +
             '#PLAYLEVEL 7\n' +
             '#BPM 123\n' +
-            '#00111:1111')
+            '#00111:1111'
+        )
       },
       {
         name: '03.bms',
-        data: new Buffer(
+        data: Buffer.from(
           '#TITLE meow [ANOTHER]\n' +
             '#ARTIST lol\n' +
             '#PLAYLEVEL 12\n' +
             '#BPM 123\n' +
-            '#00111:1111')
+            '#00111:1111'
+        )
       }
     ]
 
     var song
 
     beforeEach(function () {
-      return indexer.getSongInfo(files).tap(function (x) { song = x })
+      return indexer.getSongInfo(files).tap(function (x) {
+        song = x
+      })
     })
 
     describe('title', function () {
@@ -231,8 +224,9 @@ describe('getSongInfo', function () {
       })
       it('should be overridable', function () {
         var options = { extra: { artist: 'meowmeow' } }
-        return expect(indexer.getSongInfo(files, options).get('artist'))
-          .to.eventually.equal('meowmeow')
+        return expect(
+          indexer.getSongInfo(files, options).get('artist')
+        ).to.eventually.equal('meowmeow')
       })
     })
     describe('charts', function () {
@@ -259,12 +253,10 @@ describe('getSongInfo', function () {
 
   describe('a song’s video', function () {
     it('is taken from an available bga in a chart', function () {
-      var charts = [
-        { },
-        { bga: { file: 'a.mp4', offset: 2 } },
-        { }
-      ]
-      expect(indexer._getSongVideoFromCharts(charts).video_file).to.equal('a.mp4')
+      var charts = [{}, { bga: { file: 'a.mp4', offset: 2 } }, {}]
+      expect(indexer._getSongVideoFromCharts(charts).video_file).to.equal(
+        'a.mp4'
+      )
       expect(indexer._getSongVideoFromCharts(charts).video_offset).to.equal(2)
     })
   })
