@@ -1,9 +1,0 @@
-#!/bin/sh -e
-
-PRE_COMMIT_HOOK=.git/hooks/pre-commit
-
-echo '#!/bin/sh -e' > $PRE_COMMIT_HOOK
-echo './node_modules/.bin/jshint src/*.js' >> $PRE_COMMIT_HOOK
-chmod +x $PRE_COMMIT_HOOK
-
-echo 'pre-commit hook installed!'

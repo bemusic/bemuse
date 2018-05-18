@@ -2,9 +2,9 @@
   "name": "bemuse-tools",
   "version": "3.0.0-0",
   "description": "bemuse-tools: Tools for Bemuse",
-  "main": "index.js",
+  "files": ["src", "lib", "bin"],
   "scripts": {
-    "test": "mocha -r ./spec/support/es6 spec/*_spec.js",
+    "test": "mocha -r ts-node/register spec/*_spec.js",
     "prepare": "tsc"
   },
   "bin": {
