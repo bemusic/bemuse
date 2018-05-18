@@ -6,7 +6,7 @@
   "files": ["src", "lib"],
   "scripts": {
     "prepare": "rm -rf lib && tsc",
-    "test": "nyc mocha -r ts-node/register spec"
+    "test": "nyc -r text -r lcov mocha -r ts-node/register spec"
   },
   "keywords": ["BMS", "Bemuse", "bmson"],
   "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",

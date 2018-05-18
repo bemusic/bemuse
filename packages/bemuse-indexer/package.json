@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "files": ["src", "lib"],
   "scripts": {
-    "test": "nyc mocha src/test.js -r ts-node/register",
+    "test": "nyc -r text -r lcov mocha src/test.js -r ts-node/register",
     "prepare": "rm -rf lib && tsc"
   },
   "repository": {

@@ -4,7 +4,7 @@
   "description": "bemuse-tools: Tools for Bemuse",
   "files": ["src", "lib", "bin"],
   "scripts": {
-    "test": "mocha -r ts-node/register spec/*_spec.js",
+    "test": "nyc -r text -r lcov mocha -r ts-node/register spec/*_spec.js",
     "prepare": "rm -rf lib && tsc"
   },
   "bin": {
