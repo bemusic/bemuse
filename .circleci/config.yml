@@ -34,8 +34,8 @@ jobs:
       - *bootstrap
       - *save_node_modules_cache
       - run:
-          name: test
-          command: yarn danger
+          name: danger
+          command: yarn danger ci
   test:
     working_directory: ~/bemuse
     environment:
@@ -60,9 +60,25 @@ jobs:
       - run:
           name: codecov
           command: yarn codecov
+  test_packages:
+    working_directory: ~/bemuse
+    environment:
+      FORCE_COLOR: '1'
+    docker:
+      - image: circleci/node:8-browsers
+    steps:
+      - run: sudo npm i -g lerna
+      - checkout
+      - *restore_node_modules_cache
+      - *bootstrap
+      - *save_node_modules_cache
+      - run:
+          name: lerna run test
+          command: lerna run test
 workflows:
   version: 2
   tests:
     jobs:
-      - test
       - lint
+      - test
+      - test_packages
