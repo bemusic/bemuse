@@ -2,6 +2,7 @@ var gulp = require('gulp')
 var mocha = require('gulp-mocha')
 var cucumber = require('gulp-cucumber')
 var fs = require('fs')
+var childProcess = require('child_process')
 
 var files = {
   specs: ['spec/**/*_spec.js'],
@@ -19,7 +20,7 @@ var files = {
     'util/*.js'
   ],
   get features () {
-    var home = process.env.BMSPEC_HOME
+    var home = process.env.BMSPEC_HOME || './bmspec'
     if (home === undefined) {
       console.error(
         'WARNING! BMSPEC_HOME is not set. BMSpec test suites will not be run!'
@@ -46,6 +47,23 @@ gulp.task('test:cucumber', function (callback) {
 
 gulp.task('test:mocha', function (callback) {
   return mochaTest(callback)
+})
+
+gulp.task('bmspec:update', async function () {
+  if (!fs.existsSync('bmspec')) {
+    console.log('* Cloning bmspec...')
+    childProcess.execSync(
+      `git clone https://github.com/bemusic/bms-spec.git bmspec`,
+      {
+        stdio: 'inherit'
+      }
+    )
+  } else {
+    console.log('* Updating bmspec...')
+    childProcess.execSync(`git pull`, {
+      stdio: 'inherit'
+    })
+  }
 })
 
 function mochaTest (callback) {

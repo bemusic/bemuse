@@ -6,7 +6,8 @@
   "files": ["src", "lib"],
   "scripts": {
     "prepare": "rm -rf lib && tsc",
-    "test": "nyc gulp test"
+    "test": "nyc gulp test",
+    "pretest": "gulp bmspec:update"
   },
   "repository": {
     "type": "git",
