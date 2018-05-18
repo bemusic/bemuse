@@ -21,9 +21,9 @@
   "homepage": "https://github.com/dtinth/bmson#readme",
   "devDependencies": {
     "bms": "^2.0.0",
-    "gulp": "^3.9.0",
-    "mocha": "^2.3.0",
-    "power-assert": "^1.1.0"
+    "gulp": "^3.9.1",
+    "mocha": "^5.1.1",
+    "power-assert": "^1.5.0"
   },
   "peerDependencies": {
     "bms": "^2.0.0"

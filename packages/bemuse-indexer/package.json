@@ -4,7 +4,7 @@
   "description": "Parse and index BMS notecharts",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "nyc mocha src/test.js -r ts-node/register",
     "prepare": "tsc"
   },
   "repository": {
@@ -18,16 +18,16 @@
   },
   "homepage": "https://github.com/bemusic/indexer",
   "dependencies": {
-    "bluebird": "^2.9.25",
+    "bluebird": "^3.5.1",
     "bms": "^2.0.0",
     "bmson": "^3.1.0",
-    "invariant": "^2.1.0",
-    "lodash": "^3.8.0",
-    "object-assign": "^2.0.0"
+    "invariant": "^2.2.4",
+    "lodash": "^4.17.10",
+    "object-assign": "^4.1.1"
   },
   "devDependencies": {
-    "chai": "^2.3.0",
-    "chai-as-promised": "^5.0.0",
-    "mocha": "^2.2.5"
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^5.1.1"
   }
 }
