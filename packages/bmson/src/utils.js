@@ -1,4 +1,3 @@
-
 import _ from 'lodash'
 
 // Private: Takes the notes for a certain `soundChannel` and returns instructions

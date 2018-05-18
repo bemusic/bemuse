@@ -3,10 +3,91 @@ import * as BMS from 'bms'
 import * as legacy from './legacy'
 import * as utils from './utils'
 
-// Public: Returns a BMS.SongInfo corresponding to this BMS file.
-//
-// * `bmson` The bmson object
-//
+/**
+ * @typedef {Object} Bmson
+ * @property {string} version bmson version
+ * @property {BmsonInfo} info information, e.g. title, artist, …
+ * @property {BarLine[]?} lines location of bar-lines in pulses
+ * @property {BpmEvent[]?} bpm_events bpm changes
+ * @property {StopEvent[]?} stop_events stop events
+ * @property {SoundChannel[]} sound_channels note data
+ * @property {BGA} bga bga data
+ */
+
+/**
+ * @typedef {Object} BmsonInfo
+ * @property {string} title
+ * @property {string} [subtitle=""]
+ * @property {string} artist
+ * @property {string[]} [subartists=[]] ["key:value"]
+ * @property {string} genre
+ * @property {string} [mode_hint="beat-7k"] layout hints, e.g. "beat-7k", "popn-5k", "generic-nkeys"
+ * @property {string} chart_name // e.g. "HYPER", "FOUR DIMENSIONS"
+ * @property {number} level
+ * @property {double} init_bpm
+ * @property {double} [judge_rank=100] relative judge width
+ * @property {double} [total=100] relative life bar gain
+ * @property {string} [back_image] background image filename
+ * @property {string} [eyecatch_image] eyecatch image filename
+ * @property {string} [banner_image] banner image filename
+ * @property {string} [preview_music] preview music filename
+ * @property {number} [resolution=240] pulses per quarter note
+ */
+
+/**
+ * [A bmson Bar Line](http://bmson-spec.readthedocs.io/en/master/doc/index.html#time-signatures),
+ * used for time signature
+ * @typedef {Object} BarLine
+ * @property {number} y the pulse number
+ */
+
+/**
+ * [bmson Sound Channel](http://bmson-spec.readthedocs.io/en/master/doc/index.html#sound-channels)
+ * @typedef {Object} SoundChannel
+ * @property {string} name sound file name
+ * @property {Note[]} notes notes using this sound
+ */
+/**
+ * @typedef {Object} Note
+ * @property {any} x lane
+ * @property {number} y pulse number
+ * @property {number} l length (0: normal note; greater than zero (length in pulses): long note)
+ * @property {number} c continuation flag
+ */
+
+/**
+ * @typedef {Object} BpmEvent
+ * @property {number} y pulse number
+ * @property {number} bpm
+ */
+/**
+ * @typedef {Object} StopEvent
+ * @property {number} y pulse number
+ * @property {number} duration number of pulses to stop
+ */
+/**
+ * [bmson BGA](http://bmson-spec.readthedocs.io/en/master/doc/index.html#bga-bga)
+ * @typedef {Object} BGA
+ * @property {BGAHeader[]} bga_header picture id and filename
+ * @property {BGAEvent[]} bga_events picture sequence
+ * @property {BGAEvent[]} layer_events picture sequence overlays bga_events
+ * @property {BGAEvent[]} poor_events picture sequence when missed
+ */
+/**
+ * @typedef {Object} BGAHeader
+ * @property {number} id
+ * @property {string} name picture file name
+ */
+/**
+ * @typedef {Object} BGAEvent
+ * @property {number} y
+ * @property {number} id corresponds to {BGAHeader}.id
+ */
+
+/**
+ * Returns a BMS.SongInfo corresponding to this BMS file.
+ * @param {Bmson} bmson
+ */
 export function songInfoForBmson (bmson) {
   const bmsonInfo = bmson.info
   let info = {}
@@ -31,10 +112,10 @@ export function songInfoForBmson (bmson) {
   }
 }
 
-// Public: Returns the barlines as an array of beats.
-//
-// * `bmson` The bmson object
-//
+/**
+ * Returns the barlines as an array of beats.
+ * @param {Bmson} bmson
+ */
 export function barLinesForBmson (bmson) {
   if (!bmson.version) return legacy.barLinesForBmson(bmson)
   let beatForPulse = beatForPulseForBmson(bmson)
@@ -45,11 +126,11 @@ export function barLinesForBmson (bmson) {
     .value()
 }
 
-// Public: Returns the information to be passed to BMS.Timing constructor
-// in order to generate the timing data represented by the `bmson` object.
-//
-// * `bmson` The bmson object
-//
+/**
+ * Returns the information to be passed to BMS.Timing constructor
+ * in order to generate the timing data represented by the `bmson` object.
+ * @param {Bmson} bmson
+ */
 export function timingInfoForBmson (bmson) {
   if (!bmson.version) return legacy.timingInfoForBmson(bmson)
   let beatForPulse = beatForPulseForBmson(bmson)
@@ -70,26 +151,19 @@ export function timingInfoForBmson (bmson) {
   }
 }
 
-// Private: Returns the timing data represented by the `bmson` object.
-//
-// * `bmson` The bmson object
-//
+/**
+ * Returns the timing data represented by the `bmson` object.
+ * @param {Bmson} bmson
+ */
 function timingForBmson (bmson) {
   let { initialBPM, actions } = timingInfoForBmson(bmson)
   return new BMS.Timing(initialBPM, actions)
 }
 
-// Public: Returns the musical score (comprised of BMS.Notes and BMS.Keysounds).
-//
-// * `bmson` The bmson object
-//
-// Returns an object with these properties:
-//
-// * `notes` A {BMS.Notes} representing notes inside the bmson notechart.
-// * `keysounds` A {BMS.Keysounds} representing mapping between keysound in the
-//   `notes` field to the actual keysound file name.
-// * `timing` The {BMS.Timing} object for this musical score.
-//
+/**
+ * Returns the musical score (comprised of BMS.Notes and BMS.Keysounds).
+ * @param {Bmson} bmson
+ */
 export function musicalScoreForBmson (bmson) {
   let timing = timingForBmson(bmson)
   let { notes, keysounds } = notesDataAndKeysoundsDataForBmsonAndTiming(
@@ -97,8 +171,18 @@ export function musicalScoreForBmson (bmson) {
     timing
   )
   return {
+    /**
+     * The {BMS.Timing} object for this musical score.
+     */
     timing,
+    /**
+     * A {BMS.Notes} representing notes inside the bmson notechart.
+     */
     notes: new BMS.Notes(notes),
+    /**
+     * A {BMS.Keysounds} representing mapping between keysound in the
+     * `notes` field to the actual keysound file name.
+     */
     keysounds: new BMS.Keysounds(keysounds)
   }
 }
@@ -153,12 +237,6 @@ export function beatForPulseForBmson (bmson) {
   return y => y / resolution
 }
 
-// Private: Takes the `x` coordinate value and returns the `column`.
-//
-// * `x` The {Number} representing the X position in a bmson chart.
-//
-// Returns a {String} representing the column that this note should be put on.
-//
 function getColumn (x) {
   switch (x) {
     case 1:
@@ -181,8 +259,10 @@ function getColumn (x) {
   return undefined
 }
 
-// Public: Checks if there is a scratch in a bmson file
-//
+/**
+ * Checks if there is a scratch in a bmson file
+ * @param {Bmson} bmson
+ */
 export function hasScratch (bmson) {
   const soundChannels = soundChannelsForBmson(bmson)
   if (soundChannels) {
@@ -195,8 +275,10 @@ export function hasScratch (bmson) {
   return false
 }
 
-// Public: Checks if there is a scratch in a bmson file
-//
+/**
+ * Checks the key mode for a bmson file
+ * @param {Bmson} bmson
+ */
 export function keysForBmson (bmson) {
   const soundChannels = soundChannelsForBmson(bmson)
   let hasKeys = false
