@@ -1,7 +1,7 @@
 import Promise from 'bluebird'
 import co from 'co'
-import { join } from 'path'
-import fs, { createWriteStream } from 'fs'
+import path from 'path'
+import fs from 'fs'
 import Payload from './payload'
 
 let writeFile = Promise.promisify(fs.writeFile, fs)
@@ -44,17 +44,20 @@ export class BemusePacker {
           nums[ref.name] = num
           let out = ref.name + '.' + num + '.' + hash.substr(0, 8) + '.bemuse'
           refs.push({ path: out, hash: hash })
-          yield this._writeBin(join(folder, out), Buffer.alloc(0), payload)
+          yield this._writeBin(path.join(folder, out), Buffer.alloc(0), payload)
           console.log(`Written ${out}`)
         }
         let metadata = { files, refs }
-        yield writeFile(join(folder, 'metadata.json'), JSON.stringify(metadata))
+        yield writeFile(
+          path.join(folder, 'metadata.json'),
+          JSON.stringify(metadata)
+        )
         console.log(`Written metadata.json`)
       }.bind(this)
     )
   }
   _writeBin (path, metadataBuffer, payload) {
-    let file = createWriteStream(path)
+    let file = fs.createWriteStream(path)
     let size = Buffer.alloc(4)
     size.writeUInt32LE(metadataBuffer.length, 0)
     file.write(Buffer.from('BEMUSEPACK'))
