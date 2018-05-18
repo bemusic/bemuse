@@ -9,20 +9,17 @@ sidebar_label: Music Server
 <p>This section is under construction.</p>
 </div>
 
-Bemuse comes with a default music server to help new players get
-started. This default music server contains a selection of songs that I
-think are really nice. You can also run your own music server and play
-it in Bemuse. This page describes how you can do it.
+Bemuse comes with a default music server to help new players get started. This default music server contains a selection of songs that I think are really nice. You can also run your own music server and play it in Bemuse. This page describes how you can do it.
 
-This page assumes some knowledge about using the command line and web hosting.
+This guide is valid for all major operating systems (Windows, Linux, or macOS), and assumes some knowledge about using the command line and web hosting.
 
 ## Prerequisites
 
 ### macOS
 
-- [Homebrew](http://brew.sh/)
-- [Node.js](https://nodejs.org/)
-- [SoX](http://sox.sourceforge.net/): `brew install sox --with-libvorbis`
+* [Homebrew](http://brew.sh/)
+* [Node.js](https://nodejs.org/)
+* [SoX](http://sox.sourceforge.net/): `brew install sox --with-libvorbis`
 
 #### Prerequisite Check
 
@@ -49,10 +46,10 @@ $ sox --version
 
 ### Windows
 
-- [Node.js](https://nodejs.org/)
-- [SoX](http://sox.sourceforge.net/): Download from http://sourceforge.net/projects/sox/files/sox/
-- [QuickTime Player](http://www.apple.com/quicktime/download/) or [iTunes](http://www.apple.com/itunes/download/)
-- [qaac](https://sites.google.com/site/qaacpage/)
+* [Node.js](https://nodejs.org/)
+* [SoX](http://sox.sourceforge.net/): Download from http://sourceforge.net/projects/sox/files/sox/
+* [QuickTime Player](http://www.apple.com/quicktime/download/) or [iTunes](http://www.apple.com/itunes/download/)
+* [qaac](https://sites.google.com/site/qaacpage/)
 
 #### Installation
 
@@ -112,7 +109,7 @@ PS> sox --version
 PS> qaac
 # qaac 2.47
 # Usage: qaac [options] infiles....
-# 
+#
 # ...
 # ...
 # ...
@@ -124,7 +121,6 @@ A music server is simply a web server that hosts the files in a specific
 structure, which allows Bemuse to find the list of songs and the song
 data. A Bemuse music server has the following structure:
 
-
     (root of the server)
     ├── index.cache
     ├── index.json
@@ -135,39 +131,25 @@ data. A Bemuse music server has the following structure:
             ├── metadata.json
             └── (something).bemuse
 
-
 ### `index.json`
 
-This file holds the list of all available songs and charts in this
-server. It also includes some metadata information.
+This file holds the list of all available songs and charts in this server. It also includes some metadata information.
 
-When entering the game, Bemuse will download this file to create the
-song list that you see in the music selection screen.
+When entering the game, Bemuse will download this file to create the song list that you see in the music selection screen.
 
 ### Song directory
 
-Besides the `index.json` file is a song directory. This directory
-contains the BMS files and the assets folder, a **Bemuse assets
-package**.
+Besides the `index.json` file is a song directory. This directory contains the BMS files and the assets folder, a **Bemuse assets package**.
 
-This file is generated using the Bemuse tools, which we will cover in
-the next section.
+This file is generated using the Bemuse tools, which we will cover in the next section.
 
 ### Bemuse assets package
 
-Usually, a BMS package will come with hundreds (or even thousands) of
-sound files (the keysounds). It is not suitable for serving over the
-web. Sometimes, they are `.wav` files and usually, they are `.ogg`
-files. Wave files are too large, and not all browsers can play OGG
-files.
+Usually, a BMS package will come with hundreds (or even thousands) of sound files (the keysounds). It is not suitable for serving over the web. Sometimes, they are `.wav` files and usually, they are `.ogg` files. Wave files are too large, and not all browsers can play OGG files.
 
-A Bemuse asset package contains the keysounds in OGG and M4A format,
-because most browsers can play these file formats. These sound files are
-grouped together into multiple parts. Each part is approximately 1.4 MB
-large.
+A Bemuse asset package contains the keysounds in OGG and M4A format, because most browsers can play these file formats. These sound files are grouped together into multiple parts. Each part is approximately 1.4 MB large.
 
-The Bemuse assets package is also generated using the Bemuse tools,
-which we will cover in the next section.
+The Bemuse assets package is also generated using the Bemuse tools, which we will cover in the next section.
 
 ## Install Bemuse Tools
 
@@ -220,7 +202,7 @@ Extract your BMS files into a folder. One song per folder. For example:
 
 ## Creating Bemuse Packages
 
-Normally, a BMS package comes in `.rar` or `.zip `format. Inside that package, there are few BMS files and hundreds of sound files.
+Normally, a BMS package comes in `.rar` or `.zip`format. Inside that package, there are few BMS files and hundreds of sound files.
 
 It's not practical to extract `.rar` or `.zip` files in the browser. It's also not practical to download hundreds of small files (very slow).
 
@@ -239,7 +221,7 @@ PS> bemuse-tools pack 'Lapis - SHIKI'
 # -> Loading audios
 # -> Loading movies
 # -> Loading and converting images
-# 
+#
 # -> Converting audio to ogg [better audio performance]
 # .....................................................................................................
 # ..................................................
@@ -288,7 +270,7 @@ Now, the client needs to know what songs are available in the server. You need t
 
 ```powershell
 PS> bemuse-tools index
-# 
+#
 # Absurd Gaff - siromaru       160bpm [schranz] siromaru / BMSSP-Absurd Gaff 3 6 8 10 10 21 [no-meta]
 # ametsuchi - stereoberry      122bpm [discopunk / shoegazer] stereoberry / BMSSP-ametsuchi 1 3 5 5 8 [no-meta]
 # atonement you you - unknown  197bpm [NO GENRE] Unknown Artist / BMSSP-atonement you you 4 6 [no-meta]
@@ -308,7 +290,6 @@ After running, you will see these `index.json` and `index.cache` appear in your 
     │   ...
     ├── index.cache
     └── index.json
-
 
 ## Hosting
 
