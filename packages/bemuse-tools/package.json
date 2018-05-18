@@ -1,8 +1,12 @@
 {
   "name": "bemuse-tools",
-  "version": "3.0.0-2",
+  "version": "3.0.0-3",
   "description": "bemuse-tools: Tools for Bemuse",
-  "files": ["src", "lib", "bin"],
+  "files": [
+    "src",
+    "lib",
+    "bin"
+  ],
   "scripts": {
     "test": "nyc -r text -r lcov mocha -r ts-node/register spec/*_spec.js",
     "prepare": "rm -rf lib && tsc"
