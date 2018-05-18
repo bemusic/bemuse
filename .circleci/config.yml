@@ -75,6 +75,9 @@ jobs:
       - run:
           name: lerna run test
           command: lerna run test
+      - run:
+          name: codecov
+          command: yarn codecov
 workflows:
   version: 2
   tests:
