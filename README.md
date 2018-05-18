@@ -23,11 +23,12 @@ It is recommended to play this game on Google Chrome.
 
 <!-- toc -->
 
-* [Video Demo](#video-demo)
-* [Quick Tour](#quick-tour)
-* [Technology](#technology)
-* [Development](#development)
-* [License](#license)
+- [Video Demo](#video-demo)
+- [Quick Tour](#quick-tour)
+- [Technology](#technology)
+- [Development](#development)
+- [Sub-projects](#sub-projects)
+- [License](#license)
 
 <!-- tocstop -->
 
