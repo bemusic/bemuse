@@ -1,5 +1,4 @@
-
-var bms = require('../..')
+var bms = require('../../lib')
 
 var Compiler = bms.Compiler
 var Timing = bms.Timing
@@ -13,7 +12,7 @@ module.exports = function () {
   var World = this.World
 
   World.plug(function () {
-    this.parseOptions = { }
+    this.parseOptions = {}
   })
 
   World.prototype.parseBMS = function (string) {
