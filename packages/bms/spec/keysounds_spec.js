@@ -1,4 +1,5 @@
 var { Keysounds } = require('../lib')
+const { expect } = require('chai')
 
 describe('Keysounds', function () {
   describe('#files', function () {

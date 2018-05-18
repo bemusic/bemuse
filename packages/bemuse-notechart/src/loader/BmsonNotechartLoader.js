@@ -1,6 +1,5 @@
 import * as bmson from 'bmson'
-
-import BMS from 'bms'
+import * as BMS from 'bms'
 
 import Notechart from '../'
 
@@ -15,12 +14,11 @@ export function load (source, options) {
     timing: score.timing,
     keysounds: score.keysounds,
     songInfo,
-    positioning: new BMS.Positioning([
-      { t: 0, x: 0, dx: 1, inclusive: true }
-    ]),
-    spacing: new BMS.Spacing([ ]),
+    positioning: new BMS.Positioning([{ t: 0, x: 0, dx: 1, inclusive: true }]),
+    spacing: new BMS.Spacing([]),
     barLines,
-    images: { // HACK: Hardcoded here, probably should belong in bmson package
+    images: {
+      // HACK: Hardcoded here, probably should belong in bmson package
       eyecatch: data.info.eyecatch_image,
       background: data.info.back_image
     },
@@ -31,10 +29,11 @@ export function load (source, options) {
 }
 
 function getExpertJudgmentWindowForBmson (data) {
-  const judgeRank = (() => {
-    if (!data.info) return 100
-    if (!data.info.judge_rank) return 100
-    return +data.info.judge_rank || 100
-  })() / 100
-  return [ 18 * judgeRank, 40 * judgeRank ]
+  const judgeRank =
+    (() => {
+      if (!data.info) return 100
+      if (!data.info.judge_rank) return 100
+      return +data.info.judge_rank || 100
+    })() / 100
+  return [18 * judgeRank, 40 * judgeRank]
 }

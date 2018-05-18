@@ -1,4 +1,4 @@
-import BMS from 'bms'
+import * as BMS from 'bms'
 import * as BMSNotechartLoader from './BMSNotechartLoader'
 import * as BmsonNotechartLoader from './BmsonNotechartLoader'
 import Promise from 'bluebird'

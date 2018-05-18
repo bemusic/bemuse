@@ -1,4 +1,5 @@
 var { Compiler, Notes } = require('../lib')
+const { expect } = require('chai')
 
 describe('Notes', function () {
   it('should be able to process normal notes', function () {

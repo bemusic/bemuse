@@ -1,6 +1,7 @@
 var { Reader } = require('../lib')
 var fs = require('fs')
 var path = require('path')
+const { expect } = require('chai')
 
 function fixture (name) {
   return fs.readFileSync(path.resolve(__dirname, 'fixtures/' + name))

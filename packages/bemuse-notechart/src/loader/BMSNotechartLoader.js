@@ -1,5 +1,4 @@
-
-import BMS from 'bms'
+import * as BMS from 'bms'
 import _ from 'lodash'
 import Notechart from '../'
 
@@ -28,15 +27,15 @@ export function fromBMSChart (bms, playerOptions) {
 function getJudgmentWindowFromBMS (bms) {
   // http://hitkey.nekokan.dyndns.info/diary1501.php
   const rank = +bms.headers.get('rank') || 2
-  if (rank === 0) return [ 8, 24 ] // Very Hard
-  if (rank === 1) return [ 15, 30 ] // Hard
-  if (rank === 3) return [ 21, 60 ] // Easy
-  return [ 18, 40 ] // Normal
+  if (rank === 0) return [8, 24] // Very Hard
+  if (rank === 1) return [15, 30] // Hard
+  if (rank === 3) return [21, 60] // Easy
+  return [18, 40] // Normal
 }
 
 function generateBarLinesFromBMS (bmsNotes, bms) {
   let max = _.max(bmsNotes.map(note => note.endBeat || note.beat))
-  let barLines = [ 0 ]
+  let barLines = [0]
   let currentBeat = 0
   let currentMeasure = 0
   do {

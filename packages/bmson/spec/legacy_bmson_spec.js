@@ -1,5 +1,5 @@
 import assert from 'power-assert'
-import BMS from 'bms'
+import * as BMS from 'bms'
 
 import * as bmson from '../src'
 

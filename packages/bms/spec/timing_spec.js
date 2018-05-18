@@ -1,4 +1,5 @@
 var { Timing, Compiler } = require('../lib')
+const { expect } = require('chai')
 
 describe('Timing', function () {
   function case1 () {
