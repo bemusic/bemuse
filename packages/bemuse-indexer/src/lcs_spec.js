@@ -1,6 +1,5 @@
-
-var lcs = require('./lcs')
-var expect = require('chai').expect
+import { lcs } from './lcs'
+import { expect } from 'chai'
 
 describe('lcs', function () {
   it('should find longest common substring', function () {

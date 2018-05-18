@@ -1,18 +1,21 @@
+import _ from 'lodash'
 
-var _ = require('lodash')
-
-function getBpmInfo (notes, timing) {
-  var maxBeat = _(notes.all()).pluck('beat').max()
+export function getBpmInfo (notes, timing) {
+  var maxBeat = _(notes.all())
+    .map('beat')
+    .max()
   var beats = _(timing.getEventBeats())
     .concat([0, maxBeat])
     .sortBy()
     .uniq()
-    .filter(function (beat) { return beat <= maxBeat })
+    .filter(function (beat) {
+      return beat <= maxBeat
+    })
     .value()
-  var data = [ ]
+  var data = []
   for (var i = 0; i + 1 < beats.length; i++) {
-    var length = timing.beatToSeconds(beats[i + 1]) -
-                    timing.beatToSeconds(beats[i])
+    var length =
+      timing.beatToSeconds(beats[i + 1]) - timing.beatToSeconds(beats[i])
     var bpm = timing.bpmAtBeat(beats[i])
     data.push([bpm, length])
   }
@@ -25,11 +28,9 @@ function getBpmInfo (notes, timing) {
   }
 }
 
-module.exports = getBpmInfo
-
 function percentile (data) {
   data = _.sortBy(data, 0)
-  var total = _.sum(data, 1)
+  var total = _.sumBy(data, 1)
   return function (percentileNo) {
     var current = 0
     for (var i = 0; i < data.length; i++) {

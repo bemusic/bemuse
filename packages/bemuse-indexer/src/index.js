@@ -1,29 +1,34 @@
+import { createHash } from 'crypto'
+import { Reader, Compiler, SongInfo, Notes, Timing } from 'bms'
+import {
+  songInfoForBmson,
+  musicalScoreForBmson,
+  hasScratch as bmsonHasScratch,
+  keysForBmson
+} from 'bmson'
+import Promise from 'bluebird'
+import _ from 'lodash'
+import assign from 'object-assign'
+import { extname } from 'path'
+import invariant from 'invariant'
 
-var createHash = require('crypto').createHash
-var bms = require('bms')
-var bmson = require('bmson')
-var Promise = require('bluebird')
-var _ = require('lodash')
-var assign = require('object-assign')
-var extname = require('path').extname
-var invariant = require('invariant')
+import { lcs } from './lcs'
+import { getKeys } from './keys'
+import { getBpmInfo } from './bpm-info'
+import { getDuration } from './duration'
+import { getBmsonBga } from './bmson-bga'
 
-var lcs = require('./lcs')
-var getKeys = require('./keys')
-var getBpmInfo = require('./bpm-info')
-var getDuration = require('./duration')
-var getBmsonBga = require('./bmson-bga')
+var readBMS = Promise.promisify(Reader.readAsync, Reader)
 
-var readBMS = Promise.promisify(bms.Reader.readAsync, bms.Reader)
+const _extensions = {}
+export { _extensions as extensions }
 
-exports.extensions = { }
-
-exports.extensions['.bms'] = function (source) {
+_extensions['.bms'] = function (source) {
   return readBMS(source).then(function (str) {
-    var chart = bms.Compiler.compile(str).chart
-    var info = bms.SongInfo.fromBMSChart(chart)
-    var notes = bms.Notes.fromBMSChart(chart)
-    var timing = bms.Timing.fromBMSChart(chart)
+    var chart = Compiler.compile(str).chart
+    var info = SongInfo.fromBMSChart(chart)
+    var notes = Notes.fromBMSChart(chart)
+    var timing = Timing.fromBMSChart(chart)
     return {
       info: info,
       notes: notes,
@@ -34,119 +39,129 @@ exports.extensions['.bms'] = function (source) {
   })
 }
 
-exports.extensions['.bmson'] = function (source) {
-  return (
-    Promise.try(function () {
-      return new Buffer(source).toString('utf8')
+_extensions['.bmson'] = function (source) {
+  return Promise.try(function () {
+    return new Buffer(source).toString('utf8')
+  })
+    .then(function (string) {
+      return JSON.parse(string)
     })
-      .then(function (string) {
-        return JSON.parse(string)
-      })
-      .then(function (object) {
-        var info = bmson.songInfoForBmson(object)
-        var ms = bmson.musicalScoreForBmson(object)
-        var notes = ms.notes
-        var timing = ms.timing
-        var bga = getBmsonBga(object, { timing: timing })
-        return {
-          info: info,
-          notes: notes,
-          timing: timing,
-          scratch: bmson.hasScratch(object),
-          keys: bmson.keysForBmson(object),
-          bga: bga
-        }
-      })
-  )
+    .then(function (object) {
+      var info = songInfoForBmson(object)
+      var ms = musicalScoreForBmson(object)
+      var notes = ms.notes
+      var timing = ms.timing
+      var bga = getBmsonBga(object, { timing: timing })
+      return {
+        info: info,
+        notes: notes,
+        timing: timing,
+        scratch: bmsonHasScratch(object),
+        keys: keysForBmson(object),
+        bga: bga
+      }
+    })
 }
 
 function getFileInfo (data, meta, options) {
-  options = options || { }
+  options = options || {}
   invariant(typeof meta.name === 'string', 'meta.name must be a string')
 
-  var extensions = options.extensions || exports.extensions
-  var extension = extensions[extname(meta.name).toLowerCase()] || extensions['.bms']
+  var extensions = options.extensions || _extensions
+  var extension =
+    extensions[extname(meta.name).toLowerCase()] || extensions['.bms']
 
-  var md5 = meta.md5 || (function () {
-    var hash = createHash('md5')
-    hash.update(data)
-    return hash.digest('hex')
-  }())
+  var md5 =
+    meta.md5 ||
+    (function () {
+      var hash = createHash('md5')
+      hash.update(data)
+      return hash.digest('hex')
+    })()
 
-  return (
-    extension(data, meta, options)
-      .then(function (basis) {
-        invariant(basis.info, 'basis.info must be a BMS.SongInfo')
-        invariant(basis.notes, 'basis.notes must be a BMS.Notes')
-        invariant(basis.timing, 'basis.timing must be a BMS.Timing')
-        invariant(typeof basis.scratch === 'boolean', 'basis.scratch must be a boolean')
-        invariant(typeof basis.keys === 'string', 'basis.scratch must be a string')
+  return extension(data, meta, options).then(function (basis) {
+    invariant(basis.info, 'basis.info must be a BMS.SongInfo')
+    invariant(basis.notes, 'basis.notes must be a BMS.Notes')
+    invariant(basis.timing, 'basis.timing must be a BMS.Timing')
+    invariant(
+      typeof basis.scratch === 'boolean',
+      'basis.scratch must be a boolean'
+    )
+    invariant(typeof basis.keys === 'string', 'basis.scratch must be a string')
 
-        var info = basis.info
-        var notes = basis.notes
-        var timing = basis.timing
-        var count = notes.all().filter(noteIsPlayable).length
+    var info = basis.info
+    var notes = basis.notes
+    var timing = basis.timing
+    var count = notes.all().filter(noteIsPlayable).length
 
-        return {
-          md5: md5,
-          info: info,
-          noteCount: count,
-          bpm: getBpmInfo(notes, timing),
-          duration: getDuration(notes, timing),
-          scratch: basis.scratch,
-          keys: basis.keys,
-          bga: basis.bga
-        }
-      })
-  )
+    return {
+      md5: md5,
+      info: info,
+      noteCount: count,
+      bpm: getBpmInfo(notes, timing),
+      duration: getDuration(notes, timing),
+      scratch: basis.scratch,
+      keys: basis.keys,
+      bga: basis.bga
+    }
+  })
 }
 
-exports.getFileInfo = getFileInfo
+const _getFileInfo = getFileInfo
+export { _getFileInfo as getFileInfo }
 
 function getSongInfo (files, options) {
-  options = options || { }
+  options = options || {}
   var warnings = []
   var cache = options.cache || undefined
-  var extra = options.extra || { }
-  var report = options.onProgress || function () { }
-  var onError = options.onError || function (e, name) {
-    if (global.console && console.error) {
-      console.error('Error while parsing ' + name, e)
+  var extra = options.extra || {}
+  var report = options.onProgress || function () {}
+  var onError =
+    options.onError ||
+    function (e, name) {
+      if (global.console && console.error) {
+        console.error('Error while parsing ' + name, e)
+      }
     }
-  }
   var processed = 0
   var doGetFileInfo = options.getFileInfo || getFileInfo
-  return Promise.map(files, function (file) {
-    var name = file.name
-    var data = file.data
-    var hash = createHash('md5')
-    hash.update(data)
-    var md5 = hash.digest('hex')
-    return Promise.resolve(cache && cache.get(md5))
-      .then(function (cached) {
-        if (cached) {
-          return cached
-        } else {
-          var meta = { name: name, md5: md5 }
-          return Promise.resolve(doGetFileInfo(data, meta, options)).tap(function (info) {
-            if (cache) return cache.put(md5, info)
-          })
-        }
-      })
-      .then(function (info) {
-        info.file = name
-        return [info]
-      })
-      .catch(function (e) {
-        onError(e, name)
-        warnings.push('Unable to parse ' + name + ': ' + e)
-        return []
-      })
-      .finally(function () {
-        processed += 1
-        report(processed, files.length, name)
-      })
-  }, { concurrency: 2 })
+  return Promise.map(
+    files,
+    function (file) {
+      var name = file.name
+      var data = file.data
+      var hash = createHash('md5')
+      hash.update(data)
+      var md5 = hash.digest('hex')
+      return Promise.resolve(cache && cache.get(md5))
+        .then(function (cached) {
+          if (cached) {
+            return cached
+          } else {
+            var meta = { name: name, md5: md5 }
+            return Promise.resolve(doGetFileInfo(data, meta, options)).tap(
+              function (info) {
+                if (cache) return cache.put(md5, info)
+              }
+            )
+          }
+        })
+        .then(function (info) {
+          info.file = name
+          return [info]
+        })
+        .catch(function (e) {
+          onError(e, name)
+          warnings.push('Unable to parse ' + name + ': ' + e)
+          return []
+        })
+        .finally(function () {
+          processed += 1
+          report(processed, files.length, name)
+        })
+    },
+    { concurrency: 2 }
+  )
     .then(_.flatten)
     .then(function (charts) {
       if (charts.length === 0) {
@@ -166,10 +181,11 @@ function getSongInfo (files, options) {
     })
 }
 
-exports.getSongInfo = getSongInfo
+const _getSongInfo = getSongInfo
+export { _getSongInfo as getSongInfo }
 
 function getSongVideoFromCharts (charts) {
-  var result = { }
+  var result = {}
   var chart = _.find(charts, 'bga')
   if (chart) {
     result.video_file = chart.bga.file
@@ -178,7 +194,7 @@ function getSongVideoFromCharts (charts) {
   return result
 }
 
-exports._getSongVideoFromCharts = getSongVideoFromCharts
+export const _getSongVideoFromCharts = getSongVideoFromCharts
 
 function noteIsPlayable (note) {
   return note.column !== undefined
@@ -201,6 +217,9 @@ function common (array, f) {
 }
 
 function median (array, f) {
-  var arr = _(array).map(f).sortBy().value()
+  var arr = _(array)
+    .map(f)
+    .sortBy()
+    .value()
   return arr[Math.floor(arr.length / 2)]
 }

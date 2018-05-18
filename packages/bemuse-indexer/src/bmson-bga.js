@@ -1,14 +1,13 @@
+import * as bmson from 'bmson'
 
-var bmson = require('bmson')
-
-module.exports = function getBmsonBga (object, options) {
+export function getBmsonBga (object, options) {
   if (!object.bga) return undefined
   if (!object.bga.bga_events) return undefined
   if (!object.bga.bga_header) return undefined
   if (!object.bga.bga_header.length) return undefined
   if (object.bga.bga_events.length !== 1) return undefined
 
-  var mapping = { }
+  var mapping = {}
   object.bga.bga_header.forEach(function (bgaHeader) {
     mapping[bgaHeader.id] = bgaHeader.name
   })
