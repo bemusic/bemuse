@@ -31,6 +31,11 @@ table tr th {
   font-family: $baseFont;
 }
 
+.container .wrapper h3 {
+  padding-top: 20px;
+  margin: 10px 0;
+}
+
 .container .wrapper .imageAlignSide p {
   text-align: left;
 }
