@@ -29,7 +29,7 @@
     "test": "cross-env NODE_ENV=test BEMUSE_COV=true gulp test",
     "test-bed": "cross-env NODE_ENV=test test-bed",
     "travis": "gulp travis",
-    "readme:toc": "markdown-toc -i README.md"
+    "readme:update": "markdown-toc -i README.md && prettier --write README.md"
   },
   "importSort": {
     ".js, .jsx, .es6, .es": {
