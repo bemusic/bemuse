@@ -2,6 +2,48 @@
 
 ## Unreleased
 
+This release mostly contains a lot of internal changes.
+
+**Internal changes**
+
+* **Gone monorepo.** 5 packages on `npm`: `bms`, `bmson`, `bemuse-notechart`,
+  `bemuse-indexer` and `bemuse-tools` now lives in this repository.
+
+* Updated Browserslist compatibility table according to blog post
+  [“‘last 2 versions’ considered harmful”](https://jamie.build/last-2-versions)
+  [#483]
+
+* Upgraded `auth0-js` due to security issue. [#485]
+
+* Improved developer guide for Windows users. [#487]
+
+### API Changes
+
+#### `bms@3.0.0`
+
+* [Breaking change] Use `lib` folder to refer to individual module.
+  `bms/speedcore` &rarr; `bms/lib/speedcore`
+* [New feature] Added support parsing `.dtx` files. [bemusic/bms-js#28]
+* [Internals] Modernized the source code and moved into `bemuse` repository.
+
+#### `bmson@4.0.0`
+
+* [Internals] Modernized the source code and moved into `bemuse` repository.
+
+#### `bemuse-notechart@2.0.0`
+
+* [Breaking change] Use `lib` folder to refer to individual module.
+  `bemuse-notechart/loader` &rarr; `bemuse-notechart/lib/loader`
+* [Internals] Modernized the source code and moved into `bemuse` repository.
+
+#### `bemuse-indexer@4.0.0`
+
+* [Internals] Modernized the source code and moved into `bemuse` repository.
+
+#### `bemuse-tools@3.0.0`
+
+* [Internals] Modernized the source code and moved into `bemuse` repository.
+
 ## v41 — New docs site, Latency calibration fixes, Chrome 66 support, IPFS support (2018-05-07)
 
 * **Fixed a bug that happens in Chrome 66** where a song wouldn’t start due to
@@ -12,24 +54,19 @@
     ~40ms.
 
 * **New documentation site.** The docs site for the Bemuse project can now be
-  found at https://bemuse.ninja/project/.
-  (https://github.com/bemusic/bemuse/pull/479 by @resir014)
+  found at https://bemuse.ninja/project/. [#479]
 
 * **Fixed a long-standing audio latency calibration bug** where it would cause
-  the game to go out of sync from the display.
-  (https://github.com/bemusic/bemuse/pull/474 by @dtinth)
+  the game to go out of sync from the display. [#474]
 
 * **Experimental support for IPFS.** Please read more info about this feature in
-  the issue linked afterwards. (https://github.com/bemusic/bemuse/pull/480 by
-  @dtinth)
+  the issue linked afterwards. [#480]
 
-* **UI updated for mobile devices.** (https://github.com/bemusic/bemuse/pull/478
-  by @dtinth)
+* **UI updated for mobile devices.** [#478]
 
 * **Internal changes**
 
-  * **Upgraded webpack** to v4. (https://github.com/bemusic/bemuse/pull/471 by
-    @resir014)
+  * **Upgraded webpack** to v4. [#471]
 
 ## v40 — Big update: 3D mode, 7 more songs, and other stuff! (2018-02-13)
 
@@ -477,8 +514,6 @@ possible to assign 2 keys to the turntable.**
 
 * Performance improvements in the music selection and options screen.
 
-[![Play now](https://cloud.githubusercontent.com/assets/193136/7686079/773df752-fdbd-11e4-8a9b-b1aaece1a6f8.png)](https://bemuse.ninja)
-
 ## v1.0.0-beta.16: 5-keys BMS support, deps update (2015-08-04)
 
 This release of Bemuse comes with support for 5-keys BMS.
@@ -562,13 +597,13 @@ feedback._
 ## v1.0.0-beta.13 — Offline Support (2015-06-18)
 
 This release brings offline support (and other small fixes). Now you can play
-Bemuse while ๆbeing completely offline.
+Bemuse while being completely offline.
 
 ### Offline Support
 
 Offline support is made possible through a new HTML5 technology,
 [Service Worker](http://www.html5rocks.com/en/tutorials/service-worker/introduction/),
-which allows web application to manage all network resouces
+which allows web application to manage all network resources
 ([and more](https://github.com/slightlyoff/ServiceWorker/blob/master/explainer.md#other-serviceworker-related-specifications)).
 
 * **HTTPS is Required** — Service workers
