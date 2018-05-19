@@ -596,7 +596,7 @@ stuff.
 
 ### New features
 
-* **\*5-keys BMS support added.**
+* **5-keys BMS support added.**
 
   This release of Bemuse allows playing of 5-keys BMS files. 5-keys BMS charts
   are highlighted in green.
