@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 'use strict'
 
 const React = require('react')
@@ -206,7 +207,7 @@ const FeatureTour = props => (
       image={
         <BrowserScreenshot
           alt='Screenshot'
-          src={imgUrl('screenshots/music-select.jpg')}
+          src={imgUrl('screenshots/music-server.png')}
         />
       }
       imageAlign='left'
