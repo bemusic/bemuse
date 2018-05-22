@@ -6,7 +6,9 @@ sidebar_label: Architecture
 
 This section describes the architecture of the project.
 
-## Directory Structure
+## Structure
+
+The Bemuse project is a **monorepo**. This means every package that shapes the project lives inside the same repository, which allows for easier development process.
 
 <dl>
   <dt>bin</dt>  
@@ -19,14 +21,13 @@ This section describes the architecture of the project.
   <dt>docs</dt>  
   <dd>This documentation.</dd>
 
+  <dt>packages</dt>  
+  <dd>Contains projects closely-related to the core Bemuse project. These are published into separate npm packages.</dd>
+
   <dt>public</dt>  
   <dd>Files that will be deployed verbatim to the server, **except for**
   `index.html`, where the boot script will be inlined. These include
   skin files.</dd>
-
-  <dt>spec</dt>  
-  <dd>Contains the unit tests. Its directory structure resembles the `src`
-  directory.</dd>
 
   <dt>src</dt>  
   <dd>Contains the production code. Code is split into *modules* for
@@ -34,6 +35,9 @@ This section describes the architecture of the project.
 
   <dt>tasks</dt>  
   <dd>Gulp tasks to run test server, build, test the application.</dd>
+
+  <dt>website</dt>  
+  <dd>The code that powers this documentation. We use <a href="https://docusaurus.io/">Docusaurus</a> to build our documentation as a static website.</dd>
 </dl>
 
 ## Important Modules
@@ -51,14 +55,14 @@ modules.
   executed. Main modules include <code>app</code>, the game, and <code>test</code>, the unit
   tests. Upon building, the boot script will be inlined into
   <code>index.html</code>.
-    
-  **Rationale:** No one likes blank white page. We want the user to
-  see the application starting up as soon as possible, even though it
-  is simply a loading indicator. To make this *blazingly fast*, we
-  keep the compiled size of the `boot` very small, and inline that
-  compiled code directly into the HTML file. So, no round-trip HTML
-  requests\! If they can load the HTML, they *will* see the loading
-  bar.</dd>
+
+**Rationale:** No one likes blank white page. We want the user to
+see the application starting up as soon as possible, even though it
+is simply a loading indicator. To make this _blazingly fast_, we
+keep the compiled size of the `boot` very small, and inline that
+compiled code directly into the HTML file. So, no round-trip HTML
+requests\! If they can load the HTML, they _will_ see the loading
+bar.</dd>
 
   <dt>app</dt>  
   <dd>This is the main module of the game's application flow. Executing
@@ -76,25 +80,17 @@ modules.
   for judging notes, calculating score, and rendering the scene.</dd>
 </dl>
 
-## Related Projects
+## Packages
 
-Apart from the `bemuse` project, we also maintain other closely-related
-projects in a separate repository.
+We also maintain other closely-related packages. These used to live in their own repository, but we've merged them into the main Bemuse repo for easier development.
 
 <dl>
-  <dt><a href="https://github.com/bemusic/bms-js">bemusic/bms-js</a></dt>  
-  <dd>This project is a BMS parser written in JavaScript. It is written in
-    plain ES5 for maximum portability.</dd>
+  <dt><a href="https://github.com/bemusic/bemuse/tree/master/packages/bms">bms-js</a></dt>  
+  <dd>This package is a BMS parser written in JavaScript.</dd>
 
-  <dt><a href="https://github.com/bemusic/bmspec">bemusic/bmspec</a></dt>  
-  <dd>This project is an executable specification of the BMS file format.
-  It is used to make sure that bms-js can properly parse BMS file
-  format, especially the edge cases.</dd>
+  <dt><a href="https://github.com/bemusic/bemuse/tree/master/packages/bmson">bmson</a></dt>  
+  <dd>This package contains various functions useful for working with bmson files.</dd>
 
-  <dt><a href="https://github.com/bemusic/bemuse-tools">bemusic/bemuse-tools</a></dt>  
-  <dd>This repository contains the command-line tools needed to convert a BMS package
-  into a Bemuse package. Traditional BMS packages are optimized for
-  offline playing. They are distributed as a large <code>.zip</code>
-  file with <code>.wav</code>, <code>.mpg</code>, and <code>.bms</code> files.
-  This is not suitable for web consumption.</dd>
+  <dt><a href="https://github.com/bemusic/bemuse/tree/master/packages/bemuse-tools">bemuse-tools</a></dt>  
+  <dd>This package contains the command-line tools to convert a BMS package into a Bemuse package. Traditional BMS packages are optimized for offline playing. They are distributed as a large <code>.zip</code> file with <code>.wav</code>, <code>.mpg</code>, and <code>.bms</code> files.</dd>
 </dl>
