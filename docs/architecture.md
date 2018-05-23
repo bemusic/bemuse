@@ -25,12 +25,12 @@ The Bemuse project is a **monorepo**. This means every package that shapes the p
   <dd>Contains projects closely-related to the core Bemuse project. These are published into separate npm packages.</dd>
 
   <dt>public</dt>  
-  <dd>Files that will be deployed verbatim to the server, **except for**
-  `index.html`, where the boot script will be inlined. These include
+  <dd>Files that will be deployed verbatim to the server, <strong>except for</strong>
+  <code>index.html</code>, where the boot script will be inlined. These include
   skin files.</dd>
 
   <dt>src</dt>  
-  <dd>Contains the production code. Code is split into *modules* for
+  <dd>Contains the production code. Code is split into <em>modules</em> for
   different parts of the application.</dd>
 
   <dt>tasks</dt>  
