@@ -26,14 +26,29 @@ The different timegates are designed to make the game easier for beginners, with
 | Level5   |          5 |
 | Normal   |         6+ |
 
-Based on the above judgement, an accuracy score is given based on the above judgement out of a highest possible score of 555555.
+The final score is split into 2 parts:
 
-| Judgment   | Accuracy Score |
-| ---------- | -------------: |
-| Meticulous |           100% |
-| Precise    |            80% |
-| Good       |            50% |
-| Offbeat    |             0% |
+* 500000 for accuracy
+* 55555 for combo bonus
+
+Each combo has an associated score.
+
+| Combo number | Combo score |
+| -----------: | ----------: |
+|            0 |           0 |
+|         1–22 |           1 |
+|        23-50 |           2 |
+|        51-91 |           3 |
+|       92–160 |           4 |
+|        161~∞ |           5 |
+
+Combo bonus is the sum of combo score for each hit, divided by maximum possible value, times 55555.
+
+**Example:** There are 100 notes. 60 notes have been hit, I missed a note, and hit 39 other notes.
+
+* Obtained combo score = 108 for first 60 notes + 56 for 39 other notes = `164`
+* Maximum possible combo score = `237`
+* Combo bonus = `164 / 237 * 55555 = 38443`
 
 ## Grading
 
