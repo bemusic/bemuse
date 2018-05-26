@@ -3,95 +3,67 @@ id: scoring-and-judgment
 title: Scoring and Judgment
 ---
 
-The scoring system and judgment system in Bemuse focuses on both
-accuracy and combo.
+The scoring system and judgment system in Bemuse focuses on both accuracy and combo.
 
 ## Judgment
 
-When hitting the note, the accuracy of your button press will be judged
-according to this table:
+When hitting the note, the accuracy of your button press will be judged according to this table:
 
-|      Name      | Maximum Offset (ms) | Accuracy Score |
-|:--------------:| -------------------:| --------------:|
-|   METICULOUS!  |                  20 |           100% |
-|     PRECISE!   |                  50 |            80% |
-|      GOOD!     |                 100 |            50% |
-|     OFFBEAT!   |                 200 |             0% |
-|     MISSED!    |                  -- |             0% |
+| Judgment   | Normal | Level5 | Level4 | Level3 | Beginner |
+| ---------- | -----: | -----: | -----: | -----: | -------: |
+| Meticulous |   20ms |   21ms |   22ms |   23ms |     24ms |
+| Precise    |   50ms |   60ms |   70ms |   80ms |    100ms |
+| Good       |  100ms |  120ms |  140ms |  160ms |    180ms |
+| Offbeat    |  200ms |  200ms |  200ms |  200ms |    200ms |
 
-<div class="srcref admonition">
-<p class="first admonition-title">Source code reference</p>
-<ul class="last simple">
-<li>Defined at <a class="reference external" href="https://github.com/bemusic/bemuse/blob/bf96099/src/game/judgments.js#L7-14">src/game/judgments.js:7-14</a> (judgment timegate)</li>
-<li>Defined at <a class="reference external" href="https://github.com/bemusic/bemuse/blob/bf96099/src/game/judgments.js#L51-58">src/game/judgments.js:51-58</a> (judgment weight)</li>
-</ul>
-</div>
+The different timegates are designed to make the game easier for beginners, with a gradual increase in difficulty the harder the song gets. They are divided as follows:
 
-## Scoring
+| Timegate | Song Level |
+| -------- | ---------: |
+| Beginner |        1-2 |
+| Level3   |          3 |
+| Level4   |          4 |
+| Level5   |          5 |
+| Normal   |         6+ |
 
-The player's score is calculated from this formula:
+The final score is split into 2 parts:
 
+* 500000 for accuracy
+* 55555 for combo bonus
 
-<div class="math">
-  \[\begin{split}\text{score} &amp;= 500000 \times \text{accuracy}
-    + 55555 \times \text{combo bonus} \\[10pt]
-  \text{accuracy} &amp;= \frac{
-    \sum\text{accuracy score}
-  }{\sum\text{total combos}} \\[10pt]
-  \text{combo bonus} &amp;= \frac{
-    \sum_{c \in \text{combos}}{\text{combo level}(c)}
-  }{\sum_{i = 1}^{\text{total combos}}{\text{combo level}(i)}} \\[10pt]
-  \text{combo level}(c) &amp;= \begin{cases}
-    0 &amp; c = 0 \\
-    1 &amp; 1 \leq c \leq 22 \\
-    2 &amp; 23 \leq c \leq 50 \\
-    3 &amp; 51 \leq c \leq 91 \\
-    4 &amp; 92 \leq c \leq 160 \\
-    6 &amp; 161 \leq c
-  \end{cases}\end{split}\]
-</div>
+Each combo has an associated score.
 
+| Combo number | Combo score |
+| -----------: | ----------: |
+|            0 |           0 |
+|         1–22 |           1 |
+|        23-50 |           2 |
+|        51-91 |           3 |
+|       92–160 |           4 |
+|        161~∞ |           5 |
 
-Here's how the combo level formula comes from. Let's assume, for
-simplicity, a player with 99% hit rate, regardless of difficulty. The
-probability that the player will attain \\(c\\) combos is \\(0.99^c\\).
+Combo bonus is the sum of combo score for each hit, divided by maximum possible value, times 55555.
 
-Now we have 6 combo levels. The probability that the player will attain
-that level gradually decreases. Therefore, the minimum combo is
-\\(\left\lceil\log_{0.99} p\right\rceil\\).
+**Example:** There are 100 notes. 60 notes have been hit, I missed a note, and hit 39 other notes.
 
-| Combo Level | Max. Probability |  Min. Combo |
-| -----------:| ----------------:| -----------:|
-|           1 |             100% |           1 |
-|           2 |              80% |          23 |
-|           3 |              60% |          51 |
-|           4 |              40% |          92 |
-|           5 |              20% |         161 |
+* Obtained combo score = 108 for first 60 notes + 56 for 39 other notes = `164`
+* Maximum possible combo score = `237`
+* Combo bonus = `164 / 237 * 55555 = 38443`
 
-<div class="srcref outdated admonition">
-<p class="first admonition-title">Source code reference</p>
-<ul class="last simple">
-<li class="outdated">Defined at <a class="reference external" href="https://github.com/bemusic/bemuse/blob/bf96099/src/game/state/player-stats.js#L27-29">src/game/state/player-stats.js:27-29</a> (score) [outdated: 17be8477]</li>
-<li>Defined at <a class="reference external" href="https://github.com/bemusic/bemuse/blob/bf96099/src/game/state/player-stats.js#L99-106">src/game/state/player-stats.js:99-106</a> (combo)</li>
-</ul>
-</div>
-
-# Grading
+## Grading
 
 After playing the game, the grade is calculated according to this table:
 
 | Grade | Minimum Score |
-| ----- | -------------:|
-|   F   |             0 |
-|   D   |        300000 |
-|   C   |        350000 |
-|   B   |        400000 |
-|   A   |        450000 |
-|   S   |        500000 |
+| ----- | ------------: |
+| F     |             0 |
+| D     |        300000 |
+| C     |        350000 |
+| B     |        400000 |
+| A     |        450000 |
+| S     |        500000 |
 
-<div class="srcref admonition">
-<p class="first admonition-title">Source code reference</p>
-<ul class="last simple">
-<li>Defined at <a class="reference external" href="https://github.com/bemusic/bemuse/blob/bf96099/src/rules/grade.js#L2-12">src/rules/grade.js:2-12</a> (grade)</li>
-</ul>
-</div>
+## References
+
+* The original [pull request](https://github.com/bemusic/bemuse/pull/446) implementing the scoring system.
+* [Essay by @dtinth](https://qiita.com/dtinth/items/5b9f6b876a0a777eec50) regarding the new timegates & scoring.

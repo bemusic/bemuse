@@ -1,6 +1,6 @@
 ---
-id: gameplay
-title: Gameplay
+id: faq
+title: FAQ
 ---
 
 ## How do I adjust the speed?
@@ -15,8 +15,8 @@ As a web-based game, it does not have low-level access to the audio
 driver. There are many factors that affect the audio latency in this
 game (and web-based audio applications in general):
 
-  - The browser's implementation of the Web Audio technology
-  - Your sound card driver and settings on your operating system
+* The browser's implementation of the Web Audio technology
+* Your sound card driver and settings on your operating system
 
 Bemuse has a mechanism for delay compensation. Simply open the options
 screen and enter your system’s audio+input latency. You can click on the
