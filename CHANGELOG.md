@@ -4,6 +4,18 @@
 
 This release mostly contains a lot of internal changes.
 
+### Improvements
+
+* **Improved documentation.** Our docs have been split into 3 sections [#489]:
+
+  * **Users** for people who play this game. This section covers the user guide,
+    the game mechanics, and some FAQs.
+
+  * **Creators** for content creators (bms authors) and people who wants to
+    maintain a music server.
+
+  * **Developers** for developers who wants to dive into the game’s code.
+
 ### Internal changes
 
 * **Gone monorepo.** 5 packages on `npm`: `bms`, `bmson`, `bemuse-notechart`,
@@ -714,16 +726,17 @@ improvements.
 
 ### New big feature
 
-- **Custom BMS Support**
+* **Custom BMS Support**
 
   We are excited to announce that you can now play custom BMS songs in Bemuse,
   right in the browser.
 
   For those who don't know what BMS is, it is a playable song format for rhythm
   games. Every year, hundreds of songs are created in this format, and can be
-  played in any [BMS player](http://hitkey.nekokan.dyndns.info/cmds.htm#BMS-APPS),
-  and Bemuse is just one of them. You can read about the history of BMS from this
-  excellent article,
+  played in any
+  [BMS player](http://hitkey.nekokan.dyndns.info/cmds.htm#BMS-APPS), and Bemuse
+  is just one of them. You can read about the history of BMS from this excellent
+  article,
   “[What is BMS?](https://github.com/lifthrasiir/angolmois/wiki/What-is-BMS%3F)”
 
   Currently, we only support Google Chrome. In the music selection screen, click
