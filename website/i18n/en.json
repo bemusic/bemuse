@@ -12,8 +12,8 @@
     "BMS Support": "BMS Support",
     "colors": "Colors",
     "developer-guide": "Developer Guide",
+    "faq": "FAQ",
     "game-loop": "The Game Loop",
-    "gameplay": "Gameplay",
     "music-server": "How to Host a Music Server",
     "Music Server": "Music Server",
     "options": "Game Options and Configuration",
@@ -28,6 +28,7 @@
     "Discord": "Discord",
     "GitHub": "GitHub",
     "Users": "Users",
+    "Creators": "Creators",
     "Developers": "Developers"
   },
   "pages-strings": {
