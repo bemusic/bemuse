@@ -51,6 +51,10 @@ $ sox --version
 * [QuickTime Player](http://www.apple.com/quicktime/download/) or [iTunes](http://www.apple.com/itunes/download/)
 * [qaac](https://sites.google.com/site/qaacpage/)
 
+**For hosting on your local machine**:
+
+* [xampp](https://www.apachefriends.org)
+
 #### Installation
 
 Create a directory to store the program files. For example: `C:\Bemuse\vendor\bin`. Extract files into that folder. Your tree should look like this:
@@ -274,7 +278,7 @@ PS> bemuse-tools index
 # Absurd Gaff - siromaru       160bpm [schranz] siromaru / BMSSP-Absurd Gaff 3 6 8 10 10 21 [no-meta]
 # ametsuchi - stereoberry      122bpm [discopunk / shoegazer] stereoberry / BMSSP-ametsuchi 1 3 5 5 8 [no-meta]
 # atonement you you - unknown  197bpm [NO GENRE] Unknown Artist / BMSSP-atonement you you 4 6 [no-meta]
-# AVALON - Team.SASAKURATION   200bpm [Ω] Team:SASAKURATION-AVALON 0 5 6 10 10 12 12 [no-me ta]
+# AVALON - Team.SASAKURATION   200bpm [Ω] Team:SASAKURATION-AVALON 0 5 6 10 10 12 12 [no-meta]
 # ...
 ```
 
@@ -304,3 +308,47 @@ Upload `index.json`, all `*.bemuse` and `*.bms/bme/bml` files to a web server. M
 To connect to the music server, go to `http://bemuse.ninja/?server=<your URL>`.
 
 Example: http://bemuse.ninja/?server=http://flicknote.bemuse.ninja/bemuse/mumei12
+
+
+### On a Local Machine
+
+Navigate to your Apache Config folder of XAMPP (e.g. `C:\xampp\apache\conf`) and open `httpd.conf`
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure you create a Backup of the file so that you can restore to the default settings if any issues occur.</p>
+</div>
+
+Find the variable name `DocumentRoot` and edit it's value from `"C:\xampp\htdocs"` to your server folder. (e.g. `C:\Bemuse\myserver`)
+
+```
+#
+# DocumentRoot: The directory out of which you will serve your
+# documents. By default, all requests are taken from this directory, but
+# symbolic links and aliases may be used to point to other locations.
+#
+DocumentRoot "C:\Bemuse\myserver"
+```
+
+Also change the value found in the `Directory` tag to the server folder
+```
+<Directory "C:\Bemuse\myserver">
+```
+
+Place this line inside the `Directory` tag
+```
+Header set Access-Control-Allow-Origin "*"
+```
+
+So it should look like below
+```
+DocumentRoot "C:\Bemuse\myserver"
+<Directory "C:\Bemuse\myserver">
+    ....
+    Header set Access-Control-Allow-Origin "*"
+</Directory>
+```
+
+Once the file is saved, open your XAMPP Control Pannel and run "Apache".
+
+Then connect to the music server with (http://bemuse.ninja/?server=https://localhost/).
