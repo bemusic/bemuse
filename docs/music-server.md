@@ -50,7 +50,10 @@ $ sox --version
 * [SoX](http://sox.sourceforge.net/): Download from http://sourceforge.net/projects/sox/files/sox/
 * [QuickTime Player](http://www.apple.com/quicktime/download/) or [iTunes](http://www.apple.com/itunes/download/)
 * [qaac](https://sites.google.com/site/qaacpage/)
-* [xampp](https://www.apachefriends.org) **For Hosting on your Local Machine**
+
+**For hosting on your local machine**:
+
+* [xampp](https://www.apachefriends.org)
 
 #### Installation
 
