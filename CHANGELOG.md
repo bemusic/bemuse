@@ -16,6 +16,9 @@ This release mostly contains a lot of internal changes.
 
   * **Developers** for developers who wants to dive into the game’s code.
 
+* Added information on documentation for running a music server on a Windows
+  local machine. [#490]
+
 ### Internal changes
 
 * **Gone monorepo.** 5 packages on `npm`: `bms`, `bmson`, `bemuse-notechart`,
