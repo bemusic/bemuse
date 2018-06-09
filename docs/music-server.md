@@ -316,7 +316,7 @@ Navigate to your Apache Config folder of XAMPP (e.g. `C:\xampp\apache\conf`) and
 <p>Make sure you create a Backup of the file so that you can restore to the default settings if any issues occur.</p>
 </div>
 
-Find the Varable name `DocumentRoot` and edit it's value from `"C:\xampp\htdocs"` to your server folder. (e.g. `C:\Bemuse\myserver`)
+Find the variable name `DocumentRoot` and edit it's value from `"C:\xampp\htdocs"` to your server folder. (e.g. `C:\Bemuse\myserver`)
 
 ```
 #
