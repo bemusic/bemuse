@@ -50,6 +50,7 @@ $ sox --version
 * [SoX](http://sox.sourceforge.net/): Download from http://sourceforge.net/projects/sox/files/sox/
 * [QuickTime Player](http://www.apple.com/quicktime/download/) or [iTunes](http://www.apple.com/itunes/download/)
 * [qaac](https://sites.google.com/site/qaacpage/)
+* [xampp](https://www.apachefriends.org) **For Hosting on your Local Machine**
 
 #### Installation
 
@@ -304,3 +305,52 @@ Upload `index.json`, all `*.bemuse` and `*.bms/bme/bml` files to a web server. M
 To connect to the music server, go to `http://bemuse.ninja/?server=<your URL>`.
 
 Example: http://bemuse.ninja/?server=http://flicknote.bemuse.ninja/bemuse/mumei12
+
+## On a Local Machine
+
+Navigate to your appacache config folder of XAMPP (e.g. `C:\xampp\apache\conf`) and open `httpd.conf`
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure you create a Backup of the file so that you can be able to restore to the default settings.</p>
+</div>
+
+Find the Varable name `DocumentRoot` and edit it's value from `"C:\xampp\htdocs"` to your server folder. (e.g. `C:\Bemuse\myserver`)
+```
+#
+# DocumentRoot: The directory out of which you will serve your
+# documents. By default, all requests are taken from this directory, but
+# symbolic links and aliases may be used to point to other locations.
+#
+DocumentRoot "C:\Bemuse\myserver"
+```
+
+Also change the value found in the `Directory` tag to the server folder
+```
+<Directory "C:\Bemuse\myserver">
+```
+
+Place this line inside the `Directory` tag
+```
+Header set Access-Control-Allow-Origin "*"
+```
+
+So it should look like this
+
+```
+DocumentRoot "C:\Bemuse\myserver"
+<Directory "C:\Bemuse\myserver">
+    ....
+    Header set Access-Control-Allow-Origin "*"
+</Directory>
+```
+
+Once it is saved, open your XAMPP Control pannel and run "Apache".
+
+Then connect to the music server with `http://bemuse.ninja/?server=https://localhost/`. 
+
+
+
+
+
+
