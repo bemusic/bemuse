@@ -63,7 +63,7 @@ This release mostly contains a lot of internal changes.
 [#483]: https://github.com/bemusic/bemuse/pull/483
 [#485]: https://github.com/bemusic/bemuse/pull/485
 [#487]: https://github.com/bemusic/bemuse/pull/487
-[#489]: https://github.com/bemusic/bemuse/pulls/48
+[#489]: https://github.com/bemusic/bemuse/pull/489
 [#490]: https://github.com/bemusic/bemuse/pull/490
 
 ## v41 — New docs site, Latency calibration fixes, Chrome 66 support, IPFS support (2018-05-07)
