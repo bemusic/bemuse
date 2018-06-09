@@ -6,109 +6,120 @@ This release mostly contains a lot of internal changes.
 
 ### Improvements
 
-* **Improved documentation.** Our docs have been split into 3 sections [#489]:
+- **Improved documentation.** Our docs have been split into 3 sections [#489]:
 
-  * **Users** for people who play this game. This section covers the user guide,
+  - **Users** for people who play this game. This section covers the user guide,
     the game mechanics, and some FAQs.
 
-  * **Creators** for content creators (bms authors) and people who wants to
+  - **Creators** for content creators (bms authors) and people who wants to
     maintain a music server.
 
-  * **Developers** for developers who wants to dive into the game’s code.
+  - **Developers** for developers who wants to dive into the game’s code.
 
-* Added information on documentation for running a music server on a Windows
+- Added information on documentation for running a music server on a Windows
   local machine. [#490]
 
 ### Internal changes
 
-* **Gone monorepo.** 5 packages on `npm`: `bms`, `bmson`, `bemuse-notechart`,
+- **Gone monorepo.** 5 packages on `npm`: `bms`, `bmson`, `bemuse-notechart`,
   `bemuse-indexer` and `bemuse-tools` now lives in this repository.
 
-* Updated Browserslist compatibility table according to blog post
+- Updated Browserslist compatibility table according to blog post
   [“‘last 2 versions’ considered harmful”](https://jamie.build/last-2-versions)
   [#483]
 
-* Upgraded `auth0-js` due to security issue. [#485]
+- Upgraded `auth0-js` due to security issue. [#485]
 
-* Improved developer guide for Windows users. [#487]
+- Improved developer guide for Windows users. [#487]
 
 ### API changes
 
 #### `bms@3.0.0`
 
-* [Breaking change] Use `lib` folder to refer to individual module.
+- [Breaking change] Use `lib` folder to refer to individual module.
   `bms/speedcore` &rarr; `bms/lib/speedcore`
-* [New feature] Added support parsing `.dtx` files. [bemusic/bms-js#28]
-* [Internals] Modernized the source code and moved into `bemuse` repository.
+- [New feature] Added support parsing `.dtx` files. [bemusic/bms-js#28]
+- [Internals] Modernized the source code and moved into `bemuse` repository.
 
 #### `bmson@4.0.0`
 
-* [Internals] Modernized the source code and moved into `bemuse` repository.
+- [Internals] Modernized the source code and moved into `bemuse` repository.
 
 #### `bemuse-notechart@2.0.0`
 
-* [Breaking change] Use `lib` folder to refer to individual module.
+- [Breaking change] Use `lib` folder to refer to individual module.
   `bemuse-notechart/loader` &rarr; `bemuse-notechart/lib/loader`
-* [Internals] Modernized the source code and moved into `bemuse` repository.
+- [Internals] Modernized the source code and moved into `bemuse` repository.
 
 #### `bemuse-indexer@4.0.0`
 
-* [Internals] Modernized the source code and moved into `bemuse` repository.
+- [Internals] Modernized the source code and moved into `bemuse` repository.
 
 #### `bemuse-tools@3.0.0`
 
-* [Internals] Modernized the source code and moved into `bemuse` repository.
+- [Internals] Modernized the source code and moved into `bemuse` repository.
 
-[#489]: https://github.com/bemusic/bemuse/pulls/489
+[bemusic/bms-js#28]: https://github.com/bemusic/bms-js/pull/289
+[#483]: https://github.com/bemusic/bemuse/pull/483
+[#485]: https://github.com/bemusic/bemuse/pull/485
+[#487]: https://github.com/bemusic/bemuse/pull/487
+[#489]: https://github.com/bemusic/bemuse/pulls/48
+[#490]: https://github.com/bemusic/bemuse/pull/490
 
 ## v41 — New docs site, Latency calibration fixes, Chrome 66 support, IPFS support (2018-05-07)
 
 ### New stuff
 
-* **New documentation site.** The docs site for the Bemuse project can now be
+- **New documentation site.** The docs site for the Bemuse project can now be
   found at https://bemuse.ninja/project/. [#479]
 
-* **Experimental support for IPFS.** Please read more info about this feature in
+- **Experimental support for IPFS.** Please read more info about this feature in
   the issue linked afterwards. [#480]
 
 ### Fixes and improvements
 
-* **Fixed a bug that happens in Chrome 66** where a song wouldn’t start due to
+- **Fixed a bug that happens in Chrome 66** where a song wouldn’t start due to
   the new autoplay policy taking effect.
 
-  * By the way, newer versions of Chrome in Android has **significantly lower
+  - By the way, newer versions of Chrome in Android has **significantly lower
     latency.** On Android, the latency used to be ~120ms, but now it’s only
     ~40ms.
 
-* **Fixed a long-standing audio latency calibration bug** where it would cause
+- **Fixed a long-standing audio latency calibration bug** where it would cause
   the game to go out of sync from the display. [#474]
 
-* **UI updated for mobile devices.** [#478]
+- **UI updated for mobile devices.** [#478]
 
 ### Internal changes
 
-* **Upgraded webpack** to v4. [#471]
+- **Upgraded webpack** to v4. [#471]
+
+[#479]: https://github.com/bemusic/bemuse/pull/479
+[#480]: https://github.com/bemusic/bemuse/pull/480
+[#474]: https://github.com/bemusic/bemuse/pull/474
+[#478]: https://github.com/bemusic/bemuse/pull/478
+[#471]: https://github.com/bemusic/bemuse/pull/471
 
 ## v40 — Big update: 3D mode, 7 more songs, and other stuff! (2018-02-13)
 
 ### New, new stuff!
 
-* **3D mode is out!** This mode is recommended for playing on touch screens
+- **3D mode is out!** This mode is recommended for playing on touch screens
   (e.g. an iPad Pro). This mode only works when Scratch settings is set to off.
   [Video demo](https://www.youtube.com/watch?v=2o7i3L4Tu1o)
 
-* **Added 7 more songs.**
+- **Added 7 more songs.**
 
-* **A friendly dialog box appears when you exit the tutorial** and encourages
+- **A friendly dialog box appears when you exit the tutorial** and encourages
   you to keep playing other songs, and build up your music gaming skills!
 
 ### Internal changes
 
-* **Improved analytics tracking,** using [Amplitude](https://amplitude.com/).
+- **Improved analytics tracking,** using [Amplitude](https://amplitude.com/).
   This will help me to gain better insights more easily, which can be useful in
   improving the game. No personal data is collected.
 
-* **Infrastructure and tooling:** Upgraded to webpack 3, added prop-types to
+- **Infrastructure and tooling:** Upgraded to webpack 3, added prop-types to
   most components, and other project improvements. Thanks a lot to @resir014 for
   contributing these improvements!
 
@@ -118,17 +129,17 @@ Have a happy new year! This release makes the game easier for beginners.
 
 ### New stuffs
 
-* Added **5 new songs** and more **easy charts**.
+- Added **5 new songs** and more **easy charts**.
 
 ### Improved mechanics
 
-* This game mechanics is now easier for beginners. For more information, see the
+- This game mechanics is now easier for beginners. For more information, see the
   report
   [“Easier timegates for beginners coming to Bemuse”](https://qiita.com/dtinth/items/5b9f6b876a0a777eec50).
 
 ### Internals
 
-* Updated the project’s infrastructure (e.g. upgraded to latest version of
+- Updated the project’s infrastructure (e.g. upgraded to latest version of
   React). Big thanks to help and feedback from
   [@resir014](https://github.com/resir014)!
 
@@ -136,30 +147,30 @@ Have a happy new year! This release makes the game easier for beginners.
 
 ### Bugfixes
 
-* **Scoreboard is back.** After a month of downtime or so. Thanks for your
+- **Scoreboard is back.** After a month of downtime or so. Thanks for your
   patience!
 
-* **Speed no longer resets** when you hit the replay (F1) button.
+- **Speed no longer resets** when you hit the replay (F1) button.
 
-* **Errors are now displayed** when there is a problem loading a custom BMS.
+- **Errors are now displayed** when there is a problem loading a custom BMS.
   (They used to be silently discarded, leading to the dialog keeps loading
   indefinitely).
 
 ### Internals
 
-* **Upgraded the build infrastructure.** webpack 2 and stuffs.
+- **Upgraded the build infrastructure.** webpack 2 and stuffs.
 
 ## v36 (2016-12-24)
 
 ### A new feature arrived
 
-* **Music previews.** Now you’ll hear a preview while selecting songs!
+- **Music previews.** Now you’ll hear a preview while selecting songs!
 
 ## v35 (2016-12-21)
 
 ### Internals
 
-* **Moved the music server.** With 44 songs and counting, our music server now
+- **Moved the music server.** With 44 songs and counting, our music server now
   contains more than 1GB of data. Since
   [GitHub only allows 1GB](https://help.github.com/articles/what-is-my-disk-quota/),
   I need to find a new home in order to release more songs.
@@ -171,40 +182,40 @@ Have a happy new year! This release makes the game easier for beginners.
   The game itself is still hosted on
   [GitHub](https://github.com/bemusic/bemuse).
 
-* **Added
+- **Added
   [Bemuse server tool](https://github.com/bemusic/bemuse/wiki/Bemuse-server-tool).**
 
 ## v34 (2016-12-06)
 
 ### New features
 
-* **5-keys inactive column cover.** This is the first step to make Bemuse more
+- **5-keys inactive column cover.** This is the first step to make Bemuse more
   approachable to beginners. When playing 5-key charts (marked with green
   color), we will cover the unused columns. We will be improving 5-keys support.
 
-* **Expert gauge.** When expert gauge is enabled, you will see a gauge at the
+- **Expert gauge.** When expert gauge is enabled, you will see a gauge at the
   top of the screen. This brings a challenge — to finish the song with the gauge
   intact.
 
 ### Improvements
 
-* **Improved offbeat sound.** When you trigger the note off-beat, the note would
+- **Improved offbeat sound.** When you trigger the note off-beat, the note would
   also sound off-pitch. [@joezeng](https://github.com/joezeng) contributed a
   change which makes it sound even more jarring! Enjoy!!!!!!
 
-* **Improved offline support.** We’ve modernized the code for offline support a
+- **Improved offline support.** We’ve modernized the code for offline support a
   bit. This makes the first visit of the game faster.
 
 ## v33 (2016-09-24)
 
 ### More features!
 
-* **Play area cover.** For some players, the play area may be too tall. There is
+- **Play area cover.** For some players, the play area may be too tall. There is
   now a new setting that lets you adjust the amount of the play area that will
   be hidden (covered) from the top (in percentage). If this number is negative,
   the play area will be pulled up.
 
-* **Accuracy and precision in result screen.** We now display the accuracy (mean
+- **Accuracy and precision in result screen.** We now display the accuracy (mean
   difference) and precision data (standard deviation) of the keypresses in the
   result screen.
 
@@ -212,68 +223,68 @@ Have a happy new year! This release makes the game easier for beginners.
 
 ### Improvements to existing features
 
-* **Improved game restarting.** Based on the statistics in the past 3 months,
+- **Improved game restarting.** Based on the statistics in the past 3 months,
   21.3% of game plays are restarts of the previous game. In this release, I make
   restarting easier in several ways:
-  * **Inside game, press F1 to restart.** This will immediately restart the
+  - **Inside game, press F1 to restart.** This will immediately restart the
     game.
-  * **Inside the result screen, click the chart difficulty button** at the
+  - **Inside the result screen, click the chart difficulty button** at the
     top-right corner. This will also immediately restart the game.
-  * **Faster song loading when playing the same song.** In Bemuse, songs are
+  - **Faster song loading when playing the same song.** In Bemuse, songs are
     stored in a compressed format and have to be decoded before playing. In this
     version, Bemuse will temporarily store the decoded data, so that it will
     load faster if you play the same song again.
-* **Custom BMS popup will immediately appear when a folder is dragged over the
+- **Custom BMS popup will immediately appear when a folder is dragged over the
   music selection screen.** This should make playing custom BMS easier.
 
 ## v31.2 (2016-09-17)
 
 ### Improvements
 
-* Improved support for bmson BGAs in Bemuse servers.
+- Improved support for bmson BGAs in Bemuse servers.
 
 ### Bugfixes
 
-* Fixed a bug where BGAs would display at an incorrect position in different
+- Fixed a bug where BGAs would display at an incorrect position in different
   screen resolution.
 
 ## v31.2 (2016-09-07)
 
 ### New features
 
-* **Support BGAs in bmson files.** In this version, there is a caveat when using
+- **Support BGAs in bmson files.** In this version, there is a caveat when using
   BGAs in bmson file.
-  * Due to current Bemuse architecture, every chart in the same song shares the
+  - Due to current Bemuse architecture, every chart in the same song shares the
     same BGA. It case of multiple charts with different BGA, the BGA of the song
     will be selected arbitrarily.
-  * Only 1 `bga_event` allowed, and it is expected to point to a WebM or MP4
+  - Only 1 `bga_event` allowed, and it is expected to point to a WebM or MP4
     file. Otherwise, the BGA is considered invalid and will not be loaded.
 
 ## v31.1 (2016-06-30)
 
 ### New stuffs
 
-* Added a home page (which you can see by scrolling down from the title screen).
+- Added a home page (which you can see by scrolling down from the title screen).
   There are still a lot of rooms for improvements. Think of this as an alpha
   version. Suggestions are welcome. :)
 
 ### Internals
 
-* Improved analytics tracking to send more useful information. All analytics
+- Improved analytics tracking to send more useful information. All analytics
   data are anonymous and are used for the purpose of improving the game.
 
 ## v31 (2016-06-24)
 
 ### Announcement of new stuffs!
 
-* **Out of beta!** I’ve shipped so many beta releases for a year now, and it
+- **Out of beta!** I’ve shipped so many beta releases for a year now, and it
   needs to go out of beta someday… Since jumping major versions are pretty
   [trendy](https://medium.com/node-js-javascript/4-0-is-the-new-1-0-386597a3436d)
   [these](https://facebook.github.io/react/blog/2016/03/07/react-v15-rc1.html)
   [days](https://blog.sketchapp.com/versioning-licensing-and-sketch-4-0-8ad98783e9ba),
   I decided to release version 31.
 
-* **BGAs!** On new songs, Bemuse will now display a 720p HD background
+- **BGAs!** On new songs, Bemuse will now display a 720p HD background
   animation. You need a decent computer and a good internet connection for this
   feature to work smoothly. You can turn it off in the options screen.
 
@@ -282,7 +293,7 @@ Have a happy new year! This release makes the game easier for beginners.
   BGAs are encoded in WebM format at resolution of 1280x720, at bitrate of 1500
   kbps.
 
-* **Auto-velocity!** Bemuse now has the auto-velocity option which tries to
+- **Auto-velocity!** Bemuse now has the auto-velocity option which tries to
   maintain a consistent note scrolling speed across plays. This means the game
   will automatically adjust the speed modifier to match the note scrolling speed
   of the previous song you’ve played.
@@ -291,14 +302,14 @@ Have a happy new year! This release makes the game easier for beginners.
   200bpm song, the game will adjust the speed to 2.4x. You can activate this
   feature in the options screen.
 
-* **[BMS Search](http://bmssearch.net/) Integration!** You can now go to BMS
+- **[BMS Search](http://bmssearch.net/) Integration!** You can now go to BMS
   Search page for the selected song from the “Information” tab.
 
-* **New Title Screen!**
+- **New Title Screen!**
 
 ### Advanced and developer features…
 
-* **Setting the default search text!** [BMS Search](http://bmssearch.net/), a
+- **Setting the default search text!** [BMS Search](http://bmssearch.net/), a
   BMS database and search engine, has a very convenient link to Bemuse. But you
   still have to search for the song you want to play. In this version, Bemuse
   supported the `?grep=` URL parameter, which will pre-fill the search text.
@@ -307,14 +318,14 @@ Have a happy new year! This release makes the game easier for beginners.
   Appears.” in [METTATUNES](http://keysounds.net/mettatunes/) event server:
   https://bemuse.ninja/?server=https://bmson.nekokan.dyndns.info/mettatunes/&grep=the+heroine+appears
 
-* **Adding BGAs in music server:** Two new keys in `README.md` front-matter data
+- **Adding BGAs in music server:** Two new keys in `README.md` front-matter data
   is added: `video_url` which specifies the URL to a video file (WebM, 1280x720,
   1500kbps) and `video_offset` which specifies when to start playing the video
   (in seconds after the song begins).
 
 ### Internals
 
-* **Modernized the codebase!** The Bemuse GUI is now based on latest version of
+- **Modernized the codebase!** The Bemuse GUI is now based on latest version of
   React. The web application has been aggressively refactored to use Redux
   (which leads to cleaner code and easier testability).
 
@@ -322,7 +333,7 @@ Have a happy new year! This release makes the game easier for beginners.
 
 ### New feature
 
-* **iPad Pro support.**
+- **iPad Pro support.**
 
   **Note:** Bemuse is very RAM intensive. Before playing, please close other
   apps and other Safari tabs, and set your screen orientation to portrait.
@@ -350,7 +361,7 @@ Have a happy new year! This release makes the game easier for beginners.
 
 ### Changes
 
-* **Sound volume normalization** (online songs only).
+- **Sound volume normalization** (online songs only).
 
   The [ReplayGain](https://en.wikipedia.org/wiki/ReplayGain) algorithm is used
   to normalize the volume of each song. From now on, every song will have
@@ -363,7 +374,7 @@ Have a happy new year! This release makes the game easier for beginners.
   ([example](https://github.com/bemusic/music/blame/6ce362e6905fb3ca390ab34320daf0559ea99ab6/%5B5argon%5Dmaidbattle/README.md#L7)),
   then run `bemuse-tools index` again.
 
-* **Overall volume decrease.**
+- **Overall volume decrease.**
 
   Some platforms (e.g. Chrome on Mac OS X) can process audio
   [using 32-bit float format](https://developer.apple.com/library/mac/documentation/MusicAudio/Conceptual/CoreAudioOverview/WhatisCoreAudio/WhatisCoreAudio.html#//apple_ref/doc/uid/TP40003577-CH3-SW11)
@@ -391,7 +402,7 @@ Have a happy new year! This release makes the game easier for beginners.
 
 ### New features
 
-* **_Experimental_ support for native gamepad and MIDI input.**
+- **_Experimental_ support for native gamepad and MIDI input.**
 
   A common problem with using keyboard and joystick-to-keyboard softwares is
   that the keypresses has to go through the operating system’s—then the
@@ -410,7 +421,7 @@ Have a happy new year! This release makes the game easier for beginners.
   the DJ DAO controller but not the JKOC controller, whereas Firefox only
   detects the JKOC controller, but not DJ DAO. In short, it may not work.
 
-* **Detailed accuracy report:** In the result screen, click on the accuracy
+- **Detailed accuracy report:** In the result screen, click on the accuracy
   number, and a panel showing the detailed play statistics is displayed,
   including a histogram of accuracies, number of EARLY/LATE hits, and other
   statistical information.
@@ -419,36 +430,36 @@ Have a happy new year! This release makes the game easier for beginners.
 
   Other statistical information include:
 
-  * The **mean** which represents the
+  - The **mean** which represents the
     [trueness](https://en.wikipedia.org/wiki/Accuracy_and_precision#ISO_Definition_.28ISO_5725.29)
     of your note hits to the musical score.
-  * The **S.D.** which represents the
+  - The **S.D.** which represents the
     [precision](http://www.mathsisfun.com/accuracy-precision.html) of your note
     hits.
-  * The **median** which can be compared to the mean to determine the
+  - The **median** which can be compared to the mean to determine the
     [skewness](https://en.wikipedia.org/wiki/Skewness#Relationship_of_mean_and_median)
     (although
     [not technically correct](http://www.amstat.org/publications/jse/v13n2/vonhippel.html)).
 
-* **What’s new?** Never miss out on new updates to Bemuse. When a new version is
+- **What’s new?** Never miss out on new updates to Bemuse. When a new version is
   released, a “What’s new?” bubble appears in the title screen. Clicking on it
   will display the change log.
 
 ### Fixes
 
-* Fixed a problem where modifier keys (Ctrl, Alt) are captured by the web
+- Fixed a problem where modifier keys (Ctrl, Alt) are captured by the web
   browser, and thus interrupting the game.
 
 ### Internals
 
-* The custom automated test harness has been replaced with
+- The custom automated test harness has been replaced with
   [Karma](http://karma-runner.github.io/) test runner.
 
 ## v1.0.0-beta.26 — Personal records (2015-11-24)
 
 ### New feature
 
-* This release displays your personal records in the music selection screen.
+- This release displays your personal records in the music selection screen.
 
 ## v1.0.0-beta.27 — Eyecatch, background image (2015-11-24)
 
@@ -462,21 +473,21 @@ Follow [@forgetalia](https://twitter.com/forgetalia) for more updates.
 
 ### New features
 
-* **Eyecatch and background images** are now supported for bmson files.
-  * If the eyecatch and background image is not specified (or using BMS files),
+- **Eyecatch and background images** are now supported for bmson files.
+  - If the eyecatch and background image is not specified (or using BMS files),
     Bemuse will try to load `eyecatch_image.png` and `back_image.png`.
-* **Sharing on Twitter** will now attach the server URL.
+- **Sharing on Twitter** will now attach the server URL.
 
 ### Improvements
 
-* Make the game display smoother in non-native resolution. Please play at
+- Make the game display smoother in non-native resolution. Please play at
   1280x720 resolution for best experience.
-* The music list will automatically scroll to the selected song after playing.
-* Changed the wording in the tutorial to make it more encouraging…
+- The music list will automatically scroll to the selected song after playing.
+- Changed the wording in the tutorial to make it more encouraging…
 
   ![That’s it!](https://github.com/bemusic/bemuse/blob/feature/moar-stuff/public/skins/default/Tutorial/Page6.png?raw=true)
 
-* The long scratch note will now automatically end at the moment the end of the
+- The long scratch note will now automatically end at the moment the end of the
   scratch note reaches the judgment bar. This does not affect gameplay; only
   visual.
 
@@ -484,46 +495,46 @@ Follow [@forgetalia](https://twitter.com/forgetalia) for more updates.
 
 ### New features
 
-* **Rudimentary bmson 1.0 support.** This release makes Bemuse support the bmson
+- **Rudimentary bmson 1.0 support.** This release makes Bemuse support the bmson
   1.0 structure. It supports only what is supported in bmson v0.21.
 
   The following are supported:
 
-  * New, snake_cased key names, and other key name changes
-  * `info.resolution`
-  * `info.chart_name`
-  * `info.subtitle`
-  * `info.subartists`
+  - New, snake_cased key names, and other key name changes
+  - `info.resolution`
+  - `info.chart_name`
+  - `info.subtitle`
+  - `info.subartists`
 
   The following are NOT yet supported:
 
-  * Mix notes
-  * Background images
-  * New sound slicing algorithm (unfortunately, requires non-trivial change
+  - Mix notes
+  - Background images
+  - New sound slicing algorithm (unfortunately, requires non-trivial change
     across codebases)
 
 ### その他
 
-* Refactored the old UI data flow system (imperative `<Binding />`) into a
+- Refactored the old UI data flow system (imperative `<Binding />`) into a
   higher-order component. #211
-* Made the music-select-store code easier to understand. #211
+- Made the music-select-store code easier to understand. #211
 
 ## v1.0.0-beta.24 (2015-11-08)
 
 ### Bugfixes
 
-* **Fixed sound cutting problem when playing bmson files.** In previous version,
+- **Fixed sound cutting problem when playing bmson files.** In previous version,
   sometimes there’s a clicking sound at the end of a sliced keysound. As of
   writing, Google Chrome is not very accurate when it comes to playing and
   stopping sounds. I guess that it rounds to the next buffer loop before
   stopping. The fix is to manually stop the sound by setting fading its volume
   down to 0 at a precise time.
-* **Fixed graphics blending problem.** Related issue:
+- **Fixed graphics blending problem.** Related issue:
   [pixijs/pixi.js#2188](https://github.com/pixijs/pixi.js/issues/2188)
 
 ### その他
 
-* **Updated code style** to use
+- **Updated code style** to use
   [eslint-config-bemuse](https://github.com/bemusic/eslint-config-bemuse), which
   is based on [feross/standard](https://github.com/feross/standard) code style,
   but is less strict.
@@ -532,17 +543,17 @@ Follow [@forgetalia](https://twitter.com/forgetalia) for more updates.
 
 ### New feature
 
-* **Personal records.** If you are signed in, you should be able to see your
+- **Personal records.** If you are signed in, you should be able to see your
   personal record in the music selection screen.
 
 ### This section is for developers
 
-* **Node 5.** The codebase has been migrated to work with Node.js version 5.
-* **Hot Module Replacement.** Developing this game will be much easier with hot
+- **Node 5.** The codebase has been migrated to work with Node.js version 5.
+- **Hot Module Replacement.** Developing this game will be much easier with hot
   reloading. It is now possible to tweak the user interface code and have the
   new code injected.
   [See this awesome talk if you haven’t](https://www.youtube.com/watch?v=xsSnOQynTHs).
-* **Refactored online system.** The code for online system has been heavily
+- **Refactored online system.** The code for online system has been heavily
   refactored. It is very far from perfect, and we lose data caching ability (in
   exchange with simpler code). Caching (and cache invalidation) is a hard
   problem and would need dedicated effort to implement it in the right way.
@@ -554,50 +565,50 @@ stuff.
 
 ### Improvements
 
-* **Faster loading.** Bemuse will now download 2 package files simultaneously.
+- **Faster loading.** Bemuse will now download 2 package files simultaneously.
   This should result in faster package downloads.
 
 ### Advanced stuffs
 
-* Allow `server` query string to be used instead of the more verbose
+- Allow `server` query string to be used instead of the more verbose
   `BEMUSE_MUSIC_SERVER`.
 
 ### Internals
 
-* The markdown parser has switched to use
+- The markdown parser has switched to use
   [markdown-it](https://github.com/markdown-it/markdown-it) library.
-* The markdown will be parsed like GFM, which means line breaks will create a
+- The markdown will be parsed like GFM, which means line breaks will create a
   new line when displayed.
-* Changed file names and CSS class names to be consistent with JSX class names
+- Changed file names and CSS class names to be consistent with JSX class names
   across the codebase.
-* The bmson related code has been moved to
+- The bmson related code has been moved to
   [bmson](https://github.com/bemusic/bmson) project, to be incorporated into
   [bemuse-indexer](https://github.com/bemusic/indexer), and subsequently,
   [bemuse-tools](https://github.com/bemusic/bemuse-tools), in order to give
   bmson support to these tools.
-* Update isparta relying on a older version of webpack that uses an incompatible
+- Update isparta relying on a older version of webpack that uses an incompatible
   regenerator, causing build errors on the CI.
 
 ## v1.0.0-beta.21 (2015-09-08)
 
 ### A new feature
 
-* The game will now display
+- The game will now display
   [whether you pressed the keys too early or too late](https://twitter.com/bemusegame/status/635873015356461056).
 
 ## v1.0.0-beta.20: Options Screen Improvements (2015-08-23)
 
 ### New features
 
-* **Audio latency compensation** now available. Just go to options screen and
+- **Audio latency compensation** now available. Just go to options screen and
   click the “Calibrate” button.
-* You can now set the speed directly inside the options screen.
+- You can now set the speed directly inside the options screen.
 
 ## v1.0.0-beta.19: #bmson (2015-08-23)
 
 ### bmson supported
 
-* **Experimental support for bmson notechart,** a new notechart format that will
+- **Experimental support for bmson notechart,** a new notechart format that will
   hopefully make authoring notecharts for rhythm games much, much easier. Please
   [read the full announcement here](http://qiita.com/dtinth/items/a2d644c608b3d1cf41ff).
 
@@ -605,15 +616,15 @@ stuff.
 
 ### Improvements
 
-* Some people have been requesting this, so I’m glad to announce that **it’s now
+- Some people have been requesting this, so I’m glad to announce that **it’s now
   possible to assign 2 keys to the turntable.**
-* Performance improvements in the music selection and options screen.
+- Performance improvements in the music selection and options screen.
 
 ## v1.0.0-beta.16: 5-keys BMS support (2015-08-04)
 
 ### New features
 
-* **5-keys BMS support added.**
+- **5-keys BMS support added.**
 
   This release of Bemuse allows playing of 5-keys BMS files. 5-keys BMS charts
   are highlighted in green.
@@ -632,43 +643,43 @@ stuff.
 
   As a result, these 5-keys charts on the default music server becomes playable:
 
-  * CHICKEN for the WIN
-    * 5 SUMMONED
-    * 5 BUFFED
-    * 5 ENRAGED
-  * 僕たちの旅とエピローグ。
-    * normal
-  * 가짜/인형/술사/이야기
-    * 5Keys Normal
-    * 5Keys Hyper
+  - CHICKEN for the WIN
+    - 5 SUMMONED
+    - 5 BUFFED
+    - 5 ENRAGED
+  - 僕たちの旅とエピローグ。
+    - normal
+  - 가짜/인형/술사/이야기
+    - 5Keys Normal
+    - 5Keys Hyper
 
 ### Internals
 
-* The JavaScript ecosystem is
+- The JavaScript ecosystem is
   [evolving fast](http://www.allenpike.com/2015/javascript-framework-fatigue/),
   and we need to keep updating our dependencies to the latest version, in order
   to reap the most benefits from modern web technologies. Notable changes:
-  * We migrated to [**Pixi.js v3**](http://www.goodboydigital.com/pixi-js-v3/),
+  - We migrated to [**Pixi.js v3**](http://www.goodboydigital.com/pixi-js-v3/),
     which should be “faster and better in almost every way!”
-  * Babel, the JavaScript transpiler we use has been upgraded from `^4.3.0` to
+  - Babel, the JavaScript transpiler we use has been upgraded from `^4.3.0` to
     `^5.8.20`
-  * And a lot of
+  - And a lot of
     [other dependencies](https://github.com/bemusic/bemuse/pull/194/files#diff-b9cfc7f2cdf78a7f4b91a753d10865a2).
 
-- The background image has been moved out of the game layer, and is now managed
+* The background image has been moved out of the game layer, and is now managed
   via the DOM.
 
 ## v1.0.0-beta.15 (2015-07-27)
 
 ### A little improvement
 
-* You can now see your own ranking in the music selection screen.
+- You can now see your own ranking in the music selection screen.
 
 ## v1.0.0-beta.14.1 (2015-07-22)
 
 ### Fixed a bug
 
-* Fixed a small bug where you cannot sign in / create a new account in the
+- Fixed a small bug where you cannot sign in / create a new account in the
   result screen, because keystrokes handled by the game subsystem instead of the
   user interface.
 
@@ -676,12 +687,12 @@ stuff.
 
 ### New features
 
-* **Online Ranking System!** A preliminary<sup>1</sup> ranking system, powered
+- **Online Ranking System!** A preliminary<sup>1</sup> ranking system, powered
   by [Parse](https://parse.com/).
 
 ### Improvements
 
-* The Custom BMS dialog will now pop up automatically when you drag something
+- The Custom BMS dialog will now pop up automatically when you drag something
   over the “Custom BMS” button in music selection screen.
 
 <sup>1</sup> _By preliminary, I really mean it. While it should work fine, the
@@ -697,30 +708,30 @@ Bemuse while being completely offline.
 
 ### New stuff
 
-* **Offline support added.** It is made possible through a new HTML5 technology,
+- **Offline support added.** It is made possible through a new HTML5 technology,
   [Service Worker](http://www.html5rocks.com/en/tutorials/service-worker/introduction/),
   which allows web application to manage all network resources
   ([and more](https://github.com/slightlyoff/ServiceWorker/blob/master/explainer.md#other-serviceworker-related-specifications)).
 
-  * **HTTPS is Required** — Service workers
+  - **HTTPS is Required** — Service workers
     [only work when using HTTPS](https://github.com/slightlyoff/ServiceWorker/blob/master/explainer.md#https-only-you-say),
     so you need to go to https://bemuse.ninja instead of
     http<b></b>://bemuse.ninja.
-  * **Browser support** is very limited, as this technology is new. As of
+  - **Browser support** is very limited, as this technology is new. As of
     writing, only **Google Chrome** and **Opera** works. For an up-to-date
     status, check out the website
     _[Is ServiceWorker Ready?](https://jakearchibald.github.io/isserviceworkerready/)_
 
 ### その他
 
-* Added preliminary documentation about
+- Added preliminary documentation about
   [Bemuse's BMS support](http://bemuse.readthedocs.org/en/latest/users/bms-support.html)
   and
   [running your own music server](http://bemuse.readthedocs.org/en/latest/users/music-server.html).
-* The sky background has been removed from the touch gameplay screen. It has
+- The sky background has been removed from the touch gameplay screen. It has
   been found to have caught frame rate drops in iOS.
-* Added a disclaimer when playing a non-official music server.
-* Fixed a bug where the game fails to load BMS files with special characters
+- Added a disclaimer when playing a non-official music server.
+- Fixed a bug where the game fails to load BMS files with special characters
   from the server. This is due to it not being properly URL-encoded, which makes
   files like `#another.bms` fail to load. ddb13eb
 
@@ -731,7 +742,7 @@ improvements.
 
 ### New big feature
 
-* **Custom BMS Support**
+- **Custom BMS Support**
 
   We are excited to announce that you can now play custom BMS songs in Bemuse,
   right in the browser.
@@ -758,14 +769,14 @@ improvements.
 
 ### その他
 
-* Fixed the problem where Bemuse refuses to read data from some music server.
+- Fixed the problem where Bemuse refuses to read data from some music server.
   These servers report that the metadata is just a "plain text data" (as opposed
   to the expected "JSON data").
-* New songs are now sorted in reverse-chronological order.
-* Fixed bug where some keysounds failed to load when filename has wrong
+- New songs are now sorted in reverse-chronological order.
+- Fixed bug where some keysounds failed to load when filename has wrong
   capitalization (for example, `#WAV Piano-001.ogg` is declared where the actual
   filename is `piano-001.ogg`).
-* Subtle changes to how freestyle sounds (sounds played when pressing buttons
+- Subtle changes to how freestyle sounds (sounds played when pressing buttons
   without hitting a note) are played. See #186 for more discussion.
 
 <sup>1</sup> _As it has been pointed out, this statement isn’t entirely
@@ -778,17 +789,17 @@ apologize for any misconception._
 
 ### Improvements
 
-* **Newly-added songs are now at the top of the song list.**
-* **Twitter account** is linked from the title screen. Follow
+- **Newly-added songs are now at the top of the song list.**
+- **Twitter account** is linked from the title screen. Follow
   [@bemusegame](https://twitter.com/bemusegame) on Twitter.
-* **YouTube videos** are added to the Information tab of songs that has a music
+- **YouTube videos** are added to the Information tab of songs that has a music
   video.
 
 ## v1.0.0-beta.8 (2015-05-07)
 
 ### Improvements
 
-* **Songs are now sorted by difficulty** of the easiest chart.
+- **Songs are now sorted by difficulty** of the easiest chart.
 
   From the play statistics, we have seen that, after finishing the Tutorial,
   most people start playing the next song in the list. Unfortunately, it was a
@@ -801,25 +812,25 @@ apologize for any misconception._
 
 ### Two modes
 
-* **The game is split into two modes.** Keyboard mode for beginners and O2Jam
+- **The game is split into two modes.** Keyboard mode for beginners and O2Jam
   players, and BMS mode for existing LR2 and IIDX players.
-  * The keyboard settings are now separate between these two modes.
-  * In keyboard mode, the default key settings are [S][d][f][space][j][k][l].
+  - The keyboard settings are now separate between these two modes.
+  - In keyboard mode, the default key settings are [S][d][f][space][j][k][l].
     There are no scratch lanes.
-  * In BMS mode, there is a scratch lane and the key settings are
+  - In BMS mode, there is a scratch lane and the key settings are
     (Shift)[Z][s][X][d][C][f][V].
 
 ## v1.0.0-beta.6 (2015-05-07)
 
 ### Improvements
 
-* Error popups may now be closed (by double-clicking them).
+- Error popups may now be closed (by double-clicking them).
 
 ### Bugfixes
 
-* Fixes an occasional bug where an error popup appears when the game fails to
+- Fixes an occasional bug where an error popup appears when the game fails to
   synchronize the time with the server.
-* Fixes a strange bug where an error popup appears when you push the Esc button
+- Fixes a strange bug where an error popup appears when you push the Esc button
   to quit the game.
 
 ## v1.0.0-beta.5.2 (2015-05-05)
@@ -833,9 +844,9 @@ server. More info on that will be published in later version.
 
 ### Improvements
 
-* Added About page.
-* Check for supported browser before entering game.
-* Start the game when player releases the start button (instead of when
+- Added About page.
+- Check for supported browser before entering game.
+- Start the game when player releases the start button (instead of when
   pressing). This fixes the keypress delay issue on Mac OS X and helps player
   concentrate more on the start button.
 
@@ -850,105 +861,130 @@ A lot of new, big things!
 
 ### OMG! The game is now working!
 
-* **Game** is now playable.
-  * Only 1 player and 7k+1 mode.
-  * Speed, keyboard mapping, and audio latency is still hardcoded.
-  * BMS url configurable via `?bms` query parameter.
+- **Game** is now playable.
+  - Only 1 player and 7k+1 mode.
+  - Speed, keyboard mapping, and audio latency is still hardcoded.
+  - BMS url configurable via `?bms` query parameter.
 
 ### Internals
 
-* **Isparta** is used to perform code coverage instrumentation.
-* **Documentation** is revamped to Sphinx style, and is published to
+- **Isparta** is used to perform code coverage instrumentation.
+- **Documentation** is revamped to Sphinx style, and is published to
   http://bemuse.readthedocs.org/.
 
 ## v0.10.1 (2015-02-20)
 
 ### Game implementation progress
 
-* **Game loader** is implemented to download everything needed for the game
+- **Game loader** is implemented to download everything needed for the game
   (song, game engine, skin) [#94]
-* **Random notes** are generated to test the display. [#92], [#93]
+- **Random notes** are generated to test the display. [#92], [#93]
 
 ### Infrastructure stuff
 
-* **webpack** configuration have been tweaked
-  * Use absolute path to filter module instead of regular expressions — more
+- **webpack** configuration have been tweaked
+  - Use absolute path to filter module instead of regular expressions — more
     reliable environment [#91]
-* **Babel** is used instead of the now-obsolete 6to5. [#95]
-* **Istanbul** is configured to ignore Babel runtime code. [#96]
+- **Babel** is used instead of the now-obsolete 6to5. [#95]
+- **Istanbul** is configured to ignore Babel runtime code. [#96]
+
+[#91]: https://github.com/bemusic/bemuse/pull/91
+[#92]: https://github.com/bemusic/bemuse/pull/92
+[#93]: https://github.com/bemusic/bemuse/pull/93
+[#94]: https://github.com/bemusic/bemuse/pull/94
+[#95]: https://github.com/bemusic/bemuse/pull/95
+[#96]: https://github.com/bemusic/bemuse/pull/96
 
 ## v0.8.0 (2015-02-11)
 
 ### Internals
 
-* **co** (dependency) has been updated to latest version. [#88]
-* **Module loading progress** has been implemented. Since the game code may be
+- **co** (dependency) has been updated to latest version. [#88]
+- **Module loading progress** has been implemented. Since the game code may be
   quite large it is a good idea to to show a progress bar. [#89]
+
+[#88]: https://github.com/bemusic/bemuse/pull/88
+[#89]: https://github.com/bemusic/bemuse/pull/89
 
 ## v0.7.0 (2015-02-04)
 
 ### Game implementation progress
 
-* **Support for || and && operators in Scintillator** added, so more complex
+- **Support for || and && operators in Scintillator** added, so more complex
   expression may be used.
-* **Auto-Synchro** project started [#87] — to study how to calibrate audio-video
+- **Auto-Synchro** project started [#87] — to study how to calibrate audio-video
   offset and audio+input latency. [#85]
 
 ### Internals
 
-* **Bluebird** is now used instead of prfun for Promises implementation, since
+- **Bluebird** is now used instead of prfun for Promises implementation, since
   Bluebird seems to be more actively developed. [#86]
+
+[#85]: https://github.com/bemusic/bemuse/pull/85
+[#86]: https://github.com/bemusic/bemuse/pull/86
+[#87]: https://github.com/bemusic/bemuse/pull/87
 
 ## v0.5.0 (2015-02-03)
 
 ### Game implementation progress
 
-* **Animations** in skins are now possible, thanks to the
+- **Animations** in skins are now possible, thanks to the
   [keytime](https://github.com/mattdesl/keytime) project. [#84]
+
+[#84]: https://github.com/bemusic/bemuse/pull/84
 
 ## v0.4.0 (2015-02-02)
 
 ### Game implementation progress
 
-* **Skins compilation** changed from a simple Makefile to a Gulp script. [#82]
-* **Masking** feature added to `<group>` object in the skin. [#83]
+- **Skins compilation** changed from a simple Makefile to a Gulp script. [#82]
+- **Masking** feature added to `<group>` object in the skin. [#83]
+
+[#82]: https://github.com/bemusic/bemuse/pull/82
+[#83]: https://github.com/bemusic/bemuse/pull/83
 
 ### Infrastructure stuff
 
-* **Coveralls.io** is integrated with this project. When there are pull
+- **Coveralls.io** is integrated with this project. When there are pull
   requests, Coveralls will tell you how the pull-request affect the code
-  coverage. #81
+  coverage. [#81]
+
+[#81]: https://github.com/bemusic/bemuse/pull/81
 
 ## v0.3.1 (2015-02-02)
 
 ### Internals
 
-* **Asset hashing** have been enabled. This means each time a different
+- **Asset hashing** have been enabled. This means each time a different
   JavaScript file name will be generated, based on the contents. [#80]
-  * This prevents problem when some cached JavaScript files are the old version
+  - This prevents problem when some cached JavaScript files are the old version
     and doesn't work with the boot script AND/OR other JavaScript files.
+
+[#80]: https://github.com/bemusic/bemuse/pull/80
 
 ## v0.3.0 (2015-02-01)
 
 ### Game implementation progress
 
-* **Scintillator** is the biggest addition to this game. It is a game skinning
+- **Scintillator** is the biggest addition to this game. It is a game skinning
   engine based on XML and Pixi.js. [#77]
 
 ### Internals
 
-* **6to5** has been updated.
-* **Code coverage** improved.
+- **6to5** has been updated.
+- **Code coverage** improved.
+
+[#77]: https://github.com/bemusic/bemuse/pull/77
 
 ## v0.2.1 (2015-02-01)
 
 ### Game implementation progress
 
-* **Pixi.js** is added to the project just to make sure it works in our build
+- **Pixi.js** is added to the project just to make sure it works in our build
   infrastructure.
-* **Bemuse** is the official name of this game. BEAT☆MUSIC☆SEQUENCE will be the
+- **Bemuse** is the official name of this game. BEAT☆MUSIC☆SEQUENCE will be the
   subtitle.
-* **Windows build support** added so my teammate (who uses Windows) can
+- **Windows build support** added so my teammate (who uses Windows) can
   collaborate, as well as others who use Windows.
 
 ## v0.1.2 (2015-01-17)
@@ -957,19 +993,19 @@ A lot has happened.
 
 ### Game implementation progress
 
-* **Cachier:** Large blobs can now be cached inside IndexedDB. This should make
+- **Cachier:** Large blobs can now be cached inside IndexedDB. This should make
   it easy to implement offline playback.
-* **Sampling Master:** Sounds can be loaded and played using Web Audio API.
-* **BMS:** Basic BMS parsing has been implemented.
-* **Technical Demo:** A demo of BMS parsing and playing sound has been added to
+- **Sampling Master:** Sounds can be loaded and played using Web Audio API.
+- **BMS:** Basic BMS parsing has been implemented.
+- **Technical Demo:** A demo of BMS parsing and playing sound has been added to
   the "Coming Soon" page.
 
 ### Set up the infrastructure for success
 
-* **Automated Code Reviews:** Whenever a pull request is opened, Travis will
+- **Automated Code Reviews:** Whenever a pull request is opened, Travis will
   check your code against `jshint` and `jscs` and writes a comment on the pull
   request.
-* **Automatic Deployments:** Once a new version is released, a deployment to
+- **Automatic Deployments:** Once a new version is released, a deployment to
   GitHub pages is made.
 
 ## v0.0.0 (2014-12-26)
@@ -979,8 +1015,8 @@ finished setting up the infrastructure. Took me five days!
 
 ### Project setup progress
 
-* Decide on which build tool to use: Gulp + webpack + Jasmine.
-* Set up linting rules and pre-commit hooks.
-* Setup Travis CI and Code Climate with Code Coverage.
-* Set up testing infrastructure.
-* Write brief project plan and README.md (which will evolve over time).
+- Decide on which build tool to use: Gulp + webpack + Jasmine.
+- Set up linting rules and pre-commit hooks.
+- Setup Travis CI and Code Climate with Code Coverage.
+- Set up testing infrastructure.
+- Write brief project plan and README.md (which will evolve over time).
