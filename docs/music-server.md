@@ -275,7 +275,7 @@ PS> bemuse-tools index
 # Absurd Gaff - siromaru       160bpm [schranz] siromaru / BMSSP-Absurd Gaff 3 6 8 10 10 21 [no-meta]
 # ametsuchi - stereoberry      122bpm [discopunk / shoegazer] stereoberry / BMSSP-ametsuchi 1 3 5 5 8 [no-meta]
 # atonement you you - unknown  197bpm [NO GENRE] Unknown Artist / BMSSP-atonement you you 4 6 [no-meta]
-# AVALON - Team.SASAKURATION   200bpm [Ω] Team:SASAKURATION-AVALON 0 5 6 10 10 12 12 [no-me ta]
+# AVALON - Team.SASAKURATION   200bpm [Ω] Team:SASAKURATION-AVALON 0 5 6 10 10 12 12 [no-meta]
 # ...
 ```
 
@@ -306,16 +306,18 @@ To connect to the music server, go to `http://bemuse.ninja/?server=<your URL>`.
 
 Example: http://bemuse.ninja/?server=http://flicknote.bemuse.ninja/bemuse/mumei12
 
-## On a Local Machine
 
-Navigate to your appacache config folder of XAMPP (e.g. `C:\xampp\apache\conf`) and open `httpd.conf`
+### On a Local Machine
+
+Navigate to your Apache Config folder of XAMPP (e.g. `C:\xampp\apache\conf`) and open `httpd.conf`
 
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Make sure you create a Backup of the file so that you can be able to restore to the default settings.</p>
+<p>Make sure you create a Backup of the file so that you can restore to the default settings if any issues occur.</p>
 </div>
 
 Find the Varable name `DocumentRoot` and edit it's value from `"C:\xampp\htdocs"` to your server folder. (e.g. `C:\Bemuse\myserver`)
+
 ```
 #
 # DocumentRoot: The directory out of which you will serve your
@@ -335,8 +337,7 @@ Place this line inside the `Directory` tag
 Header set Access-Control-Allow-Origin "*"
 ```
 
-So it should look like this
-
+So it should look like below
 ```
 DocumentRoot "C:\Bemuse\myserver"
 <Directory "C:\Bemuse\myserver">
@@ -345,9 +346,10 @@ DocumentRoot "C:\Bemuse\myserver"
 </Directory>
 ```
 
-Once it is saved, open your XAMPP Control pannel and run "Apache".
+Once the file is saved, open your XAMPP Control Pannel and run "Apache".
 
-Then connect to the music server with `http://bemuse.ninja/?server=https://localhost/`. 
+Then connect to the music server with (http://bemuse.ninja/?server=https://localhost/).
+
 
 
 
