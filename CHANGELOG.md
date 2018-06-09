@@ -1,12 +1,17 @@
 # Changelog
 
+[@Coppertine]: https://github.com/Coppertine
+[@dtinth]: https://github.com/dtinth
+[@mugabe]: https://github.com/mugabe
+[@resir014]: https://github.com/resir014
+
 ## Unreleased
 
 This release mostly contains a lot of internal changes.
 
 ### Improvements
 
-- **Improved documentation.** Our docs have been split into 3 sections [#489]:
+- **Improved documentation.** Our docs have been split into 3 sections ([#489], by [@resir014]):
 
   - **Users** for people who play this game. This section covers the user guide,
     the game mechanics, and some FAQs.
@@ -17,7 +22,7 @@ This release mostly contains a lot of internal changes.
   - **Developers** for developers who wants to dive into the game’s code.
 
 - Added information on documentation for running a music server on a Windows
-  local machine. [#490]
+  local machine. [#490], by [@Coppertine]
 
 ### Internal changes
 
@@ -26,11 +31,11 @@ This release mostly contains a lot of internal changes.
 
 - Updated Browserslist compatibility table according to blog post
   [“‘last 2 versions’ considered harmful”](https://jamie.build/last-2-versions)
-  [#483]
+  [#483], by [@resir014]
 
-- Upgraded `auth0-js` due to security issue. [#485]
+- Upgraded `auth0-js` due to security issue. [#485], by [@resir014]
 
-- Improved developer guide for Windows users. [#487]
+- Improved developer guide for Windows users. [#487], by [@resir014]
 
 ### API changes
 
@@ -38,7 +43,7 @@ This release mostly contains a lot of internal changes.
 
 - [Breaking change] Use `lib` folder to refer to individual module.
   `bms/speedcore` &rarr; `bms/lib/speedcore`
-- [New feature] Added support parsing `.dtx` files. [bemusic/bms-js#28]
+- [New feature] Added support parsing `.dtx` files. [bemusic/bms-js#28], by [@mugabe]
 - [Internals] Modernized the source code and moved into `bemuse` repository.
 
 #### `bmson@4.0.0`
@@ -59,7 +64,7 @@ This release mostly contains a lot of internal changes.
 
 - [Internals] Modernized the source code and moved into `bemuse` repository.
 
-[bemusic/bms-js#28]: https://github.com/bemusic/bms-js/pull/289
+[bemusic/bms-js#28]: https://github.com/bemusic/bms-js/pull/28
 [#483]: https://github.com/bemusic/bemuse/pull/483
 [#485]: https://github.com/bemusic/bemuse/pull/485
 [#487]: https://github.com/bemusic/bemuse/pull/487
@@ -71,10 +76,10 @@ This release mostly contains a lot of internal changes.
 ### New stuff
 
 - **New documentation site.** The docs site for the Bemuse project can now be
-  found at https://bemuse.ninja/project/. [#479]
+  found at https://bemuse.ninja/project/. [#479], by [@resir014]
 
 - **Experimental support for IPFS.** Please read more info about this feature in
-  the issue linked afterwards. [#480]
+  the issue linked afterwards. [#480], by [@dtinth]
 
 ### Fixes and improvements
 
@@ -86,13 +91,13 @@ This release mostly contains a lot of internal changes.
     ~40ms.
 
 - **Fixed a long-standing audio latency calibration bug** where it would cause
-  the game to go out of sync from the display. [#474]
+  the game to go out of sync from the display. [#474], by [@dtinth]
 
-- **UI updated for mobile devices.** [#478]
+- **UI updated for mobile devices.** [#478], by [@dtinth]
 
 ### Internal changes
 
-- **Upgraded webpack** to v4. [#471]
+- **Upgraded webpack** to v4. [#471], by [@resir014]
 
 [#479]: https://github.com/bemusic/bemuse/pull/479
 [#480]: https://github.com/bemusic/bemuse/pull/480
