@@ -352,10 +352,3 @@ DocumentRoot "C:\Bemuse\myserver"
 Once the file is saved, open your XAMPP Control Pannel and run "Apache".
 
 Then connect to the music server with (http://bemuse.ninja/?server=https://localhost/).
-
-
-
-
-
-
-
