@@ -4,16 +4,10 @@
   "description": "BEAT☆MUSIC☆SEQUENCE, a web-based music game of the future",
   "main": "index.js",
   "private": true,
-  "workspaces": [
-    "website",
-    "packages/*"
-  ],
-  "browserslist": [
-    ">0.25%",
-    "not ie 11",
-    "not op_mini all"
-  ],
+  "workspaces": ["website", "packages/*"],
+  "browserslist": [">0.25%", "not ie 11", "not op_mini all"],
   "scripts": {
+    "bootstrap": "lerna bootstrap",
     "build": "gulp build",
     "build:netlify": "./bin/netlify-build",
     "pre-deploy": "gulp pre-deploy",
@@ -22,7 +16,10 @@
     "ci:code-review": "npm run code-review; ./bin/upload-code-review",
     "code-review": "gulp code-review",
     "lint": "gulp lint",
+    "postbootstrap": "lerna run prepare",
+    "postinstall": "npm run prepare",
     "pre-commit": "gulp pre-commit",
+    "prepare": "lerna run prepare",
     "prod-build": "cross-env NODE_ENV=production gulp build",
     "prod-start": "cross-env NODE_ENV=production HOT=true gulp server",
     "start": "cross-env HOT=true gulp server",
@@ -41,9 +38,7 @@
     "type": "git",
     "url": "https://github.com/spacetme/bemuse.git"
   },
-  "keywords": [
-    "bms"
-  ],
+  "keywords": ["bms"],
   "author": "Thai Pangsakulyanont <dtinth@spacet.me> (http://dt.in.th/)",
   "license": "AGPL-1.0",
   "bugs": {
