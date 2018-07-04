@@ -9,10 +9,10 @@ This page describes how to setup the project on your computer for local developm
 
 ### Windows, macOS and Linux
 
-* [Git](http://git-scm.com/)
-* [Node.js](http://nodejs.org/) (8.0.0+)
-* [Yarn](https://yarnpkg.com/)
-* Text Editor with [EditorConfig](http://editorconfig.org/) & [Prettier](https://prettier.io/) support. (We recommend [Visual Studio Code](https://code.visualstudio.com/))
+- [Git](http://git-scm.com/)
+- [Node.js](http://nodejs.org/) (8.0.0+)
+- [Yarn](https://yarnpkg.com/)
+- Text Editor with [EditorConfig](http://editorconfig.org/) & [Prettier](https://prettier.io/) support. (We recommend [Visual Studio Code](https://code.visualstudio.com/))
 
 #### Prerequisite Check
 
@@ -82,8 +82,8 @@ We measure the code coverage to make sure that most part of our code is covered 
 
 To turn on the coverage mode, start the server with the `BEMUSE_COV` environment variable set to `true`:
 
-```bash
-BEMUSE_COV=true npm start
+```sh-session
+$ BEMUSE_COV=true npm start
 ```
 
 Then run the unit tests. After the unit tests are run, the coverage report will be generated. They can be viewed at `http://localhost:8080/coverage/`.
