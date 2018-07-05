@@ -12,11 +12,11 @@ class ChangelogPanel extends React.Component {
   }
 
   componentDidMount () {
-    const promise = Promise.resolve(
-      $.get('https://api.github.com/repos/bemusic/bemuse/releases')
+    const promise = import('!!raw-loader!../../../CHANGELOG.md').then(
+      m => m.default
     )
     promise.then(
-      releases => this.setState({ data: { status: 'completed', releases } }),
+      changelog => this.setState({ data: { status: 'completed', changelog } }),
       () => this.setState({ data: { status: 'error' } })
     )
   }
@@ -44,15 +44,7 @@ class ChangelogPanel extends React.Component {
         releasesPage
       )
     }
-    const releases = _(this.state.data.releases || [])
-      .reject('draft')
-      .sortBy('created_at')
-      .reverse()
-      .take(10)
-      .value()
-    const changelog = releases
-      .map(release => `# ${release.tag_name}` + '\n\n' + release.body)
-      .join('\n\n')
+    const changelog = this.state.data.changelog
     const seeMore =
       '# Older Versions\n\n' +
       'The change log for older versions are available at the ' +
