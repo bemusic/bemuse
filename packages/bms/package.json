@@ -8,7 +8,7 @@
     "lib"
   ],
   "scripts": {
-    "prepare": "rm -rf lib && tsc",
+    "prepare": "rimraf lib && tsc",
     "test": "nyc -r text -r lcov gulp test",
     "pretest": "gulp bmspec:update"
   },

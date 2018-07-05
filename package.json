@@ -4,8 +4,15 @@
   "description": "BEAT☆MUSIC☆SEQUENCE, a web-based music game of the future",
   "main": "index.js",
   "private": true,
-  "workspaces": ["website", "packages/*"],
-  "browserslist": [">0.25%", "not ie 11", "not op_mini all"],
+  "workspaces": [
+    "website",
+    "packages/*"
+  ],
+  "browserslist": [
+    ">0.25%",
+    "not ie 11",
+    "not op_mini all"
+  ],
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "build": "gulp build",
@@ -26,7 +33,7 @@
     "test": "cross-env NODE_ENV=test BEMUSE_COV=true gulp test",
     "test-bed": "cross-env NODE_ENV=test test-bed",
     "travis": "gulp travis",
-    "readme:toc": "markdown-toc -i README.md"
+    "readme:update": "markdown-toc -i README.md && prettier --write README.md"
   },
   "importSort": {
     ".js, .jsx, .es6, .es": {
@@ -38,7 +45,9 @@
     "type": "git",
     "url": "https://github.com/spacetme/bemuse.git"
   },
-  "keywords": ["bms"],
+  "keywords": [
+    "bms"
+  ],
   "author": "Thai Pangsakulyanont <dtinth@spacet.me> (http://dt.in.th/)",
   "license": "AGPL-1.0",
   "bugs": {
@@ -122,7 +131,9 @@
     "prettier-eslint": "^8.6.0",
     "prettier-eslint-cli": "^4.7.0",
     "puppeteer": "^0.13.0",
+    "raw-loader": "^0.5.1",
     "react-transform-catch-errors": "^1.0.1",
+    "rimraf": "^2.6.2",
     "sass-loader": "^6.0.6",
     "script-loader": "^0.7.2",
     "serviceworker-loader": "^0.1.0",

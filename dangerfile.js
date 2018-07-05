@@ -2,6 +2,7 @@ const { danger, warn, fail } = require('danger')
 const { CLIEngine } = require('eslint')
 const fs = require('fs')
 const toc = require('markdown-toc')
+const prettier = require('prettier')
 
 // No PR is too small to include a description of why you made a change
 if (danger.github.pr.body.length < 10) {
@@ -30,8 +31,11 @@ report.results.forEach(result => {
 
 // Readme
 const readme = fs.readFileSync('README.md', 'utf8')
-if (toc.insert(readme) !== readme) {
+const formattedReadme = prettier.format(toc.insert(readme), {
+  parser: 'markdown'
+})
+if (formattedReadme !== readme) {
   fail(
-    'Please update README file with up-to-date table of contents: `yarn readme:toc`'
+    'Please format the README and update its table of contents using `yarn readme:update`.'
   )
 }

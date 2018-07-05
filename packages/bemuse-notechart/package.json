@@ -7,7 +7,7 @@
     "lib"
   ],
   "scripts": {
-    "prepare": "rm -rf lib && tsc",
+    "prepare": "rimraf lib && tsc",
     "test": "nyc -r text -r lcov mocha -r ts-node/register"
   },
   "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",

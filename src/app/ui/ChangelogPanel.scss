@@ -1,4 +1,3 @@
-
 .ChangelogPanel {
   &のcontent {
     width: 80vw;
@@ -12,20 +11,24 @@
   }
   &のcontent .Markdown {
     h1 {
+      display: none;
+    }
+    h2 {
       color: #d7fc70;
       font-size: 1.5em;
+      margin: 0;
     }
-    h1:not(:first-child) {
+    h2:not(:first-of-type) {
       margin-top: 1.5em;
       padding-top: 0;
       &::before {
         content: '';
         display: block;
-        border-top: 1px solid #656463;
+        border-top: 2px solid #454443;
         margin: 0 -16px 1.5em;
       }
     }
-    h2 {
+    h3 {
       font-size: 1.4em;
       font-weight: normal;
       color: #8b8685;
