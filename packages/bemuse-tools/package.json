@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "test": "nyc -r text -r lcov mocha -r ts-node/register spec/*_spec.js",
-    "prepare": "rm -rf lib && tsc"
+    "prepare": "rimraf lib && tsc"
   },
   "bin": {
     "bemuse-tools": "./bin/bemuse-tools"

@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "test": "nyc -r text -r lcov mocha src/test.js -r ts-node/register",
-    "prepare": "rm -rf lib && tsc"
+    "prepare": "rimraf lib && tsc"
   },
   "repository": {
     "type": "git",
