@@ -45,7 +45,7 @@ export function readAsync (buffer, options, callback) {
   setTimeout(function () {
     var result
     try {
-      result = { value: exports.read(buffer) }
+      result = { value: exports.read(buffer, options) }
     } catch (e) {
       result = { error: e }
     }
