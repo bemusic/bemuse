@@ -1,6 +1,6 @@
 # Changelog
 
-[@Coppertine]: https://github.com/Coppertine
+[@coppertine]: https://github.com/Coppertine
 [@dtinth]: https://github.com/dtinth
 [@mugabe]: https://github.com/mugabe
 [@resir014]: https://github.com/resir014
@@ -11,7 +11,8 @@ This release mostly contains a lot of internal changes.
 
 ### Improvements
 
-- **Improved documentation.** Our docs have been split into 3 sections ([#489], by [@resir014]):
+- **Improved documentation.** Our docs have been split into 3 sections ([#489],
+  by [@resir014]):
 
   - **Users** for people who play this game. This section covers the user guide,
     the game mechanics, and some FAQs.
@@ -23,6 +24,9 @@ This release mostly contains a lot of internal changes.
 
 - Added information on documentation for running a music server on a Windows
   local machine. [#490], by [@Coppertine]
+
+- Forced encoding. Encoding can be forced by setting the file extension. For
+  example, `HYPER.sjis.bms` will always be read as Shift-JIS.
 
 ### Internal changes
 
@@ -43,8 +47,13 @@ This release mostly contains a lot of internal changes.
 
 - [Breaking change] Use `lib` folder to refer to individual module.
   `bms/speedcore` &rarr; `bms/lib/speedcore`
-- [New feature] Added support parsing `.dtx` files. [bemusic/bms-js#28], by [@mugabe]
+- [New feature] Added support parsing `.dtx` files. [bemusic/bms-js#28], by
+  [@mugabe]
 - [Internals] Modernized the source code and moved into `bemuse` repository.
+
+#### `bms@3.1.0`
+
+- [New feature] `BMS.Reader.read` and `BMS.Reader.readAsync` now takes an optional options object, allowing you to force file encoding.
 
 #### `bmson@4.0.0`
 
@@ -56,13 +65,26 @@ This release mostly contains a lot of internal changes.
   `bemuse-notechart/loader` &rarr; `bemuse-notechart/lib/loader`
 - [Internals] Modernized the source code and moved into `bemuse` repository.
 
+#### `bemuse-notechart@2.1.0`
+
+- [Improvement] File encoding can be forced through file name extension.
+
 #### `bemuse-indexer@4.0.0`
 
 - [Internals] Modernized the source code and moved into `bemuse` repository.
 
+#### `bemuse-notechart@4.1.0`
+
+- [Improvement] File encoding can be forced through file name extension.
+
 #### `bemuse-tools@3.0.0`
 
 - [Internals] Modernized the source code and moved into `bemuse` repository.
+
+#### `bemuse-tools@3.1.0`
+
+- [Bugfix] Removed peer dependencies error.
+- [Improvement] File encoding can be forced through file name extension.
 
 [bemusic/bms-js#28]: https://github.com/bemusic/bms-js/pull/28
 [#483]: https://github.com/bemusic/bemuse/pull/483
