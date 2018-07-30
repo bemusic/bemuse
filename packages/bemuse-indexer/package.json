@@ -23,7 +23,7 @@
   "homepage": "https://github.com/bemusic/indexer",
   "dependencies": {
     "bluebird": "^3.5.1",
-    "bms": "^3.0.0",
+    "bms": "^3.1.0-1",
     "bmson": "^4.0.0",
     "invariant": "^2.2.4",
     "lodash": "^4.17.10",

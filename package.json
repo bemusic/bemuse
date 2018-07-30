@@ -162,7 +162,7 @@
     "bemuse-indexer": "^4.0.0-2",
     "bemuse-notechart": "^2.0.0-2",
     "bluebird": "^3.3.4",
-    "bms": "^3.0.0-2",
+    "bms": "^3.1.0-1",
     "bmson": "^4.0.0-2",
     "bson-objectid": "^1.1.4",
     "bytes": "^3.0.0",
