@@ -19,7 +19,11 @@ export class NotechartLoader {
 
   async loadBMS (arraybuffer, resource, options) {
     let buffer = coerceToBuffer(arraybuffer)
-    let source = await Promise.promisify(BMS.Reader.readAsync)(buffer)
+    let readerOptions = BMS.Reader.getReaderOptionsFromFilename(resource.name)
+    let source = await Promise.promisify(BMS.Reader.readAsync)(
+      buffer,
+      readerOptions
+    )
     let compileResult = BMS.Compiler.compile(source)
     let chart = compileResult.chart
     let notechart = BMSNotechartLoader.fromBMSChart(chart, options)

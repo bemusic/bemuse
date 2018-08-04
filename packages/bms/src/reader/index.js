@@ -9,13 +9,19 @@ var chardet = require('bemuse-chardet/bemuse-chardet')
 var iconv = require('iconv-lite')
 
 /**
+ * @typedef {Object} ReaderOptions
+ * @prop {string} [forceEncoding] Force an encoding.
+ */
+
+/**
  * Reads the buffer, detect the character set, and returns the decoded
  * string synchronously.
  * @param {Buffer} buffer
+ * @param {ReaderOptions | null} buffer
  * @returns {string} the decoded text
  */
-export function read (buffer) {
-  var charset = chardet.detect(buffer)
+export function read (buffer, options = null) {
+  var charset = (options && options.forceEncoding) || chardet.detect(buffer)
   var text = iconv.decode(buffer, charset)
   if (text.charCodeAt(0) === 0xfeff) {
     // BOM?!
@@ -28,13 +34,18 @@ export function read (buffer) {
 /**
  * Like `read(buffer)`, but this is the asynchronous version.
  * @param {Buffer} buffer
+ * @param {ReaderOptions | null} [options]
  * @param {(error: Error | null, value?: string) => any} callback
  */
-export function readAsync (buffer, callback) {
+export function readAsync (buffer, options, callback) {
+  if (!callback) {
+    callback = options
+    options = null
+  }
   setTimeout(function () {
     var result
     try {
-      result = { value: exports.read(buffer) }
+      result = { value: exports.read(buffer, options) }
     } catch (e) {
       result = { error: e }
     }
@@ -45,3 +56,5 @@ export function readAsync (buffer, callback) {
     }
   })
 }
+
+export { getReaderOptionsFromFilename } from './getReaderOptionsFromFilename'

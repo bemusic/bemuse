@@ -43,6 +43,15 @@ describe('bms.Reader', function () {
         0xfeff
       )
     })
+
+    it('should should encoding to be forced', function () {
+      const options = Reader.getReaderOptionsFromFilename('HYPER.sjis.bms')
+      // Unfortunately, the text "隣町の蜃気楼" is detected as EUC-KR.
+      // We must provide a way to allow encoding to be fixed.
+      expect(Reader.read(fixture('jp-ambiguous.sjis'), options)).to.match(
+        /隣町の蜃気楼/
+      )
+    })
   })
 
   describe('asynchronous detection', function () {

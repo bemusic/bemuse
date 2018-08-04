@@ -5,8 +5,12 @@ export function read (buffer) {
   throw new Error('Synchronous read unsupported in browser!')
 }
 
-export function readAsync (buffer, callback) {
-  var charset = chardet.detect(buffer)
+export function readAsync (buffer, options, callback) {
+  if (!callback) {
+    callback = options
+    options = null
+  }
+  var charset = (options && options.forceEncoding) || chardet.detect(buffer)
   var reader = new FileReader()
   reader.onload = function () {
     callback(null, reader.result)
@@ -16,3 +20,5 @@ export function readAsync (buffer, callback) {
   }
   reader.readAsText(new Blob([buffer]), charset)
 }
+
+export { getReaderOptionsFromFilename } from './getReaderOptionsFromFilename'

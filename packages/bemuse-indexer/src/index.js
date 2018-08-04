@@ -23,8 +23,9 @@ var readBMS = Promise.promisify(Reader.readAsync, Reader)
 const _extensions = {}
 export { _extensions as extensions }
 
-_extensions['.bms'] = function (source) {
-  return readBMS(source).then(function (str) {
+_extensions['.bms'] = function (source, meta) {
+  const options = Reader.getReaderOptionsFromFilename(meta.name)
+  return readBMS(source, options).then(function (str) {
     var chart = Compiler.compile(str).chart
     var info = SongInfo.fromBMSChart(chart)
     var notes = Notes.fromBMSChart(chart)
