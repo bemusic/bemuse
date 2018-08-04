@@ -66,7 +66,13 @@ Install the project's dependencies. Note that we use Yarn, not npm:
 $ yarn
 ```
 
-When it finishes installing, start the development server:
+Before running the development server, you will have to compile all subprojects:
+
+```sh-session
+$ yarn lerna run prepare
+```
+
+After everything is installed and all subprojects have been compiled, you can start the development server:
 
 ```sh-session
 $ yarn start
