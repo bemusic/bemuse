@@ -122,13 +122,17 @@ export class GameDisplay {
       touchButtons.classList.add('is-visible')
     } else {
       let shown = false
-      this.wrapper.addEventListener('touchstart', () => {
-        if (shown) return
-        shown = true
-        touchButtons.classList.add('is-visible')
-      }, true)
+      this.wrapper.addEventListener(
+        'touchstart',
+        () => {
+          if (shown) return
+          shown = true
+          touchButtons.classList.add('is-visible')
+        },
+        true
+      )
     }
-    const createTouchButton = (className, onClick) => {
+    const addTouchButton = (className, onClick) => {
       let button = document.createElement('button')
       button.addEventListener(
         'touchstart',
@@ -144,8 +148,8 @@ export class GameDisplay {
       button.className = className
       touchButtons.appendChild(button)
     }
-    createTouchButton('game-display--touch-escape-button', () => this._onEscape())
-    createTouchButton('game-display--touch-replay-button', () => this._onReplay())
+    addTouchButton('game-display--touch-escape-button', () => this._onEscape())
+    addTouchButton('game-display--touch-replay-button', () => this._onReplay())
   }
   get context () {
     return this._context
