@@ -23,6 +23,9 @@ function Toolbar ({ items }) {
     />
   )
 }
+Toolbar.propTypes = {
+  items: PropTypes.array
+}
 
 const defaultOptions = {
   href: 'javascript://bemuse.ninja',
