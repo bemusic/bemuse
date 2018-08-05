@@ -4,6 +4,7 @@ import $ from 'jquery'
 
 import PlayerDisplay from './player-display'
 import formatTime from '../../utils/formatTime'
+import { shouldDisableFullScreen } from 'bemuse/devtools/query-flags'
 
 export class GameDisplay {
   constructor ({ game, context, backgroundImagePromise, video }) {
@@ -23,6 +24,7 @@ export class GameDisplay {
     this._createTouchEscapeButton({
       displayByDefault: skinData.mainInputDevice === 'touch'
     })
+    this._createFullScreenButton()
   }
   setEscapeHandler (escapeHandler) {
     this._onEscape = escapeHandler
@@ -116,7 +118,7 @@ export class GameDisplay {
   }
   _createTouchEscapeButton ({ displayByDefault }) {
     const touchButtons = document.createElement('div')
-    touchButtons.className = 'game-display--touch-buttons'
+    touchButtons.className = 'game-display--touch-buttons is-left'
     this.wrapper.appendChild(touchButtons)
     if (displayByDefault) {
       touchButtons.classList.add('is-visible')
@@ -133,23 +135,31 @@ export class GameDisplay {
       )
     }
     const addTouchButton = (className, onClick) => {
-      let button = document.createElement('button')
-      button.addEventListener(
-        'touchstart',
-        e => {
-          e.stopPropagation()
-        },
-        true
-      )
-      button.onclick = e => {
-        e.preventDefault()
-        onClick()
-      }
-      button.className = className
+      let button = createTouchButton(onClick, className)
       touchButtons.appendChild(button)
     }
     addTouchButton('game-display--touch-escape-button', () => this._onEscape())
     addTouchButton('game-display--touch-replay-button', () => this._onReplay())
+  }
+
+  _createFullScreenButton () {
+    if (
+      shouldDisableFullScreen() ||
+      !document.documentElement.requestFullscreen
+    ) {
+      return
+    }
+    const touchButtons = document.createElement('div')
+    touchButtons.className = 'game-display--touch-buttons is-visible is-right'
+    this.wrapper.appendChild(touchButtons)
+    const onClick = () => {
+      document.documentElement.requestFullscreen()
+    }
+    const button = createTouchButton(
+      onClick,
+      'game-display--touch-fullscreen-button'
+    )
+    touchButtons.appendChild(button)
   }
   get context () {
     return this._context
@@ -160,6 +170,23 @@ export class GameDisplay {
   get wrapper () {
     return this._wrapper
   }
+}
+
+function createTouchButton (onClick, className) {
+  let button = document.createElement('button')
+  button.addEventListener(
+    'touchstart',
+    e => {
+      e.stopPropagation()
+    },
+    true
+  )
+  button.onclick = e => {
+    e.preventDefault()
+    onClick()
+  }
+  button.className = className
+  return button
 }
 
 export default GameDisplay
