@@ -13,12 +13,13 @@ import Toggle from 'react-toggled'
 function Toolbar ({ items }) {
   return (
     <WindowSize
-      render={({ width, height }) => (
-        console.log(width, height),
-        width < 720
-          ? <MobileToolbar items={items} />
-          : <DesktopToolbar items={items} />
-      )}
+      render={({ width, height }) =>
+        width < 720 ? (
+          <MobileToolbar items={items} />
+        ) : (
+          <DesktopToolbar items={items} />
+        )
+      }
     />
   )
 }
@@ -49,9 +50,15 @@ class DesktopToolbar extends React.PureComponent {
       <SceneToolbar>
         {this.props.items.map((element, index) => {
           if (element.type === 'item') {
-            return <React.Fragment key={index}>{this.renderItem(element)}</React.Fragment>
+            return (
+              <React.Fragment key={index}>
+                {this.renderItem(element)}
+              </React.Fragment>
+            )
           } else {
-            return <React.Fragment key={index}>{this.renderSpacer()}</React.Fragment>
+            return (
+              <React.Fragment key={index}>{this.renderSpacer()}</React.Fragment>
+            )
           }
         })}
       </SceneToolbar>
@@ -91,24 +98,32 @@ class MobileToolbar extends React.PureComponent {
   }
   render () {
     return (
-      <Toggle>{({ on, getTogglerProps }) => (
-        <React.Fragment>
-          <FloatingMobileMenu visible={on}>
-            {this.props.items.map((element, index) => {
-              if (element.type === 'item') {
-                return <React.Fragment key={index}>{this.renderItem(element)}</React.Fragment>
-              } else {
-                return <React.Fragment key={index}>{this.renderSeparator()}</React.Fragment>
-              }
-            })}
-          </FloatingMobileMenu>
-          <FloatingMobileButton
-            buttonProps={getTogglerProps()}
-          >
-            <Icon name='bars' />
-          </FloatingMobileButton>
-        </React.Fragment>
-      )}</Toggle>
+      <Toggle>
+        {({ on, getTogglerProps }) => (
+          <React.Fragment>
+            <FloatingMobileMenu visible={on}>
+              {this.props.items.map((element, index) => {
+                if (element.type === 'item') {
+                  return (
+                    <React.Fragment key={index}>
+                      {this.renderItem(element)}
+                    </React.Fragment>
+                  )
+                } else {
+                  return (
+                    <React.Fragment key={index}>
+                      {this.renderSeparator()}
+                    </React.Fragment>
+                  )
+                }
+              })}
+            </FloatingMobileMenu>
+            <FloatingMobileButton buttonProps={getTogglerProps()}>
+              <Icon name='bars' />
+            </FloatingMobileButton>
+          </React.Fragment>
+        )}
+      </Toggle>
     )
   }
   renderItem (item) {
