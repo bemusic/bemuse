@@ -75,6 +75,8 @@ export function main () {
   let timeSynchroServer =
     getTimeSynchroServer() || 'wss://timesynchro.herokuapp.com/'
   if (timeSynchroServer) now.synchronize(timeSynchroServer)
+
+  trackFullscreenEvents()
 }
 
 function displayFirstScene () {
@@ -112,6 +114,19 @@ function setupServiceWorker () {
 function registerServiceWorker () {
   const url = '/sw-loader.js?path=' + encodeURIComponent(workerPath)
   return navigator.serviceWorker.register(url)
+}
+
+function trackFullscreenEvents () {
+  let fullscreen = false
+  document.addEventListener('fullscreenchange', () => {
+    if (document.fullscreenElement && !fullscreen) {
+      fullscreen = true
+      Analytics.send('fullscreen', 'enter')
+    } else if (!document.fullscreenElement && fullscreen) {
+      fullscreen = false
+      Analytics.send('fullscreen', 'exit')
+    }
+  })
 }
 
 window.addEventListener('beforeunload', () => {

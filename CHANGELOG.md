@@ -7,7 +7,14 @@
 
 ## Unreleased
 
-This release mostly contains a lot of internal changes.
+This update took a really long time as I (dtinth) was busy with other things in
+life. Also, this release contains many internal changes to the code
+infrastructure, which is, you know, the less exciting parts of the work.
+
+### New stuff
+
+- **Full-screen button** is displayed at the top-right corner inside the game.
+  Automatic full-screen has been removed. [#495], by [@dtinth]
 
 ### Improvements
 
@@ -53,7 +60,8 @@ This release mostly contains a lot of internal changes.
 
 #### `bms@3.1.0`
 
-- [New feature] `BMS.Reader.read` and `BMS.Reader.readAsync` now takes an optional options object, allowing you to force file encoding.
+- [New feature] `BMS.Reader.read` and `BMS.Reader.readAsync` now takes an
+  optional options object, allowing you to force file encoding.
 
 #### `bmson@4.0.0`
 
@@ -87,6 +95,7 @@ This release mostly contains a lot of internal changes.
 - [Improvement] File encoding can be forced through file name extension.
 
 [bemusic/bms-js#28]: https://github.com/bemusic/bms-js/pull/28
+[#495]: https://github.com/bemusic/bemuse/pull/495
 [#483]: https://github.com/bemusic/bemuse/pull/483
 [#485]: https://github.com/bemusic/bemuse/pull/485
 [#487]: https://github.com/bemusic/bemuse/pull/487

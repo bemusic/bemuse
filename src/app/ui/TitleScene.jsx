@@ -7,12 +7,10 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 import Scene from 'bemuse/ui/Scene'
-import screenfull from 'screenfull'
 import version from 'bemuse/utils/version'
 import { hot } from 'react-hot-loader'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
-import { shouldDisableFullScreen } from 'bemuse/devtools/query-flags'
 import connectIO from 'bemuse/impure-react/connectIO'
 
 import * as Analytics from '../analytics'
@@ -134,7 +132,7 @@ class TitleScene extends React.Component {
     )
   }
 
-  openLink = (e) => {
+  openLink = e => {
     e.preventDefault()
     window.open(
       $(e.target)
@@ -144,7 +142,7 @@ class TitleScene extends React.Component {
     )
   }
 
-  openTwitterLink = (e) => {
+  openTwitterLink = e => {
     this.openLink(e)
     if (this.props.onTwitterButtonClick) this.props.onTwitterButtonClick()
   }
@@ -152,12 +150,6 @@ class TitleScene extends React.Component {
   enterGame () {
     SCENE_MANAGER.push(<ModeSelectScene />).done()
     Analytics.send('TitleScene', 'enter game')
-    // go fullscreen
-    if (screenfull.enabled && !shouldDisableFullScreen()) {
-      let safari =
-        /Safari/.test(navigator.userAgent) && !/Chrom/.test(navigator.userAgent)
-      if (!safari) screenfull.request()
-    }
   }
 
   showAbout () {
