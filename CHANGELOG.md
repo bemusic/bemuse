@@ -5,7 +5,7 @@
 [@mugabe]: https://github.com/mugabe
 [@resir014]: https://github.com/resir014
 
-## Unreleased
+## v42
 
 This update took a really long time as I (dtinth) was busy with other things in
 life. Also, this release contains many internal changes to the code
@@ -15,6 +15,8 @@ infrastructure, which is, you know, the less exciting parts of the work.
 
 - **Full-screen button** is displayed at the top-right corner inside the game.
   Automatic full-screen has been removed. [#495], by [@dtinth]
+
+- **3 new songs added.** More songs will be added soon, stay tuned.
 
 ### Improvements
 
