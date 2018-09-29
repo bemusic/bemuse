@@ -12,8 +12,8 @@ h4 {
 }
 
 dl {
-  padding-top: 10px;
-  line-height: 1.7;
+  margin-bottom: 1em;
+  margin-top: 0;
 }
 dl dt {
   font-weight: bold;
@@ -23,17 +23,8 @@ dl dd {
   margin-bottom: 10px;
 }
 
-table tr th {
-  font-family: $baseFont;
-}
-
-.fixedHeaderContainer header h2 {
-  font-family: $baseFont;
-}
-
-.container .wrapper h3 {
-  padding-top: 20px;
-  margin: 10px 0;
+.mainContainer {
+  padding-bottom: 0;
 }
 
 .container .wrapper .imageAlignSide p {

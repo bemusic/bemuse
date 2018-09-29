@@ -239,13 +239,13 @@ class Index extends React.Component {
     let language = this.props.language || ''
 
     return (
-      <div>
+      <React.Fragment>
         <HomeSplash language={language} />
         <div className='mainContainer'>
           <FeatureTour />
           <FooterButtons />
         </div>
-      </div>
+      </React.Fragment>
     )
   }
 }

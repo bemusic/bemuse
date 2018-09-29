@@ -25,6 +25,7 @@ const siteConfig = {
   tagline: 'online, web-based rhythm game',
   url: 'https://bemuse.ninja' /* your website url */,
   baseUrl: '/project/' /* base url for your project */,
+  organizationName: 'bemusic', // or set an env variable ORGANIZATION_NAME
   projectName: 'bemuse',
   headerLinks: [
     { href: 'https://bemuse.ninja', label: 'Play' },
@@ -54,8 +55,6 @@ const siteConfig = {
     'Copyright © ' +
     new Date().getFullYear() +
     ' Your Name or Your Company Name',
-  // organizationName: 'deltice', // or set an env variable ORGANIZATION_NAME
-  // projectName: 'test-site', // or set an env variable PROJECT_NAME
   highlight: {
     // Highlight.js theme to use for syntax highlighting in code blocks
     theme: 'default'
@@ -68,9 +67,9 @@ const siteConfig = {
     'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
   ],
   // You may provide arbitrary config keys to be used as needed by your template.
-  repoUrl: 'https://github.com/bemusic/bemuse'
-  /* On page navigation for the current documentation page */
-  // onPageNav: 'separate',
+  repoUrl: 'https://github.com/bemusic/bemuse',
+  // On page navigation for the current documentation page
+  onPageNav: 'separate'
 }
 
 module.exports = siteConfig

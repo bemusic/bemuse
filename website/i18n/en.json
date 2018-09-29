@@ -4,32 +4,62 @@
     "next": "Next",
     "previous": "Previous",
     "tagline": "online, web-based rhythm game",
-    "architecture": "Project Architecture",
-    "Architecture": "Architecture",
-    "bms-extensions": "Bemuse's BMS Extensions",
-    "BMS Extensions": "BMS Extensions",
-    "bms-support": "BMS Support in Bemuse",
-    "BMS Support": "BMS Support",
-    "colors": "Colors",
-    "developer-guide": "Developer Guide",
-    "faq": "FAQ",
-    "game-loop": "The Game Loop",
-    "music-server": "How to Host a Music Server",
-    "Music Server": "Music Server",
-    "options": "Game Options and Configuration",
-    "Options": "Options",
-    "scoring-and-judgment": "Scoring and Judgment",
-    "skinning": "Skinning",
-    "user-guide": "User Guide",
-    "User Guide": "User Guide",
-    "Play": "Play",
-    "Docs": "Docs",
-    "Contribute": "Contribute",
-    "Discord": "Discord",
-    "GitHub": "GitHub",
-    "Users": "Users",
-    "Creators": "Creators",
-    "Developers": "Developers"
+    "docs": {
+      "architecture": {
+        "title": "Project Architecture",
+        "sidebar_label": "Architecture"
+      },
+      "bms-extensions": {
+        "title": "Bemuse's BMS Extensions",
+        "sidebar_label": "BMS Extensions"
+      },
+      "bms-support": {
+        "title": "BMS Support in Bemuse",
+        "sidebar_label": "BMS Support"
+      },
+      "colors": {
+        "title": "Colors"
+      },
+      "developer-guide": {
+        "title": "Developer Guide"
+      },
+      "faq": {
+        "title": "FAQ"
+      },
+      "game-loop": {
+        "title": "The Game Loop"
+      },
+      "music-server": {
+        "title": "How to Host a Music Server",
+        "sidebar_label": "Music Server"
+      },
+      "options": {
+        "title": "Game Options and Configuration",
+        "sidebar_label": "Options"
+      },
+      "scoring-and-judgment": {
+        "title": "Scoring and Judgment"
+      },
+      "skinning": {
+        "title": "Skinning"
+      },
+      "user-guide": {
+        "title": "User Guide",
+        "sidebar_label": "User Guide"
+      }
+    },
+    "links": {
+      "Play": "Play",
+      "Docs": "Docs",
+      "Contribute": "Contribute",
+      "Discord": "Discord",
+      "GitHub": "GitHub"
+    },
+    "categories": {
+      "Users": "Users",
+      "Creators": "Creators",
+      "Developers": "Developers"
+    }
   },
   "pages-strings": {
     "Help Translate|recruit community translators for your project": "Help Translate",
