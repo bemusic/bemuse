@@ -241,7 +241,7 @@ class Index extends React.Component {
     return (
       <React.Fragment>
         <HomeSplash language={language} />
-        <div className='mainContainer'>
+        <div className='mainContainer homepageMainContainer'>
           <FeatureTour />
           <FooterButtons />
         </div>
