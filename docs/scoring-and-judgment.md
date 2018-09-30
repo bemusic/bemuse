@@ -28,8 +28,8 @@ The different timegates are designed to make the game easier for beginners, with
 
 The final score is split into 2 parts:
 
-* 500000 for accuracy
-* 55555 for combo bonus
+- 500000 for accuracy
+- 55555 for combo bonus
 
 Each combo has an associated score.
 
@@ -46,9 +46,9 @@ Combo bonus is the sum of combo score for each hit, divided by maximum possible 
 
 **Example:** There are 100 notes. 60 notes have been hit, I missed a note, and hit 39 other notes.
 
-* Obtained combo score = 108 for first 60 notes + 56 for 39 other notes = `164`
-* Maximum possible combo score = `237`
-* Combo bonus = `164 / 237 * 55555 = 38443`
+- Obtained combo score = 108 for first 60 notes + 56 for 39 other notes = `164`
+- Maximum possible combo score = `237`
+- Combo bonus = `164 / 237 * 55555 = 38443`
 
 ## Grading
 
@@ -65,5 +65,5 @@ After playing the game, the grade is calculated according to this table:
 
 ## References
 
-* The original [pull request](https://github.com/bemusic/bemuse/pull/446) implementing the scoring system.
-* [Essay by @dtinth](https://qiita.com/dtinth/items/5b9f6b876a0a777eec50) regarding the new timegates & scoring.
+- The original [pull request](https://github.com/bemusic/bemuse/pull/446) implementing the scoring system.
+- [Essay by @dtinth](https://qiita.com/dtinth/items/5b9f6b876a0a777eec50) regarding the new timegates & scoring.

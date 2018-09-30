@@ -17,9 +17,9 @@ This guide is valid for all major operating systems (Windows, Linux, or macOS), 
 
 ### macOS
 
-* [Homebrew](http://brew.sh/)
-* [Node.js](https://nodejs.org/)
-* [SoX](http://sox.sourceforge.net/): `brew install sox --with-libvorbis`
+- [Homebrew](http://brew.sh/)
+- [Node.js](https://nodejs.org/)
+- [SoX](http://sox.sourceforge.net/): `brew install sox --with-libvorbis`
 
 #### Prerequisite Check
 
@@ -27,16 +27,16 @@ Run these commands inside the Terminal.
 
 **Node.js**: You should see the version number:
 
-```bash
+```sh-session
 $ node -v
-# v9.8.0
+v10.11.0
 ```
 
 **SoX**: You should see the SoX version:
 
-```bash
+```sh-session
 $ sox --version
-# sox:      SoX v14.4.2
+sox:      SoX v14.4.2
 ```
 
 <div class="admonition note">
@@ -46,14 +46,14 @@ $ sox --version
 
 ### Windows
 
-* [Node.js](https://nodejs.org/)
-* [SoX](http://sox.sourceforge.net/): Download from http://sourceforge.net/projects/sox/files/sox/
-* [QuickTime Player](http://www.apple.com/quicktime/download/) or [iTunes](http://www.apple.com/itunes/download/)
-* [qaac](https://sites.google.com/site/qaacpage/)
+- [Node.js](https://nodejs.org/)
+- [SoX](http://sox.sourceforge.net/): Download from http://sourceforge.net/projects/sox/files/sox/
+- [QuickTime Player](http://www.apple.com/quicktime/download/) or [iTunes](http://www.apple.com/itunes/download/)
+- [qaac](https://sites.google.com/site/qaacpage/)
 
 **For hosting on your local machine**:
 
-* [xampp](https://www.apachefriends.org)
+- [xampp](https://www.apachefriends.org)
 
 #### Installation
 
@@ -309,7 +309,6 @@ To connect to the music server, go to `http://bemuse.ninja/?server=<your URL>`.
 
 Example: http://bemuse.ninja/?server=http://flicknote.bemuse.ninja/bemuse/mumei12
 
-
 ### On a Local Machine
 
 Navigate to your Apache Config folder of XAMPP (e.g. `C:\xampp\apache\conf`) and open `httpd.conf`
@@ -331,16 +330,19 @@ DocumentRoot "C:\Bemuse\myserver"
 ```
 
 Also change the value found in the `Directory` tag to the server folder
+
 ```
 <Directory "C:\Bemuse\myserver">
 ```
 
 Place this line inside the `Directory` tag
+
 ```
 Header set Access-Control-Allow-Origin "*"
 ```
 
 So it should look like below
+
 ```
 DocumentRoot "C:\Bemuse\myserver"
 <Directory "C:\Bemuse\myserver">
