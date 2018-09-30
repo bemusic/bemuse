@@ -125,12 +125,15 @@ const content = `
 class Music extends React.Component {
   render () {
     return (
-      <div className='mainContainer'>
+      <div className='docMainWrapper wrapper'>
         <Container className='mainContainer documentContainer postContainer'>
           <div className='post'>
             <header className='postHeader'>
-              <h2>Artists Showcase</h2>
-              <p>We'd like to thank the following artists for letting us use their songs in the game.</p>
+              <h1 className='postHeaderTitle'>Artists Showcase</h1>
+              <p>
+                We'd like to thank the following artists for letting us use
+                their songs in the game.
+              </p>
             </header>
           </div>
           <div dangerouslySetInnerHTML={{ __html: content }} />

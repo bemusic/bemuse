@@ -58,7 +58,7 @@ class Help extends React.Component {
         <Container className='mainContainer documentContainer postContainer'>
           <div className='post'>
             <header className='postHeader'>
-              <h2>Contribute</h2>
+              <h1 className='postHeaderTitle'>Contribute</h1>
             </header>
             <MarkdownBlock>{pageContent}</MarkdownBlock>
             <GridBlock contents={supportLinks} layout='threeColumn' />
