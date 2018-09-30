@@ -4,7 +4,7 @@
 }
 .mainContainer .wrapper .post .BrowserScreenshot {
   margin-top: 1.6em;
-  margin-bottom: 0.8em;
+  margin-bottom: 1.6em;
 }
 .mainContainer .wrapper .BrowserScreenshot > p {
   height: 0;
@@ -12,13 +12,14 @@
   box-sizing: content-box;
   overflow: hidden;
   background: #c6c6c6;
+  margin: 0;
   padding-top: 24px;
   padding-bottom: 56.25%;
   position: relative;
   border-radius: 4px;
 }
 .mainContainer .wrapper .BrowserScreenshot > p::before {
-  content: '';
+  content: "";
   display: block;
   width: 12px;
   height: 12px;
