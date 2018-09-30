@@ -1,25 +1,5 @@
 'use strict'
 
-/* List of artists used for the /music.html page */
-/* TODO: Fetch from the artists.json file dynamically  */
-const artists = [
-  {
-    name: '5argon vs encX',
-    url: 'https://soundcloud.com/5argon',
-    pinned: true
-  },
-  {
-    name: '5argon',
-    url: 'https://soundcloud.com/5argon',
-    pinned: true
-  },
-  {
-    name: 'a_hisa',
-    url: 'http://hisaweb.6.ql.bz/',
-    pinned: true
-  }
-]
-
 const siteConfig = {
   title: 'Bemuse' /* title for your website */,
   tagline: 'online, web-based rhythm game',
@@ -34,7 +14,6 @@ const siteConfig = {
     { href: 'https://discord.gg/aB6ucmx', label: 'Discord' },
     { href: 'https://github.com/bemusic/bemuse', label: 'GitHub' }
   ],
-  artists,
   /* path to images for header/footer */
   headerIcon: 'img/white-logo.png',
   footerIcon: 'img/white-logo.png',
