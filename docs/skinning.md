@@ -16,18 +16,14 @@ will see several files.
   This is the skin file that will be loaded by Bemuse. **Do not edit
   this file,** since this file has been generated from the skin
   template.
-
 - `skin_template.jade`  
   This is the skin template that is used to generate skin.xml. It is
   written in [Jade](http://jade-lang.com/) language.
-
 - `skin_data.yml`  
   A YAML file describing global variables available to the skin
   template.
-
 - `gulpfile.js`  
   A Gulp script to compile the template into skin.xml.
-
 - `*/*.png`  
   Image assets.
 
