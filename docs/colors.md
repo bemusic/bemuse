@@ -12,11 +12,7 @@ These are the colors used throughout the project.
 - **Gold** is used on the stars separating the words “beat”, “music” and “sequence.”
 
 <div id="colors">
-
-<div>
   <color-list :colors="colors"></color-list>
-</div>
-
 </div>
 
 <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>

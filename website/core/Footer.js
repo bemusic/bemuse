@@ -19,7 +19,6 @@ class Footer extends React.Component {
   }
 
   render () {
-    const currentYear = new Date().getFullYear()
     return (
       <footer className='nav-footer' id='footer'>
         <section className='sitemap'>
@@ -55,9 +54,7 @@ class Footer extends React.Component {
           </div>
         </section>
 
-        <section className='copyright'>
-          Copyright &copy; {currentYear} Bemuse Team
-        </section>
+        <section className='copyright'>{this.props.config.copyright}</section>
       </footer>
     )
   }

@@ -27,6 +27,10 @@ dl dd {
   padding: 0;
 }
 
+.projectTitle {
+  margin-top: 0;
+}
+
 .container .wrapper .imageAlignSide p {
   text-align: left;
 }

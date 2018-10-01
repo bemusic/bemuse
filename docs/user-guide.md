@@ -23,10 +23,10 @@ the title screen:
 
 Supported web browsers include:
 
-* Google Chrome (latest version)
-* Mozilla Firefox (latest version)
-* iOS Safari
-* Android Chrome (Oreo and above)
+- Google Chrome (latest version)
+- Mozilla Firefox (latest version)
+- iOS Safari
+- Android Chrome (Oreo and above)
 
 Click the **Enter Game** button.
 
@@ -164,14 +164,14 @@ After finishing a song, you will see the result screen:
 
 1.  The **Result Table** shows the results of your game play:
 
-    * The first 5 rows show how many notes you hit or missed.
+    - The first 5 rows show how many notes you hit or missed.
 
-    * The **Max Combo** shows the highest streak of note hits.
+    - The **Max Combo** shows the highest streak of note hits.
 
-    * The **Accuracy** shows how accurate you played in percentage. Click on
+    - The **Accuracy** shows how accurate you played in percentage. Click on
       this number to see more detailed information.
 
-    * The **Total Score** shows the final score of your performance.
+    - The **Total Score** shows the final score of your performance.
 
     For more information, see the dedicated page on
     [Scoring and Judgment](./scoring-and-judgment.md).
@@ -214,8 +214,8 @@ You can click on the accuracy number to see detailed **accuracy data.**
 This accuracy data is calculated from the **delta time** of each note, measured
 in milliseconds.
 
-* If you hit the note too early, the delta time for that note is negative.
-* If you hit the note too late, the delta time for that note is positive.
+- If you hit the note too early, the delta time for that note is negative.
+- If you hit the note too late, the delta time for that note is positive.
 
 The numbers at the top shows how many notes you hit too early or too late to get
 the best (Meticulous) judgment. The histogram shows the distribution of the
@@ -236,38 +236,38 @@ You can access the options panel from the Music Selection Screen by clicking the
 
 The **Player Settings** lets you customize the in-game experience.
 
-* **Speed** lets you control the note speed modifier. You can also
+- **Speed** lets you control the note speed modifier. You can also
   [adjust the speed in-game](#adjusting-note-speed).
 
-* **Scratch** lets you decide whether and where to put the turntable lane in the
+- **Scratch** lets you decide whether and where to put the turntable lane in the
   game. If turntable lane is active, it’s called **BMS Mode**. Otherwise, it’s
   the normal **Keyboard Mode**. Since different modes results in different
   number of notes, they are considered different levels and have a different
   leaderboard.
 
-* **Panel** lets you pick where to place the panel. The **3D** placement is only
+- **Panel** lets you pick where to place the panel. The **3D** placement is only
   available in Keyboard Mode (turntable lane will have to be deactivated).
 
-* Some people find the play area too high, making it hard to read the notes.
+- Some people find the play area too high, making it hard to read the notes.
   **Cover** lets you cover part of the play area, in case it is too high. It
   [helps you concentrate more](https://www.facebook.com/bemusegame/photos/a.872468499492894.1073741828.815335081872903/956741924398884/?type=3&permPage=1)
   on the notes at the bottom of the screen. _Not compatible with 3D mode._
 
-* **BGA** lets you turn the background animations on and off.
+- **BGA** lets you turn the background animations on and off.
 
-* Each song have different tempo, and therefore notes scroll at a different
+- Each song have different tempo, and therefore notes scroll at a different
   speed. **AutoVel** (auto-velocity), when turned on, automatically adjusts the
   note speed modifier so that the note scrolling speed is the same as the last
   song, regardless of song tempo. The Speed option also changes into
   **LeadTime** which lets you specify how long it should take for the note to
   scroll across the screen.
 
-* **Gauge**, when turned on, displays a score gauge at the top of the screen. If
+- **Gauge**, when turned on, displays a score gauge at the top of the screen. If
   the gauge runs out the first time, then you missed your chance to get the ‘S’
   grade. If the gauge runs out the second time, then you missed your chance to
   get the ‘A’ grade.
 
-* **Preview** music can be turned on and off.
+- **Preview** music can be turned on and off.
 
 The **Input Settings** lets you choose which keys you will use to hit the note
 in each column.

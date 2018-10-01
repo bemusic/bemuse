@@ -147,7 +147,7 @@ const FeatureTour = props => (
       image={
         <BrowserScreenshot
           alt='Screenshot'
-          src={imgUrl('screenshots/mode-select.jpg')}
+          src={imgUrl('screenshots/mode-selection.jpg')}
         />
       }
       imageAlign='left'
@@ -193,7 +193,7 @@ const FeatureTour = props => (
       image={
         <BrowserScreenshot
           alt='Screenshot'
-          src={imgUrl('screenshots/music-select.jpg')}
+          src={imgUrl('screenshots/music-selection.jpg')}
         />
       }
       imageAlign='right'

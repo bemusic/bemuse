@@ -20,23 +20,23 @@ Run these commands inside the **Terminal** (**PowerShell/Command Prompt** for Wi
 
 **Git**: You should see the version number:
 
-```bash
+```sh-session
 $ git --version
-# git version 2.17.0
+git version 2.17.0
 ```
 
 **Node.js**: You should see the version number:
 
-```bash
+```sh-session
 $ node -v
-# v9.8.0
+v10.11.0
 ```
 
 **Yarn**: You should see the version number:
 
-```bash
+```sh-session
 $ yarn -v
-# 1.6.0
+1.6.0
 ```
 
 ## Setting Up the Project

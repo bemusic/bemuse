@@ -4,11 +4,11 @@ title: The Game Loop
 ---
 
 At each iteration of the game loop, each game component takes turn and
-update itself.  Each game component involved in this game loop should
+update itself. Each game component involved in this game loop should
 have a `update(...)` method, which takes care of updating itself.
 This is the only time the component will be mutable.
 Outside of the `update` method, a component should behave like an
-immutable object.  This allows us to have some sense of immutability
+immutable object. This allows us to have some sense of immutability
 without having to create new objects. See [the case for immutability](https://github.com/facebook/immutable-js/blob/d8d189ae7ea8965fee2ecc7320ebdc55e83eb6a1/README.md#the-case-for-immutability).
 
 At each cycle, the following happens:

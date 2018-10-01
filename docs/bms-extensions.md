@@ -11,8 +11,7 @@ I don't want to deal with number clashes in the future,
 so I took the liberty to extend the support for channel numbers into Base36 (00-ZZ).
 
 This allows more meaningful channel names,
-such as ``#xxxSC`` for scrolling factor and ``#xxxSP`` for spacing factor.
-
+such as `#xxxSC` for scrolling factor and `#xxxSP` for spacing factor.
 
 ## Speed and Scroll Segments
 
@@ -32,10 +31,8 @@ to dynamically change notes spacing and notes scrolling speed.
 This allows scrolling effects to be created without relying on BPM changes
 or STOPs.
 
-
 ## Extension Lines
 
 ```
   #EXT #xxxyy:....
 ```
-
