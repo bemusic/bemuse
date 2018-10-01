@@ -27,15 +27,15 @@
   },
   "homepage": "https://github.com/dtinth/bmson#readme",
   "devDependencies": {
-    "bms": "^3.0.0",
+    "bms": "^3.1.0-2",
     "gulp": "^3.9.1",
-    "mocha": "^5.1.1",
-    "power-assert": "^1.5.0"
+    "mocha": "^5.2.0",
+    "power-assert": "^1.6.1"
   },
   "peerDependencies": {
     "bms": "^3.0.0"
   },
   "dependencies": {
-    "lodash": "^4.17.10"
+    "lodash": "^4.17.11"
   }
 }
