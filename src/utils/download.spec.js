@@ -16,9 +16,11 @@ describe('download', function () {
   })
 
   it('rejects for XHR error', function () {
-    let stub = sinon.stub(XMLHttpRequest.prototype, 'send', function () {
-      this.onerror(new Error('...'))
-    })
+    let stub = sinon
+      .stub(XMLHttpRequest.prototype, 'send')
+      .callsFake(function () {
+        this.onerror(new Error('...'))
+      })
     return expect(
       download('/spec/download/fixtures/hello.txt')
         .as('blob')
