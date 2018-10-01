@@ -24,7 +24,6 @@
     "code-review": "gulp code-review",
     "lint": "gulp lint",
     "postbootstrap": "lerna run prepare",
-    "postinstall": "npm run prepare",
     "pre-commit": "gulp pre-commit",
     "prepare": "lerna run prepare",
     "prod-build": "cross-env NODE_ENV=production gulp build",
