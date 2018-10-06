@@ -1,6 +1,6 @@
 require('dotenv').load()
-require('babel-register')({
-  plugins: ['transform-es2015-modules-commonjs']
+require('@babel/register')({
+  plugins: ['@babel/plugin-transform-modules-commonjs']
 })
-require('babel-polyfill')
+require('@babel/polyfill')
 global.Promise = require('bluebird')
