@@ -35,7 +35,11 @@ jobs:
       - *save_node_modules_cache
       - run:
           name: danger
-          command: yarn danger ci
+          command: |
+            if [ "$DANGER_GITHUB_API_TOKEN" ]
+            then
+              yarn danger ci
+            fi
   test:
     working_directory: ~/bemuse
     environment:
