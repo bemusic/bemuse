@@ -1,0 +1,8 @@
+{
+    "name": "bemuse-e2e",
+    "version": "0.0.1",
+    "dependencies": {
+        "prescript": "0.5040.1-beta.10",
+        "puppeteer": "^1.9.0"
+    }
+}

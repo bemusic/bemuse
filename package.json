@@ -6,6 +6,7 @@
   "private": true,
   "workspaces": [
     "website",
+    "e2e",
     "packages/*"
   ],
   "browserslist": [
