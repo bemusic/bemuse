@@ -103,7 +103,11 @@ function shouldActivateServiceWorker () {
 
 function setupServiceWorker () {
   if (!('serviceWorker' in navigator)) return false
-  if (!shouldActivateServiceWorker()) return false
+  if (!shouldActivateServiceWorker()) {
+    // Unregister any stale service workers that can be from other apps.
+    unregisterServiceWorker()
+    return false
+  }
   registerServiceWorker()
   return true
 }
@@ -111,6 +115,12 @@ function setupServiceWorker () {
 function registerServiceWorker () {
   const url = '/sw-loader.js?path=' + encodeURIComponent(workerPath)
   return navigator.serviceWorker.register(url)
+}
+
+function unregisterServiceWorker () {
+  return navigator.serviceWorker.ready.then(registration => {
+    registration.unregister()
+  })
 }
 
 function trackFullscreenEvents () {
