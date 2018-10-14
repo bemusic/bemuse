@@ -26,18 +26,18 @@
   "homepage": "https://github.com/bemusic/bemuse-tools",
   "dependencies": {
     "bemuse-indexer": "^4.1.0-0",
-    "bluebird": "^3.5.1",
+    "bluebird": "^3.5.2",
     "bytes": "^3.0.0",
     "chalk": "^2.4.1",
     "co": "^4.6.0",
     "cors": "^2.8.4",
     "endpoint": "^0.4.2",
-    "express": "^4.12.4",
+    "express": "^4.16.4",
     "format-json": "^1.0.3",
     "glob": "^4.3.5",
-    "gulp-util": "^3.0.1",
-    "js-yaml": "^3.11.0",
-    "lodash": "^4.17.10",
+    "gulp-util": "^3.0.8",
+    "js-yaml": "^3.12.0",
+    "lodash": "^4.17.11",
     "meow": "^3.1.0",
     "mime": "^1.2.11",
     "mkdirp": "^0.5.1",
@@ -46,7 +46,7 @@
     "throat": "^1.0.0"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "mocha": "^5.1.1"
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
   }
 }

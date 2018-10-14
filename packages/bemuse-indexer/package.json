@@ -22,16 +22,16 @@
   },
   "homepage": "https://github.com/bemusic/indexer",
   "dependencies": {
-    "bluebird": "^3.5.1",
+    "bluebird": "^3.5.2",
     "bms": "^3.1.0-2",
     "bmson": "^4.0.0",
     "invariant": "^2.2.4",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.11",
     "object-assign": "^4.1.1"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
+    "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "mocha": "^5.1.1"
+    "mocha": "^5.2.0"
   }
 }
