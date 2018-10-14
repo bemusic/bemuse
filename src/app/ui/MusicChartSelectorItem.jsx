@@ -23,7 +23,11 @@ class MusicChartSelectorItem extends React.Component {
       'is-5keys': this.props.chart.keys === '5K'
     })
     return (
-      <li className={classes} onClick={this.handleClick}>
+      <li
+        className={classes}
+        onClick={this.handleClick}
+        data-testid={this.props.isSelected ? 'play-selected-chart' : undefined}
+      >
         {this.props.isTutorial ? (
           this.props.chart.keys === '5K' ? (
             'Start Tutorial (5 keys)'

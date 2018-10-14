@@ -14,6 +14,7 @@ import { withContext } from 'recompose'
 import * as Analytics from './analytics'
 import * as OptionsIO from './io/OptionsIO'
 import * as ReduxState from './redux/ReduxState'
+import * as BemuseTestMode from '../devtools/BemuseTestMode'
 import AboutScene from './ui/AboutScene'
 import BrowserSupportWarningScene from './ui/BrowserSupportWarningScene'
 import ModeSelectScene from './ui/ModeSelectScene'
@@ -131,4 +132,8 @@ function trackFullscreenEvents () {
 
 window.addEventListener('beforeunload', () => {
   Analytics.send('app', 'quit')
+})
+
+Object.assign(window, {
+  BemuseTestMode
 })

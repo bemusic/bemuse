@@ -1,6 +1,7 @@
 import Auth0 from 'auth0-js'
 
 import createScoreboardClient from './createScoreboardClient'
+import { isTestModeEnabled } from 'bemuse/devtools/BemuseTestMode'
 
 export class OnlineService {
   constructor ({ server, storagePrefix = 'scoreboard.auth', authOptions }) {
@@ -96,6 +97,9 @@ export class OnlineService {
   }
 
   async submitScore (info) {
+    if (isTestModeEnabled()) {
+      throw new Error('Cannot submit score in test mode')
+    }
     if (!this._currentUser) {
       throw new Error('Not logged in')
     }

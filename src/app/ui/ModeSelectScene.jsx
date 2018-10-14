@@ -39,7 +39,11 @@ class ModeSelectScene extends React.Component {
             onTouchStart={() => this.setPlayDevice('touch')}
             onMouseDown={() => this.setPlayDevice('keyboard')}
           >
-            <div className='ModeSelectSceneのitem' onClick={this.handleKB}>
+            <div
+              className='ModeSelectSceneのitem'
+              onClick={this.handleKB}
+              data-testid='keyboard-mode'
+            >
               {this.renderKBGraphics()}
               <h2>Keyboard Mode</h2>
               <p>
@@ -48,7 +52,11 @@ class ModeSelectScene extends React.Component {
               </p>
               <p>This mode is similar to O2Jam.</p>
             </div>
-            <div className='ModeSelectSceneのitem' onClick={this.handleBM}>
+            <div
+              className='ModeSelectSceneのitem'
+              onClick={this.handleBM}
+              data-testid='bms-mode'
+            >
               {this.renderBMGraphics()}
               <h2>BMS Mode</h2>
               <p>
