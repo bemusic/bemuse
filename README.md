@@ -23,12 +23,12 @@ It is recommended to play this game on Google Chrome.
 
 <!-- toc -->
 
-* [Video Demo](#video-demo)
-* [Quick Tour](#quick-tour)
-* [Technology](#technology)
-* [Development](#development)
-* [Sub-projects](#sub-projects)
-* [License](#license)
+- [Video Demo](#video-demo)
+- [Quick Tour](#quick-tour)
+- [Technology](#technology)
+- [Development](#development)
+- [Sub-projects](#sub-projects)
+- [License](#license)
 
 <!-- tocstop -->
 
@@ -42,73 +42,73 @@ It is recommended to play this game on Google Chrome.
 
 ![Music selection](website/static/img/screenshots/music-select.jpg)
 
-* You can play **online songs** instantly in your browser.
+- You can play **online songs** instantly in your browser.
 
-* You can play **custom songs** by dragging a folder containing BMS files into
+- You can play **custom songs** by dragging a folder containing BMS files into
   this screen. There are over 5,000 songs published in BMS format by the
   community worldwide. You can find them using
   [BMS Search](http://bmssearch.net/).
 
-* There’s an **online internet ranking** system. You can compete with other
+- There’s an **online internet ranking** system. You can compete with other
   players and see your rank online.
 
-* It has an **insane tutorial.**
+- It has an **insane tutorial.**
 
 ![Gameplay](website/static/img/screenshots/gameplay-kbd.jpg)
 
-* **Keyboard mode** (7-keys). Play along the music with your keyboard.
+- **Keyboard mode** (7-keys). Play along the music with your keyboard.
 
-* **Fully key-sounded.** Each note has its own sound. The music will be affected
+- **Fully key-sounded.** Each note has its own sound. The music will be affected
   by your game play.
 
-* Player together with friends using
+- Player together with friends using
   [**party mode.**](https://www.youtube.com/watch?v=hiJzFRIhiiA) It helps you
   start the game at the exact same time.
 
-* **Multiple difficulties.** Each song has multiple difficulties to accommodate
+- **Multiple difficulties.** Each song has multiple difficulties to accommodate
   every player skill levels.
 
-* **Adjustable speed.** You can adjust the speed (spacing) of the notes to make
+- **Adjustable speed.** You can adjust the speed (spacing) of the notes to make
   it easy-to-sightread. This does not affect the speed of the song; lowering the
   speed causes notes to become more dense on-screen.
 
-* [**Scoring and grading system.**](http://bemuse.readthedocs.io/en/latest/users/scoring-and-judgment.html)
+- [**Scoring and grading system.**](http://bemuse.readthedocs.io/en/latest/users/scoring-and-judgment.html)
   Master the song to get the S grade (score over 500000).
 
 ![Gameplay](website/static/img/screenshots/gameplay-bms.jpg)
 
-* **BMS mode** (7-keys + turntable). You can play using an
+- **BMS mode** (7-keys + turntable). You can play using an
   [IIDX controller](https://www.youtube.com/watch?v=EOgI37Myqvk) or
   [MIDI controller](https://www.facebook.com/bemusegame/videos/985712734835136/).
 
-* **HD video support.** Some songs will have a background animation in
+- **HD video support.** Some songs will have a background animation in
   high-definition (720p).
 
-* **Adjustable play area size.** If the gameplay area is too long, you can
+- **Adjustable play area size.** If the gameplay area is too long, you can
   adjust the cover it to make the play area more easy-to-sightread.
 
-* **Early/Late indicator.** Bemuse will tell you if you press the note too early
+- **Early/Late indicator.** Bemuse will tell you if you press the note too early
   or too late.
 
 ![Options](website/static/img/screenshots/options.jpg)
 
-* **Adjustable panel position.** You can position the note panel on either side
+- **Adjustable panel position.** You can position the note panel on either side
   of the screen, or put it at the center.
 
-* **Adjustable turntable position.** You can put turntable on the left or on the
+- **Adjustable turntable position.** You can put turntable on the left or on the
   right (BMS mode only).
 
-* **Audio latency compensation.** Some systems may have audio latency. Bemuse
+- **Audio latency compensation.** Some systems may have audio latency. Bemuse
   contains a calibration system to compensate for the audio latency.
 
 **Play now at https://bemuse.ninja/.**
 
 ## Technology
 
-* The web application is powered by **[React](https://facebook.github.io/react/)
+- The web application is powered by **[React](https://facebook.github.io/react/)
   and [Redux](http://redux.js.org/).**
 
-* The game engine is powered by **[PixiJS](http://www.pixijs.com/).**
+- The game engine is powered by **[PixiJS](http://www.pixijs.com/).**
 
 ## Development
 
