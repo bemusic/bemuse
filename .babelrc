@@ -1,10 +1,14 @@
 {
   "presets": [
-    ["env", { "modules": false }],
-    "react",
-    "stage-2"
+    ["@babel/preset-env", { "modules": false }],
+    "@babel/preset-react"
   ],
-  "plugins": ["emotion", "espower"],
+  "plugins": [
+    "emotion",
+    "babel-plugin-espower",
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-proposal-class-properties"
+  ],
   "env": {
     "test": {
       "plugins": [
