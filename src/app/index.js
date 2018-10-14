@@ -98,10 +98,7 @@ function getFirstScene () {
 }
 
 function shouldActivateServiceWorker () {
-  return (
-    (location.protocol === 'https:' && location.host === 'bemuse.ninja') ||
-    location.hostname === 'localhost'
-  )
+  return location.protocol === 'https:' && location.host === 'bemuse.ninja'
 }
 
 function setupServiceWorker () {
