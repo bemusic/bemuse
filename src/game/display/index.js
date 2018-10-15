@@ -5,6 +5,7 @@ import $ from 'jquery'
 import PlayerDisplay from './player-display'
 import formatTime from '../../utils/formatTime'
 import { shouldDisableFullScreen } from 'bemuse/devtools/query-flags'
+import screenfull from 'screenfull'
 
 export class GameDisplay {
   constructor ({ game, context, backgroundImagePromise, video }) {
@@ -143,17 +144,14 @@ export class GameDisplay {
   }
 
   _createFullScreenButton () {
-    if (
-      shouldDisableFullScreen() ||
-      !document.documentElement.requestFullscreen
-    ) {
+    if (shouldDisableFullScreen() || !screenfull.enabled) {
       return
     }
     const touchButtons = document.createElement('div')
     touchButtons.className = 'game-display--touch-buttons is-visible is-right'
     this.wrapper.appendChild(touchButtons)
     const onClick = () => {
-      document.documentElement.requestFullscreen()
+      screenfull.request()
     }
     const button = createTouchButton(
       onClick,
