@@ -25,7 +25,15 @@ export function main () {
   const ConnectedExperimentScene = connect(state川)(ExperimentScene)
 
   const scene = React.createElement(ConnectedExperimentScene, {
-    onStart: () => play()
+    onStart: () => {
+      if (window.opener) {
+        window.opener.postMessage({ type: 'calibration-started' }, '*')
+        addEventListener('beforeunload', () => {
+          window.opener.postMessage({ type: 'calibration-closed' }, '*')
+        })
+      }
+      play()
+    }
   })
 
   ReactDOM.render(scene, $('<div></div>').appendTo('body')[0])
