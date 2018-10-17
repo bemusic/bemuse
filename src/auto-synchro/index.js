@@ -26,19 +26,23 @@ export function main () {
 
   const scene = React.createElement(ConnectedExperimentScene, {
     onStart: () => {
-      if (window.opener) {
-        window.opener.postMessage({ type: 'calibration-started' }, '*')
-        addEventListener('beforeunload', () => {
-          window.opener.postMessage({ type: 'calibration-closed' }, '*')
-        })
-      }
       play()
+      postMessage({ type: 'calibration-started' })
+      addEventListener('beforeunload', () => {
+        postMessage({ type: 'calibration-closed' })
+      })
     }
   })
 
   ReactDOM.render(scene, $('<div></div>').appendTo('body')[0])
 
   let play
+
+  function postMessage (data) {
+    if (window.opener) {
+      window.opener.postMessage(data, '*')
+    }
+  }
 
   function getLatency (samples) {
     let data = samples.map(d => d[1])
@@ -63,14 +67,7 @@ export function main () {
         a () {
           let latency = Math.max(0, getLatency(samples))
           state口.push({ finished: true, latency })
-          if (window.opener) {
-            window.opener.postMessage(
-              {
-                latency: latency
-              },
-              '*'
-            )
-          }
+          postMessage({ latency: latency })
         }
       })
       let tap = () => {
