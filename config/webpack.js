@@ -6,6 +6,8 @@ import { flowRight } from 'lodash'
 import path from './path'
 import webpack from 'webpack'
 import webpackResolve from './webpackResolve'
+import { version } from './buildConfig'
+import { GenerateSW } from 'workbox-webpack-plugin'
 
 function generateBaseConfig () {
   let config = {
@@ -19,7 +21,7 @@ function generateBaseConfig () {
     },
     devServer: {
       contentBase: false,
-      publicPath: '/build/',
+      publicPath: '/',
       stats: { colors: true, chunkModules: false }
     },
     module: {
@@ -39,6 +41,56 @@ function generateBaseConfig () {
         options: {
           context: process.cwd()
         }
+      }),
+      new GenerateSW({
+        swDest: 'service-worker.js',
+        globDirectory: path('public/'),
+        globPatterns: ['**/index.html'],
+        exclude: [/\.(mp3|mp4|ogg|m4a)$/],
+        skipWaiting: true,
+        clientsClaim: true,
+        runtimeCaching: [
+          {
+            urlPattern: /assets\/[^/]+\.bemuse$/,
+            handler: 'cacheFirst',
+            options: {
+              cacheName: 'songs'
+            }
+          },
+          {
+            urlPattern: /\.(bms|bme|bml)$/,
+            handler: 'cacheFirst',
+            options: {
+              cacheName: 'songs'
+            }
+          },
+          {
+            urlPattern: /\/index\.json$/,
+            handler: 'cacheFirst',
+            options: {
+              cacheName: 'songs'
+            }
+          },
+          {
+            urlPattern: /\/assets\/metadata\.json$/,
+            handler: 'cacheFirst',
+            options: {
+              cacheName: 'songs'
+            }
+          },
+          {
+            // To match cross-origin requests, use a RegExp that matches
+            // the start of the origin:
+            urlPattern: new RegExp('^https://fonts.googleapis.com/'),
+            handler: 'staleWhileRevalidate',
+            options: {
+              cacheName: `skins-v${version}`,
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
+          }
+        ]
       })
     ]
   }
@@ -79,7 +131,12 @@ function generateLoadersConfig () {
     },
     {
       test: /\.worker\.js$/,
-      use: { loader: 'worker-loader' }
+      use: {
+        loader: 'worker-loader',
+        options: {
+          name: 'build/[name].[hash].[ext]'
+        }
+      }
     },
     {
       test: /\.json$/,
@@ -153,22 +210,30 @@ function generateLoadersConfig () {
       loader: 'url-loader',
       options: {
         limit: 100000,
-        mimetype: 'image/png'
+        mimetype: 'image/png',
+        name: 'build/[name].[hash].[ext]'
       }
     },
     {
       test: /\.jpg$/,
-      loader: 'file-loader'
+      loader: 'file-loader',
+      options: {
+        name: 'build/[name].[hash].[ext]'
+      }
     },
     {
       test: /\.(?:mp3|mp4|ogg|m4a)$/,
-      loader: 'file-loader'
+      loader: 'file-loader',
+      options: {
+        name: 'build/[name].[hash].[ext]'
+      }
     },
     {
       test: /\.(otf|eot|svg|ttf|woff|woff2)(?:$|\?)/,
       loader: 'url-loader',
       options: {
-        limit: 8192
+        limit: 8192,
+        name: 'build/[name].[hash].[ext]'
       }
     }
   ]
@@ -180,11 +245,10 @@ function applyWebConfig (config) {
       boot: ['./boot']
     },
     output: {
-      path: path('dist', 'build'),
-      publicPath: 'build/',
+      path: path('dist'),
       globalObject: 'this',
-      filename: '[name].js',
-      chunkFilename: '[name]-[chunkhash].js',
+      filename: 'build/[name].js',
+      chunkFilename: 'build/[name]-[chunkhash].js',
       devtoolModuleFilenameTemplate: 'file://[absolute-resource-path]',
       devtoolFallbackModuleFilenameTemplate:
         'file://[absolute-resource-path]?[hash]'
@@ -221,7 +285,10 @@ function applyTestBedConfig (config) {
   return config
 }
 
-export const generateWebConfig = flowRight(applyWebConfig, generateBaseConfig)
+export const generateWebConfig = flowRight(
+  applyWebConfig,
+  generateBaseConfig
+)
 
 export const generateKarmaConfig = flowRight(
   applyKarmaConfig,

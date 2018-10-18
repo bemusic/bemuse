@@ -23,6 +23,7 @@ globals:
   xdescribe: false
   xit: false
   sinon: false
+  workbox: false
   BemuseLogger: false
 parser: babel-eslint
 plugins:

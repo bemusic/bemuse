@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 import now from 'bemuse/utils/now'
-import workerPath from 'bemuse/hacks/service-worker-url/index.loader.js!serviceworker-loader!./service-worker.js'
 import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
 import { createIO, createRun } from 'impure'
 import {
@@ -112,8 +111,18 @@ function setupServiceWorker () {
 }
 
 function registerServiceWorker () {
-  const url = '/sw-loader.js?path=' + encodeURIComponent(workerPath)
-  return navigator.serviceWorker.register(url)
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker
+        .register('/service-worker.js')
+        .then(registration => {
+          console.log('SW registered: ', registration)
+        })
+        .catch(registrationError => {
+          console.log('SW registration failed: ', registrationError)
+        })
+    })
+  }
 }
 
 function trackFullscreenEvents () {
