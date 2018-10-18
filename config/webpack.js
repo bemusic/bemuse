@@ -46,33 +46,33 @@ function generateBaseConfig () {
         swDest: 'service-worker.js',
         globDirectory: path('public/'),
         globPatterns: ['**/index.html'],
-        exclude: [/\.(mp3|mp4|ogg|m4a)$/],
+        exclude: [/\.(?:mp3|mp4|ogg|m4a)$/],
         skipWaiting: true,
         clientsClaim: true,
         runtimeCaching: [
           {
-            urlPattern: /assets\/[^/]+\.bemuse$/,
+            urlPattern: /^https?:\/\/.+\/assets\/[^/]+\.bemuse$/,
             handler: 'cacheFirst',
             options: {
               cacheName: 'songs'
             }
           },
           {
-            urlPattern: /\.(bms|bme|bml)$/,
+            urlPattern: /^https?:\/\/.+\.(bms|bme|bml)$/,
             handler: 'cacheFirst',
             options: {
               cacheName: 'songs'
             }
           },
           {
-            urlPattern: /\/index\.json$/,
+            urlPattern: /^https?:\/\/.+\/index\.json$/,
             handler: 'cacheFirst',
             options: {
               cacheName: 'songs'
             }
           },
           {
-            urlPattern: /\/assets\/metadata\.json$/,
+            urlPattern: /^https?:\/\/.+\/assets\/metadata\.json$/,
             handler: 'cacheFirst',
             options: {
               cacheName: 'songs'
@@ -88,6 +88,27 @@ function generateBaseConfig () {
               cacheableResponse: {
                 statuses: [0, 200]
               }
+            }
+          },
+          {
+            urlPattern: /^https?:\/\/.+\/skins\//,
+            handler: 'staleWhileRevalidate',
+            options: {
+              cacheName: `skins-v${version}`
+            }
+          },
+          {
+            urlPattern: /^https?:\/\/.+\/res\//,
+            handler: 'staleWhileRevalidate',
+            options: {
+              cacheName: `site-v${version}`
+            }
+          },
+          {
+            urlPattern: /^https?:\/\/.+\.!(?:mp3|mp4|ogg|m4a)$/,
+            handler: 'staleWhileRevalidate',
+            options: {
+              cacheName: `site-v${version}`
             }
           }
         ]
