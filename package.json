@@ -198,6 +198,7 @@
     "redux": "^3.7.2",
     "reselect": "^2.5.1",
     "rxjs": "^5.5.12",
+    "screenfull": "^3.3.3",
     "test-bed": "^0.777.77-beta",
     "throat": "^2.0.2",
     "timesynchro": "^1.0.1",
