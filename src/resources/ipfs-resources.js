@@ -52,7 +52,7 @@ class NativeIPFSResources {
   }
 }
 
-export class NativeIPFSFileResource {
+class NativeIPFSFileResource {
   constructor (multihash, name) {
     this._multihash = multihash
     this._name = name
