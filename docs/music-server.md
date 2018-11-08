@@ -9,9 +9,16 @@ sidebar_label: Music Server
 <p>This section is under construction.</p>
 </div>
 
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+
+**Linux is not officially supported for creating Bemuse packages,** as it relies on Apple's AAC codec. You can still host the server files on any Linux machine, though.
+
+</div>
+
 Bemuse comes with a default music server to help new players get started. This default music server contains a selection of songs that I think are really nice. You can also run your own music server and play it in Bemuse. This page describes how you can do it.
 
-This guide is valid for all major operating systems (Windows, Linux, or macOS), and assumes some knowledge about using the command line and web hosting.
+This guide is valid for Windows or macOS, and assumes some knowledge about using the command line and web hosting.
 
 ## Prerequisites
 
