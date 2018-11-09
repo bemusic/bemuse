@@ -9,11 +9,52 @@ sidebar_label: Music Server
 <p>This section is under construction.</p>
 </div>
 
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+
+**Linux is not officially supported for creating Bemuse packages,** as it relies on Apple's AAC codec. You can still host the server files on any Linux machine, though.
+
+</div>
+
 Bemuse comes with a default music server to help new players get started. This default music server contains a selection of songs that I think are really nice. You can also run your own music server and play it in Bemuse. This page describes how you can do it.
 
-This guide is valid for all major operating systems (Windows, Linux, or macOS), and assumes some knowledge about using the command line and web hosting.
+This guide is valid for Windows or macOS, and assumes some knowledge about using the command line and web hosting.
 
 ## Prerequisites
+
+### Debian Linux (Debian, Ubuntu etc.)
+
+- [Node.js](https://nodejs.org/): [Here](https://github.com/nodesource/distributions/blob/master/README.md) is the installation guide from nodejs.
+- [SoX](http://sox.sourceforge.net/): `sudo apt install sox`
+
+If you got error when convert sound, install `libsox-dev` package too.
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+    <b>Linux is not support M4A conversion because of Apple's AAC codec.</b>
+    <br />
+    If you build bemuse custom server via linux, Apple device can't play the music.
+</p>
+</div>
+
+#### Prerequisite Check
+
+Run these commands inside the Terminal.
+
+**Node.js**: You should see the version number:
+
+```sh-session
+$ node -v
+v11.1.0
+```
+
+**SoX**: You should see the SoX version:
+
+```sh-session
+$ sox --version
+sox:      SoX v14.4.2
+```
 
 ### macOS
 
@@ -163,6 +204,12 @@ Bemuse Tools is a command line application to help you generate files for Bemuse
 PS> npm install -g bemuse-tools
 ```
 
+or if you use yarn:
+
+```bash
+$ yarn global add bemuse-tools
+```
+
 ### Installation Check
 
 Run the following command:
@@ -240,7 +287,16 @@ PS> bemuse-tools pack 'Lapis - SHIKI'
 # Written metadata.json
 ```
 
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
     If you pack bms files from <b>linux</b>, <code>-> Converting audio to m4a [for iOS and Safari]</code> will get errors because of codec. Converted pack will not play sounds on Apple platform devices.
+</p>
+</div>
+
+### Note
+
+
 Now if you look at your song folder, you should see a new folder called **assets**:
 
     Lapis - SHIKI
@@ -355,3 +411,99 @@ DocumentRoot "C:\Bemuse\myserver"
 Once the file is saved, open your XAMPP Control Pannel and run "Apache".
 
 Then connect to the music server with (http://bemuse.ninja/?server=https://localhost/).
+
+#### Linux or macOS using [Nginx](https://nginx.org/en/)
+
+First, Open terminal and Use `cd` command, move to folder that bemuse custom files contained.
+
+Then, install Nginx
+
+from macOS:
+```bash
+$ brew install nginx
+```
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+    Homebrew will install nginx on /usr/local.
+</p>
+</div>
+
+
+from Debian Linux:
+```bash
+$ sudo apt install nginx
+```
+
+Check your current location
+
+```bash
+$ pwd
+# e.g Output: /Users/cenox/Dev/bemuse-test
+```
+
+Memo output location. This will be used when config nginx.
+
+Go to nginx folder.
+
+from macOS:
+```bash
+$ cd /usr/local/nginx/etc
+```
+
+from Debian Linux:
+```bash
+$ cd /etc/nginx
+```
+
+Then, Use `touch` command to make setting files for serve bemuse files.
+
+from macOS:
+```bash
+$ touch servers/bemuse
+```
+
+from Debian Linux:
+```bash
+$ sudo touch sites-available/bemuse
+```
+
+Open bemuse setting file with text editor. This example uses `nano`. Write into setting file.
+
+
+```nginx
+server {
+    listen 80;
+
+    location / {
+        add_header 'Access-Control-Allow-Origin' '*';
+        root /Users/cenox/Dev/bemuse-test; # Write location from pwd command.
+    }
+
+}
+```
+
+Save file with `Control+X`, `Y`, `Enter`.
+
+Reload nginx
+
+from macOS:
+```bash
+$ nginx -s reload
+```
+
+from Debian Linux:
+```bash
+$ sudo systemctl restart nginx
+```
+
+Then connect to the music server with (http://bemuse.ninja/?server=http://localhost).
+
+##### Additional Note.
+
+Linux's nginx runs when OS booted, but macOS isn't.
+You can register service via brew. This makes nginx run when user logged in.
+
+```bash
+$ brew services start nginx
+```
