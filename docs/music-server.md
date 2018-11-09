@@ -240,6 +240,7 @@ PS> bemuse-tools pack 'Lapis - SHIKI'
 # Written metadata.json
 ```
 
+    If you pack bms files from <b>linux</b>, <code>-> Converting audio to m4a [for iOS and Safari]</code> will get errors because of codec. Converted pack will not play sounds on Apple platform devices.
 Now if you look at your song folder, you should see a new folder called **assets**:
 
     Lapis - SHIKI
