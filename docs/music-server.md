@@ -228,6 +228,14 @@ It should display the version:
       pack <path> — Packs sounds and BGAs into assets folder
       server <path> — Serves a Bemuse server (no indexing or conversion)
 
+If you installed bemuse-tools from yarn and get `command not found` error, you have to export path.
+
+```bash
+$ export PATH=~/.yarn/bin:${PATH}
+```
+
+and run once again for installation check.
+
 ## Creating Your Server Folder
 
 Extract your BMS files into a folder. One song per folder. For example:
@@ -412,28 +420,22 @@ Once the file is saved, open your XAMPP Control Pannel and run "Apache".
 
 Then connect to the music server with (http://bemuse.ninja/?server=https://localhost/).
 
-#### Linux or macOS using [Nginx](https://nginx.org/en/)
+#### macOS using [Nginx](https://nginx.org/en/)
 
 First, Open terminal and Use `cd` command, move to folder that bemuse custom files contained.
 
 Then, install Nginx
 
-from macOS:
 ```bash
 $ brew install nginx
 ```
+
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>
     Homebrew will install nginx on /usr/local.
-</p>
+</p
 </div>
-
-
-from Debian Linux:
-```bash
-$ sudo apt install nginx
-```
 
 Check your current location
 
@@ -441,35 +443,27 @@ Check your current location
 $ pwd
 # e.g Output: /Users/cenox/Dev/bemuse-test
 ```
-
 Memo output location. This will be used when config nginx.
 
 Go to nginx folder.
 
-from macOS:
 ```bash
 $ cd /usr/local/nginx/etc
 ```
 
-from Debian Linux:
-```bash
-$ cd /etc/nginx
-```
+Use `touch` command for making config file to serve bemuse files.
 
-Then, Use `touch` command to make setting files for serve bemuse files.
-
-from macOS:
 ```bash
 $ touch servers/bemuse
 ```
 
-from Debian Linux:
+Open bemuse setting file with text editor. This example uses `nano`.
+
 ```bash
-$ sudo touch sites-available/bemuse
+$ nano servers/bemuse
 ```
 
-Open bemuse setting file with text editor. This example uses `nano`. Write into setting file.
-
+Insert below text.
 
 ```nginx
 server {
@@ -487,14 +481,8 @@ Save file with `Control+X`, `Y`, `Enter`.
 
 Reload nginx
 
-from macOS:
 ```bash
 $ nginx -s reload
-```
-
-from Debian Linux:
-```bash
-$ sudo systemctl restart nginx
 ```
 
 Then connect to the music server with (http://bemuse.ninja/?server=http://localhost).
@@ -507,3 +495,72 @@ You can register service via brew. This makes nginx run when user logged in.
 ```bash
 $ brew services start nginx
 ```
+
+#### Debian Linux using [Nginx](https://nginx.org/en/)
+
+First, Open terminal and Use `cd` command, move to folder that bemuse custom files contained.
+
+Then, install Nginx
+
+```bash
+$ sudo apt install nginx
+```
+
+Check your current location
+
+```bash
+$ pwd
+# e.g Output: /home/cenox/bemuse-test
+```
+
+Memo output location. This will be used when config nginx.
+
+Go to nginx folder.
+
+```bash
+$ cd /etc/nginx
+```
+
+Use `touch` command for making config file to serve bemuse files.
+
+```bash
+$ sudo touch site-available/bemuse
+```
+
+Open bemuse setting file with text editor. This example uses `nano`.
+
+```bash
+$ sudo nano servers/bemuse
+```
+
+Insert below text.
+
+```nginx
+server {
+    listen 80;
+
+    server_name localhost;
+
+    location / {
+        add_header 'Access-Control-Allow-Origin' '*';
+        root /home/cenox/bemuse-test; # Write location from pwd command.
+    }
+
+}
+```
+
+Save file with `Control+X`, `Y`, `Enter`.
+
+Then, make symlink for config file works
+
+```bash
+$ sudo ln -s /etc/nginx/site-available/bemuse site-enabled/bemuse
+```
+
+Restart nginx,
+
+```bash
+$ sudo systemctl restart nginx
+```
+
+Then connect to the music server with (http://bemuse.ninja/?server=http://localhost).
