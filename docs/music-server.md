@@ -434,7 +434,7 @@ $ brew install nginx
 <p class="admonition-title">Note</p>
 <p>
     Homebrew will install nginx on /usr/local.
-</p
+</p>
 </div>
 
 Check your current location
