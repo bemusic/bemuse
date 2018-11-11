@@ -22,40 +22,6 @@ This guide is valid for Windows or macOS, and assumes some knowledge about using
 
 ## Prerequisites
 
-### Debian Linux (Debian, Ubuntu etc.)
-
-- [Node.js](https://nodejs.org/): [Here](https://github.com/nodesource/distributions/blob/master/README.md) is the installation guide from nodejs.
-- [SoX](http://sox.sourceforge.net/): `sudo apt install sox`
-
-If you got error when convert sound, install `libsox-dev` package too.
-
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>
-    <b>Linux is not support M4A conversion because of Apple's AAC codec.</b>
-    <br />
-    If you build bemuse custom server via linux, Apple device can't play the music.
-</p>
-</div>
-
-#### Prerequisite Check
-
-Run these commands inside the Terminal.
-
-**Node.js**: You should see the version number:
-
-```sh-session
-$ node -v
-v11.1.0
-```
-
-**SoX**: You should see the SoX version:
-
-```sh-session
-$ sox --version
-sox:      SoX v14.4.2
-```
-
 ### macOS
 
 - [Homebrew](http://brew.sh/)
@@ -158,6 +124,40 @@ PS> qaac
 # ...
 # ...
 # ...
+```
+
+### Debian Linux (Debian, Ubuntu etc.)
+
+- [Node.js](https://nodejs.org/): [Here](https://github.com/nodesource/distributions/blob/master/README.md) is the installation guide from nodejs.
+- [SoX](http://sox.sourceforge.net/): `sudo apt install sox`
+
+If you got error when convert sound, install `libsox-dev` package too.
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+    <b>Linux is not support M4A conversion because of Apple's AAC codec.</b>
+    <br />
+    If you build bemuse custom server via linux, Apple device can't play the music.
+</p>
+</div>
+
+#### Prerequisite Check
+
+Run these commands inside the Terminal.
+
+**Node.js**: You should see the version number:
+
+```sh-session
+$ node -v
+v11.1.0
+```
+
+**SoX**: You should see the SoX version:
+
+```sh-session
+$ sox --version
+sox:      SoX v14.4.2
 ```
 
 ## A Music Server
