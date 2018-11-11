@@ -362,10 +362,6 @@ After running, you will see these `index.json` and `index.cache` appear in your 
 
 ## Hosting
 
-### On Dropbox
-
-TODO
-
 ### On a Web Server
 
 Upload `index.json`, all `*.bemuse` and `*.bms/bme/bml` files to a web server. Make sure the directory layout is the same. [Enable cross-origin resource sharing](http://enable-cors.org/) on your web server to allow Bemuse client to connect.
