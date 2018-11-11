@@ -370,7 +370,7 @@ To connect to the music server, go to `http://bemuse.ninja/?server=<your URL>`.
 
 Example: http://bemuse.ninja/?server=http://flicknote.bemuse.ninja/bemuse/mumei12
 
-### On a Local Machine
+### On a Local Machine (Windows, XAMPP)
 
 Navigate to your Apache Config folder of XAMPP (e.g. `C:\xampp\apache\conf`) and open `httpd.conf`
 
@@ -416,11 +416,11 @@ Once the file is saved, open your XAMPP Control Pannel and run "Apache".
 
 Then connect to the music server with (http://bemuse.ninja/?server=https://localhost/).
 
-#### macOS using [Nginx](https://nginx.org/en/)
+### On a Local Machine (macOS, [nginx](https://nginx.org/en/))
 
-First, Open terminal and Use `cd` command, move to folder that bemuse custom files contained.
+First, open a Terminal and `cd` into the folder that contains the Bemuse server (there should be an `index.json` file in that folder).
 
-Then, install Nginx
+Then, install nginx:
 
 ```bash
 $ brew install nginx
@@ -433,130 +433,127 @@ $ brew install nginx
 </p>
 </div>
 
-Check your current location
+Check your current location:
 
 ```bash
 $ pwd
 # e.g Output: /Users/cenox/Dev/bemuse-test
 ```
-Memo output location. This will be used when config nginx.
+Note the output location; this will be used when we configure nginx.
 
-Go to nginx folder.
+Next, `cd` to nginx folder:
 
 ```bash
 $ cd /usr/local/nginx/etc
 ```
 
-Use `touch` command for making config file to serve bemuse files.
+Use `touch` command to create a config file to serve the Bemuse server.
 
 ```bash
 $ touch servers/bemuse
 ```
 
-Open bemuse setting file with text editor. This example uses `nano`.
+Open Bemuse setting file with a text editor. Our example will use `nano`:
 
 ```bash
 $ nano servers/bemuse
 ```
 
-Insert below text.
+Insert below text:
 
 ```nginx
 server {
     listen 80;
-
     location / {
         add_header 'Access-Control-Allow-Origin' '*';
-        root /Users/cenox/Dev/bemuse-test; # Write location from pwd command.
+        root /Users/cenox/Dev/bemuse-test;
+        #    ^ Replace with the location from previous step
     }
-
 }
 ```
 
-Save file with `Control+X`, `Y`, `Enter`.
+Save the file by pressing `Ctrl+X`, `Y`, `Enter`.
 
-Reload nginx
+Reload nginx:
 
 ```bash
 $ nginx -s reload
 ```
 
-Then connect to the music server with (http://bemuse.ninja/?server=http://localhost).
+Now, the music server will be available at http://localhost. You can play by going to <http://bemuse.ninja/?server=http://localhost>.
 
 ##### Additional Note.
 
-Linux's nginx runs when OS booted, but macOS isn't.
-You can register service via brew. This makes nginx run when user logged in.
+When you install nginx in Linux using a package manager, it runs when the OS boots up, but macOS isn't.
+You can use `brew services` to register the nginx service and make nginx automatically start when you log in.
 
 ```bash
 $ brew services start nginx
 ```
 
-#### Debian Linux using [Nginx](https://nginx.org/en/)
+#### Debian Linux using [nginx](https://nginx.org/en/)
 
-First, Open terminal and Use `cd` command, move to folder that bemuse custom files contained.
+First, open a Terminal and `cd` into the folder that contains the Bemuse music server (you should see `index.json` in this folder).
 
-Then, install Nginx
+Then, install nginx:
 
 ```bash
 $ sudo apt install nginx
 ```
 
-Check your current location
+Check your current location:
 
 ```bash
 $ pwd
 # e.g Output: /home/cenox/bemuse-test
 ```
 
-Memo output location. This will be used when config nginx.
+Note the output location. This will be used when we configure nginx.
 
-Go to nginx folder.
+Go to nginx folder:
 
 ```bash
 $ cd /etc/nginx
 ```
 
-Use `touch` command for making config file to serve bemuse files.
+Use `touch` command to create a config file to serve the Bemuse music server.
 
 ```bash
 $ sudo touch site-available/bemuse
 ```
 
-Open bemuse setting file with text editor. This example uses `nano`.
+Open the setting file with your text editor. This example uses `nano`:
 
 ```bash
 $ sudo nano servers/bemuse
 ```
 
-Insert below text.
+Insert below text:
 
 ```nginx
 server {
     listen 80;
-
     server_name localhost;
-
     location / {
         add_header 'Access-Control-Allow-Origin' '*';
         root /home/cenox/bemuse-test; # Write location from pwd command.
     }
-
 }
 ```
 
-Save file with `Control+X`, `Y`, `Enter`.
+Save the file by pressing `Ctrl+X`, `Y`, `Enter`.
 
-Then, make symlink for config file works
+Then, create a symlink to enable the configured site:
 
 ```bash
 $ sudo ln -s /etc/nginx/site-available/bemuse site-enabled/bemuse
 ```
 
-Restart nginx,
+Restart nginx:
 
 ```bash
 $ sudo systemctl restart nginx
 ```
 
-Then connect to the music server with (http://bemuse.ninja/?server=http://localhost).
+Now, the music server will be available at http://localhost. You can play by going to <http://bemuse.ninja/?server=http://localhost>.
+
