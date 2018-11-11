@@ -519,13 +519,13 @@ $ cd /etc/nginx
 Use `touch` command to create a config file to serve the Bemuse music server.
 
 ```bash
-$ sudo touch site-available/bemuse
+$ sudo touch sites-available/bemuse
 ```
 
 Open the setting file with your text editor. This example uses `nano`:
 
 ```bash
-$ sudo nano servers/bemuse
+$ sudo nano sites-available/bemuse
 ```
 
 Insert below text:
@@ -546,7 +546,7 @@ Save the file by pressing `Ctrl+X`, `Y`, `Enter`.
 Then, create a symlink to enable the configured site:
 
 ```bash
-$ sudo ln -s /etc/nginx/site-available/bemuse site-enabled/bemuse
+$ sudo ln -s /etc/nginx/sites-available/bemuse sites-enabled/bemuse
 ```
 
 Restart nginx:
