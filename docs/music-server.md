@@ -126,6 +126,40 @@ PS> qaac
 # ...
 ```
 
+### Debian Linux (Debian, Ubuntu etc.)
+
+- [Node.js](https://nodejs.org/): [Here](https://github.com/nodesource/distributions/blob/master/README.md) is the installation guide from nodejs.
+- [SoX](http://sox.sourceforge.net/): `sudo apt install sox`
+
+If you got error when convert sound, install `libsox-dev` package too.
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+    <b>Linux is not support M4A conversion because of Apple's AAC codec.</b>
+    <br />
+    If you build bemuse custom server via linux, Apple device can't play the music.
+</p>
+</div>
+
+#### Prerequisite Check
+
+Run these commands inside the Terminal.
+
+**Node.js**: You should see the version number:
+
+```sh-session
+$ node -v
+v11.1.0
+```
+
+**SoX**: You should see the SoX version:
+
+```sh-session
+$ sox --version
+sox:      SoX v14.4.2
+```
+
 ## A Music Server
 
 A music server is simply a web server that hosts the files in a specific
@@ -170,6 +204,12 @@ Bemuse Tools is a command line application to help you generate files for Bemuse
 PS> npm install -g bemuse-tools
 ```
 
+or if you use yarn:
+
+```bash
+$ yarn global add bemuse-tools
+```
+
 ### Installation Check
 
 Run the following command:
@@ -187,6 +227,14 @@ It should display the version:
       index [-r] — Index BMS files in current directory
       pack <path> — Packs sounds and BGAs into assets folder
       server <path> — Serves a Bemuse server (no indexing or conversion)
+
+If you installed bemuse-tools from yarn and get `command not found` error, you have to export path.
+
+```bash
+$ export PATH=~/.yarn/bin:${PATH}
+```
+
+and run once again for installation check.
 
 ## Creating Your Server Folder
 
@@ -247,6 +295,16 @@ PS> bemuse-tools pack 'Lapis - SHIKI'
 # Written metadata.json
 ```
 
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+    If you pack bms files from <b>linux</b>, <code>-> Converting audio to m4a [for iOS and Safari]</code> will get errors because of codec. Converted pack will not play sounds on Apple platform devices.
+</p>
+</div>
+
+### Note
+
+
 Now if you look at your song folder, you should see a new folder called **assets**:
 
     Lapis - SHIKI
@@ -304,10 +362,6 @@ After running, you will see these `index.json` and `index.cache` appear in your 
 
 ## Hosting
 
-### On Dropbox
-
-TODO
-
 ### On a Web Server
 
 Upload `index.json`, all `*.bemuse` and `*.bms/bme/bml` files to a web server. Make sure the directory layout is the same. [Enable cross-origin resource sharing](http://enable-cors.org/) on your web server to allow Bemuse client to connect.
@@ -316,7 +370,7 @@ To connect to the music server, go to `http://bemuse.ninja/?server=<your URL>`.
 
 Example: http://bemuse.ninja/?server=http://flicknote.bemuse.ninja/bemuse/mumei12
 
-### On a Local Machine
+### On a Local Machine (Windows, XAMPP)
 
 Navigate to your Apache Config folder of XAMPP (e.g. `C:\xampp\apache\conf`) and open `httpd.conf`
 
@@ -361,3 +415,145 @@ DocumentRoot "C:\Bemuse\myserver"
 Once the file is saved, open your XAMPP Control Pannel and run "Apache".
 
 Then connect to the music server with (http://bemuse.ninja/?server=https://localhost/).
+
+### On a Local Machine (macOS, [nginx](https://nginx.org/en/))
+
+First, open a Terminal and `cd` into the folder that contains the Bemuse server (there should be an `index.json` file in that folder).
+
+Then, install nginx:
+
+```bash
+$ brew install nginx
+```
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+    Homebrew will install nginx on /usr/local.
+</p>
+</div>
+
+Check your current location:
+
+```bash
+$ pwd
+# e.g Output: /Users/cenox/Dev/bemuse-test
+```
+Note the output location; this will be used when we configure nginx.
+
+Next, `cd` to nginx folder:
+
+```bash
+$ cd /usr/local/nginx/etc
+```
+
+Use `touch` command to create a config file to serve the Bemuse server.
+
+```bash
+$ touch servers/bemuse
+```
+
+Open Bemuse setting file with a text editor. Our example will use `nano`:
+
+```bash
+$ nano servers/bemuse
+```
+
+Insert below text:
+
+```nginx
+server {
+    listen 80;
+    location / {
+        add_header 'Access-Control-Allow-Origin' '*';
+        root /Users/cenox/Dev/bemuse-test;
+        #    ^ Replace with the location from previous step
+    }
+}
+```
+
+Save the file by pressing `Ctrl+X`, `Y`, `Enter`.
+
+Reload nginx:
+
+```bash
+$ nginx -s reload
+```
+
+Now, the music server will be available at http://localhost. You can play by going to <http://bemuse.ninja/?server=http://localhost>.
+
+##### Additional Note.
+
+When you install nginx in Linux using a package manager, it runs when the OS boots up, but macOS isn't.
+You can use `brew services` to register the nginx service and make nginx automatically start when you log in.
+
+```bash
+$ brew services start nginx
+```
+
+#### Debian Linux using [nginx](https://nginx.org/en/)
+
+First, open a Terminal and `cd` into the folder that contains the Bemuse music server (you should see `index.json` in this folder).
+
+Then, install nginx:
+
+```bash
+$ sudo apt install nginx
+```
+
+Check your current location:
+
+```bash
+$ pwd
+# e.g Output: /home/cenox/bemuse-test
+```
+
+Note the output location. This will be used when we configure nginx.
+
+Go to nginx folder:
+
+```bash
+$ cd /etc/nginx
+```
+
+Use `touch` command to create a config file to serve the Bemuse music server.
+
+```bash
+$ sudo touch sites-available/bemuse
+```
+
+Open the setting file with your text editor. This example uses `nano`:
+
+```bash
+$ sudo nano sites-available/bemuse
+```
+
+Insert below text:
+
+```nginx
+server {
+    listen 80;
+    server_name localhost;
+    location / {
+        add_header 'Access-Control-Allow-Origin' '*';
+        root /home/cenox/bemuse-test; # Write location from pwd command.
+    }
+}
+```
+
+Save the file by pressing `Ctrl+X`, `Y`, `Enter`.
+
+Then, create a symlink to enable the configured site:
+
+```bash
+$ sudo ln -s /etc/nginx/sites-available/bemuse sites-enabled/bemuse
+```
+
+Restart nginx:
+
+```bash
+$ sudo systemctl restart nginx
+```
+
+Now, the music server will be available at http://localhost. You can play by going to <http://bemuse.ninja/?server=http://localhost>.
+
