@@ -109,9 +109,9 @@ class AboutScene extends React.Component {
                 libraries we use into standalone web packages.
               </li>
               <li>
-                We use <a href='https://babeljs.io/'>Babel</a> so that we can
-                write our code in future JavaScript dialect and have it
-                translate our code for today{"'"}s browsers.
+                We use <a href="https://www.typescriptlang.org/">TypeScript</a>{' '}
+                to statically check our code for type errors and compiles the
+                code down to JavaScript.
               </li>
               <li>
                 We use{' '}
