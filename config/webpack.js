@@ -62,7 +62,10 @@ function generateLoadersConfig () {
       use: {
         loader: 'ts-loader',
         options: {
-          transpileOnly: true
+          transpileOnly: true,
+          compilerOptions: {
+            module: 'es6'
+          }
         }
       }
     },
