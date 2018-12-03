@@ -90,6 +90,7 @@
     "gulp-util": "^3.0.8",
     "hide-stack-frames-from": "^1.0.0",
     "import-sort-style-renke": "^2.4.0",
+    "istanbul-instrumenter-loader": "^3.0.1",
     "jade": "^1.9.2",
     "jade-loader": "^0.8.0",
     "js-yaml": "^3.12.0",

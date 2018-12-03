@@ -69,6 +69,19 @@ function generateLoadersConfig () {
         }
       }
     },
+    ...(Env.coverageEnabled()
+      ? [
+        {
+          test: /\.[jt]sx?$/,
+          include: [path('src')],
+          use: {
+            loader: 'istanbul-instrumenter-loader',
+            options: { esModules: true }
+          },
+          enforce: 'post'
+        }
+      ]
+      : []),
     {
       test: /\.js$/,
       type: 'javascript/auto',
