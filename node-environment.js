@@ -1,6 +1,3 @@
 require('dotenv').load()
-require('@babel/register')({
-  plugins: ['@babel/plugin-transform-modules-commonjs']
-})
-require('@babel/polyfill')
+require('ts-node/register/transpile-only')
 global.Promise = require('bluebird')
