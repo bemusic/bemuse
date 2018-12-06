@@ -24,7 +24,7 @@ globals:
   xit: false
   sinon: false
   BemuseLogger: false
-parser: babel-eslint
+parser: typescript-eslint-parser
 plugins:
   - react
 rules:

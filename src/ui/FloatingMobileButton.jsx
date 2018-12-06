@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { css } from 'emotion';
 
 function FloatingMobileButton ({ children, buttonProps }) {
   return (
     <button
-      css={`
+      className={css(`
         position: fixed;
         z-index: 102;
         top: 20px;
@@ -23,7 +24,7 @@ function FloatingMobileButton ({ children, buttonProps }) {
         align-items: center;
         justify-content: center;
         cursor: pointer;
-      `}
+      `)}
       {...buttonProps}
     >
       {children}

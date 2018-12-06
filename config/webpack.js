@@ -57,15 +57,31 @@ function generateBaseConfig () {
 function generateLoadersConfig () {
   return [
     {
-      test: /\.jsx?$/,
+      test: /\.[jt]sx?$/,
       include: [path('src'), path('spec')],
       use: {
-        loader: 'babel-loader',
+        loader: 'ts-loader',
         options: {
-          cacheDirectory: true
+          transpileOnly: true,
+          compilerOptions: {
+            module: 'es6'
+          }
         }
       }
     },
+    ...(Env.coverageEnabled()
+      ? [
+        {
+          test: /\.[jt]sx?$/,
+          include: [path('src')],
+          use: {
+            loader: 'istanbul-instrumenter-loader',
+            options: { esModules: true }
+          },
+          enforce: 'post'
+        }
+      ]
+      : []),
     {
       test: /\.js$/,
       type: 'javascript/auto',
@@ -221,7 +237,10 @@ function applyTestBedConfig (config) {
   return config
 }
 
-export const generateWebConfig = flowRight(applyWebConfig, generateBaseConfig)
+export const generateWebConfig = flowRight(
+  applyWebConfig,
+  generateBaseConfig
+)
 
 export const generateKarmaConfig = flowRight(
   applyKarmaConfig,

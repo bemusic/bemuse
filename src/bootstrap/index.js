@@ -3,17 +3,13 @@
 // :doc:
 // Bootstraps the environment with:
 //
-// - `babel-polyfill`_
 // - `debug`_
 // - `Bluebird`_ (with `extended Promise API`_)
 //
-// .. _ES6 Runtime: https://babeljs.io/docs/usage/polyfill/
-// .. _Babel: https://babeljs.io/
 // .. _debug: https://www.npmjs.com/package/debug
 // .. _bluebird: https://github.com/petkaantonov/bluebird
 // .. _Extended Promise API: https://github.com/petkaantonov/bluebird/blob/master/API.md
 
-import '@babel/polyfill'
 import 'whatwg-fetch'
 import debug from 'debug'
 import Bluebird from 'bluebird'
