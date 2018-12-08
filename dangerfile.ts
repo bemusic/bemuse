@@ -3,6 +3,10 @@ import { CLIEngine } from 'eslint'
 import { readFileSync } from 'fs'
 import { insert } from 'markdown-toc'
 import { getFileInfo, resolveConfig, check, format } from 'prettier'
+import minimatch = require('minimatch')
+
+/* eslint no-undef: off */
+/* REASON: not compatible with import = require() syntax. */
 
 // No PR is too small to include a description of why you made a change
 if (danger.github) {
@@ -33,16 +37,21 @@ report.results.forEach(result => {
 
 // Prettier
 let prettierFailed = false
+const prettierPattern = '*.{js,jsx,ts,tsx,json,scss,css,yml}'
 filesToCheck.forEach(filePath => {
+  const matchesPattern = minimatch(filePath, prettierPattern, {
+    matchBase: true,
+  })
+  if (!matchesPattern) return
   const fileInfo = getFileInfo.sync(filePath)
-  if (!fileInfo.ignored && fileInfo.inferredParser) {
-    const source = readFileSync(filePath, 'utf8')
-    const config = resolveConfig.sync(filePath)
-    const options = { ...config, parser: fileInfo.inferredParser }
-    if (!check(source, options)) {
-      fail(`${filePath} is not formatted using Prettier`)
-      prettierFailed = true
-    }
+  if (fileInfo.ignored) return
+  if (!fileInfo.inferredParser) return
+  const source = readFileSync(filePath, 'utf8')
+  const config = resolveConfig.sync(filePath)
+  const options = { ...config, parser: fileInfo.inferredParser }
+  if (!check(source, options)) {
+    fail(`${filePath} is not formatted using Prettier`)
+    prettierFailed = true
   }
 })
 if (prettierFailed) {
