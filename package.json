@@ -29,7 +29,6 @@
     "style:check": "yarn prettier --list-different './**/*.{js,jsx,ts,tsx,json,scss,css,yml}'",
     "style:fix": "yarn prettier --write './**/*.{js,jsx,ts,tsx,json,scss,css,yml}'",
     "test": "cross-env NODE_ENV=test BEMUSE_COV=true gulp test",
-    "travis": "gulp travis",
     "readme:update": "markdown-toc -i README.md && prettier --write README.md"
   },
   "importSort": {
