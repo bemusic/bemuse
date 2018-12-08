@@ -2,17 +2,17 @@ let _enabled = false
 
 let _lifecycleHandler = {
   /** @returns {Promise<void>} */
-  pauseAt (t) {
+  pauseAt(t) {
     throw new Error('Cannot pause: No lifecycle handler registered!')
   },
   /** @returns {void} */
-  unpause () {
+  unpause() {
     throw new Error('Cannot unpause: No lifecycle handler registered!')
   },
   /** @returns {number} */
-  getScore () {
+  getScore() {
     throw new Error('Cannot get score: No lifecycle handler registered!')
-  }
+  },
 }
 
 /**
@@ -26,7 +26,7 @@ let _lifecycleHandler = {
  *
  * Note: Once test mode is activated, it cannot be deactivated for the rest of the game session.
  */
-export function enableTestMode () {
+export function enableTestMode() {
   if (!_enabled) {
     _enabled = true
     console.log('[Bemuse test mode enabled]')
@@ -60,7 +60,7 @@ export function enableTestMode () {
  *
  * @param {typeof _lifecycleHandler} handler
  */
-export function setGameLifecycleHandler (handler) {
+export function setGameLifecycleHandler(handler) {
   console.log('[Bemuse test mode] A pause handler has been registered.')
   _lifecycleHandler = handler
 }
@@ -68,7 +68,7 @@ export function setGameLifecycleHandler (handler) {
 /**
  * Returns `true` if test mode is enabled, `false` otherwise.
  */
-export function isTestModeEnabled () {
+export function isTestModeEnabled() {
   return !!_enabled
 }
 
@@ -78,20 +78,20 @@ export function isTestModeEnabled () {
  * @param {number} t The song time to pause in seconds
  * @returns {Promise<void>} A promise that will be resolved when the time is reached and game is paused.
  */
-export function pauseAt (t) {
+export function pauseAt(t) {
   return _lifecycleHandler.pauseAt(t)
 }
 
 /**
  * Unpauses the game.
  */
-export function unpause () {
+export function unpause() {
   return _lifecycleHandler.unpause()
 }
 
 /**
  * Returns the current score.
  */
-export function getScore () {
+export function getScore() {
   return _lifecycleHandler.getScore()
 }

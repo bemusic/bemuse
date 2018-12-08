@@ -70,7 +70,7 @@ export class GameTimer {
       return Math.min(projectedTimerValue, this._pauseAtTimerValue)
     }
   }
-  pauseAt (timerValueToPause) {
+  pauseAt(timerValueToPause) {
     if (
       this._unpausedTimerValue +
         (this._lastRecordedTimeSinceStart - this._unpausedTimeSinceStart) >=

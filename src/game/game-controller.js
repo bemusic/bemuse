@@ -44,7 +44,7 @@ export class GameController {
           const state = this._state
           const playerState = state.player(state.game.players[0])
           return playerState.stats.score
-        }
+        },
       })
     }
   }

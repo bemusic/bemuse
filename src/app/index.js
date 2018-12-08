@@ -135,5 +135,5 @@ window.addEventListener('beforeunload', () => {
 })
 
 Object.assign(window, {
-  BemuseTestMode
+  BemuseTestMode,
 })

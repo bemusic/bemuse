@@ -62,7 +62,7 @@ to('Play through the game', () => {
     { key: 'j', beat: 8, expectedScore: 347221 },
     { key: 'f', beat: 8.5, expectedScore: 416666 },
     { key: 'f', beat: 9, expectedScore: 486110 },
-    { key: 'k', beat: 9.75, expectedScore: 524305 }
+    { key: 'k', beat: 9.75, expectedScore: 524305 },
   ]
   for (const [i, event] of keys.entries()) {
     const t = (event.beat * 60) / 140
