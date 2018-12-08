@@ -23,7 +23,6 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
     "postbootstrap": "lerna run prepare",
-    "pre-commit": "gulp pre-commit",
     "prepare": "lerna run prepare",
     "prod-build": "cross-env NODE_ENV=production gulp build",
     "prod-start": "cross-env NODE_ENV=production HOT=true gulp server",
