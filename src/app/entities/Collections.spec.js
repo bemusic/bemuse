@@ -3,7 +3,7 @@ import * as LoadState from './LoadState'
 
 import { given, shouldEqual } from 'circumstance'
 
-describe('Collections', function () {
+describe('Collections', function() {
   it('should receive collection data', () =>
     given(Collections.initialState)
       .when(Collections.beginLoading('https://test-server/'))

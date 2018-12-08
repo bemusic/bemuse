@@ -1,44 +1,44 @@
 const no = () => Promise.reject(new Error('Online services not enabled.'))
 
 export class OfflineService {
-  getCurrentUser () {
+  getCurrentUser() {
     return null
   }
 
-  isLoggedIn () {
+  isLoggedIn() {
     return false
   }
 
-  signUp ({ username, password, email }) {
+  signUp({ username, password, email }) {
     return no()
   }
 
-  logIn ({ username, password }) {
+  logIn({ username, password }) {
     return no()
   }
 
-  logOut () {
+  logOut() {
     return no()
   }
 
-  submitScore (info) {
+  submitScore(info) {
     return Promise.reject(new Error('Online services not enabled.'))
   }
 
   // Retrieves a record.
   //
   // Returns a record object.
-  retrieveRecord (level, user) {
+  retrieveRecord(level, user) {
     return Promise.reject(new Error('Online services not enabled.'))
   }
 
   // Retrieves the scoreboard
-  retrieveScoreboard ({ md5, playMode }) {
+  retrieveScoreboard({ md5, playMode }) {
     return Promise.reject(new Error('Online services not enabled.'))
   }
 
   // Retrieve multiple records!
-  retrieveMultipleRecords (items, user) {
+  retrieveMultipleRecords(items, user) {
     return Promise.reject(new Error('Online services not enabled.'))
   }
 }

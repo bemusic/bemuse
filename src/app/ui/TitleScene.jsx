@@ -33,10 +33,10 @@ const enhance = compose(
   hot(module),
   connectIO({
     onMarkChangelogAsSeen: () => () =>
-      OptionsIO.updateOptions(Options.updateLastSeenVersion(version))
+      OptionsIO.updateOptions(Options.updateLastSeenVersion(version)),
   }),
   connect(state => ({
-    hasSeenChangelog: Options.lastSeenVersion(state.options) === version
+    hasSeenChangelog: Options.lastSeenVersion(state.options) === version,
   }))
 )
 
@@ -44,50 +44,50 @@ class TitleScene extends React.Component {
   static propTypes = {
     hasSeenChangelog: PropTypes.bool,
     onTwitterButtonClick: PropTypes.func,
-    onMarkChangelogAsSeen: PropTypes.func.isRequired
+    onMarkChangelogAsSeen: PropTypes.func.isRequired,
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      changelogModalVisible: false
+      changelogModalVisible: false,
     }
   }
 
-  getToolbarItems () {
+  getToolbarItems() {
     return [
       Toolbar.item('About', {
-        onClick: this.showAbout
+        onClick: this.showAbout,
       }),
       Toolbar.item('Docs', {
-        href: '/project/'
+        href: '/project/',
       }),
       Toolbar.item(this.renderVersion(), {
         onClick: this.viewChangelog,
         tip: 'What’s new?',
-        tipVisible: !this.props.hasSeenChangelog
+        tipVisible: !this.props.hasSeenChangelog,
       }),
       Toolbar.spacer(),
       Toolbar.item('Discord', {
         href: 'https://discord.gg/aB6ucmx',
         tip: 'Join our Discord server',
-        tipFeatureKey: 'discord'
+        tipFeatureKey: 'discord',
       }),
       Toolbar.item('Facebook', {
-        href: 'https://www.facebook.com/bemusegame'
+        href: 'https://www.facebook.com/bemusegame',
       }),
       Toolbar.item('Twitter', {
         href: 'https://twitter.com/bemusegame',
         tip: 'Follow us :)',
-        tipFeatureKey: 'twitter'
+        tipFeatureKey: 'twitter',
       }),
       Toolbar.item('Fork me on GitHub', {
-        href: 'https://github.com/bemusic/bemuse'
-      })
+        href: 'https://github.com/bemusic/bemuse',
+      }),
     ]
   }
 
-  render () {
+  render() {
     const shouldShowHomepage = !HAS_PARENT
     return (
       <Scene className='TitleScene'>
@@ -128,7 +128,7 @@ class TitleScene extends React.Component {
     )
   }
 
-  renderVersion () {
+  renderVersion() {
     return (
       <React.Fragment>
         <strong>Bemuse</strong> v{version}
@@ -151,12 +151,12 @@ class TitleScene extends React.Component {
     if (this.props.onTwitterButtonClick) this.props.onTwitterButtonClick()
   }
 
-  enterGame () {
+  enterGame() {
     SCENE_MANAGER.push(<ModeSelectScene />).done()
     Analytics.send('TitleScene', 'enter game')
   }
 
-  showAbout () {
+  showAbout() {
     SCENE_MANAGER.push(<AboutScene />).done()
     Analytics.send('TitleScene', 'show about')
   }
@@ -167,7 +167,7 @@ class TitleScene extends React.Component {
     Analytics.send('TitleScene', 'view changelog')
   }
 
-  toggleChangelogModal () {
+  toggleChangelogModal() {
     this.setState({ changelogModalVisible: !this.state.changelogModalVisible })
   }
 }

@@ -2,9 +2,13 @@ extends:
   - standard
   - standard-react
   - ./.eslintrc.config.import.js
+  - prettier
+  - prettier/react
+  - prettier/standard
 parserOptions:
   ecmaVersion: 6
   sourceType: module
+  jsx: true
   ecmaFeatures:
     jsx: true
 env:
@@ -24,7 +28,7 @@ globals:
   xit: false
   sinon: false
   BemuseLogger: false
-parser: babel-eslint
+parser: typescript-eslint-parser
 plugins:
   - react
 rules:

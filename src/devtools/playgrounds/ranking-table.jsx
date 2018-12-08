@@ -14,19 +14,19 @@ const RankingTablePlayground = () => (
             score: '543210',
             count: [5, 4, 3, 2, 1],
             total: 15,
-            rank: 1
+            rank: 1,
           },
           {
             playerName: 'Two',
             score: '123456',
             count: [1, 2, 3, 4, 5],
             total: 15,
-            rank: 2
-          }
+            rank: 2,
+          },
         ],
         meta: {
           scoreboard: {
-            status: 'completed'
+            status: 'completed',
           },
           submission: {
             status: 'completed',
@@ -35,10 +35,10 @@ const RankingTablePlayground = () => (
               score: '543210',
               count: [5, 4, 3, 2, 1],
               total: 15,
-              rank: 1
-            }
-          }
-        }
+              rank: 1,
+            },
+          },
+        },
       }}
     />
     <Ranking
@@ -49,25 +49,25 @@ const RankingTablePlayground = () => (
             score: '543210',
             count: [5, 4, 3, 2, 1],
             total: 15,
-            rank: 1
+            rank: 1,
           },
           {
             playerName: 'Two',
             score: '123456',
             count: [1, 2, 3, 4, 5],
             total: 15,
-            rank: 2
-          }
+            rank: 2,
+          },
         ],
         meta: {
           scoreboard: {
-            status: 'completed'
+            status: 'completed',
           },
           submission: {
             status: 'completed',
-            record: null
-          }
-        }
+            record: null,
+          },
+        },
       }}
     />
     <Ranking
@@ -75,12 +75,12 @@ const RankingTablePlayground = () => (
         data: null,
         meta: {
           scoreboard: {
-            status: 'completed'
+            status: 'completed',
           },
           submission: {
-            status: 'unauthenticated'
-          }
-        }
+            status: 'unauthenticated',
+          },
+        },
       }}
     />
     <Ranking
@@ -88,12 +88,12 @@ const RankingTablePlayground = () => (
         data: null,
         meta: {
           scoreboard: {
-            status: 'loading'
+            status: 'loading',
           },
           submission: {
-            status: 'loading'
-          }
-        }
+            status: 'loading',
+          },
+        },
       }}
     />
     <Ranking
@@ -101,17 +101,17 @@ const RankingTablePlayground = () => (
         data: null,
         meta: {
           scoreboard: {
-            status: 'error'
+            status: 'error',
           },
           submission: {
-            status: 'error'
-          }
-        }
+            status: 'error',
+          },
+        },
       }}
     />
   </div>
 )
 
-export function main () {
+export function main() {
   ReactDOM.render(<RankingTablePlayground />, MAIN)
 }

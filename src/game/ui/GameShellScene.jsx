@@ -7,17 +7,17 @@ import c from 'classnames'
 class CustomChartSelector extends React.Component {
   static propTypes = {
     selectedResource: PropTypes.any,
-    onSelect: PropTypes.func
+    onSelect: PropTypes.func,
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      files: []
+      files: [],
     }
   }
 
-  render () {
+  render() {
     let files = this.state.files
     return (
       <div className='drop-zone'>
@@ -29,7 +29,7 @@ class CustomChartSelector extends React.Component {
                   href='javascript://'
                   onClick={this.handleItemClick}
                   className={c({
-                    'is-active': file.resource === this.props.selectedResource
+                    'is-active': file.resource === this.props.selectedResource,
                   })}
                 >
                   {file.name}
@@ -91,17 +91,17 @@ class CustomChartSelector extends React.Component {
 export default class GameShellScene extends React.Component {
   static propTypes = {
     options: PropTypes.object,
-    play: PropTypes.func
+    play: PropTypes.func,
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      options: this.props.options
+      options: this.props.options,
     }
   }
 
-  render () {
+  render() {
     let options = this.state.options
     return (
       <div
@@ -200,7 +200,7 @@ export default class GameShellScene extends React.Component {
 
   handleSelectFile = (resources, resource) => {
     this.setState({
-      options: Object.assign(this.state.options, { resources, resource })
+      options: Object.assign(this.state.options, { resources, resource }),
     })
     this.forceUpdate()
   }

@@ -71,24 +71,24 @@ export class Speedcore {
    * Constructs a new `Speedcore` from given segments.
    * @param {SpeedSegment[]} segments
    */
-  constructor (segments) {
+  constructor(segments) {
     this._segments = segments.map(Segment)
   }
-  _reached (index, typeFn, position) {
+  _reached(index, typeFn, position) {
     if (index >= this._segments.length) return false
     var segment = this._segments[index]
     var target = typeFn(segment)
     return segment.inclusive ? position >= target : position > target
   }
-  _segmentAt (typeFn, position) {
+  _segmentAt(typeFn, position) {
     for (var i = 0; i < this._segments.length; i++) {
       if (!this._reached(i + 1, typeFn, position)) return this._segments[i]
     }
   }
-  segmentAtX (x) {
+  segmentAtX(x) {
     return this._segmentAt(X, x)
   }
-  segmentAtT (t) {
+  segmentAtT(t) {
     return this._segmentAt(T, t)
   }
 
@@ -96,7 +96,7 @@ export class Speedcore {
    * Calculates the _t_, given _x_.
    * @param {number} x
    */
-  t (x) {
+  t(x) {
     var segment = this.segmentAtX(x)
     return segment.t + (x - segment.x) / (segment.dx || 1)
   }
@@ -105,7 +105,7 @@ export class Speedcore {
    * Calculates the _x_, given _t_.
    * @param {number} t
    */
-  x (t) {
+  x(t) {
     var segment = this.segmentAtT(t)
     return segment.x + (t - segment.t) * segment.dx
   }
@@ -114,16 +114,16 @@ export class Speedcore {
    * Finds the _dx_, given _t_.
    * @param {number} t
    */
-  dx (t) {
+  dx(t) {
     var segment = this.segmentAtT(t)
     return segment.dx
   }
 }
 
-var T = function (segment) {
+var T = function(segment) {
   return segment.t
 }
-var X = function (segment) {
+var X = function(segment) {
   return segment.x
 }
 

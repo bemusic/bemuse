@@ -1,4 +1,4 @@
-export function loadImage (assets, filename) {
+export function loadImage(assets, filename) {
   return assets
     .file(filename)
     .then(asset => asset.read())

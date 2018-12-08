@@ -11,7 +11,7 @@ import * as BemuseTestMode from 'bemuse/devtools/BemuseTestMode'
 // The GameController takes care of communications between each game
 // component, and takes care of the Game loop.
 export class GameController {
-  constructor ({ game, display, audio }) {
+  constructor({ game, display, audio }) {
     this._audioInputLatency = game.options.audioInputLatency
     this._game = game
     this._display = display
@@ -48,27 +48,27 @@ export class GameController {
       })
     }
   }
-  get game () {
+  get game() {
     return this._game
   }
-  get display () {
+  get display() {
     return this._display
   }
-  get audio () {
+  get audio() {
     return this._audio
   }
-  get promise () {
+  get promise() {
     return this._promise
   }
-  get state () {
+  get state() {
     return this._state
   }
-  get latestGameTime () {
+  get latestGameTime() {
     return this._latestGameTime
   }
 
   // Initializes the game components and kickstarts the game loop.
-  start () {
+  start() {
     this._handleEscape()
     this._display.start()
     this._input.use(new OmniInputPlugin(this._game))
@@ -84,7 +84,7 @@ export class GameController {
   }
 
   // Exits the game when escape is pressed.
-  _handleEscape () {
+  _handleEscape() {
     let onKeyDown = e => {
       const ESCAPE_KEY = 27
       const F1_KEY = 112
@@ -100,28 +100,28 @@ export class GameController {
     }
     window.addEventListener('keydown', onKeyDown, true)
     this._promise
-      .finally(function () {
+      .finally(function() {
         window.removeEventListener('keydown', onKeyDown, true)
       })
       .done()
   }
 
-  _quitGame () {
+  _quitGame() {
     this._resolvePromise({ finished: false, replay: false })
   }
-  _replayGame () {
+  _replayGame() {
     this._resolvePromise({ finished: false, replay: true })
   }
 
   // Destroy the game.
-  destroy () {
+  destroy() {
     this._endGameLoop()
     this._audio.destroy()
     this._input.destroy()
     this._display.destroy()
   }
 
-  _update () {
+  _update() {
     // >> game/loop
     //
     // Turn-Based Update Cycle
@@ -163,7 +163,7 @@ export class GameController {
     }
   }
 
-  enableBenchmark () {
+  enableBenchmark() {
     bench.benchmark('update', this, '_update')
     bench.benchmark('input_update', this._input, 'update')
     bench.benchmark('state_update', this._state, 'update')

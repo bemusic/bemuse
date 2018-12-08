@@ -7,7 +7,7 @@ import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
 import { createIO, createRun } from 'impure'
 import {
   shouldShowAbout,
-  shouldShowModeSelect
+  shouldShowModeSelect,
 } from 'bemuse/devtools/query-flags'
 import { withContext } from 'recompose'
 
@@ -24,13 +24,13 @@ import store from './redux/instance'
 import {
   getInitialGrepString,
   getMusicServer,
-  getTimeSynchroServer
+  getTimeSynchroServer,
 } from './query-flags'
 import { isBrowserSupported } from './browser-support'
 
 /* eslint import/no-webpack-loader-syntax: off */
 export const runIO = createRun({
-  context: ioContext
+  context: ioContext,
 })
 
 // HACK: Make SCENE_MANAGER provide Redux store and IO context.
@@ -48,18 +48,18 @@ if (module.hot) {
 
 export default runIO
 
-function bootUp () {
+function bootUp() {
   return createIO(({ collectionLoader, store }, run) => {
     collectionLoader.load(getMusicServer() || OFFICIAL_SERVER_URL)
     store.dispatch({
       type: ReduxState.MUSIC_SEARCH_TEXT_INITIALIZED,
-      text: getInitialGrepString()
+      text: getInitialGrepString(),
     })
     run(OptionsIO.loadInitialOptions())
   })
 }
 
-export function main () {
+export function main() {
   runIO(bootUp())
 
   // setup service worker
@@ -80,11 +80,11 @@ export function main () {
   trackFullscreenEvents()
 }
 
-function displayFirstScene () {
+function displayFirstScene() {
   SCENE_MANAGER.display(getFirstScene()).done()
 }
 
-function getFirstScene () {
+function getFirstScene() {
   if (shouldShowAbout()) {
     return React.createElement(AboutScene)
   } else if (shouldShowModeSelect()) {
@@ -98,26 +98,26 @@ function getFirstScene () {
   }
 }
 
-function shouldActivateServiceWorker () {
+function shouldActivateServiceWorker() {
   return (
     (location.protocol === 'https:' && location.host === 'bemuse.ninja') ||
     location.hostname === 'localhost'
   )
 }
 
-function setupServiceWorker () {
+function setupServiceWorker() {
   if (!('serviceWorker' in navigator)) return false
   if (!shouldActivateServiceWorker()) return false
   registerServiceWorker()
   return true
 }
 
-function registerServiceWorker () {
+function registerServiceWorker() {
   const url = '/sw-loader.js?path=' + encodeURIComponent(workerPath)
   return navigator.serviceWorker.register(url)
 }
 
-function trackFullscreenEvents () {
+function trackFullscreenEvents() {
   let fullscreen = false
   document.addEventListener('fullscreenchange', () => {
     if (document.fullscreenElement && !fullscreen) {

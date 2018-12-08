@@ -1,4 +1,3 @@
-
 .MusicInfoTabStats {
   overflow: hidden;
   &のmessage {
@@ -9,8 +8,12 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    &.is-left { float: left; }
-    &.is-right { float: right; }
+    &.is-left {
+      float: left;
+    }
+    &.is-right {
+      float: right;
+    }
     > dt {
       float: left;
       clear: left;

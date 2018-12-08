@@ -7,13 +7,13 @@ import PropTypes from 'prop-types'
 class OptionsSpeed extends React.PureComponent {
   static propTypes = {
     value: PropTypes.string,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
   }
 
-  parseSpeed (speedString) {
+  parseSpeed(speedString) {
     return +(+speedString || 1.0).toFixed(1)
   }
-  stringifySpeed (speed) {
+  stringifySpeed(speed) {
     return speed.toFixed(1)
   }
   handleMinusButtonClick = () => {
@@ -29,7 +29,7 @@ class OptionsSpeed extends React.PureComponent {
   handleSpeedInputChange = nextSpeed => {
     this.props.onChange(this.stringifySpeed(nextSpeed))
   }
-  render () {
+  render() {
     return (
       <div className='OptionsSpeed'>
         <span className='OptionsSpeedのminus'>

@@ -2,7 +2,7 @@
 
 import version from 'bemuse/utils/version'
 
-function log (...args) {
+function log(...args) {
   console.log(
     '%c serviceworker %c',
     'background:yellow;color:black',
@@ -19,7 +19,7 @@ var RES_CACHE_KEY = 'site-v' + version
 var SKIN_CACHE_KEY = 'skin-v' + version
 var SONG_CACHE_KEY = 'songs'
 
-self.addEventListener('install', function (event) {
+self.addEventListener('install', function(event) {
   event.waitUntil(
     caches
       .open(SITE_CACHE_KEY)
@@ -28,12 +28,12 @@ self.addEventListener('install', function (event) {
   )
 })
 
-self.addEventListener('activate', function () {
+self.addEventListener('activate', function() {
   log('Service worker activated! Claiming clients now!')
   return self.clients.claim()
 })
 
-self.addEventListener('fetch', function (event) {
+self.addEventListener('fetch', function(event) {
   if (event.request.headers.get('range')) {
     // https://bugs.chromium.org/p/chromium/issues/detail?id=575357
     log('Bailing out for ranged request.', event.request.url)
@@ -75,13 +75,13 @@ self.addEventListener('fetch', function (event) {
   }
 })
 
-function cacheForever (event, cacheName) {
+function cacheForever(event, cacheName) {
   event.respondWith(
-    caches.open(cacheName).then(function (cache) {
-      return cache.match(event.request).then(function (cached) {
+    caches.open(cacheName).then(function(cache) {
+      return cache.match(event.request).then(function(cached) {
         return (
           cached ||
-          fetch(event.request).then(function (response) {
+          fetch(event.request).then(function(response) {
             log('Cache forever:', event.request.url)
             cache.put(event.request, response.clone())
             return response
@@ -92,11 +92,11 @@ function cacheForever (event, cacheName) {
   )
 }
 
-function fetchThenCache (event, cacheName) {
+function fetchThenCache(event, cacheName) {
   event.respondWith(
-    caches.open(cacheName).then(function (cache) {
+    caches.open(cacheName).then(function(cache) {
       return fetch(event.request)
-        .then(function (response) {
+        .then(function(response) {
           if (response && response.ok) {
             log('Fetch OK:', event.request.url)
             cache.put(event.request, response.clone())
@@ -105,18 +105,18 @@ function fetchThenCache (event, cacheName) {
             return cache.match(event.request)
           }
         })
-        .catch(function () {
+        .catch(function() {
           return cache.match(event.request)
         })
     })
   )
 }
 
-function staleWhileRevalidate (event, cacheName) {
+function staleWhileRevalidate(event, cacheName) {
   event.respondWith(
-    caches.open(cacheName).then(function (cache) {
-      return cache.match(event.request).then(function (cached) {
-        var promise = fetch(event.request).then(function (response) {
+    caches.open(cacheName).then(function(cache) {
+      return cache.match(event.request).then(function(cached) {
+        var promise = fetch(event.request).then(function(response) {
           if (response && response.ok) {
             log('Updated:', event.request.url)
             cache.put(event.request, response.clone())

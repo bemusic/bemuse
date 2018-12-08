@@ -3,24 +3,24 @@ import * as ReduxState from '../redux/ReduxState'
 
 import { createIO } from 'impure'
 
-export function loadInitialOptions () {
+export function loadInitialOptions() {
   return createIO(({ store }) => {
     store.dispatch({
       type: ReduxState.OPTIONS_LOADED_FROM_STORAGE,
-      options: options.getAllCurrentOptions()
+      options: options.getAllCurrentOptions(),
     })
 
     // HACK: Dispatch when options change!
     options.events.on('changed', () => {
       store.dispatch({
         type: ReduxState.OPTIONS_LOADED_FROM_STORAGE,
-        options: options.getAllCurrentOptions()
+        options: options.getAllCurrentOptions(),
       })
     })
   })
 }
 
-export function updateOptions (updater) {
+export function updateOptions(updater) {
   return createIO(({ store }) => {
     const currentOptions = store.getState().options
     const nextOptions = updater(currentOptions)

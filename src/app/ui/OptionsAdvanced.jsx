@@ -14,10 +14,10 @@ import OptionsInputField from './OptionsInputField'
 
 const enhance = compose(
   connect(state => ({
-    options: state.options
+    options: state.options,
   })),
   connectIO({
-    onUpdateOptions: () => updater => OptionsIO.updateOptions(updater)
+    onUpdateOptions: () => updater => OptionsIO.updateOptions(updater),
   }),
   pure
 )
@@ -25,15 +25,15 @@ const enhance = compose(
 class OptionsAdvanced extends React.Component {
   static propTypes = {
     options: PropTypes.object,
-    onUpdateOptions: PropTypes.func
+    onUpdateOptions: PropTypes.func,
   }
-  stringifyLatency (latency) {
+  stringifyLatency(latency) {
     return Math.round(latency) + 'ms'
   }
-  parseLatency (latencyText) {
+  parseLatency(latencyText) {
     return parseInt(latencyText, 10)
   }
-  render () {
+  render() {
     let options = this.props.options
     return (
       <div className='OptionsAdvanced'>
@@ -72,15 +72,15 @@ export default enhance(OptionsAdvanced)
 
 class LatencyMessageListener extends React.Component {
   static propTypes = {
-    onLatency: PropTypes.func
+    onLatency: PropTypes.func,
   }
-  render () {
+  render() {
     return null
   }
-  componentDidMount () {
+  componentDidMount() {
     window.addEventListener('message', this.handleMessage)
   }
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener('message', this.handleMessage)
   }
   handleMessage = event => {

@@ -3,7 +3,7 @@ import { load } from './loader'
 
 export { load, Context }
 
-export function getSkinUrl ({ displayMode } = {}) {
+export function getSkinUrl({ displayMode } = {}) {
   if (displayMode === 'touch3d') {
     return '/skins/default/skin_touch3d.xml'
   } else {

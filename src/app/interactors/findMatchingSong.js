@@ -1,6 +1,6 @@
 // Finds a song matching the title
 
-function findMatchingSong ({ songs, title, getTitle }) {
+function findMatchingSong({ songs, title, getTitle }) {
   for (const song of songs) {
     if (titleFullyMatches(getTitle(song), title)) {
       return song
@@ -8,7 +8,7 @@ function findMatchingSong ({ songs, title, getTitle }) {
   }
 }
 
-function titleFullyMatches (haystack, needle) {
+function titleFullyMatches(haystack, needle) {
   return (
     String(haystack)
       .toLowerCase()

@@ -1,19 +1,26 @@
-@import "~bemuse/ui/common";
+@import '~bemuse/ui/common';
 
 .TitleScene {
-  background: #415067 url('~!!url-loader!./images/bg-title.placeholder.png') 50% 90% no-repeat;
+  background: #415067 url('~!!url-loader!./images/bg-title.placeholder.png') 50%
+    90% no-repeat;
   background-size: cover;
 
   &のimage {
     background: url('./images/bg-title.jpg') 50% 90% no-repeat;
     background-size: cover;
     position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
   }
 
   &のpage {
     position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     overflow-x: hidden;
     overflow-y: auto;
     &::-webkit-scrollbar {
@@ -33,8 +40,9 @@
 
   &のlogo {
     position: absolute;
-    top: 32%; left: 50%;
-    transform: translate(-50%,-50%);
+    top: 32%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 90vw;
     background-size: contain;
     animation: 0.8s TitleSceneのfadeIn;
@@ -57,7 +65,11 @@
 
   &のcurtain {
     position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0; background: black;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: black;
     animation: 0.8s TitleSceneのcurtain;
     opacity: 0;
     pointer-events: none;
@@ -65,7 +77,9 @@
 
   &のenter {
     position: absolute;
-    top: 70%; left: 0; right: 0;
+    top: 70%;
+    left: 0;
+    right: 0;
     transform: translate(0, -50%);
     animation: 0.8s TitleSceneのenterFadeIn;
     display: flex;
@@ -81,7 +95,7 @@
       transform: scale(1);
       transition: 0.1s transform, 0.1s background;
       &:hover {
-        background: rgba(#fff, 1.0);
+        background: rgba(#fff, 1);
         transform: scale(1.1);
       }
     }
@@ -94,22 +108,41 @@
 }
 
 @keyframes TitleSceneのtoolbar {
-  from { transform: translateY(1rem); }
-  to { transform: translateY(0); }
+  from {
+    transform: translateY(1rem);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 @keyframes TitleSceneのcurtain {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
-
 @keyframes TitleSceneのfadeIn {
-  0% { opacity: 0; transform: translate(-50%, -50%) translate(0, -1rem); }
-  100% { opacity: 1; transform: translate(-50%, -50%); }
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate(0, -1rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
 }
 
 @keyframes TitleSceneのenterFadeIn {
-  0% { opacity: 0; transform: translate(0%, -50%) translate(0, -1em); }
-  100% { opacity: 1; transform: translate(0%, -50%); }
+  0% {
+    opacity: 0;
+    transform: translate(0%, -50%) translate(0, -1em);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0%, -50%);
+  }
 }

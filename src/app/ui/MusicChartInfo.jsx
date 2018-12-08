@@ -29,8 +29,8 @@ MusicChartInfo.propTypes = {
     subtitles: PropTypes.arrayOf(PropTypes.string),
     subartists: PropTypes.arrayOf(PropTypes.string),
     difficulty: PropTypes.number,
-    level: PropTypes.number
-  })
+    level: PropTypes.number,
+  }),
 }
 
 export default MusicChartInfo

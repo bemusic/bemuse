@@ -5,7 +5,7 @@ import Instance from './lib/instance'
 import Expression from '../expression'
 
 export class IfNode extends SkinNode {
-  compile (compiler, $el) {
+  compile(compiler, $el) {
     let children = compiler.compileChildren($el)
     if (children.length !== 1) {
       throw new Error(
@@ -16,7 +16,7 @@ export class IfNode extends SkinNode {
     this.key = new Expression($el.attr('key'))
     this.value = String($el.attr('value'))
   }
-  instantiate (context, container) {
+  instantiate(context, container) {
     let object = new PIXI.Container()
     let expr = this.key
     let value = this.value
@@ -38,7 +38,7 @@ export class IfNode extends SkinNode {
             child = null
           }
         }
-      }
+      },
     })
   }
 }

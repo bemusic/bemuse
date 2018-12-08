@@ -8,8 +8,8 @@ import SamplingMaster, { canPlay } from 'bemuse/sampling-master'
 /**
  * The audio format to use (.ogg or .m4a)
  */
-let audioExt = once(
-  () => (canPlay('audio/ogg; codecs="vorbis"') ? '.ogg' : '.m4a')
+let audioExt = once(() =>
+  canPlay('audio/ogg; codecs="vorbis"') ? '.ogg' : '.m4a'
 )
 
 /**
@@ -23,14 +23,14 @@ let ASSET_URLS = {
   'kick.m4a': require('./data/kick.m4a'),
   'kick.ogg': require('./data/kick.ogg'),
   'snare.m4a': require('./data/snare.m4a'),
-  'snare.ogg': require('./data/snare.ogg')
+  'snare.ogg': require('./data/snare.ogg'),
 }
 
 /**
  * Loads the files and create a music instance.
  */
-export function load () {
-  return co(function * () {
+export function load() {
+  return co(function*() {
     let master = new SamplingMaster(context)
     let sample = name =>
       download(ASSET_URLS[`${name}${audioExt()}`])
@@ -50,8 +50,8 @@ export function load () {
 /**
  * Takes the sample and sequences a music
  */
-function music (master, samples) {
-  return function play (callbacks) {
+function music(master, samples) {
+  return function play(callbacks) {
     master.unmute()
 
     let BPM = 148
@@ -91,40 +91,40 @@ function music (master, samples) {
     setInterval(() => sequence(time.t), 33)
 
     return {
-      ok () {
+      ok() {
         state.ok = true
       },
-      progress (p) {
+      progress(p) {
         filter.frequency.value = 20000 * p * p * p
       },
-      getSample () {
-        let nearestBeat = Math.round(time.t * BPM / 60)
-        let nearestBeatTime = nearestBeat * 60 / BPM
+      getSample() {
+        let nearestBeat = Math.round((time.t * BPM) / 60)
+        let nearestBeatTime = (nearestBeat * 60) / BPM
         return [nearestBeat, time.t - nearestBeatTime]
-      }
+      },
     }
   }
 }
 
-function beatSequencer (bpm, f) {
+function beatSequencer(bpm, f) {
   let beat = -1
   return time => {
-    let nowBeat = Math.floor((time + 0.1) * bpm / 60)
+    let nowBeat = Math.floor(((time + 0.1) * bpm) / 60)
     while (beat < nowBeat) {
       beat += 1
-      let beatTime = beat * 60 / bpm
+      let beatTime = (beat * 60) / bpm
       f(beat, beatTime - time)
     }
   }
 }
 
 class AudioTime {
-  constructor (audioContext, leadTime) {
+  constructor(audioContext, leadTime) {
     this._context = audioContext
     this._start = audioContext.currentTime
     this._startTime = leadTime
   }
-  get t () {
+  get t() {
     return this._context.currentTime - this._start + this._startTime
   }
 }

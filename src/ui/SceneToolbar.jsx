@@ -4,16 +4,16 @@ import PropTypes from 'prop-types'
 
 export class SceneToolbar extends React.Component {
   static propTypes = {
-    children: PropTypes.node
+    children: PropTypes.node,
   }
 
-  render () {
+  render() {
     return <div className='SceneToolbar'>{this.props.children}</div>
   }
 }
 
 SceneToolbar.Spacer = class SceneToolbarSpacer extends React.Component {
-  render () {
+  render() {
     return <div className='SceneToolbarのspacer' />
   }
 }

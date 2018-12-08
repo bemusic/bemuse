@@ -7,10 +7,10 @@ export default class Panel extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     title: PropTypes.string,
-    children: PropTypes.node
+    children: PropTypes.node,
   }
 
-  render () {
+  render() {
     return (
       <div className={c('Panel', this.props.className)}>
         <div className='Panelのtitle'>{this.props.title}</div>

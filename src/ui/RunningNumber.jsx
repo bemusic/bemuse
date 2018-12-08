@@ -7,14 +7,14 @@ import now from 'bemuse/utils/now'
 export default class RunningNumber extends React.Component {
   static propTypes = {
     formatter: PropTypes.func,
-    value: PropTypes.number.isRequired
+    value: PropTypes.number.isRequired,
   }
 
-  render () {
+  render() {
     return <span className='RunningNumber' />
   }
 
-  componentDidMount () {
+  componentDidMount() {
     let node = ReactDOM.findDOMNode(this)
     let text = document.createTextNode('')
     node.appendChild(text)

@@ -9,17 +9,17 @@ import OptionsButton from './OptionsButton'
 
 class UnofficialPanel extends React.Component {
   static propTypes = {
-    onClose: PropTypes.func.isRequired
+    onClose: PropTypes.func.isRequired,
   }
 
-  render () {
+  render() {
     return (
       <div style={{ maxWidth: '30em' }}>
         <Panel title='Unofficial Music Server'>
           <DialogContent>
             <p>
-              You are now playing in an <strong>unofficial music server</strong>.
-              This music server is not maintained or endorsed by Bemuse or
+              You are now playing in an <strong>unofficial music server</strong>
+              . This music server is not maintained or endorsed by Bemuse or
               Bemuse’s developers.
             </p>
             <DialogContent.Buttons>

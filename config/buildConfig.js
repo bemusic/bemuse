@@ -1,9 +1,13 @@
+/* eslint no-global-assign: off */
+/* REASON: When using TypeScript parser, sourceType:'module' is not respected.
+ * It thinks that CommonJS module files are global scripts. */
+
 let name = 'Bemuse'
 let version = require('../package.json')
   .version.replace(/\.0$/, '')
   .replace(/\.0$/, '')
 
-function gitRevision () {
+function gitRevision() {
   return require('child_process')
     .execSync('git rev-parse --short HEAD')
     .toString()

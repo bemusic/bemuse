@@ -8,10 +8,10 @@ import OptionsAdvanced from './OptionsAdvanced'
 
 export default class Options extends React.Component {
   static propTypes = {
-    onClose: PropTypes.func
+    onClose: PropTypes.func,
   }
 
-  render () {
+  render() {
     return (
       <div className='Options'>
         <div className='Optionsのa'>

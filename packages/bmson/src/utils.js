@@ -15,7 +15,7 @@ import _ from 'lodash'
 // * `keysoundEnd` The {Number} of seconds into the sound file to stop playing.
 //   This may be `undefined` to indicate that the sound file should play until the end.
 //
-export function slicesForNotesAndTiming (notes, timing, options) {
+export function slicesForNotesAndTiming(notes, timing, options) {
   const { beatForPulse } = options
 
   let all = new Set()

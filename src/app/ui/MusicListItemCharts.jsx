@@ -9,7 +9,7 @@ const chartPropType = PropTypes.shape({
     init: PropTypes.number,
     max: PropTypes.number,
     median: PropTypes.number,
-    min: PropTypes.number
+    min: PropTypes.number,
   }),
   duration: PropTypes.number,
   file: PropTypes.string,
@@ -20,11 +20,11 @@ const chartPropType = PropTypes.shape({
     subtitles: PropTypes.arrayOf(PropTypes.string),
     subartists: PropTypes.arrayOf(PropTypes.string),
     difficulty: PropTypes.number,
-    level: PropTypes.number
+    level: PropTypes.number,
   }),
   keys: PropTypes.string,
   md5: PropTypes.string,
-  noteCount: PropTypes.number
+  noteCount: PropTypes.number,
 })
 
 export default class MusicListItemCharts extends React.Component {
@@ -32,10 +32,10 @@ export default class MusicListItemCharts extends React.Component {
     charts: PropTypes.arrayOf(chartPropType),
     onChartClick: PropTypes.func,
     selectedChart: chartPropType,
-    playMode: PropTypes.string
+    playMode: PropTypes.string,
   }
 
-  render () {
+  render() {
     return (
       <div className='MusicListItemCharts'>
         {this.props.charts.map((chart, index) => (

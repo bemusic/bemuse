@@ -1,6 +1,6 @@
 import styled from 'react-emotion'
 
-const DialogContent = styled.div`
+const DialogContent = styled('div')`
   padding: 1em;
   > p {
     margin: 0;
@@ -10,7 +10,7 @@ const DialogContent = styled.div`
   }
 `
 
-DialogContent.Buttons = styled.p`
+DialogContent.Buttons = styled('p')`
   text-align: right;
 `
 

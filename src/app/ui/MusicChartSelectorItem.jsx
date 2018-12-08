@@ -11,16 +11,16 @@ class MusicChartSelectorItem extends React.Component {
     isSelected: PropTypes.bool,
     isReplayable: PropTypes.bool,
     isTutorial: PropTypes.number,
-    onChartClick: PropTypes.func.isRequired
+    onChartClick: PropTypes.func.isRequired,
   }
 
-  render () {
+  render() {
     let classes = c('MusicChartSelectorItem', {
       'is-active': this.props.isSelected,
       'is-replayable': this.props.isReplayable,
       'is-tutorial': this.props.isTutorial,
       'is-insane': this.props.chart.info.difficulty >= 5,
-      'is-5keys': this.props.chart.keys === '5K'
+      'is-5keys': this.props.chart.keys === '5K',
     })
     return (
       <li

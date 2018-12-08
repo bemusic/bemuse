@@ -9,6 +9,6 @@ const DropBMSScene = () => (
   </div>
 )
 
-export function main () {
+export function main() {
   ReactDOM.render(<DropBMSScene />, MAIN)
 }

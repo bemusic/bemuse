@@ -1,17 +1,13 @@
 'use strict'
 
 module.exports = {
-  extends: [
-    'plugin:import/errors'
-  ],
-  plugins: [
-    'import'
-  ],
+  extends: ['plugin:import/errors'],
+  plugins: ['import'],
   settings: {
     'import/resolver': {
       webpack: {
-        config: require.resolve('./webpack.config.resolver.js')
-      }
+        config: require.resolve('./webpack.config.resolver.js'),
+      },
     },
     'import/ignore': [
       'node_modules',
@@ -22,6 +18,6 @@ module.exports = {
       'config\\.js$',
       '/config/',
       '/tasks/',
-    ]
-  }
+    ],
+  },
 }

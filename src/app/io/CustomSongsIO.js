@@ -3,17 +3,17 @@ import * as ReduxState from '../redux/ReduxState'
 import { createIO } from 'impure'
 
 import DndResources from '../../resources/dnd-resources'
-import IPFSResources from '../../resources/ipfs-resources'
+import { getIPFSResources } from '../../resources/ipfs-resources'
 
-export function handleCustomSongFolderDrop (event) {
+export function handleCustomSongFolderDrop(event) {
   return createIO(async ({ store, customSongLoader }) => {
     const resources = new DndResources(event)
-    const initialLog = [ 'Examining dropped items...' ]
+    const initialLog = ['Examining dropped items...']
     return loadCustomSong(resources, initialLog, { store, customSongLoader })
   })
 }
 
-export function handleClipboardPaste (e) {
+export function handleClipboardPaste(e) {
   return createIO(async ({ store, customSongLoader }) => {
     let match
     const text = e.clipboardData.getData('text/plain')
@@ -21,31 +21,36 @@ export function handleClipboardPaste (e) {
     if (match) {
       const gateway = match[1] || undefined
       const path = gateway ? decodeURI(match[2]) : match[2]
-      const resources = new IPFSResources(path, gateway)
+      const resources = getIPFSResources(path, gateway)
       const initialLog = [
         'Loading from IPFS path ' + path + '...',
-        gateway
-          ? `(Using gateway "${gateway}")`
-          : `(Using default gateway "${IPFSResources.getDefaultGateway()}")`
+        `(Using ${resources.gatewayName})`,
       ]
       if (/^http:/.test(gateway) && window.location.protocol === 'https:') {
-        initialLog.push(store, 'WARNING: Loading http URL from https. This will likely fail!')
+        initialLog.push(
+          store,
+          'WARNING: Loading http URL from https. This will likely fail!'
+        )
       }
       return loadCustomSong(resources, initialLog, { store, customSongLoader })
     }
   })
 }
 
-async function loadCustomSong (resources, initialText, { store, customSongLoader }) {
+async function loadCustomSong(
+  resources,
+  initialText,
+  { store, customSongLoader }
+) {
   try {
     store.dispatch({ type: ReduxState.CUSTOM_SONG_LOAD_STARTED })
     for (const text of initialText) {
       store.dispatch({ type: ReduxState.CUSTOM_SONG_LOG_EMITTED, text })
     }
     const song = await customSongLoader.loadSongFromResources(resources, {
-      onMessage (text) {
+      onMessage(text) {
         store.dispatch({ type: ReduxState.CUSTOM_SONG_LOG_EMITTED, text })
-      }
+      },
     })
     if (song && song.charts && song.charts.length) {
       store.dispatch({ type: ReduxState.CUSTOM_SONG_LOADED, song })

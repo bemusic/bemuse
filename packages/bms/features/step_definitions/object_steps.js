@@ -1,11 +1,11 @@
 var steps = require('artstep')
 
 module.exports = steps()
-  .Then(/^there should be (\d+) objects$/, function (n) {
+  .Then(/^there should be (\d+) objects$/, function(n) {
     expect(this.chart.objects.all()).to.have.length(+n)
   })
 
-  .Then(/^object (\S+) should be on channel (\S+) at beat (\d+)$/, function (
+  .Then(/^object (\S+) should be on channel (\S+) at beat (\d+)$/, function(
     value,
     channel,
     beat
@@ -16,13 +16,13 @@ module.exports = steps()
     expect(objectBeat).to.equal(+beat)
   })
 
-  .Then(/^object (\S+) should be at beat ([\d.]+)$/, function (value, beat) {
+  .Then(/^object (\S+) should be at beat ([\d.]+)$/, function(value, beat) {
     var object = this.getObject(value)
     var objectBeat = this.chart.measureToBeat(object.measure, object.fraction)
     expect(objectBeat).to.equal(+beat)
   })
 
-  .Then(/^object (\S+) should be at ([\d.]+) seconds?$/, function (
+  .Then(/^object (\S+) should be at ([\d.]+) seconds?$/, function(
     value,
     seconds
   ) {

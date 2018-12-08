@@ -1,9 +1,60 @@
 # Changelog
 
 [@coppertine]: https://github.com/Coppertine
+[@cenox]: https://github.com/CenoX
 [@dtinth]: https://github.com/dtinth
+[@gluestick]: https://github.com/Gluestick
 [@mugabe]: https://github.com/mugabe
 [@resir014]: https://github.com/resir014
+[@thakkaryash94]: https://github.com/thakkaryash94
+
+## v43
+
+This release contains multiple contributions from the community! Many thanks to
+everyone who helped contributing to this release.
+
+### Fixes and improvements
+
+- **Faster IPFS support** using Cloudflare’s
+  [Distributed Web Gateway](https://www.cloudflare.com/distributed-web-gateway/).
+  [#508], by [@dtinth]
+
+- **Fullscreen now works in more browsers.** [#505], by [@Gluestick]
+
+- **When calibrating, music preview is now muted.** [#507], by [@Gluestick]
+
+- **Documentation has been improved.**
+
+  - Contribution guidelines have been updated, along with miscellaneous fixes.
+    [#496], by [@resir014]
+
+  - Our [Music Server](https://bemuse.ninja/project/docs/music-server.html) docs
+    has been updated to note that due to our usage of proprietary codec (AAC)
+    for iOS compatibility, Music Servers has to be created from either Windows
+    and Mac machines ([#510], by [@resir014]). Also, some instructions has been
+    made more easy to follow, and a guide to configure an nginx web server (in
+    addition to XAMPP) have been added ([#511], by [@cenox]).
+
+### Internals
+
+Our codebase has been modernized and quality improved, thanks to the hard work
+from our contributors.
+
+- Upgraded many dependencies. [#498], by [@resir014]
+
+- Migraded to Babel 7. [#501], by [@thakkaryash94]
+
+- Fixed a propTypes warning in OptionsInputKey. [#506], by [@Gluestick]
+
+[#496]: https://github.com/bemusic/bemuse/pull/496
+[#498]: https://github.com/bemusic/bemuse/pull/498
+[#501]: https://github.com/bemusic/bemuse/pull/501
+[#505]: https://github.com/bemusic/bemuse/pull/505
+[#506]: https://github.com/bemusic/bemuse/pull/506
+[#507]: https://github.com/bemusic/bemuse/pull/507
+[#508]: https://github.com/bemusic/bemuse/pull/508
+[#510]: https://github.com/bemusic/bemuse/pull/510
+[#511]: https://github.com/bemusic/bemuse/pull/511
 
 ## v42
 
@@ -685,7 +736,7 @@ stuff.
     - 5 SUMMONED
     - 5 BUFFED
     - 5 ENRAGED
-  - 僕たちの旅とエピローグ。
+  - 僕たちの旅とエピロ ー グ。
     - normal
   - 가짜/인형/술사/이야기
     - 5Keys Normal

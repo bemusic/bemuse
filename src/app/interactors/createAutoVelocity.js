@@ -16,39 +16,39 @@ export default options => {
     return autoVelocity({
       desiredLeadTime: options.desiredLeadTime,
       songBPM: options.songBPM,
-      laneCover: options.laneCover || 0
+      laneCover: options.laneCover || 0,
     })
   } else {
     return manualVelocity(options.initialSpeed)
   }
 }
 
-function manualVelocity (initialSpeed) {
+function manualVelocity(initialSpeed) {
   return {
-    getInitialSpeed () {
+    getInitialSpeed() {
       return initialSpeed
     },
-    handleGameFinish (finishingSpeed, { saveSpeed }) {
+    handleGameFinish(finishingSpeed, { saveSpeed }) {
       saveSpeed(finishingSpeed)
-    }
+    },
   }
 }
 
-function autoVelocity ({ songBPM, desiredLeadTime, laneCover }) {
+function autoVelocity({ songBPM, desiredLeadTime, laneCover }) {
   const visiblePortion = 1 - Math.abs(laneCover)
-  const nominalSpeedLeadTime = 60000 * 5 / songBPM * visiblePortion
+  const nominalSpeedLeadTime = ((60000 * 5) / songBPM) * visiblePortion
   const initialSpeed = _.minBy(_.range(1, 999).map(x => x / 10), speed =>
     Math.abs(desiredLeadTime - nominalSpeedLeadTime / speed)
   )
   return {
-    getInitialSpeed () {
+    getInitialSpeed() {
       return initialSpeed
     },
-    handleGameFinish (finishingSpeed, { saveSpeed, saveLeadTime }) {
+    handleGameFinish(finishingSpeed, { saveSpeed, saveLeadTime }) {
       saveSpeed(finishingSpeed)
       if (finishingSpeed.toFixed(1) !== initialSpeed.toFixed(1)) {
         saveLeadTime(Math.round(nominalSpeedLeadTime / finishingSpeed))
       }
-    }
+    },
   }
 }

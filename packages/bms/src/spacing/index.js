@@ -14,7 +14,7 @@ export class Spacing {
    * Constructs a Spacing from the given `segments`.
    * @param {SpacingSegment[]} segments
    */
-  constructor (segments) {
+  constructor(segments) {
     if (segments.length > 0) {
       this._speedcore = new Speedcore(segments)
     }
@@ -24,7 +24,7 @@ export class Spacing {
    * Returns the note spacing factor at the specified beat.
    * @param {*} beat the beat
    */
-  factor (beat) {
+  factor(beat) {
     if (this._speedcore) {
       return this._speedcore.x(beat)
     } else {
@@ -53,10 +53,10 @@ export class Spacing {
    *
    * @param {BMSChart} chart the chart
    */
-  static fromBMSChart (chart) {
+  static fromBMSChart(chart) {
     void BMSChart
     var segments = []
-    chart.objects.allSorted().forEach(function (object) {
+    chart.objects.allSorted().forEach(function(object) {
       if (object.channel === 'SP') {
         var beat = chart.measureToBeat(object.measure, object.fraction)
         var factor = +chart.headers.get('speed' + object.value)
@@ -69,7 +69,7 @@ export class Spacing {
           t: beat,
           x: factor,
           dx: 0,
-          inclusive: true
+          inclusive: true,
         })
       }
     })
@@ -78,7 +78,7 @@ export class Spacing {
         t: 0,
         x: segments[0].x,
         dx: 0,
-        inclusive: true
+        inclusive: true,
       })
     }
     return new Spacing(segments)

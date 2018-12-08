@@ -4,11 +4,11 @@ import co from 'co'
 import readBlob from 'bemuse/utils/read-blob'
 
 export class DndResources {
-  constructor (event) {
+  constructor(event) {
     this._files = getFilesFromEvent(event)
   }
-  file (name) {
-    return this._files.then(function (files) {
+  file(name) {
+    return this._files.then(function(files) {
       for (let file of files) {
         if (file.name.toLowerCase() === name.toLowerCase()) {
           return new FileResource(file.file)
@@ -17,35 +17,35 @@ export class DndResources {
       throw new Error('unable to find ' + name)
     })
   }
-  get fileList () {
+  get fileList() {
     return Promise.resolve(this._files.map(f => f.name))
   }
 }
 
 export class FileResource {
-  constructor (file) {
+  constructor(file) {
     this._file = file
   }
-  read (progress) {
+  read(progress) {
     return ProgressUtils.atomic(
       progress,
       readBlob(this._file).as('arraybuffer')
     )
   }
-  resolveUrl () {
+  resolveUrl() {
     return Promise.resolve(URL.createObjectURL(this._file))
   }
-  get name () {
+  get name() {
     return this._file.name
   }
 }
 
 export default DndResources
 
-function getFilesFromEvent (event) {
+function getFilesFromEvent(event) {
   let out = []
 
-  return co(function * () {
+  return co(function*() {
     if (event.dataTransfer.items) {
       for (let item of Array.from(event.dataTransfer.items)) {
         yield readItem(item)
@@ -58,8 +58,8 @@ function getFilesFromEvent (event) {
     return out
   })
 
-  function readItem (item) {
-    return co(function * () {
+  function readItem(item) {
+    return co(function*() {
       let entry = item.webkitGetAsEntry && item.webkitGetAsEntry()
       if (entry) {
         yield readEntry(entry, '')
@@ -70,7 +70,7 @@ function getFilesFromEvent (event) {
     })
   }
 
-  function readEntry (entry) {
+  function readEntry(entry) {
     if (entry.isFile) {
       return readFile(entry)
     } else if (entry.isDirectory) {
@@ -78,7 +78,7 @@ function getFilesFromEvent (event) {
     }
   }
 
-  function readFile (entry) {
+  function readFile(entry) {
     return new Promise((resolve, reject) => {
       entry.file(resolve, reject)
     }).tap(file => {
@@ -86,8 +86,8 @@ function getFilesFromEvent (event) {
     })
   }
 
-  function readDirectory (dir) {
-    return co(function * () {
+  function readDirectory(dir) {
+    return co(function*() {
       let entries = []
       let reader = dir.createReader()
       let readMore = () =>
@@ -105,7 +105,7 @@ function getFilesFromEvent (event) {
     })
   }
 
-  function addFile (file) {
+  function addFile(file) {
     if (file) {
       out.push({ name: file.name, file })
     }

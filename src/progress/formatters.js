@@ -9,7 +9,7 @@ export let BYTES_FORMATTER = wrap(
 
 // Formats the `Progress` as percentage.
 export let PERCENTAGE_FORMATTER = wrap(
-  progress => (progress.current / progress.total * 100).toFixed(1) + '%'
+  progress => ((progress.current / progress.total) * 100).toFixed(1) + '%'
 )
 
 // Formats the `Progress` simply by using the value of `Progress#extra`.

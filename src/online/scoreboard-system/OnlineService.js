@@ -4,23 +4,23 @@ import createScoreboardClient from './createScoreboardClient'
 import { isTestModeEnabled } from 'bemuse/devtools/BemuseTestMode'
 
 export class OnlineService {
-  constructor ({ server, storagePrefix = 'scoreboard.auth', authOptions }) {
+  constructor({ server, storagePrefix = 'scoreboard.auth', authOptions }) {
     const auth = new Auth0.WebAuth({
       ...authOptions,
       redirectUri: window.location.href,
-      responseType: 'token id_token'
+      responseType: 'token id_token',
     })
     this._scoreboardClient = createScoreboardClient({
       server,
       auth,
-      log: () => {}
+      log: () => {},
     })
     this._storagePrefix = storagePrefix
     this._updateUserFromStorage()
     this._renewPlayerToken()
   }
 
-  _updateUserFromStorage () {
+  _updateUserFromStorage() {
     const loadUser = text => {
       if (!text) return null
       try {
@@ -40,7 +40,7 @@ export class OnlineService {
     this._currentUser = loadUser(localStorage[`${this._storagePrefix}.id`])
   }
 
-  _renewPlayerToken () {
+  _renewPlayerToken() {
     const playerToken = this._currentUser && this._currentUser.playerToken
     if (!playerToken) return
     const username = this._currentUser.username
@@ -49,12 +49,12 @@ export class OnlineService {
       .then(newToken => {
         localStorage[`${this._storagePrefix}.id`] = JSON.stringify({
           username: username,
-          playerToken: newToken
+          playerToken: newToken,
         })
       })
   }
 
-  getCurrentUser () {
+  getCurrentUser() {
     if (this._currentUser && this._currentUser.playerToken) {
       return { username: this._currentUser.username }
     } else {
@@ -62,41 +62,41 @@ export class OnlineService {
     }
   }
 
-  isLoggedIn () {
+  isLoggedIn() {
     return !!this._currentUser
   }
 
-  signUp ({ username, password, email }) {
+  signUp({ username, password, email }) {
     return this._scoreboardClient
       .signUp({ username, password, email })
       .then(signUpResult => {
         localStorage[`${this._storagePrefix}.id`] = JSON.stringify({
           username: username,
-          playerToken: signUpResult.playerToken
+          playerToken: signUpResult.playerToken,
         })
         this._updateUserFromStorage()
       })
   }
 
-  logIn ({ username, password }) {
+  logIn({ username, password }) {
     return this._scoreboardClient
       .loginByUsernamePassword({ username, password })
       .then(loginResult => {
         localStorage[`${this._storagePrefix}.id`] = JSON.stringify({
           username: username,
-          playerToken: loginResult.playerToken
+          playerToken: loginResult.playerToken,
         })
         this._updateUserFromStorage()
         return this.getCurrentUser()
       })
   }
 
-  async logOut () {
+  async logOut() {
     delete localStorage[`${this._storagePrefix}.id`]
     this._updateUserFromStorage()
   }
 
-  async submitScore (info) {
+  async submitScore(info) {
     if (isTestModeEnabled()) {
       throw new Error('Cannot submit score in test mode')
     }
@@ -112,13 +112,13 @@ export class OnlineService {
         combo: info.combo,
         count: info.count,
         total: info.total,
-        log: info.log
-      }
+        log: info.log,
+      },
     })
     const data = {
       md5: info.md5,
       playMode: info.playMode,
-      ...toEntry(result.data.registerScore.resultingRow)
+      ...toEntry(result.data.registerScore.resultingRow),
     }
     return data
   }
@@ -126,27 +126,27 @@ export class OnlineService {
   // Retrieves a record.
   //
   // Returns a record object.
-  async retrieveRecord (level, user) {
+  async retrieveRecord(level, user) {
     const result = await this._scoreboardClient.retrieveRecord({
       playerToken: this._currentUser.playerToken,
       md5: level.md5,
-      playMode: level.playMode
+      playMode: level.playMode,
     })
     const myRecord = result.data.chart.level.myRecord
     return (
       myRecord && {
         md5: level.md5,
         playMode: level.playMode,
-        ...toEntry(myRecord)
+        ...toEntry(myRecord),
       }
     )
   }
 
   // Retrieves the scoreboard
-  async retrieveScoreboard ({ md5, playMode }) {
+  async retrieveScoreboard({ md5, playMode }) {
     const result = await this._scoreboardClient.retrieveScoreboard({
       md5,
-      playMode
+      playMode,
     })
     return { data: result.data.chart.level.leaderboard.map(toEntry) }
   }
@@ -154,15 +154,15 @@ export class OnlineService {
   // Retrieve multiple records!
   //
   // Items is an array of song items. They have a md5 property.
-  async retrieveMultipleRecords (items) {
+  async retrieveMultipleRecords(items) {
     const result = await this._scoreboardClient.retrieveRankingEntries({
       playerToken: this._currentUser.playerToken,
-      md5s: items.map(item => item.md5)
+      md5s: items.map(item => item.md5),
     })
     const entries = result.data.me.records.map(item => ({
       ...toEntry(item),
       md5: item.md5,
-      playMode: item.playMode
+      playMode: item.playMode,
     }))
     return entries
   }
@@ -170,7 +170,7 @@ export class OnlineService {
 
 export default OnlineService
 
-function toEntry (row) {
+function toEntry(row) {
   return {
     rank: row.rank,
     score: row.entry.score,
@@ -180,6 +180,6 @@ function toEntry (row) {
     playerName: row.entry.player.name,
     recordedAt: new Date(row.entry.recordedAt),
     playCount: row.entry.playCount,
-    playNumber: row.entry.playNumber
+    playNumber: row.entry.playNumber,
   }
 }

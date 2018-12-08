@@ -1,17 +1,15 @@
 import './ChangelogPanel.scss'
 import React from 'react'
-import $ from 'jquery'
-import _ from 'lodash'
 import Panel from 'bemuse/ui/Panel'
 import Markdown from 'bemuse/ui/Markdown'
 
 class ChangelogPanel extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = { data: { status: 'loading' } }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const promise = import('!!raw-loader!../../../CHANGELOG.md').then(
       m => m.default
     )
@@ -21,7 +19,7 @@ class ChangelogPanel extends React.Component {
     )
   }
 
-  render () {
+  render() {
     return (
       <Panel className='ChangelogPanel' title='What’s New'>
         <div className='ChangelogPanelのcontent'>
@@ -31,7 +29,7 @@ class ChangelogPanel extends React.Component {
     )
   }
 
-  getMarkdown () {
+  getMarkdown() {
     const releasesPage =
       '[releases page on GitHub](https://github.com/bemusic/bemuse/releases)'
     if (this.state.data.status === 'loading') {

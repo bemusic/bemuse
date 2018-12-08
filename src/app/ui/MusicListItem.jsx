@@ -12,7 +12,7 @@ const chartPropType = PropTypes.shape({
     init: PropTypes.number,
     max: PropTypes.number,
     median: PropTypes.number,
-    min: PropTypes.number
+    min: PropTypes.number,
   }),
   duration: PropTypes.number,
   file: PropTypes.string,
@@ -23,11 +23,11 @@ const chartPropType = PropTypes.shape({
     subtitles: PropTypes.arrayOf(PropTypes.string),
     subartists: PropTypes.arrayOf(PropTypes.string),
     difficulty: PropTypes.number,
-    level: PropTypes.number
+    level: PropTypes.number,
   }),
   keys: PropTypes.string,
   md5: PropTypes.string,
-  noteCount: PropTypes.number
+  noteCount: PropTypes.number,
 })
 
 class MusicListItem extends React.PureComponent {
@@ -37,14 +37,14 @@ class MusicListItem extends React.PureComponent {
     selectedChart: chartPropType,
     playMode: PropTypes.string,
     onSelect: PropTypes.func,
-    highlight: PropTypes.string
+    highlight: PropTypes.string,
   }
 
-  render () {
+  render() {
     const song = this.props.song
     const className = c('MusicListItem', {
       'is-active': this.props.selected,
-      'js-active-song': this.props.selected
+      'js-active-song': this.props.selected,
     })
     return (
       <li className={className} onClick={this.handleClick}>
@@ -79,7 +79,7 @@ class MusicListItem extends React.PureComponent {
     )
   }
 
-  renderChartlist () {
+  renderChartlist() {
     return (
       <MusicListItemCharts
         charts={getPlayableCharts(this.props.song.charts)}
@@ -90,7 +90,7 @@ class MusicListItem extends React.PureComponent {
     )
   }
 
-  renderHighlight (text) {
+  renderHighlight(text) {
     if (!this.props.highlight) return text
     let highlight = this.props.highlight
     let segments = text.toLowerCase().split(highlight.toLowerCase())

@@ -6,7 +6,7 @@ import DisplayObject from './concerns/display-object'
 import Expression from '../expression'
 
 export class TextNode extends SkinNode {
-  compile (compiler, $el) {
+  compile(compiler, $el) {
     this.font = $el.attr('font')
     this.text = $el.attr('text')
     this.data = new Expression($el.attr('data') || '0')
@@ -16,12 +16,12 @@ export class TextNode extends SkinNode {
     this.align =
       $el.attr('align') === 'left' ? 0 : $el.attr('align') === 'right' ? 1 : 0.5
   }
-  instantiate (context, container) {
+  instantiate(context, container) {
     let text
     if (this.ttf) {
       text = new PIXI.Text(this.text, {
         font: this.font,
-        fill: this.fill
+        fill: this.fill,
       })
     } else {
       text = new PIXI.extras.BitmapText(this.text, { font: this.font })
@@ -40,9 +40,9 @@ export class TextNode extends SkinNode {
             text.text = this.text.replace('%s', v)
             text.updateText()
             text.x = text.width * -this.align
-          }
-        ]
-      ]
+          },
+        ],
+      ],
     })
   }
 }

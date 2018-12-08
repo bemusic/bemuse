@@ -1,7 +1,7 @@
 /* global Parse */
 var GameScore = Parse.Object.extend('GameScore')
 
-Parse.Cloud.define('submitScore', function (request, response) {
+Parse.Cloud.define('submitScore', function(request, response) {
   Parse.Cloud.useMasterKey()
 
   var params = request.params
@@ -18,7 +18,7 @@ Parse.Cloud.define('submitScore', function (request, response) {
 
   query
     .first()
-    .then(function (gameScore) {
+    .then(function(gameScore) {
       if (!gameScore) {
         gameScore = new GameScore()
         gameScore.set('user', user)
@@ -28,7 +28,7 @@ Parse.Cloud.define('submitScore', function (request, response) {
       }
       return gameScore
     })
-    .then(function (gameScore) {
+    .then(function(gameScore) {
       if (params.score > (+gameScore.get('score') || -1)) {
         gameScore.set('recordedAt', new Date())
         gameScore.set('score', params.score)
@@ -39,7 +39,7 @@ Parse.Cloud.define('submitScore', function (request, response) {
           +params.count[1] || 0,
           +params.count[2] || 0,
           +params.count[3] || 0,
-          +params.count[4] || 0
+          +params.count[4] || 0,
         ])
         gameScore.set('log', params.log.length <= 2048 ? params.log : '!')
         gameScore.set('playNumber', gameScore.get('playCount') + 1)
@@ -48,18 +48,18 @@ Parse.Cloud.define('submitScore', function (request, response) {
       gameScore.set('playerName', user.get('username'))
       return gameScore.save()
     })
-    .then(function (gameScore) {
+    .then(function(gameScore) {
       if (params.md5 === '12345670123456789abcdef89abemuse') {
         return gameScore
       }
       user.increment('playCount')
       user.increment('grandTotalScore', gameScore.get('score'))
-      return user.save().then(function () {
+      return user.save().then(function() {
         return gameScore
       })
     })
     .then(
-      function (gameScore) {
+      function(gameScore) {
         var countQuery = new Parse.Query(GameScore)
         countQuery.equalTo('md5', params.md5)
         countQuery.equalTo('playMode', params.playMode)
@@ -67,21 +67,21 @@ Parse.Cloud.define('submitScore', function (request, response) {
         return countQuery
           .count()
           .then(
-            function (count) {
+            function(count) {
               return count + 1
             },
-            function () {
+            function() {
               return null
             }
           )
-          .then(function (rank) {
+          .then(function(rank) {
             response.success({
               meta: { rank: rank, user: user },
-              data: gameScore
+              data: gameScore,
             })
           })
       },
-      function (error) {
+      function(error) {
         if (error && error.code && error.message) {
           response.error(
             'Unable to submit score: ' + error.code + ': ' + error.message
@@ -95,7 +95,7 @@ Parse.Cloud.define('submitScore', function (request, response) {
     )
 })
 
-Parse.Cloud.afterSave(Parse.User, function (request) {
+Parse.Cloud.afterSave(Parse.User, function(request) {
   Parse.Cloud.useMasterKey()
 
   var user = request.user

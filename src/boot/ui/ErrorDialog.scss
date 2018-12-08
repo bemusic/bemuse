@@ -1,6 +1,4 @@
-
 .ErrorDialog {
-
   background: #533;
   color: #edd;
 
@@ -14,7 +12,8 @@
   padding: 10px;
   max-width: 640px;
 
-  h1, p {
+  h1,
+  p {
     margin: 0;
     font-size: 1em;
     line-height: 1.3;
@@ -39,8 +38,13 @@
 
   &のclose {
     position: absolute;
-    top: 1ex; right: 1ex; background: lighten(#633, 0.1);
-    width: 1.3em; height: 1.3em; line-height: 1.3em; text-align: center;
+    top: 1ex;
+    right: 1ex;
+    background: lighten(#633, 0.1);
+    width: 1.3em;
+    height: 1.3em;
+    line-height: 1.3em;
+    text-align: center;
     cursor: pointer;
     border: 1px solid #955;
     &:hover {
@@ -48,5 +52,4 @@
       border-color: #d77;
     }
   }
-
 }

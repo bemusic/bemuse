@@ -6,13 +6,13 @@ import {
   getJudgeForNotechart,
   isBad,
   judgeEndTime,
-  judgeTime
+  judgeTime,
 } from '../judgments'
 
 // The PlayerState class holds a single player's state, including the stats
 // (score, current combo, maximum combo).
 export class PlayerState {
-  constructor (player) {
+  constructor(player) {
     this._player = player
     this._columns = player.columns
     this._noteBufferByColumn = _(player.notechart.notes)
@@ -23,7 +23,7 @@ export class PlayerState {
     this._noteResult = new Map()
     this._duration = player.notechart.duration
     this._judge = getJudgeForNotechart(player.notechart, {
-      tutorial: player.options.tutorial
+      tutorial: player.options.tutorial,
     })
     console.log('GET JDG', this._judge)
 
@@ -44,12 +44,12 @@ export class PlayerState {
   }
 
   // The `Player` associated with this `PlayerState`.
-  get player () {
+  get player() {
     return this._player
   }
 
   // Updates the state. Judge the notes and emit notifications.
-  update (gameTime, input) {
+  update(gameTime, input) {
     this._gameTime = gameTime
     this._rawInput = input
     this.notifications = {}
@@ -70,7 +70,7 @@ export class PlayerState {
   //   but not yet release it.
   // judged
   //   This note is fully-judged.
-  getNoteStatus (note) {
+  getNoteStatus(note) {
     let result = this._noteResult.get(note)
     if (!result) return 'unjudged'
     return result.status
@@ -83,22 +83,22 @@ export class PlayerState {
   //   When the note is unjudged.
   // otherwise
   //   See the game/judgments module for information about this number.
-  getNoteJudgment (note) {
+  getNoteJudgment(note) {
     let result = this._noteResult.get(note)
     if (!result) return 0
     return result.judgment
   }
 
-  getPlayerInput (control) {
+  getPlayerInput(control) {
     return this._rawInput.get(`p${this._player.number}_${control}`)
   }
-  _updateInputColumnMap () {
+  _updateInputColumnMap() {
     this.input = new Map(
       this._columns.map(column => [column, this.getPlayerInput(column)])
     )
   }
 
-  _judgeNotes () {
+  _judgeNotes() {
     for (let column of this._columns) {
       let buffer = this._noteBufferByColumn[column]
       if (buffer) {
@@ -108,7 +108,7 @@ export class PlayerState {
       }
     }
   }
-  _updateSpeed () {
+  _updateSpeed() {
     if (this.getPlayerInput('speedup').justPressed) {
       this._modifySpeed(+1)
     }
@@ -123,19 +123,21 @@ export class PlayerState {
     }
     if (pinch) {
       let pinching = this._pinching
-      let speed = pinching.speed * pinch / pinching.start
+      let speed = (pinching.speed * pinch) / pinching.start
       this.speed = Math.max(0.2, Math.round(speed * 10) / 10)
     }
   }
-  _modifySpeed (direction) {
+  _modifySpeed(direction) {
     let amount = this._rawInput.get('select').value
       ? 0.1
-      : this.speed < 0.5 ? 0.3 : 0.5
+      : this.speed < 0.5
+      ? 0.3
+      : 0.5
     this.speed += direction * amount
     if (this.speed < 0.2) this.speed = 0.2
   }
 
-  _judgeColumn (buffer, control) {
+  _judgeColumn(buffer, control) {
     let judgedNote
     let judgment
     let notes = buffer.notes
@@ -157,7 +159,7 @@ export class PlayerState {
         this.notifications.sounds.push({
           note: judgedNote,
           type: 'hit',
-          judgment: judgment
+          judgment: judgment,
         })
       } else {
         let freestyleNote = this._getFreestyleNote(notes)
@@ -167,17 +169,17 @@ export class PlayerState {
       }
     }
   }
-  _getClosestNote (notes) {
+  _getClosestNote(notes) {
     return _.minBy(notes, note => Math.abs(this._gameTime - note.time))
   }
-  _getFreestyleNote (notes) {
+  _getFreestyleNote(notes) {
     return _.minBy(notes, note => {
       let distance = Math.abs(this._gameTime - note.time)
       let penalty = this._gameTime < note.time - 1 ? 1000000 : 0
       return distance + penalty
     })
   }
-  _shouldJudge (note, control, buffer) {
+  _shouldJudge(note, control, buffer) {
     let status = this.getNoteStatus(note)
     if (status === 'unjudged') {
       if (window.BEMUSE_AUTOPLAY && this._gameTime >= note.time) {
@@ -206,7 +208,7 @@ export class PlayerState {
       return false
     }
   }
-  _judgeNote (note) {
+  _judgeNote(note) {
     let delta = this._gameTime - note.time
     let judgment = judgeTime(this._gameTime, note.time, this._judge)
     let result = this._noteResult.get(note)
@@ -244,29 +246,29 @@ export class PlayerState {
     this._setJudgment(judgment, delta, note.column)
     return judgment
   }
-  _setJudgment (judgment, delta, column) {
+  _setJudgment(judgment, delta, column) {
     this.stats.handleJudgment(judgment)
     let info = { judgment, combo: this.stats.combo, delta, column }
     this.notifications.judgments.push(info)
   }
 }
 
-function noteBuffer (state) {
-  return function bufferNotes (notes) {
+function noteBuffer(state) {
+  return function bufferNotes(notes) {
     let startIndex = 0
     return {
       notes,
-      get startIndex () {
+      get startIndex() {
         return startIndex
       },
-      update () {
+      update() {
         while (
           startIndex < notes.length &&
           state.getNoteStatus(notes[startIndex]) === 'judged'
         ) {
           startIndex += 1
         }
-      }
+      },
     }
   }
 }

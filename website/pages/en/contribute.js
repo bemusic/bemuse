@@ -16,11 +16,11 @@ const GridBlock = CompLibrary.GridBlock
 
 const siteConfig = require(process.cwd() + '/siteConfig.js')
 
-function docUrl (doc, language) {
+function docUrl(doc, language) {
   return siteConfig.baseUrl + 'docs/' + (language ? language + '/' : '') + doc
 }
 
-function pageUrl (page, language) {
+function pageUrl(page, language) {
   return siteConfig.baseUrl + (language ? language + '/' : '') + page
 }
 
@@ -33,24 +33,24 @@ Thank you for helping us make this game better!
 `
 
 class Help extends React.Component {
-  render () {
+  render() {
     const supportLinks = [
       {
         content: `Follow the [developer documentation](${docUrl(
           'developer-guide.html'
         )}) to get started. Don't forget to read our [coding guidelines](https://github.com/bemusic/bemuse/blob/master/CONTRIBUTING.md) as well.`,
-        title: 'Read the docs'
+        title: 'Read the docs',
       },
       {
         content:
           "Read through our [issues thread](https://github.com/bemusic/bemuse/issues) and pick an issue. If you're confused, we recommend starting out with [these issues](https://github.com/bemusic/bemuse/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22).",
-        title: 'Pick an issue'
+        title: 'Pick an issue',
       },
       {
         content:
           "We have a [Waffle board](https://waffle.io/bemusic/bemuse) which we use to track this project's development progress.",
-        title: 'Track progress'
-      }
+        title: 'Track progress',
+      },
     ]
 
     return (

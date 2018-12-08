@@ -10,7 +10,7 @@ import { resolve } from 'url'
 import { URLResource } from './url'
 
 export class BemusePackageResources {
-  constructor (url, options = {}) {
+  constructor(url, options = {}) {
     let lazy = addLazyProperty.bind(null, this)
     this._url = url
     this._fallback = options.fallback
@@ -36,7 +36,7 @@ export class BemusePackageResources {
     )
     this.progress = {
       all: new Progress(),
-      current: new Progress()
+      current: new Progress(),
     }
     let simultaneous = ProgressUtils.simultaneous(this.progress.current)
     let nextProgress = () => {
@@ -53,10 +53,10 @@ export class BemusePackageResources {
       )
     )
   }
-  get url () {
+  get url() {
     return this._url
   }
-  file (name) {
+  file(name) {
     return this._fileMap.then(fileMap => {
       let file = fileMap.get(name.toLowerCase())
       if (file) {
@@ -68,7 +68,7 @@ export class BemusePackageResources {
       }
     })
   }
-  getBlob ([index, start, end]) {
+  getBlob([index, start, end]) {
     return this.refs
       .then(refs => refs[index])
       .then(ref => ref.load())
@@ -77,12 +77,12 @@ export class BemusePackageResources {
 }
 
 class BemusePackageFileResource {
-  constructor (resources, ref, name) {
+  constructor(resources, ref, name) {
     this._resources = resources
     this._ref = ref
     this._name = name
   }
-  read (progress) {
+  read(progress) {
     return ProgressUtils.atomic(
       progress,
       this._resources
@@ -90,22 +90,22 @@ class BemusePackageFileResource {
         .then(blob => readBlob(blob).as('arraybuffer'))
     )
   }
-  resolveUrl () {
+  resolveUrl() {
     return this._resources
       .getBlob(this._ref)
       .then(blob => URL.createObjectURL(blob))
   }
-  get name () {
+  get name() {
     return this._name
   }
 }
 
 class Ref {
-  constructor (resources, spec) {
+  constructor(resources, spec) {
     this._resources = resources
     this._url = resolve(resources.url, spec.path)
   }
-  load () {
+  load() {
     return (
       this._promise || (this._promise = this._resources._loadPayload(this._url))
     )
@@ -114,7 +114,7 @@ class Ref {
 
 export default BemusePackageResources
 
-function getPayload (blob) {
+function getPayload(blob) {
   return readBlob(blob.slice(0, 10))
     .as('text')
     .then(magic => {

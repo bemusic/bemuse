@@ -5,9 +5,9 @@ export { Bacon }
 
 let lock = false
 
-export function Action (transform = x => x) {
+export function Action(transform = x => x) {
   var bus = new Bacon.Bus()
-  var action = function () {
+  var action = function() {
     if (lock) {
       throw new Error(
         'An action should not fire another action! (' + lock.stack + ')'
@@ -22,14 +22,14 @@ export function Action (transform = x => x) {
     }
   }
   action.bus = bus
-  action.debug = function (prefix) {
+  action.debug = function(prefix) {
     bus.map(value => [prefix, value]).log()
     return action
   }
   return action
 }
 
-export function Store (store, options = {}) {
+export function Store(store, options = {}) {
   let lazy = !!options.lazy
   store = toProperty(store)
   store.get = () => {
@@ -44,7 +44,7 @@ export function Store (store, options = {}) {
   return store
 }
 
-function toProperty (store) {
+function toProperty(store) {
   if (store instanceof Bacon.Property) {
     return store
   } else if (store instanceof Bacon.EventStream) {
@@ -59,7 +59,7 @@ function toProperty (store) {
 export const connect = props川 => Component => {
   let propsProperty = toProperty(props川)
   return class extends React.Component {
-    constructor (props) {
+    constructor(props) {
       super(props)
       this._unsubscribe = propsProperty.onValue(this.handleValue)
       let initialValue
@@ -70,12 +70,12 @@ export const connect = props川 => Component => {
       this.state = { value: initialValue }
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
       this._mounted = false
       if (this._unsubscribe) this._unsubscribe()
     }
 
-    componentDidMount () {
+    componentDidMount() {
       this._mounted = true
     }
 
@@ -83,7 +83,7 @@ export const connect = props川 => Component => {
       if (this._mounted) this.setState({ value })
     }
 
-    render () {
+    render() {
       return <Component {...this.state.value || {}} {...this.props} />
     }
   }

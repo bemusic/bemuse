@@ -11,17 +11,17 @@ export default class Ranking extends React.Component {
       data: PropTypes.arrayOf(PropTypes.object),
       meta: PropTypes.shape({
         scoreboard: PropTypes.object,
-        submission: PropTypes.object
-      })
+        submission: PropTypes.object,
+      }),
     }),
     onReloadScoreboardRequest: PropTypes.func,
-    onResubmitScoreRequest: PropTypes.func
+    onResubmitScoreRequest: PropTypes.func,
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      authenticationPopupVisible: false
+      authenticationPopupVisible: false,
     }
   }
   handleAuthenticate = () => {
@@ -33,7 +33,7 @@ export default class Ranking extends React.Component {
   handleAuthenticationFinish = () => {
     this.setState({ authenticationPopupVisible: false })
   }
-  render () {
+  render() {
     return (
       <div className='Ranking'>
         <AuthenticationPopup
@@ -46,7 +46,7 @@ export default class Ranking extends React.Component {
       </div>
     )
   }
-  renderYours () {
+  renderYours() {
     const state = this.props.state
     const submission = state.meta.submission
     return (
@@ -83,7 +83,7 @@ export default class Ranking extends React.Component {
       </div>
     )
   }
-  renderLeaderboard () {
+  renderLeaderboard() {
     const state = this.props.state
     return (
       <div className='Rankingのleaderboard'>
@@ -110,7 +110,7 @@ export default class Ranking extends React.Component {
       </div>
     )
   }
-  renderError (text, error, retry) {
+  renderError(text, error, retry) {
     return (
       <span className='Rankingのerror'>
         <strong>

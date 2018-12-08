@@ -14,11 +14,11 @@ let readFile = Promise.promisify(fs.readFile, fs)
 let writeFile = Promise.promisify(fs.writeFile, fs)
 let glob = Promise.promisify(require('glob'))
 
-function Cache (path) {
+function Cache(path) {
   let data = load()
   let stream = fs.createWriteStream(path, { encoding: 'utf-8', flags: 'a' })
 
-  function load () {
+  function load() {
     let out = {}
     let text
     try {
@@ -26,7 +26,7 @@ function Cache (path) {
     } catch (e) {
       return out
     }
-    text.split(/\n/).forEach(function (line) {
+    text.split(/\n/).forEach(function(line) {
       if (line.length < 34) return
       let md5 = line.substr(0, 32)
       let payload = JSON.parse(line.substr(33))
@@ -36,20 +36,20 @@ function Cache (path) {
   }
 
   return {
-    get: function (key) {
+    get: function(key) {
       return data[key]
     },
-    put: function (key, value) {
+    put: function(key, value) {
       if (key.length !== 32) throw new Error('Keys should be 32 chars only')
       data[key] = value
       stream.write(key + ' ' + JSON.stringify(value) + '\n')
       return value
-    }
+    },
   }
 }
 
-export function index (path, { recursive }) {
-  return co(function * () {
+export function index(path, { recursive }) {
+  return co(function*() {
     let stat = yield fileStat(path)
     if (!stat.isDirectory()) throw new Error('Not a directory: ' + path)
 
@@ -91,10 +91,12 @@ export function index (path, { recursive }) {
             chart.keys === '5K'
               ? chalk.gray
               : chart.keys === '7K'
-                ? chalk.green
-                : chart.keys === '10K'
-                  ? chalk.magenta
-                  : chart.keys === '14K' ? chalk.red : chalk.inverse
+              ? chalk.green
+              : chart.keys === '10K'
+              ? chalk.magenta
+              : chart.keys === '14K'
+              ? chalk.red
+              : chalk.inverse
           return ch(chart.info.level)
         })
       console.log(
@@ -109,15 +111,15 @@ export function index (path, { recursive }) {
     }
 
     let collection = {
-      songs: songs
+      songs: songs,
     }
 
     writeFile(join(path, 'index.json'), json.diffy(collection))
   })
 }
 
-function getExtra (dir) {
-  return co(function * () {
+function getExtra(dir) {
+  return co(function*() {
     let readme
     let extra = {}
     try {
@@ -138,7 +140,7 @@ function getExtra (dir) {
   })
 }
 
-function put (map, key, f) {
+function put(map, key, f) {
   if (map.has(key)) {
     return map.get(key)
   } else {

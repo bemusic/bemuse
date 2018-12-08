@@ -5,9 +5,10 @@ import $ from 'jquery'
 import PlayerDisplay from './player-display'
 import formatTime from '../../utils/formatTime'
 import { shouldDisableFullScreen } from 'bemuse/devtools/query-flags'
+import screenfull from 'screenfull'
 
 export class GameDisplay {
-  constructor ({ game, context, backgroundImagePromise, video }) {
+  constructor({ game, context, backgroundImagePromise, video }) {
     this._game = game
     this._context = context
     const skinData = context.skinData
@@ -19,20 +20,20 @@ export class GameDisplay {
       backgroundImagePromise,
       video,
       panelPlacement: game.players[0].options.placement,
-      infoPanelPosition: skinData.infoPanelPosition
+      infoPanelPosition: skinData.infoPanelPosition,
     })
     this._createTouchEscapeButton({
-      displayByDefault: skinData.mainInputDevice === 'touch'
+      displayByDefault: skinData.mainInputDevice === 'touch',
     })
     this._createFullScreenButton()
   }
-  setEscapeHandler (escapeHandler) {
+  setEscapeHandler(escapeHandler) {
     this._onEscape = escapeHandler
   }
-  setReplayHandler (replayHandler) {
+  setReplayHandler(replayHandler) {
     this._onReplay = replayHandler
   }
-  start () {
+  start() {
     this._started = new Date().getTime()
     let player = this._game.players[0]
     let songInfo = player.notechart.songInfo
@@ -40,10 +41,10 @@ export class GameDisplay {
     this._stateful['song_artist'] = songInfo.artist
     this._duration = player.notechart.duration
   }
-  destroy () {
+  destroy() {
     this._context.destroy()
   }
-  update (gameTime, gameState) {
+  update(gameTime, gameState) {
     let time = (new Date().getTime() - this._started) / 1000
     let data = this._getData(time, gameTime, gameState)
     this._updateStatefulData(time, gameTime, gameState)
@@ -55,7 +56,7 @@ export class GameDisplay {
       this._videoStarted = true
     }
   }
-  _getData (time, gameTime, gameState) {
+  _getData(time, gameTime, gameState) {
     let data = {}
     data['tutorial'] = this._game.options.tutorial ? 'yes' : 'no'
     data['t'] = time
@@ -71,7 +72,7 @@ export class GameDisplay {
     }
     return data
   }
-  _updateStatefulData (time, gameTime, gameState) {
+  _updateStatefulData(time, gameTime, gameState) {
     let data = this._stateful
     if (data['started'] === undefined && gameState.started) {
       data['started'] = time
@@ -80,22 +81,22 @@ export class GameDisplay {
       data['gettingStarted'] = time
     }
   }
-  _getSongTime (gameTime) {
+  _getSongTime(gameTime) {
     return (
       formatTime(Math.min(this._duration, Math.max(0, gameTime))) +
       ' / ' +
       formatTime(this._duration)
     )
   }
-  _getReady (gameState) {
+  _getReady(gameState) {
     let f = gameState.readyFraction
     return f > 0.5 ? Math.pow(1 - (f - 0.5) / 0.5, 2) : 0
   }
-  _createWrapper ({
+  _createWrapper({
     backgroundImagePromise,
     video,
     panelPlacement,
-    infoPanelPosition
+    infoPanelPosition,
   }) {
     var $wrapper = $('<div class="game-display"></div>')
       .attr('data-panel-placement', panelPlacement)
@@ -116,7 +117,7 @@ export class GameDisplay {
     }
     return $wrapper[0]
   }
-  _createTouchEscapeButton ({ displayByDefault }) {
+  _createTouchEscapeButton({ displayByDefault }) {
     const touchButtons = document.createElement('div')
     touchButtons.className = 'game-display--touch-buttons is-left'
     this.wrapper.appendChild(touchButtons)
@@ -142,18 +143,15 @@ export class GameDisplay {
     addTouchButton('game-display--touch-replay-button', () => this._onReplay())
   }
 
-  _createFullScreenButton () {
-    if (
-      shouldDisableFullScreen() ||
-      !document.documentElement.requestFullscreen
-    ) {
+  _createFullScreenButton() {
+    if (shouldDisableFullScreen() || !screenfull.enabled) {
       return
     }
     const touchButtons = document.createElement('div')
     touchButtons.className = 'game-display--touch-buttons is-visible is-right'
     this.wrapper.appendChild(touchButtons)
     const onClick = () => {
-      document.documentElement.requestFullscreen()
+      screenfull.request()
     }
     const button = createTouchButton(
       onClick,
@@ -161,18 +159,18 @@ export class GameDisplay {
     )
     touchButtons.appendChild(button)
   }
-  get context () {
+  get context() {
     return this._context
   }
-  get view () {
+  get view() {
     return this._context.view
   }
-  get wrapper () {
+  get wrapper() {
     return this._wrapper
   }
 }
 
-function createTouchButton (onClick, className) {
+function createTouchButton(onClick, className) {
   let button = document.createElement('button')
   button.addEventListener(
     'touchstart',

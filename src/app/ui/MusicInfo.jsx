@@ -11,7 +11,7 @@ const chartPropType = PropTypes.shape({
     init: PropTypes.number,
     max: PropTypes.number,
     median: PropTypes.number,
-    min: PropTypes.number
+    min: PropTypes.number,
   }),
   duration: PropTypes.number,
   file: PropTypes.string,
@@ -22,11 +22,11 @@ const chartPropType = PropTypes.shape({
     subtitles: PropTypes.arrayOf(PropTypes.string),
     subartists: PropTypes.arrayOf(PropTypes.string),
     difficulty: PropTypes.number,
-    level: PropTypes.number
+    level: PropTypes.number,
   }),
   keys: PropTypes.string,
   md5: PropTypes.string,
-  noteCount: PropTypes.number
+  noteCount: PropTypes.number,
 })
 
 class MusicInfo extends React.PureComponent {
@@ -36,10 +36,10 @@ class MusicInfo extends React.PureComponent {
     onChartClick: PropTypes.func,
     onOptions: PropTypes.func,
     playMode: PropTypes.string,
-    song: PropTypes.object
+    song: PropTypes.object,
   }
 
-  render () {
+  render() {
     const { song, chart } = this.props
     return (
       <section className='MusicInfo'>

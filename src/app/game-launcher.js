@@ -24,19 +24,19 @@ if (module.hot) {
   module.hot.accept('bemuse/game/loaders/game-loader')
 }
 
-export function launch ({
+export function launch({
   server,
   song,
   chart,
   options,
   saveSpeed,
   saveLeadTime,
-  onRagequitted
+  onRagequitted,
 }) {
   // Unmute audio immediately so that it sounds on iOS and Chrome and some other browsers as well!
   unmuteAudio()
 
-  return co(function * () {
+  return co(function*() {
     // get the options from the store
     invariant(options, 'Options must be passed!')
 
@@ -54,7 +54,7 @@ export function launch ({
       loadSpec.bms = new URLResource(url)
       loadSpec.assets = new BemusePackageResources(assetsUrl, {
         fallback: url,
-        fallbackPattern: /\.(?:png|jpg|webm|mp4|m4v)/
+        fallbackPattern: /\.(?:png|jpg|webm|mp4|m4v)/,
       })
     }
 
@@ -70,7 +70,7 @@ export function launch ({
       initialSpeed: +options['player.P1.speed'] || 1,
       laneCover: Options.laneCover(options),
       desiredLeadTime: Options.leadTime(options),
-      songBPM: chart.bpm.median
+      songBPM: chart.bpm.median,
     })
 
     loadSpec.options = {
@@ -86,10 +86,10 @@ export function launch ({
           laneCover: Options.laneCover(options),
           gauge: Options.getGauge(options),
           input: {
-            keyboard: keyboardMapping
-          }
-        }
-      ]
+            keyboard: keyboardMapping,
+          },
+        },
+      ],
     }
 
     if (options['player.P1.panel'] === '3d') {
@@ -116,7 +116,7 @@ export function launch ({
       let loadingScene = React.createElement(LoadingScene, {
         tasks: tasks,
         song: chart.info,
-        eyecatchImagePromise: loader.get('EyecatchImage')
+        eyecatchImagePromise: loader.get('EyecatchImage'),
       })
       if (replay) {
         yield SCENE_MANAGER.display(loadingScene)
@@ -180,8 +180,8 @@ export function launch ({
   })
 }
 
-function findVideoUrl (song, assets) {
-  return co(function * () {
+function findVideoUrl(song, assets) {
+  return co(function*() {
     if (song.video_url) {
       return song.video_url
     }
@@ -198,7 +198,7 @@ function findVideoUrl (song, assets) {
   })
 }
 
-function showResult (player, playerState, chart) {
+function showResult(player, playerState, chart) {
   return new Promise(resolve => {
     let stats = playerState.stats
     let playMode = playerState.player.options.scratch === 'off' ? 'KB' : 'BM'
@@ -217,13 +217,13 @@ function showResult (player, playerState, chart) {
         log: stats.log,
         deltas: stats.deltas,
         tainted: playerState.tainted,
-        grade: playerState.tainted ? 'AUTOPLAY' : getGrade(stats)
+        grade: playerState.tainted ? 'AUTOPLAY' : getGrade(stats),
       },
       chart: chart,
       playMode: playMode,
       lr2Timegate: player.notechart.expertJudgmentWindow,
       onExit: () => resolve({ replay: false }),
-      onReplay: () => resolve({ replay: true })
+      onReplay: () => resolve({ replay: true }),
     }
     SCENE_MANAGER.display(React.createElement(ResultScene, props)).done()
   })
@@ -232,12 +232,12 @@ function showResult (player, playerState, chart) {
 // http://qiita.com/dtinth/items/1200681c517a3fb26357
 const DEFAULT_REPLAYGAIN = -12.2 // dB
 
-function getVolume (song) {
+function getVolume(song) {
   const gain = replayGainFor(song)
   return Math.pow(10, ((gain == null ? DEFAULT_REPLAYGAIN : gain) + 8) / 20)
 }
 
-function replayGainFor (song) {
+function replayGainFor(song) {
   if (typeof song.replaygain !== 'string') return null
   if (!/^\S+\s+dB$/.test(song.replaygain)) return null
   const gain = parseFloat(song.replaygain)
@@ -245,7 +245,7 @@ function replayGainFor (song) {
   return gain
 }
 
-function describeChart (chart) {
+function describeChart(chart) {
   const { info } = chart
   return `[${info.genre}] ${info.title} ／ ${info.artist}`
 }

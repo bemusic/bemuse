@@ -24,15 +24,15 @@ export default class ResultScene extends React.Component {
       score: PropTypes.number,
       deltas: PropTypes.array,
       totalNotes: PropTypes.number,
-      tainted: PropTypes.bool
+      tainted: PropTypes.bool,
     }),
     playMode: PropTypes.string,
     lr2Timegate: PropTypes.array,
     chart: PropTypes.object,
     onReplay: PropTypes.func,
-    onExit: PropTypes.func
+    onExit: PropTypes.func,
   }
-  render () {
+  render() {
     void this.props.lr2Timegate // XXX: unused for now
 
     return (
@@ -95,7 +95,7 @@ export default class ResultScene extends React.Component {
       </Scene>
     )
   }
-  getTweetLink () {
+  getTweetLink() {
     let title = this.props.chart.info.title
     let subtitle = this.props.chart.info.subtitles[0] || ''
     let score = this.props.result.score

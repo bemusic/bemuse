@@ -14,7 +14,7 @@ const chartPropType = PropTypes.shape({
     init: PropTypes.number,
     max: PropTypes.number,
     median: PropTypes.number,
-    min: PropTypes.number
+    min: PropTypes.number,
   }),
   duration: PropTypes.number,
   file: PropTypes.string,
@@ -25,11 +25,11 @@ const chartPropType = PropTypes.shape({
     subtitles: PropTypes.arrayOf(PropTypes.string),
     subartists: PropTypes.arrayOf(PropTypes.string),
     difficulty: PropTypes.number,
-    level: PropTypes.number
+    level: PropTypes.number,
   }),
   keys: PropTypes.string,
   md5: PropTypes.string,
-  noteCount: PropTypes.number
+  noteCount: PropTypes.number,
 })
 
 export default class MusicInfoTabs extends React.Component {
@@ -37,17 +37,17 @@ export default class MusicInfoTabs extends React.Component {
     chart: chartPropType,
     onOptions: PropTypes.func,
     playMode: PropTypes.string,
-    song: PropTypes.object
+    song: PropTypes.object,
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      selectedTab: 0
+      selectedTab: 0,
     }
   }
 
-  render () {
+  render() {
     return (
       <section className='MusicInfoTabs'>
         <ul className='MusicInfoTabsのtabs'>
@@ -60,7 +60,7 @@ export default class MusicInfoTabs extends React.Component {
         </ul>
         <div
           className={c('MusicInfoTabsのpanel', {
-            'is-without-padding': this.state.selectedTab === 1
+            'is-without-padding': this.state.selectedTab === 1,
           })}
         >
           {this.renderCurrentTab()}
@@ -69,12 +69,12 @@ export default class MusicInfoTabs extends React.Component {
     )
   }
 
-  renderTab (index, title) {
+  renderTab(index, title) {
     const onClick = () => this.setState({ selectedTab: index })
     return (
       <li
         className={c('MusicInfoTabsのtab', {
-          'is-active': index === this.state.selectedTab
+          'is-active': index === this.state.selectedTab,
         })}
         onClick={onClick}
       >
@@ -83,7 +83,7 @@ export default class MusicInfoTabs extends React.Component {
     )
   }
 
-  renderCurrentTab () {
+  renderCurrentTab() {
     switch (this.state.selectedTab) {
       case 0:
         return (

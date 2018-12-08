@@ -9,8 +9,8 @@ import MAIN from 'bemuse/utils/main-element'
 import co from 'co'
 import { fromBMSChart } from 'bemuse-notechart/lib/loader/BMSNotechartLoader'
 
-export function main () {
-  co(function * () {
+export function main() {
+  co(function*() {
     let chart = BMS.Compiler.compile(`
       #TITLE ทดสอบ Bemuse
       #ARTIST ฟหกด
@@ -41,12 +41,12 @@ export function main () {
     let notecharts = [fromBMSChart(chart)]
 
     let game = new Game(notecharts, {
-      players: [{ speed: 2 }]
+      players: [{ speed: 2 }],
     })
 
     let skin = yield Scintillator.load(
       Scintillator.getSkinUrl({
-        displayMode: 'touch3d'
+        displayMode: 'touch3d',
       })
     )
     let context = new Scintillator.Context(skin)
@@ -57,12 +57,12 @@ export function main () {
     let timer = {
       started: true,
       startTime: started,
-      readyFraction: 0
+      readyFraction: 0,
     }
 
     display.start()
     display._getData = (getData =>
-      function () {
+      function() {
         let result = getData.apply(display, arguments)
         result['p1_score'] = (new Date().getTime() - started) % 555556
         window.LATEST_DATA = result
@@ -75,7 +75,7 @@ export function main () {
       display.update(t, state)
     }
     draw()
-    requestAnimationFrame(function f () {
+    requestAnimationFrame(function f() {
       draw()
       requestAnimationFrame(f)
     })
@@ -83,7 +83,7 @@ export function main () {
   }).done()
 }
 
-function showCanvas (view) {
+function showCanvas(view) {
   var { width, height } = view
 
   view.style.display = 'block'
@@ -93,7 +93,7 @@ function showCanvas (view) {
   resize()
   $(window).on('resize', resize)
 
-  function resize () {
+  function resize() {
     var scale = Math.min(window.innerWidth / width, window.innerHeight / height)
     view.style.width = Math.round(width * scale) + 'px'
     view.style.height = Math.round(height * scale) + 'px'

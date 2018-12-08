@@ -3,11 +3,11 @@ import _ from 'lodash'
 import bench from 'bemuse/devtools/benchmark'
 
 export class GameInput {
-  constructor () {
+  constructor() {
     this._controls = new Map()
     this._plugins = []
   }
-  update () {
+  update() {
     let changes = new Map()
     /* jshint -W098 */
     /* jshint -W004 */
@@ -32,22 +32,22 @@ export class GameInput {
     /* jshint +W004 */
     // https://github.com/jshint/jshint/issues/2138
   }
-  destroy () {
+  destroy() {
     for (let plugin of this._plugins) {
       plugin.destroy()
     }
   }
-  get (controlName) {
+  get(controlName) {
     if (!this._controls.has(controlName)) {
       this._controls.set(controlName, new Control())
     }
     return this._controls.get(controlName)
   }
-  use (plugin) {
+  use(plugin) {
     let state = {}
     let name = 'input:' + plugin.name
     this._plugins.push({
-      get: bench.wrap(name, function () {
+      get: bench.wrap(name, function() {
         let out = plugin.get()
         let diff = []
         for (let key of _.union(_.keys(out), _.keys(state))) {
@@ -58,13 +58,13 @@ export class GameInput {
         }
         return diff
       }),
-      destroy () {
+      destroy() {
         if (typeof plugin.destroy === 'function') {
           return plugin.destroy()
         } else {
           return true
         }
-      }
+      },
     })
   }
 }

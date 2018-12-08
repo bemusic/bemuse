@@ -1,6 +1,5 @@
-
-@import "~bemuse/ui/common";
-@import "options-input-common";
+@import '~bemuse/ui/common';
+@import 'options-input-common';
 
 .OptionsInputKey {
   &のcontents {
@@ -18,10 +17,11 @@
     @include options-input-button--text;
   }
   @include color(#feb);
-  &[data-n="2"], &[data-n="6"] {
+  &[data-n='2'],
+  &[data-n='6'] {
     @include color(#abf);
   }
-  &[data-n="4"] {
+  &[data-n='4'] {
     @include color(#bfa);
   }
 }
