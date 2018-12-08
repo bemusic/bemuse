@@ -88,7 +88,6 @@
     "gulp-gh-pages": "git://github.com/dtinth/gulp-gh-pages",
     "gulp-mocha": "^6.0.0",
     "gulp-util": "^3.0.8",
-    "hide-stack-frames-from": "^1.0.0",
     "import-sort-style-renke": "^2.4.0",
     "istanbul-instrumenter-loader": "^3.0.1",
     "jade": "^1.9.2",
