@@ -20,8 +20,6 @@
     "pre-deploy": "gulp pre-deploy",
     "codecov": "codecov",
     "build:ios": "cross-env NODE_ENV=ios gulp build",
-    "ci:code-review": "npm run code-review; ./bin/upload-code-review",
-    "code-review": "gulp code-review",
     "lint": "gulp lint",
     "postbootstrap": "lerna run prepare",
     "pre-commit": "gulp pre-commit",
