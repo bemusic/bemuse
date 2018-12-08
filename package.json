@@ -29,6 +29,8 @@
     "prod-build": "cross-env NODE_ENV=production gulp build",
     "prod-start": "cross-env NODE_ENV=production HOT=true gulp server",
     "start": "cross-env HOT=true gulp server",
+    "style:check": "yarn prettier --list-different './**/*.{js,jsx,ts,tsx,json,scss,css,yml}'",
+    "style:fix": "yarn prettier --write './**/*.{js,jsx,ts,tsx,json,scss,css,yml}'",
     "test": "cross-env NODE_ENV=test BEMUSE_COV=true gulp test",
     "test-bed": "cross-env NODE_ENV=test test-bed",
     "travis": "gulp travis",
