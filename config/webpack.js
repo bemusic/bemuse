@@ -227,16 +227,6 @@ function applyKarmaConfig(config) {
   return config
 }
 
-function applyTestBedConfig(config) {
-  config.entry = './test/testBed.entry.js'
-  config.testBed = {
-    configureExpressApp: (app, express) => {
-      app.use('/src', express.static(path('src')))
-    },
-  }
-  return config
-}
-
 export const generateWebConfig = flowRight(
   applyWebConfig,
   generateBaseConfig
@@ -244,11 +234,6 @@ export const generateWebConfig = flowRight(
 
 export const generateKarmaConfig = flowRight(
   applyKarmaConfig,
-  generateBaseConfig
-)
-
-export const generateTestBedConfig = flowRight(
-  applyTestBedConfig,
   generateBaseConfig
 )
 

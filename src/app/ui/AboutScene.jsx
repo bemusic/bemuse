@@ -142,7 +142,6 @@ class AboutScene extends React.Component {
                 repository.
               </li>
               <li>
-                <a href='https://travis-ci.org/'>Travis CI</a> and{' '}
                 <a href='https://circleci.com/'>CircleCI</a> continuously runs
                 our automated tests and notifies us when our new code breaks
                 existing features. CircleCI also builds and deploys new version
