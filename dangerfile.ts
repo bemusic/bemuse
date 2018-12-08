@@ -29,7 +29,7 @@ report.results.forEach(result => {
     const messageText = `${filePath} line ${line} – ${message} (${rule})`
     if (msg.severity === 1) {
       warn(messageText)
-    } else if (msg.severity === 1) {
+    } else if (msg.severity === 2) {
       fail(messageText)
     }
   })
@@ -50,7 +50,7 @@ filesToCheck.forEach(filePath => {
   const config = resolveConfig.sync(filePath)
   const options = { ...config, parser: fileInfo.inferredParser }
   if (!check(source, options)) {
-    fail(`${filePath} is not formatted using Prettier`)
+    fail(`${filePath} is not formatted using Prettier.`)
     prettierFailed = true
   }
 })
