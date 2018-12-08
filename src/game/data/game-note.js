@@ -4,7 +4,7 @@ import Event from './event'
 export let GameNote = new DataStructure(Event, {
   id: Number,
   end: DataStructure.maybe(Event),
-  column: String
+  column: String,
 })
 
 export default GameNote

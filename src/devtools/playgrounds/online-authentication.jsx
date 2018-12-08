@@ -9,6 +9,6 @@ const OnlineAuthenticationTestScene = () => (
   </div>
 )
 
-export function main () {
+export function main() {
   ReactDOM.render(<OnlineAuthenticationTestScene />, MAIN)
 }

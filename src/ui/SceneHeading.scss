@@ -1,10 +1,10 @@
-
-@import "./common.scss";
+@import './common.scss';
 
 .SceneHeading {
   @include soft-shadow;
   background: white;
-  margin: 0; padding: 0 20px;
+  margin: 0;
+  padding: 0 20px;
   font: bold 2rem $ui-font;
   line-height: 40px;
   color: black;

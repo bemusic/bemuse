@@ -1,5 +1,4 @@
-
-@import "~bemuse/ui/common";
+@import '~bemuse/ui/common';
 
 .ModeSelectScene {
   background: #415067 url(./images/bg-title.jpg) 50% 90% no-repeat;
@@ -54,7 +53,8 @@
     width: 22em;
     height: 22em * 9 / 16;
     box-shadow: 0 2px 8px black;
-    rect, circle {
+    rect,
+    circle {
       fill: rgba(mix(#4d535a, #848d99), 0.8);
       stroke: rgba(#848d99, 1);
       stroke-width: 0.4;

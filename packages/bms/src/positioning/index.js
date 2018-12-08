@@ -13,7 +13,7 @@ export class Positioning {
    * Constructs a Positioning from the given `segments`.
    * @param {PositioningSegment[]} segments
    */
-  constructor (segments) {
+  constructor(segments) {
     this._speedcore = new Speedcore(segments)
   }
 
@@ -21,7 +21,7 @@ export class Positioning {
    * Returns the scrolling speed at specified beat.
    * @param {number} beat the beat number
    */
-  speed (beat) {
+  speed(beat) {
     return this._speedcore.dx(beat)
   }
 
@@ -29,7 +29,7 @@ export class Positioning {
    * Returns the total elapsed scrolling amount at specified beat.
    * @param {number} beat the beat number
    */
-  position (beat) {
+  position(beat) {
     return this._speedcore.x(beat)
   }
 
@@ -37,7 +37,7 @@ export class Positioning {
    * Creates a {Positioning} object from the {BMSChart}.
    * @param {BMSChart} chart A {BMSChart} to construct a {Positioning} from
    */
-  static fromBMSChart (chart) {
+  static fromBMSChart(chart) {
     void BMSChart
     var segments = []
     var x = 0
@@ -45,9 +45,9 @@ export class Positioning {
       t: 0,
       x: x,
       dx: 1,
-      inclusive: true
+      inclusive: true,
     })
-    chart.objects.allSorted().forEach(function (object) {
+    chart.objects.allSorted().forEach(function(object) {
       if (object.channel === 'SC') {
         var beat = chart.measureToBeat(object.measure, object.fraction)
         var dx = +chart.headers.get('scroll' + object.value)
@@ -61,7 +61,7 @@ export class Positioning {
             t: beat,
             x: x,
             dx: dx,
-            inclusive: true
+            inclusive: true,
           })
         }
       }

@@ -12,15 +12,15 @@ const sorters = {
   added: songs => [
     {
       title: 'Sorted by added date',
-      songs: _.reverse(_.sortBy(songs, getAdded))
-    }
-  ]
+      songs: _.reverse(_.sortBy(songs, getAdded)),
+    },
+  ],
 }
 
 const getAdded = song =>
   song.added || (song.initial ? '0000-00-00' : '9999-99-99')
 
-function validateSong (song) {
+function validateSong(song) {
   const problems = []
   const report = (message, ...keys) => problems.push({ keys, message })
   if (song.unreleased) {
@@ -58,7 +58,7 @@ function validateSong (song) {
   return problems
 }
 
-function renderSongWarnings (song) {
+function renderSongWarnings(song) {
   const problems = validateSong(song)
   if (!problems.length) return null
   return (
@@ -73,7 +73,7 @@ function renderSongWarnings (song) {
                 marginRight: '2',
                 padding: 3,
                 fontSize: '0.8em',
-                background: '#755'
+                background: '#755',
               }}
             >
               {key}
@@ -90,17 +90,17 @@ export class MusicTable extends React.Component {
   static propTypes = {
     data: PropTypes.object,
     url: PropTypes.string,
-    initialSort: PropTypes.string
+    initialSort: PropTypes.string,
   }
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       sort: this.props.initialSort || Object.keys(sorters)[0],
       previewUrl: null,
-      previewEnabled: false
+      previewEnabled: false,
     }
   }
-  renderTable () {
+  renderTable() {
     return (
       <table style={{ borderSpacing: 4 }}>
         <thead>
@@ -121,7 +121,7 @@ export class MusicTable extends React.Component {
       </table>
     )
   }
-  renderSorter () {
+  renderSorter() {
     const out = []
     for (const key of Object.keys(sorters)) {
       out.push(
@@ -141,7 +141,7 @@ export class MusicTable extends React.Component {
       </span>
     )
   }
-  renderPreview () {
+  renderPreview() {
     const button = (
       <button
         onClick={() => {
@@ -160,7 +160,7 @@ export class MusicTable extends React.Component {
       </span>
     )
   }
-  renderRows () {
+  renderRows() {
     const categories = sorters[this.state.sort](this.props.data.songs)
     const out = []
     for (const category of categories) {
@@ -212,10 +212,10 @@ export class MusicTable extends React.Component {
     }
     return out
   }
-  renderMessage (text) {
+  renderMessage(text) {
     return <div style={{ textAlign: 'center' }}>{text}</div>
   }
-  render () {
+  render() {
     if (!this.props.data) return this.renderMessage('No data')
     try {
       return this.renderTable()

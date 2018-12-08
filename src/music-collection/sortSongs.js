@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import isChartPlayable from './isChartPlayable'
 
-export function sortSongs (songs) {
+export function sortSongs(songs) {
   return _.orderBy(songs, [
     song => {
       return _(song.charts)
@@ -12,7 +12,7 @@ export function sortSongs (songs) {
         .min()
     },
     song => song.bpm,
-    song => song.title.toLowerCase()
+    song => song.title.toLowerCase(),
   ])
 }
 

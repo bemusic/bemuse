@@ -14,10 +14,10 @@ import YouTube from 'bemuse/ui/YouTube'
 
 const enhance = compose(
   connect(state => ({
-    readme: ReduxState.selectReadmeTextForSelectedSong(state)
+    readme: ReduxState.selectReadmeTextForSelectedSong(state),
   })),
   connectIO({
-    onRequestReadme: () => song => ReadmeIO.requestReadme(song)
+    onRequestReadme: () => song => ReadmeIO.requestReadme(song),
   })
 )
 
@@ -25,20 +25,20 @@ class MusicInfoTabInformation extends React.Component {
   static propTypes = {
     song: PropTypes.object,
     readme: PropTypes.string,
-    onRequestReadme: PropTypes.func
+    onRequestReadme: PropTypes.func,
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.onRequestReadme(this.props.song)
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.song !== this.props.song) {
       this.props.onRequestReadme(nextProps.song)
     }
   }
 
-  render () {
+  render() {
     const song = this.props.song
     return (
       <div className='MusicInfoTabInformation'>
@@ -55,7 +55,7 @@ class MusicInfoTabInformation extends React.Component {
     )
   }
 
-  renderButtons () {
+  renderButtons() {
     let buttons = []
     let song = this.props.song
     if (song.bms_url) {
@@ -85,7 +85,7 @@ class MusicInfoTabInformation extends React.Component {
 
 export default enhance(MusicInfoTabInformation)
 
-function link (text, url) {
+function link(text, url) {
   return url ? (
     <a key={text} href={url} target='_blank'>
       {text}

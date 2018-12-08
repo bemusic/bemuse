@@ -7,7 +7,7 @@ init:
 
 # Test against these versions of Node.js.
 environment:
-  nodejs_version: "0.10"
+  nodejs_version: '0.10'
 
 # Install scripts. (runs after repo cloning)
 install:
@@ -25,5 +25,4 @@ test_script:
 build: off
 
 # Set build version format here instead of in the admin panel.
-version: "{build}"
-
+version: '{build}'

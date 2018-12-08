@@ -1,8 +1,8 @@
 export class LoadingContext {
-  constructor (progress) {
+  constructor(progress) {
     this._progress = progress
   }
-  load (script, head) {
+  load(script, head) {
     let src = script.src
     let xh = new XMLHttpRequest()
     xh.open('GET', src, true)
@@ -23,7 +23,7 @@ export class LoadingContext {
     }
     xh.send(null)
   }
-  use (callback) {
+  use(callback) {
     let old = window.WebpackLoadingContext
     try {
       window.WebpackLoadingContext = this

@@ -32,7 +32,7 @@ export class SongInfo {
    * Constructs a SongInfo with given data
    * @param {{ [propertyName: string]: any }} info the properties to set on this new instance
    */
-  constructor (info) {
+  constructor(info) {
     /** the song title */
     this.title = 'NO TITLE'
     /** the song artist */
@@ -76,7 +76,7 @@ export class SongInfo {
    * Constructs a new {SongInfo} object from a {BMSChart}.
    * @param {BMSChart} chart A {BMSChart} to construct a {SongInfo} from
    */
-  static fromBMSChart (chart) {
+  static fromBMSChart(chart) {
     void BMSChart
     var info = {}
     var title = chart.headers.get('title')
@@ -87,7 +87,7 @@ export class SongInfo {
     var subtitles = chart.headers.getAll('subtitle')
     var subartists = chart.headers.getAll('subartist')
     if (typeof title === 'string' && !subtitles) {
-      var extractSubtitle = function (m) {
+      var extractSubtitle = function(m) {
         title = m[1]
         subtitles = [m[2]]
       }

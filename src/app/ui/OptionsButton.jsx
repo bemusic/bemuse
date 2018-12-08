@@ -10,7 +10,7 @@ const OptionsButton = ({ children, onClick }) => (
 
 OptionsButton.propTypes = {
   children: PropTypes.node,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 }
 
 export default OptionsButton

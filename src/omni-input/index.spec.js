@@ -4,90 +4,90 @@ import { EventEmitter } from 'events'
 
 import { OmniInput, _key川ForUpdate川, getName, key川 } from './'
 
-function fakeWindow () {
+function fakeWindow() {
   const events = new EventEmitter()
   const gamepads = []
   const noop = () => {}
   return {
-    addEventListener (name, callback) {
+    addEventListener(name, callback) {
       events.on(name, callback)
     },
-    removeEventListener (name, callback) {
+    removeEventListener(name, callback) {
       events.removeListener(name, callback)
     },
-    setInterval (callback) {
+    setInterval(callback) {
       events.on('timeout', callback)
       return callback
     },
-    clearInterval (callback) {
+    clearInterval(callback) {
       events.removeListener('timeout', callback)
     },
-    keydown (keyCode) {
+    keydown(keyCode) {
       events.emit('keydown', { which: keyCode, preventDefault: noop })
     },
-    keyup (keyCode) {
+    keyup(keyCode) {
       events.emit('keyup', { which: keyCode, preventDefault: noop })
     },
-    tick () {
+    tick() {
       events.emit('timeout')
     },
     gamepads,
     navigator: {
-      getGamepads () {
+      getGamepads() {
         return gamepads
-      }
-    }
+      },
+    },
   }
 }
 
-describe('OmniInput', function () {
-  beforeEach(function () {
+describe('OmniInput', function() {
+  beforeEach(function() {
     this.window = fakeWindow()
     this.midi口 = new Bacon.Bus()
     this.input = new OmniInput(this.window, {
-      getMidi川: () => this.midi口
+      getMidi川: () => this.midi口,
     })
     this.midi = (...args) => {
       this.midi口.push({
         data: args,
-        target: { id: '1234' }
+        target: { id: '1234' },
       })
     }
   })
 
-  afterEach(function () {
+  afterEach(function() {
     this.input.dispose()
   })
 
   it('does not fail when browser support is limited', () => {
     const basicWindow = {
-      addEventListener () {},
-      removeEventListener () {},
-      navigator: {}
+      addEventListener() {},
+      removeEventListener() {},
+      navigator: {},
     }
     const input = new OmniInput(basicWindow)
     void input
   })
 
-  describe('keyboard', function () {
-    it('recognizes input', function () {
+  describe('keyboard', function() {
+    it('recognizes input', function() {
       this.window.keydown(32)
       assert(this.input.update()['32'])
       this.window.keyup(32)
       assert(!this.input.update()['32'])
     })
-    it('returns the key name', function () {
+    it('returns the key name', function() {
       assert(getName('32') === 'Space')
       assert(getName('65') === 'A')
     })
   })
 
-  describe('gamepad', function () {
-    it('recognizes input', function () {
+  describe('gamepad', function() {
+    it('recognizes input', function() {
       this.window.gamepads.push(null, {
         index: 1,
         buttons: [{}, { value: 0.9 }],
-        axes: [0, 0.9, -0.9]
+        axes: [0, 0.9, -0.9],
       })
       const data = this.input.update()
       assert(!data['gamepad.1.button.0'])
@@ -102,8 +102,8 @@ describe('OmniInput', function () {
     })
   })
 
-  describe('midi', function () {
-    it('handles notes', function () {
+  describe('midi', function() {
+    it('handles notes', function() {
       this.midi(0x92, 0x40, 0x7f)
       assert(this.input.update()['midi.1234.2.note.64'], 'note on')
       this.midi(0x82, 0x40, 0x7f)
@@ -116,7 +116,7 @@ describe('OmniInput', function () {
         'note off with note on'
       )
     })
-    it('handles pitch bend', function () {
+    it('handles pitch bend', function() {
       this.midi(0xe1, 0x7f, 0x7f)
       assert(this.input.update()['midi.1234.1.pitch.up'])
       assert(!this.input.update()['midi.1234.1.pitch.down'])
@@ -124,19 +124,19 @@ describe('OmniInput', function () {
       assert(this.input.update()['midi.1234.1.pitch.down'])
       assert(!this.input.update()['midi.1234.1.pitch.up'])
     })
-    it('handles sustain pedal', function () {
+    it('handles sustain pedal', function() {
       this.midi(0xbc, 0x40, 0x7f)
       assert(this.input.update()['midi.1234.12.sustain'])
       this.midi(0xbc, 0x40, 0x00)
       assert(!this.input.update()['midi.1234.12.sustain'])
     })
-    it('handles modulation lever', function () {
+    it('handles modulation lever', function() {
       this.midi(0xbc, 0x01, 0x7f)
       assert(this.input.update()['midi.1234.12.mod'])
       this.midi(0xbc, 0x01, 0x00)
       assert(!this.input.update()['midi.1234.12.mod'])
     })
-    it('returns the key name', function () {
+    it('returns the key name', function() {
       assert(getName('midi.1234.12.note.60').match(/C4/))
       assert(getName('midi.1234.12.pitch.up').match(/Pitch\+/))
       assert(getName('midi.1234.12.pitch.down').match(/Pitch-/))
@@ -145,8 +145,8 @@ describe('OmniInput', function () {
     })
   })
 
-  describe('key川', function () {
-    it('should return events', function () {
+  describe('key川', function() {
+    it('should return events', function() {
       let last
       const dispose = key川(this.input, this.window).onValue(
         value => (last = value)
@@ -160,8 +160,8 @@ describe('OmniInput', function () {
     })
   })
 
-  describe('_key川ForUpdate川', function () {
-    it('should emit new keys', function () {
+  describe('_key川ForUpdate川', function() {
+    it('should emit new keys', function() {
       const 口 = new Bacon.Bus()
       const events = []
       const dispose = _key川ForUpdate川(口).onValue(value => events.push(value))

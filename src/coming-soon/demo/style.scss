@@ -1,15 +1,18 @@
-
 .jukebox {
-
   &--overlay {
     position: fixed;
-    top: 0;right: 0;bottom: 0;left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     background: rgba(#8b8685, 0.5);
   }
 
   &--inner {
     position: absolute;
-    top: 50%; left: 50%; transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border: 2px solid #8b8685;
     background: #252423;
     padding: 12px;
@@ -61,5 +64,4 @@
     font: bold 15px verdana, sans-serif;
     margin-top: 18px;
   }
-
 }

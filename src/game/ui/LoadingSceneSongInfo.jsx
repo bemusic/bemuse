@@ -13,11 +13,11 @@ export default class LoadingSceneSongInfo extends React.Component {
       subtitles: PropTypes.arrayOf(PropTypes.string),
       subartists: PropTypes.arrayOf(PropTypes.string),
       difficulty: PropTypes.number,
-      level: PropTypes.number
-    }).isRequired
+      level: PropTypes.number,
+    }).isRequired,
   }
 
-  render () {
+  render() {
     const song = this.props.song
     return (
       <div className='LoadingSceneSongInfo'>
@@ -25,10 +25,10 @@ export default class LoadingSceneSongInfo extends React.Component {
         <div className='LoadingSceneSongInfoのtitle'>{song.title}</div>
         {!isTitleDisplayMode()
           ? song.subtitles.map(text => (
-            <div key={text} className='LoadingSceneSongInfoのsubtitle'>
-              {text}
-            </div>
-          ))
+              <div key={text} className='LoadingSceneSongInfoのsubtitle'>
+                {text}
+              </div>
+            ))
           : null}
         <div className='LoadingSceneSongInfoのartist'>{song.artist}</div>
         {song.subartists.map(text => (

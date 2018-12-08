@@ -1,11 +1,11 @@
 import { OmniInput } from 'bemuse/omni-input'
 
-function OmniInputPlugin (game) {
+function OmniInputPlugin(game) {
   const input = new OmniInput(window, { exclusive: true })
   let kbm = game.players[0].options.input.keyboard
   return {
     name: 'GameKBPlugin',
-    get () {
+    get() {
       const data = input.update()
       const result = {
         p1_1: data[kbm['1'] || '83'],
@@ -19,7 +19,7 @@ function OmniInputPlugin (game) {
         p1_speedup: data[38],
         p1_speeddown: data[40],
         start: data[13] || data['gamepad.0.button.9'],
-        select: data[18] || data['gamepad.0.button.8']
+        select: data[18] || data['gamepad.0.button.8'],
       }
       if (result['start'] || result['select']) {
         if (
@@ -36,9 +36,9 @@ function OmniInputPlugin (game) {
       }
       return result
     },
-    destroy () {
+    destroy() {
       input.dispose()
-    }
+    },
   }
 }
 

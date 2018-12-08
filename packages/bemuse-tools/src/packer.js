@@ -1,4 +1,3 @@
-
 import Promise from 'bluebird'
 import co from 'co'
 import fs from 'fs'
@@ -13,8 +12,8 @@ import BemusePacker from './bemuse-packer'
 let mkdirp = Promise.promisify(require('mkdirp'))
 let fileStat = Promise.promisify(fs.stat, fs)
 
-export function packIntoBemuse (path) {
-  return co(function * () {
+export function packIntoBemuse(path) {
+  return co(function*() {
     let stat = yield fileStat(path)
     if (!stat.isDirectory()) throw new Error('Not a directory: ' + path)
 
@@ -43,21 +42,17 @@ export function packIntoBemuse (path) {
   })
 }
 
-function dotMap (array, map) {
-  return (
-    Promise.map(
-      array,
-      item => (Promise.resolve(map(item))
-        .tap(() => process.stdout.write('.'))
-        .then(result => [result])
-        .catch(e => {
-          process.stdout.write('x')
-          process.stderr.write('[ERR] ' + e.stack)
-          return [ ]
-        })
-      )
-    )
-      .then(results => _.flatten(results))
-      .tap(() => process.stdout.write('\n'))
+function dotMap(array, map) {
+  return Promise.map(array, item =>
+    Promise.resolve(map(item))
+      .tap(() => process.stdout.write('.'))
+      .then(result => [result])
+      .catch(e => {
+        process.stdout.write('x')
+        process.stderr.write('[ERR] ' + e.stack)
+        return []
+      })
   )
+    .then(results => _.flatten(results))
+    .tap(() => process.stdout.write('\n'))
 }

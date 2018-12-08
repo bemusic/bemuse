@@ -8,15 +8,17 @@ import OptionsPlayerGraphics from './OptionsPlayerGraphics'
 class OptionsPlayerSelector extends React.PureComponent {
   static propTypes = {
     onSelect: PropTypes.func,
-    options: PropTypes.arrayOf(PropTypes.shape({
-      label: PropTypes.string,
-      value: PropTypes.string
-    })),
+    options: PropTypes.arrayOf(
+      PropTypes.shape({
+        label: PropTypes.string,
+        value: PropTypes.string,
+      })
+    ),
     type: PropTypes.string,
-    value: PropTypes.string
+    value: PropTypes.string,
   }
 
-  render () {
+  render() {
     return (
       <div className='OptionsPlayerSelector'>
         {this.props.options.map((item, index) => (
@@ -40,14 +42,14 @@ class OptionsPlayerSelectorItem extends React.PureComponent {
     onSelect: PropTypes.func,
     label: PropTypes.string,
     type: PropTypes.string,
-    value: PropTypes.string
+    value: PropTypes.string,
   }
 
-  render () {
+  render() {
     return (
       <div
         className={c('OptionsPlayerSelectorのitem', {
-          'is-active': this.props.active
+          'is-active': this.props.active,
         })}
         onClick={this.handleClick}
       >

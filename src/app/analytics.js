@@ -9,27 +9,27 @@ import * as Options from './entities/Options'
 import getLR2Score from './interactors/getLR2Score'
 import getNonMissedDeltas from './interactors/getNonMissedDeltas'
 
-let ga = window.ga || function () {}
+let ga = window.ga || function() {}
 const startTime = Date.now()
 const sid = ObjectID.generate()
 
-function getLabel (chart) {
+function getLabel(chart) {
   return `${chart.md5}`
 }
 
-function getSongTitle (song) {
+function getSongTitle(song) {
   if (song.custom) return '(custom song)'
   return song.title
 }
 
-export function send (category, action, label, value, extra) {
+export function send(category, action, label, value, extra) {
   console.log('[Analytics]', category, action, label, value, extra)
   ga('send', 'event', category, action, label, value)
   try {
     if (window.ga) {
       const sessionLength = Date.now() - startTime
       const data = {
-        info: { sid, category, action, label, value, extra, t: sessionLength }
+        info: { sid, category, action, label, value, extra, t: sessionLength },
       }
       window.navigator.sendBeacon(
         'https://analytics.bemuse.ninja/collect.php?' + stringify(data)
@@ -43,7 +43,7 @@ export function send (category, action, label, value, extra) {
       window.amplitude.getInstance().logEvent(`${category} / ${action}`, {
         label,
         value,
-        ...extra
+        ...extra,
       })
     }
   } catch (e) {
@@ -51,18 +51,18 @@ export function send (category, action, label, value, extra) {
   }
 }
 
-export function gameStart (song, chart, gameMode, options) {
+export function gameStart(song, chart, gameMode, options) {
   send('song', 'play', getSongTitle(song))
   send('game', 'start', getLabel(chart), chart.info.level, {
     gameMode,
     bga: Options.isBackgroundAnimationsEnabled(options) ? 'y' : 'n',
     autoVelocity: Options.isAutoVelocityEnabled(options) ? 'y' : 'n',
-    latency: +options['system.offset.audio-input']
+    latency: +options['system.offset.audio-input'],
   })
   send('game', 'mode', gameMode)
 }
 
-export function gameFinish (song, chart, gameState, gameMode) {
+export function gameFinish(song, chart, gameState, gameMode) {
   const player = gameState.game.players[0]
   const notechart = player.notechart
   const state = gameState.player(player)
@@ -88,37 +88,37 @@ export function gameFinish (song, chart, gameState, gameMode) {
       w2: stats.counts['2'],
       w3: stats.counts['3'],
       w4: stats.counts['4'],
-      w5: stats.counts[MISSED]
-    }
+      w5: stats.counts[MISSED],
+    },
   })
 }
 
-export function recordGameLoadTime (gameLoadTimeMillis) {
+export function recordGameLoadTime(gameLoadTimeMillis) {
   console.log(`[Analytics] Game load time: ${gameLoadTimeMillis} ms`)
   ga('send', 'timing', 'Game', 'load', gameLoadTimeMillis)
 }
 
-export function getDeltaStats (deltas) {
+export function getDeltaStats(deltas) {
   const nonMissDeltas = getNonMissedDeltas(deltas)
   return {
     sd: Math.sqrt(variance(nonMissDeltas)),
     mean: mean(nonMissDeltas),
-    median: median(nonMissDeltas)
+    median: median(nonMissDeltas),
   }
 }
 
-export function gameEscape (song, chart, gameState) {
+export function gameEscape(song, chart, gameState) {
   let state = gameState.player(gameState.game.players[0])
   send('song', 'escape', getSongTitle(song))
   send('game', 'escape', getLabel(chart), state.stats.score)
 }
 
-export function gameQuit (song, chart, gameState) {
+export function gameQuit(song, chart, gameState) {
   let state = gameState.player(gameState.game.players[0])
   send('song', 'quit', getSongTitle(song))
   send('game', 'quit', getLabel(chart), state.stats.score)
 }
 
-export function action (label) {
+export function action(label) {
   send('action', 'trigger', label)
 }

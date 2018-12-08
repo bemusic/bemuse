@@ -39,7 +39,7 @@
  * ```
  */
 export class TimeSignatures {
-  constructor () {
+  constructor() {
     this._values = {}
   }
 
@@ -50,7 +50,7 @@ export class TimeSignatures {
    *  For example, a size of 1.0 represents a common 4/4 time signature,
    *  whereas a size of 0.75 represents the 3/4 or 6/8 time signature.
    */
-  set (measure, value) {
+  set(measure, value) {
     this._values[measure] = value
   }
 
@@ -60,7 +60,7 @@ export class TimeSignatures {
    * @returns {number} the size of the measure.
    *  By default, a measure has a size of 1.
    */
-  get (measure) {
+  get(measure) {
     return this._values[measure] || 1
   }
 
@@ -72,7 +72,7 @@ export class TimeSignatures {
    * @param {number} measure representing the measure number.
    * @returns {number} the size of the measure in beats.
    */
-  getBeats (measure) {
+  getBeats(measure) {
     return this.get(measure) * 4
   }
 
@@ -84,7 +84,7 @@ export class TimeSignatures {
    * @param {number} fraction the fraction of a measure,
    * @returns the number of beats since measure 0.
    */
-  measureToBeat (measure, fraction) {
+  measureToBeat(measure, fraction) {
     var sum = 0
     for (var i = 0; i < measure; i++) sum += this.getBeats(i)
     return sum + this.getBeats(measure) * fraction

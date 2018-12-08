@@ -2,7 +2,7 @@ import Worker from './song-loader.worker.js'
 
 /* eslint import/no-webpack-loader-syntax: off */
 
-export function loadSongFromResources (resources, options = {}) {
+export function loadSongFromResources(resources, options = {}) {
   var onMessage = options.onMessage || (() => {})
   return resources.fileList
     .then(fileList => {
@@ -24,14 +24,14 @@ export function loadSongFromResources (resources, options = {}) {
           })
           .then(arrayBuffer => ({
             name: filename,
-            data: arrayBuffer
+            data: arrayBuffer,
           }))
       })
     })
     .then(files => {
       return new Promise((resolve, reject) => {
         let worker = new Worker()
-        worker.onmessage = function ({ data }) {
+        worker.onmessage = function({ data }) {
           if (data.type === 'result') {
             resolve(data.song)
             worker.terminate()
@@ -50,7 +50,7 @@ export function loadSongFromResources (resources, options = {}) {
             )
           }
         }
-        worker.onerror = function (e) {
+        worker.onerror = function(e) {
           onMessage('Worker error: ' + e)
           console.error('Worker error: ' + e)
           reject(e.error)

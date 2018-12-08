@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js'
 
-function createRenderer (w, h) {
+function createRenderer(w, h) {
   hackPIXIToForceNewBlendModes()
 
   // For now, we are using CanvasRenderer instead of WebGLRenderer or
@@ -14,12 +14,12 @@ function createRenderer (w, h) {
 
 // HACK: Sometimes, when using the canvas renderer,
 // the blend mode is not properly set.
-function hackPIXIToForceNewBlendModes () {
+function hackPIXIToForceNewBlendModes() {
   PIXI.utils.canUseNewCanvasBlendModes = () => true
 }
 
 export class Context {
-  constructor (skin) {
+  constructor(skin) {
     this.refs = {}
     this._skin = skin
     this._instance = skin.instantiate(this)
@@ -29,28 +29,28 @@ export class Context {
     this.skinData = skin.data
     this._setupInteractivity()
   }
-  render (data) {
+  render(data) {
     this._instance.push(data)
     this._renderer.render(this.stage)
   }
-  destroy () {
+  destroy() {
     this._instance.destroy()
     this._instance = null
     this._teardownInteractivity()
   }
-  get input () {
+  get input() {
     return this._input.get()
   }
-  ref (key, object) {
+  ref(key, object) {
     let set = this.refs[key] || (this.refs[key] = new Set())
     set.add(object)
   }
-  unref (key, object) {
+  unref(key, object) {
     let set = this.refs[key]
     if (!set) return
     set.delete(object)
   }
-  _setupInteractivity () {
+  _setupInteractivity() {
     let mouse = null
     let touches = []
     let onMouse = e => {
@@ -94,13 +94,13 @@ export class Context {
           output.push(point('touch' + touch.identifier, touch, rect))
         }
         return output
-      }
+      },
     }
-    function point (id, p, rect) {
+    function point(id, p, rect) {
       return {
-        x: (p.clientX - rect.left) / rect.width * width,
-        y: (p.clientY - rect.top) / rect.height * height,
-        id: id
+        x: ((p.clientX - rect.left) / rect.width) * width,
+        y: ((p.clientY - rect.top) / rect.height) * height,
+        id: id,
       }
     }
   }

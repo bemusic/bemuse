@@ -1,4 +1,4 @@
-export function * loginByUsernamePassword (
+export function* loginByUsernamePassword(
   username,
   password,
   {
@@ -16,17 +16,17 @@ export function * loginByUsernamePassword (
 
     // (idToken) => Promise
     // - Result should contain `playerId` and `playerName` property.
-    ensureLink
+    ensureLink,
   }
 ) {
   {
-    const { idToken } = yield * obtainIdToken()
+    const { idToken } = yield* obtainIdToken()
     log('Loading profile...')
     yield ensureLink(idToken)
     return { idToken }
   }
 
-  function * obtainIdToken () {
+  function* obtainIdToken() {
     let triedEmail = false
     if (/@/.test(username)) {
       log('Authenticating using email...')
@@ -55,7 +55,7 @@ export function * loginByUsernamePassword (
   }
 }
 
-export function * signUp (
+export function* signUp(
   username,
   email,
   password,
@@ -77,7 +77,7 @@ export function * signUp (
 
     // (idToken) => Promise
     // - Result should contain `playerId` and `playerName` property.
-    ensureLink
+    ensureLink,
   }
 ) {
   log('Checking player name availability...')

@@ -3,7 +3,7 @@ let version = require('../package.json')
   .version.replace(/\.0$/, '')
   .replace(/\.0$/, '')
 
-function gitRevision () {
+function gitRevision() {
   return require('child_process')
     .execSync('git rev-parse --short HEAD')
     .toString()

@@ -1,41 +1,41 @@
 let instance = null
 
-function getInstance () {
+function getInstance() {
   return instance || (instance = createMusicPreviewer())
 }
 
-export function preload () {
+export function preload() {
   getInstance()
 }
 
-export function enable () {
+export function enable() {
   return getInstance().enable()
 }
 
-export function disable () {
+export function disable() {
   return getInstance().disable()
 }
 
-export function go () {
+export function go() {
   return getInstance().go()
 }
 
-export function preview (url) {
+export function preview(url) {
   return getInstance().preview(url)
 }
 
-function createFader (audio, initialVolume, onTargetReached) {
+function createFader(audio, initialVolume, onTargetReached) {
   let targetVolume = 0
   let currentSpeed = 0
   let requested = false
   let volumeChanged
   audio.volume = initialVolume
 
-  function elapsed () {
+  function elapsed() {
     return (Date.now() - volumeChanged) / 1000
   }
 
-  function getCurrentVolume () {
+  function getCurrentVolume() {
     if (targetVolume > initialVolume) {
       return Math.min(targetVolume, initialVolume + elapsed() * currentSpeed)
     }
@@ -45,7 +45,7 @@ function createFader (audio, initialVolume, onTargetReached) {
     return targetVolume
   }
 
-  function update () {
+  function update() {
     requested = false
     const currentVolume = getCurrentVolume()
     audio.volume = currentVolume
@@ -60,7 +60,7 @@ function createFader (audio, initialVolume, onTargetReached) {
   }
 
   return {
-    fadeTo (target, speed) {
+    fadeTo(target, speed) {
       if (targetVolume !== target || speed !== currentSpeed) {
         initialVolume = getCurrentVolume()
         targetVolume = target
@@ -68,11 +68,11 @@ function createFader (audio, initialVolume, onTargetReached) {
         volumeChanged = Date.now()
         update()
       }
-    }
+    },
   }
 }
 
-function createMusicPreviewer () {
+function createMusicPreviewer() {
   let enabled = false
   let currentUrl = null
   let backgroundLoaded = false
@@ -100,7 +100,7 @@ function createMusicPreviewer () {
     }
   })
 
-  function update () {
+  function update() {
     if (!enabled) {
       if (backgroundPlayed) {
         backgroundFader.fadeTo(0, 100)
@@ -141,17 +141,17 @@ function createMusicPreviewer () {
   }
 
   const musicPreviewer = {
-    enable () {
+    enable() {
       if (enabled) return
       enabled = true
       update()
     },
-    disable () {
+    disable() {
       if (!enabled) return
       enabled = false
       update()
     },
-    go () {
+    go() {
       if (!enabled) return
       goSound.currentTime = 0
       try {
@@ -160,17 +160,17 @@ function createMusicPreviewer () {
         console.warn('Cannot play go sound.')
       }
     },
-    preview (songUrl) {
+    preview(songUrl) {
       if (currentUrl === songUrl) return
       currentUrl = songUrl
       if (songUrl && !instances[songUrl]) {
         instances[songUrl] = createInstance(songUrl)
       }
       update()
-    }
+    },
   }
 
-  function createInstance (songUrl) {
+  function createInstance(songUrl) {
     const audio = document.createElement('audio')
     audio.src = songUrl
     let played = false
@@ -185,7 +185,7 @@ function createMusicPreviewer () {
 
     const instance = {
       loaded: false,
-      play () {
+      play() {
         if (!played) {
           try {
             audio.play()
@@ -196,14 +196,14 @@ function createMusicPreviewer () {
         }
         fader.fadeTo(1, 2)
       },
-      stop () {
+      stop() {
         fader.fadeTo(0, 4)
       },
-      destroy () {
+      destroy() {
         audio.pause()
         delete instances[songUrl]
         update()
-      }
+      },
     }
 
     audio.oncanplaythrough = () => {

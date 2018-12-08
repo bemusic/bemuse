@@ -31,21 +31,21 @@ import MAIN from 'bemuse/utils/main-element'
 //   ``teardown()`` method.
 //
 export class SceneManager {
-  constructor () {
+  constructor() {
     this._transitioning = false
     this._stack = []
   }
 
   // Displays the scene and returns a promise that resolves when the old
   // scene finishes exiting.
-  display (scene) {
+  display(scene) {
     return this._transitionTo(() => {
       return scene
     })
   }
 
   // Displays the scene, while remembering the previous scene.
-  push (scene) {
+  push(scene) {
     let previousScene = this.currentScene
     return this._transitionTo(() => {
       this._stack.push(previousScene)
@@ -54,15 +54,15 @@ export class SceneManager {
   }
 
   // Displays the previous scene.
-  pop () {
+  pop() {
     return this._transitionTo(() => {
       return this._stack.pop()
     })
   }
 
-  _transitionTo (getNextScene) {
+  _transitionTo(getNextScene) {
     return co(
-      function * () {
+      function*() {
         if (this._transitioning) throw new Error('Scene is transitioning!')
         try {
           this._transitioning = true
@@ -77,7 +77,9 @@ export class SceneManager {
           let scene = getNextScene()
 
           // coerce react elements
-          if (typeof scene !== 'function') { scene = new ReactScene(scene, this.ReactSceneContainer) }
+          if (typeof scene !== 'function') {
+            scene = new ReactScene(scene, this.ReactSceneContainer)
+          }
 
           // set up the next scene
           var element = document.createElement('div')
@@ -94,7 +96,7 @@ export class SceneManager {
   }
 }
 
-function detach (element) {
+function detach(element) {
   if (element && element.parentNode === MAIN) {
     MAIN.removeChild(element)
   }
@@ -105,14 +107,14 @@ export let instance = new SceneManager()
 
 export default instance
 
-function ReactScene (element, ReactSceneContainer) {
-  return function instantiate (container) {
+function ReactScene(element, ReactSceneContainer) {
+  return function instantiate(container) {
     let teardown = () => {}
     const clonedElement = React.cloneElement(element, {
       scene: element,
       registerTeardownCallback: callback => {
         teardown = callback
-      }
+      },
     })
     const elementToDisplay = ReactSceneContainer ? (
       <ReactSceneContainer>{clonedElement}</ReactSceneContainer>
@@ -121,13 +123,13 @@ function ReactScene (element, ReactSceneContainer) {
     )
     ReactDOM.render(elementToDisplay, container)
     return {
-      teardown () {
+      teardown() {
         return Promise.try(() => {
           return teardown()
         }).finally(() => {
           ReactDOM.unmountComponentAtNode(container)
         })
-      }
+      },
     }
   }
 }

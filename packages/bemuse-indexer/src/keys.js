@@ -1,4 +1,4 @@
-export function getKeys (chart) {
+export function getKeys(chart) {
   var objects = chart.objects.all()
   var stat = {}
   for (var i = 0; i < objects.length; i++) {
@@ -9,7 +9,7 @@ export function getKeys (chart) {
     if (channel > 29) continue
     stat[channel] = (stat[channel] || 0) + 1
   }
-  var channels = Object.keys(stat).map(function (ch) {
+  var channels = Object.keys(stat).map(function(ch) {
     return +ch
   })
   if (channels.length === 0) return 'empty'
@@ -18,7 +18,7 @@ export function getKeys (chart) {
   }
   return stat[18] || stat[19] ? '7K' : '5K'
 
-  function isSecondPlayer (ch) {
+  function isSecondPlayer(ch) {
     return ch >= 20 && ch <= 29
   }
 }

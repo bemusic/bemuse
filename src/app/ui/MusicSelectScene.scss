@@ -1,4 +1,4 @@
-@import "~bemuse/ui/common";
+@import '~bemuse/ui/common';
 
 .MusicSelectScene {
   @include main-bg;
@@ -42,7 +42,8 @@
 
   &のsearch {
     position: absolute;
-    top: 50%; right: 4rem;
+    top: 50%;
+    right: 4rem;
     transform: translateY(-50%);
     width: 8em;
     font: 0.4em $ui-font;
@@ -66,7 +67,10 @@
   .MusicInfo {
     @include scrolling-y;
     position: absolute;
-    top: 0; right: 4rem; bottom: 0; left: calc(50vw + 1rem);
+    top: 0;
+    right: 4rem;
+    bottom: 0;
+    left: calc(50vw + 1rem);
     padding-top: 10rem;
     padding-bottom: 3rem;
   }
@@ -103,5 +107,4 @@
     width: 640px;
     max-width: 95vw;
   }
-
 }

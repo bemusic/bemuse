@@ -3,13 +3,13 @@ import { given, shouldEqual, withReducer } from 'circumstance'
 
 const { dispatch, initialState } = withReducer(ReduxState.reducer)
 
-describe('ReduxState', function () {
-  describe('integration test', function () {
+describe('ReduxState', function() {
+  describe('integration test', function() {
     const givenLoadedCollection = given(initialState)
       .and(
         dispatch({
           type: ReduxState.COLLECTION_LOADING_BEGAN,
-          url: '/music'
+          url: '/music',
         })
       )
       .and(
@@ -17,8 +17,8 @@ describe('ReduxState', function () {
           type: ReduxState.OPTIONS_LOADED_FROM_STORAGE,
           options: {
             'player.P1.mode': 'BM',
-            'player.P1.scratch': 'left'
-          }
+            'player.P1.scratch': 'left',
+          },
         })
       )
       .and(
@@ -34,19 +34,19 @@ describe('ReduxState', function () {
                   {
                     keys: '7K',
                     file: 'exargon_7another.bms',
-                    info: { level: 12 }
+                    info: { level: 12 },
                   },
                   {
                     keys: '7K',
                     file: 'exargon_7hyper.bms',
-                    info: { level: 10 }
+                    info: { level: 10 },
                   },
                   {
                     keys: '7K',
                     file: 'exargon_7normal.bms',
-                    info: { level: 8 }
-                  }
-                ]
+                    info: { level: 8 },
+                  },
+                ],
               },
               {
                 title: 'Anhedonia',
@@ -55,14 +55,14 @@ describe('ReduxState', function () {
                   {
                     keys: '7K',
                     file: '01_anhedonia_n.bms',
-                    info: { level: 6 }
+                    info: { level: 6 },
                   },
                   {
                     keys: '7K',
                     file: '00_anhedonia_7b.bms',
-                    info: { level: 1 }
-                  }
-                ]
+                    info: { level: 1 },
+                  },
+                ],
               },
               {
                 title: 'Blooming',
@@ -71,17 +71,17 @@ describe('ReduxState', function () {
                   {
                     keys: '7K',
                     file: 'Trish_Blooming_7key_Another.bms',
-                    info: { level: 11 }
+                    info: { level: 11 },
                   },
                   {
                     keys: '7K',
                     file: 'Trish_Blooming_7key_Feeling.bms',
-                    info: { level: 13 }
-                  }
-                ]
-              }
-            ]
-          }
+                    info: { level: 13 },
+                  },
+                ],
+              },
+            ],
+          },
         })
       )
     it('should intially selected easiest song and chart', () =>

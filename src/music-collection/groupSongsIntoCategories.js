@@ -9,15 +9,15 @@ const grouping = [
     criteria: song =>
       song.added && Date.now() - Date.parse(song.added) < 60 * 86400000,
     sort: song => song.added,
-    reverse: true
+    reverse: true,
   },
-  { title: '☆', criteria: () => true }
+  { title: '☆', criteria: () => true },
 ]
 
-export function groupSongsIntoCategories (songs) {
+export function groupSongsIntoCategories(songs) {
   let groups = grouping.map(group => ({
     input: group,
-    output: { title: group.title, songs: [] }
+    output: { title: group.title, songs: [] },
   }))
   for (let song of songs) {
     for (let { input, output } of groups) {

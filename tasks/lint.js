@@ -5,7 +5,7 @@ import eslint from 'gulp-eslint'
 import eslintUtil from 'gulp-eslint/util'
 import through2 from 'through2'
 
-gulp.task('lint', function () {
+gulp.task('lint', function() {
   return gulp
     .src(javascripts)
     .pipe(eslint())
@@ -13,10 +13,10 @@ gulp.task('lint', function () {
     .pipe(eslintFailOnError())
 })
 
-function eslintFailOnError () {
+function eslintFailOnError() {
   let error = false
   return through2.obj(
-    function (file, enc, callback) {
+    function(file, enc, callback) {
       if (
         file.eslint &&
         file.eslint.messages &&
@@ -24,12 +24,12 @@ function eslintFailOnError () {
       ) {
         error = new gutil.PluginError('tasks/lint', {
           name: 'ESLintError',
-          message: 'ESLint Complained!!'
+          message: 'ESLint Complained!!',
         })
       }
       callback(null, file)
     },
-    function (callback) {
+    function(callback) {
       if (error) {
         callback(error)
       } else {

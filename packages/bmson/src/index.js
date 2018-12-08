@@ -88,7 +88,7 @@ import * as utils from './utils'
  * Returns a BMS.SongInfo corresponding to this BMS file.
  * @param {Bmson} bmson
  */
-export function songInfoForBmson (bmson) {
+export function songInfoForBmson(bmson) {
   const bmsonInfo = bmson.info
   let info = {}
   if (bmsonInfo.title) info.title = bmsonInfo.title
@@ -99,7 +99,7 @@ export function songInfoForBmson (bmson) {
   if (bmsonInfo.subartists) info.subartists = bmsonInfo.subartists
   return new BMS.SongInfo(info)
 
-  function getSubtitles () {
+  function getSubtitles() {
     if (!bmson.version) return ['Warning: legacy bmson']
     let subtitles = []
     if (bmsonInfo.chart_name && typeof bmsonInfo.chart_name === 'string') {
@@ -116,7 +116,7 @@ export function songInfoForBmson (bmson) {
  * Returns the barlines as an array of beats.
  * @param {Bmson} bmson
  */
-export function barLinesForBmson (bmson) {
+export function barLinesForBmson(bmson) {
   if (!bmson.version) return legacy.barLinesForBmson(bmson)
   let beatForPulse = beatForPulseForBmson(bmson)
   let lines = bmson.lines
@@ -131,7 +131,7 @@ export function barLinesForBmson (bmson) {
  * in order to generate the timing data represented by the `bmson` object.
  * @param {Bmson} bmson
  */
-export function timingInfoForBmson (bmson) {
+export function timingInfoForBmson(bmson) {
   if (!bmson.version) return legacy.timingInfoForBmson(bmson)
   let beatForPulse = beatForPulseForBmson(bmson)
   return {
@@ -140,14 +140,14 @@ export function timingInfoForBmson (bmson) {
       ...(bmson.bpm_events || []).map(({ y, bpm }) => ({
         type: 'bpm',
         beat: beatForPulse(y),
-        bpm: bpm
+        bpm: bpm,
       })),
       ...(bmson.stop_events || []).map(({ y, duration }) => ({
         type: 'stop',
         beat: beatForPulse(y),
-        stopBeats: beatForPulse(Math.floor(duration))
-      }))
-    ]
+        stopBeats: beatForPulse(Math.floor(duration)),
+      })),
+    ],
   }
 }
 
@@ -155,7 +155,7 @@ export function timingInfoForBmson (bmson) {
  * Returns the timing data represented by the `bmson` object.
  * @param {Bmson} bmson
  */
-function timingForBmson (bmson) {
+function timingForBmson(bmson) {
   let { initialBPM, actions } = timingInfoForBmson(bmson)
   return new BMS.Timing(initialBPM, actions)
 }
@@ -164,7 +164,7 @@ function timingForBmson (bmson) {
  * Returns the musical score (comprised of BMS.Notes and BMS.Keysounds).
  * @param {Bmson} bmson
  */
-export function musicalScoreForBmson (bmson) {
+export function musicalScoreForBmson(bmson) {
   let timing = timingForBmson(bmson)
   let { notes, keysounds } = notesDataAndKeysoundsDataForBmsonAndTiming(
     bmson,
@@ -183,15 +183,15 @@ export function musicalScoreForBmson (bmson) {
      * A {BMS.Keysounds} representing mapping between keysound in the
      * `notes` field to the actual keysound file name.
      */
-    keysounds: new BMS.Keysounds(keysounds)
+    keysounds: new BMS.Keysounds(keysounds),
   }
 }
 
-function soundChannelsForBmson (bmson) {
+function soundChannelsForBmson(bmson) {
   return bmson.version ? bmson.sound_channels : bmson.soundChannel
 }
 
-function notesDataAndKeysoundsDataForBmsonAndTiming (bmson, timing) {
+function notesDataAndKeysoundsDataForBmsonAndTiming(bmson, timing) {
   let nextKeysoundNumber = 1
   let beatForPulse = beatForPulseForBmson(bmson)
   let notes = []
@@ -203,7 +203,7 @@ function notesDataAndKeysoundsDataForBmsonAndTiming (bmson, timing) {
       let keysoundNumber = nextKeysoundNumber++
       let keysoundId = _.padStart('' + keysoundNumber, 4, '0')
       let slices = utils.slicesForNotesAndTiming(soundChannelNotes, timing, {
-        beatForPulse: beatForPulse
+        beatForPulse: beatForPulse,
       })
 
       keysounds[keysoundId] = name
@@ -213,7 +213,7 @@ function notesDataAndKeysoundsDataForBmsonAndTiming (bmson, timing) {
           column: getColumn(x),
           beat: beatForPulse(y),
           keysound: keysoundId,
-          endBeat: undefined
+          endBeat: undefined,
         }
         if (l > 0) {
           note.endBeat = beatForPulse(y + l)
@@ -231,13 +231,13 @@ function notesDataAndKeysoundsDataForBmsonAndTiming (bmson, timing) {
 
 export { _slicesForNotesAndTiming } from './legacy'
 
-export function beatForPulseForBmson (bmson) {
+export function beatForPulseForBmson(bmson) {
   if (!bmson.version) return legacy.beatForLoc
   const resolution = (bmson.info && bmson.info.resolution) || 240
   return y => y / resolution
 }
 
-function getColumn (x) {
+function getColumn(x) {
   switch (x) {
     case 1:
       return '1'
@@ -263,7 +263,7 @@ function getColumn (x) {
  * Checks if there is a scratch in a bmson file
  * @param {Bmson} bmson
  */
-export function hasScratch (bmson) {
+export function hasScratch(bmson) {
   const soundChannels = soundChannelsForBmson(bmson)
   if (soundChannels) {
     for (let { notes } of soundChannels) {
@@ -279,7 +279,7 @@ export function hasScratch (bmson) {
  * Checks the key mode for a bmson file
  * @param {Bmson} bmson
  */
-export function keysForBmson (bmson) {
+export function keysForBmson(bmson) {
   const soundChannels = soundChannelsForBmson(bmson)
   let hasKeys = false
   let hasSecondPlayer = false

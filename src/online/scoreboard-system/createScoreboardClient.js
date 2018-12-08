@@ -4,17 +4,17 @@ import invariant from 'invariant'
 
 import * as authenticationFlow from './authenticationFlow'
 
-export default function createScoreboardClient ({
+export default function createScoreboardClient({
   server,
   auth,
   log = (format, ...args) =>
-    console.log('[ScoreboardClient] ' + format, ...args)
+    console.log('[ScoreboardClient] ' + format, ...args),
 }) {
   const client = axios.create({
-    baseURL: server
+    baseURL: server,
   })
 
-  function userSignUp (username, email, password, playerName) {
+  function userSignUp(username, email, password, playerName) {
     return new Promise((resolve, reject) => {
       log('Signing up with Auth0')
       auth.signup(
@@ -24,10 +24,10 @@ export default function createScoreboardClient ({
           username: username,
           password: password,
           userMetadata: {
-            playerName: playerName
-          }
+            playerName: playerName,
+          },
         },
-        function (err) {
+        function(err) {
           if (err) {
             log('Auth0 signup error', err)
             return reject(coerceAuth0ErrorToErrorObject(err))
@@ -38,9 +38,9 @@ export default function createScoreboardClient ({
               realm: 'Username-Password-Authentication',
               username: username,
               password: password,
-              scope: 'openid email profile'
+              scope: 'openid email profile',
             },
-            function (err, authResult) {
+            function(err, authResult) {
               if (err) {
                 log('Auth0 login error', err)
                 return reject(coerceAuth0ErrorToErrorObject(err))
@@ -54,13 +54,13 @@ export default function createScoreboardClient ({
     })
   }
 
-  function graphql ({ query, variables }) {
+  function graphql({ query, variables }) {
     return client
       .post('graphql', { query, variables })
       .then(response => response.data)
   }
 
-  function usernamePasswordLogin (playerId, password) {
+  function usernamePasswordLogin(playerId, password) {
     return new Promise((resolve, reject) => {
       log('Auth0 log in')
       auth.client.login(
@@ -68,9 +68,9 @@ export default function createScoreboardClient ({
           realm: 'Username-Password-Authentication',
           username: playerId,
           password: password,
-          scope: 'openid email profile'
+          scope: 'openid email profile',
         },
-        function (err, authResult) {
+        function(err, authResult) {
           if (err) {
             log('Auth0 login error', err)
             return reject(coerceAuth0ErrorToErrorObject(err))
@@ -82,7 +82,7 @@ export default function createScoreboardClient ({
     })
   }
 
-  function checkPlayerNameAvailability (playerName) {
+  function checkPlayerNameAvailability(playerName) {
     return Promise.resolve(
       graphql({
         query: `
@@ -93,8 +93,8 @@ export default function createScoreboardClient ({
           }
         `,
         variables: {
-          name: playerName
-        }
+          name: playerName,
+        },
       }).then(result => {
         log('checkPlayerNameAvailability response', result)
         if (result.data.player && result.data.player.linked) {
@@ -108,7 +108,7 @@ export default function createScoreboardClient ({
     )
   }
 
-  function resolvePlayerId (playerName) {
+  function resolvePlayerId(playerName) {
     return Promise.resolve(
       graphql({
         query: `
@@ -119,8 +119,8 @@ export default function createScoreboardClient ({
           }
         `,
         variables: {
-          name: playerName
-        }
+          name: playerName,
+        },
       }).then(result => {
         if (result.data.player === null) {
           return { error: 'Player not found...' }
@@ -131,7 +131,7 @@ export default function createScoreboardClient ({
     )
   }
 
-  function reservePlayerId (playerName) {
+  function reservePlayerId(playerName) {
     return Promise.resolve(
       graphql({
         query: `
@@ -142,8 +142,8 @@ export default function createScoreboardClient ({
           }
         `,
         variables: {
-          name: playerName
-        }
+          name: playerName,
+        },
       }).then(result => {
         const playerId = result.data.registerPlayer.id
         log('reservePlayerId response', result, 'playerId', playerId)
@@ -152,7 +152,7 @@ export default function createScoreboardClient ({
     )
   }
 
-  function ensureLink (idToken) {
+  function ensureLink(idToken) {
     return Promise.resolve(
       graphql({
         query: `
@@ -164,8 +164,8 @@ export default function createScoreboardClient ({
           }
         `,
         variables: {
-          jwt: idToken
-        }
+          jwt: idToken,
+        },
       }).then(result => {
         const playerId = result.data.linkPlayer.id
         const playerName = result.data.linkPlayer.name
@@ -175,7 +175,7 @@ export default function createScoreboardClient ({
     )
   }
 
-  function resolvePlayerTokenFromIdToken (idToken) {
+  function resolvePlayerTokenFromIdToken(idToken) {
     return Promise.resolve(
       graphql({
         query: `
@@ -184,8 +184,8 @@ export default function createScoreboardClient ({
           }
         `,
         variables: {
-          jwt: idToken
-        }
+          jwt: idToken,
+        },
       }).then(result => {
         return result.data.authenticatePlayer.playerToken
       })
@@ -210,12 +210,12 @@ export default function createScoreboardClient ({
   }`
 
   const scoreboardClient = {
-    signUp ({ username, password, email }) {
+    signUp({ username, password, email }) {
       invariant(typeof username === 'string', 'username must be a string')
       invariant(typeof password === 'string', 'password must be a string')
       invariant(typeof email === 'string', 'email must be a string')
-      return co(function * () {
-        const { idToken } = yield * authenticationFlow.signUp(
+      return co(function*() {
+        const { idToken } = yield* authenticationFlow.signUp(
           username,
           email,
           password,
@@ -224,30 +224,30 @@ export default function createScoreboardClient ({
             userSignUp,
             checkPlayerNameAvailability,
             reservePlayerId,
-            ensureLink
+            ensureLink,
           }
         )
         return { playerToken: yield resolvePlayerTokenFromIdToken(idToken) }
       })
     },
-    loginByUsernamePassword ({ username, password }) {
+    loginByUsernamePassword({ username, password }) {
       invariant(typeof username === 'string', 'username must be a string')
       invariant(typeof password === 'string', 'password must be a string')
-      return co(function * () {
-        const { idToken } = yield * authenticationFlow.loginByUsernamePassword(
+      return co(function*() {
+        const { idToken } = yield* authenticationFlow.loginByUsernamePassword(
           username,
           password,
           {
             log: message => log('[loginByUsernamePassword]', message),
             usernamePasswordLogin,
             resolvePlayerId,
-            ensureLink
+            ensureLink,
           }
         )
         return { playerToken: yield resolvePlayerTokenFromIdToken(idToken) }
       })
     },
-    submitScore ({ playerToken, md5, playMode, input }) {
+    submitScore({ playerToken, md5, playMode, input }) {
       return graphql({
         query: `
           mutation submitScore ($playerToken: String!, $md5: String!, $playMode: String!, $input: RegisterScoreInput!) {
@@ -260,11 +260,11 @@ export default function createScoreboardClient ({
           playerToken,
           md5,
           playMode,
-          input
-        }
+          input,
+        },
       })
     },
-    retrieveScoreboard ({ md5, playMode }) {
+    retrieveScoreboard({ md5, playMode }) {
       return graphql({
         query: `
           query retrieveScoreboard ($md5: String!, $playMode: String!) {
@@ -277,11 +277,11 @@ export default function createScoreboardClient ({
         `,
         variables: {
           md5,
-          playMode
-        }
+          playMode,
+        },
       })
     },
-    retrieveRecord ({ playerToken, md5, playMode }) {
+    retrieveRecord({ playerToken, md5, playMode }) {
       return graphql({
         query: `
           query retrieveRecord ($md5: String!, $playMode: String!, $playerToken: String!) {
@@ -295,11 +295,11 @@ export default function createScoreboardClient ({
         variables: {
           md5,
           playMode,
-          playerToken
-        }
+          playerToken,
+        },
       })
     },
-    retrieveRankingEntries ({ playerToken, md5s }) {
+    retrieveRankingEntries({ playerToken, md5s }) {
       return graphql({
         query: `
           query retrieveRecord ($md5s: [String], $playerToken: String!) {
@@ -314,11 +314,11 @@ export default function createScoreboardClient ({
         `,
         variables: {
           md5s,
-          playerToken
-        }
+          playerToken,
+        },
       })
     },
-    renewPlayerToken ({ playerToken }) {
+    renewPlayerToken({ playerToken }) {
       return graphql({
         query: `
           mutation renewPlayerToken ($playerToken: String!) {
@@ -327,15 +327,15 @@ export default function createScoreboardClient ({
             }
           }
         `,
-        variables: { playerToken }
+        variables: { playerToken },
       }).then(result => result.data.renewPlayerToken.playerToken)
-    }
+    },
   }
 
   return scoreboardClient
 }
 
-function coerceAuth0ErrorToErrorObject (err) {
+function coerceAuth0ErrorToErrorObject(err) {
   return new Error(
     `Auth0 Error: ${err.statusCode} ${err.description} [${err.code}]`
   )

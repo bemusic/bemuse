@@ -12,6 +12,6 @@ const OptionsPlayground = () => (
   </ModalPopup>
 )
 
-export function main () {
+export function main() {
   ReactDOM.render(<OptionsPlayground />, MAIN)
 }

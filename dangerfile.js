@@ -32,7 +32,7 @@ report.results.forEach(result => {
 // Readme
 const readme = fs.readFileSync('README.md', 'utf8')
 const formattedReadme = prettier.format(toc.insert(readme), {
-  parser: 'markdown'
+  parser: 'markdown',
 })
 if (formattedReadme !== readme) {
   fail(

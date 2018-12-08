@@ -15,11 +15,11 @@ let properties = [
   { name: 'alpha', default: '1', apply: (obj, v) => (obj.alpha = v) },
   { name: 'width', apply: (obj, v) => (obj.width = v) },
   { name: 'height', apply: (obj, v) => (obj.height = v) },
-  { name: 'visible', apply: (obj, v) => (obj.visible = v) }
+  { name: 'visible', apply: (obj, v) => (obj.visible = v) },
 ]
 
 export class DisplayObject extends SkinNode {
-  compile (compiler, $el) {
+  compile(compiler, $el) {
     this._animation = Animation.compile(compiler, $el)
     this._bindings = []
     for (let property of properties) {
@@ -29,13 +29,13 @@ export class DisplayObject extends SkinNode {
       let getter = this._animation.prop(property.name, expression)
       this._bindings.push({
         getter: getter,
-        apply: property.apply
+        apply: property.apply,
       })
     }
     this.blendMode = parseBlendMode($el.attr('blend') || 'normal')
     this.ref = $el.attr('ref') || null
   }
-  instantiate (context, subject) {
+  instantiate(context, subject) {
     var object = subject.object
     var bindings = []
     var onDestroy = null
@@ -50,12 +50,12 @@ export class DisplayObject extends SkinNode {
     }
     return new Instance({
       bindings: bindings,
-      onDestroy: onDestroy
+      onDestroy: onDestroy,
     })
   }
 }
 
-function parseBlendMode (text) {
+function parseBlendMode(text) {
   if (text === 'normal') return PIXI.BLEND_MODES.NORMAL
   if (text === 'screen') return PIXI.BLEND_MODES.SCREEN
   throw new Error('Invalid blend mode: ' + text)

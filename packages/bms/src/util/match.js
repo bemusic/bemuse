@@ -1,7 +1,7 @@
-export function match (text) {
+export function match(text) {
   var matched = false
   return {
-    when: function (pattern, callback) {
+    when: function(pattern, callback) {
       if (matched) return this
       var match = text.match(pattern)
       if (match) {
@@ -10,9 +10,9 @@ export function match (text) {
       }
       return this
     },
-    else: function (callback) {
+    else: function(callback) {
       if (matched) return this
       callback()
-    }
+    },
   }
 }

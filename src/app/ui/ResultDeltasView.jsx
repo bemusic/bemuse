@@ -21,10 +21,10 @@ const group = deltas =>
 
 export default class ResultDeltasView extends React.Component {
   static propTypes = {
-    deltas: PropTypes.array
+    deltas: PropTypes.array,
   }
 
-  render () {
+  render() {
     const deltas = this.props.deltas
     const nonMissDeltas = getNonMissedDeltas(deltas)
     const offDeltas = deltas.filter(delta => timegate(1) <= Math.abs(delta))
@@ -33,12 +33,12 @@ export default class ResultDeltasView extends React.Component {
     const groups = group(deltas)
     const stats = _.range(-20, 20).map(bucket => ({
       bucket,
-      count: groups[bucket] || 0
+      count: groups[bucket] || 0,
     }))
     const max = _(stats)
       .map('count')
       .max()
-    const height = value => Math.ceil(value / Math.max(max, 1) * 128)
+    const height = value => Math.ceil((value / Math.max(max, 1)) * 128)
     return (
       <div className='ResultDeltasView'>
         <Panel title='Accuracy Data'>
@@ -63,7 +63,7 @@ export default class ResultDeltasView extends React.Component {
               <tbody>
                 {this.renderRow('Mean:', mean(nonMissDeltas))}
                 {this.renderRow('S.D:', Math.sqrt(variance(nonMissDeltas)), {
-                  showEarlyLate: false
+                  showEarlyLate: false,
                 })}
                 {this.renderRow('Median:', median(nonMissDeltas))}
               </tbody>
@@ -74,14 +74,18 @@ export default class ResultDeltasView extends React.Component {
     )
   }
 
-  renderRow (text, data, options = {}) {
+  renderRow(text, data, options = {}) {
     return (
       <tr>
         <th>{text}</th>
         <td className='is-number'>{ms(data)}</td>
         <td>
           {options.showEarlyLate !== false
-            ? data > 0 ? '(late)' : data < 0 ? '(early)' : ''
+            ? data > 0
+              ? '(late)'
+              : data < 0
+              ? '(early)'
+              : ''
             : null}
         </td>
       </tr>

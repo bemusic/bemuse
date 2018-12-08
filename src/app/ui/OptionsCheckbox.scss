@@ -1,5 +1,4 @@
-
-@import "~bemuse/ui/common";
+@import '~bemuse/ui/common';
 
 .OptionsCheckbox {
   > label > input {
@@ -18,14 +17,15 @@
       position: absolute;
       display: block;
       transform: translate(-50%, -50%) rotate(90deg);
-      top: 50%; left: 50%;
+      top: 50%;
+      left: 50%;
       content: '✓';
-      color: #B9EDFF;
+      color: #b9edff;
       opacity: 0;
       transform: 0.138s opacity ease-out;
     }
     &:checked {
-      border-color: #B9EDFF;
+      border-color: #b9edff;
       border-width: 2px;
       transform: rotate(-90deg);
       &::after {

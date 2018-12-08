@@ -7,10 +7,10 @@ import DisplayObject from './concerns/display-object'
 import { parseFrame } from './lib/utils'
 
 export class Mask {
-  constructor (frame) {
+  constructor(frame) {
     this._frame = frame
   }
-  instantiate (context, subject) {
+  instantiate(context, subject) {
     let mask = new PIXI.Graphics()
     mask.beginFill()
     mask.drawShape(this._frame)
@@ -19,19 +19,19 @@ export class Mask {
     return new Instance({
       context: context,
       object: mask,
-      parent: subject.object
+      parent: subject.object,
     })
   }
 }
 
 export class GroupNode extends SkinNode {
-  compile (compiler, $el) {
+  compile(compiler, $el) {
     this.children = compiler.compileChildren($el)
     this.display = DisplayObject.compile(compiler, $el)
     let maskFrame = parseFrame($el.attr('mask') || '')
     if (maskFrame) this.mask = new Mask(maskFrame)
   }
-  instantiate (context, container) {
+  instantiate(context, container) {
     let object = new PIXI.Container()
     let concerns = [this.display]
     if (this.mask) {
@@ -42,7 +42,7 @@ export class GroupNode extends SkinNode {
       object: object,
       parent: container,
       concerns: concerns,
-      children: this.children
+      children: this.children,
     })
   }
 }

@@ -32,7 +32,7 @@ function FloatingMobileMenu({ children, visible }) {
 }
 FloatingMobileMenu.propTypes = {
   children: PropTypes.node,
-  visible: PropTypes.bool
+  visible: PropTypes.bool,
 }
 
 FloatingMobileMenu.Separator = styled('hr')`

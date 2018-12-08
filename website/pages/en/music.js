@@ -123,7 +123,7 @@ const content = `
 `
 
 class Music extends React.Component {
-  render () {
+  render() {
     return (
       <div className='docMainWrapper wrapper'>
         <Container className='mainContainer documentContainer postContainer'>

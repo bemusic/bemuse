@@ -5,7 +5,7 @@ import { render } from 'react-dom'
 
 import CollectionViewer from './CollectionViewer'
 
-export function main () {
+export function main() {
   MusicPreviewer.preload()
   render(<CollectionViewer />, MAIN)
 }

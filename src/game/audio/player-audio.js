@@ -3,22 +3,22 @@ import _ from 'lodash'
 import WaveFactory from './wave-factory'
 import { isBad } from '../judgments'
 
-function autoplayer (array) {
+function autoplayer(array) {
   array = _.sortBy(array, 'time')
   let i = 0
   return {
-    next (time) {
+    next(time) {
       let out = []
       for (; i < array.length && time >= array[i].time; i++) {
         out.push(array[i])
       }
       return out
-    }
+    },
   }
 }
 
 export class PlayerAudio {
-  constructor ({ player, samples, master, waveFactory, volume }) {
+  constructor({ player, samples, master, waveFactory, volume }) {
     let notechart = player.notechart
     this._waveFactory =
       waveFactory ||
@@ -28,17 +28,17 @@ export class PlayerAudio {
     this._played = new Map()
     this._autosound = !!player.options.autosound
   }
-  update (time, state) {
+  update(time, state) {
     this._playAutokeysounds(time)
     this._playAutosounds(time, state)
     this._handleSoundNotifications((state && state.notifications.sounds) || [])
   }
-  _playAutokeysounds (time) {
+  _playAutokeysounds(time) {
     for (let auto of this._autos.next(time + 1 / 30)) {
       this._waveFactory.playAuto(auto, auto.time - time)
     }
   }
-  _playAutosounds (time, state) {
+  _playAutosounds(time, state) {
     let autosounds = this._notes.next(time + 1 / 30)
     let poor = state && state.stats.poor
     let shouldPlay = this._autosound && !poor
@@ -47,7 +47,7 @@ export class PlayerAudio {
       this._hitNote(note, note.time - time)
     }
   }
-  _handleSoundNotifications (soundNotifications) {
+  _handleSoundNotifications(soundNotifications) {
     for (let notification of soundNotifications) {
       let { type, note } = notification
       if (type === 'hit') {
@@ -59,7 +59,7 @@ export class PlayerAudio {
       }
     }
   }
-  _hitNote (note, delay, judgment) {
+  _hitNote(note, delay, judgment) {
     let instance = this._played.get(note)
     if (!instance) {
       instance = this._waveFactory.playNote(note, delay)
@@ -71,7 +71,7 @@ export class PlayerAudio {
       }
     }
   }
-  _breakNote (note) {
+  _breakNote(note) {
     let instance = this._played.get(note)
     if (instance) {
       instance.stop()

@@ -1,6 +1,4 @@
-
 .Boot {
-
   position: fixed;
   top: 50%;
   left: 50%;
@@ -36,11 +34,17 @@
     background: #8b8685;
     height: 5px;
     &.is-indeterminate {
-      background: linear-gradient(to bottom right,
-        $a 0%, $a 25%,
-        $b 25%, $b 50%,
-        $a 50%, $a 75%,
-        $b 75%, $b 100%);
+      background: linear-gradient(
+        to bottom right,
+        $a 0%,
+        $a 25%,
+        $b 25%,
+        $b 50%,
+        $a 50%,
+        $a 75%,
+        $b 75%,
+        $b 100%
+      );
       background-size: 7px 7px;
       animation: 1s Bootのindeterminate linear infinite;
     }
@@ -60,10 +64,13 @@
     font-weight: bold;
     color: #656463;
   }
-
 }
 
 @keyframes Bootのindeterminate {
-  from { background-position: 0 0; }
-  to { background-position: 7px 0; }
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 7px 0;
+  }
 }

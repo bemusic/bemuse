@@ -1,5 +1,5 @@
 'use strict'
 
 module.exports = {
-  resolve: require('./config/webpackResolve')
+  resolve: require('./config/webpackResolve'),
 }

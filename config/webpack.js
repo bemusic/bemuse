@@ -7,40 +7,40 @@ import path from './path'
 import webpack from 'webpack'
 import webpackResolve from './webpackResolve'
 
-function generateBaseConfig () {
+function generateBaseConfig() {
   let config = {
     mode: Env.production() ? 'production' : 'development',
     context: path('src'),
     resolve: webpackResolve,
     resolveLoader: {
       alias: {
-        bemuse: path('src')
-      }
+        bemuse: path('src'),
+      },
     },
     devServer: {
       contentBase: false,
       publicPath: '/build/',
-      stats: { colors: true, chunkModules: false }
+      stats: { colors: true, chunkModules: false },
     },
     module: {
       strictExportPresence: true,
       rules: generateLoadersConfig(),
-      noParse: [/sinon\.js/]
+      noParse: [/sinon\.js/],
     },
     plugins: [
       new CompileProgressPlugin(),
       new LoadProgressPlugin(),
       new webpack.ProvidePlugin({
-        BemuseLogger: 'bemuse/logger'
+        BemuseLogger: 'bemuse/logger',
       }),
       // Workaround A for `file-loader` (TODO: remove this when possible):
       // https://github.com/webpack/webpack/issues/6064
       new webpack.LoaderOptionsPlugin({
         options: {
-          context: process.cwd()
-        }
-      })
-    ]
+          context: process.cwd(),
+        },
+      }),
+    ],
   }
 
   if (Env.sourceMapsEnabled() && Env.development()) {
@@ -54,7 +54,7 @@ function generateBaseConfig () {
   return config
 }
 
-function generateLoadersConfig () {
+function generateLoadersConfig() {
   return [
     {
       test: /\.[jt]sx?$/,
@@ -64,23 +64,23 @@ function generateLoadersConfig () {
         options: {
           transpileOnly: true,
           compilerOptions: {
-            module: 'es6'
-          }
-        }
-      }
+            module: 'es6',
+          },
+        },
+      },
     },
     ...(Env.coverageEnabled()
       ? [
-        {
-          test: /\.[jt]sx?$/,
-          include: [path('src')],
-          use: {
-            loader: 'istanbul-instrumenter-loader',
-            options: { esModules: true }
+          {
+            test: /\.[jt]sx?$/,
+            include: [path('src')],
+            use: {
+              loader: 'istanbul-instrumenter-loader',
+              options: { esModules: true },
+            },
+            enforce: 'post',
           },
-          enforce: 'post'
-        }
-      ]
+        ]
       : []),
     {
       test: /\.js$/,
@@ -89,22 +89,22 @@ function generateLoadersConfig () {
       use: {
         loader: 'transform-loader/cacheable',
         options: {
-          brfs: true
-        }
-      }
+          brfs: true,
+        },
+      },
     },
     {
       test: /\.worker\.js$/,
-      use: { loader: 'worker-loader' }
+      use: { loader: 'worker-loader' },
     },
     {
       test: /\.json$/,
       type: 'javascript/auto',
-      loader: 'json-loader'
+      loader: 'json-loader',
     },
     {
       test: /\.pegjs$/,
-      loader: 'pegjs-loader'
+      loader: 'pegjs-loader',
     },
     {
       test: /\.scss$/,
@@ -113,8 +113,8 @@ function generateLoadersConfig () {
         {
           loader: 'css-loader',
           options: {
-            importLoaders: 1
-          }
+            importLoaders: 1,
+          },
         },
         {
           loader: 'postcss-loader',
@@ -123,18 +123,18 @@ function generateLoadersConfig () {
             plugins: () => [
               require('postcss-flexbugs-fixes'),
               require('autoprefixer')({
-                flexbox: 'no-2009'
-              })
-            ]
-          }
+                flexbox: 'no-2009',
+              }),
+            ],
+          },
         },
         {
           loader: 'sass-loader',
           options: {
-            outputStyle: 'expanded'
-          }
-        }
-      ]
+            outputStyle: 'expanded',
+          },
+        },
+      ],
     },
     {
       test: /\.css$/,
@@ -143,8 +143,8 @@ function generateLoadersConfig () {
         {
           loader: 'css-loader',
           options: {
-            importLoaders: 1
-          }
+            importLoaders: 1,
+          },
         },
         {
           loader: 'postcss-loader',
@@ -153,47 +153,47 @@ function generateLoadersConfig () {
             plugins: () => [
               require('postcss-flexbugs-fixes'),
               require('autoprefixer')({
-                flexbox: 'no-2009'
-              })
-            ]
-          }
-        }
-      ]
+                flexbox: 'no-2009',
+              }),
+            ],
+          },
+        },
+      ],
     },
     {
       test: /\.jade$/,
-      loader: 'jade-loader'
+      loader: 'jade-loader',
     },
     {
       test: /\.png$/,
       loader: 'url-loader',
       options: {
         limit: 100000,
-        mimetype: 'image/png'
-      }
+        mimetype: 'image/png',
+      },
     },
     {
       test: /\.jpg$/,
-      loader: 'file-loader'
+      loader: 'file-loader',
     },
     {
       test: /\.(?:mp3|mp4|ogg|m4a)$/,
-      loader: 'file-loader'
+      loader: 'file-loader',
     },
     {
       test: /\.(otf|eot|svg|ttf|woff|woff2)(?:$|\?)/,
       loader: 'url-loader',
       options: {
-        limit: 8192
-      }
-    }
+        limit: 8192,
+      },
+    },
   ]
 }
 
-function applyWebConfig (config) {
+function applyWebConfig(config) {
   Object.assign(config, {
     entry: {
-      boot: ['./boot']
+      boot: ['./boot'],
     },
     output: {
       path: path('dist', 'build'),
@@ -203,8 +203,8 @@ function applyWebConfig (config) {
       chunkFilename: '[name]-[chunkhash].js',
       devtoolModuleFilenameTemplate: 'file://[absolute-resource-path]',
       devtoolFallbackModuleFilenameTemplate:
-        'file://[absolute-resource-path]?[hash]'
-    }
+        'file://[absolute-resource-path]?[hash]',
+    },
   })
 
   if (Env.hotModeEnabled()) {
@@ -222,17 +222,17 @@ function applyWebConfig (config) {
   return config
 }
 
-function applyKarmaConfig (config) {
+function applyKarmaConfig(config) {
   config.devtool = 'cheap-inline-source-map'
   return config
 }
 
-function applyTestBedConfig (config) {
+function applyTestBedConfig(config) {
   config.entry = './test/testBed.entry.js'
   config.testBed = {
     configureExpressApp: (app, express) => {
       app.use('/src', express.static(path('src')))
-    }
+    },
   }
   return config
 }
@@ -254,9 +254,9 @@ export const generateTestBedConfig = flowRight(
 
 export default generateWebConfig()
 
-function CompileProgressPlugin () {
+function CompileProgressPlugin() {
   const gauge = new Gauge()
-  return new webpack.ProgressPlugin(function (percentage, message) {
+  return new webpack.ProgressPlugin(function(percentage, message) {
     if (percentage === 1) gauge.hide()
     else gauge.show(message, percentage)
   })

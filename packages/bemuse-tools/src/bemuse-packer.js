@@ -7,10 +7,10 @@ import Payload from './payload'
 let writeFile = Promise.promisify(fs.writeFile, fs)
 
 export class BemusePacker {
-  constructor () {
+  constructor() {
     this._refs = []
   }
-  pack (name, files) {
+  pack(name, files) {
     let max = 1474560
     let cur = null
     files = files.slice()
@@ -22,14 +22,14 @@ export class BemusePacker {
       cur.add(file)
     }
   }
-  ref (name) {
+  ref(name) {
     let ref = new Ref(name, this._refs.length)
     this._refs.push(ref)
     return ref
   }
-  write (folder) {
+  write(folder) {
     return co(
-      function * () {
+      function*() {
         let files = []
         let refs = []
         let nums = {}
@@ -56,7 +56,7 @@ export class BemusePacker {
       }.bind(this)
     )
   }
-  _writeBin (path, metadataBuffer, payload) {
+  _writeBin(path, metadataBuffer, payload) {
     let file = fs.createWriteStream(path)
     let size = Buffer.alloc(4)
     size.writeUInt32LE(metadataBuffer.length, 0)
@@ -71,13 +71,13 @@ export class BemusePacker {
 }
 
 export class Ref {
-  constructor (name, index) {
+  constructor(name, index) {
     this.name = name
     this.index = index
     this.size = 0
     this.files = []
   }
-  add (file) {
+  add(file) {
     this.files.push(file)
     this.size += file.size
   }

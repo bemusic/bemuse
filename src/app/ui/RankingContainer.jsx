@@ -6,25 +6,25 @@ import online from 'bemuse/online/instance'
 export default class RankingContainer extends React.Component {
   static propTypes = {
     chart: PropTypes.object,
-    playMode: PropTypes.any
+    playMode: PropTypes.any,
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       data: null,
       meta: {
         scoreboard: { status: 'loading' },
-        submission: { status: 'loading' }
-      }
+        submission: { status: 'loading' },
+      },
     }
   }
 
-  getParams (props) {
+  getParams(props) {
     let params = {}
     Object.assign(params, {
       md5: props.chart.md5,
-      playMode: props.playMode
+      playMode: props.playMode,
     })
     let result = props.result
     if (result) {
@@ -37,21 +37,21 @@ export default class RankingContainer extends React.Component {
           result['2'],
           result['3'],
           result['4'],
-          result.missed
+          result.missed,
         ],
-        log: result.log
+        log: result.log,
       })
     }
     return params
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.model = online.Ranking(this.getParams(this.props))
     this.unsubscribe = this.model.state川.onValue(this.onStoreTrigger)
     this.mounted = true
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (
       this.props.chart.md5 !== nextProps.chart.md5 ||
       this.props.playMode !== nextProps.playMode
@@ -62,7 +62,7 @@ export default class RankingContainer extends React.Component {
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.mounted = false
     if (this.unsubscribe) this.unsubscribe()
   }
@@ -71,15 +71,15 @@ export default class RankingContainer extends React.Component {
     if (this.mounted) this.setState(state)
   }
 
-  onReloadScoreboardRequest () {
+  onReloadScoreboardRequest() {
     this.model.reloadScoreboard()
   }
 
-  onResubmitScoreRequest () {
+  onResubmitScoreRequest() {
     this.model.resubmit()
   }
 
-  render () {
+  render() {
     return (
       <Ranking
         state={this.state}

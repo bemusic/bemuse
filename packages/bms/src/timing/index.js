@@ -24,7 +24,7 @@ export class Timing {
    * @param {number} initialBPM
    * @param {TimingAction[]} actions
    */
-  constructor (initialBPM, actions) {
+  constructor(initialBPM, actions) {
     var state = { bpm: initialBPM, beat: 0, seconds: 0 }
     var segments = []
     segments.push({
@@ -32,15 +32,15 @@ export class Timing {
       x: 0,
       dx: state.bpm / 60,
       bpm: state.bpm,
-      inclusive: true
+      inclusive: true,
     })
     actions = actions.slice()
-    actions.sort(function (a, b) {
+    actions.sort(function(a, b) {
       return a.beat - b.beat || precedence[a.type] - precedence[b.type]
     })
-    actions.forEach(function (action) {
+    actions.forEach(function(action) {
       var beat = action.beat
-      var seconds = state.seconds + (beat - state.beat) * 60 / state.bpm
+      var seconds = state.seconds + ((beat - state.beat) * 60) / state.bpm
       switch (action.type) {
         case 'bpm':
           state.bpm = action.bpm
@@ -49,7 +49,7 @@ export class Timing {
             x: beat,
             dx: state.bpm / 60,
             bpm: state.bpm,
-            inclusive: true
+            inclusive: true,
           })
           break
         case 'stop':
@@ -58,15 +58,15 @@ export class Timing {
             x: beat,
             dx: 0,
             bpm: state.bpm,
-            inclusive: true
+            inclusive: true,
           })
-          seconds += (action.stopBeats || 0) * 60 / state.bpm
+          seconds += ((action.stopBeats || 0) * 60) / state.bpm
           segments.push({
             t: seconds,
             x: beat,
             dx: state.bpm / 60,
             bpm: state.bpm,
-            inclusive: false
+            inclusive: false,
           })
           break
         default:
@@ -86,7 +86,7 @@ export class Timing {
    * Convert the given beat into seconds.
    * @param {number} beat
    */
-  beatToSeconds (beat) {
+  beatToSeconds(beat) {
     return this._speedcore.t(beat)
   }
 
@@ -94,7 +94,7 @@ export class Timing {
    * Convert the given second into beats.
    * @param {number} seconds
    */
-  secondsToBeat (seconds) {
+  secondsToBeat(seconds) {
     return this._speedcore.x(seconds)
   }
 
@@ -102,14 +102,14 @@ export class Timing {
    * Returns the BPM at the specified beat.
    * @param {number} beat
    */
-  bpmAtBeat (beat) {
+  bpmAtBeat(beat) {
     return this._speedcore.segmentAtX(beat).bpm
   }
 
   /**
    * Returns an array representing the beats where there are events.
    */
-  getEventBeats () {
+  getEventBeats() {
     return this._eventBeats
   }
 
@@ -117,10 +117,10 @@ export class Timing {
    * Creates a Timing instance from a BMSChart.
    * @param {BMSChart} chart
    */
-  static fromBMSChart (chart) {
+  static fromBMSChart(chart) {
     void BMSChart
     var actions = []
-    chart.objects.all().forEach(function (object) {
+    chart.objects.all().forEach(function(object) {
       var bpm
       var beat = chart.measureToBeat(object.measure, object.fraction)
       if (object.channel === '03') {

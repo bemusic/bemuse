@@ -8,15 +8,15 @@ class OptionsInputKey extends React.PureComponent {
     text: PropTypes.string,
     n: PropTypes.number,
     isEditing: PropTypes.bool,
-    onEdit: PropTypes.func
+    onEdit: PropTypes.func,
   }
 
-  render () {
+  render() {
     return (
       <div className='OptionsInputKey' data-n={this.props.n}>
         <div
           className={c('OptionsInputKeyのcontents', {
-            'is-editing': this.props.isEditing
+            'is-editing': this.props.isEditing,
           })}
           onClick={this.handleClick}
         >

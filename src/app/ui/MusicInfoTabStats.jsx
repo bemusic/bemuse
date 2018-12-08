@@ -13,10 +13,10 @@ class MusicInfoTabStats extends React.Component {
     chart: PropTypes.object,
     record: PropTypes.object,
     user: PropTypes.object,
-    loading: PropTypes.bool
+    loading: PropTypes.bool,
   }
 
-  render () {
+  render() {
     const chart = this.props.chart
     const record = this.props.record
     return (
@@ -31,8 +31,8 @@ class MusicInfoTabStats extends React.Component {
           <dd>{formatTime(chart.duration)}</dd>
           <dt>Play Count</dt>
           <dd>
-            {this.renderWhenNotLoading(
-              () => (record ? record.playCount : this.props.user ? '0' : '-')
+            {this.renderWhenNotLoading(() =>
+              record ? record.playCount : this.props.user ? '0' : '-'
             )}
           </dd>
         </dl>
@@ -44,22 +44,21 @@ class MusicInfoTabStats extends React.Component {
 
           <dt>Accuracy</dt>
           <dd>
-            {this.renderWhenNotLoading(
-              () => (record ? formattedAccuracyForRecord(record) : '-')
+            {this.renderWhenNotLoading(() =>
+              record ? formattedAccuracyForRecord(record) : '-'
             )}
           </dd>
 
           <dt>Max Combo</dt>
           <dd>
-            {this.renderWhenNotLoading(
-              () =>
-                record ? (
-                  <span>
-                    {record.combo} <small>/ {record.total}</small>
-                  </span>
-                ) : (
-                  '-'
-                )
+            {this.renderWhenNotLoading(() =>
+              record ? (
+                <span>
+                  {record.combo} <small>/ {record.total}</small>
+                </span>
+              ) : (
+                '-'
+              )
             )}
           </dd>
         </dl>
@@ -67,11 +66,11 @@ class MusicInfoTabStats extends React.Component {
     )
   }
 
-  renderWhenNotLoading (f) {
+  renderWhenNotLoading(f) {
     return this.props.loading ? <Icon name='spinner' spin /> : f()
   }
 
-  renderMessage () {
+  renderMessage() {
     if (!this.props.user) {
       return (
         <div className='MusicInfoTabStatsのmessage'>

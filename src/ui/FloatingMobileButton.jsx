@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { css } from 'emotion';
+import { css } from 'emotion'
 
-function FloatingMobileButton ({ children, buttonProps }) {
+function FloatingMobileButton({ children, buttonProps }) {
   return (
     <button
       className={css(`
@@ -33,7 +33,7 @@ function FloatingMobileButton ({ children, buttonProps }) {
 }
 FloatingMobileButton.propTypes = {
   children: PropTypes.node,
-  buttonProps: PropTypes.object
+  buttonProps: PropTypes.object,
 }
 
 export default FloatingMobileButton

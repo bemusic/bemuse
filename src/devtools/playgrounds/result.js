@@ -4,7 +4,7 @@ import ResultScene from 'bemuse/app/ui/ResultScene'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 import { Provider } from 'react-redux'
 
-export function main () {
+export function main() {
   let props = {
     result: {
       '1': 9999,
@@ -17,7 +17,7 @@ export function main () {
       accuracy: 0.97,
       totalCombo: 11106,
       grade: 'A',
-      deltas: [0, 0.01, 0.03, -0.03, -0.06]
+      deltas: [0, 0.01, 0.03, -0.03, -0.06],
     },
     chart: {
       info: {
@@ -26,14 +26,14 @@ export function main () {
         artist: 'iaht',
         subartists: ['obj.flicknote'],
         genre: 'Frantic Hardcore',
-        level: 17
+        level: 17,
       },
-      md5: '12345670123456789abcdef89abemuse'
+      md5: '12345670123456789abcdef89abemuse',
     },
     lr2Timegate: [20, 40],
     onExit: () => alert('Exit!'),
     onReplay: () => alert('Replay!'),
-    playMode: 'BM'
+    playMode: 'BM',
   }
   SCENE_MANAGER.display(
     <Provider store={configureStore()}>

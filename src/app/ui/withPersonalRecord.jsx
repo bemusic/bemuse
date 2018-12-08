@@ -18,7 +18,7 @@ const chartPropType = PropTypes.shape({
     init: PropTypes.number,
     max: PropTypes.number,
     median: PropTypes.number,
-    min: PropTypes.number
+    min: PropTypes.number,
   }),
   duration: PropTypes.number,
   file: PropTypes.string,
@@ -29,21 +29,21 @@ const chartPropType = PropTypes.shape({
     subtitles: PropTypes.arrayOf(PropTypes.string),
     subartists: PropTypes.arrayOf(PropTypes.string),
     difficulty: PropTypes.number,
-    level: PropTypes.number
+    level: PropTypes.number,
   }),
   keys: PropTypes.string,
   md5: PropTypes.string,
-  noteCount: PropTypes.number
+  noteCount: PropTypes.number,
 })
 
-export function withPersonalRecord (Component) {
+export function withPersonalRecord(Component) {
   const enhance = compose(
     legacyConnect({
       user: online.user川,
-      onlineRecords: online.records川
+      onlineRecords: online.records川,
     }),
     connect(state => ({
-      playMode: ReduxState.selectPlayMode(state)
+      playMode: ReduxState.selectPlayMode(state),
     }))
   )
 
@@ -51,16 +51,16 @@ export function withPersonalRecord (Component) {
     static propTypes = {
       onlineRecords: PropTypes.any,
       chart: chartPropType,
-      playMode: PropTypes.string
+      playMode: PropTypes.string,
     }
 
-    componentDidMount () {
+    componentDidMount() {
       online.seen(this.getLevel())
     }
-    componentDidUpdate () {
+    componentDidUpdate() {
       online.seen(this.getLevel())
     }
-    render () {
+    render() {
       const recordState = this.getRecordState()
       return (
         <Component
@@ -70,10 +70,10 @@ export function withPersonalRecord (Component) {
         />
       )
     }
-    getRecordState (data) {
+    getRecordState(data) {
       return DataStore.get(this.props.onlineRecords, id(this.getLevel()))
     }
-    getLevel () {
+    getLevel() {
       return { md5: this.props.chart.md5, playMode: this.props.playMode }
     }
   }

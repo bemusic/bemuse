@@ -19,7 +19,7 @@
   border-radius: 4px;
 }
 .mainContainer .wrapper .BrowserScreenshot > p::before {
-  content: "";
+  content: '';
   display: block;
   width: 12px;
   height: 12px;

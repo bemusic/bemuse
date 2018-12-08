@@ -5,7 +5,7 @@ import { compose, getContext, mapProps, withHandlers } from 'recompose'
 export const connectIO = handlers =>
   compose(
     getContext({
-      runIO: PropTypes.func
+      runIO: PropTypes.func,
     }),
     withHandlers(
       _.mapValues(handlers, handler => {
