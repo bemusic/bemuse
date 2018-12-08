@@ -107,7 +107,6 @@
     "minimatch": "^3.0.4",
     "mocha": "^5.2.0",
     "node-env": "^0.1.6",
-    "node-notifier": "^4.0.3",
     "node-sass": "^4.9.3",
     "nyc": "^11.9.0",
     "pegjs": "^0.10.0",
