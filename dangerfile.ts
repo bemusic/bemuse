@@ -19,7 +19,10 @@ const filesToCheck = danger.git.created_files.concat(danger.git.modified_files)
 
 // ESLint
 const cli = new CLIEngine({})
-const filesToLint = filesToCheck.filter(path => !cli.isPathIgnored(path))
+const eslintPattern = '*.{js,jsx,ts,tsx}'
+const filesToLint = filesToCheck
+  .filter(path => minimatch(path, eslintPattern, { matchBase: true }))
+  .filter(path => !cli.isPathIgnored(path))
 const report = cli.executeOnFiles(filesToLint)
 report.results.forEach(result => {
   const { filePath } = result
