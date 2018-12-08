@@ -68,7 +68,7 @@
     "connect": "^3.6.6",
     "cross-env": "^5.2.0",
     "css-loader": "^1.0.0",
-    "danger": "^4.4.8",
+    "danger": "^6.1.9",
     "dotenv": "^6.1.0",
     "eslint": "^5.7.0",
     "eslint-config-bemuse": "^4.0.2",
