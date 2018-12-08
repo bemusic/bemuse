@@ -1,7 +1,5 @@
 import './ChangelogPanel.scss'
 import React from 'react'
-import $ from 'jquery'
-import _ from 'lodash'
 import Panel from 'bemuse/ui/Panel'
 import Markdown from 'bemuse/ui/Markdown'
 
