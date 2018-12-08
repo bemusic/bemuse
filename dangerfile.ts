@@ -1,8 +1,8 @@
-const { danger, warn, fail, message } = require('danger')
-const { CLIEngine } = require('eslint')
-const fs = require('fs')
-const toc = require('markdown-toc')
-const prettier = require('prettier')
+import { danger, warn, fail, message } from 'danger'
+import { CLIEngine } from 'eslint'
+import { readFileSync } from 'fs'
+import { insert } from 'markdown-toc'
+import { getFileInfo, resolveConfig, check, format } from 'prettier'
 
 // No PR is too small to include a description of why you made a change
 if (danger.github) {
@@ -34,11 +34,12 @@ report.results.forEach(result => {
 // Prettier
 let prettierFailed = false
 filesToCheck.forEach(filePath => {
-  const fileInfo = prettier.getFileInfo.sync(filePath)
+  const fileInfo = getFileInfo.sync(filePath)
   if (!fileInfo.ignored && fileInfo.inferredParser) {
-    const source = fs.readFileSync(filePath, 'utf8')
-    const options = { parser: fileInfo.inferredParser }
-    if (!prettier.check(source, options)) {
+    const source = readFileSync(filePath, 'utf8')
+    const config = resolveConfig.sync(filePath)
+    const options = { ...config, parser: fileInfo.inferredParser }
+    if (!check(source, options)) {
       fail(`${filePath} is not formatted using Prettier`)
       prettierFailed = true
     }
@@ -51,8 +52,8 @@ if (prettierFailed) {
 }
 
 // Readme
-const readme = fs.readFileSync('README.md', 'utf8')
-const formattedReadme = prettier.format(toc.insert(readme), {
+const readme = readFileSync('README.md', 'utf8')
+const formattedReadme = format(insert(readme), {
   parser: 'markdown',
 })
 if (formattedReadme !== readme) {
