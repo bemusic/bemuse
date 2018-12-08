@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled, { keyframes, css } from 'react-emotion'
 
-function FloatingMobileMenu ({ children, visible }) {
+function FloatingMobileMenu({ children, visible }) {
   return (
     <nav
       className={css(`
@@ -32,7 +32,7 @@ function FloatingMobileMenu ({ children, visible }) {
 }
 FloatingMobileMenu.propTypes = {
   children: PropTypes.node,
-  visible: PropTypes.bool
+  visible: PropTypes.bool,
 }
 
 FloatingMobileMenu.Separator = styled('hr')`

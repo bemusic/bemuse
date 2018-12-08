@@ -6,23 +6,23 @@ import PropTypes from 'prop-types'
 const markdown = new Markdown({
   linkify: true,
   breaks: true,
-  typographer: true
+  typographer: true,
 })
 
 const safeMarkdown = new Markdown({
   html: true,
   linkify: true,
   breaks: true,
-  typographer: true
+  typographer: true,
 })
 
 export default class MarkdownContent extends React.Component {
   static propTypes = {
     safe: PropTypes.bool,
-    source: PropTypes.string.isRequired
+    source: PropTypes.string.isRequired,
   }
 
-  render () {
+  render() {
     return (
       <article
         className='Markdown'
@@ -31,7 +31,7 @@ export default class MarkdownContent extends React.Component {
     )
   }
 
-  componentDidMount () {
+  componentDidMount() {
     ReactDOM.findDOMNode(this).addEventListener('click', e => {
       e.preventDefault()
       if (e.target.href) {

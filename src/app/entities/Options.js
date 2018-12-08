@@ -7,7 +7,7 @@ import * as options from '../options'
 export const initialState = options.DEFAULTS
 export const initWithDataFromStorage = options => ({
   ...initialState,
-  ...options
+  ...options,
 })
 
 // Internal utils
@@ -19,7 +19,7 @@ export const getKeyMapping = (mode, key) => state =>
   state['input.P1.keyboard.' + mode + '.' + key]
 export const changeKeyMapping = (mode, key, keyCode) =>
   u({
-    ['input.P1.keyboard.' + mode + '.' + key]: keyCode
+    ['input.P1.keyboard.' + mode + '.' + key]: keyCode,
   })
 
 // Play mode
@@ -28,7 +28,7 @@ export const changePlayMode = mode =>
   u({
     'player.P1.mode': mode,
     'player.P1.panel': panel =>
-      panel === '3d' && mode !== 'KB' ? 'center' : panel
+      panel === '3d' && mode !== 'KB' ? 'center' : panel,
   })
 
 // Speed
@@ -56,7 +56,10 @@ export const changeScratchPosition = position => {
   if (position === 'off') {
     return changePlayMode('KB')
   } else {
-    return _.flow(changePlayMode('BM'), u({ 'player.P1.scratch': position }))
+    return _.flow(
+      changePlayMode('BM'),
+      u({ 'player.P1.scratch': position })
+    )
   }
 }
 
@@ -66,7 +69,7 @@ export const changePanelPlacement = placement =>
   u({
     'player.P1.panel': placement,
     'player.P1.mode': mode =>
-      placement === '3d' && mode !== 'KB' ? 'KB' : mode
+      placement === '3d' && mode !== 'KB' ? 'KB' : mode,
   })
 
 // Lane cover
@@ -85,28 +88,28 @@ export const changeLaneCover = laneCover =>
 export const isBackgroundAnimationsEnabled = state =>
   toggleOptionEnabled(state['system.bga.enabled'])
 export const toggleBackgroundAnimations = u({
-  'system.bga.enabled': toggleOption
+  'system.bga.enabled': toggleOption,
 })
 
 // Auto-velocity
 export const isAutoVelocityEnabled = state =>
   toggleOptionEnabled(state['player.P1.auto-velocity'])
 export const toggleAutoVelocity = u({
-  'player.P1.auto-velocity': toggleOption
+  'player.P1.auto-velocity': toggleOption,
 })
 
 // Song preview enabled
 export const isPreviewEnabled = state =>
   toggleOptionEnabled(state['system.preview.enabled'])
 export const togglePreview = u({
-  'system.preview.enabled': toggleOption
+  'system.preview.enabled': toggleOption,
 })
 
 // Gauge
 export const isGaugeEnabled = state => getGauge(state) !== 'off'
 export const getGauge = state => state['player.P1.gauge']
 export const toggleGauge = u({
-  'player.P1.gauge': gauge => (gauge === 'off' ? 'hope' : 'off')
+  'player.P1.gauge': gauge => (gauge === 'off' ? 'hope' : 'off'),
 })
 
 // Queries
@@ -124,21 +127,21 @@ export const hasAcknowledged = featureKey => state =>
   state[`system.ack.${featureKey}`] === '1'
 export const acknowledge = featureKey =>
   u({
-    [`system.ack.${featureKey}`]: '1'
+    [`system.ack.${featureKey}`]: '1',
   })
 
 // Audio-input latency
 export const audioInputLatency = state => +state['system.offset.audio-input']
 export const changeAudioInputLatency = latency =>
   u({
-    'system.offset.audio-input': `${latency}`
+    'system.offset.audio-input': `${latency}`,
   })
 
 // Latest version
 export const lastSeenVersion = state => state['system.last-seen-version']
 export const updateLastSeenVersion = newVersion =>
   u({
-    'system.last-seen-version': newVersion
+    'system.last-seen-version': newVersion,
   })
 
 // Utils

@@ -18,7 +18,8 @@ export const HomePage = () => {
         your friends with our{' '}
         <a href='https://www.youtube.com/watch?v=hiJzFRIhiiA' target='_blank'>
           party mode
-        </a>.
+        </a>
+        .
       </p>
       <p>
         Plug in your headphone, connect your{' '}

@@ -13,8 +13,8 @@ if (config.AUTH0_CLIENT_ID && config.AUTH0_DOMAIN && config.SCOREBOARD_SERVER) {
       server: config.SCOREBOARD_SERVER,
       authOptions: {
         domain: config.AUTH0_DOMAIN,
-        clientID: config.AUTH0_CLIENT_ID
-      }
+        clientID: config.AUTH0_CLIENT_ID,
+      },
     })
   )
 } else {

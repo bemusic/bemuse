@@ -3,7 +3,7 @@ import * as BMS from 'bms'
 
 import Notechart from '../'
 
-export function load (source, options) {
+export function load(source, options) {
   let data = JSON.parse(source)
   let songInfo = bmson.songInfoForBmson(data)
   let score = bmson.musicalScoreForBmson(data)
@@ -20,15 +20,15 @@ export function load (source, options) {
     images: {
       // HACK: Hardcoded here, probably should belong in bmson package
       eyecatch: data.info.eyecatch_image,
-      background: data.info.back_image
+      background: data.info.back_image,
     },
-    expertJudgmentWindow: getExpertJudgmentWindowForBmson(data)
+    expertJudgmentWindow: getExpertJudgmentWindowForBmson(data),
   }
 
   return new Notechart(stuff, options)
 }
 
-function getExpertJudgmentWindowForBmson (data) {
+function getExpertJudgmentWindowForBmson(data) {
   const judgeRank =
     (() => {
       if (!data.info) return 100

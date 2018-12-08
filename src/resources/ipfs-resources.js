@@ -5,7 +5,7 @@ import query from 'bemuse/utils/query'
 
 import URLResource from './url'
 
-export function getIPFSResources (ipfsPath, gateway) {
+export function getIPFSResources(ipfsPath, gateway) {
   if (window.ipfs && query.BEMUSE_USE_IPFS_COMPANION === '1') {
     return new NativeIPFSResources(ipfsPath)
   } else {
@@ -14,14 +14,14 @@ export function getIPFSResources (ipfsPath, gateway) {
 }
 
 class NativeIPFSResources {
-  constructor (ipfsPath) {
+  constructor(ipfsPath) {
     this._path = ipfsPath
   }
-  get gatewayName () {
+  get gatewayName() {
     return `IPFS Companion extension`
   }
   _throat = throat(8)
-  async _loadLinks () {
+  async _loadLinks() {
     const m = this._path.match(/^\/ipfs\/([^/]+)\/?$/)
     if (!m) throw new Error('Only IPFS path is supported')
     const multihash = m[1]
@@ -32,10 +32,10 @@ class NativeIPFSResources {
     }
     return data.links
   }
-  _getLinks () {
+  _getLinks() {
     return this._linksPromise || (this._linksPromise = this._loadLinks())
   }
-  async file (name) {
+  async file(name) {
     const links = await this._getLinks()
     for (const l of links) {
       if (l.name.toLowerCase() === name.toLowerCase()) {
@@ -47,37 +47,37 @@ class NativeIPFSResources {
     }
     throw new Error('unable to find ' + name)
   }
-  get fileList () {
+  get fileList() {
     return this._getLinks().then(links => links.map(l => l.name))
   }
 }
 
 class NativeIPFSFileResource {
-  constructor (multihash, name) {
+  constructor(multihash, name) {
     this._multihash = multihash
     this._name = name
   }
-  read (progress) {
+  read(progress) {
     return ProgressUtils.atomic(
       progress,
       window.ipfs.files.cat(this._multihash).then(a => a.buffer)
     )
   }
-  get name () {
+  get name() {
     return this._name
   }
 }
 
 class GatewayIPFSResources {
-  constructor (ipfsPath, gateway = 'https://cloudflare-ipfs.com') {
+  constructor(ipfsPath, gateway = 'https://cloudflare-ipfs.com') {
     this._path = ipfsPath
     this._gateway = gateway
   }
-  get gatewayName () {
+  get gatewayName() {
     return `IPFS gateway "${this._gateway}"`
   }
   _throat = throat(7)
-  async _loadLinks () {
+  async _loadLinks() {
     const url = `${this._gateway}${this._path}`
     const response = await axios.get(url, { responseType: 'text' })
     const data = response.data
@@ -86,7 +86,7 @@ class GatewayIPFSResources {
     data.replace(/"(\/ipfs\/[^"]+)"/g, (a, encodedPathname) => {
       if (encodedPathname.substr(0, prefix.length) === prefix) {
         out.push({
-          Name: decodeURIComponent(encodedPathname.substr(prefix.length))
+          Name: decodeURIComponent(encodedPathname.substr(prefix.length)),
         })
       }
     })
@@ -95,10 +95,10 @@ class GatewayIPFSResources {
     }
     return out
   }
-  _getLinks () {
+  _getLinks() {
     return this._linksPromise || (this._linksPromise = this._loadLinks())
   }
-  async file (name) {
+  async file(name) {
     const links = await this._getLinks()
     const base = this._path.replace(/^\/|\/$/g, '').split('/')
     for (const l of links) {
@@ -113,23 +113,23 @@ class GatewayIPFSResources {
     }
     throw new Error('unable to find ' + name)
   }
-  get fileList () {
+  get fileList() {
     return this._getLinks().then(links => links.map(l => l.Name))
   }
 }
 
 class LimitedConcurrencyResource {
-  constructor (_throat, resource) {
+  constructor(_throat, resource) {
     this._throat = _throat
     this._resource = resource
   }
-  read (progress) {
+  read(progress) {
     return this._throat(() => this._resource.read(progress))
   }
-  resolveUrl () {
+  resolveUrl() {
     return this._resource.resolveUrl()
   }
-  get name () {
+  get name() {
     return this._resource.name
   }
 }

@@ -58,7 +58,7 @@ const selectMusicSelectState = (() => {
     filterText: ReduxState.selectSearchInputText,
     highlight: ReduxState.selectSearchText,
     unofficial: selectIsCurrentCollectionUnofficial,
-    playMode: ReduxState.selectPlayMode
+    playMode: ReduxState.selectPlayMode,
   })
 })()
 
@@ -68,7 +68,7 @@ const enhance = compose(
   connect(state => ({
     musicSelect: selectMusicSelectState(state),
     collectionUrl: ReduxState.selectCurrentCollectionUrl(state),
-    musicPreviewEnabled: Options.isPreviewEnabled(state.options)
+    musicPreviewEnabled: Options.isPreviewEnabled(state.options),
   })),
   connectIO({
     onSelectChart: () => (song, chart) =>
@@ -80,7 +80,7 @@ const enhance = compose(
         musicSelect.server,
         musicSelect.song,
         musicSelect.chart
-      )
+      ),
   })
 )
 
@@ -93,26 +93,26 @@ class MusicSelectScene extends React.PureComponent {
     onFilterTextChange: PropTypes.func,
     onLaunchGame: PropTypes.func,
     collectionUrl: PropTypes.string,
-    musicPreviewEnabled: PropTypes.bool
+    musicPreviewEnabled: PropTypes.bool,
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       optionsVisible: shouldShowOptions(),
       customBMSVisible: false,
       unofficialDisclaimerVisible: false,
       inSong: false,
-      authenticationPopupVisible: false
+      authenticationPopupVisible: false,
     }
   }
 
-  getPreviewUrl () {
+  getPreviewUrl() {
     const song = this.props.musicSelect.song
     return getPreviewUrl(this.props.collectionUrl, song)
   }
 
-  render () {
+  render() {
     let musicSelect = this.props.musicSelect
     return (
       <Scene
@@ -174,7 +174,7 @@ class MusicSelectScene extends React.PureComponent {
     )
   }
 
-  renderUnofficialDisclaimer () {
+  renderUnofficialDisclaimer() {
     if (!this.props.musicSelect.unofficial) return null
     return (
       <div
@@ -186,7 +186,7 @@ class MusicSelectScene extends React.PureComponent {
     )
   }
 
-  renderMain () {
+  renderMain() {
     const musicSelect = this.props.musicSelect
     if (musicSelect.loading) {
       return <div className='MusicSelectSceneのloading'>Loading…</div>
@@ -202,7 +202,7 @@ class MusicSelectScene extends React.PureComponent {
     return (
       <div
         className={c('MusicSelectSceneのmain', {
-          'is-in-song': this.state.inSong
+          'is-in-song': this.state.inSong,
         })}
       >
         <MusicList
@@ -226,41 +226,41 @@ class MusicSelectScene extends React.PureComponent {
     )
   }
 
-  getToolbarItems () {
+  getToolbarItems() {
     return [
       Toolbar.item('Exit', {
-        onClick: this.popScene
+        onClick: this.popScene,
       }),
       Toolbar.item('Play Custom BMS', {
-        onClick: this.handleCustomBMSOpen
+        onClick: this.handleCustomBMSOpen,
       }),
       Toolbar.spacer(),
       ...this.getOnlineToolbarButtons(),
       Toolbar.item('Options', {
-        onClick: this.handleOptionsOpen
-      })
+        onClick: this.handleOptionsOpen,
+      }),
     ]
   }
-  getOnlineToolbarButtons () {
-    if (!online) return [ ]
+  getOnlineToolbarButtons() {
+    if (!online) return []
     if (this.props.user) {
       return [
         Toolbar.item(<span>Log Out ({this.props.user.username})</span>, {
-          onClick: this.handleLogout
-        })
+          onClick: this.handleLogout,
+        }),
       ]
     } else {
       return [
         Toolbar.item('Log In / Create an Account', {
-          onClick: this.handleAuthenticate
-        })
+          onClick: this.handleAuthenticate,
+        }),
       ]
     }
   }
-  componentDidMount () {
+  componentDidMount() {
     this.ensureSelectedSongInView()
   }
-  ensureSelectedSongInView () {
+  ensureSelectedSongInView() {
     const $this = $(ReactDOM.findDOMNode(this))
     const active = $this.find('.js-active-song')[0]
     if (!active) return
@@ -344,7 +344,7 @@ class MusicSelectScene extends React.PureComponent {
   handleAuthenticationFinish = () => {
     this.setState({ authenticationPopupVisible: false })
   }
-  popScene () {
+  popScene() {
     SCENE_MANAGER.pop().done()
   }
 }

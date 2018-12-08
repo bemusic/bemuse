@@ -4,7 +4,7 @@ import _ from 'lodash'
 export const initialState = {
   selectedSongId: null,
   selectedChartId: null,
-  selectedChartLevel: 1
+  selectedChartLevel: 1,
 }
 
 // Queries
@@ -25,11 +25,11 @@ export const selectedChartGivenCharts = charts => state => {
 // Updater
 export const selectSong = songId =>
   u({
-    selectedSongId: songId
+    selectedSongId: songId,
   })
 export const selectChart = (songId, chartId, chartLevel) =>
   u({
     selectedSongId: songId,
     selectedChartId: chartId,
-    selectedChartLevel: chartLevel
+    selectedChartLevel: chartLevel,
   })

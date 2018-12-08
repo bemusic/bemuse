@@ -8,5 +8,5 @@ TestBedMocha.setup()
 prepareTestEnvironment()
 
 TestBedMocha.run({
-  context: require.context('..', true, /\.spec\.js$/)
+  context: require.context('..', true, /\.spec\.js$/),
 })

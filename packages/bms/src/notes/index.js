@@ -32,7 +32,7 @@ export class Notes {
   /**
    * @param {BMSNote[]} notes An array of Note objects
    */
-  constructor (notes) {
+  constructor(notes) {
     notes.forEach(Note)
     this._notes = notes
   }
@@ -41,14 +41,14 @@ export class Notes {
    * Returns the number of notes in this object,
    * counting both playable and non-playable notes.
    */
-  count () {
+  count() {
     return this._notes.length
   }
 
   /**
    * Returns an Array of all notes.
    */
-  all () {
+  all() {
     return this._notes.slice()
   }
 
@@ -57,7 +57,7 @@ export class Notes {
    * @param {BMSChart} chart the chart to process
    * @param {BMSChartOptions} options options
    */
-  static fromBMSChart (chart, options) {
+  static fromBMSChart(chart, options) {
     void BMSChart
     options = options || {}
     var mapping = options.mapping || Notes.CHANNEL_MAPPING.IIDX_P1
@@ -69,7 +69,7 @@ export class Notes {
 Notes.CHANNEL_MAPPING = ChannelMapping
 
 class BMSNoteBuilder {
-  constructor (chart, options) {
+  constructor(chart, options) {
     this._chart = chart
     invariant(options.mapping, 'Expected options.mapping')
     invariant(
@@ -78,7 +78,7 @@ class BMSNoteBuilder {
     )
     this._mapping = options.mapping
   }
-  build () {
+  build() {
     this._notes = []
     this._activeLN = {}
     this._lastNote = {}
@@ -86,13 +86,13 @@ class BMSNoteBuilder {
     this._channelMapping = this._mapping
     this._objects = this._chart.objects.allSorted()
     this._objects.forEach(
-      function (object) {
+      function(object) {
         this._handle(object)
       }.bind(this)
     )
     return new Notes(this._notes)
   }
-  _handle (object) {
+  _handle(object) {
     if (object.channel === '01') {
       this._handleNormalNote(object)
     } else {
@@ -108,7 +108,7 @@ class BMSNoteBuilder {
       }
     }
   }
-  _handleNormalNote (object) {
+  _handleNormalNote(object) {
     var channel = this._normalizeChannel(object.channel)
     var beat = this._getBeat(object)
     if (object.value.toLowerCase() === this._lnObj) {
@@ -120,13 +120,13 @@ class BMSNoteBuilder {
         beat: beat,
         endBeat: undefined,
         keysound: object.value,
-        column: this._getColumn(channel)
+        column: this._getColumn(channel),
       }
       this._lastNote[channel] = note
       this._notes.push(note)
     }
   }
-  _handleLongNote (object) {
+  _handleLongNote(object) {
     var channel = this._normalizeChannel(object.channel)
     var beat = this._getBeat(object)
     if (this._activeLN[channel]) {
@@ -138,17 +138,17 @@ class BMSNoteBuilder {
       this._activeLN[channel] = {
         beat: beat,
         keysound: object.value,
-        column: this._getColumn(channel)
+        column: this._getColumn(channel),
       }
     }
   }
-  _getBeat (object) {
+  _getBeat(object) {
     return this._chart.measureToBeat(object.measure, object.fraction)
   }
-  _getColumn (channel) {
+  _getColumn(channel) {
     return this._channelMapping[channel]
   }
-  _normalizeChannel (channel) {
+  _normalizeChannel(channel) {
     return channel.replace(/^5/, '1').replace(/^6/, '2')
   }
 }

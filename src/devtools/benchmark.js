@@ -4,7 +4,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import BenchmarkPanel from './ui/BenchmarkPanel'
 
-function Stat () {
+function Stat() {
   let sum = 0
   let count = 0
   let average = 0
@@ -12,7 +12,7 @@ function Stat () {
   let lastSec = 0
   let secAvg = 0
   return {
-    push: function (delta) {
+    push: function(delta) {
       let t = now()
       sum += delta
       count += 1
@@ -24,23 +24,23 @@ function Stat () {
       }
       secAvg = lastSec / hist.length
     },
-    toString () {
+    toString() {
       return format(average) + ' / ' + format(secAvg)
-    }
+    },
   }
 }
 
-function format (x) {
+function format(x) {
   return x.toFixed(2) + 'ms'
 }
 
-function Benchmarker () {
+function Benchmarker() {
   var stats = {}
   let bench = {
     enabled: true,
     stats,
-    wrap (title, f) {
-      return function () {
+    wrap(title, f) {
+      return function() {
         try {
           var start = now()
           return f.apply(this, arguments)
@@ -51,16 +51,16 @@ function Benchmarker () {
         }
       }
     },
-    benchmark (title, obj, name) {
+    benchmark(title, obj, name) {
       obj[name] = this.wrap(title, obj[name])
     },
-    toString () {
+    toString() {
       var lines = []
-      Object.keys(stats).forEach(function (key) {
+      Object.keys(stats).forEach(function(key) {
         lines.push('- ' + key + ': ' + stats[key])
       })
       return lines.join('\n')
-    }
+    },
   }
   let div = document.createElement('div')
   div.setAttribute('style', 'position:fixed;top:10px;right:10px;z-index:99999')
@@ -69,10 +69,10 @@ function Benchmarker () {
   return bench
 }
 
-function FakeBenchmarker () {
+function FakeBenchmarker() {
   return {
     enabled: false,
-    wrap: (title, f) => f
+    wrap: (title, f) => f,
   }
 }
 

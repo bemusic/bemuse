@@ -9,10 +9,10 @@ class OptionsInputKeys extends React.PureComponent {
     texts: PropTypes.objectOf(PropTypes.string),
     editing: PropTypes.string,
     onEdit: PropTypes.func,
-    keyboardMode: PropTypes.bool
+    keyboardMode: PropTypes.bool,
   }
 
-  render () {
+  render() {
     let keys = []
     for (let i = 1; i <= 7; i++) {
       keys.push(

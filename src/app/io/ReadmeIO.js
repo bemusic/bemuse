@@ -2,7 +2,7 @@ import { createIO } from 'impure'
 import $ from 'jquery'
 import * as ReduxState from '../redux/ReduxState'
 
-export function requestReadme (song) {
+export function requestReadme(song) {
   return createIO(({ store }, run) => {
     const collectionUrl = ReduxState.selectCurrentCollectionUrl(
       store.getState()
@@ -16,7 +16,7 @@ export function requestReadme (song) {
   })
 }
 
-function requestReadmeForUrl (songId, url) {
+function requestReadmeForUrl(songId, url) {
   return createIO(async ({ store }) => {
     store.dispatch({ type: ReduxState.README_LOADING_STARTED })
     try {
@@ -28,6 +28,6 @@ function requestReadmeForUrl (songId, url) {
   })
 }
 
-function stripFrontMatter (text) {
+function stripFrontMatter(text) {
   return text.replace(/\r\n|\r|\n/g, '\n').replace(/^---\n[\s\S]*?\n---/, '')
 }

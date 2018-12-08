@@ -17,14 +17,14 @@ export default class LoadingScene extends React.Component {
       subtitles: PropTypes.arrayOf(PropTypes.string),
       subartists: PropTypes.arrayOf(PropTypes.string),
       difficulty: PropTypes.number,
-      level: PropTypes.number
+      level: PropTypes.number,
     }),
     tasks: PropTypes.object,
     eyecatchImagePromise: PropTypes.object,
-    registerTeardownCallback: PropTypes.func
+    registerTeardownCallback: PropTypes.func,
   }
 
-  render () {
+  render() {
     return (
       <Scene className='LoadingScene' ref='scene'>
         <div className='LoadingSceneのimage' ref='eyecatch' />
@@ -38,7 +38,7 @@ export default class LoadingScene extends React.Component {
     )
   }
 
-  componentDidMount () {
+  componentDidMount() {
     if (this.props.eyecatchImagePromise) {
       this.props.eyecatchImagePromise.then(image => {
         ReactDOM.findDOMNode(this.refs.eyecatch).appendChild(image)

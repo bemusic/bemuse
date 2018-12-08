@@ -3,7 +3,7 @@ import _ from 'lodash'
 import Notechart from '../'
 
 // Returns a new Notechart from a BMSChart.
-export function fromBMSChart (bms, playerOptions) {
+export function fromBMSChart(bms, playerOptions) {
   let notes = BMS.Notes.fromBMSChart(bms).all()
   let timing = BMS.Timing.fromBMSChart(bms)
   let keysounds = BMS.Keysounds.fromBMSChart(bms)
@@ -19,12 +19,12 @@ export function fromBMSChart (bms, playerOptions) {
     positioning,
     spacing,
     barLines: generateBarLinesFromBMS(notes, bms),
-    expertJudgmentWindow: getJudgmentWindowFromBMS(bms)
+    expertJudgmentWindow: getJudgmentWindowFromBMS(bms),
   }
   return new Notechart(data, playerOptions)
 }
 
-function getJudgmentWindowFromBMS (bms) {
+function getJudgmentWindowFromBMS(bms) {
   // http://hitkey.nekokan.dyndns.info/diary1501.php
   const rank = +bms.headers.get('rank') || 2
   if (rank === 0) return [8, 24] // Very Hard
@@ -33,7 +33,7 @@ function getJudgmentWindowFromBMS (bms) {
   return [18, 40] // Normal
 }
 
-function generateBarLinesFromBMS (bmsNotes, bms) {
+function generateBarLinesFromBMS(bmsNotes, bms) {
   let max = _.max(bmsNotes.map(note => note.endBeat || note.beat))
   let barLines = [0]
   let currentBeat = 0

@@ -13,16 +13,16 @@ import GameDisplay from '../display'
 import SamplesLoader from './samples-loader'
 import loadImage from './loadImage'
 
-export function load (spec) {
+export function load(spec) {
   const assets = spec.assets
   const bms = spec.bms
   const songId = spec.songId
 
-  return Multitasker.start(function (task, run) {
-    task('Scintillator', 'Loading game engine', [], function (progress) {
+  return Multitasker.start(function(task, run) {
+    task('Scintillator', 'Loading game engine', [], function(progress) {
       return new Promise(resolve => {
         let context = new LoadingContext(progress)
-        context.use(function () {
+        context.use(function() {
           import(/* webpackChunkName: 'gameEngine' */ 'bemuse/scintillator').then(
             loadedModule => resolve(loadedModule)
           )
@@ -30,19 +30,19 @@ export function load (spec) {
       })
     })
 
-    task('Skin', 'Loading skin', ['Scintillator'], function (
+    task('Skin', 'Loading skin', ['Scintillator'], function(
       Scintillator,
       progress
     ) {
       return Scintillator.load(
         Scintillator.getSkinUrl({
-          displayMode: spec.displayMode
+          displayMode: spec.displayMode,
         }),
         progress
       )
     })
 
-    task('SkinContext', null, ['Scintillator', 'Skin'], function (
+    task('SkinContext', null, ['Scintillator', 'Skin'], function(
       Scintillator,
       skin
     ) {
@@ -62,18 +62,18 @@ export function load (spec) {
       'Notechart',
       'Loading ' + spec.bms.name,
       [],
-      co.wrap(function * (progress) {
+      co.wrap(function*(progress) {
         let loader = new NotechartLoader()
         let arraybuffer = yield bms.read(progress)
         return yield loader.load(arraybuffer, spec.bms, spec.options.players[0])
       })
     )
 
-    task('EyecatchImage', null, ['Notechart'], function (notechart) {
+    task('EyecatchImage', null, ['Notechart'], function(notechart) {
       return loadImage(assets, notechart.eyecatchImage)
     })
 
-    task('BackgroundImage', null, ['Notechart'], function (notechart) {
+    task('BackgroundImage', null, ['Notechart'], function(notechart) {
       return loadImage(assets, notechart.backgroundImage)
     })
 
@@ -83,7 +83,7 @@ export function load (spec) {
     task.bar('Loading audio', audioLoadProgress)
     task.bar('Decoding audio', audioDecodeProgress)
 
-    task('SamplingMaster', null, [], function () {
+    task('SamplingMaster', null, [], function() {
       return new SamplingMaster()
     })
 
@@ -91,7 +91,7 @@ export function load (spec) {
       'Video',
       spec.videoUrl ? 'Loading video' : null,
       ['Notechart'],
-      function (notechart, progress) {
+      function(notechart, progress) {
         if (!spec.videoUrl) return Promise.resolve(null)
         return new Promise((resolve, reject) => {
           const video = document.createElement('video')
@@ -104,7 +104,7 @@ export function load (spec) {
           video.addEventListener('abort', onError, true)
           video.load()
 
-          function onProgress (e) {
+          function onProgress(e) {
             if (video.buffered && video.buffered.length && video.duration) {
               progress.report(
                 video.buffered.end(0) - video.buffered.start(0),
@@ -112,19 +112,19 @@ export function load (spec) {
               )
             }
           }
-          function finish () {
+          function finish() {
             video.removeEventListener('progress', onProgress, true)
             video.removeEventListener('canplaythrough', onCanPlayThrough, true)
             video.removeEventListener('error', onError, true)
             video.removeEventListener('abort', onError, true)
           }
-          function onCanPlayThrough () {
+          function onCanPlayThrough() {
             finish()
             const n = video.duration || 100
             progress.report(n, n)
             resolve({ element: video, offset: spec.videoOffset })
           }
-          function onError () {
+          function onError() {
             finish()
             console.warn('Cannot load video... Just skip it!')
             resolve(null)
@@ -133,7 +133,7 @@ export function load (spec) {
       }
     )
 
-    task('Game', null, ['Notechart'], function (notechart) {
+    task('Game', null, ['Notechart'], function(notechart) {
       return new Game([notechart], spec.options)
     })
 
@@ -141,18 +141,18 @@ export function load (spec) {
       'GameDisplay',
       null,
       ['Game', 'Skin', 'SkinContext', 'Video'],
-      function (game, skin, context, video) {
+      function(game, skin, context, video) {
         return new GameDisplay({
           game,
           skin,
           context,
           backgroundImagePromise: run('BackgroundImage'),
-          video
+          video,
         })
       }
     )
 
-    task('Samples', null, ['SamplingMaster', 'Game'], function (master, game) {
+    task('Samples', null, ['SamplingMaster', 'Game'], function(master, game) {
       keysoundCache.receiveSongId(songId)
       const samplesLoader = new SamplesLoader(assets, master)
       return samplesLoader.loadFiles(
@@ -162,7 +162,7 @@ export function load (spec) {
       )
     })
 
-    task('GameAudio', null, ['Game', 'Samples', 'SamplingMaster'], function (
+    task('GameAudio', null, ['Game', 'Samples', 'SamplingMaster'], function(
       game,
       samples,
       master
@@ -170,7 +170,7 @@ export function load (spec) {
       return new GameAudio({ game, samples, master })
     })
 
-    task('GameController', null, ['Game', 'GameDisplay', 'GameAudio'], function (
+    task('GameController', null, ['Game', 'GameDisplay', 'GameAudio'], function(
       game,
       display,
       audio

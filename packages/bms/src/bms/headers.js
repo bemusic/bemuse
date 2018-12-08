@@ -16,7 +16,7 @@
  * ```
  */
 export class BMSHeaders {
-  constructor () {
+  constructor() {
     this._data = {}
     this._dataAll = {}
   }
@@ -25,7 +25,7 @@ export class BMSHeaders {
    * Iterates through each header field using a callback function.
    * @param {(key: string, value: string) => any} callback will be called for each header field
    */
-  each (callback) {
+  each(callback) {
     for (var i in this._data) {
       callback(i, this._data[i])
     }
@@ -36,7 +36,7 @@ export class BMSHeaders {
    * @param {string} name field’s name
    * @return {string | undefined} the field’s latest value
    */
-  get (name) {
+  get(name) {
     return this._data[name.toLowerCase()]
   }
 
@@ -46,7 +46,7 @@ export class BMSHeaders {
    * @param {string} name field’s name
    * @return {string[] | undefined}
    */
-  getAll (name) {
+  getAll(name) {
     return this._dataAll[name.toLowerCase()]
   }
 
@@ -55,7 +55,7 @@ export class BMSHeaders {
    * @param {string} name field’s name
    * @param {string} value field’s value
    */
-  set (name, value) {
+  set(name, value) {
     var key = name.toLowerCase()
     this._data[key] = value
     ;(this._dataAll[key] || (this._dataAll[key] = [])).push(value)

@@ -10,7 +10,7 @@ import config from '../../../config/webpack'
 import path from '../../../config/path'
 import routes from '../../../config/routes'
 
-export function start () {
+export function start() {
   console.log(
     chalk.redBright('⬤'),
     chalk.yellowBright('▗▚▚▚'),
@@ -28,14 +28,14 @@ export function start () {
 
   let cacheSettings = {
     etag: true,
-    setHeaders (res) {
+    setHeaders(res) {
       res.setHeader('Cache-Control', 'public, max-age=31536000, no-cache')
-    }
+    },
   }
   server.use('/music', express.static(path('..', 'music'), cacheSettings))
   server.use('/coverage', express.static(path('coverage', 'lcov-report')))
 
-  server.listen(port, '0.0.0.0', function (err) {
+  server.listen(port, '0.0.0.0', function(err) {
     if (err) throw new gutil.PluginError('webpack-dev-server', err)
     gutil.log('[webpack-dev-server]', 'http://localhost:' + port + '/')
   })

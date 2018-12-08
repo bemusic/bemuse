@@ -56,29 +56,29 @@ export const DEFAULTS = {
   'system.ack.twitter': '0',
   'system.ack.deltas': '0',
   'system.ack.finishGame': '0',
-  'system.ack.replayGame': '0'
+  'system.ack.replayGame': '0',
 }
 
 export const events = new EventEmitter()
 
 // Returns all the available options.
-export function keys () {
+export function keys() {
   return Object.keys(DEFAULTS)
 }
 
 // Gets the options value by a specified key.
-export function get (key) {
+export function get(key) {
   return storage.getItem(key) || DEFAULTS[key]
 }
 
 // Saves the options value by a specified key.
-export function set (key, value) {
+export function set(key, value) {
   storage.setItem(key, value)
   events.emit('changed')
 }
 
 // Saves many options.
-export function setOptions (options) {
+export function setOptions(options) {
   for (const key of Object.keys(options)) {
     storage.setItem(key, options[key])
   }
@@ -86,12 +86,12 @@ export function setOptions (options) {
 }
 
 // Gets the options Storage engine.
-export function getStorage () {
+export function getStorage() {
   return storage
 }
 
 // Returns all the options.
-export function getAllCurrentOptions () {
+export function getAllCurrentOptions() {
   let options = {}
   for (let key of keys()) options[key] = get(key)
   return options
@@ -101,7 +101,7 @@ export function getAllCurrentOptions () {
 // Useful for injecting a mock storage from tests. A storage engine should have
 // ``getItem`` and ``setItem`` methods. An example of a storage engine
 // that implements this interface is the ``localStorage``.
-export function setStorage (_storage) {
+export function setStorage(_storage) {
   storage = _storage
 }
 

@@ -2,7 +2,7 @@
  * BMSObjects holds a collection of objects inside a BMS notechart.
  */
 export class BMSObjects {
-  constructor () {
+  constructor() {
     /** @type {BMSObject[]} */
     this._objects = []
   }
@@ -13,7 +13,7 @@ export class BMSObjects {
    * the object is replaced (except for autokeysound tracks).
    * @param {BMSObject} object the object to add
    */
-  add (object) {
+  add(object) {
     if (object.channel !== '01') {
       for (var i = 0; i < this._objects.length; i++) {
         var test = this._objects[i]
@@ -33,16 +33,16 @@ export class BMSObjects {
   /**
    * Returns an array of all objects.
    */
-  all () {
+  all() {
     return this._objects.slice()
   }
 
   /**
    * Returns a sorted array of all objects.
    */
-  allSorted () {
+  allSorted() {
     var list = this.all()
-    list.sort(function (a, b) {
+    list.sort(function(a, b) {
       return a.measure + a.fraction - (b.measure + b.fraction)
     })
     return list

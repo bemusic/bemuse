@@ -17,9 +17,9 @@ var files = {
     'speedcore/*.js',
     'time-signatures/*.js',
     'timing/*.js',
-    'util/*.js'
+    'util/*.js',
   ],
-  get features () {
+  get features() {
     var home = process.env.BMSPEC_HOME || './bmspec'
     if (home === undefined) {
       console.error(
@@ -27,46 +27,46 @@ var files = {
       )
       return []
     }
-    return require('./features').map(function (file) {
+    return require('./features').map(function(file) {
       var filePath = home + '/features/' + file
       if (!fs.existsSync(filePath)) {
         console.error('WARNING! ' + filePath + ' does not exist.')
       }
       return filePath
     })
-  }
+  },
 }
 
-gulp.task('test', function (callback) {
+gulp.task('test', function(callback) {
   return mochaThenCucumberTest(callback)
 })
 
-gulp.task('test:cucumber', function (callback) {
+gulp.task('test:cucumber', function(callback) {
   return cucumberTest(callback)
 })
 
-gulp.task('test:mocha', function (callback) {
+gulp.task('test:mocha', function(callback) {
   return mochaTest(callback)
 })
 
-gulp.task('bmspec:update', async function () {
+gulp.task('bmspec:update', async function() {
   if (!fs.existsSync('bmspec')) {
     console.log('* Cloning bmspec...')
     childProcess.execSync(
       `git clone https://github.com/bemusic/bms-spec.git bmspec`,
       {
-        stdio: 'inherit'
+        stdio: 'inherit',
       }
     )
   } else {
     console.log('* Updating bmspec...')
     childProcess.execSync(`git pull`, {
-      stdio: 'inherit'
+      stdio: 'inherit',
     })
   }
 })
 
-function mochaTest (callback) {
+function mochaTest(callback) {
   global.expect = require('chai').expect
   gulp
     .src(files.specs, { read: false })
@@ -75,21 +75,21 @@ function mochaTest (callback) {
     .on('error', callback)
 }
 
-function cucumberTest (callback) {
+function cucumberTest(callback) {
   gulp
     .src(files.features, { read: false })
     .pipe(
       cucumber({
         steps: 'features/step_definitions/**/*_steps.js',
-        support: ['features/support/world.js', 'features/support/*.js']
+        support: ['features/support/world.js', 'features/support/*.js'],
       })
     )
     .on('end', callback)
     .on('error', callback)
 }
 
-function mochaThenCucumberTest (callback) {
-  mochaTest(function (error) {
+function mochaThenCucumberTest(callback) {
+  mochaTest(function(error) {
     if (error) return callback(error)
     cucumberTest(callback)
   })

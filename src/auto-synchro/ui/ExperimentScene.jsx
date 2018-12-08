@@ -12,10 +12,10 @@ export default class ExperimentScene extends React.Component {
     listening: PropTypes.bool,
     onStart: PropTypes.func,
     numSamples: PropTypes.number,
-    latency: PropTypes.number
+    latency: PropTypes.number,
   }
 
-  render () {
+  render() {
     return (
       <div
         className={c('ExperimentScene', { 'is-finished': this.props.finished })}
@@ -73,15 +73,15 @@ export default class ExperimentScene extends React.Component {
     let transform = 'scaleX(' + scale + ')'
     let style = {
       transform: transform,
-      WebkitTransform: transform
+      WebkitTransform: transform,
     }
     return (
       <div className='ExperimentSceneのcollection'>
         {this.renderMessage(
           this.props.finished
             ? 'Your latency is ' +
-              this.props.latency +
-              'ms. Please close this window.'
+                this.props.latency +
+                'ms. Please close this window.'
             : 'Please press the space bar when you hear the kick drum.'
         )}
         <div className='ExperimentSceneのprogress'>
@@ -92,6 +92,6 @@ export default class ExperimentScene extends React.Component {
   }
 }
 
-function easeOut (x) {
+function easeOut(x) {
   return 1 - Math.pow(1 - x, 2)
 }

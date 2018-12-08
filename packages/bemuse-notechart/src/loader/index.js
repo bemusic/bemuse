@@ -9,7 +9,7 @@ const coerceToBuffer = bufferOrArrayBuffer =>
     : Buffer.from(new Uint8Array(bufferOrArrayBuffer))
 
 export class NotechartLoader {
-  load (arraybuffer, resource, options) {
+  load(arraybuffer, resource, options) {
     if (resource.name.match(/\.bmson$/i)) {
       return this.loadBmson(arraybuffer, resource, options)
     } else {
@@ -17,7 +17,7 @@ export class NotechartLoader {
     }
   }
 
-  async loadBMS (arraybuffer, resource, options) {
+  async loadBMS(arraybuffer, resource, options) {
     let buffer = coerceToBuffer(arraybuffer)
     let readerOptions = BMS.Reader.getReaderOptionsFromFilename(resource.name)
     let source = await Promise.promisify(BMS.Reader.readAsync)(
@@ -30,7 +30,7 @@ export class NotechartLoader {
     return notechart
   }
 
-  async loadBmson (arraybuffer, resource, options) {
+  async loadBmson(arraybuffer, resource, options) {
     let buffer = coerceToBuffer(arraybuffer)
     let source = buffer.toString('utf-8')
     return BmsonNotechartLoader.load(source, options)

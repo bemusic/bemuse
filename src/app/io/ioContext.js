@@ -16,35 +16,35 @@ const collectionLoader = createCollectionLoader({
   onBeginLoading: url =>
     store.dispatch({
       type: ReduxState.COLLECTION_LOADING_BEGAN,
-      url: url
+      url: url,
     }),
   onErrorLoading: (url, reason) =>
     store.dispatch({
       type: ReduxState.COLLECTION_LOADING_ERRORED,
       url: url,
-      error: reason
+      error: reason,
     }),
   onLoad: (url, data) => {
     store.dispatch({
       type: ReduxState.COLLECTION_LOADED,
       url: url,
-      data: data
+      data: data,
     })
     const initiallySelectedSong = getInitiallySelectedSong()
     if (initiallySelectedSong) {
       const matchingSong = findMatchingSong({
         songs: data.songs,
         getTitle: song => song.title,
-        title: initiallySelectedSong
+        title: initiallySelectedSong,
       })
       if (matchingSong) {
         store.dispatch({
           type: ReduxState.MUSIC_SONG_SELECTED,
-          songId: matchingSong.id
+          songId: matchingSong.id,
         })
       }
     }
-  }
+  },
 })
 
 // Configure a custom song loader which loads custom song from resources.
@@ -54,13 +54,13 @@ const customSongLoader = {
     song.id = '__custom_' + Date.now()
     song.custom = true
     return song
-  }
+  },
 }
 
 export const ioContext = {
   store,
   collectionLoader,
-  customSongLoader
+  customSongLoader,
 }
 
 export default ioContext

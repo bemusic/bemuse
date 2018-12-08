@@ -50,32 +50,32 @@ export const reducer = combineReducers({
     [COLLECTION_LOADING_ERRORED]: action =>
       Collections.completeLoading(action.url, action.error),
     [COLLECTION_LOADED]: action =>
-      Collections.completeLoading(action.url, action.data)
+      Collections.completeLoading(action.url, action.data),
   }),
   customSongLoadState: createReducer(LoadState.initCompletedWithValue(null), {
     [CUSTOM_SONG_LOAD_STARTED]: action => LoadState.beginLoading,
-    [CUSTOM_SONG_LOADED]: action => LoadState.completeWithValue()
+    [CUSTOM_SONG_LOADED]: action => LoadState.completeWithValue(),
   }),
   customSongs: createReducer([], {
-    [CUSTOM_SONG_LOADED]: action => state => [action.song]
+    [CUSTOM_SONG_LOADED]: action => state => [action.song],
   }),
   customSongLoaderLog: createReducer(null, {
     [CUSTOM_SONG_LOAD_STARTED]: action => state => [],
     [CUSTOM_SONG_LOG_EMITTED]: action => state =>
       state && [...state, action.text],
     [CUSTOM_SONG_LOADED]: action => state => null,
-    [CUSTOM_SONG_LOAD_FAILED]: action => state => null
+    [CUSTOM_SONG_LOAD_FAILED]: action => state => null,
   }),
   currentCollection: createReducer('', {
     [COLLECTION_LOADING_BEGAN]: action => state =>
-      state === '' ? action.url : state
+      state === '' ? action.url : state,
   }),
   musicSearchText: createReducer(MusicSearchText.initialState, {
     [MUSIC_SEARCH_TEXT_TYPED]: action =>
       MusicSearchText.handleTextType(action.text),
     [MUSIC_SEARCH_DEBOUNCED]: action => MusicSearchText.handleDebounce,
     [MUSIC_SEARCH_TEXT_INITIALIZED]: action =>
-      MusicSearchText.setText(action.text)
+      MusicSearchText.setText(action.text),
   }),
   musicSelection: createReducer(MusicSelection.initialState, {
     [CUSTOM_SONG_LOADED]: action => MusicSelection.selectSong(action.song.id),
@@ -85,22 +85,22 @@ export const reducer = combineReducers({
         action.songId,
         action.chartId,
         action.chartLevel
-      )
+      ),
   }),
   options: createReducer(Options.initialState, {
     [OPTIONS_LOADED_FROM_STORAGE]: action => state =>
-      Options.initWithDataFromStorage(action.options)
+      Options.initWithDataFromStorage(action.options),
   }),
   currentSongReadme: createReducer('Omachi kudasai…', {
     [README_LOADING_STARTED]: action => state => 'Omachi kudasai…',
     [README_LOADING_ERRORED]: action => state =>
       'Cannot download ' + action.url,
-    [README_LOADED]: action => state => action.text
+    [README_LOADED]: action => state => action.text,
   }),
   rageQuit: createReducer(false, {
     [RAGEQUITTED]: action => state => true,
-    [RAGEQUIT_DISMISSED]: action => state => false
-  })
+    [RAGEQUIT_DISMISSED]: action => state => false,
+  }),
 })
 
 // Selectors
@@ -145,8 +145,9 @@ export const { selectGroups, selectSongs } = (() => {
     state => state.customSongs,
     (songList, customSongs) => [...customSongs, ...songList]
   )
-  const selectSortedSongList = createSelector(selectSongList, songList =>
-    sortSongs(songList)
+  const selectSortedSongList = createSelector(
+    selectSongList,
+    songList => sortSongs(songList)
   )
   const selectFilteredSongList = createSelector(
     selectSortedSongList,
@@ -157,11 +158,13 @@ export const { selectGroups, selectSongs } = (() => {
     selectFilteredSongList,
     groupSongsIntoCategories
   )
-  const selectSongs = createSelector(selectGroups, groups =>
-    _(groups)
-      .map('songs')
-      .flatten()
-      .value()
+  const selectSongs = createSelector(
+    selectGroups,
+    groups =>
+      _(groups)
+        .map('songs')
+        .flatten()
+        .value()
   )
   return { selectGroups, selectSongs }
 })()
@@ -169,7 +172,7 @@ export const { selectGroups, selectSongs } = (() => {
 export const {
   selectSelectedSong,
   selectChartsForSelectedSong,
-  selectSelectedChart
+  selectSelectedChart,
 } = (() => {
   const selectMusicSelection = state => state.musicSelection
   const selectSelectedSong = createSelector(
@@ -178,8 +181,9 @@ export const {
     (musicSelection, songs) =>
       MusicSelection.selectedSongGivenSongs(songs)(musicSelection)
   )
-  const selectChartsForSelectedSong = createSelector(selectSelectedSong, song =>
-    getPlayableCharts((song && song.charts) || [])
+  const selectChartsForSelectedSong = createSelector(
+    selectSelectedSong,
+    song => getPlayableCharts((song && song.charts) || [])
   )
   const selectSelectedChart = createSelector(
     selectMusicSelection,
@@ -190,7 +194,7 @@ export const {
   return {
     selectSelectedSong,
     selectChartsForSelectedSong,
-    selectSelectedChart
+    selectSelectedChart,
   }
 })()
 

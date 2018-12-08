@@ -1,7 +1,7 @@
 import './ErrorDialog.scss'
 import template from './ErrorDialog.jade'
 
-function show (message, url, line, col, e) {
+function show(message, url, line, col, e) {
   var div = document.createElement('div')
   div.className = 'ErrorDialog'
   div.innerHTML = template({ message, url, line, col, e })
@@ -10,7 +10,7 @@ function show (message, url, line, col, e) {
   if (close) {
     close.addEventListener(
       'click',
-      function () {
+      function() {
         div.parentNode.removeChild(div)
       },
       false

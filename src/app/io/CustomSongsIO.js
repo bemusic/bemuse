@@ -5,7 +5,7 @@ import { createIO } from 'impure'
 import DndResources from '../../resources/dnd-resources'
 import { getIPFSResources } from '../../resources/ipfs-resources'
 
-export function handleCustomSongFolderDrop (event) {
+export function handleCustomSongFolderDrop(event) {
   return createIO(async ({ store, customSongLoader }) => {
     const resources = new DndResources(event)
     const initialLog = ['Examining dropped items...']
@@ -13,7 +13,7 @@ export function handleCustomSongFolderDrop (event) {
   })
 }
 
-export function handleClipboardPaste (e) {
+export function handleClipboardPaste(e) {
   return createIO(async ({ store, customSongLoader }) => {
     let match
     const text = e.clipboardData.getData('text/plain')
@@ -24,7 +24,7 @@ export function handleClipboardPaste (e) {
       const resources = getIPFSResources(path, gateway)
       const initialLog = [
         'Loading from IPFS path ' + path + '...',
-        `(Using ${resources.gatewayName})`
+        `(Using ${resources.gatewayName})`,
       ]
       if (/^http:/.test(gateway) && window.location.protocol === 'https:') {
         initialLog.push(
@@ -37,7 +37,7 @@ export function handleClipboardPaste (e) {
   })
 }
 
-async function loadCustomSong (
+async function loadCustomSong(
   resources,
   initialText,
   { store, customSongLoader }
@@ -48,9 +48,9 @@ async function loadCustomSong (
       store.dispatch({ type: ReduxState.CUSTOM_SONG_LOG_EMITTED, text })
     }
     const song = await customSongLoader.loadSongFromResources(resources, {
-      onMessage (text) {
+      onMessage(text) {
         store.dispatch({ type: ReduxState.CUSTOM_SONG_LOG_EMITTED, text })
-      }
+      },
     })
     if (song && song.charts && song.charts.length) {
       store.dispatch({ type: ReduxState.CUSTOM_SONG_LOADED, song })

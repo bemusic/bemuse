@@ -6,14 +6,14 @@ import { OFFICIAL_SERVER_URL, load } from 'bemuse/music-collection'
 import MusicTable from './MusicTable'
 
 export class CollectionViewer extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       url: query.server || OFFICIAL_SERVER_URL,
-      status: 'Loading'
+      status: 'Loading',
     }
   }
-  componentDidMount () {
+  componentDidMount() {
     load(this.state.url)
       .then(result => {
         this.setState({ status: 'Load completed', data: result })
@@ -22,7 +22,7 @@ export class CollectionViewer extends React.Component {
         this.setState({ status: 'Load error: ' + e })
       })
   }
-  render () {
+  render() {
     return (
       <div>
         <header style={{ textAlign: 'center' }}>

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import c from 'classnames'
 
-const PANEL_PATH = (function () {
+const PANEL_PATH = (function() {
   const x = 48
   const w = 14
   const y = 20
@@ -22,7 +22,7 @@ const PANEL_PATH = (function () {
           L${x4} ${y4} L${x4} ${y3} L${x3} ${y2} L${x3} ${y1}`
 })()
 
-const PANEL_3D_PATH = (function () {
+const PANEL_3D_PATH = (function() {
   const down = []
   const up = []
   for (let i = 0; i <= 11; i++) {
@@ -39,23 +39,23 @@ export default class OptionsPlayerGraphics extends React.Component {
   static propTypes = {
     type: PropTypes.string,
     active: PropTypes.bool,
-    value: PropTypes.string
+    value: PropTypes.string,
   }
 
-  render () {
+  render() {
     let svg =
       this.props.type === 'scratch' ? this.renderScratch() : this.renderPanel()
     return (
       <div
         className={c('OptionsPlayerGraphics', {
-          'is-active': this.props.active
+          'is-active': this.props.active,
         })}
       >
         {svg}
       </div>
     )
   }
-  renderScratch () {
+  renderScratch() {
     let p = this.props.value
     let bx = p === 'left' ? 24 : p === 'right' ? 4 : 14
     let gx = p === 'left' ? 21 : p === 'right' ? 75 : null
@@ -69,7 +69,7 @@ export default class OptionsPlayerGraphics extends React.Component {
               key={i}
               className='OptionsPlayerGraphicsのline'
               x={off && i === 3 ? 10 : i * 10}
-              y={off ? (i === 3 ? 10 : 0) : (1 - i % 2) * 3}
+              y={off ? (i === 3 ? 10 : 0) : (1 - (i % 2)) * 3}
               width={off && i === 3 ? 48 : 8}
               height={off ? 8 : 16}
               rx={2}
@@ -105,7 +105,7 @@ export default class OptionsPlayerGraphics extends React.Component {
       </svg>
     )
   }
-  renderPanel () {
+  renderPanel() {
     let p = this.props.value
     let tx = p === 'left' ? -35 : p === 'right' ? 35 : 0
     return (

@@ -20,7 +20,7 @@ var iconv = require('iconv-lite')
  * @param {ReaderOptions | null} buffer
  * @returns {string} the decoded text
  */
-export function read (buffer, options = null) {
+export function read(buffer, options = null) {
   var charset = (options && options.forceEncoding) || chardet.detect(buffer)
   var text = iconv.decode(buffer, charset)
   if (text.charCodeAt(0) === 0xfeff) {
@@ -37,12 +37,12 @@ export function read (buffer, options = null) {
  * @param {ReaderOptions | null} [options]
  * @param {(error: Error | null, value?: string) => any} callback
  */
-export function readAsync (buffer, options, callback) {
+export function readAsync(buffer, options, callback) {
   if (!callback) {
     callback = options
     options = null
   }
-  setTimeout(function () {
+  setTimeout(function() {
     var result
     try {
       result = { value: exports.read(buffer, options) }

@@ -5,10 +5,10 @@ import PropTypes from 'prop-types'
 
 export default class YouTube extends React.Component {
   static propTypes = {
-    url: PropTypes.string
+    url: PropTypes.string,
   }
 
-  render () {
+  render() {
     return (
       <iframe
         width='100%'
@@ -26,17 +26,17 @@ export default class YouTube extends React.Component {
     )
   }
 
-  componentDidMount () {
+  componentDidMount() {
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize)
   }
 
   handleResize = () => {
     let el = ReactDOM.findDOMNode(this)
-    el.style.height = el.offsetWidth * 9 / 16 + 'px'
+    el.style.height = (el.offsetWidth * 9) / 16 + 'px'
   }
 }

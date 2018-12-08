@@ -6,23 +6,23 @@ import WARP from 'bemuse/utils/warp-element'
 
 export default class WarpContainer extends React.Component {
   static propTypes = {
-    children: PropTypes.node
+    children: PropTypes.node,
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.el = document.createElement('div')
   }
 
-  componentDidMount () {
+  componentDidMount() {
     WARP.appendChild(this.el)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     WARP.removeChild(this.el)
   }
 
-  render () {
+  render() {
     return ReactDOM.createPortal(this.props.children, this.el)
   }
 }

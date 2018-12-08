@@ -3,14 +3,14 @@ import path from './path'
 export default [
   {
     src: path('public'),
-    dest: []
+    dest: [],
   },
   {
     src: path('src'),
-    dest: ['src']
+    dest: ['src'],
   },
   {
     src: path('spec'),
-    dest: ['spec']
-  }
+    dest: ['spec'],
+  },
 ]

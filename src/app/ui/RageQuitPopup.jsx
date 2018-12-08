@@ -10,29 +10,24 @@ import OptionsButton from './OptionsButton'
 
 const enhance = connect(
   state => ({
-    visible: ReduxState.selectRageQuittedFlag(state)
+    visible: ReduxState.selectRageQuittedFlag(state),
   }),
   dispatch => ({
-    onClose: () => dispatch({ type: ReduxState.RAGEQUIT_DISMISSED })
+    onClose: () => dispatch({ type: ReduxState.RAGEQUIT_DISMISSED }),
   })
 )
 
-function RageQuitPopup ({ onClose, visible }) {
+function RageQuitPopup({ onClose, visible }) {
   return (
-    <ModalPopup
-      visible={visible}
-      onBackdropClick={onClose}
-    >
+    <ModalPopup visible={visible} onBackdropClick={onClose}>
       <div style={{ maxWidth: '30em' }}>
         <Panel title='You just rage-quitted!'>
           <DialogContent>
+            <p>I hope you enjoyed the tutorial ^_^</p>
             <p>
-              I hope you enjoyed the tutorial ^_^
-            </p>
-            <p>
-              From here, you can play other songs.
-              Start from Level 1 and work your way up.
-              And hopefully, someday, you will be able to beat this tutorial!
+              From here, you can play other songs. Start from Level 1 and work
+              your way up. And hopefully, someday, you will be able to beat this
+              tutorial!
             </p>
             <DialogContent.Buttons>
               <OptionsButton onClick={onClose}>Continue</OptionsButton>
@@ -46,7 +41,7 @@ function RageQuitPopup ({ onClose, visible }) {
 
 RageQuitPopup.propTypes = {
   visible: PropTypes.bool,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
 }
 
 export default enhance(RageQuitPopup)

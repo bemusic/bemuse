@@ -9,7 +9,8 @@ const modules = {
   // >>
   // music
   //   The music collection viewer which shows all the songs.
-  music: () => import(/* webpackChunkName: 'music' */ 'bemuse/music-collection-viewer'),
+  music: () =>
+    import(/* webpackChunkName: 'music' */ 'bemuse/music-collection-viewer'),
 
   // >>
   // test
@@ -19,7 +20,8 @@ const modules = {
   // >>
   // comingSoon
   //   Displays the "coming soon" text.
-  comingSoon: () => import(/* webpackChunkName: 'comingSoon' */ 'bemuse/coming-soon'),
+  comingSoon: () =>
+    import(/* webpackChunkName: 'comingSoon' */ 'bemuse/coming-soon'),
 
   // >>
   // sync
@@ -35,7 +37,8 @@ const modules = {
   // >>
   // playground
   //   Various playgrounds...
-  playground: () => import(/* webpackChunkName: 'playground' */ 'bemuse/devtools/playground')
+  playground: () =>
+    import(/* webpackChunkName: 'playground' */ 'bemuse/devtools/playground'),
 }
 
 export default modules

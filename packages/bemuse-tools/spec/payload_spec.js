@@ -1,14 +1,14 @@
 import Payload from '../src/payload'
 import { expect } from 'chai'
 
-describe('Payload', function () {
+describe('Payload', function() {
   var payload
 
   beforeEach(() => {
     payload = new Payload()
   })
 
-  describe('with 2 buffers added: "hello" and ", "', function () {
+  describe('with 2 buffers added: "hello" and ", "', function() {
     beforeEach(() => {
       payload.add(Buffer.from('hello'))
       payload.add(Buffer.from(', '))

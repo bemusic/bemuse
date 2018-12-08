@@ -4,7 +4,7 @@ import { MISSED, breaksCombo } from '../judgments'
 import { getGauge } from './Gauge'
 
 export class PlayerDisplay {
-  constructor (player, skinData) {
+  constructor(player, skinData) {
     let notechart = player.notechart
     this._currentSpeed = 1
     this._player = player
@@ -15,12 +15,12 @@ export class PlayerDisplay {
       scratch: player.options.scratch,
       key_mode: getKeyMode(notechart, player.options.scratch),
       lane_lift: Math.max(0, -player.options.laneCover),
-      lane_press: Math.max(0, player.options.laneCover)
+      lane_press: Math.max(0, player.options.laneCover),
     }
     this._gauge = getGauge(player.options.gauge)
     this._touch3dMode = skinData.displayMode === 'touch3d'
   }
-  update (time, gameTime, playerState) {
+  update(time, gameTime, playerState) {
     const touch3dMode = this._touch3dMode
     let player = this._player
     let noteArea = this._noteArea
@@ -56,32 +56,33 @@ export class PlayerDisplay {
     Object.assign(data, stateful)
     return data
 
-    function updateBeat () {
+    function updateBeat() {
       data.beat = beat
     }
 
-    function getCount (judgment) {
+    function getCount(judgment) {
       return playerState.stats.counts && playerState.stats.counts[judgment]
     }
 
-    function getAccuracy () {
+    function getAccuracy() {
       return ((playerState.stats.currentAccuracy || 0) * 100).toFixed(2) + '%'
     }
 
-    function updateVisibleNotes () {
+    function updateVisibleNotes() {
       let entities = noteArea.getVisibleNotes(position, getUpperBound(), 1)
       if (touch3dMode) {
         const putNote = (id, noteY, column, scale = 1) => {
           const row = touch3d.getRow(noteY - 0.01)
           const columnIndex = +column || -1
           const areaWidth = touch3d.PLAY_AREA_WIDTH
-          const xOffset = row.projection * areaWidth * (2 * (columnIndex - 0.5) / 7 - 1)
-          const desiredWidth = row.projection * scale * areaWidth * 2 / 7
+          const xOffset =
+            row.projection * areaWidth * ((2 * (columnIndex - 0.5)) / 7 - 1)
+          const desiredWidth = (row.projection * scale * areaWidth * 2) / 7
           push(`note3d_${column}`, {
             key: id,
             y: row.y,
             x: xOffset + 1280 / 2,
-            width: desiredWidth
+            width: desiredWidth,
           })
         }
         let longNoteStep = 3 / 128
@@ -122,13 +123,13 @@ export class PlayerDisplay {
               y: entity.y,
               height: entity.height,
               active: judgment !== 0 && judgment !== MISSED,
-              missed: status === 'judged' && judgment === MISSED
+              missed: status === 'judged' && judgment === MISSED,
             })
           } else {
             if (playerState.getNoteStatus(note) !== 'judged') {
               push(`note_${column}`, {
                 key: note.id,
-                y: entity.y
+                y: entity.y,
               })
             }
           }
@@ -136,7 +137,7 @@ export class PlayerDisplay {
       }
     }
 
-    function updateBarLines () {
+    function updateBarLines() {
       let entities = noteArea.getVisibleBarLines(position, getUpperBound(), 1)
       for (let entity of entities) {
         if (touch3dMode) {
@@ -145,7 +146,7 @@ export class PlayerDisplay {
             key: entity.id,
             y: row.y,
             x: row.projection * -touch3d.PLAY_AREA_WIDTH + 1280 / 2,
-            width: row.projection * touch3d.PLAY_AREA_WIDTH * 2
+            width: row.projection * touch3d.PLAY_AREA_WIDTH * 2,
           })
         } else {
           push('barlines', { key: entity.id, y: entity.y })
@@ -153,7 +154,7 @@ export class PlayerDisplay {
       }
     }
 
-    function updateInput () {
+    function updateInput() {
       let input = playerState.input
       for (let column of player.columns) {
         let control = input.get(column)
@@ -168,7 +169,7 @@ export class PlayerDisplay {
       }
     }
 
-    function updateJudgment () {
+    function updateJudgment() {
       let notifications = playerState.notifications.judgments
       let notification = notifications[notifications.length - 1]
       if (notification) {
@@ -179,15 +180,17 @@ export class PlayerDisplay {
           notification.judgment === -1 || notification.judgment === 1
             ? 'none'
             : notification.delta > 0
-              ? 'late'
-              : notification.delta < 0 ? 'early' : 'none'
+            ? 'late'
+            : notification.delta < 0
+            ? 'early'
+            : 'none'
         stateful[`judge_deviation_${deviationMode}`] = time
         stateful['combo'] = notification.combo
       }
       data['score'] = playerState.stats.score
     }
 
-    function updateGauge () {
+    function updateGauge() {
       gauge.update(playerState)
       if (gauge.shouldDisplay()) {
         if (!stateful['gauge_enter']) stateful['gauge_enter'] = time
@@ -201,7 +204,7 @@ export class PlayerDisplay {
       data['gauge_extra'] = gauge.getExtra()
     }
 
-    function updateExplode () {
+    function updateExplode() {
       let notifications = playerState.notifications.judgments
       for (let i = 0; i < notifications.length; i++) {
         let notification = notifications[i]
@@ -211,7 +214,7 @@ export class PlayerDisplay {
       }
     }
 
-    function getUpperBound () {
+    function getUpperBound() {
       return position + 5 / speed
     }
   }
@@ -221,7 +224,7 @@ export default PlayerDisplay
 
 // TODO: MOVE THIS TO bemuse-notechart
 //
-function getKeyMode (notechart, scratch) {
+function getKeyMode(notechart, scratch) {
   const usedColumns = {}
   for (const note of notechart.notes) {
     usedColumns[note.column] = true

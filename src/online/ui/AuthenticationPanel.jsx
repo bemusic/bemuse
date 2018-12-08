@@ -12,17 +12,17 @@ import AuthenticationForm from './AuthenticationForm'
 
 export default class AuthenticationPanel extends React.Component {
   static propTypes = {
-    onFinish: PropTypes.func
+    onFinish: PropTypes.func,
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       mode: 'logIn',
       authentication: {
         status: 'idle',
-        message: ''
-      }
+        message: '',
+      },
     }
   }
 
@@ -38,8 +38,8 @@ export default class AuthenticationPanel extends React.Component {
     this.setState({
       authentication: {
         status: 'loading',
-        message: 'Omachi kudasai...'
-      }
+        message: 'Omachi kudasai...',
+      },
     })
     promise
       .then(
@@ -47,16 +47,16 @@ export default class AuthenticationPanel extends React.Component {
           this.setState({
             authentication: {
               status: 'completed',
-              message: message
-            }
+              message: message,
+            },
           })
         },
         error => {
           this.setState({
             authentication: {
               status: 'error',
-              message: error.message
-            }
+              message: error.message,
+            },
           })
         }
       )
@@ -119,7 +119,7 @@ export default class AuthenticationPanel extends React.Component {
     this.setState({ mode: 'signUp' })
   }
 
-  render () {
+  render() {
     return (
       <div className='AuthenticationPanel'>
         <Panel title='Bemuse Online Ranking'>
@@ -130,7 +130,11 @@ export default class AuthenticationPanel extends React.Component {
                 alt='DJ Bemuse'
               />
               <div className='AuthenticationPanelのidentification'>
-                Bemuse<br />Online<br />Ranking
+                Bemuse
+                <br />
+                Online
+                <br />
+                Ranking
               </div>
             </div>
             <div className='AuthenticationPanelのcontent'>

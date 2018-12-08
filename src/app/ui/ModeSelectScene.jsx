@@ -17,19 +17,19 @@ const enhance = connectIO({
   onSetMode: () => (mode, playDevice) =>
     OptionsIO.updateOptions(
       playDevice === 'touch' &&
-      window.innerWidth >= window.innerHeight &&
-      mode === 'KB'
+        window.innerWidth >= window.innerHeight &&
+        mode === 'KB'
         ? Options.changePanelPlacement('3d')
         : Options.changePlayMode(mode)
-    )
+    ),
 })
 
 class ModeSelectScene extends React.Component {
   static propTypes = {
-    onSetMode: PropTypes.func
+    onSetMode: PropTypes.func,
   }
 
-  render () {
+  render() {
     return (
       <Scene className='ModeSelectScene'>
         <SceneHeading>Select Mode</SceneHeading>
@@ -68,7 +68,7 @@ class ModeSelectScene extends React.Component {
     )
   }
 
-  renderKBGraphics () {
+  renderKBGraphics() {
     let children = []
     for (let i = 0; i < 7; i++) {
       if (i === 3) {
@@ -109,7 +109,7 @@ class ModeSelectScene extends React.Component {
     )
   }
 
-  renderBMGraphics () {
+  renderBMGraphics() {
     let children = []
     for (let i = 0; i < 7; i++) {
       children.push(
@@ -137,7 +137,7 @@ class ModeSelectScene extends React.Component {
     )
   }
 
-  setPlayDevice (device) {
+  setPlayDevice(device) {
     console.log('Set play device to', device)
     if (!this._playDevice) {
       this._playDevice = device

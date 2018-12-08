@@ -16,11 +16,11 @@ let execFile = Promise.promisify(_execFile)
 let throat = new Throat(cpus().length || 1)
 
 export class AudioConvertor {
-  constructor (type, ...extra) {
+  constructor(type, ...extra) {
     this._target = type
     this._extra = extra
   }
-  convert (file) {
+  convert(file) {
     let ext = extname(file.name).toLowerCase()
     if (ext === '.' + this._target && !this.force) {
       return Promise.resolve(file)
@@ -31,10 +31,10 @@ export class AudioConvertor {
       )
     }
   }
-  _doConvert (path, type) {
+  _doConvert(path, type) {
     if (type === 'm4a') {
       return co(
-        function * () {
+        function*() {
           let wav = yield this._SoX(path, 'wav')
           let prefix = tmp()
           let wavPath = prefix + '.wav'
@@ -53,7 +53,7 @@ export class AudioConvertor {
               '-q',
               '127',
               '-s',
-              '2'
+              '2',
             ])
           }
           return yield readFile(m4aPath)
@@ -63,9 +63,9 @@ export class AudioConvertor {
       return this._SoX(path, type)
     }
   }
-  _SoX (path, type) {
+  _SoX(path, type) {
     return co(
-      function * () {
+      function*() {
         let typeArgs = []
         try {
           let fd = yield Promise.promisify(fs.open, fs)(path, 'r')
@@ -103,7 +103,7 @@ export class AudioConvertor {
       }.bind(this)
     )
   }
-  _doSoX (path, type, inputTypeArgs) {
+  _doSoX(path, type, inputTypeArgs) {
     return throat(
       () =>
         new Promise((resolve, reject) => {
@@ -113,7 +113,7 @@ export class AudioConvertor {
             '-t',
             type,
             ...this._extra,
-            '-'
+            '-',
           ])
           sox.stdin.end()
           sox.stderr.on('data', x => process.stderr.write(x))

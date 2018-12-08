@@ -14,11 +14,11 @@ import connectIO from '../../impure-react/connectIO'
 
 const enhance = compose(
   connect(state => ({
-    log: ReduxState.selectCustomSongLoaderLog(state)
+    log: ReduxState.selectCustomSongLoaderLog(state),
   })),
   connectIO({
     onFileDrop: () => event => CustomSongsIO.handleCustomSongFolderDrop(event),
-    onPaste: () => e => CustomSongsIO.handleClipboardPaste(e)
+    onPaste: () => e => CustomSongsIO.handleClipboardPaste(e),
   })
 )
 
@@ -27,23 +27,23 @@ class CustomBMS extends React.Component {
     log: PropTypes.arrayOf(PropTypes.string),
     onFileDrop: PropTypes.func,
     onPaste: PropTypes.func,
-    onSongLoaded: PropTypes.func
+    onSongLoaded: PropTypes.func,
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = { hover: false }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     window.addEventListener('paste', this.handlePaste)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener('paste', this.handlePaste)
   }
 
-  render () {
+  render() {
     return (
       <Panel className='CustomBMS' title='Load Custom BMS'>
         <div className='CustomBMSのwrapper'>
@@ -61,7 +61,7 @@ class CustomBMS extends React.Component {
           </div>
           <div
             className={c('CustomBMSのdropzone', {
-              'is-hover': this.state.hover
+              'is-hover': this.state.hover,
             })}
             onDragOver={this.handleDragOver}
             onDragEnter={this.handleDragEnter}
@@ -71,7 +71,9 @@ class CustomBMS extends React.Component {
             {this.props.log ? (
               this.props.log.length ? (
                 <div className='CustomBMSのlog'>
-                  {this.props.log.map((text, i) => <p key={i}>{text}</p>)}
+                  {this.props.log.map((text, i) => (
+                    <p key={i}>{text}</p>
+                  ))}
                 </div>
               ) : (
                 <div className='CustomBMSのlog'>

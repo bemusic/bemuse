@@ -10,7 +10,7 @@ import FloatingMobileButton from 'bemuse/ui/FloatingMobileButton'
 import FloatingMobileMenu from 'bemuse/ui/FloatingMobileMenu'
 import Toggle from 'react-toggled'
 
-function Toolbar ({ items }) {
+function Toolbar({ items }) {
   return (
     <WindowSize
       render={({ width, height }) =>
@@ -24,12 +24,12 @@ function Toolbar ({ items }) {
   )
 }
 Toolbar.propTypes = {
-  items: PropTypes.array
+  items: PropTypes.array,
 }
 
 const defaultOptions = {
   href: 'javascript://bemuse.ninja',
-  onClick: openLink
+  onClick: openLink,
 }
 
 Toolbar.item = (text, options) => {
@@ -37,7 +37,7 @@ Toolbar.item = (text, options) => {
     type: 'item',
     text,
     ...defaultOptions,
-    ...options
+    ...options,
   }
 }
 Toolbar.spacer = () => {
@@ -46,9 +46,9 @@ Toolbar.spacer = () => {
 
 class DesktopToolbar extends React.PureComponent {
   static propTypes = {
-    items: PropTypes.array.isRequired
+    items: PropTypes.array.isRequired,
   }
-  render () {
+  render() {
     return (
       <SceneToolbar>
         {this.props.items.map((element, index) => {
@@ -67,7 +67,7 @@ class DesktopToolbar extends React.PureComponent {
       </SceneToolbar>
     )
   }
-  renderItem (item) {
+  renderItem(item) {
     let content = item.text
     if (item.tip) {
       if (item.tipFeatureKey) {
@@ -90,16 +90,16 @@ class DesktopToolbar extends React.PureComponent {
       </a>
     )
   }
-  renderSpacer () {
+  renderSpacer() {
     return <SceneToolbar.Spacer />
   }
 }
 
 class MobileToolbar extends React.PureComponent {
   static propTypes = {
-    items: PropTypes.array.isRequired
+    items: PropTypes.array.isRequired,
   }
-  render () {
+  render() {
     return (
       <Toggle>
         {({ on, getTogglerProps }) => (
@@ -129,19 +129,19 @@ class MobileToolbar extends React.PureComponent {
       </Toggle>
     )
   }
-  renderItem (item) {
+  renderItem(item) {
     return (
       <a onClick={item.onClick} href={item.href}>
         {item.text}
       </a>
     )
   }
-  renderSeparator () {
+  renderSeparator() {
     return <FloatingMobileMenu.Separator />
   }
 }
 
-function openLink (e) {
+function openLink(e) {
   e.preventDefault()
   window.open(
     $(e.target)

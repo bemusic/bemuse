@@ -4,7 +4,6 @@
     "titleBar.activeForeground": "#FEE4ED"
   },
   "editor.formatOnSave": true,
-  "prettier.eslintIntegration": true,
   "cSpell.words": [
     "AGPL",
     "BGAs",

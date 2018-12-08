@@ -10,15 +10,15 @@ class OptionsInputField extends React.PureComponent {
     parse: PropTypes.func,
     onChange: PropTypes.func,
     validator: PropTypes.object,
-    value: PropTypes.any
+    value: PropTypes.any,
   }
   static defaultProps = {
     stringify: x => `${x}`,
     parse: x => x,
-    onChange: () => {}
+    onChange: () => {},
   }
 
-  render () {
+  render() {
     return (
       <input
         {..._.omit(this.props, [
@@ -26,7 +26,7 @@ class OptionsInputField extends React.PureComponent {
           'parse',
           'onChange',
           'validator',
-          'value'
+          'value',
         ])}
         type='text'
         ref='input'
@@ -51,7 +51,7 @@ class OptionsInputField extends React.PureComponent {
     input.value = this.props.stringify(this.props.value)
     input.classList.remove('is-invalid')
   }
-  componentDidUpdate (previousProps, previousState) {
+  componentDidUpdate(previousProps, previousState) {
     let newValue = this.props.stringify(this.props.value)
     if (this.props.stringify(previousProps.value) !== newValue) {
       let input = ReactDOM.findDOMNode(this.refs.input)

@@ -1,6 +1,5 @@
-
-@import "~bemuse/ui/common";
-@import "options-input-common";
+@import '~bemuse/ui/common';
+@import 'options-input-common';
 
 .OptionsInputScratch {
   $color: #faa;
@@ -12,7 +11,12 @@
   @include options-input-button($color);
   > svg {
     position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
   &のstar {
     fill: rgba($color, 0.2);
@@ -24,7 +28,11 @@
   &のkeySeparator {
     font-size: 0.8em;
     margin: 0.25ex 0;
-    &::before, &::after { content: '—'; margin: 0 0.25em; }
+    &::before,
+    &::after {
+      content: '—';
+      margin: 0 0.25em;
+    }
   }
   &.is-editing &のkey:not(.is-editing),
   &.is-editing &のkeySeparator:not(.is-editing) {

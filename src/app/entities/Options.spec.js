@@ -108,7 +108,7 @@ describe('Options', () => {
     itCanBeToggled({
       check: Options.isBackgroundAnimationsEnabled,
       toggle: Options.toggleBackgroundAnimations,
-      defaultSetting: true
+      defaultSetting: true,
     })
   })
 
@@ -116,7 +116,7 @@ describe('Options', () => {
     itCanBeToggled({
       check: Options.isAutoVelocityEnabled,
       toggle: Options.toggleAutoVelocity,
-      defaultSetting: false
+      defaultSetting: false,
     })
   })
 
@@ -124,7 +124,7 @@ describe('Options', () => {
     itCanBeToggled({
       check: Options.isGaugeEnabled,
       toggle: Options.toggleGauge,
-      defaultSetting: false
+      defaultSetting: false,
     })
   })
 
@@ -164,7 +164,7 @@ describe('Options', () => {
     })
   })
 
-  function itCanBeToggled ({ check, toggle, defaultSetting }) {
+  function itCanBeToggled({ check, toggle, defaultSetting }) {
     it('defaults to ' + defaultSetting, () => {
       given(Options.initialState).then(check, shouldEqual(defaultSetting))
     })

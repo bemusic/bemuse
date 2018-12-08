@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-export function getBpmInfo (notes, timing) {
+export function getBpmInfo(notes, timing) {
   var maxBeat = _(notes.all())
     .map('beat')
     .max()
@@ -8,7 +8,7 @@ export function getBpmInfo (notes, timing) {
     .concat([0, maxBeat])
     .sortBy()
     .uniq()
-    .filter(function (beat) {
+    .filter(function(beat) {
       return beat <= maxBeat
     })
     .value()
@@ -24,14 +24,14 @@ export function getBpmInfo (notes, timing) {
     init: timing.bpmAtBeat(0),
     min: getPercentile(2),
     median: getPercentile(50),
-    max: getPercentile(98)
+    max: getPercentile(98),
   }
 }
 
-function percentile (data) {
+function percentile(data) {
   data = _.sortBy(data, 0)
   var total = _.sumBy(data, 1)
-  return function (percentileNo) {
+  return function(percentileNo) {
     var current = 0
     for (var i = 0; i < data.length; i++) {
       current += data[i][1]

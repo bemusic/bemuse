@@ -8,7 +8,7 @@ import $ from 'jquery'
 export default class AuthenticationForm extends React.Component {
   static propTypes = {
     onSubmit: PropTypes.func,
-    mode: PropTypes.string
+    mode: PropTypes.string,
   }
 
   onButtonClick = e => {
@@ -18,17 +18,17 @@ export default class AuthenticationForm extends React.Component {
       password: ReactDOM.findDOMNode(this.refs.password).value,
       passwordConfirmation: ReactDOM.findDOMNode(this.refs.passwordConfirmation)
         .value,
-      email: ReactDOM.findDOMNode(this.refs.email).value
+      email: ReactDOM.findDOMNode(this.refs.email).value,
     })
   }
 
-  componentDidMount () {
+  componentDidMount() {
     $(ReactDOM.findDOMNode(this)).on('keydown keyup keypress', e => {
       e.stopPropagation()
     })
   }
 
-  render () {
+  render() {
     return (
       <form className='AuthenticationForm'>
         <div className='AuthenticationFormのgroup'>

@@ -17,7 +17,7 @@ import * as ErrorDialog from './ui/ErrorDialog'
 import loadModule from './loader'
 import LoadingContext from './loading-context'
 
-window.onerror = function (message, url, line, col, e) {
+window.onerror = function(message, url, line, col, e) {
   ErrorDialog.show(message, url, line, col, e)
 }
 
@@ -35,7 +35,7 @@ import(/* webpackChunkName: 'environment' */ './environment')
       let progress = new Progress()
       let context = new LoadingContext(progress)
       progress.watch(() => Boot.setProgress(progress.progress))
-      context.use(function () {
+      context.use(function() {
         // >>
         // The main script is then loaded and imported into the environment,
         // and its ``main()`` method is invoked.
@@ -46,12 +46,19 @@ import(/* webpackChunkName: 'environment' */ './environment')
         //
         // .. codedoc:: boot/modes
         //
-        loadModule[mode]().then(loadedModule => {
-          Boot.hide()
-          loadedModule.main()
-        }).catch(err => console.error('An error occurred while loading the mode', err))
+        loadModule[mode]()
+          .then(loadedModule => {
+            Boot.hide()
+            loadedModule.main()
+          })
+          .catch(err =>
+            console.error('An error occurred while loading the mode', err)
+          )
       })
     } else {
       console.error('Invalid mode:', mode)
     }
-  }).catch(err => console.error('An error occurred while loading the component', err))
+  })
+  .catch(err =>
+    console.error('An error occurred while loading the component', err)
+  )

@@ -6,10 +6,10 @@ import LoadingSceneProgressBar from './LoadingSceneProgressBar.jsx'
 
 export default class LoadingSceneProgress extends React.Component {
   static propTypes = {
-    tasks: PropTypes.object
+    tasks: PropTypes.object,
   }
 
-  render () {
+  render() {
     return (
       <div className='LoadingSceneProgress'>
         {this.props.tasks.value.map(task => this.renderItem(task))}
@@ -29,11 +29,11 @@ export default class LoadingSceneProgress extends React.Component {
     )
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this._unsubscribe = this.props.tasks.watch(() => this.forceUpdate())
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this._unsubscribe()
   }
 }

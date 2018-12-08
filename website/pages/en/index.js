@@ -10,21 +10,21 @@ const GridBlock = CompLibrary.GridBlock
 
 const siteConfig = require(process.cwd() + '/siteConfig.js')
 
-function imgUrl (img) {
+function imgUrl(img) {
   return siteConfig.baseUrl + 'img/' + img
 }
 
-function docUrl (doc, language) {
+function docUrl(doc, language) {
   return siteConfig.baseUrl + 'docs/' + (language ? language + '/' : '') + doc
 }
 
-function pageUrl (page, language) {
+function pageUrl(page, language) {
   // eslint-disable-line
   return siteConfig.baseUrl + (language ? language + '/' : '') + page
 }
 
 class Button extends React.Component {
-  render () {
+  render() {
     return (
       <div className='pluginWrapper buttonWrapper'>
         <a className='button' href={this.props.href} target={this.props.target}>
@@ -36,14 +36,14 @@ class Button extends React.Component {
 }
 
 Button.defaultProps = {
-  target: '_self'
+  target: '_self',
 }
 
 const SplashContainer = props => (
   <div
     className='homeContainer'
     style={{
-      backgroundImage: `url(${imgUrl('bg-title.jpg')})`
+      backgroundImage: `url(${imgUrl('bg-title.jpg')})`,
     }}
   >
     <div className='homeSplashFade'>
@@ -93,7 +93,7 @@ const CTAButtons = props => (
 )
 
 class HomeSplash extends React.Component {
-  render () {
+  render() {
     let language = this.props.language || ''
     return (
       <SplashContainer>
@@ -183,8 +183,7 @@ const FeatureTour = props => (
       }
       imageAlign='left'
     >
-      <MarkdownBlock
-      >{`More challenge with an extra turntable lane! \\\nYou can also play using an [IIDX controller](https://www.youtube.com/watch?v=EOgI37Myqvk) or [MIDI controller](https://www.facebook.com/bemusegame/videos/985712734835136/). \\\nThis mode is similar to beatmaniaIIDX and LR2.`}</MarkdownBlock>
+      <MarkdownBlock>{`More challenge with an extra turntable lane! \\\nYou can also play using an [IIDX controller](https://www.youtube.com/watch?v=EOgI37Myqvk) or [MIDI controller](https://www.facebook.com/bemusegame/videos/985712734835136/). \\\nThis mode is similar to beatmaniaIIDX and LR2.`}</MarkdownBlock>
     </FeatureBlock>
 
     <FeatureBlock
@@ -198,8 +197,7 @@ const FeatureTour = props => (
       }
       imageAlign='right'
     >
-      <MarkdownBlock
-      >{`More than [50 songs](/project/music.html) to choose, handpicked from various genres.`}</MarkdownBlock>
+      <MarkdownBlock>{`More than [50 songs](/project/music.html) to choose, handpicked from various genres.`}</MarkdownBlock>
     </FeatureBlock>
 
     <FeatureBlock
@@ -212,11 +210,10 @@ const FeatureTour = props => (
       }
       imageAlign='left'
     >
-      <MarkdownBlock
-      >{`If you would like to host your own music server with custom song sets, you can! [Click here](${docUrl(
-          'music-server.html',
-          props.language || ''
-        )}) to learn how.`}</MarkdownBlock>
+      <MarkdownBlock>{`If you would like to host your own music server with custom song sets, you can! [Click here](${docUrl(
+        'music-server.html',
+        props.language || ''
+      )}) to learn how.`}</MarkdownBlock>
     </FeatureBlock>
 
     <FeatureBlock
@@ -225,17 +222,16 @@ const FeatureTour = props => (
       image={<img alt='Screenshot' src={imgUrl('screenshots/oss.png')} />}
       imageAlign='right'
     >
-      <MarkdownBlock
-      >{`Bemuse is free and open source (licensed under [AGPLv3](https://github.com/bemusic/bemuse/blob/master/LICENSE)), made awesome by [our contributors](https://github.com/bemusic/bemuse/graphs/contributors).\n\nContributions are welcome! [Click here](${pageUrl(
-          'contribute.html',
-          props.language || ''
-        )}) to get started, and have a look at our [issues page](https://github.com/bemusic/bemuse/issues).`}</MarkdownBlock>
+      <MarkdownBlock>{`Bemuse is free and open source (licensed under [AGPLv3](https://github.com/bemusic/bemuse/blob/master/LICENSE)), made awesome by [our contributors](https://github.com/bemusic/bemuse/graphs/contributors).\n\nContributions are welcome! [Click here](${pageUrl(
+        'contribute.html',
+        props.language || ''
+      )}) to get started, and have a look at our [issues page](https://github.com/bemusic/bemuse/issues).`}</MarkdownBlock>
     </FeatureBlock>
   </div>
 )
 
 class Index extends React.Component {
-  render () {
+  render() {
     let language = this.props.language || ''
 
     return (

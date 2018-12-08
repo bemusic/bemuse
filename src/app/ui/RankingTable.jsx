@@ -10,15 +10,15 @@ const RankingTable = ({ children }) => (
 )
 
 RankingTable.propTypes = {
-  children: PropTypes.any
+  children: PropTypes.any,
 }
 
 class Row extends React.Component {
   static propTypes = {
-    record: PropTypes.object
+    record: PropTypes.object,
   }
 
-  render () {
+  render() {
     return (
       <tr>
         <td className='RankingTableのrank'>
@@ -45,7 +45,7 @@ export const Message = ({ children }) => (
 )
 
 Message.propTypes = {
-  children: PropTypes.any
+  children: PropTypes.any,
 }
 
 RankingTable.Row = Row

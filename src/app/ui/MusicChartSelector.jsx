@@ -9,10 +9,10 @@ class MusicChartSelector extends React.Component {
     charts: PropTypes.array,
     song: PropTypes.object,
     selectedChart: PropTypes.object,
-    onChartClick: PropTypes.func
+    onChartClick: PropTypes.func,
   }
 
-  render () {
+  render() {
     return (
       <ul className='MusicChartSelector'>
         {this.props.charts.map((chart, index) => (

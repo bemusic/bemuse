@@ -1,7 +1,7 @@
 import { createStore } from 'redux'
 import { reducer } from './ReduxState'
 
-export default function configureStore (initialState) {
+export default function configureStore(initialState) {
   const devTools = window.devToolsExtension
     ? window.devToolsExtension()
     : f => f

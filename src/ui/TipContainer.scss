@@ -1,4 +1,3 @@
-
 .TipContainer {
   display: inline-block;
   position: relative;
@@ -15,7 +14,7 @@
   &のbubbleContent {
     position: relative;
     display: block;
-    background: #B61A44;
+    background: #b61a44;
     padding: 8px 12px;
     color: white;
     white-space: nowrap;
@@ -35,7 +34,7 @@
       border-width: 8px 8px 0 8px;
       border-style: solid;
       border-color: transparent;
-      border-top-color: #B61A44;
+      border-top-color: #b61a44;
     }
   }
 }
@@ -47,9 +46,23 @@
   }
 }
 @keyframes TipContainerのbubbleContent {
-  0% { transform: translateY(0); animation-timing-function: ease-out; }
-  25% { transform: translateY(-3px); animation-timing-function: ease-in; }
-  50% { transform: translateY(0); animation-timing-function: ease-out; }
-  75% { transform: translateY(3px); animation-timing-function: ease-in; }
-  100% { transform: translateY(0); }
+  0% {
+    transform: translateY(0);
+    animation-timing-function: ease-out;
+  }
+  25% {
+    transform: translateY(-3px);
+    animation-timing-function: ease-in;
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: ease-out;
+  }
+  75% {
+    transform: translateY(3px);
+    animation-timing-function: ease-in;
+  }
+  100% {
+    transform: translateY(0);
+  }
 }

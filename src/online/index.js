@@ -10,10 +10,10 @@ import {
   completedStateTransition,
   isWaiting,
   operationState川,
-  transition川FromPromise
+  transition川FromPromise,
 } from './operations'
 
-export function Online (service) {
+export function Online(service) {
   const user口 = new Bacon.Bus()
   const seen口 = new Bacon.Bus()
   const submitted口 = new Bacon.Bus()
@@ -23,27 +23,27 @@ export function Online (service) {
     .toProperty(null)
     .map(user => user || service.getCurrentUser())
 
-  function signUp (options) {
+  function signUp(options) {
     return Promise.resolve(service.signUp(options)).tap(user =>
       user口.push(user)
     )
   }
 
-  function logIn (options) {
+  function logIn(options) {
     return Promise.resolve(service.logIn(options)).tap(user =>
       user口.push(user)
     )
   }
 
-  function logOut () {
+  function logOut() {
     return service.logOut().tap(() => user口.push(null))
   }
 
-  function submitScore (info) {
+  function submitScore(info) {
     return service.submitScore(info).tap(record => submitted口.push(record))
   }
 
-  function getScoreboard (level) {
+  function getScoreboard(level) {
     return service.retrieveScoreboard(level)
   }
 
@@ -54,7 +54,7 @@ export function Online (service) {
 
   const dispose = records川.onValue(() => {})
 
-  function allSeen川ForJustSeen川 (justSeen川) {
+  function allSeen川ForJustSeen川(justSeen川) {
     return justSeen川
       .bufferWithTime(138)
       .scan(new Immutable.Map(), (map, seen) =>
@@ -65,7 +65,7 @@ export function Online (service) {
       .map(seq => seq.toJS())
   }
 
-  function records川ForUser (user) {
+  function records川ForUser(user) {
     let seen = {}
 
     {
@@ -83,7 +83,7 @@ export function Online (service) {
       return DataStore.store川(action川)
     }
 
-    function fetch (levels) {
+    function fetch(levels) {
       const levelsToFetch = levels.filter(level => !seen[id(level)])
       for (let level of levelsToFetch) {
         seen[id(level)] = true
@@ -94,7 +94,7 @@ export function Online (service) {
           : Promise.resolve([])
       return Bacon.fromPromise(
         promise
-          .then(function (results) {
+          .then(function(results) {
             let loadedRecords = _.zipObject(
               results.map(id),
               results.map(completedStateTransition)
@@ -106,7 +106,7 @@ export function Online (service) {
             let transitions = _.defaults(loadedRecords, nullResults)
             return DataStore.putMultiple(transitions)
           })
-          .catch(function (e) {
+          .catch(function(e) {
             console.error('Cannot fetch levels:', e)
             return DataStore.putMultiple({})
           })
@@ -114,7 +114,7 @@ export function Online (service) {
     }
   }
 
-  function Ranking (data) {
+  function Ranking(data) {
     const level = Level.fromObject(data)
     const retrySelf口 = new Bacon.Bus()
     const retryScoreboard口 = new Bacon.Bus()
@@ -130,61 +130,61 @@ export function Online (service) {
       const scoreboard川 = getScoreboardState川(scoreboardTrigger川)
       const state川 = Bacon.combineTemplate({
         self: self川,
-        scoreboard: scoreboard川
+        scoreboard: scoreboard川,
       }).map(conformState)
       return {
         state川,
         resubmit: () => retrySelf口.push(),
-        reloadScoreboard: () => retryScoreboard口.push()
+        reloadScoreboard: () => retryScoreboard口.push(),
       }
     }
 
     // Make the state conform the old API. We should remove this in the future.
-    function conformState (state) {
+    function conformState(state) {
       return {
         data: state.scoreboard.value && state.scoreboard.value.data,
         meta: {
           scoreboard: _.omit(state.scoreboard, 'value'),
-          submission: state.self
-        }
+          submission: state.self,
+        },
       }
     }
 
-    function rankingModelForUser (user) {
+    function rankingModelForUser(user) {
       if (!user) return unauthenticatedRankingModel()
       return data.score ? submissionModel(user) : viewRecordModel(user)
     }
 
-    function unauthenticatedRankingModel () {
+    function unauthenticatedRankingModel() {
       return {
         self川: Bacon.constant({
           status: 'unauthenticated',
           error: null,
-          record: null
+          record: null,
         }),
-        scoreboardTrigger川: Bacon.once({ force: false })
+        scoreboardTrigger川: Bacon.once({ force: false }),
       }
     }
 
-    function submissionModel (user) {
+    function submissionModel(user) {
       const self川 = submitScoreState川(user)
       const selfDone川 = self川
         .toEventStream()
         .filter(state => !isWaiting(state))
       return {
         self川,
-        scoreboardTrigger川: selfDone川.map(() => ({ force: true }))
+        scoreboardTrigger川: selfDone川.map(() => ({ force: true })),
       }
     }
 
-    function viewRecordModel (user) {
+    function viewRecordModel(user) {
       return {
         self川: getRecordState川(user),
-        scoreboardTrigger川: asap川({ force: false })
+        scoreboardTrigger川: asap川({ force: false }),
       }
     }
 
-    function getScoreboardState川 (trigger川) {
+    function getScoreboardState川(trigger川) {
       return operationState川(
         trigger川
           .merge(retryScoreboard口)
@@ -192,7 +192,7 @@ export function Online (service) {
       )
     }
 
-    function getRecordState川 (user) {
+    function getRecordState川(user) {
       return operationState川(
         asap川()
           .merge(retrySelf口)
@@ -202,7 +202,7 @@ export function Online (service) {
       )
     }
 
-    function submitScoreState川 (user) {
+    function submitScoreState川(user) {
       return operationState川(
         asap川()
           .merge(retrySelf口)
@@ -211,11 +211,11 @@ export function Online (service) {
     }
   }
 
-  function seen (level) {
+  function seen(level) {
     return seen口.push(level)
   }
 
-  function asap川 (value) {
+  function asap川(value) {
     return Bacon.later(0, value)
   }
 
@@ -229,7 +229,7 @@ export function Online (service) {
     scoreboard: getScoreboard,
     Ranking,
     seen,
-    dispose
+    dispose,
   }
 }
 
