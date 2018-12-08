@@ -38,3 +38,11 @@ rules:
   node/no-deprecated-api: warn
   no-sequences: off
   import/named: warn
+overrides:
+  - files:
+      - '**/*.ts'
+      - '**/*.tsx'
+    rules:
+      no-undef: off
+      no-unused-vars: off
+      no-use-before-define: off
