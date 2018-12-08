@@ -1,6 +1,7 @@
 /dist/
 *.mp3
 /code-review-result.txt
+package-lock.json
 
 # created by git-ignore
 # Logs
