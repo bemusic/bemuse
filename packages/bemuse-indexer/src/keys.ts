@@ -1,6 +1,9 @@
-export function getKeys(chart) {
+import * as BMS from 'bms'
+import { Keys } from './types'
+
+export function getKeys(chart: BMS.BMSChart): Keys {
   var objects = chart.objects.all()
-  var stat = {}
+  var stat: { [channel: number]: number } = {}
   for (var i = 0; i < objects.length; i++) {
     var object = objects[i]
     var channel = +object.channel
@@ -18,7 +21,7 @@ export function getKeys(chart) {
   }
   return stat[18] || stat[19] ? '7K' : '5K'
 
-  function isSecondPlayer(ch) {
+  function isSecondPlayer(ch: number) {
     return ch >= 20 && ch <= 29
   }
 }

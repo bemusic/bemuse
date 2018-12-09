@@ -1,69 +1,63 @@
-var expect = require('chai').expect
-var indexer = require('./')
-
-require('chai').use(require('chai-as-promised'))
-require('./lcs_spec')
+import { BPMInfo, OutputSongInfo } from './types'
+import { expect } from 'chai'
+import * as indexer from '.'
 
 describe('getFileInfo (bms)', function() {
-  function info(source) {
+  function info(source: string) {
     return indexer.getFileInfo(Buffer.from(source), { name: 'meow.bms' })
   }
 
   describe('.md5', function() {
-    it('should return hash', function() {
-      return expect(info('').get('md5')).to.eventually.equal(
+    it('should return hash', async function() {
+      return expect((await info('')).md5).to.equal(
         'd41d8cd98f00b204e9800998ecf8427e'
       )
     })
   })
 
   describe('.info', function() {
-    it('should return song info', function() {
+    it('should return song info', async function() {
       var source = '#TITLE meow'
-      return expect(
-        info(source)
-          .get('info')
-          .get('title')
-      ).to.eventually.equal('meow')
+      return expect((await info(source)).info.title).to.equal('meow')
     })
   })
 
   describe('.noteCount', function() {
-    it('should not count BGM', function() {
+    it('should not count BGM', async function() {
       var source = '#00101:01'
-      return expect(info(source).get('noteCount')).to.eventually.equal(0)
+      return expect((await info(source)).noteCount).to.equal(0)
     })
-    it('should count playable notes', function() {
+    it('should count playable notes', async function() {
       var source = '#00111:01'
-      return expect(info(source).get('noteCount')).to.eventually.equal(1)
+      return expect((await info(source)).noteCount).to.equal(1)
     })
   })
 
   describe('.scratch', function() {
-    it('is false when no scratch track', function() {
+    it('is false when no scratch track', async function() {
       var source = '#00101:01'
-      return expect(info(source).get('scratch')).to.eventually.be.false
+      return expect((await info(source)).scratch).to.be.false
     })
-    it('should count playable notes', function() {
+    it('should count playable notes', async function() {
       var source = '#00116:01'
-      return expect(info(source).get('scratch')).to.eventually.be.true
+      return expect((await info(source)).scratch).to.be.true
     })
   })
 
   describe('.keys', function() {
-    it('should be empty when no notes', function() {
+    it('should be empty when no notes', async function() {
       var source = '#00101:01'
-      return expect(info(source).get('keys')).to.eventually.equal('empty')
+      return expect((await info(source)).keys).to.equal('empty')
     })
-    it('should be 7K on normal chart', function() {
+    it('should be 7K on normal chart', async function() {
       var source = ['#00111:01', '#00114:01', '#00159:0101'].join('\n')
-      return expect(info(source).get('keys')).to.eventually.equal('7K')
+      return expect((await info(source)).keys).to.equal('7K')
     })
-    it('should be 5K when 6th and 7th keys not detected', function() {
+    it('should be 5K when 6th and 7th keys not detected', async function() {
       var source = ['#00111:01', '#00114:01'].join('\n')
-      return expect(info(source).get('keys')).to.eventually.equal('5K')
+      return expect((await info(source)).keys).to.equal('5K')
     })
-    it('should be 14K on doubles chart', function() {
+    it('should be 14K on doubles chart', async function() {
       var source = [
         '#00111:01',
         '#00114:01',
@@ -72,23 +66,23 @@ describe('getFileInfo (bms)', function() {
         '#00124:01',
         '#00129:0101',
       ].join('\n')
-      return expect(info(source).get('keys')).to.eventually.equal('14K')
+      return expect((await info(source)).keys).to.equal('14K')
     })
     it(
       'should be 10K when 2 players and ' + '6th and 7th keys not detected',
-      function() {
+      async function() {
         var source = ['#00111:01', '#00114:01', '#00121:01', '#00124:01'].join(
           '\n'
         )
-        return expect(info(source).get('keys')).to.eventually.equal('10K')
+        return expect((await info(source)).keys).to.equal('10K')
       }
     )
   })
 
   describe('.duration', function() {
-    it('should be correct', function() {
+    it('should be correct', async function() {
       var source = ['#BPM 120', '#00111:0101'].join('\n')
-      return expect(info(source).get('duration')).to.eventually.equal(3)
+      return expect((await info(source)).duration).to.equal(3)
     })
   })
 
@@ -103,14 +97,11 @@ describe('getFileInfo (bms)', function() {
       '#00311:01',
     ].join('\n')
 
-    var bpm
+    var bpm: BPMInfo
 
-    beforeEach(function() {
-      return info(source)
-        .get('bpm')
-        .tap(function(x) {
-          bpm = x
-        })
+    beforeEach(async function() {
+      const fileInfo = await info(source)
+      bpm = fileInfo.bpm
     })
 
     it('init should be the BPM at first beat', function() {
@@ -129,28 +120,24 @@ describe('getFileInfo (bms)', function() {
 })
 
 describe('getFileInfo (bmson)', function() {
-  function info(bmson) {
+  function info(bmson: any) {
     var source = JSON.stringify(bmson)
     return indexer.getFileInfo(Buffer.from(source), { name: 'meow.bmson' })
   }
 
   describe('.info', function() {
-    it('should return song info', function() {
-      return expect(
-        info({ info: { title: 'Running Out' } })
-          .get('info')
-          .get('title')
-      ).to.eventually.equal('Running Out')
+    it('should return song info', async function() {
+      const out = await info({ info: { title: 'Running Out' } })
+      return expect(out.info.title).to.equal('Running Out')
     })
   })
 
   describe('.bga', function() {
-    it('is undefined if no bga', function() {
-      return expect(
-        info({ info: { title: 'Running Out' } }).get('bga')
-      ).to.eventually.equal(undefined)
+    it('is undefined if no bga', async function() {
+      const out = await info({ info: { title: 'Running Out' } })
+      return expect(out.bga).to.equal(undefined)
     })
-    it('has timing ', function() {
+    it('has timing ', async function() {
       var bmsonData = {
         version: '1.0.0',
         info: {
@@ -162,7 +149,8 @@ describe('getFileInfo (bmson)', function() {
           bga_header: [{ id: 1, name: 'meow.mp4' }],
         },
       }
-      return expect(info(bmsonData).get('bga')).to.eventually.deep.equal({
+      const out = await info(bmsonData)
+      return expect(out.bga).to.deep.equal({
         file: 'meow.mp4',
         offset: 60 / 42,
       })
@@ -205,12 +193,11 @@ describe('getSongInfo', function() {
       },
     ]
 
-    var song
+    var song: OutputSongInfo
 
-    beforeEach(function() {
-      return indexer.getSongInfo(files).tap(function(x) {
-        song = x
-      })
+    beforeEach(async function() {
+      const songInfo = await indexer.getSongInfo(files)
+      song = songInfo
     })
 
     describe('title', function() {
@@ -222,11 +209,10 @@ describe('getSongInfo', function() {
       it('should be correct', function() {
         expect(song.artist).to.equal('lol')
       })
-      it('should be overridable', function() {
+      it('should be overridable', async function() {
         var options = { extra: { artist: 'meowmeow' } }
-        return expect(
-          indexer.getSongInfo(files, options).get('artist')
-        ).to.eventually.equal('meowmeow')
+        const out = await indexer.getSongInfo(files, options)
+        return expect(out.artist).to.equal('meowmeow')
       })
     })
     describe('charts', function() {
@@ -253,7 +239,7 @@ describe('getSongInfo', function() {
 
   describe('a song’s video', function() {
     it('is taken from an available bga in a chart', function() {
-      var charts = [{}, { bga: { file: 'a.mp4', offset: 2 } }, {}]
+      var charts = [{}, { bga: { file: 'a.mp4', offset: 2 } }, {}] as any
       expect(indexer._getSongVideoFromCharts(charts).video_file).to.equal(
         'a.mp4'
       )
