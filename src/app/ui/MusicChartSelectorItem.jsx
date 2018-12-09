@@ -23,25 +23,29 @@ class MusicChartSelectorItem extends React.Component {
       'is-5keys': this.props.chart.keys === '5K',
     })
     return (
-      <li className={classes} onClick={this.handleClick}>
-        {this.props.isTutorial ? (
-          this.props.chart.keys === '5K' ? (
-            'Start Tutorial (5 keys)'
-          ) : (
-            'Start Tutorial (7 keys)'
-          )
-        ) : (
-          <span className='MusicChartSelectorItemのlevel'>
-            {this.props.chart.info.level}
-          </span>
-        )}
+      <li
+        className={classes}
+        onClick={this.handleClick}
+        data-testid={this.props.isSelected ? 'play-selected-chart' : undefined}
+      >
+        {this.renderText()}
         <span className='MusicChartSelectorItemのplay'>
           <Icon name='play' />
         </span>
       </li>
     )
   }
-
+  renderText() {
+    if (this.props.isTutorial) {
+      const gameMode = this.props.chart.keys === '5K' ? '5 keys' : '7 keys'
+      return `Start Tutorial (${gameMode})`
+    }
+    return (
+      <span className='MusicChartSelectorItemのlevel'>
+        {this.props.chart.info.level}
+      </span>
+    )
+  }
   handleClick = () => {
     this.props.onChartClick(this.props.chart)
   }

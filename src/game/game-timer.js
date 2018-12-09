@@ -8,7 +8,11 @@ export class GameTimer {
     this._clock = clock
     this._input = input
     this._now = now.synchronized()
+    this._lastRecordedTimeSinceStart = 0
     this.startTime = null
+    this._pauseAtTimerValue = Infinity
+    this._unpausedTimeSinceStart = 0
+    this._unpausedTimerValue = 0
     this.readyFraction = 0
   }
 
@@ -58,8 +62,24 @@ export class GameTimer {
     if (delta < 1) {
       return (Math.pow(delta, 6) - 1) / 6 - 1 / 30
     } else {
-      return delta - 31 / 30
+      const timeSinceStart = delta - 31 / 30
+      this._lastRecordedTimeSinceStart = timeSinceStart
+      const projectedTimerValue =
+        this._unpausedTimerValue +
+        (timeSinceStart - this._unpausedTimeSinceStart)
+      return Math.min(projectedTimerValue, this._pauseAtTimerValue)
     }
+  }
+  pauseAt(timerValueToPause) {
+    if (
+      this._unpausedTimerValue +
+        (this._lastRecordedTimeSinceStart - this._unpausedTimeSinceStart) >=
+      this._pauseAtTimerValue
+    ) {
+      this._unpausedTimerValue = this._pauseAtTimerValue
+      this._unpausedTimeSinceStart = this._lastRecordedTimeSinceStart
+    }
+    this._pauseAtTimerValue = timerValueToPause
   }
 }
 

@@ -6,6 +6,7 @@
   "private": true,
   "workspaces": [
     "website",
+    "e2e",
     "packages/*"
   ],
   "browserslist": [
@@ -22,7 +23,6 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
     "postbootstrap": "lerna run prepare",
-    "pre-commit": "gulp pre-commit",
     "prepare": "lerna run prepare",
     "prod-build": "cross-env NODE_ENV=production gulp build",
     "prod-start": "cross-env NODE_ENV=production HOT=true gulp server",
@@ -89,6 +89,7 @@
     "gulp-gh-pages": "git://github.com/dtinth/gulp-gh-pages",
     "gulp-mocha": "^6.0.0",
     "gulp-util": "^3.0.8",
+    "husky": "^1.2.0",
     "import-sort-style-renke": "^2.4.0",
     "istanbul-instrumenter-loader": "^3.0.1",
     "jade": "^1.9.2",
@@ -103,6 +104,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^3.0.5",
     "lerna": "^2.11.0",
+    "lint-staged": "^8.1.0",
     "markdown-toc": "^1.2.0",
     "merge-stream": "^1.0.1",
     "minimatch": "^3.0.4",
@@ -192,5 +194,16 @@
     "updeep": "^0.16.0",
     "variance": "0.0.1",
     "whatwg-fetch": "^1.1.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }

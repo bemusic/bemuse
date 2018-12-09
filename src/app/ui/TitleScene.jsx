@@ -101,7 +101,11 @@ class TitleScene extends React.Component {
               <img src={require('./images/logo-with-shadow.svg')} />
             </div>
             <div className='TitleSceneのenter'>
-              <a href='javascript://' onClick={this.enterGame}>
+              <a
+                href='javascript://'
+                onClick={this.enterGame}
+                data-testid='enter-game'
+              >
                 Enter Game
               </a>
             </div>

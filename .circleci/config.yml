@@ -109,6 +109,42 @@ jobs:
             else
               echo 'Not a release commit, skipped!'
             fi
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist
+            - node_modules
+            - e2e/node_modules
+  e2e:
+    working_directory: ~/bemuse
+    environment:
+      FORCE_COLOR: '1'
+      SCREENSHOT_DIR: /tmp/bemuse-e2e-screenshot
+    docker:
+      - image: circleci/node:8-browsers
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install HTTP server
+          command: |
+            sudo npm i -g http-server
+      - run:
+          name: Run server
+          command: |
+            http-server -p 8089 dist
+          background: true
+      - run:
+          name: E2E
+          command: |
+            cd e2e
+            mkdir -p "$SCREENSHOT_DIR"
+            env BEMUSE_PORT=8089 yarn prescript tests/Gameplay-test.js
+          no_output_timeout: 1m
+      - store_artifacts:
+          path: /tmp/bemuse-e2e-screenshot
+          destination: screenshots
 workflows:
   version: 2
   tests:
@@ -117,3 +153,6 @@ workflows:
       - test
       - test_packages
       - build
+      - e2e:
+          requires:
+            - build

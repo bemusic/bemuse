@@ -6,6 +6,7 @@ import GameState from './state'
 import GameTimer from './game-timer'
 import OmniInputPlugin from './input/omni-input-plugin'
 import TouchPlugin from './input/touch-plugin'
+import * as BemuseTestMode from 'bemuse/devtools/BemuseTestMode'
 
 // The GameController takes care of communications between each game
 // component, and takes care of the Game loop.
@@ -22,7 +23,8 @@ export class GameController {
     this._promise = new Promise(resolve => (this._resolvePromise = resolve))
     this._display.setEscapeHandler(() => this._quitGame())
     this._display.setReplayHandler(() => this._replayGame())
-    if (bench.enabled) this.enableBenchmark()
+    this.initializeBenchmark()
+    this.initializeTestModeHooks()
   }
   get game() {
     return this._game
@@ -139,7 +141,8 @@ export class GameController {
     }
   }
 
-  enableBenchmark() {
+  initializeBenchmark() {
+    if (!bench.enabled) return
     bench.benchmark('update', this, '_update')
     bench.benchmark('input_update', this._input, 'update')
     bench.benchmark('state_update', this._state, 'update')
@@ -152,6 +155,30 @@ export class GameController {
       this._display._context._renderer,
       'render'
     )
+  }
+  initializeTestModeHooks() {
+    if (!BemuseTestMode.isTestModeEnabled()) return
+    BemuseTestMode.setGameLifecycleHandler({
+      pauseAt: t => {
+        this._timer.pauseAt(t)
+        return new Promise(resolve => {
+          const interval = setInterval(() => {
+            if (this._timer.time >= t) {
+              clearInterval(interval)
+              resolve()
+            }
+          })
+        })
+      },
+      unpause: () => {
+        this._timer.pauseAt(Infinity)
+      },
+      getScore: () => {
+        const state = this._state
+        const playerState = state.player(state.game.players[0])
+        return playerState.stats.score
+      },
+    })
   }
 }
 
