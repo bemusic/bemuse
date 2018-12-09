@@ -10,9 +10,9 @@ action('Open browser', async state => {
   state.browser = await puppeteer.launch(puppeteerOptions)
   state.page = await state.browser.newPage()
   await state.page.setViewport({ width: 1200, height: 480 })
-  await state.page.goto(
-    'http://localhost:8080/?server=https://raw.githubusercontent.com/bemusic/bemuse-test-server/master'
-  )
+  const testMusicServer =
+    'https://raw.githubusercontent.com/bemusic/bemuse-test-server/master'
+  await state.page.goto('http://localhost:8089/?server=' + testMusicServer)
 })
 
 defer('Close browser', async state => {
