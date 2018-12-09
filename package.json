@@ -4,6 +4,9 @@
   "description": "BEAT☆MUSIC☆SEQUENCE, a web-based music game of the future",
   "main": "index.js",
   "private": true,
+  "engines": {
+    "node": ">=10.14.1"
+  },
   "workspaces": [
     "website",
     "e2e",
