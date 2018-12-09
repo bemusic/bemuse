@@ -139,6 +139,7 @@ jobs:
           command: |
             cd e2e
             yarn prescript tests/Gameplay-test.js
+          no_output_timeout: 1m
 workflows:
   version: 2
   tests:
