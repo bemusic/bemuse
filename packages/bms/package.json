@@ -30,6 +30,12 @@
   },
   "homepage": "https://github.com/bemusic/bms-js",
   "devDependencies": {
+    "@types/invariant": "^2.2.29",
+    "@types/lodash.assign": "^4.2.4",
+    "@types/lodash.map": "^4.6.13",
+    "@types/lodash.uniq": "^4.5.4",
+    "@types/lodash.values": "^4.3.4",
+    "@types/node": "^10.12.12",
     "artstep": "^5555.0.0",
     "bluebird": "^3.5.2",
     "chai": "^4.2.0",

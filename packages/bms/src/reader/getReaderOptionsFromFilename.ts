@@ -2,7 +2,7 @@
  * Given the filename, returns the reader options.
  * @param {string} filename
  */
-export function getReaderOptionsFromFilename(filename) {
+export function getReaderOptionsFromFilename(filename: string) {
   let forceEncoding
   if (filename.match(/\.sjis\.\w+$/i)) {
     forceEncoding = 'Shift-JIS'

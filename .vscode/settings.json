@@ -79,5 +79,6 @@
     "transpiler",
     "updeep",
     "workspaces"
-  ]
+  ],
+  "eslint.enable": false
 }

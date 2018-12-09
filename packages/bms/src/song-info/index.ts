@@ -2,6 +2,16 @@ import { match } from '../util/match'
 import { assign } from '../util/lodash'
 import { BMSChart } from '../bms/chart'
 
+export interface ISongInfoData {
+  title: string
+  artist: string
+  genre: string
+  subtitles: string[]
+  subartists: string[]
+  difficulty: number
+  level: number
+}
+
 /**
  * A SongInfo represents the song info, such as title, artist, genre.
  *
@@ -27,12 +37,19 @@ import { BMSChart } from '../bms/chart'
  * info.subtitles // => ['HYPER']
  * ```
  */
-export class SongInfo {
+export class SongInfo implements ISongInfoData {
+  title: string
+  artist: string
+  genre: string
+  subtitles: string[]
+  subartists: string[]
+  difficulty: number
+  level: number
   /**
    * Constructs a SongInfo with given data
-   * @param {{ [propertyName: string]: any }} info the properties to set on this new instance
+   * @param info the properties to set on this new instance
    */
-  constructor(info) {
+  constructor(info: { [propertyName: string]: any }) {
     /** the song title */
     this.title = 'NO TITLE'
     /** the song artist */
@@ -74,20 +91,20 @@ export class SongInfo {
 
   /**
    * Constructs a new {SongInfo} object from a {BMSChart}.
-   * @param {BMSChart} chart A {BMSChart} to construct a {SongInfo} from
+   * @param chart A {BMSChart} to construct a {SongInfo} from
    */
-  static fromBMSChart(chart) {
+  static fromBMSChart(chart: BMSChart) {
     void BMSChart
-    var info = {}
+    var info: Partial<ISongInfoData> = {}
     var title = chart.headers.get('title')
     var artist = chart.headers.get('artist')
     var genre = chart.headers.get('genre')
-    var difficulty = +chart.headers.get('difficulty')
-    var level = +chart.headers.get('playlevel')
+    var difficulty = +chart.headers.get('difficulty')! || 0
+    var level = +chart.headers.get('playlevel')! || 0
     var subtitles = chart.headers.getAll('subtitle')
     var subartists = chart.headers.getAll('subartist')
     if (typeof title === 'string' && !subtitles) {
-      var extractSubtitle = function(m) {
+      var extractSubtitle = function(m: string[]) {
         title = m[1]
         subtitles = [m[2]]
       }

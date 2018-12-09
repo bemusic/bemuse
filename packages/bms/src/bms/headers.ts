@@ -16,6 +16,9 @@
  * ```
  */
 export class BMSHeaders {
+  private _data: { [field: string]: string }
+  private _dataAll: { [field: string]: string[] }
+
   constructor() {
     this._data = {}
     this._dataAll = {}
@@ -23,9 +26,9 @@ export class BMSHeaders {
 
   /**
    * Iterates through each header field using a callback function.
-   * @param {(key: string, value: string) => any} callback will be called for each header field
+   * @param callback will be called for each header field
    */
-  each(callback) {
+  each(callback: (key: string, value: string) => any) {
     for (var i in this._data) {
       callback(i, this._data[i])
     }
@@ -33,29 +36,28 @@ export class BMSHeaders {
 
   /**
    * Retrieves the header field’s latest value.
-   * @param {string} name field’s name
-   * @return {string | undefined} the field’s latest value
+   * @param name field’s name
+   * @return the field’s latest value
    */
-  get(name) {
+  get(name: string): string | undefined {
     return this._data[name.toLowerCase()]
   }
 
   /**
    * Retrieves the header field’s values.
    * This is useful when a header field is specified multiple times.
-   * @param {string} name field’s name
-   * @return {string[] | undefined}
+   * @param name field’s name
    */
-  getAll(name) {
+  getAll(name: string): string[] | undefined {
     return this._dataAll[name.toLowerCase()]
   }
 
   /**
    * Sets the header field’s value.
-   * @param {string} name field’s name
-   * @param {string} value field’s value
+   * @param name field’s name
+   * @param value field’s value
    */
-  set(name, value) {
+  set(name: string, value: string) {
     var key = name.toLowerCase()
     this._data[key] = value
     ;(this._dataAll[key] || (this._dataAll[key] = [])).push(value)

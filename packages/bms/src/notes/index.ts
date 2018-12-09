@@ -1,7 +1,8 @@
-import { Note } from './note'
+import { Note, BMSNote } from './note'
 import invariant from 'invariant'
 import * as ChannelMapping from './channels'
 import { BMSChart } from '../bms/chart'
+import { BMSObject } from '../bms/objects'
 
 /**
  * A Notes holds the {Note} objects in the game.
@@ -29,10 +30,13 @@ import { BMSChart } from '../bms/chart'
  * ```
  */
 export class Notes {
+  _notes: BMSNote[]
+  static CHANNEL_MAPPING = ChannelMapping
+
   /**
    * @param {BMSNote[]} notes An array of Note objects
    */
-  constructor(notes) {
+  constructor(notes: BMSNote[]) {
     notes.forEach(Note)
     this._notes = notes
   }
@@ -54,10 +58,10 @@ export class Notes {
 
   /**
    * Creates a Notes object from a BMSChart.
-   * @param {BMSChart} chart the chart to process
-   * @param {BMSChartOptions} options options
+   * @param chart the chart to process
+   * @param options options
    */
-  static fromBMSChart(chart, options) {
+  static fromBMSChart(chart: BMSChart, options: BMSChartOptions) {
     void BMSChart
     options = options || {}
     var mapping = options.mapping || Notes.CHANNEL_MAPPING.IIDX_P1
@@ -66,10 +70,16 @@ export class Notes {
   }
 }
 
-Notes.CHANNEL_MAPPING = ChannelMapping
-
 class BMSNoteBuilder {
-  constructor(chart, options) {
+  _chart: BMSChart
+  _mapping: { [channel: string]: string }
+  _notes: BMSNote[]
+  _activeLN: { [channel: string]: BMSNote }
+  _lastNote: { [channel: string]: BMSNote }
+  _lnObj: string
+  _channelMapping: { [channel: string]: string }
+  _objects: BMSObject[]
+  constructor(chart: BMSChart, options: { mapping: BMSChannelNoteMapping }) {
     this._chart = chart
     invariant(options.mapping, 'Expected options.mapping')
     invariant(
@@ -77,22 +87,20 @@ class BMSNoteBuilder {
       'options.mapping must be object'
     )
     this._mapping = options.mapping
-  }
-  build() {
     this._notes = []
     this._activeLN = {}
     this._lastNote = {}
     this._lnObj = (this._chart.headers.get('lnobj') || '').toLowerCase()
     this._channelMapping = this._mapping
     this._objects = this._chart.objects.allSorted()
-    this._objects.forEach(
-      function(object) {
-        this._handle(object)
-      }.bind(this)
-    )
+  }
+  build() {
+    this._objects.forEach(object => {
+      this._handle(object)
+    })
     return new Notes(this._notes)
   }
-  _handle(object) {
+  _handle(object: BMSObject) {
     if (object.channel === '01') {
       this._handleNormalNote(object)
     } else {
@@ -108,7 +116,7 @@ class BMSNoteBuilder {
       }
     }
   }
-  _handleNormalNote(object) {
+  _handleNormalNote(object: BMSObject) {
     var channel = this._normalizeChannel(object.channel)
     var beat = this._getBeat(object)
     if (object.value.toLowerCase() === this._lnObj) {
@@ -126,7 +134,7 @@ class BMSNoteBuilder {
       this._notes.push(note)
     }
   }
-  _handleLongNote(object) {
+  _handleLongNote(object: BMSObject) {
     var channel = this._normalizeChannel(object.channel)
     var beat = this._getBeat(object)
     if (this._activeLN[channel]) {
@@ -142,26 +150,22 @@ class BMSNoteBuilder {
       }
     }
   }
-  _getBeat(object) {
+  _getBeat(object: BMSObject) {
     return this._chart.measureToBeat(object.measure, object.fraction)
   }
-  _getColumn(channel) {
+  _getColumn(channel: string) {
     return this._channelMapping[channel]
   }
-  _normalizeChannel(channel) {
+  _normalizeChannel(channel: string) {
     return channel.replace(/^5/, '1').replace(/^6/, '2')
   }
 }
-/**
- * @typedef {Object} BMSNote A single note in a notechart.
- * @property {number} beat
- * @property {number} [endBeat]
- * @property {string} [column]
- * @property {string} keysound
- */
-/**
- * @typedef {Object} BMSChartOptions
- * @property {{[channel: string]: string}} [mapping]
- *  the mapping from BMS channel to game channel.
- *  Default value is the IIDX_P1 mapping.
- */
+
+interface BMSChartOptions {
+  /**
+   * The mapping from BMS channel to game channel.
+   * Default value is the IIDX_P1 mapping.
+   */
+  mapping?: BMSChannelNoteMapping
+}
+type BMSChannelNoteMapping = { [channel: string]: string }

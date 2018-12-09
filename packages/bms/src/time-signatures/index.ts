@@ -39,28 +39,29 @@
  * ```
  */
 export class TimeSignatures {
+  private _values: { [measure: number]: number }
   constructor() {
     this._values = {}
   }
 
   /**
    * Sets the size of a specified measure.
-   * @param {number} measure the measure number, starting from 0
-   * @param {number} value the measure size.
+   * @param measure the measure number, starting from 0
+   * @param value the measure size.
    *  For example, a size of 1.0 represents a common 4/4 time signature,
    *  whereas a size of 0.75 represents the 3/4 or 6/8 time signature.
    */
-  set(measure, value) {
+  set(measure: number, value: number) {
     this._values[measure] = value
   }
 
   /**
    * Retrieves the size of a specified measure.
-   * @param {number} measure representing the measure number.
-   * @returns {number} the size of the measure.
+   * @param measure representing the measure number.
+   * @returns the size of the measure.
    *  By default, a measure has a size of 1.
    */
-  get(measure) {
+  get(measure: number): number {
     return this._values[measure] || 1
   }
 
@@ -69,10 +70,10 @@ export class TimeSignatures {
    *
    * Since one beat is equivalent to a quarter note in 4/4 time signature,
    * this is equivalent to `(timeSignatures.get(measure) * 4)`.
-   * @param {number} measure representing the measure number.
-   * @returns {number} the size of the measure in beats.
+   * @param measure representing the measure number.
+   * @returns the size of the measure in beats.
    */
-  getBeats(measure) {
+  getBeats(measure: number): number {
     return this.get(measure) * 4
   }
 
@@ -80,11 +81,11 @@ export class TimeSignatures {
    * Converts a measure number and a fraction inside that measure
    * into the beat number.
    *
-   * @param {number} measure the measure number.
-   * @param {number} fraction the fraction of a measure,
+   * @param measure the measure number.
+   * @param fraction the fraction of a measure,
    * @returns the number of beats since measure 0.
    */
-  measureToBeat(measure, fraction) {
+  measureToBeat(measure: number, fraction: number): number {
     var sum = 0
     for (var i = 0; i < measure; i++) sum += this.getBeats(i)
     return sum + this.getBeats(measure) * fraction

@@ -3,6 +3,7 @@
 /* module */
 import { match } from '../util/match'
 import { BMSChart } from '../bms/chart'
+import { BMSObject } from '../bms/objects'
 
 var matchers = {
   bms: {
@@ -26,10 +27,10 @@ var matchers = {
 /**
  * Reads the string representing the BMS notechart, parses it,
  * and compiles into a {BMSChart}.
- * @param {string} text the BMS notechart
- * @param {BMSCompileOptions} options additional parser options
+ * @param text the BMS notechart
+ * @param options additional parser options
  */
-export function compile(text, options) {
+export function compile(text: string, options: BMSCompileOptions) {
   options = options || {}
 
   var chart = new BMSChart()
@@ -42,7 +43,7 @@ export function compile(text, options) {
 
   var matcher = matchers[options.format] || matchers.bms
 
-  var randomStack = []
+  var randomStack: number[] = []
   var skipStack = [false]
 
   var result = {
@@ -59,9 +60,8 @@ export function compile(text, options) {
 
     /**
      * Warnings found during compilation
-     * @type {{lineNumber: number, message: string}[]}
      */
-    warnings: [],
+    warnings: [] as { lineNumber: number; message: string }[],
   }
 
   eachLine(text, function(text, lineNumber) {
@@ -105,7 +105,12 @@ export function compile(text, options) {
 
   return result
 
-  function handleChannelSentence(measure, channel, string, lineNumber) {
+  function handleChannelSentence(
+    measure: number,
+    channel: string,
+    string: string,
+    lineNumber: number
+  ) {
     var items = Math.floor(string.length / 2)
     if (items === 0) return
     for (var i = 0; i < items; i++) {
@@ -118,11 +123,11 @@ export function compile(text, options) {
         value: value,
         channel: channel,
         lineNumber: lineNumber,
-      })
+      } as BMSObject)
     }
   }
 
-  function warn(lineNumber, message) {
+  function warn(lineNumber: number, message: string) {
     result.warnings.push({
       lineNumber: lineNumber,
       message: message,
@@ -130,7 +135,10 @@ export function compile(text, options) {
   }
 }
 
-function eachLine(text, callback) {
+function eachLine(
+  text: string,
+  callback: (line: string, index: number) => void
+) {
   text
     .split(/\r\n|\r|\n/)
     .map(function(line) {
@@ -141,10 +149,13 @@ function eachLine(text, callback) {
     })
 }
 
-/**
- * @typedef {Object} BMSCompileOptions
- * @property {'bms' | 'dtx'} [format='bms'] File format
- * @property {(max: number): number} [rng] A function that generates a random number.
- *  It is used when processing `#RANDOM n` directive.
- *  This function should return an integer number between 1 and `n`.
- */
+export interface BMSCompileOptions {
+  /** File format */
+  format: 'bms' | 'dtx'
+
+  /** A function that generates a random number.
+   *  It is used when processing `#RANDOM n` directive.
+   *  This function should return an integer number between 1 and `n`.
+   */
+  rng: (max: number) => number
+}
