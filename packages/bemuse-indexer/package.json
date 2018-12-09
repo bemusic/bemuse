@@ -3,12 +3,13 @@
   "version": "4.1.0-0",
   "description": "Parse and index BMS notecharts",
   "main": "lib/index.js",
+  "typings": "lib/index.d.js",
   "files": [
     "src",
     "lib"
   ],
   "scripts": {
-    "test": "nyc -r text -r lcov mocha src/test.js -r ts-node/register",
+    "test": "nyc -r text -r lcov mocha -r ts-node/register 'src/**/*.spec.ts'",
     "prepare": "rimraf lib && tsc"
   },
   "repository": {
@@ -30,6 +31,7 @@
     "object-assign": "^4.1.1"
   },
   "devDependencies": {
+    "@types/object-assign": "^4.0.30",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "mocha": "^5.2.0"

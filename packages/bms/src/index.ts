@@ -63,6 +63,7 @@ import * as Reader from './reader'
 import * as Compiler from './compiler'
 
 export { Reader, Compiler }
+export * from './reader/types'
 
 export * from './bms/chart'
 export * from './bms/headers'

@@ -63,7 +63,7 @@ export class Notes {
    * @param chart the chart to process
    * @param options options
    */
-  static fromBMSChart(chart: BMSChart, options: BMSChartOptions) {
+  static fromBMSChart(chart: BMSChart, options?: BMSChartOptions) {
     void BMSChart
     options = options || {}
     var mapping = options.mapping || Notes.CHANNEL_MAPPING.IIDX_P1

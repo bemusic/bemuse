@@ -30,7 +30,7 @@ var matchers = {
  * @param text the BMS notechart
  * @param options additional parser options
  */
-export function compile(text: string, options: BMSCompileOptions) {
+export function compile(text: string, options?: Partial<BMSCompileOptions>) {
   options = options || {}
 
   var chart = new BMSChart()
@@ -41,7 +41,7 @@ export function compile(text: string, options: BMSCompileOptions) {
       return 1 + Math.floor(Math.random() * max)
     }
 
-  var matcher = matchers[options.format] || matchers.bms
+  var matcher = (options.format && matchers[options.format]) || matchers.bms
 
   var randomStack: number[] = []
   var skipStack = [false]
