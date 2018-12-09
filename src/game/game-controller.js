@@ -24,29 +24,7 @@ export class GameController {
     this._display.setEscapeHandler(() => this._quitGame())
     this._display.setReplayHandler(() => this._replayGame())
     if (bench.enabled) this.enableBenchmark()
-    if (BemuseTestMode.isTestModeEnabled()) {
-      BemuseTestMode.setGameLifecycleHandler({
-        pauseAt: t => {
-          this._timer.pauseAt(t)
-          return new Promise(resolve => {
-            const interval = setInterval(() => {
-              if (this._timer.time >= t) {
-                clearInterval(interval)
-                resolve()
-              }
-            })
-          })
-        },
-        unpause: () => {
-          this._timer.pauseAt(Infinity)
-        },
-        getScore: () => {
-          const state = this._state
-          const playerState = state.player(state.game.players[0])
-          return playerState.stats.score
-        },
-      })
-    }
+    if (BemuseTestMode.isTestModeEnabled()) this.connectToTestMode()
   }
   get game() {
     return this._game
@@ -176,6 +154,29 @@ export class GameController {
       this._display._context._renderer,
       'render'
     )
+  }
+  connectToTestMode() {
+    BemuseTestMode.setGameLifecycleHandler({
+      pauseAt: t => {
+        this._timer.pauseAt(t)
+        return new Promise(resolve => {
+          const interval = setInterval(() => {
+            if (this._timer.time >= t) {
+              clearInterval(interval)
+              resolve()
+            }
+          })
+        })
+      },
+      unpause: () => {
+        this._timer.pauseAt(Infinity)
+      },
+      getScore: () => {
+        const state = this._state
+        const playerState = state.player(state.game.players[0])
+        return playerState.stats.score
+      },
+    })
   }
 }
 
