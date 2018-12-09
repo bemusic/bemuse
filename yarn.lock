@@ -11309,10 +11309,10 @@ prepend-http@^1.0.0, prepend-http@^1.0.1:
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-1.0.4.tgz#d4f4562b0ce3696e41ac52d0e002e57a635dc6dc"
   integrity sha1-1PRWKwzjaW5BrFLQ4ALlemNdxtw=
 
-prescript@0.5040.1-beta.10:
-  version "0.5040.1-beta.10"
-  resolved "https://registry.yarnpkg.com/prescript/-/prescript-0.5040.1-beta.10.tgz#a8b2074100b680d32443ae2bb9ae0e85f5991f7a"
-  integrity sha512-zyI7p5R5RirzNgcL4Ua00CT4vOV3gAGwyCxk3Tb6OnaTYcw10ISgaZgclL3F7ey+GMNlxTfR/19IcB1ZrBIMyA==
+prescript@^0.5555.55:
+  version "0.5555.55"
+  resolved "https://registry.yarnpkg.com/prescript/-/prescript-0.5555.55.tgz#51dfdc7dda25efbbdba0fea799f67a61730ff1d2"
+  integrity sha512-/BixqBiDZIPiglHQINuLMZae/rF6P+FJCI251o4UPWmIPlV8BRMbMiE3mOkigr8+OrTfeCQD++t2bQDfMxzqQg==
   dependencies:
     allure-js-commons "^1.2.1"
     chalk "^2.4.1"

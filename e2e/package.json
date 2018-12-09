@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "expect": "^23.6.0",
-    "prescript": "0.5040.1-beta.10",
+    "prescript": "^0.5555.55",
     "puppeteer": "^1.9.0"
   }
 }
