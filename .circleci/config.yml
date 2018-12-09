@@ -119,6 +119,7 @@ jobs:
     working_directory: ~/bemuse
     environment:
       FORCE_COLOR: '1'
+      SCREENSHOT_DIR: /tmp/bemuse-e2e-screenshot
     docker:
       - image: circleci/node:8-browsers
     steps:
@@ -138,8 +139,12 @@ jobs:
           name: E2E
           command: |
             cd e2e
+            mkdir -p "$SCREENSHOT_DIR"
             env BEMUSE_PORT=8089 yarn prescript tests/Gameplay-test.js
           no_output_timeout: 1m
+      - store_artifacts:
+          path: /tmp/bemuse-e2e-screenshot
+          destination: screenshots
 workflows:
   version: 2
   tests:

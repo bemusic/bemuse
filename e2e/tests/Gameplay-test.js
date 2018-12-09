@@ -91,10 +91,19 @@ to('Play through the game', () => {
   action(
     'Let the game finish and wait for result screen to show',
     async state => {
+      await takeScreenshot(state.page, 'gameplay')
       await state.page.evaluate(() => {
         window.BemuseTestMode.unpause()
       })
       await state.page.waitForSelector('.ResultScene')
+      await takeScreenshot(state.page, 'result')
     }
   )
 })
+
+async function takeScreenshot(page, name) {
+  if (!process.env.SCREENSHOT_DIR) return
+  await page.screenshot({
+    path: `${process.env.SCREENSHOT_DIR}/${name}.png`,
+  })
+}
