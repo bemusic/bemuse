@@ -26,7 +26,7 @@ jobs:
     environment:
       FORCE_COLOR: '1'
     docker:
-      - image: circleci/node:8-browsers
+      - image: circleci/node:10.14.1-browsers
     steps:
       - run: sudo npm i -g lerna
       - checkout
@@ -45,7 +45,7 @@ jobs:
     environment:
       FORCE_COLOR: '1'
     docker:
-      - image: circleci/node:8-browsers
+      - image: circleci/node:10.14.1-browsers
     steps:
       - run: sudo npm i -g lerna
       - checkout
@@ -63,7 +63,7 @@ jobs:
     environment:
       FORCE_COLOR: '1'
     docker:
-      - image: circleci/node:8-browsers
+      - image: circleci/node:10.14.1-browsers
     steps:
       - run: sudo npm i -g lerna
       - checkout
@@ -81,7 +81,7 @@ jobs:
     environment:
       FORCE_COLOR: '1'
     docker:
-      - image: circleci/node:8-browsers
+      - image: circleci/node:10.14.1-browsers
     steps:
       - run: sudo npm i -g lerna
       - checkout
@@ -121,7 +121,7 @@ jobs:
       FORCE_COLOR: '1'
       SCREENSHOT_DIR: /tmp/bemuse-e2e-screenshot
     docker:
-      - image: circleci/node:8-browsers
+      - image: circleci/node:10.14.1-browsers
     steps:
       - checkout
       - attach_workspace:
