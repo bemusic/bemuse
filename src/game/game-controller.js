@@ -23,8 +23,8 @@ export class GameController {
     this._promise = new Promise(resolve => (this._resolvePromise = resolve))
     this._display.setEscapeHandler(() => this._quitGame())
     this._display.setReplayHandler(() => this._replayGame())
-    if (bench.enabled) this.enableBenchmark()
-    if (BemuseTestMode.isTestModeEnabled()) this.connectToTestMode()
+    this.initializeBenchmark()
+    this.initializeTestModeHooks()
   }
   get game() {
     return this._game
@@ -141,7 +141,8 @@ export class GameController {
     }
   }
 
-  enableBenchmark() {
+  initializeBenchmark() {
+    if (!bench.enabled) return
     bench.benchmark('update', this, '_update')
     bench.benchmark('input_update', this._input, 'update')
     bench.benchmark('state_update', this._state, 'update')
@@ -155,7 +156,8 @@ export class GameController {
       'render'
     )
   }
-  connectToTestMode() {
+  initializeTestModeHooks() {
+    if (!BemuseTestMode.isTestModeEnabled()) return
     BemuseTestMode.setGameLifecycleHandler({
       pauseAt: t => {
         this._timer.pauseAt(t)
