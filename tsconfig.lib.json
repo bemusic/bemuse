@@ -3,6 +3,7 @@
   "compilerOptions": {
     "allowJs": false,
     "declaration": true,
-    "declarationMap": true
+    "declarationMap": true,
+    "composite": true
   }
 }
