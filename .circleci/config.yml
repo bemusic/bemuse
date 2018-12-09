@@ -122,7 +122,6 @@ jobs:
     docker:
       - image: circleci/node:8-browsers
     steps:
-      - run: sudo npm i -g lerna
       - checkout
       - attach_workspace:
           at: .
