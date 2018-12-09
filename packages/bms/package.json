@@ -10,6 +10,7 @@
   "scripts": {
     "prepare": "rimraf lib && tsc",
     "test": "nyc -r text -r lcov gulp test",
+    "dev": "tsc --watch",
     "pretest": "gulp bmspec:update"
   },
   "repository": {
