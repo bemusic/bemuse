@@ -15,6 +15,9 @@ import { TimeSignatures } from '../time-signatures'
  * such as {Keysounds}, {Notes}, and {Timing}.
  */
 export class BMSChart {
+  headers: BMSHeaders
+  objects: BMSObjects
+  timeSignatures: TimeSignatures
   constructor() {
     /**
      * {BMSHeaders} representing the BMS-specific headers of this notechart
@@ -37,7 +40,7 @@ export class BMSChart {
    * @param {number} measure representing the measure number, starting from 0
    * @param {number} fraction representing the fraction inside that measure, from 0 to 1
    */
-  measureToBeat(measure, fraction) {
+  measureToBeat(measure: number, fraction: number) {
     return this.timeSignatures.measureToBeat(measure, fraction)
   }
 }

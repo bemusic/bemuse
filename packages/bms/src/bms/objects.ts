@@ -2,8 +2,9 @@
  * BMSObjects holds a collection of objects inside a BMS notechart.
  */
 export class BMSObjects {
+  private _objects: BMSObject[]
+
   constructor() {
-    /** @type {BMSObject[]} */
     this._objects = []
   }
 
@@ -11,9 +12,9 @@ export class BMSObjects {
    * Adds a new object to this collection.
    * If an object already exists on the same channel and position,
    * the object is replaced (except for autokeysound tracks).
-   * @param {BMSObject} object the object to add
+   * @param object the object to add
    */
-  add(object) {
+  add(object: BMSObject) {
     if (object.channel !== '01') {
       for (var i = 0; i < this._objects.length; i++) {
         var test = this._objects[i]
@@ -49,13 +50,22 @@ export class BMSObjects {
   }
 }
 
-/**
- * @typedef {Object} BMSObject An object inside a {BMSChart}.
- * @property {string} channel the raw two-character BMS channel of this object
- * @property {number} measure the measure number, starting at 0 (corresponds to `#000`)
- * @property {number} fraction the fractional position inside the measure,
- *  ranging from 0 (inclusive) to 1 (exclusive).
- *  0 means that the object is at the start of the measure,
- *  whereas 1 means that the object is at the end of the measure.
- * @property {string} value the raw value of the BMS object.
- */
+/** An object inside a {BMSChart}. */
+export interface BMSObject {
+  /** the raw two-character BMS channel of this object */
+  channel: string
+
+  /** the measure number, starting at 0 (corresponds to `#000`) */
+  measure: number
+
+  /**
+   * the fractional position inside the measure,
+   * ranging from 0 (inclusive) to 1 (exclusive).
+   * 0 means that the object is at the start of the measure,
+   * whereas 1 means that the object is at the end of the measure.
+   */
+  fraction: number
+
+  /** the raw value of the BMS object. */
+  value: string
+}

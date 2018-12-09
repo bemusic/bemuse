@@ -28,25 +28,25 @@ import { BMSChart } from '../bms/chart'
  * ```
  */
 export class Keysounds {
-  constructor(map) {
-    /** @type {{[id: string]: string}} */
+  _map: { [id: string]: string }
+  constructor(map: { [id: string]: string }) {
     this._map = map
   }
 
   /**
    * Returns the keysound file at the specified ID.
-   * @param {string} id the two-character keysound ID
-   * @returns {string | undefined} the sound filename
+   * @param id the two-character keysound ID
+   * @returns the sound filename
    */
-  get(id) {
+  get(id: string): string | undefined {
     return this._map[id.toLowerCase()]
   }
 
   /**
    * Returns an array of unique filenames in this Keysounds object.
-   * @returns {string[]} filenames array
+   * @returns filenames array
    */
-  files() {
+  files(): string[] {
     return uniq(values(this._map))
   }
 
@@ -62,11 +62,11 @@ export class Keysounds {
 
   /**
    * Constructs a new {Keysounds} object from a {BMSChart}.
-   * @param {BMSChart} chart
+   * @param chart
    */
-  static fromBMSChart(chart) {
+  static fromBMSChart(chart: BMSChart) {
     void BMSChart
-    var map = {}
+    var map: { [id: string]: string } = {}
     chart.headers.each(function(name, value) {
       var match = name.match(/^wav(\S\S)$/i)
       if (!match) return

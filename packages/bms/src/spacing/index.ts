@@ -1,5 +1,6 @@
 import { Speedcore } from '../speedcore'
 import { BMSChart } from '../bms/chart'
+import { SpeedSegment } from '../speedcore/segment'
 
 /**
  * Public: A Spacing represents the relation between song beats and
@@ -10,11 +11,11 @@ import { BMSChart } from '../bms/chart'
  * StepMania’s `#SPEED` segments is an example.
  */
 export class Spacing {
+  private _speedcore?: Speedcore
   /**
    * Constructs a Spacing from the given `segments`.
-   * @param {SpacingSegment[]} segments
    */
-  constructor(segments) {
+  constructor(segments: SpacingSegment[]) {
     if (segments.length > 0) {
       this._speedcore = new Speedcore(segments)
     }
@@ -22,9 +23,9 @@ export class Spacing {
 
   /**
    * Returns the note spacing factor at the specified beat.
-   * @param {*} beat the beat
+   * @param beat the beat
    */
-  factor(beat) {
+  factor(beat: number) {
     if (this._speedcore) {
       return this._speedcore.x(beat)
     } else {
@@ -53,13 +54,13 @@ export class Spacing {
    *
    * @param {BMSChart} chart the chart
    */
-  static fromBMSChart(chart) {
+  static fromBMSChart(chart: BMSChart) {
     void BMSChart
-    var segments = []
+    var segments: SpacingSegment[] = []
     chart.objects.allSorted().forEach(function(object) {
       if (object.channel === 'SP') {
         var beat = chart.measureToBeat(object.measure, object.fraction)
-        var factor = +chart.headers.get('speed' + object.value)
+        var factor = +chart.headers.get('speed' + object.value)!
         if (isNaN(factor)) return
         if (segments.length > 0) {
           var previous = segments[segments.length - 1]
@@ -84,12 +85,20 @@ export class Spacing {
     return new Spacing(segments)
   }
 }
-/**
- * @typedef {Object} SpacingSegment
- * @property {number} t the beat number
- * @property {number} x the spacing at beat `t`
- * @property {number} dx the amount spacing factor change per beat,
- *  in order to create a continuous speed change
- * @property {boolean} inclusive whether or not to include the
- *  starting beat `t` as part of the segment
- */
+
+export interface SpacingSegment extends SpeedSegment {
+  /** the beat number */
+  t: number
+  /** the spacing at beat `t` */
+  x: number
+  /**
+   * the amount spacing factor change per beat,
+   * in order to create a continuous speed change
+   */
+  dx: number
+  /**
+   * whether or not to include the
+   * starting beat `t` as part of the segment
+   */
+  inclusive: boolean
+}

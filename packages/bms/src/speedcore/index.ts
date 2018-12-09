@@ -1,7 +1,6 @@
-import { Segment } from './segment'
+import { Segment, SpeedSegment } from './segment'
 
 /**
- *
  * Speedcore is a small internally-used library.
  * A Speedcore represents a single dimensional keyframed linear motion
  * (as in equation x = f(t)), and is useful when working
@@ -66,37 +65,40 @@ import { Segment } from './segment'
  *   [2]: { t: 13.6,  x: 32,  dx: 2.5,  inclusive: false } ]
  * ```
  */
-export class Speedcore {
+export class Speedcore<S extends SpeedSegment = SpeedSegment> {
+  _segments: S[]
   /**
    * Constructs a new `Speedcore` from given segments.
-   * @param {SpeedSegment[]} segments
    */
-  constructor(segments) {
-    this._segments = segments.map(Segment)
+  constructor(segments: S[]) {
+    segments.forEach(Segment)
+    this._segments = segments
   }
-  _reached(index, typeFn, position) {
+  _reached(index: number, targetFn: (segment: S) => number, position: number) {
     if (index >= this._segments.length) return false
     var segment = this._segments[index]
-    var target = typeFn(segment)
+    var target = targetFn(segment)
     return segment.inclusive ? position >= target : position > target
   }
-  _segmentAt(typeFn, position) {
+  _segmentAt(targetFn: (segment: S) => number, position: number): S {
     for (var i = 0; i < this._segments.length; i++) {
-      if (!this._reached(i + 1, typeFn, position)) return this._segments[i]
+      if (!this._reached(i + 1, targetFn, position)) return this._segments[i]
     }
+    throw new Error(
+      'Unable to find a segment matching a criteria (this should never happen)!'
+    )
   }
-  segmentAtX(x) {
+  segmentAtX(x: number) {
     return this._segmentAt(X, x)
   }
-  segmentAtT(t) {
+  segmentAtT(t: number) {
     return this._segmentAt(T, t)
   }
 
   /**
    * Calculates the _t_, given _x_.
-   * @param {number} x
    */
-  t(x) {
+  t(x: number) {
     var segment = this.segmentAtX(x)
     return segment.t + (x - segment.x) / (segment.dx || 1)
   }
@@ -105,7 +107,7 @@ export class Speedcore {
    * Calculates the _x_, given _t_.
    * @param {number} t
    */
-  x(t) {
+  x(t: number) {
     var segment = this.segmentAtT(t)
     return segment.x + (t - segment.t) * segment.dx
   }
@@ -114,23 +116,11 @@ export class Speedcore {
    * Finds the _dx_, given _t_.
    * @param {number} t
    */
-  dx(t) {
+  dx(t: number) {
     var segment = this.segmentAtT(t)
     return segment.dx
   }
 }
 
-var T = function(segment) {
-  return segment.t
-}
-var X = function(segment) {
-  return segment.x
-}
-
-/**
- * @typedef {Object} SpeedSegment
- * @property {number} t
- * @property {number} x
- * @property {number} dx the amount of change in x per t
- * @property {boolean} inclusive whether or not the segment includes the t
- */
+var T = (segment: SpeedSegment) => segment.t
+var X = (segment: SpeedSegment) => segment.x
