@@ -136,17 +136,17 @@ export class Timing {
   }
 }
 
-type TimingAction = BPMTimingAction | StopTimingAction
-interface BaseTimingAction {
+export type TimingAction = BPMTimingAction | StopTimingAction
+export interface BaseTimingAction {
   /** where this action occurs */
   beat: number
 }
-interface BPMTimingAction extends BaseTimingAction {
+export interface BPMTimingAction extends BaseTimingAction {
   type: 'bpm'
   /** BPM to change to */
   bpm: number
 }
-interface StopTimingAction extends BaseTimingAction {
+export interface StopTimingAction extends BaseTimingAction {
   type: 'stop'
   /** number of beats to stop */
   stopBeats: number

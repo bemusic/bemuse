@@ -72,7 +72,7 @@ export class Positioning {
   }
 }
 
-interface PositioningSegment extends SpeedSegment {
+export interface PositioningSegment extends SpeedSegment {
   /** the beat number */
   t: number
   /** the total elapsed amount of scrolling at beat `t` */

@@ -4,6 +4,8 @@ import * as ChannelMapping from './channels'
 import { BMSChart } from '../bms/chart'
 import { BMSObject } from '../bms/objects'
 
+export { BMSNote }
+
 /**
  * A Notes holds the {Note} objects in the game.
  * A note object may or may not be playable.
@@ -168,4 +170,5 @@ interface BMSChartOptions {
    */
   mapping?: BMSChannelNoteMapping
 }
+
 type BMSChannelNoteMapping = { [channel: string]: string }

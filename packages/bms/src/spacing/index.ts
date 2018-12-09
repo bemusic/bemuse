@@ -85,7 +85,8 @@ export class Spacing {
     return new Spacing(segments)
   }
 }
-interface SpacingSegment extends SpeedSegment {
+
+export interface SpacingSegment extends SpeedSegment {
   /** the beat number */
   t: number
   /** the spacing at beat `t` */
