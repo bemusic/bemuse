@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer')
 const expect = require('expect')
 
 action('Open browser', async state => {
-  state.browser = await puppeteer.launch({ headless: false })
+  state.browser = await puppeteer.launch({ headless: true })
   state.page = await state.browser.newPage()
   await state.page.setViewport({ width: 1200, height: 480 })
   await state.page.goto(
