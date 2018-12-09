@@ -3,7 +3,11 @@ const puppeteer = require('puppeteer')
 const expect = require('expect')
 
 action('Open browser', async state => {
-  state.browser = await puppeteer.launch({ headless: true })
+  const puppeteerOptions = { headless: true }
+  if (process.env.CIRCLECI) {
+    puppeteerOptions.args = ['--no-sandbox', '--disable-setuid-sandbox']
+  }
+  state.browser = await puppeteer.launch(puppeteerOptions)
   state.page = await state.browser.newPage()
   await state.page.setViewport({ width: 1200, height: 480 })
   await state.page.goto(
