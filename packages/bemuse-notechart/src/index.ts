@@ -1,15 +1,41 @@
 import _ from 'lodash'
+import * as BMS from 'bms'
 import invariant from 'invariant'
-
-import GameEvent from './data/GameEvent'
-import GameNote from './data/GameNote'
+import {
+  NotechartInput,
+  PlayerOptions,
+  GameEvent,
+  GameNote,
+  SoundedEvent,
+  NoteInfo,
+  NotechartImages,
+} from './types'
 
 /**
  * A notechart holds every info about a single player's note chart that the
  * game will ever need.
  */
 export class Notechart {
-  constructor(data, playerOptions = {}) {
+  private _timing: BMS.Timing
+  private _keysounds: BMS.Keysounds
+  private _positioning: BMS.Positioning
+  private _spacing: BMS.Spacing
+
+  private _duration: number
+  private _notes: GameNote[]
+  private _autos: SoundedEvent[]
+  private _barLines: GameEvent[]
+  private _samples: string[]
+  private _infos: Map<GameNote, NoteInfo>
+  private _songInfo: BMS.SongInfo
+  private _images: NotechartImages | undefined
+
+  expertJudgmentWindow: [number, number]
+
+  constructor(
+    data: NotechartInput,
+    playerOptions: Partial<PlayerOptions> = {}
+  ) {
     let {
       notes: bmsNotes,
       timing,
@@ -43,8 +69,10 @@ export class Notechart {
     this._autos = this._generateAutoKeysoundEventsFromBMS(bmsNotes)
     this._barLines = this._generateBarLineEvents(barLines)
     this._samples = this._generateKeysoundFiles(keysounds)
-    this._infos = new Map(
-      this._notes.map(note => [note, this._getNoteInfo(note)])
+    this._infos = new Map<GameNote, NoteInfo>(
+      this._notes.map(
+        note => [note, this._getNoteInfo(note)] as [GameNote, NoteInfo]
+      )
     )
     this._songInfo = songInfo
     this._images = images
@@ -122,70 +150,64 @@ export class Notechart {
 
   /**
    * Returns the characteristic of the note as an Object.
-   * @param {GameNote} note
-   * @returns {GameNoteCharacteristic | undefined}
    */
-  info(note) {
+  info(note: GameNote): NoteInfo | undefined {
     return this._infos.get(note)
   }
 
   /**
    * Converts the beat number to in-song position (seconds)
-   * @param {number} beat
    */
-  beatToSeconds(beat) {
+  beatToSeconds(beat: number) {
     return this._timing.beatToSeconds(beat)
   }
 
   /**
    * Converts the beat number to in-game position.
-   * @param {number} beat
    */
-  beatToPosition(beat) {
+  beatToPosition(beat: number) {
     return this._positioning.position(beat)
   }
 
   /**
    * Converts the in-song position to beat number.
-   * @param {number} seconds
    */
-  secondsToBeat(seconds) {
+  secondsToBeat(seconds: number) {
     return this._timing.secondsToBeat(seconds)
   }
 
   /**
    * Converts the in-song position to in-game position.
-   * @param {number} seconds
    */
-  secondsToPosition(seconds) {
+  secondsToPosition(seconds: number) {
     return this.beatToPosition(this.secondsToBeat(seconds))
   }
 
   /**
    * Finds BPM at the specified beat.
-   * @param {number} beat
    */
-  bpmAtBeat(beat) {
+  bpmAtBeat(beat: number) {
     return this._timing.bpmAtBeat(beat)
   }
 
   /**
    * Finds the scrolling speed at the specified beat.
-   * @param {*} beat
    */
-  scrollSpeedAtBeat(beat) {
+  scrollSpeedAtBeat(beat: any) {
     return this._positioning.speed(beat)
   }
 
   /**
    * Calculates the note spacing factor at the specified beat.
-   * @param {*} beat
    */
-  spacingAtBeat(beat) {
+  spacingAtBeat(beat: any) {
     return this._spacing.factor(beat)
   }
 
-  _preTransform(bmsNotes, playerOptions) {
+  _preTransform(
+    bmsNotes: BMS.BMSNote[],
+    playerOptions: Partial<PlayerOptions>
+  ) {
     let chain = _.chain(bmsNotes)
     let keys = getKeys(bmsNotes)
     if (playerOptions.scratch === 'off') {
@@ -199,7 +221,7 @@ export class Notechart {
     }
     if (keys === '5K') {
       const columnsToShift = ['1', '2', '3', '4', '5', '6', '7']
-      const shiftNote = amount => note => {
+      const shiftNote = (amount: number) => (note: BMS.BMSNote) => {
         if (note.column) {
           let index = columnsToShift.indexOf(note.column)
           if (index > -1) {
@@ -223,14 +245,14 @@ export class Notechart {
     return chain.value()
   }
 
-  _generatePlayableNotesFromBMS(bmsNotes) {
+  _generatePlayableNotesFromBMS(bmsNotes: BMS.BMSNote[]) {
     let nextId = 1
     return bmsNotes
       .filter(note => note.column)
       .map(note => {
-        let spec = this._generateEvent(note.beat)
+        let spec = this._generateEvent(note.beat) as GameNote
         spec.id = nextId++
-        spec.column = note.column
+        spec.column = note.column!
         spec.keysound = note.keysound
         spec.keysoundStart = note.keysoundStart
         spec.keysoundEnd = note.keysoundEnd
@@ -241,28 +263,28 @@ export class Notechart {
         } else {
           spec.end = undefined
         }
-        return new GameNote(spec)
+        return spec
       })
   }
 
-  _updateDuration(event) {
+  _updateDuration(event: GameEvent) {
     if (event.time > this._duration) this._duration = event.time
   }
 
-  _generateAutoKeysoundEventsFromBMS(bmsNotes) {
+  _generateAutoKeysoundEventsFromBMS(bmsNotes: BMS.BMSNote[]) {
     return bmsNotes
       .filter(note => !note.column)
       .map(note => {
-        let spec = this._generateEvent(note.beat)
+        let spec = this._generateEvent(note.beat) as SoundedEvent
         spec.keysound = note.keysound
         spec.keysoundStart = note.keysoundStart
         spec.keysoundEnd = note.keysoundEnd
-        return new GameEvent(spec)
+        return spec
       })
   }
 
-  _generateKeysoundFiles(keysounds) {
-    let set = new Set()
+  _generateKeysoundFiles(keysounds: BMS.Keysounds): string[] {
+    let set = new Set<string>()
     for (let array of [this.notes, this.autos]) {
       for (let event_ of array) {
         let file = keysounds.get(event_.keysound)
@@ -272,11 +294,11 @@ export class Notechart {
     return Array.from(set)
   }
 
-  _generateBarLineEvents(beats) {
+  _generateBarLineEvents(beats: number[]) {
     return beats.map(beat => this._generateEvent(beat))
   }
 
-  _generateEvent(beat) {
+  _generateEvent(beat: number): GameEvent {
     return {
       beat: beat,
       time: this.beatToSeconds(beat),
@@ -284,15 +306,14 @@ export class Notechart {
     }
   }
 
-  _getNoteInfo(note) {
-    let combos = note.end ? 2 : 1
-    return { combos }
+  _getNoteInfo(note: GameNote): NoteInfo {
+    return { combos: note.end ? 2 : 1 }
   }
 }
 
 export default Notechart
 
-function getKeys(bmsNotes) {
+function getKeys(bmsNotes: BMS.BMSNote[]) {
   for (let note of bmsNotes) {
     if (note.column === '6' || note.column === '7') {
       return '7K'
@@ -300,10 +321,3 @@ function getKeys(bmsNotes) {
   }
   return '5K'
 }
-
-/**
- * @typedef {Object} GameNoteCharacteristic
- * @property {number} combos
- *  The maximum amount of judgments this note may give. Usually it is 1
- *  for normal notes and 2 for long notes.
- */

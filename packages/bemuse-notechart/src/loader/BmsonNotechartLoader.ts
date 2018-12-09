@@ -2,14 +2,16 @@ import * as bmson from 'bmson'
 import * as BMS from 'bms'
 
 import Notechart from '../'
+import { PlayerOptions, NotechartInput, ExpertJudgmentWindow } from '../types'
+import { Bmson } from 'bmson/lib/types'
 
-export function load(source, options) {
+export function load(source: string, playerOptions: PlayerOptions) {
   let data = JSON.parse(source)
   let songInfo = bmson.songInfoForBmson(data)
   let score = bmson.musicalScoreForBmson(data)
   let barLines = bmson.barLinesForBmson(data)
 
-  let stuff = {
+  let stuff: NotechartInput = {
     notes: score.notes.all(),
     timing: score.timing,
     keysounds: score.keysounds,
@@ -25,10 +27,10 @@ export function load(source, options) {
     expertJudgmentWindow: getExpertJudgmentWindowForBmson(data),
   }
 
-  return new Notechart(stuff, options)
+  return new Notechart(stuff, playerOptions)
 }
 
-function getExpertJudgmentWindowForBmson(data) {
+function getExpertJudgmentWindowForBmson(data: Bmson): ExpertJudgmentWindow {
   const judgeRank =
     (() => {
       if (!data.info) return 100
