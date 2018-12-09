@@ -89,7 +89,7 @@ export interface Note {
   /** length (0: normal note; greater than zero (length in pulses): long note) */
   l: number
   /** continuation flag */
-  c: number
+  c: boolean
 }
 
 export interface BpmEvent {

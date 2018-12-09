@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "prepare": "rimraf lib && tsc",
-    "test": "nyc -r text -r lcov mocha -r ts-node/register spec"
+    "test": "nyc -r text -r lcov mocha -r ts-node/register './src/**/*.spec.ts'"
   },
   "keywords": [
     "BMS",
@@ -28,6 +28,8 @@
   },
   "homepage": "https://github.com/dtinth/bmson#readme",
   "devDependencies": {
+    "@types/mocha": "^5.2.5",
+    "@types/power-assert": "^1.5.0",
     "bms": "^3.1.0-2",
     "gulp": "^3.9.1",
     "mocha": "^5.2.0",
