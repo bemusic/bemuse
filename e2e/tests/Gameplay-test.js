@@ -12,7 +12,9 @@ action('Open browser', async state => {
   await state.page.setViewport({ width: 1200, height: 480 })
   const testMusicServer =
     'https://raw.githubusercontent.com/bemusic/bemuse-test-server/master'
-  await state.page.goto('http://localhost:8089/?server=' + testMusicServer)
+  const bemusePort = process.env.BEMUSE_PORT || '8080'
+  const url = `http://localhost:${bemusePort}/?server=${testMusicServer}`
+  await state.page.goto(url)
 })
 
 defer('Close browser', async state => {
