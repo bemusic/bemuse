@@ -3,6 +3,7 @@ import * as BMS from 'bms'
 import * as legacy from './legacy'
 import * as utils from './utils'
 import { Bmson } from './types'
+export * from './types'
 
 /**
  * Returns a BMS.SongInfo corresponding to this BMS file.
