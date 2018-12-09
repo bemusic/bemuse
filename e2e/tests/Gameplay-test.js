@@ -1,6 +1,6 @@
 const { action, defer, to } = require('prescript')
 const puppeteer = require('puppeteer')
-const assert = require('assert')
+const expect = require('expect')
 
 action('Open browser', async state => {
   state.browser = await puppeteer.launch({ headless: false })
@@ -78,7 +78,7 @@ to('Play through the game', () => {
       const score = await state.page.evaluate(() =>
         window.BemuseTestMode.getScore()
       )
-      assert.equal(score, event.expectedScore)
+      expect(score).toEqual(event.expectedScore)
     })
   }
 
