@@ -4,6 +4,6 @@
   "dependencies": {
     "expect": "^23.6.0",
     "prescript": "^0.5555.55",
-    "puppeteer": "^1.9.0"
+    "puppeteer": "^1.11.0"
   }
 }
