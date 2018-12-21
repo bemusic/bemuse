@@ -1,6 +1,6 @@
-import LoadingContext from 'bemuse/boot/loading-context'
 import NotechartLoader from 'bemuse-notechart/lib/loader'
 import Progress from 'bemuse/progress'
+import { atomic } from 'bemuse/progress/utils'
 import SamplingMaster from 'bemuse/sampling-master'
 import co from 'co'
 import keysoundCache from 'bemuse/keysound-cache'
@@ -20,14 +20,10 @@ export function load(spec) {
 
   return Multitasker.start(function(task, run) {
     task('Scintillator', 'Loading game engine', [], function(progress) {
-      return new Promise(resolve => {
-        let context = new LoadingContext(progress)
-        context.use(function() {
-          import(/* webpackChunkName: 'gameEngine' */ 'bemuse/scintillator').then(
-            loadedModule => resolve(loadedModule)
-          )
-        })
-      })
+      return atomic(
+        progress,
+        import(/* webpackChunkName: 'gameEngine' */ 'bemuse/scintillator')
+      )
     })
 
     task('Skin', 'Loading skin', ['Scintillator'], function(
