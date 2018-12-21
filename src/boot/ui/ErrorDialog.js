@@ -1,7 +1,7 @@
 import './ErrorDialog.scss'
 import template from './ErrorDialog.jade'
 
-function show(message, url, line, col, e) {
+function show(message, e, url, line, col) {
   var div = document.createElement('div')
   div.className = 'ErrorDialog'
   div.innerHTML = template({ message, url, line, col, e })

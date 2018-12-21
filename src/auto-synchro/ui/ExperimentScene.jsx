@@ -2,7 +2,6 @@ import './ExperimentScene.scss'
 import React from 'react'
 import PropTypes from 'prop-types'
 import c from 'classnames'
-import Loading from 'bemuse/ui/Loading'
 
 export default class ExperimentScene extends React.Component {
   static propTypes = {
@@ -31,7 +30,7 @@ export default class ExperimentScene extends React.Component {
 
   renderContents = () => {
     if (this.props.loading) {
-      return this.renderLoading()
+      return null
     } else if (!this.props.started) {
       return this.renderReady()
     } else if (!this.props.listening) {
@@ -39,14 +38,6 @@ export default class ExperimentScene extends React.Component {
     } else {
       return this.renderCollection()
     }
-  }
-
-  renderLoading = () => {
-    return (
-      <div className='ExperimentSceneのloading'>
-        <Loading />
-      </div>
-    )
   }
 
   renderReady = () => {

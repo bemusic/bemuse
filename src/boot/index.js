@@ -16,7 +16,7 @@ import * as ErrorDialog from './ui/ErrorDialog'
 import loadModule from './loader'
 
 window.onerror = function(message, url, line, col, e) {
-  ErrorDialog.show(message, url, line, col, e)
+  ErrorDialog.show(message, e, url, line, col)
 }
 
 // >>
@@ -40,18 +40,27 @@ import(/* webpackChunkName: 'environment' */ './environment')
       //
       // .. codedoc:: boot/modes
       //
+      Boot.setStatus(`Loading ${mode} bundle`)
       loadModule[mode]()
         .then(loadedModule => {
-          Boot.hide()
-          loadedModule.main()
+          Boot.setStatus(`Initializing`)
+          return loadedModule.main({ setStatus: Boot.setStatus })
         })
-        .catch(err =>
-          console.error('An error occurred while loading the mode', err)
-        )
+        .then(() => Boot.hide())
+        .catch(err => {
+          ErrorDialog.show(
+            `An error occurred while initializing "${mode}"`,
+            err
+          )
+        })
     } else {
-      console.error('Invalid mode:', mode)
+      ErrorDialog.show(`Invalid mode: ${mode}`)
     }
   })
-  .catch(err =>
+  .catch(err => {
+    ErrorDialog.show(
+      'Failed to load environment bundle. Please refresh the page to try again.',
+      err
+    )
     console.error('An error occurred while loading the component', err)
-  )
+  })

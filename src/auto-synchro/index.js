@@ -7,7 +7,8 @@ import _ from 'lodash'
 import Bacon from 'baconjs'
 import { connect } from 'bemuse/flux'
 
-export function main() {
+export function main(bootContext) {
+  bootContext.setStatus('Loading song')
   const state口 = new Bacon.Bus()
 
   const state川 = state口.scan(
@@ -57,7 +58,7 @@ export function main() {
     return Math.round((sum / count) * 1000)
   }
 
-  Music.load().then(music => {
+  return Music.load().then(music => {
     let bound = 56
     let samples = []
     state口.push({ loading: false })
