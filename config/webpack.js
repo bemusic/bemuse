@@ -6,6 +6,7 @@ import { flowRight } from 'lodash'
 import path from './path'
 import webpack from 'webpack'
 import webpackResolve from './webpackResolve'
+import ServiceWorkerWebpackPlugin from 'serviceworker-webpack-plugin'
 
 function generateBaseConfig() {
   let config = {
@@ -19,7 +20,7 @@ function generateBaseConfig() {
     },
     devServer: {
       contentBase: false,
-      publicPath: '/build/',
+      publicPath: '/',
       stats: { colors: true, chunkModules: false },
     },
     module: {
@@ -39,6 +40,9 @@ function generateBaseConfig() {
         options: {
           context: process.cwd(),
         },
+      }),
+      new ServiceWorkerWebpackPlugin({
+        entry: path('src/app/service-worker.js'),
       }),
     ],
   }
@@ -95,7 +99,12 @@ function generateLoadersConfig() {
     },
     {
       test: /\.worker\.js$/,
-      use: { loader: 'worker-loader' },
+      use: {
+        loader: 'worker-loader',
+        options: {
+          name: 'build/[hash].worker.js',
+        },
+      },
     },
     {
       test: /\.json$/,
@@ -170,21 +179,29 @@ function generateLoadersConfig() {
       options: {
         limit: 100000,
         mimetype: 'image/png',
+        name: 'build/[hash].[ext]',
       },
     },
     {
       test: /\.jpg$/,
       loader: 'file-loader',
+      options: {
+        name: 'build/[hash].[ext]',
+      },
     },
     {
       test: /\.(?:mp3|mp4|ogg|m4a)$/,
       loader: 'file-loader',
+      options: {
+        name: 'build/[hash].[ext]',
+      },
     },
     {
       test: /\.(otf|eot|svg|ttf|woff|woff2)(?:$|\?)/,
       loader: 'url-loader',
       options: {
         limit: 8192,
+        name: 'build/[hash].[ext]',
       },
     },
   ]
@@ -196,11 +213,11 @@ function applyWebConfig(config) {
       boot: ['./boot'],
     },
     output: {
-      path: path('dist', 'build'),
-      publicPath: 'build/',
+      path: path('dist'),
+      publicPath: '/',
       globalObject: 'this',
-      filename: '[name].js',
-      chunkFilename: '[name]-[chunkhash].js',
+      filename: 'build/[name].js',
+      chunkFilename: 'build/[name]-[chunkhash].js',
       devtoolModuleFilenameTemplate: 'file://[absolute-resource-path]',
       devtoolFallbackModuleFilenameTemplate:
         'file://[absolute-resource-path]?[hash]',
