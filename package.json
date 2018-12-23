@@ -125,7 +125,6 @@
     "rimraf": "^2.6.2",
     "sass-loader": "^7.1.0",
     "script-loader": "^0.7.2",
-    "serviceworker-loader": "^0.1.0",
     "sinon": "^6.3.5",
     "sinon-chai": "^3.2.0",
     "source-map-support": "^0.5.9",
