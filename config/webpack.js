@@ -1,7 +1,6 @@
 import * as Env from './env'
 
 import Gauge from 'gauge'
-import LoadProgressPlugin from '../src/hacks/webpack-progress'
 import { flowRight } from 'lodash'
 import path from './path'
 import webpack from 'webpack'
@@ -30,7 +29,6 @@ function generateBaseConfig() {
     },
     plugins: [
       new CompileProgressPlugin(),
-      new LoadProgressPlugin(),
       new webpack.ProvidePlugin({
         BemuseLogger: 'bemuse/logger',
       }),

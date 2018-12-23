@@ -14,7 +14,6 @@ module.exports = {
       '\\.(jade|scss|pegjs)$',
       'version\\.js$',
       'worker\\.js$',
-      'webpack-progress',
       'config\\.js$',
       '/config/',
       '/tasks/',
