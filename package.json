@@ -56,6 +56,7 @@
   "homepage": "https://github.com/spacetme/bemuse",
   "devDependencies": {
     "@types/eslint": "^4.16.4",
+    "@types/lodash-es": "^4.17.1",
     "@types/minimatch": "^3.0.3",
     "autoprefixer": "^9.1.5",
     "body-parser": "^1.18.3",

@@ -1,5 +1,6 @@
+import { uniq, map } from 'lodash-es'
+
 import { Speedcore } from '../speedcore'
-import { uniq, map } from '../util/lodash'
 import { BMSChart } from '../bms/chart'
 import { SpeedSegment } from '../speedcore/segment'
 

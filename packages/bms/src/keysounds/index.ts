@@ -1,7 +1,7 @@
 // Public: A module that exposes {Keysounds}
 /* module */
 
-import { uniq, values } from '../util/lodash'
+import { uniq, values } from 'lodash-es'
 import { BMSChart } from '../bms/chart'
 
 /**
