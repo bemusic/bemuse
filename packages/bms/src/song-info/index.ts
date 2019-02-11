@@ -1,6 +1,5 @@
-import { assign } from 'lodash-es'
-
 import { match } from '../util/match'
+import { assign } from '../util/lodash'
 import { BMSChart } from '../bms/chart'
 
 export interface ISongInfoData {
