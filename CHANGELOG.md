@@ -8,6 +8,51 @@
 [@resir014]: https://github.com/resir014
 [@thakkaryash94]: https://github.com/thakkaryash94
 
+## v44
+
+This release contains no new features, just a lot of codebase modernizations.
+
+### Internals
+
+- Babel is replaced by TypeScript compiler. Now TypeScript is used to transpile
+  both TypeScript and JavaScript files. [#512], by [@dtinth]
+
+- The whole source tree is automatically formatted using Prettier. [#513], by
+  [@dtinth]
+
+- Lots of old code and unused dependencies have been removed. [#516], by
+  [@dtinth]
+
+- Minor warning fixes. [#517], by [@dtinth]
+
+- Added an end-to-end testing, using Puppeteer. [#503], by [@dtinth]
+
+- Upgraded the project to Node 10. [#518], by [@dtinth]
+
+- Fix a problem where `.jsx` files do not pass through `lint-staged`. [#519], by
+  [@resir014]
+
+- Converted `bms`, `bmson`, `bemuse-notechart`, and `bemuse-indexer` packages to
+  TypeScript. [#520], [#521], [#522], by [@dtinth]
+
+- Updated service worker code to use `serviceworker-webpack-plugin` instead of
+  custom service worker hack. [#525], by [@resir014]
+
+- Removed webpack-progress hack. [#525], by [@resir014]
+
+[#512]: https://github.com/bemusic/bemuse/pull/512
+[#513]: https://github.com/bemusic/bemuse/pull/513
+[#516]: https://github.com/bemusic/bemuse/pull/516
+[#517]: https://github.com/bemusic/bemuse/pull/517
+[#503]: https://github.com/bemusic/bemuse/pull/503
+[#518]: https://github.com/bemusic/bemuse/pull/518
+[#519]: https://github.com/bemusic/bemuse/pull/519
+[#520]: https://github.com/bemusic/bemuse/pull/520
+[#521]: https://github.com/bemusic/bemuse/pull/521
+[#522]: https://github.com/bemusic/bemuse/pull/522
+[#525]: https://github.com/bemusic/bemuse/pull/525
+[#524]: https://github.com/bemusic/bemuse/pull/524
+
 ## v43
 
 This release contains multiple contributions from the community! Many thanks to
