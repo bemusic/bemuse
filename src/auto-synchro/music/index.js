@@ -2,27 +2,15 @@ import _ from 'lodash'
 import co from 'co'
 import context from 'bemuse/audio-context'
 import download from 'bemuse/utils/download'
-import once from 'once'
-import SamplingMaster, { canPlay } from 'bemuse/sampling-master'
-
-/**
- * The audio format to use (.ogg or .m4a)
- */
-let audioExt = once(() =>
-  canPlay('audio/ogg; codecs="vorbis"') ? '.ogg' : '.m4a'
-)
+import SamplingMaster from 'bemuse/sampling-master'
 
 /**
  * The asset URL of these files...
  */
 let ASSET_URLS = {
-  'bgm.m4a': require('./data/bgm.m4a'),
   'bgm.ogg': require('./data/bgm.ogg'),
-  'intro.m4a': require('./data/intro.m4a'),
   'intro.ogg': require('./data/intro.ogg'),
-  'kick.m4a': require('./data/kick.m4a'),
   'kick.ogg': require('./data/kick.ogg'),
-  'snare.m4a': require('./data/snare.m4a'),
   'snare.ogg': require('./data/snare.ogg'),
 }
 
@@ -33,7 +21,7 @@ export function load() {
   return co(function*() {
     let master = new SamplingMaster(context)
     let sample = name =>
-      download(ASSET_URLS[`${name}${audioExt()}`])
+      download(ASSET_URLS[`${name}.ogg`])
         .as('arraybuffer')
         .then(buf => master.sample(buf))
     let samples = _.fromPairs(
