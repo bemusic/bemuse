@@ -9,6 +9,16 @@
 [@thakkaryash94]: https://github.com/thakkaryash94
 [@hajimehoshi]: https://github.com/hajimehoshi
 
+## v44.2.0-pre.201908281926
+
+### Internals
+
+- Upgraded to Lerna 3 and switched to Fixed version mode. This means Bemuse’s
+  sub-projects (`bms`, `bmson`, `bemuse-tools`, etc…) will have the same version
+  as the Bemuse game. This makes versioning easier. [#536], by [@dtinth]
+
+[#536]: https://github.com/bemusic/bemuse/pull/536
+
 ## v44.1.0-pre.201908281805
 
 ### New stuff
