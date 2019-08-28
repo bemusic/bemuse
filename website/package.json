@@ -1,6 +1,6 @@
 {
   "name": "bemuse-docs",
-  "version": "44.1.1",
+  "version": "44.2.0",
   "private": true,
   "scripts": {
     "examples": "docusaurus-examples",
