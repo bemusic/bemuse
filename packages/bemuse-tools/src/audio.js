@@ -4,14 +4,8 @@ import fs from 'fs'
 import Throat from 'throat'
 import { cpus } from 'os'
 import endpoint from 'endpoint'
-import { spawn, execFile as _execFile } from 'child_process'
+import { spawn } from 'child_process'
 import { extname, basename } from 'path'
-
-import tmp from './temporary'
-
-let readFile = Promise.promisify(fs.readFile, fs)
-let writeFile = Promise.promisify(fs.writeFile, fs)
-let execFile = Promise.promisify(_execFile)
 
 let throat = new Throat(cpus().length || 1)
 
@@ -32,36 +26,7 @@ export class AudioConvertor {
     }
   }
   _doConvert(path, type) {
-    if (type === 'm4a') {
-      return co(
-        function*() {
-          let wav = yield this._SoX(path, 'wav')
-          let prefix = tmp()
-          let wavPath = prefix + '.wav'
-          let m4aPath = prefix + '.m4a'
-          yield writeFile(wavPath, wav)
-          if (process.platform.match(/^win/)) {
-            yield execFile('qaac', ['-o', m4aPath, '-c', '128', wavPath])
-          } else {
-            yield execFile('afconvert', [
-              wavPath,
-              m4aPath,
-              '-f',
-              'm4af',
-              '-b',
-              '128000',
-              '-q',
-              '127',
-              '-s',
-              '2',
-            ])
-          }
-          return yield readFile(m4aPath)
-        }.bind(this)
-      )
-    } else {
-      return this._SoX(path, type)
-    }
+    return this._SoX(path, type)
   }
   _SoX(path, type) {
     return co(

@@ -9,16 +9,13 @@ sidebar_label: Music Server
 <p>This section is under construction.</p>
 </div>
 
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+Bemuse comes with a default music server to help new players get started. This
+default music server contains a selection of songs that I think are really nice.
+You can also run your own music server and play it in Bemuse. This page
+describes how you can do it.
 
-**Linux is not officially supported for creating Bemuse packages,** as it relies on Apple's AAC codec. You can still host the server files on any Linux machine, though.
-
-</div>
-
-Bemuse comes with a default music server to help new players get started. This default music server contains a selection of songs that I think are really nice. You can also run your own music server and play it in Bemuse. This page describes how you can do it.
-
-This guide is valid for Windows or macOS, and assumes some knowledge about using the command line and web hosting.
+This guide is valid for Windows or macOS, and assumes some knowledge about using
+the command line and web hosting.
 
 ## Prerequisites
 
@@ -54,9 +51,8 @@ sox:      SoX v14.4.2
 ### Windows
 
 - [Node.js](https://nodejs.org/)
-- [SoX](http://sox.sourceforge.net/): Download from http://sourceforge.net/projects/sox/files/sox/
-- [QuickTime Player](http://www.apple.com/quicktime/download/) or [iTunes](http://www.apple.com/itunes/download/)
-- [qaac](https://sites.google.com/site/qaacpage/)
+- [SoX](http://sox.sourceforge.net/): Download from
+  http://sourceforge.net/projects/sox/files/sox/
 
 **For hosting on your local machine**:
 
@@ -64,7 +60,9 @@ sox:      SoX v14.4.2
 
 #### Installation
 
-Create a directory to store the program files. For example: `C:\Bemuse\vendor\bin`. Extract files into that folder. Your tree should look like this:
+Create a directory to store the program files. For example:
+`C:\Bemuse\vendor\bin`. Extract files into that folder. Your tree should look
+like this:
 
     C:
     └── Bemuse
@@ -85,7 +83,6 @@ Create a directory to store the program files. For example: `C:\Bemuse\vendor\bi
                 ├── libvorbisfile-3.dll
                 ├── libwavpack-1.dll
                 ├── libwinpthread-1.dll
-                ├── qaac.exe
                 ├── refalac.exe
                 ├── sox.exe
                 ├── wget.exe
@@ -114,33 +111,14 @@ PS> sox --version
 # C:\Bemuse\vendor\bin\sox.exe:      SoX v14.4.2
 ```
 
-**qaac**: You should see the help text:
-
-```powershell
-PS> qaac
-# qaac 2.47
-# Usage: qaac [options] infiles....
-#
-# ...
-# ...
-# ...
-```
-
 ### Debian Linux (Debian, Ubuntu etc.)
 
-- [Node.js](https://nodejs.org/): [Here](https://github.com/nodesource/distributions/blob/master/README.md) is the installation guide from nodejs.
+- [Node.js](https://nodejs.org/):
+  [Here](https://github.com/nodesource/distributions/blob/master/README.md) is
+  the installation guide from nodejs.
 - [SoX](http://sox.sourceforge.net/): `sudo apt install sox`
 
 If you got error when convert sound, install `libsox-dev` package too.
-
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>
-    <b>Linux is not support M4A conversion because of Apple's AAC codec.</b>
-    <br />
-    If you build bemuse custom server via linux, Apple device can't play the music.
-</p>
-</div>
 
 #### Prerequisite Check
 
@@ -163,8 +141,8 @@ sox:      SoX v14.4.2
 ## A Music Server
 
 A music server is simply a web server that hosts the files in a specific
-structure, which allows Bemuse to find the list of songs and the song
-data. A Bemuse music server has the following structure:
+structure, which allows Bemuse to find the list of songs and the song data. A
+Bemuse music server has the following structure:
 
     (root of the server)
     ├── index.cache
@@ -178,27 +156,38 @@ data. A Bemuse music server has the following structure:
 
 ### `index.json`
 
-This file holds the list of all available songs and charts in this server. It also includes some metadata information.
+This file holds the list of all available songs and charts in this server. It
+also includes some metadata information.
 
-When entering the game, Bemuse will download this file to create the song list that you see in the music selection screen.
+When entering the game, Bemuse will download this file to create the song list
+that you see in the music selection screen.
 
 ### Song directory
 
-Besides the `index.json` file is a song directory. This directory contains the BMS files and the assets folder, a **Bemuse assets package**.
+Besides the `index.json` file is a song directory. This directory contains the
+BMS files and the assets folder, a **Bemuse assets package**.
 
-This file is generated using the Bemuse tools, which we will cover in the next section.
+This file is generated using the Bemuse tools, which we will cover in the next
+section.
 
 ### Bemuse assets package
 
-Usually, a BMS package will come with hundreds (or even thousands) of sound files (the keysounds). It is not suitable for serving over the web. Sometimes, they are `.wav` files and usually, they are `.ogg` files. Wave files are too large, and not all browsers can play OGG files.
+Usually, a BMS package will come with hundreds (or even thousands) of sound
+files (the keysounds). It is not suitable for serving over the web. Sometimes,
+they are `.wav` files and usually, they are `.ogg` files. Wave files are too
+large, and not all browsers can play OGG files.
 
-A Bemuse asset package contains the keysounds in OGG and M4A format, because most browsers can play these file formats. These sound files are grouped together into multiple parts. Each part is approximately 1.4 MB large.
+A Bemuse asset package contains the keysounds in OGG format. These sound files
+are grouped together into multiple parts. Each part is approximately 1.4 MB
+large.
 
-The Bemuse assets package is also generated using the Bemuse tools, which we will cover in the next section.
+The Bemuse assets package is also generated using the Bemuse tools, which we
+will cover in the next section.
 
 ## Install Bemuse Tools
 
-Bemuse Tools is a command line application to help you generate files for Bemuse music server. Install it using the **npm** command, which comes with Node.js:
+Bemuse Tools is a command line application to help you generate files for Bemuse
+music server. Install it using the **npm** command, which comes with Node.js:
 
 ```powershell
 PS> npm install -g bemuse-tools
@@ -228,7 +217,8 @@ It should display the version:
       pack <path> — Packs sounds and BGAs into assets folder
       server <path> — Serves a Bemuse server (no indexing or conversion)
 
-If you installed bemuse-tools from yarn and get `command not found` error, you have to export path.
+If you installed bemuse-tools from yarn and get `command not found` error, you
+have to export path.
 
 ```bash
 $ export PATH=~/.yarn/bin:${PATH}
@@ -261,11 +251,14 @@ Extract your BMS files into a folder. One song per folder. For example:
 
 ## Creating Bemuse Packages
 
-Normally, a BMS package comes in `.rar` or `.zip`format. Inside that package, there are few BMS files and hundreds of sound files.
+Normally, a BMS package comes in `.rar` or `.zip` format. Inside that package,
+there are few BMS files and hundreds of sound files.
 
-It's not practical to extract `.rar` or `.zip` files in the browser. It's also not practical to download hundreds of small files (very slow).
+It's not practical to extract `.rar` or `.zip` files in the browser. It's also
+not practical to download hundreds of small files (very slow).
 
-In Bemuse, keysounds are packed into `.bemuse` format. They are split into many parts. Each part is about 1.4mb.
+In Bemuse, keysounds are packed into `.bemuse` format. They are split into many
+parts. Each part is about 1.4mb.
 
 Inside Terminal or Powershell, `cd` to the server folder:
 
@@ -284,13 +277,10 @@ PS> bemuse-tools pack 'Lapis - SHIKI'
 # -> Converting audio to ogg [better audio performance]
 # .....................................................................................................
 # ..................................................
-# -> Converting audio to m4a [for iOS and Safari]
-# .....................................................................................................
-# ..................................................
 # -> Writing...
-# Written m4a.1.550eda0a.bemuse
-# Written m4a.2.50a08444.bemuse
-# Written m4a.3.6b0990a9.bemuse
+# Written ogg.1.e0a51d24.bemuse
+# Written ogg.2.d582293b.bemuse
+# Written ogg.3.28d51957.bemuse
 # ...
 # Written metadata.json
 ```
@@ -304,18 +294,14 @@ PS> bemuse-tools pack 'Lapis - SHIKI'
 
 ### Note
 
-
-Now if you look at your song folder, you should see a new folder called **assets**:
+Now if you look at your song folder, you should see a new folder called
+**assets**:
 
     Lapis - SHIKI
     ├── assets
     │   ├── bga.1.e0a51d24.bemuse
     │   ├── bga.2.d582293b.bemuse
     │   ├── bga.3.28d51957.bemuse
-    │   │   ...
-    │   ├── m4a.1.550eda0a.bemuse
-    │   ├── m4a.2.50a08444.bemuse
-    │   ├── m4a.3.6b0990a9.bemuse
     │   │   ...
     │   ├── metadata.json
     │   ├── ogg.1.d9bfef56.bemuse
@@ -335,7 +321,9 @@ Now if you look at your song folder, you should see a new folder called **assets
 
 ## Creating Index File
 
-Now, the client needs to know what songs are available in the server. You need to create an index file. You can do it by running this command in the server folder:
+Now, the client needs to know what songs are available in the server. You need
+to create an index file. You can do it by running this command in the server
+folder:
 
 ```powershell
 PS> bemuse-tools index
@@ -347,7 +335,8 @@ PS> bemuse-tools index
 # ...
 ```
 
-After running, you will see these `index.json` and `index.cache` appear in your folder:
+After running, you will see these `index.json` and `index.cache` appear in your
+folder:
 
     myserver
     ├── AVALON - Team.SASAKURATION
@@ -364,22 +353,28 @@ After running, you will see these `index.json` and `index.cache` appear in your 
 
 ### On a Web Server
 
-Upload `index.json`, all `*.bemuse` and `*.bms/bme/bml` files to a web server. Make sure the directory layout is the same. [Enable cross-origin resource sharing](http://enable-cors.org/) on your web server to allow Bemuse client to connect.
+Upload `index.json`, all `*.bemuse` and `*.bms/bme/bml` files to a web server.
+Make sure the directory layout is the same.
+[Enable cross-origin resource sharing](http://enable-cors.org/) on your web
+server to allow Bemuse client to connect.
 
 To connect to the music server, go to `http://bemuse.ninja/?server=<your URL>`.
 
-Example: http://bemuse.ninja/?server=http://flicknote.bemuse.ninja/bemuse/mumei12
+Example:
+http://bemuse.ninja/?server=http://flicknote.bemuse.ninja/bemuse/mumei12
 
 ### On a Local Machine (Windows, XAMPP)
 
-Navigate to your Apache Config folder of XAMPP (e.g. `C:\xampp\apache\conf`) and open `httpd.conf`
+Navigate to your Apache Config folder of XAMPP (e.g. `C:\xampp\apache\conf`) and
+open `httpd.conf`
 
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Make sure you create a Backup of the file so that you can restore to the default settings if any issues occur.</p>
 </div>
 
-Find the variable name `DocumentRoot` and edit it's value from `"C:\xampp\htdocs"` to your server folder. (e.g. `C:\Bemuse\myserver`)
+Find the variable name `DocumentRoot` and edit it's value from
+`"C:\xampp\htdocs"` to your server folder. (e.g. `C:\Bemuse\myserver`)
 
 ```
 #
@@ -414,11 +409,13 @@ DocumentRoot "C:\Bemuse\myserver"
 
 Once the file is saved, open your XAMPP Control Pannel and run "Apache".
 
-Then connect to the music server with (http://bemuse.ninja/?server=https://localhost/).
+Then connect to the music server with
+(http://bemuse.ninja/?server=https://localhost/).
 
 ### On a Local Machine (macOS, [nginx](https://nginx.org/en/))
 
-First, open a Terminal and `cd` into the folder that contains the Bemuse server (there should be an `index.json` file in that folder).
+First, open a Terminal and `cd` into the folder that contains the Bemuse server
+(there should be an `index.json` file in that folder).
 
 Then, install nginx:
 
@@ -439,6 +436,7 @@ Check your current location:
 $ pwd
 # e.g Output: /Users/cenox/Dev/bemuse-test
 ```
+
 Note the output location; this will be used when we configure nginx.
 
 Next, `cd` to nginx folder:
@@ -480,12 +478,14 @@ Reload nginx:
 $ nginx -s reload
 ```
 
-Now, the music server will be available at http://localhost. You can play by going to <http://bemuse.ninja/?server=http://localhost>.
+Now, the music server will be available at http://localhost. You can play by
+going to <http://bemuse.ninja/?server=http://localhost>.
 
 ##### Additional Note.
 
-When you install nginx in Linux using a package manager, it runs when the OS boots up, but macOS isn't.
-You can use `brew services` to register the nginx service and make nginx automatically start when you log in.
+When you install nginx in Linux using a package manager, it runs when the OS
+boots up, but macOS isn't. You can use `brew services` to register the nginx
+service and make nginx automatically start when you log in.
 
 ```bash
 $ brew services start nginx
@@ -493,7 +493,8 @@ $ brew services start nginx
 
 #### Debian Linux using [nginx](https://nginx.org/en/)
 
-First, open a Terminal and `cd` into the folder that contains the Bemuse music server (you should see `index.json` in this folder).
+First, open a Terminal and `cd` into the folder that contains the Bemuse music
+server (you should see `index.json` in this folder).
 
 Then, install nginx:
 
@@ -555,5 +556,5 @@ Restart nginx:
 $ sudo systemctl restart nginx
 ```
 
-Now, the music server will be available at http://localhost. You can play by going to <http://bemuse.ninja/?server=http://localhost>.
-
+Now, the music server will be available at http://localhost. You can play by
+going to <http://bemuse.ninja/?server=http://localhost>.

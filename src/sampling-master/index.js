@@ -1,14 +1,20 @@
 import defaultAudioContext from 'bemuse/audio-context'
 import readBlob from 'bemuse/utils/read-blob'
+import { decodeOGG } from './ogg'
 
 export const FADE_LENGTH = 0.001
 
 let dummyAudioTag = document.createElement('audio')
-
 // Checks whether an audio format is supported.
 export function canPlay(type) {
+  // We have a Vorbis audio decoder!
+  if (type === 'audio/ogg; codecs="vorbis"') return true
   return dummyAudioTag.canPlayType(type) === 'probably'
 }
+
+const needsVorbisDecoder = !dummyAudioTag.canPlayType(
+  'audio/ogg; codecs="vorbis"'
+)
 
 // The sampling master is a wrapper class around Web Audio API
 // that takes care of:
@@ -92,6 +98,17 @@ export class SamplingMaster {
 
   _decodeAudio(arrayBuffer) {
     return new Promise((resolve, reject) => {
+      if (needsVorbisDecoder && arrayBuffer.byteLength > 4) {
+        const view = new Uint8Array(arrayBuffer, 0, 4)
+        if (
+          view[0] === 0x4f &&
+          view[1] === 0x67 &&
+          view[2] === 0x67 &&
+          view[3] === 0x53
+        ) {
+          return resolve(decodeOGG(this.audioContext, arrayBuffer))
+        }
+      }
       this.audioContext.decodeAudioData(
         arrayBuffer,
         function decodeAudioDataSuccess(audioBuffer) {
