@@ -1,6 +1,7 @@
 {
   "name": "bemuse-e2e",
-  "version": "0.0.1",
+  "version": "44.1.1",
+  "private": true,
   "dependencies": {
     "expect": "^23.6.0",
     "prescript": "^0.5555.55",
