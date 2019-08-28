@@ -26,8 +26,6 @@
     "codecov": "codecov",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
-    "postbootstrap": "lerna run prepare",
-    "prepare": "lerna run prepare",
     "prod-build": "cross-env NODE_ENV=production gulp build",
     "prod-start": "cross-env NODE_ENV=production HOT=true gulp server",
     "start": "cross-env HOT=true gulp server",
