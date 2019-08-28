@@ -9,7 +9,7 @@
 [@thakkaryash94]: https://github.com/thakkaryash94
 [@hajimehoshi]: https://github.com/hajimehoshi
 
-## v44.2.0-pre.201908281926
+## v44.2.0
 
 ### Internals
 
@@ -19,7 +19,7 @@
 
 [#536]: https://github.com/bemusic/bemuse/pull/536
 
-## v44.1.0-pre.201908281805
+## v44.1.0
 
 ### New stuff
 
