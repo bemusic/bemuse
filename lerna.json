@@ -6,7 +6,8 @@
   "useWorkspaces": true,
   "command": {
     "publish": {
-      "npmClient": "npm"
+      "npmClient": "npm",
+      "message": ":bookmark: %s"
     }
   }
 }
