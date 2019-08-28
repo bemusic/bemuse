@@ -55,7 +55,12 @@ export async function decodeOGG(audioContext, arrayBuffer) {
  * @param {number} totalLength
  * @param {number} sampleRate
  */
-function createBuffer(audioContext, decodedChunks, totalLength, sampleRate) {
+async function createBuffer(
+  audioContext,
+  decodedChunks,
+  totalLength,
+  sampleRate
+) {
   if (!totalLength) {
     throw new Error(`stbvorbis.js Error: No length`)
   }
