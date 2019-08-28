@@ -7,6 +7,34 @@
 [@mugabe]: https://github.com/mugabe
 [@resir014]: https://github.com/resir014
 [@thakkaryash94]: https://github.com/thakkaryash94
+[@hajimehoshi]: https://github.com/hajimehoshi
+
+## v44.1.0-pre.201908281805
+
+### New stuff
+
+- **OGG support** is added to iOS and Safari, using [@hajimehoshi]’s
+  [stbvorbis.js](https://github.com/hajimehoshi/stbvorbis.js) library to decode
+  OGG files in-browser. This means that Bemuse no longer relies on proprietary
+  audio file format (m4a) to function in Safari and iOS, and thus:
+
+  - Generating a Bemuse package is faster because m4a files no longer to be
+    generated.
+
+  - Less disk space requirement as only ogg files are needed.
+
+  - A Bemuse package can now be generated on Linux, due to proprietary tools to
+    use Apple’s m4a encoder is no longer needed.
+
+  With this change, creating content for Bemuse will become easier and more
+  accessible! [#534], by [@dtinth]
+
+### Internals
+
+- Upgraded React and React DOM to version 16.9.0. [#533], by [@dtinth]
+
+[#533]: https://github.com/bemusic/bemuse/pull/533
+[#534]: https://github.com/bemusic/bemuse/pull/534
 
 ## v44
 

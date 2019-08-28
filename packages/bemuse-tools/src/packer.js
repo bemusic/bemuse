@@ -27,12 +27,6 @@ export function packIntoBemuse(path) {
     let oggc = new AudioConvertor('ogg', '-C', '3')
     oggc.force = true
     let oggs = yield dotMap(audio, file => oggc.convert(file))
-
-    console.log('-> Converting audio to m4a [for iOS and Safari]')
-    let m4ac = new AudioConvertor('m4a')
-    let m4as = yield dotMap(audio, file => m4ac.convert(file))
-
-    packer.pack('m4a', m4as)
     packer.pack('ogg', oggs)
 
     console.log('-> Writing...')

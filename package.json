@@ -1,6 +1,6 @@
 {
   "name": "bemuse",
-  "version": "44.0.1",
+  "version": "44.1.0-pre.201908281805",
   "description": "BEAT☆MUSIC☆SEQUENCE, a web-based music game of the future",
   "main": "index.js",
   "private": true,
@@ -178,8 +178,8 @@
     "power-assert": "^1.6.1",
     "prop-types": "^15.6.2",
     "qs": "^6.5.2",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-emotion": "^9.2.12",
     "react-fa": "^5.0.0",
     "react-fns": "^1.4.0",
