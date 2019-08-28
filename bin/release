@@ -2,6 +2,6 @@
 
 git fetch
 git checkout origin/master
-npm version "$@" -m ':bookmark: %s'
-git push origin HEAD:master --follow-tags
-
+git branch -d master || true
+git checkout -b master
+yarn lerna version "$@"
