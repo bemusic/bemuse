@@ -9,6 +9,20 @@
 [@thakkaryash94]: https://github.com/thakkaryash94
 [@hajimehoshi]: https://github.com/hajimehoshi
 
+## v44.3.0-pre.201908292015
+
+### Internals
+
+- Updated webpack configuration in the main app to allow compiling TypeScript
+  code. Now we can start writing game code using TypeScript! [#538], by
+  [@dtinth]
+- Updated the automated release script to remove pre-release version suffix from
+  CHANGELOG entries, further streamlining the release process. [#539], by
+  [@dtinth]
+
+[#538]: https://github.com/bemusic/bemuse/pull/538
+[#539]: https://github.com/bemusic/bemuse/pull/539
+
 ## v44.2.4
 
 ### Internals
