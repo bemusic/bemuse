@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import Notechart from 'bemuse-notechart'
 
-enum Judgment {
+export enum Judgment {
   Missed = -1,
   Unjudged = 0,
   Meticulous = 1,
@@ -9,6 +9,8 @@ enum Judgment {
   Good = 3,
   Offbeat = 4,
 }
+
+export type JudgedJudgment = Exclude<Judgment, Judgment.Unjudged>
 
 export const UNJUDGED = Judgment.Unjudged
 export const MISSED = Judgment.Missed
