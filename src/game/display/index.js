@@ -22,10 +22,9 @@ export class GameDisplay {
       panelPlacement: game.players[0].options.placement,
       infoPanelPosition: skinData.infoPanelPosition,
     })
-    this._createTouchEscapeButton({
-      displayByDefault: skinData.mainInputDevice === 'touch',
-    })
+    this._createTouchEscapeButton()
     this._createFullScreenButton()
+    this._escapeHintShown = false
   }
   setEscapeHandler(escapeHandler) {
     this._onEscape = escapeHandler
@@ -49,11 +48,27 @@ export class GameDisplay {
     let data = this._getData(time, gameTime, gameState)
     this._updateStatefulData(time, gameTime, gameState)
     this._context.render(Object.assign({}, this._stateful, data))
+    this._synchronizeVideo(gameTime)
+    this._synchronizeTutorialEscapeHint(gameTime)
+  }
+  _synchronizeVideo(gameTime) {
     if (this._video && !this._videoStarted && gameTime >= this._videoOffset) {
       this._video.volume = 0
       this._video.play()
       this._video.classList.add('is-playing')
       this._videoStarted = true
+    }
+  }
+  _synchronizeTutorialEscapeHint(gameTime) {
+    if (this._game.options.tutorial) {
+      const TUTORIAL_ESCAPE_HINT_SHOW_TIME = 101.123595506
+      if (
+        gameTime >= TUTORIAL_ESCAPE_HINT_SHOW_TIME &&
+        !this._escapeHintShown
+      ) {
+        this._escapeHintShown = true
+        this._escapeHint.classList.add('is-shown')
+      }
     }
   }
   _getData(time, gameTime, gameState) {
@@ -117,32 +132,24 @@ export class GameDisplay {
     }
     return $wrapper[0]
   }
-  _createTouchEscapeButton({ displayByDefault }) {
+  _createTouchEscapeButton() {
     const touchButtons = document.createElement('div')
     touchButtons.className = 'game-display--touch-buttons is-left'
     this.wrapper.appendChild(touchButtons)
-    if (displayByDefault) {
-      touchButtons.classList.add('is-visible')
-    } else {
-      let shown = false
-      this.wrapper.addEventListener(
-        'touchstart',
-        () => {
-          if (shown) return
-          shown = true
-          touchButtons.classList.add('is-visible')
-        },
-        true
-      )
-    }
+    touchButtons.classList.add('is-visible')
     const addTouchButton = (className, onClick) => {
       let button = createTouchButton(onClick, className)
       touchButtons.appendChild(button)
     }
     addTouchButton('game-display--touch-escape-button', () => this._onEscape())
     addTouchButton('game-display--touch-replay-button', () => this._onReplay())
-  }
 
+    const escapeHint = document.createElement('div')
+    escapeHint.textContent = 'Click or press Esc to exit the tutorial'
+    escapeHint.className = 'game-display--escape-hint'
+    this._escapeHint = escapeHint
+    touchButtons.appendChild(escapeHint)
+  }
   _createFullScreenButton() {
     if (shouldDisableFullScreen() || !screenfull.enabled) {
       return

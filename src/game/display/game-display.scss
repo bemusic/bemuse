@@ -103,6 +103,37 @@
       display: none;
     }
   }
+  &--escape-hint {
+    position: absolute;
+    left: 12px;
+    top: 56px;
+    display: none;
+    background: #b61a44;
+    padding: 8px 12px;
+    color: white;
+    white-space: nowrap;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    pointer-events: none;
+    &.is-shown {
+      display: block;
+    }
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 0;
+      height: 0;
+      top: -8px;
+      left: 16px;
+      margin-left: -8px;
+      border-width: 0 8px 8px 8px;
+      border-style: solid;
+      border-color: transparent;
+      border-bottom-color: #b61a44;
+    }
+  }
 }
 
 @keyframes game-display--bg-default {
