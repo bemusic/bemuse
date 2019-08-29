@@ -9,6 +9,20 @@
 [@thakkaryash94]: https://github.com/thakkaryash94
 [@hajimehoshi]: https://github.com/hajimehoshi
 
+## v44.4.0-pre.201908292114
+
+### New stuff
+
+- The TUTORIAL now displays a tooltip that teaches new players how to exit the
+  game. [#542], by [@dtinth]
+
+### Internals
+
+- Added release dates to CHANGELOG sections. [#541], by [@dtinth]
+
+[#541]: https://github.com/bemusic/bemuse/pull/541
+[#542]: https://github.com/bemusic/bemuse/pull/542
+
 ## v44.3.0 (2019-08-29)
 
 ### Internals
