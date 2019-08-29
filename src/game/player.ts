@@ -19,7 +19,7 @@ type PlayerOptions = {
   tutorial: boolean
 }
 
-type PlayerOptionsInput = {
+export type PlayerOptionsInput = {
   autosound?: boolean
   speed: number
   placement?: PlayerOptionsPlacement
