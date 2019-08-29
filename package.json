@@ -54,6 +54,7 @@
   },
   "homepage": "https://github.com/spacetme/bemuse",
   "devDependencies": {
+    "@types/chai": "^4.2.0",
     "@types/eslint": "^4.16.4",
     "@types/minimatch": "^3.0.3",
     "autoprefixer": "^9.1.5",

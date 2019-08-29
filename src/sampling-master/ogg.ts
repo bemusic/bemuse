@@ -1,17 +1,29 @@
 import throat from 'throat'
 
-let decoderPromise
+type OGGDecodeEvent = {
+  data?: Float32Array[]
+  sampleRate: number
+  error?: any
+  eof?: boolean
+}
+
+type OGGDecoder = {
+  decode(arrayBuffer: ArrayBuffer, callback: (e: OGGDecodeEvent) => void): void
+}
+
+let decoderPromise: Promise<OGGDecoder>
 
 const limit = throat(1)
 
 /**
  * Decodes an OGG file using stbvorbis.js.
- *
- * @param {AudioContext} audioContext
- * @param {ArrayBuffer} arrayBuffer
  */
-export async function decodeOGG(audioContext, arrayBuffer) {
+export async function decodeOGG(
+  audioContext: AudioContext,
+  arrayBuffer: ArrayBuffer
+) {
   if (!decoderPromise) {
+    // @ts-ignore
     decoderPromise = import(/* webpackChunkName: 'stbvorbis' */ 'raw-loader!./vendor/stbvorbis/stbvorbis-e6da5fe.js')
       .then(ns => ns.default)
       .then(src => {
@@ -22,10 +34,10 @@ export async function decodeOGG(audioContext, arrayBuffer) {
   const stbvorbis = await decoderPromise
   return limit(
     () =>
-      new Promise((resolve, reject) => {
-        const buffers = []
+      new Promise<AudioBuffer>((resolve, reject) => {
+        const buffers: Float32Array[][] = []
         let totalLength = 0
-        let sampleRate
+        let sampleRate: number
         stbvorbis.decode(arrayBuffer, function(e) {
           if (e.data) {
             sampleRate = e.sampleRate
@@ -49,17 +61,11 @@ export async function decodeOGG(audioContext, arrayBuffer) {
   )
 }
 
-/**
- * @param {AudioContext} audioContext
- * @param {Float32Array[]} decodedChunks
- * @param {number} totalLength
- * @param {number} sampleRate
- */
 async function createBuffer(
-  audioContext,
-  decodedChunks,
-  totalLength,
-  sampleRate
+  audioContext: AudioContext,
+  decodedChunks: Float32Array[][],
+  totalLength: number,
+  sampleRate: number
 ) {
   if (!totalLength) {
     throw new Error(`stbvorbis.js Error: No length`)
@@ -73,10 +79,10 @@ async function createBuffer(
     sampleRate
   )
   var track = Array(audioBuffer.numberOfChannels)
-    .fill()
+    .fill(null)
     .map(() => 0)
   var data = Array(audioBuffer.numberOfChannels)
-    .fill()
+    .fill(null)
     .map((_, ch) => audioBuffer.getChannelData(ch))
   for (const chunk of decodedChunks) {
     chunk.forEach(function(a, ch) {
