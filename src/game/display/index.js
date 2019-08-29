@@ -48,12 +48,18 @@ export class GameDisplay {
     let data = this._getData(time, gameTime, gameState)
     this._updateStatefulData(time, gameTime, gameState)
     this._context.render(Object.assign({}, this._stateful, data))
+    this._synchronizeVideo(gameTime)
+    this._synchronizeTutorialEscapeHint(gameTime)
+  }
+  _synchronizeVideo(gameTime) {
     if (this._video && !this._videoStarted && gameTime >= this._videoOffset) {
       this._video.volume = 0
       this._video.play()
       this._video.classList.add('is-playing')
       this._videoStarted = true
     }
+  }
+  _synchronizeTutorialEscapeHint(gameTime) {
     if (this._game.options.tutorial) {
       const TUTORIAL_ESCAPE_HINT_SHOW_TIME = 101.123595506
       if (
