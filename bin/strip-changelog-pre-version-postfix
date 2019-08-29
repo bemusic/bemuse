@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+const fs = require('fs')
+const data = fs.readFileSync('CHANGELOG.md', 'utf8')
+fs.writeFileSync('CHANGELOG.md', data.replace(/(## v[\d.]+)-pre\.\d+/g, ''))
