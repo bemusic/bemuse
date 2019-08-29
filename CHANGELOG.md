@@ -9,7 +9,7 @@
 [@thakkaryash94]: https://github.com/thakkaryash94
 [@hajimehoshi]: https://github.com/hajimehoshi
 
-
+## v44.3.0 (2019-08-29)
 
 ### Internals
 
@@ -23,7 +23,7 @@
 [#538]: https://github.com/bemusic/bemuse/pull/538
 [#539]: https://github.com/bemusic/bemuse/pull/539
 
-## v44.2.4
+## v44.2.4 (2019-08-29)
 
 ### Internals
 
@@ -33,7 +33,7 @@
 
 [#536]: https://github.com/bemusic/bemuse/pull/536
 
-## v44.1.0
+## v44.1.0 (2019-08-29)
 
 ### New stuff
 
@@ -60,7 +60,7 @@
 [#533]: https://github.com/bemusic/bemuse/pull/533
 [#534]: https://github.com/bemusic/bemuse/pull/534
 
-## v44
+## v44 (2019-08-27)
 
 This release contains no new features, just a lot of codebase modernizations.
 
@@ -105,7 +105,7 @@ This release contains no new features, just a lot of codebase modernizations.
 [#525]: https://github.com/bemusic/bemuse/pull/525
 [#524]: https://github.com/bemusic/bemuse/pull/524
 
-## v43
+## v43 (2018-11-11)
 
 This release contains multiple contributions from the community! Many thanks to
 everyone who helped contributing to this release.
@@ -153,7 +153,7 @@ from our contributors.
 [#510]: https://github.com/bemusic/bemuse/pull/510
 [#511]: https://github.com/bemusic/bemuse/pull/511
 
-## v42
+## v42 (2018-08-08)
 
 This update took a really long time as I (dtinth) was busy with other things in
 life. Also, this release contains many internal changes to the code
