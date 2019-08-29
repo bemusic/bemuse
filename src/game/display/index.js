@@ -22,9 +22,7 @@ export class GameDisplay {
       panelPlacement: game.players[0].options.placement,
       infoPanelPosition: skinData.infoPanelPosition,
     })
-    this._createTouchEscapeButton({
-      displayByDefault: skinData.mainInputDevice === 'touch',
-    })
+    this._createTouchEscapeButton()
     this._createFullScreenButton()
   }
   setEscapeHandler(escapeHandler) {
@@ -117,24 +115,11 @@ export class GameDisplay {
     }
     return $wrapper[0]
   }
-  _createTouchEscapeButton({ displayByDefault }) {
+  _createTouchEscapeButton() {
     const touchButtons = document.createElement('div')
     touchButtons.className = 'game-display--touch-buttons is-left'
     this.wrapper.appendChild(touchButtons)
-    if (displayByDefault) {
-      touchButtons.classList.add('is-visible')
-    } else {
-      let shown = false
-      this.wrapper.addEventListener(
-        'touchstart',
-        () => {
-          if (shown) return
-          shown = true
-          touchButtons.classList.add('is-visible')
-        },
-        true
-      )
-    }
+    touchButtons.classList.add('is-visible')
     const addTouchButton = (className, onClick) => {
       let button = createTouchButton(onClick, className)
       touchButtons.appendChild(button)
