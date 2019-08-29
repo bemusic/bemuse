@@ -24,6 +24,7 @@ export class GameDisplay {
     })
     this._createTouchEscapeButton()
     this._createFullScreenButton()
+    this._escapeHintShown = false
   }
   setEscapeHandler(escapeHandler) {
     this._onEscape = escapeHandler
@@ -52,6 +53,16 @@ export class GameDisplay {
       this._video.play()
       this._video.classList.add('is-playing')
       this._videoStarted = true
+    }
+    if (this._game.options.tutorial) {
+      const TUTORIAL_ESCAPE_HINT_SHOW_TIME = 101.123595506
+      if (
+        gameTime >= TUTORIAL_ESCAPE_HINT_SHOW_TIME &&
+        !this._escapeHintShown
+      ) {
+        this._escapeHintShown = true
+        this._escapeHint.classList.add('is-shown')
+      }
     }
   }
   _getData(time, gameTime, gameState) {
@@ -126,8 +137,13 @@ export class GameDisplay {
     }
     addTouchButton('game-display--touch-escape-button', () => this._onEscape())
     addTouchButton('game-display--touch-replay-button', () => this._onReplay())
-  }
 
+    const escapeHint = document.createElement('div')
+    escapeHint.textContent = 'Click or press Esc to exit the tutorial'
+    escapeHint.className = 'game-display--escape-hint'
+    this._escapeHint = escapeHint
+    touchButtons.appendChild(escapeHint)
+  }
   _createFullScreenButton() {
     if (shouldDisableFullScreen() || !screenfull.enabled) {
       return
