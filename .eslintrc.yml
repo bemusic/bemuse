@@ -48,3 +48,4 @@ overrides:
       no-use-before-define: off
       import/no-unresolved: off
       import/export: off
+      no-useless-constructor: off
