@@ -1,8 +1,6 @@
 export class Control {
-  constructor() {
-    this.value = 0
-    this.changed = false
-  }
+  public value = 0
+  public changed = false
   get justPressed() {
     return this.changed && this.value
   }

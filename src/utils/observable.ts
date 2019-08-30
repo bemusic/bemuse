@@ -2,9 +2,10 @@
 
 import Callbacks from 'bemuse/utils/callbacks'
 
-export class Observable {
-  constructor(value = undefined) {
-    this._callbacks = new Callbacks()
+export class Observable<T> {
+  private _callbacks = new Callbacks<[T]>()
+  private _value?: T
+  constructor(value?: T) {
     this._value = value
   }
   get value() {
@@ -12,12 +13,12 @@ export class Observable {
   }
   set value(value) {
     this._value = value
-    this.notify(value)
+    this.notify(value!)
   }
-  notify(value) {
+  notify(value: T) {
     this._callbacks.call(value)
   }
-  watch(f) {
+  watch(f: (value: T) => void) {
     if (this._value !== undefined) f(this._value)
     return this._callbacks.add(f)
   }
