@@ -14,6 +14,7 @@ export class GameTimer {
     this._unpausedTimeSinceStart = 0
     this._unpausedTimerValue = 0
     this.readyFraction = 0
+    this.gettingStarted = false
   }
 
   // True if the game is started, false otherwise.
