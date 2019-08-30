@@ -4,14 +4,12 @@ import bench from 'bemuse/devtools/benchmark'
 
 export class GameInput {
   constructor() {
+    /** @type {Map<string, Control>} */
     this._controls = new Map()
     this._plugins = []
   }
   update() {
     let changes = new Map()
-    /* jshint -W098 */
-    /* jshint -W004 */
-    // https://github.com/jshint/jshint/issues/2138
     for (let [name, control] of this._controls) {
       void name
       control.changed = false
@@ -28,15 +26,13 @@ export class GameInput {
         control.value = value
       }
     }
-    /* jshint +W098 */
-    /* jshint +W004 */
-    // https://github.com/jshint/jshint/issues/2138
   }
   destroy() {
     for (let plugin of this._plugins) {
       plugin.destroy()
     }
   }
+  /** @returns {Control} */
   get(controlName) {
     if (!this._controls.has(controlName)) {
       this._controls.set(controlName, new Control())
