@@ -1,14 +1,31 @@
 import * as Judgments from '../judgments'
 
 import _ from 'lodash'
+import Notechart from 'bemuse-notechart'
 
-const getAccuracyScore = accuracy => Math.floor(accuracy * 500000)
-const getComboScore = (sum, total) => Math.floor((sum * 55555) / total)
+const getAccuracyScore = (accuracy: number) => Math.floor(accuracy * 500000)
+const getComboScore = (sum: number, total: number) =>
+  Math.floor((sum * 55555) / total)
 
 export class PlayerStats {
-  constructor(notechart) {
+  public totalCombo: number
+  public totalNotes: number
+  public combo: number
+  public maxCombo: number
+  public rawSumJudgmentWeight: number
+  public rawTotalComboScore: number
+  public rawSumComboScore: number
+  public counts: { [k in Judgments.JudgedJudgment]: number }
+  public numJudgments: number
+  public poor: boolean
+  public deltas: number[]
+
+  private _remainingMaxPossibleRawComboScore: number
+  private _log: { character: string; count: number }[]
+
+  constructor(notechart: Notechart) {
     this.totalCombo = _(notechart.notes)
-      .map(note => notechart.info(note).combos)
+      .map(note => notechart.info(note)!.combos)
       .sum()
     this.totalNotes = notechart.notes.length
     this.combo = 0
@@ -63,7 +80,7 @@ export class PlayerStats {
       .map(({ character, count }) => `${count > 1 ? count : ''}${character}`)
       .join('')
   }
-  handleJudgment(judgment) {
+  handleJudgment(judgment: Judgments.JudgedJudgment) {
     this.counts[judgment] += 1
     this.numJudgments += 1
     if (Judgments.breaksCombo(judgment)) {
@@ -86,17 +103,17 @@ export class PlayerStats {
     }
     this._recordLog(judgment)
   }
-  handleDelta(delta) {
+  handleDelta(delta: number) {
     this.deltas.push(delta)
   }
-  _calculateRawTotalComboScore(total) {
+  private _calculateRawTotalComboScore(total: number) {
     let sum = 0
     for (let i = 1; i <= total; i++) {
       sum += this._calculateRawComboScore(i)
     }
     return sum
   }
-  _calculateRawComboScore(i) {
+  private _calculateRawComboScore(i: number) {
     // #region combo
     if (i === 0) return 0
     if (i < 23) return 1
@@ -106,7 +123,7 @@ export class PlayerStats {
     return 5
     // #endregion
   }
-  _recordLog(judgment) {
+  private _recordLog(judgment: Judgments.JudgedJudgment) {
     let character = this._getLogCharacter(judgment)
     if (character) {
       if (
@@ -119,7 +136,7 @@ export class PlayerStats {
       }
     }
   }
-  _getLogCharacter(judgment) {
+  private _getLogCharacter(judgment: Judgments.JudgedJudgment) {
     switch (judgment) {
       case 1:
         return 'A'

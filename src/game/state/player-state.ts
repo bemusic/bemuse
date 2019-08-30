@@ -7,17 +7,72 @@ import {
   isBad,
   judgeEndTime,
   judgeTime,
+  IJudge,
+  Judgment,
+  JudgedJudgment,
 } from '../judgments'
+import Player from '../player'
+import { GameNote } from 'bemuse-notechart/lib/types'
+import GameInput from '../input'
+import Control from '../input/control'
+
+type NoteResult = {
+  judgment: Judgment
+  status: NoteStatus
+  delta: number
+}
+
+enum NoteStatus {
+  /** For long notes -- when the player is holding the note but not yet release it. */
+  Active = 'active',
+  /** This not is not yet judged. */
+  Unjudged = 'unjudged',
+  /** This note is fully-judged. */
+  Judged = 'judged',
+}
+
+type Notifications = {
+  sounds: (
+    | { type: 'hit'; note: GameNote; judgment: Judgment }
+    | { type: 'free'; note: GameNote }
+    | { type: 'break'; note: GameNote })[]
+  judgments: {}[]
+}
+
+function initializeNotifications(): Notifications {
+  return { sounds: [], judgments: [] }
+}
 
 // The PlayerState class holds a single player's state, including the stats
 // (score, current combo, maximum combo).
 export class PlayerState {
-  constructor(player) {
-    this._player = player
+  /** The PlayerStats object. */
+  public stats: PlayerStats
+
+  /** The notifications from the previous update. */
+  public notifications = initializeNotifications()
+  /** The current note scrolling speed. */
+  public speed: number
+  /** `true` if finished playing, `false` otherwise. */
+  public finished = false
+  /** `true` if score is invalid due to autoplay being activated. `false` otherwise. */
+  public tainted = false
+  public input: Map<string, Control> = new Map()
+
+  private _columns: string[]
+  private _noteBufferByColumn: _.Dictionary<NoteBuffer>
+  private _noteResult: Map<GameNote, NoteResult>
+  private _duration: number
+  private _judge: IJudge
+  private _gameTime = 0
+  private _rawInput?: GameInput
+  private _pinching: null | { start: number; speed: number } = null
+
+  constructor(public readonly player: Player) {
     this._columns = player.columns
     this._noteBufferByColumn = _(player.notechart.notes)
-      .sortBy('time')
-      .groupBy('column')
+      .sortBy(n => n.time)
+      .groupBy(n => n.column)
       .mapValues(noteBuffer(this))
       .value()
     this._noteResult = new Map()
@@ -25,84 +80,46 @@ export class PlayerState {
     this._judge = getJudgeForNotechart(player.notechart, {
       tutorial: player.options.tutorial,
     })
-    console.log('GET JDG', this._judge)
-
-    // The PlayerStats object.
     this.stats = new PlayerStats(player.notechart)
-
-    // The notifications from the previous update.
-    this.notifications = {}
-
-    // The current note scrolling speed.
     this.speed = player.options.speed
-
-    // ``true`` if finished playing, ``false`` otherwise.
-    this.finished = false
-
-    // `true` if score is invalid due to autoplay being activated. `false` otherwise.
-    this.tainted = false
   }
 
-  // The `Player` associated with this `PlayerState`.
-  get player() {
-    return this._player
-  }
-
-  // Updates the state. Judge the notes and emit notifications.
-  update(gameTime, input) {
+  /**
+   * Updates the state. Judge the notes and emit notifications.
+   */
+  update(gameTime: number, input: GameInput) {
     this._gameTime = gameTime
     this._rawInput = input
-    this.notifications = {}
-    this.notifications.sounds = []
-    this.notifications.judgments = []
+    this.notifications = initializeNotifications()
     this._updateInputColumnMap()
     this._judgeNotes()
     this._updateSpeed()
     if (gameTime > this._duration + 1) this.finished = true
   }
 
-  // Returns the status of the note as a string. The results may be:
-  //
-  // unjudged
-  //   This note is unjudged.
-  // active
-  //   For long notes -- when the player is holding the note
-  //   but not yet release it.
-  // judged
-  //   This note is fully-judged.
-  getNoteStatus(note) {
+  getNoteStatus(note: GameNote): NoteStatus {
     let result = this._noteResult.get(note)
-    if (!result) return 'unjudged'
+    if (!result) return NoteStatus.Unjudged
     return result.status
   }
-
-  // Returns the Number representing judgment of the note.
-  // The judgment may be:
-  //
-  // 0
-  //   When the note is unjudged.
-  // otherwise
-  //   See the game/judgments module for information about this number.
-  getNoteJudgment(note) {
+  getNoteJudgment(note: GameNote) {
     let result = this._noteResult.get(note)
-    if (!result) return 0
+    if (!result) return Judgment.Unjudged
     return result.judgment
   }
-
-  getPlayerInput(control) {
-    return this._rawInput.get(`p${this._player.number}_${control}`)
+  getPlayerInput(control: string) {
+    return this._rawInput!.get(`p${this.player.number}_${control}`)!
   }
   _updateInputColumnMap() {
     this.input = new Map(
       this._columns.map(column => [column, this.getPlayerInput(column)])
     )
   }
-
   _judgeNotes() {
     for (let column of this._columns) {
       let buffer = this._noteBufferByColumn[column]
       if (buffer) {
-        let control = this.input.get(column)
+        let control = this.input.get(column)!
         this._judgeColumn(buffer, control)
         buffer.update()
       }
@@ -121,14 +138,14 @@ export class PlayerState {
     } else if (!pinch) {
       this._pinching = null
     }
-    if (pinch) {
+    if (pinch && this._pinching) {
       let pinching = this._pinching
       let speed = (pinching.speed * pinch) / pinching.start
       this.speed = Math.max(0.2, Math.round(speed * 10) / 10)
     }
   }
-  _modifySpeed(direction) {
-    let amount = this._rawInput.get('select').value
+  _modifySpeed(direction: 1 | -1) {
+    let amount = this._rawInput!.get('select').value
       ? 0.1
       : this.speed < 0.5
       ? 0.3
@@ -136,8 +153,7 @@ export class PlayerState {
     this.speed += direction * amount
     if (this.speed < 0.2) this.speed = 0.2
   }
-
-  _judgeColumn(buffer, control) {
+  _judgeColumn(buffer: NoteBuffer, control: Control) {
     let judgedNote
     let judgment
     let notes = buffer.notes
@@ -148,15 +164,15 @@ export class PlayerState {
         let shouldBreak = this.getNoteStatus(note) !== 'active'
         judgedNote = note
         judgment = this._judgeNote(note)
-        if (window.BEMUSE_AUTOPLAY) {
+        if (isAutoplayEnabled()) {
           autoPlayed = true
         }
         if (shouldBreak) break
       }
     }
     if (control.justPressed || autoPlayed) {
-      if (judgedNote) {
-        this.notifications.sounds.push({
+      if (judgedNote && judgment != null) {
+        this.notifications.sounds!.push({
           note: judgedNote,
           type: 'hit',
           judgment: judgment,
@@ -164,25 +180,25 @@ export class PlayerState {
       } else {
         let freestyleNote = this._getFreestyleNote(notes)
         if (freestyleNote) {
-          this.notifications.sounds.push({ note: freestyleNote, type: 'free' })
+          this.notifications.sounds!.push({ note: freestyleNote, type: 'free' })
         }
       }
     }
   }
-  _getClosestNote(notes) {
+  _getClosestNote(notes: GameNote[]) {
     return _.minBy(notes, note => Math.abs(this._gameTime - note.time))
   }
-  _getFreestyleNote(notes) {
+  _getFreestyleNote(notes: GameNote[]) {
     return _.minBy(notes, note => {
       let distance = Math.abs(this._gameTime - note.time)
       let penalty = this._gameTime < note.time - 1 ? 1000000 : 0
       return distance + penalty
     })
   }
-  _shouldJudge(note, control, buffer) {
+  _shouldJudge(note: GameNote, control: Control, buffer: NoteBuffer) {
     let status = this.getNoteStatus(note)
     if (status === 'unjudged') {
-      if (window.BEMUSE_AUTOPLAY && this._gameTime >= note.time) {
+      if (isAutoplayEnabled() && this._gameTime >= note.time) {
         this.tainted = true
         return true
       }
@@ -194,7 +210,8 @@ export class PlayerState {
       }
       return missed || hit
     } else if (status === 'active') {
-      if (window.BEMUSE_AUTOPLAY && this._gameTime >= note.end.time) {
+      if (!note.end) throw new Error('Invariant violation: note.end must exist')
+      if (isAutoplayEnabled() && this._gameTime >= note.end.time) {
         this.tainted = true
         return true
       }
@@ -208,18 +225,18 @@ export class PlayerState {
       return false
     }
   }
-  _judgeNote(note) {
+  _judgeNote(note: GameNote) {
     let delta = this._gameTime - note.time
     let judgment = judgeTime(this._gameTime, note.time, this._judge)
     let result = this._noteResult.get(note)
     let isDown = !result || result.status === 'unjudged'
     let isUp = result && result.status === 'active'
-    if (window.BEMUSE_AUTOPLAY && judgment >= 1) {
+    if (isAutoplayEnabled() && judgment >= 1) {
       judgment = 1
     }
     if (note.end) {
       if (isDown) {
-        let status = judgment === MISSED ? 'judged' : 'active'
+        let status = judgment === MISSED ? NoteStatus.Judged : NoteStatus.Active
         if (judgment === MISSED) {
           // judge missed long note twice
           this._setJudgment(judgment, delta, note.column)
@@ -231,10 +248,10 @@ export class PlayerState {
         judgment =
           judgeEndTime(this._gameTime, note.end.time, this._judge) || MISSED
         if (scratch && delta > 0) judgment = 1
-        result = { status: 'judged', judgment, delta }
+        result = { status: NoteStatus.Judged, judgment, delta }
       }
     } else {
-      result = { status: 'judged', judgment, delta }
+      result = { status: NoteStatus.Judged, judgment, delta }
     }
     if (judgment === MISSED) {
       this.notifications.sounds.push({ note, type: 'break' })
@@ -242,19 +259,37 @@ export class PlayerState {
     if (isDown && judgment !== MISSED) {
       this.stats.handleDelta(delta)
     }
+    if (!result) {
+      throw new Error('Invariant violation: result must not be undefined')
+    }
+    if (!judgment) {
+      throw new Error(
+        'Invariant violation: note should be judged by this point'
+      )
+    }
     this._noteResult.set(note, result)
     this._setJudgment(judgment, delta, note.column)
     return judgment
   }
-  _setJudgment(judgment, delta, column) {
+  _setJudgment(judgment: JudgedJudgment, delta: number, column: string) {
     this.stats.handleJudgment(judgment)
     let info = { judgment, combo: this.stats.combo, delta, column }
     this.notifications.judgments.push(info)
   }
 }
 
-function noteBuffer(state) {
-  return function bufferNotes(notes) {
+type NoteBuffer = {
+  notes: GameNote[]
+  startIndex: number
+  update: () => void
+}
+
+function isAutoplayEnabled() {
+  return !!(window as any).BEMUSE_AUTOPLAY
+}
+
+function noteBuffer(state: PlayerState) {
+  return function bufferNotes(notes: GameNote[]): NoteBuffer {
     let startIndex = 0
     return {
       notes,
