@@ -2,12 +2,20 @@ import Control from './control'
 import _ from 'lodash'
 import bench from 'bemuse/devtools/benchmark'
 
+type GameInputPluginInternalInstance = {
+  get(): [string, number][]
+  destroy(): void
+}
+
+interface IGameInputPlugin {
+  name: string
+  get(): { [key: string]: number }
+  destroy?(): void
+}
+
 export class GameInput {
-  constructor() {
-    /** @type {Map<string, Control>} */
-    this._controls = new Map()
-    this._plugins = []
-  }
+  private _controls = new Map<string, Control>()
+  private _plugins: GameInputPluginInternalInstance[] = []
   update() {
     let changes = new Map()
     for (let [name, control] of this._controls) {
@@ -20,7 +28,7 @@ export class GameInput {
       }
     }
     for (let [name, value] of changes) {
-      let control = this.get(name)
+      let control = this.get(name)!
       if (control.value !== value) {
         control.changed = true
         control.value = value
@@ -32,15 +40,14 @@ export class GameInput {
       plugin.destroy()
     }
   }
-  /** @returns {Control} */
-  get(controlName) {
+  get(controlName: string) {
     if (!this._controls.has(controlName)) {
       this._controls.set(controlName, new Control())
     }
-    return this._controls.get(controlName)
+    return this._controls.get(controlName)!
   }
-  use(plugin) {
-    let state = {}
+  use(plugin: IGameInputPlugin) {
+    let state: { [key: string]: number } = {}
     let name = 'input:' + plugin.name
     this._plugins.push({
       get: bench.wrap(name, function() {
