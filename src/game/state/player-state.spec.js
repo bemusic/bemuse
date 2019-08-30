@@ -51,19 +51,19 @@ describe('PlayerState', function() {
 
         let column = chart.notes[0].column
 
-        assert(state.getNoteStatus(chart.notes[0]) === 'unjudged')
-        assert(state.stats.combo === 0)
-        assert(state.stats.poor === false)
-        assert(state.stats.totalCombo === 2)
-        assert(!state.notifications.judgments)
+        assert.equal(state.getNoteStatus(chart.notes[0]), 'unjudged')
+        assert.equal(state.stats.combo, 0)
+        assert.equal(state.stats.poor, false)
+        assert.equal(state.stats.totalCombo, 2)
+        assert.equal(state.notifications.judgments.length, 0)
 
         advance(1.999, {})
-        assert(state.getNoteStatus(chart.notes[0]), 'unjudged')
+        assert.equal(state.getNoteStatus(chart.notes[0]), 'unjudged')
 
         advance(2, { p1_1: 1 })
-        assert(state.getNoteStatus(chart.notes[0]), 'judged')
-        assert(state.getNoteJudgment(chart.notes[0]), 1)
-        assert(state.getNoteStatus(chart.notes[1]), 'unjudged')
+        assert.equal(state.getNoteStatus(chart.notes[0]), 'judged')
+        assert.equal(state.getNoteJudgment(chart.notes[0]), 1)
+        assert.equal(state.getNoteStatus(chart.notes[1]), 'unjudged')
         assert.deepEqual(state.notifications.judgments[0], {
           judgment: 1,
           combo: 1,
@@ -74,15 +74,15 @@ describe('PlayerState', function() {
 
         advance(2.1, { p1_1: 0 })
         advance(5, { p1_1: 0 })
-        assert(state.getNoteStatus(chart.notes[1]) === 'judged')
-        assert(state.getNoteJudgment(chart.notes[1]) === -1)
+        assert.equal(state.getNoteStatus(chart.notes[1]), 'judged')
+        assert.equal(state.getNoteJudgment(chart.notes[1]), -1)
         assert.deepEqual(state.notifications.judgments[0], {
           judgment: -1,
           combo: 0,
           delta: 2,
           column,
         })
-        assert(state.stats.poor === true)
+        assert.equal(state.stats.poor, true)
       })
 
       it('judges multiple notes in different column', function() {
