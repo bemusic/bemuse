@@ -9,6 +9,17 @@
 [@thakkaryash94]: https://github.com/thakkaryash94
 [@hajimehoshi]: https://github.com/hajimehoshi
 
+## v44.5.0-pre.201908301626
+
+### Internals
+
+- Several core objects have been converted to TypeScript to make the game code
+  easier to maintain. This includes `Judgments`, `Game`, `Player`, `GameInput`,
+  `GameState`, `PlayerState` and `PlayerStats` in the game, and `Callbacks`,
+  `Observable` and `Progress` in the utilities. [#544], by [@dtinth]
+
+[#544]: https://github.com/bemusic/bemuse/pull/544
+
 ## v44.4.0 (2019-08-29)
 
 ### New stuff
