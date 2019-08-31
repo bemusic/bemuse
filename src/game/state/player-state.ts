@@ -120,7 +120,7 @@ export class PlayerState {
       let buffer = this._noteBufferByColumn[column]
       if (buffer) {
         let control = this.input.get(column)!
-        this._judgeColumn(buffer, control)
+        this._judgeColumn(buffer, control, column)
         buffer.update()
       }
     }
@@ -153,7 +153,7 @@ export class PlayerState {
     this.speed += direction * amount
     if (this.speed < 0.2) this.speed = 0.2
   }
-  _judgeColumn(buffer: NoteBuffer, control: Control) {
+  _judgeColumn(buffer: NoteBuffer, control: Control, column: string) {
     let judgedNote
     let judgment
     let notes = buffer.notes
@@ -180,7 +180,15 @@ export class PlayerState {
       } else {
         let freestyleNote = this._getFreestyleNote(notes)
         if (freestyleNote) {
-          this.notifications.sounds!.push({ note: freestyleNote, type: 'free' })
+          const shouldPlayFreestyleNote =
+            this.player.options.placement !== '3d' ||
+            !this._isSandwiched(column)
+          if (shouldPlayFreestyleNote) {
+            this.notifications.sounds!.push({
+              note: freestyleNote,
+              type: 'free',
+            })
+          }
         }
       }
     }
@@ -193,6 +201,23 @@ export class PlayerState {
       let distance = Math.abs(this._gameTime - note.time)
       let penalty = this._gameTime < note.time - 1 ? 1000000 : 0
       return distance + penalty
+    })
+  }
+  _isSandwiched(column: string) {
+    const mapping: { [col: string]: string[] } = {
+      '2': ['1', '3'],
+      '3': ['2', '4'],
+      '4': ['3', '5'],
+      '5': ['4', '6'],
+      '6': ['5', '7'],
+    }
+    if (!mapping[column]) return false
+    return mapping[column].every(adjacentColumn => {
+      const buffer = this._noteBufferByColumn[adjacentColumn]
+      if (!buffer) return false
+      return buffer.notes.some(
+        note => Math.abs(this._gameTime - note.time) < 0.1
+      )
     })
   }
   _shouldJudge(note: GameNote, control: Control, buffer: NoteBuffer) {

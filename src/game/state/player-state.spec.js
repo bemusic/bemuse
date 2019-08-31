@@ -314,6 +314,42 @@ describe('PlayerState', function() {
           advance(7.5, { p1_1: 1 })
           assert(state.notifications.sounds[0].note === chart.notes[1])
         })
+        it('suppresses freestyle keysound when column is sandwiched between 2 adjacent notes in 3d mode', function() {
+          setup(
+            `
+              #BPM 60
+              #00111:01
+              #00212:02
+              #00113:02
+            `,
+            { speed: 1, placement: '3d' }
+          )
+          advance(1, { p1_2: 1 })
+          assert.equal(state.notifications.sounds.length, 1)
+          advance(1, { p1_2: 0 })
+
+          advance(4, { p1_2: 1 })
+          assert.equal(state.notifications.sounds.length, 0)
+          advance(4, { p1_2: 0 })
+        })
+        it('does not suppress freestyle keysound outside 3d mode', function() {
+          setup(
+            `
+              #BPM 60
+              #00111:01
+              #00212:02
+              #00113:02
+            `,
+            { speed: 1, placement: 'left' }
+          )
+          advance(1, { p1_2: 1 })
+          assert.equal(state.notifications.sounds.length, 1)
+          advance(1, { p1_2: 0 })
+
+          advance(4, { p1_2: 1 })
+          assert.equal(state.notifications.sounds.length, 1)
+          advance(4, { p1_2: 0 })
+        })
       })
     })
 
