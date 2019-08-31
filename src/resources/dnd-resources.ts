@@ -1,14 +1,13 @@
 import * as ProgressUtils from 'bemuse/progress/utils'
 import readBlob from 'bemuse/utils/read-blob'
-import { IResources, IResource } from './types'
+import { IResources, IResource, FileEntry } from './types'
 import Progress from 'bemuse/progress'
-
-type FileEntry = { name: string; file: File }
+import { unarchive } from './unarchiver'
 
 export class DndResources implements IResources {
   _files: Promise<FileEntry[]>
   constructor(event: DragEvent) {
-    this._files = getFilesFromEvent(event)
+    this._files = getFilesFromEvent(event).then(unarchiveIfNeeded)
   }
   file(name: string) {
     return this._files.then(function(files) {
@@ -108,4 +107,15 @@ async function getFilesFromEvent(event: DragEvent) {
       out.push({ name: file.name, file })
     }
   }
+}
+
+export async function unarchiveIfNeeded(
+  files: FileEntry[]
+): Promise<FileEntry[]> {
+  if (files.length !== 1) return files
+  const fileEntry = files[0]
+  if (!fileEntry.name.match(/\.(?:zip|rar|7z|tar(?:\.(?:gz|bz2))?)/i)) {
+    return files
+  }
+  return unarchive(fileEntry.file)
 }

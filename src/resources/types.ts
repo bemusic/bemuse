@@ -12,3 +12,5 @@ export interface IResource {
   /** Reads the resource contents as an ArrayBuffer */
   read(progress: Progress): PromiseLike<ArrayBuffer>
 }
+
+export type FileEntry = { name: string; file: File }
