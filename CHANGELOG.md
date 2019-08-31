@@ -9,6 +9,28 @@
 [@thakkaryash94]: https://github.com/thakkaryash94
 [@hajimehoshi]: https://github.com/hajimehoshi
 
+## v45.0.0-pre.201908311431
+
+### New stuff
+
+- **Bemuse can now load custom songs directly from .zip, .rar and .7z files.**
+  You can now drop an archive file into Bemuse. This is possible thanks to
+  [libarchive.js](https://github.com/nika-begiashvili/libarchivejs) which is a
+  port of [libarchive](https://github.com/libarchive/libarchive) to WebAssembly.
+  [#547], by [@dtinth]
+
+### Others
+
+- When playing in 3D mode (e.g. using a touch screen), performing a fast
+  glissando between 2 notes with one column of gap in-between will no longer
+  emit the sound of the gap. For example, given a note pattern 1-3-5-7, you can
+  swipe your finger from 1~7, and the game will suppress the sounds of column
+  2-4-6. This improves the playing experience in mobile devices. [#546], by
+  [@dtinth]
+
+[#546]: https://github.com/bemusic/bemuse/pull/546
+[#547]: https://github.com/bemusic/bemuse/pull/547
+
 ## v44.5.0 (2019-08-30)
 
 ### Internals
