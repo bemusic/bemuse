@@ -1,4 +1,4 @@
-import Progress from './'
+import { Progress } from './Progress'
 import * as ProgressUtils from './utils'
 
 describe('ProgressUtils', function() {

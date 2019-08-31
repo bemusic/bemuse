@@ -1,5 +1,5 @@
 import * as Formatters from './formatters'
-import Progress from './'
+import { Progress } from './Progress'
 
 describe('ProgressFormatters', function() {
   describe('BYTES_FORMATTER', function() {

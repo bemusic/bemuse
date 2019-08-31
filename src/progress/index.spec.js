@@ -1,4 +1,4 @@
-import Progress from './'
+import { Progress } from './Progress'
 
 describe('Progress', function() {
   describe('#watch', function() {

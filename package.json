@@ -54,6 +54,8 @@
   },
   "homepage": "https://github.com/spacetme/bemuse",
   "devDependencies": {
+    "@types/bluebird": "3",
+    "@types/bluebird-global": "3",
     "@types/chai": "^4.2.0",
     "@types/eslint": "^4.16.4",
     "@types/minimatch": "^3.0.3",
@@ -169,6 +171,7 @@
     "keycode": "^2.2.0",
     "keytime": "^0.1.0",
     "lazy-property": "^1.0.0",
+    "libarchive.js": "^1.3.0",
     "lodash": "^4.17.11",
     "markdown-it": "^6.0.0",
     "mean": "^1.0.1",
