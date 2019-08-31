@@ -6,6 +6,7 @@ export function loadSongFromResources(resources, options = {}) {
   var onMessage = options.onMessage || (() => {})
   return resources.fileList
     .then(fileList => {
+      console.log(fileList)
       return fileList.filter(filename =>
         /\.(bms|bme|bml|bmson)$/i.test(filename)
       )
