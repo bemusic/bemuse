@@ -36,9 +36,9 @@ export function slicesForNotesAndTiming(
 ) {
   const { beatForPulse } = options
 
-  let all = new Set()
-  let play = new Set()
-  let restart = new Set()
+  let all = new Set<number>()
+  let play = new Set<number>()
+  let restart = new Set<number>()
 
   for (let { x, y, c } of notes) {
     all.add(y)

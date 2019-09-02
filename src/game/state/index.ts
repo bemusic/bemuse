@@ -3,6 +3,7 @@ import Game from '../game'
 import Player from '../player'
 import GameInput from '../input'
 import GameTimer from '../game-timer'
+import invariant from 'invariant'
 
 export class GameState {
   /** See Timer#readyFraction. We need it here so that the display can read this information. */
@@ -34,7 +35,15 @@ export class GameState {
     this.finished = finished
   }
   player(p: Player) {
-    return this._players.get(p)
+    const playerState = this._players.get(p)
+    return (
+      playerState ||
+      invariant(
+        false,
+        'Invariant violation: No player state found for player %s',
+        p.number
+      )
+    )
   }
 }
 

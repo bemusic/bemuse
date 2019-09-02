@@ -9,6 +9,15 @@
 [@thakkaryash94]: https://github.com/thakkaryash94
 [@hajimehoshi]: https://github.com/hajimehoshi
 
+## v45.1.0-pre.201909021818
+
+### Internals
+
+- Upgraded TypeScript to latest version, 3.6.2, and converted some more code
+  that deals with game initialization logic to TypeScript. [#549], by [@dtinth]
+
+[#549]: https://github.com/bemusic/bemuse/pull/549
+
 ## v45.0.0 (2019-08-31)
 
 ### New stuff
