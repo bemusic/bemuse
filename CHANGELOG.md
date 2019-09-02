@@ -9,7 +9,7 @@
 [@thakkaryash94]: https://github.com/thakkaryash94
 [@hajimehoshi]: https://github.com/hajimehoshi
 
-## v45.1.0-pre.201909021818
+## v45.1.0 (2019-09-02)
 
 ### Internals
 
