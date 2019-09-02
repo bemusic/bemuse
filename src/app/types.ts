@@ -1,3 +1,6 @@
+/* eslint camelcase: off */
+/* REASON: These snake case names are used in our JSON files. */
+
 import { IResources } from 'bemuse/resources/types'
 import { PlayerOptionsPlacement } from 'bemuse/game/player'
 
