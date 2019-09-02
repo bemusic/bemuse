@@ -40,6 +40,10 @@ jobs:
             then
               yarn danger ci
             fi
+      - run:
+          name: typecheck
+          command: |
+            yarn tsc
   test:
     working_directory: ~/bemuse
     environment:
