@@ -12,7 +12,7 @@ import GameDisplay from '../display'
 import SamplesLoader from './samples-loader'
 import loadImage from './loadImage'
 import Notechart from 'bemuse-notechart'
-import Resources from 'bemuse/scintillator/resources'
+import { IResources } from 'bemuse/resources/types'
 
 type Tasks = {
   Scintillator: TODO
@@ -30,7 +30,7 @@ type Tasks = {
   GameController: GameController
 }
 
-type Assets = Resources & {
+type Assets = IResources & {
   progress?: {
     current?: Progress
     all?: Progress

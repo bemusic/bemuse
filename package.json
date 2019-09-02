@@ -59,6 +59,8 @@
     "@types/chai": "^4.2.0",
     "@types/eslint": "^4.16.4",
     "@types/minimatch": "^3.0.3",
+    "@types/react": "^16.9.2",
+    "@types/webpack-env": "^1.14.0",
     "@typescript-eslint/parser": "^2.0.0",
     "autoprefixer": "^9.1.5",
     "body-parser": "^1.18.3",

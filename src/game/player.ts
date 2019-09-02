@@ -1,10 +1,23 @@
 import Notechart from 'bemuse-notechart'
 import { PlayerOptions } from 'bemuse-notechart/lib/types'
 
-type PlayerControlKeys = '1' | '2' | '3' | '4' | '5' | '6' | '7' | 'SC' | 'SC2'
-type PlayerOptionsPlacement = 'left' | 'center' | 'right' | '3d'
-type PlayerOptionsScratch = 'left' | 'right' | 'off'
-type PlayerOptionsGauge = 'off' | 'hope'
+export type PlayerControlKeys =
+  | '1'
+  | '2'
+  | '3'
+  | '4'
+  | '5'
+  | '6'
+  | '7'
+  | 'SC'
+  | 'SC2'
+
+export type PlayerOptionsPlacement = 'left' | 'center' | 'right' | '3d'
+
+export type PlayerOptionsScratch = 'left' | 'right' | 'off'
+
+export type PlayerOptionsGauge = 'off' | 'hope'
+
 type PlayerOptionsInputMapping = {
   keyboard: { [control in PlayerControlKeys]: string }
 }
