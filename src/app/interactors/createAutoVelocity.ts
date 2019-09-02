@@ -1,7 +1,23 @@
 import _ from 'lodash'
 import invariant from 'invariant'
-
-export default options => {
+type VelocityControllerOptions = {
+  enabled: boolean
+  initialSpeed: number
+  desiredLeadTime: number
+  songBPM: number
+  laneCover?: number
+}
+type VelocityController = {
+  getInitialSpeed(): number
+  handleGameFinish(
+    finishingSpeed: number,
+    options: {
+      saveSpeed: (speed: number) => void
+      saveLeadTime: (speed: number) => void
+    }
+  ): void
+}
+export default (options: VelocityControllerOptions): VelocityController => {
   invariant(typeof options.enabled === 'boolean', 'enabled must be a boolean')
   invariant(
     typeof options.initialSpeed === 'number',
@@ -23,7 +39,7 @@ export default options => {
   }
 }
 
-function manualVelocity(initialSpeed) {
+function manualVelocity(initialSpeed: number): VelocityController {
   return {
     getInitialSpeed() {
       return initialSpeed
@@ -34,12 +50,20 @@ function manualVelocity(initialSpeed) {
   }
 }
 
-function autoVelocity({ songBPM, desiredLeadTime, laneCover }) {
+function autoVelocity({
+  songBPM,
+  desiredLeadTime,
+  laneCover,
+}: {
+  songBPM: number
+  desiredLeadTime: number
+  laneCover: number
+}): VelocityController {
   const visiblePortion = 1 - Math.abs(laneCover)
   const nominalSpeedLeadTime = ((60000 * 5) / songBPM) * visiblePortion
   const initialSpeed = _.minBy(_.range(1, 999).map(x => x / 10), speed =>
     Math.abs(desiredLeadTime - nominalSpeedLeadTime / speed)
-  )
+  )!
   return {
     getInitialSpeed() {
       return initialSpeed

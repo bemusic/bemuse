@@ -4,6 +4,7 @@
   "exclude": ["node_modules", "website/node_modules"],
   "compilerOptions": {
     "baseUrl": ".",
+    "noEmit": true,
     "paths": {
       "bemuse/*": ["./src/*"]
     }

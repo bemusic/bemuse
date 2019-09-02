@@ -35,9 +35,6 @@
     "mocha": "^5.2.0",
     "power-assert": "^1.6.1"
   },
-  "peerDependencies": {
-    "bms": "^3.0.0"
-  },
   "dependencies": {
     "lodash": "^4.17.11"
   }
