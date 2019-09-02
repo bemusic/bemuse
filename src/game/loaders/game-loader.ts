@@ -91,7 +91,7 @@ export function load(spec: LoadSpec) {
     task('Notechart', 'Loading ' + spec.bms.name, [], async progress => {
       let loader = new NotechartLoader()
       let arraybuffer = await bms.read(progress)
-      return await loader.load(arraybuffer, spec.bms, spec.options.players[0])
+      return loader.load(arraybuffer, spec.bms, spec.options.players[0])
     })
 
     task('EyecatchImage', null, ['Notechart'], function(notechart) {

@@ -15,6 +15,7 @@ import Player from '../player'
 import { GameNote } from 'bemuse-notechart/lib/types'
 import GameInput from '../input'
 import Control from '../input/control'
+import invariant from 'invariant'
 
 type NoteResult = {
   judgment: Judgment
@@ -235,16 +236,16 @@ export class PlayerState {
       }
       return missed || hit
     } else if (status === 'active') {
-      if (!note.end) throw new Error('Invariant violation: note.end must exist')
-      if (isAutoplayEnabled() && this._gameTime >= note.end.time) {
+      const noteEnd = note.end || invariant(false, 'note.end must exist')
+      if (isAutoplayEnabled() && this._gameTime >= noteEnd.time) {
         this.tainted = true
         return true
       }
-      let judgment = judgeEndTime(this._gameTime, note.end.time, this._judge)
+      let judgment = judgeEndTime(this._gameTime, noteEnd.time, this._judge)
       let missed = judgment === MISSED
       let lifted = control.changed
       let scratch = note.column === 'SC'
-      let passed = this._gameTime >= note.end.time
+      let passed = this._gameTime >= noteEnd.time
       return missed || lifted || (scratch && passed)
     } else {
       return false

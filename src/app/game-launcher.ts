@@ -120,7 +120,7 @@ export async function launch({
     // start loading the game
     const loadStart = Date.now()
     Log.info(`Loading game: ${describeChart(chart)}`)
-    const GameLoader = require('bemuse/game/loaders/game-loader')
+    const GameLoader: typeof import('bemuse/game/loaders/game-loader') = require('bemuse/game/loaders/game-loader')
     let loader = GameLoader.load(loadSpec)
     let { tasks, promise } = loader
 
@@ -181,7 +181,7 @@ export async function launch({
       Analytics.gameEscape(song, chart, state)
       replay = playResult.replay
       if (!replay) {
-        if (song.tutorial && controller.latestGameTime > 96) onRagequitted()
+        if (song.tutorial && controller.latestGameTime! > 96) onRagequitted()
       }
     }
     controller.destroy()

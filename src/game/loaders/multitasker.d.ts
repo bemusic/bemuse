@@ -1,8 +1,19 @@
 import Progress from 'bemuse/progress'
+import Observable from 'bemuse/utils/observable'
 
 export function start<T, R>(
   tasks: (task: TaskFn<T>, run: RunFn<T>) => PromiseLike<R>
-): void
+): {
+  tasks: Observable<
+    {
+      text: any
+      progress: any
+      progressText: any
+    }[]
+  >
+  promise: PromiseLike<R>
+  get: <N extends keyof T>(name: N) => PromiseLike<T[N]>
+}
 
 // Some TypeScript abomination here until we can concatenate tuples.
 // https://github.com/microsoft/TypeScript/issues/31286
