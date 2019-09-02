@@ -17,7 +17,7 @@ type VelocityController = {
     }
   ): void
 }
-export default (options: VelocityControllerOptions): AutoVelocity => {
+export default (options: VelocityControllerOptions): VelocityController => {
   invariant(typeof options.enabled === 'boolean', 'enabled must be a boolean')
   invariant(
     typeof options.initialSpeed === 'number',
