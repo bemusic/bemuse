@@ -2,23 +2,57 @@ import NotechartLoader from 'bemuse-notechart/lib/loader'
 import Progress from 'bemuse/progress'
 import { atomic } from 'bemuse/progress/utils'
 import SamplingMaster from 'bemuse/sampling-master'
-import co from 'co'
 import keysoundCache from 'bemuse/keysound-cache'
 
 import * as Multitasker from './multitasker'
-import Game from '../game'
+import Game, { GamePlayerOptionsInput } from '../game'
 import GameAudio from '../audio'
 import GameController from '../game-controller'
 import GameDisplay from '../display'
 import SamplesLoader from './samples-loader'
 import loadImage from './loadImage'
+import Notechart from 'bemuse-notechart'
+import Resources from 'bemuse/scintillator/resources'
 
-export function load(spec) {
+type Tasks = {
+  Scintillator: TODO
+  Skin: TODO
+  SkinContext: TODO
+  Notechart: Notechart
+  EyecatchImage: HTMLImageElement
+  BackgroundImage: HTMLImageElement
+  SamplingMaster: SamplingMaster
+  Video: { element: HTMLVideoElement; offset: number } | null
+  Game: Game
+  GameDisplay: GameDisplay
+  Samples: TODO
+  GameAudio: GameAudio
+  GameController: GameController
+}
+
+type Assets = Resources & {
+  progress?: {
+    current?: Progress
+    all?: Progress
+  }
+}
+
+export type LoadSpec = {
+  assets: Assets
+  bms: TODO
+  songId: string
+  displayMode?: 'touch3d' | 'normal'
+  videoUrl?: string
+  videoOffset?: number
+  options: GamePlayerOptionsInput
+}
+
+export function load(spec: LoadSpec) {
   const assets = spec.assets
   const bms = spec.bms
   const songId = spec.songId
 
-  return Multitasker.start(function(task, run) {
+  return Multitasker.start<Tasks, GameController>(function(task, run) {
     task('Scintillator', 'Loading game engine', [], function(progress) {
       return atomic(
         progress,
@@ -54,16 +88,11 @@ export function load(spec) {
       }
     }
 
-    task(
-      'Notechart',
-      'Loading ' + spec.bms.name,
-      [],
-      co.wrap(function*(progress) {
-        let loader = new NotechartLoader()
-        let arraybuffer = yield bms.read(progress)
-        return yield loader.load(arraybuffer, spec.bms, spec.options.players[0])
-      })
-    )
+    task('Notechart', 'Loading ' + spec.bms.name, [], async progress => {
+      let loader = new NotechartLoader()
+      let arraybuffer = await bms.read(progress)
+      return await loader.load(arraybuffer, spec.bms, spec.options.players[0])
+    })
 
     task('EyecatchImage', null, ['Notechart'], function(notechart) {
       return loadImage(assets, notechart.eyecatchImage)
@@ -79,7 +108,7 @@ export function load(spec) {
     task.bar('Loading audio', audioLoadProgress)
     task.bar('Decoding audio', audioDecodeProgress)
 
-    task('SamplingMaster', null, [], function() {
+    task('SamplingMaster', null, [], async () => {
       return new SamplingMaster()
     })
 
@@ -89,10 +118,11 @@ export function load(spec) {
       ['Notechart'],
       function(notechart, progress) {
         if (!spec.videoUrl) return Promise.resolve(null)
+        const videoUrl = spec.videoUrl
         return new Promise((resolve, reject) => {
           const video = document.createElement('video')
           if (!video.canPlayType('video/webm')) return resolve(null)
-          video.src = spec.videoUrl
+          video.src = videoUrl
           video.preload = 'auto'
           video.addEventListener('progress', onProgress, true)
           video.addEventListener('canplaythrough', onCanPlayThrough, true)
@@ -100,7 +130,7 @@ export function load(spec) {
           video.addEventListener('abort', onError, true)
           video.load()
 
-          function onProgress(e) {
+          function onProgress() {
             if (video.buffered && video.buffered.length && video.duration) {
               progress.report(
                 video.buffered.end(0) - video.buffered.start(0),
@@ -118,7 +148,7 @@ export function load(spec) {
             finish()
             const n = video.duration || 100
             progress.report(n, n)
-            resolve({ element: video, offset: spec.videoOffset })
+            resolve({ element: video, offset: spec.videoOffset! })
           }
           function onError() {
             finish()
@@ -129,18 +159,17 @@ export function load(spec) {
       }
     )
 
-    task('Game', null, ['Notechart'], function(notechart) {
+    task('Game', null, ['Notechart'], async notechart => {
       return new Game([notechart], spec.options)
     })
 
     task(
       'GameDisplay',
       null,
-      ['Game', 'Skin', 'SkinContext', 'Video'],
-      function(game, skin, context, video) {
+      ['Game', 'SkinContext', 'Video'],
+      async (game, context, video) => {
         return new GameDisplay({
           game,
-          skin,
           context,
           backgroundImagePromise: run('BackgroundImage'),
           video,
@@ -158,21 +187,23 @@ export function load(spec) {
       )
     })
 
-    task('GameAudio', null, ['Game', 'Samples', 'SamplingMaster'], function(
-      game,
-      samples,
-      master
-    ) {
-      return new GameAudio({ game, samples, master })
-    })
+    task(
+      'GameAudio',
+      null,
+      ['Game', 'Samples', 'SamplingMaster'],
+      async (game, samples, master) => {
+        return new GameAudio({ game, samples, master })
+      }
+    )
 
-    task('GameController', null, ['Game', 'GameDisplay', 'GameAudio'], function(
-      game,
-      display,
-      audio
-    ) {
-      return new GameController({ game, display, audio })
-    })
+    task(
+      'GameController',
+      null,
+      ['Game', 'GameDisplay', 'GameAudio'],
+      async (game, display, audio) => {
+        return new GameController({ game, display, audio })
+      }
+    )
 
     return run('GameController')
   })

@@ -1,4 +1,5 @@
 import Notechart from 'bemuse-notechart'
+import { PlayerOptions } from 'bemuse-notechart/lib/types'
 
 type PlayerControlKeys = '1' | '2' | '3' | '4' | '5' | '6' | '7' | 'SC' | 'SC2'
 type PlayerOptionsPlacement = 'left' | 'center' | 'right' | '3d'
@@ -8,7 +9,7 @@ type PlayerOptionsInputMapping = {
   keyboard: { [control in PlayerControlKeys]: string }
 }
 
-type PlayerOptions = {
+type PlayerOptionsInternal = {
   autosound: boolean
   speed: number
   placement: PlayerOptionsPlacement
@@ -19,11 +20,10 @@ type PlayerOptions = {
   tutorial: boolean
 }
 
-export type PlayerOptionsInput = {
+export type PlayerOptionsInput = PlayerOptions & {
   autosound?: boolean
   speed: number
   placement?: PlayerOptionsPlacement
-  scratch?: PlayerOptionsScratch
   laneCover?: number
   gauge: PlayerOptionsGauge
   input: PlayerOptionsInputMapping
@@ -32,7 +32,7 @@ export type PlayerOptionsInput = {
 
 /** The object representing the player's information, notechart and options. */
 export class Player {
-  public readonly options: PlayerOptions
+  public readonly options: PlayerOptionsInternal
   constructor(
     public readonly notechart: Notechart,
     public readonly number: number,
