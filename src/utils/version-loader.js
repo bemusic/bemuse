@@ -4,4 +4,4 @@
 
 let { version } = require('../../config/buildConfig')
 
-module.exports = 'module.exports=' + JSON.stringify(version)
+module.exports = () => ({ code: 'module.exports=' + JSON.stringify(version) })

@@ -1,34 +1,34 @@
-export function getGauge (gaugeType) {
+export function getGauge(gaugeType) {
   if (gaugeType === 'hope') {
     return hopeGauge()
   }
   return nullGauge()
 }
 
-function nullGauge () {
+function nullGauge() {
   return {
-    update () {},
-    shouldDisplay () {
+    update() {},
+    shouldDisplay() {
       return false
     },
-    getPrimary () {
+    getPrimary() {
       return 0
     },
-    getSecondary () {
+    getSecondary() {
       return 0
     },
-    getExtra () {
+    getExtra() {
       return 0
-    }
+    },
   }
 }
 
-function hopeGauge () {
+function hopeGauge() {
   let primary
   let secondary
   let extra
   return {
-    update (playerState) {
+    update(playerState) {
       const stats = playerState.stats
       const progress = stats.numJudgments / stats.totalCombo
       const getHope = (min, max1, max2) => {
@@ -46,17 +46,17 @@ function hopeGauge () {
         secondary = hopeA
       }
     },
-    shouldDisplay () {
+    shouldDisplay() {
       return primary > 0 || secondary > 0
     },
-    getPrimary () {
+    getPrimary() {
       return primary
     },
-    getSecondary () {
+    getSecondary() {
       return secondary
     },
-    getExtra () {
+    getExtra() {
       return extra
-    }
+    },
   }
 }

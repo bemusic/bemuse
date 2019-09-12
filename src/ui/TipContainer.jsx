@@ -16,7 +16,7 @@ const TipContainer = ({ children, tip, tipVisible = true }) => (
 TipContainer.propTypes = {
   children: PropTypes.node,
   tip: PropTypes.node,
-  tipVisible: PropTypes.bool
+  tipVisible: PropTypes.bool,
 }
 
 export default TipContainer

@@ -5,27 +5,27 @@ import * as Options from '../entities/Options'
 import * as OptionsIO from './OptionsIO'
 import * as ReduxState from '../redux/ReduxState'
 
-export function selectSong (song) {
+export function selectSong(song) {
   return createIO(({ store }) => {
     store.dispatch({
       type: ReduxState.MUSIC_SONG_SELECTED,
-      songId: song.id
+      songId: song.id,
     })
   })
 }
 
-export function selectChart (song, chart) {
+export function selectChart(song, chart) {
   return createIO(({ store }) => {
     store.dispatch({
       type: ReduxState.MUSIC_CHART_SELECTED,
       songId: song.id,
       chartId: chart.file,
-      chartLevel: chart.info.level
+      chartLevel: chart.info.level,
     })
   })
 }
 
-export function launchGame (server, song, chart) {
+export function launchGame(server, song, chart) {
   return createIO(({ store }, run) => {
     Promise.resolve(
       GameLauncher.launch({
@@ -41,7 +41,7 @@ export function launchGame (server, song, chart) {
         },
         onRagequitted: () => {
           store.dispatch({ type: ReduxState.RAGEQUITTED })
-        }
+        },
       })
     ).done()
   })

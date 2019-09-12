@@ -11,13 +11,13 @@ import ResultDeltasView from './ResultDeltasView'
 
 export default class ResultTable extends React.Component {
   static propTypes = {
-    result: PropTypes.object
+    result: PropTypes.object,
   }
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = { deltasModalVisible: false }
   }
-  render () {
+  render() {
     let { result } = this.props
     return (
       <div className='ResultTable'>
@@ -98,7 +98,7 @@ export default class ResultTable extends React.Component {
       </div>
     )
   }
-  formatAccuracy (value) {
+  formatAccuracy(value) {
     return (value * 100).toFixed(2) + '%'
   }
   handleToggleDeltasModal = () => {

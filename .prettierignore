@@ -1,0 +1,8 @@
+**/node_modules/**/*
+**/vendor/**/*
+**/lib/**/*
+**/dist/**/*
+**/build/**/*
+**/coverage/**/*
+**/.nyc_output/**/*
+**/.yarn/**/*

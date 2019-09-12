@@ -4,18 +4,18 @@ import PropTypes from 'prop-types'
 
 export default class BenchmarkPanel extends React.Component {
   static propTypes = {
-    bench: PropTypes.object
+    bench: PropTypes.object,
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       show: false,
-      text: 'wow'
+      text: 'wow',
     }
   }
 
-  render () {
+  render() {
     return (
       <div
         className='BenchmarkPanel'
@@ -35,7 +35,7 @@ export default class BenchmarkPanel extends React.Component {
     )
   }
 
-  componentDidMount () {
+  componentDidMount() {
     setInterval(() => this.forceUpdate(), 1000)
   }
 

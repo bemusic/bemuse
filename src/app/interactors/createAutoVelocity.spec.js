@@ -2,14 +2,14 @@ import assert from 'power-assert'
 
 import createAutoVelocity from './createAutoVelocity'
 
-describe('createAutoVelocity', function () {
-  describe('when disabled', function () {
+describe('createAutoVelocity', function() {
+  describe('when disabled', function() {
     it('initial speed should be from options', () => {
       const autoVelocity = createAutoVelocity({
         enabled: false,
         initialSpeed: 3.8,
         desiredLeadTime: 1000,
-        songBPM: 220
+        songBPM: 220,
       })
       assert(autoVelocity.getInitialSpeed() === 3.8)
     })
@@ -18,7 +18,7 @@ describe('createAutoVelocity', function () {
         enabled: false,
         initialSpeed: 3.8,
         desiredLeadTime: 1000,
-        songBPM: 220
+        songBPM: 220,
       })
       const saveSpeed = sinon.spy()
       const saveLeadTime = sinon.spy()
@@ -28,13 +28,13 @@ describe('createAutoVelocity', function () {
     })
   })
 
-  describe('when enabled', function () {
+  describe('when enabled', function() {
     it('initial speed should be from song’s BPM', () => {
       const autoVelocity = createAutoVelocity({
         enabled: true,
         initialSpeed: 3.8,
         desiredLeadTime: 1200,
-        songBPM: 140
+        songBPM: 140,
       })
       assert(autoVelocity.getInitialSpeed() === 1.8)
     })
@@ -44,7 +44,7 @@ describe('createAutoVelocity', function () {
         initialSpeed: 3.8,
         desiredLeadTime: 1200,
         songBPM: 140,
-        laneCover: 0.5
+        laneCover: 0.5,
       })
       assert(autoVelocity.getInitialSpeed() === 0.9)
     })
@@ -54,7 +54,7 @@ describe('createAutoVelocity', function () {
         initialSpeed: 3.8,
         desiredLeadTime: 1200,
         songBPM: 140,
-        laneCover: -0.5
+        laneCover: -0.5,
       })
       assert(autoVelocity.getInitialSpeed() === 0.9)
     })
@@ -63,7 +63,7 @@ describe('createAutoVelocity', function () {
         enabled: true,
         initialSpeed: 3.8,
         desiredLeadTime: 600,
-        songBPM: 162
+        songBPM: 162,
       })
       assert(autoVelocity.getInitialSpeed() === 3.1)
     })
@@ -72,7 +72,7 @@ describe('createAutoVelocity', function () {
         enabled: true,
         initialSpeed: 3.8,
         desiredLeadTime: 1685,
-        songBPM: 178
+        songBPM: 178,
       })
       assert(autoVelocity.getInitialSpeed() === 1.0)
     })
@@ -81,7 +81,7 @@ describe('createAutoVelocity', function () {
         enabled: true,
         initialSpeed: 3.8,
         desiredLeadTime: 1685,
-        songBPM: 178
+        songBPM: 178,
       })
       const saveSpeed = sinon.spy()
       const saveLeadTime = sinon.spy()
@@ -94,7 +94,7 @@ describe('createAutoVelocity', function () {
         enabled: true,
         initialSpeed: 3.8,
         desiredLeadTime: 1685,
-        songBPM: 178
+        songBPM: 178,
       })
       const saveSpeed = sinon.spy()
       const saveLeadTime = sinon.spy()

@@ -1,10 +1,10 @@
 import u from 'updeep'
 
 export const preprocessCollection = u({
-  songs: u.map(preprocessSong)
+  songs: u.map(preprocessSong),
 })
 
-function preprocessSong (song) {
+function preprocessSong(song) {
   if (song.chart_names) {
     song = u(
       {
@@ -14,12 +14,12 @@ function preprocessSong (song) {
           return u(
             {
               info: {
-                subtitles: subtitles => [...subtitles, name]
-              }
+                subtitles: subtitles => [...subtitles, name],
+              },
             },
             chart
           )
-        })
+        }),
       },
       song
     )

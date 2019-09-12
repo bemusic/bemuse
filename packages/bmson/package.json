@@ -1,0 +1,41 @@
+{
+  "name": "bmson",
+  "version": "45.1.0",
+  "description": "BMSON support for Bemuse",
+  "main": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "files": [
+    "src",
+    "lib"
+  ],
+  "scripts": {
+    "prepare": "rimraf lib && tsc",
+    "test": "nyc -r text -r lcov mocha -r ts-node/register './src/**/*.spec.ts'"
+  },
+  "keywords": [
+    "BMS",
+    "Bemuse",
+    "bmson"
+  ],
+  "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dtinth/bmson.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dtinth/bmson/issues"
+  },
+  "homepage": "https://github.com/dtinth/bmson#readme",
+  "devDependencies": {
+    "@types/mocha": "^5.2.5",
+    "@types/power-assert": "^1.5.0",
+    "bms": "^45.1.0",
+    "gulp": "^3.9.1",
+    "mocha": "^5.2.0",
+    "power-assert": "^1.6.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.11"
+  }
+}

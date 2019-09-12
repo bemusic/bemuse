@@ -3,7 +3,7 @@ import u from 'updeep'
 // Initializers
 export const initWithText = text => ({
   staged: text,
-  committed: text
+  committed: text,
 })
 
 // Default initial state

@@ -3,11 +3,11 @@ import { load as loadCollection } from 'bemuse/music-collection'
 
 import performSideEffects from './performSideEffects'
 
-export function createCollectionLoader ({
+export function createCollectionLoader({
   onBeginLoading,
   onLoad,
   onErrorLoading,
-  fetch
+  fetch,
 }) {
   const collectionUrl川 = new Rx.Subject()
   const sideEffect川 = collectionUrl川
@@ -26,13 +26,13 @@ export function createCollectionLoader ({
       )
     )
 
-  function load (collectionUrl) {
+  function load(collectionUrl) {
     collectionUrl川.next(collectionUrl)
   }
 
   return {
     load,
-    dispose: performSideEffects(sideEffect川).dispose
+    dispose: performSideEffects(sideEffect川).dispose,
   }
 }
 

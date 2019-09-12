@@ -7,19 +7,19 @@ import SceneToolbar from 'bemuse/ui/SceneToolbar'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 
 class AboutScene extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = { artists: [] }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     fetch('/music/artists.json')
       .then(res => res.json())
       .then(a => this.setState({ artists: a }))
       .catch(err => console.error(err))
   }
 
-  render () {
+  render() {
     return (
       <Scene className='AboutScene'>
         <SceneHeading>About</SceneHeading>
@@ -109,9 +109,9 @@ class AboutScene extends React.Component {
                 libraries we use into standalone web packages.
               </li>
               <li>
-                We use <a href='https://babeljs.io/'>Babel</a> so that we can
-                write our code in future JavaScript dialect and have it
-                translate our code for today{"'"}s browsers.
+                We use <a href='https://www.typescriptlang.org/'>TypeScript</a>{' '}
+                to statically check our code for type errors and compiles the
+                code down to JavaScript.
               </li>
               <li>
                 We use{' '}
@@ -142,7 +142,6 @@ class AboutScene extends React.Component {
                 repository.
               </li>
               <li>
-                <a href='https://travis-ci.org/'>Travis CI</a> and{' '}
                 <a href='https://circleci.com/'>CircleCI</a> continuously runs
                 our automated tests and notifies us when our new code breaks
                 existing features. CircleCI also builds and deploys new version
@@ -164,7 +163,7 @@ class AboutScene extends React.Component {
     )
   }
 
-  renderArtists () {
+  renderArtists() {
     if (this.state.artists.length === 0) {
       return <span>loading...</span>
     }

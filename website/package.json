@@ -1,0 +1,15 @@
+{
+  "name": "bemuse-docs",
+  "version": "45.1.0",
+  "private": true,
+  "scripts": {
+    "examples": "docusaurus-examples",
+    "start": "docusaurus-start",
+    "build": "docusaurus-build",
+    "publish-gh-pages": "docusaurus-publish",
+    "write-translations": "docusaurus-write-translations"
+  },
+  "devDependencies": {
+    "docusaurus": "^1.5.0"
+  }
+}

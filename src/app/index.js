@@ -2,18 +2,19 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 import now from 'bemuse/utils/now'
-import workerPath from 'bemuse/hacks/service-worker-url/index.loader.js!serviceworker-loader!./service-worker.js'
+import serviceWorkerRuntime from 'serviceworker-webpack-plugin/lib/runtime'
 import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
 import { createIO, createRun } from 'impure'
 import {
   shouldShowAbout,
-  shouldShowModeSelect
+  shouldShowModeSelect,
 } from 'bemuse/devtools/query-flags'
 import { withContext } from 'recompose'
 
 import * as Analytics from './analytics'
 import * as OptionsIO from './io/OptionsIO'
 import * as ReduxState from './redux/ReduxState'
+import * as BemuseTestMode from '../devtools/BemuseTestMode'
 import AboutScene from './ui/AboutScene'
 import BrowserSupportWarningScene from './ui/BrowserSupportWarningScene'
 import ModeSelectScene from './ui/ModeSelectScene'
@@ -23,13 +24,13 @@ import store from './redux/instance'
 import {
   getInitialGrepString,
   getMusicServer,
-  getTimeSynchroServer
+  getTimeSynchroServer,
 } from './query-flags'
 import { isBrowserSupported } from './browser-support'
 
 /* eslint import/no-webpack-loader-syntax: off */
 export const runIO = createRun({
-  context: ioContext
+  context: ioContext,
 })
 
 // HACK: Make SCENE_MANAGER provide Redux store and IO context.
@@ -47,18 +48,18 @@ if (module.hot) {
 
 export default runIO
 
-function bootUp () {
+function bootUp() {
   return createIO(({ collectionLoader, store }, run) => {
     collectionLoader.load(getMusicServer() || OFFICIAL_SERVER_URL)
     store.dispatch({
       type: ReduxState.MUSIC_SEARCH_TEXT_INITIALIZED,
-      text: getInitialGrepString()
+      text: getInitialGrepString(),
     })
     run(OptionsIO.loadInitialOptions())
   })
 }
 
-export function main () {
+export function main() {
   runIO(bootUp())
 
   // setup service worker
@@ -75,13 +76,15 @@ export function main () {
   let timeSynchroServer =
     getTimeSynchroServer() || 'wss://timesynchro.herokuapp.com/'
   if (timeSynchroServer) now.synchronize(timeSynchroServer)
+
+  trackFullscreenEvents()
 }
 
-function displayFirstScene () {
+function displayFirstScene() {
   SCENE_MANAGER.display(getFirstScene()).done()
 }
 
-function getFirstScene () {
+function getFirstScene() {
   if (shouldShowAbout()) {
     return React.createElement(AboutScene)
   } else if (shouldShowModeSelect()) {
@@ -95,25 +98,41 @@ function getFirstScene () {
   }
 }
 
-function shouldActivateServiceWorker () {
+function shouldActivateServiceWorker() {
   return (
     (location.protocol === 'https:' && location.host === 'bemuse.ninja') ||
     location.hostname === 'localhost'
   )
 }
 
-function setupServiceWorker () {
+function setupServiceWorker() {
   if (!('serviceWorker' in navigator)) return false
   if (!shouldActivateServiceWorker()) return false
   registerServiceWorker()
   return true
 }
 
-function registerServiceWorker () {
-  const url = '/sw-loader.js?path=' + encodeURIComponent(workerPath)
-  return navigator.serviceWorker.register(url)
+function registerServiceWorker() {
+  return serviceWorkerRuntime.register()
+}
+
+function trackFullscreenEvents() {
+  let fullscreen = false
+  document.addEventListener('fullscreenchange', () => {
+    if (document.fullscreenElement && !fullscreen) {
+      fullscreen = true
+      Analytics.send('fullscreen', 'enter')
+    } else if (!document.fullscreenElement && fullscreen) {
+      fullscreen = false
+      Analytics.send('fullscreen', 'exit')
+    }
+  })
 }
 
 window.addEventListener('beforeunload', () => {
   Analytics.send('app', 'quit')
+})
+
+Object.assign(window, {
+  BemuseTestMode,
 })

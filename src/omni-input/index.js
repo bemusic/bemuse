@@ -26,25 +26,25 @@ import getMidi川 from './midi'
 // - `midi.[id].[channel].pitch.down` Pitch bend (down).
 //
 export class OmniInput {
-  constructor (win = window, options = {}) {
+  constructor(win = window, options = {}) {
     const midi川 = (options.getMidi川 || getMidi川)()
     this._window = win
     this._exclusive = !!options.exclusive
     this._disposables = [
       listen(win, 'keydown', e => this._handleKeyDown(e)),
       listen(win, 'keyup', e => this._handleKeyUp(e)),
-      midi川.onValue(e => this._handleMIDIMessage(e))
+      midi川.onValue(e => this._handleMIDIMessage(e)),
     ]
     this._status = {}
   }
-  _handleKeyDown (e) {
+  _handleKeyDown(e) {
     this._status[`${e.which}`] = true
     if (this._exclusive) e.preventDefault()
   }
-  _handleKeyUp (e) {
+  _handleKeyUp(e) {
     this._status[`${e.which}`] = false
   }
-  _handleMIDIMessage (e) {
+  _handleMIDIMessage(e) {
     if (!e || !e.data) return
     const data = e.data
     const prefix = `midi.${e.target.id}.${e.data[0] & 0x0f}`
@@ -79,11 +79,13 @@ export class OmniInput {
       this._status[`${prefix}.pitch.down`] = bend < 0x1f00
     }
   }
-  _updateGamepads () {
+  _updateGamepads() {
     const nav = this._window.navigator
     const gamepads = nav.getGamepads
       ? nav.getGamepads()
-      : nav.webkitGetGamepads ? nav.webkitGetGamepads() : []
+      : nav.webkitGetGamepads
+      ? nav.webkitGetGamepads()
+      : []
     if (!gamepads) return
     for (let i = 0; i < gamepads.length; i++) {
       const gamepad = gamepads[i]
@@ -92,7 +94,7 @@ export class OmniInput {
       }
     }
   }
-  _updateGamepad (gamepad) {
+  _updateGamepad(gamepad) {
     const prefix = `gamepad.${gamepad.index}`
     for (let i = 0; i < gamepad.buttons.length; i++) {
       const button = gamepad.buttons[i]
@@ -104,11 +106,11 @@ export class OmniInput {
       this._status[`${prefix}.axis.${i}.negative`] = axis <= -0.01
     }
   }
-  update () {
+  update() {
     this._updateGamepads()
     return this._status
   }
-  dispose () {
+  dispose() {
     for (let dispose of this._disposables) {
       dispose()
     }
@@ -117,7 +119,7 @@ export class OmniInput {
 
 // Public: Returns a Bacon EventStream of keys pressed.
 //
-export function key川 (input = new OmniInput(), win = window) {
+export function key川(input = new OmniInput(), win = window) {
   return _key川ForUpdate川(
     Bacon.fromBinder(sink => {
       const handle = win.setInterval(() => {
@@ -128,7 +130,7 @@ export function key川 (input = new OmniInput(), win = window) {
   )
 }
 
-export function _key川ForUpdate川 (update川) {
+export function _key川ForUpdate川(update川) {
   return update川
     .map(update => Object.keys(update).filter(key => update[key]))
     .diff([], (previous, current) => _.difference(current, previous))
@@ -139,7 +141,7 @@ export default OmniInput
 
 const knownMidiIds = {}
 
-export function getName (key) {
+export function getName(key) {
   if (+key) {
     return _.capitalize(keycode(+key))
   }
@@ -180,7 +182,7 @@ export function getName (key) {
           'G#',
           'A',
           'A#',
-          'B'
+          'B',
         ]
         const noteName = lookup[midiNote % 12]
         const octave = Math.floor(midiNote / 12) - 1
@@ -196,9 +198,9 @@ export function getName (key) {
   return `${String(key).replace(/\./g, ' ')}?`
 }
 
-function listen (subject, eventName, listener) {
+function listen(subject, eventName, listener) {
   subject.addEventListener(eventName, listener)
-  return function dispose () {
+  return function dispose() {
     subject.removeEventListener(eventName, listener)
   }
 }

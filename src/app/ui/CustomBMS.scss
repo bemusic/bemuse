@@ -1,5 +1,4 @@
-
-@import "~bemuse/ui/common";
+@import '~bemuse/ui/common';
 
 .CustomBMS {
   &のwrapper {
@@ -10,7 +9,9 @@
     font-weight: bold;
   }
   &のremark {
-    &::before { content: "※ "; }
+    &::before {
+      content: '※ ';
+    }
     color: #8b8685;
   }
   &のdropzone {
@@ -33,7 +34,8 @@
   }
   &のlog {
     @include scrolling-y;
-    width: 100%; height: 100%;
+    width: 100%;
+    height: 100%;
     box-sizing: border-box;
     padding: 1ex;
     > p {

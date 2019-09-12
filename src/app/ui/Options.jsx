@@ -8,16 +8,18 @@ import OptionsAdvanced from './OptionsAdvanced'
 
 export default class Options extends React.Component {
   static propTypes = {
-    onClose: PropTypes.func
+    onClose: PropTypes.func,
   }
 
-  render () {
+  render() {
     return (
       <div className='Options'>
-        <Panel title='Player Settings'>
-          <OptionsPlayer onClose={this.props.onClose} />
-        </Panel>
-        <div className='Optionsのvgroup'>
+        <div className='Optionsのa'>
+          <Panel title='Player Settings'>
+            <OptionsPlayer onClose={this.props.onClose} />
+          </Panel>
+        </div>
+        <div className='Optionsのb'>
           <Panel title='Input Settings'>
             <OptionsInput />
           </Panel>

@@ -6,11 +6,12 @@ import GameState from './state'
 import GameTimer from './game-timer'
 import OmniInputPlugin from './input/omni-input-plugin'
 import TouchPlugin from './input/touch-plugin'
+import * as BemuseTestMode from 'bemuse/devtools/BemuseTestMode'
 
 // The GameController takes care of communications between each game
 // component, and takes care of the Game loop.
 export class GameController {
-  constructor ({ game, display, audio }) {
+  constructor({ game, display, audio }) {
     this._audioInputLatency = game.options.audioInputLatency
     this._game = game
     this._display = display
@@ -22,29 +23,30 @@ export class GameController {
     this._promise = new Promise(resolve => (this._resolvePromise = resolve))
     this._display.setEscapeHandler(() => this._quitGame())
     this._display.setReplayHandler(() => this._replayGame())
-    if (bench.enabled) this.enableBenchmark()
+    this.initializeBenchmark()
+    this.initializeTestModeHooks()
   }
-  get game () {
+  get game() {
     return this._game
   }
-  get display () {
+  get display() {
     return this._display
   }
-  get audio () {
+  get audio() {
     return this._audio
   }
-  get promise () {
+  get promise() {
     return this._promise
   }
-  get state () {
+  get state() {
     return this._state
   }
-  get latestGameTime () {
+  get latestGameTime() {
     return this._latestGameTime
   }
 
   // Initializes the game components and kickstarts the game loop.
-  start () {
+  start() {
     this._handleEscape()
     this._display.start()
     this._input.use(new OmniInputPlugin(this._game))
@@ -60,7 +62,7 @@ export class GameController {
   }
 
   // Exits the game when escape is pressed.
-  _handleEscape () {
+  _handleEscape() {
     let onKeyDown = e => {
       const ESCAPE_KEY = 27
       const F1_KEY = 112
@@ -76,28 +78,28 @@ export class GameController {
     }
     window.addEventListener('keydown', onKeyDown, true)
     this._promise
-      .finally(function () {
+      .finally(function() {
         window.removeEventListener('keydown', onKeyDown, true)
       })
       .done()
   }
 
-  _quitGame () {
+  _quitGame() {
     this._resolvePromise({ finished: false, replay: false })
   }
-  _replayGame () {
+  _replayGame() {
     this._resolvePromise({ finished: false, replay: true })
   }
 
   // Destroy the game.
-  destroy () {
+  destroy() {
     this._endGameLoop()
     this._audio.destroy()
     this._input.destroy()
     this._display.destroy()
   }
 
-  _update () {
+  _update() {
     // >> game/loop
     //
     // Turn-Based Update Cycle
@@ -132,14 +134,15 @@ export class GameController {
     this._latestGameTime = t
     this._state.update(t - A, this._input, this._timer)
     this._audio.update(t, this._state)
-    this._display.update(t, this._state)
+    this._display.update(t - A, this._state)
     if (this._state.finished && this._resolvePromise) {
       this._resolvePromise({ finished: true })
       this._resolvePromise = null
     }
   }
 
-  enableBenchmark () {
+  initializeBenchmark() {
+    if (!bench.enabled) return
     bench.benchmark('update', this, '_update')
     bench.benchmark('input_update', this._input, 'update')
     bench.benchmark('state_update', this._state, 'update')
@@ -152,6 +155,30 @@ export class GameController {
       this._display._context._renderer,
       'render'
     )
+  }
+  initializeTestModeHooks() {
+    if (!BemuseTestMode.isTestModeEnabled()) return
+    BemuseTestMode.setGameLifecycleHandler({
+      pauseAt: t => {
+        this._timer.pauseAt(t)
+        return new Promise(resolve => {
+          const interval = setInterval(() => {
+            if (this._timer.time >= t) {
+              clearInterval(interval)
+              resolve()
+            }
+          })
+        })
+      },
+      unpause: () => {
+        this._timer.pauseAt(Infinity)
+      },
+      getScore: () => {
+        const state = this._state
+        const playerState = state.player(state.game.players[0])
+        return playerState.stats.score
+      },
+    })
   }
 }
 

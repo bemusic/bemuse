@@ -1,6 +1,6 @@
 /dist/
 *.mp3
-/code-review-result.txt
+package-lock.json
 
 # created by git-ignore
 # Logs
@@ -36,7 +36,8 @@ node_modules
 .LSOverride
 
 # Icon must ends with two \r.
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -50,3 +51,5 @@ Icon
 /.env
 
 /.otto/
+/packages/*/lib/
+.nyc_output

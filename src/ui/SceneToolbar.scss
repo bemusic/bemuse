@@ -1,12 +1,13 @@
-
-@import "~bemuse/ui/common";
+@import '~bemuse/ui/common';
 
 .SceneToolbar {
   background: rgba(black, 0.7);
   display: flex;
+  flex-wrap: wrap;
   padding: 0 0.5rem;
   font-size: 1rem;
-  > a, > span {
+  > a,
+  > span {
     display: block;
     padding: 0.8ex 1.3ex;
   }
@@ -20,7 +21,7 @@
       color: white;
     }
   }
-  > a[data-position="right"] {
+  > a[data-position='right'] {
     float: right;
   }
   > span {

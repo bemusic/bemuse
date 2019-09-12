@@ -1,5 +1,4 @@
-
-@import "~bemuse/ui/common";
+@import '~bemuse/ui/common';
 
 .ResultGrade {
   display: flex;
@@ -10,7 +9,9 @@
   justify-content: center;
   &のlabel {
     position: absolute;
-    right: 0; bottom: 0; left: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     color: rgba(white, 0.5);
     text-align: center;
   }

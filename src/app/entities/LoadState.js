@@ -18,11 +18,11 @@ export const beginLoading = state => initLoading()
 export const completeWithValue = value =>
   u({
     status: 'completed',
-    value: () => value
+    value: () => value,
   })
 
 export const errorWithReason = error =>
   u({
     status: 'error',
-    error: () => error
+    error: () => error,
   })

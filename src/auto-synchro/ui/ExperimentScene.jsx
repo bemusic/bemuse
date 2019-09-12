@@ -2,7 +2,6 @@ import './ExperimentScene.scss'
 import React from 'react'
 import PropTypes from 'prop-types'
 import c from 'classnames'
-import Loading from 'bemuse/ui/Loading'
 
 export default class ExperimentScene extends React.Component {
   static propTypes = {
@@ -12,10 +11,10 @@ export default class ExperimentScene extends React.Component {
     listening: PropTypes.bool,
     onStart: PropTypes.func,
     numSamples: PropTypes.number,
-    latency: PropTypes.number
+    latency: PropTypes.number,
   }
 
-  render () {
+  render() {
     return (
       <div
         className={c('ExperimentScene', { 'is-finished': this.props.finished })}
@@ -31,7 +30,7 @@ export default class ExperimentScene extends React.Component {
 
   renderContents = () => {
     if (this.props.loading) {
-      return this.renderLoading()
+      return null
     } else if (!this.props.started) {
       return this.renderReady()
     } else if (!this.props.listening) {
@@ -39,14 +38,6 @@ export default class ExperimentScene extends React.Component {
     } else {
       return this.renderCollection()
     }
-  }
-
-  renderLoading = () => {
-    return (
-      <div className='ExperimentSceneのloading'>
-        <Loading />
-      </div>
-    )
   }
 
   renderReady = () => {
@@ -73,15 +64,15 @@ export default class ExperimentScene extends React.Component {
     let transform = 'scaleX(' + scale + ')'
     let style = {
       transform: transform,
-      WebkitTransform: transform
+      WebkitTransform: transform,
     }
     return (
       <div className='ExperimentSceneのcollection'>
         {this.renderMessage(
           this.props.finished
             ? 'Your latency is ' +
-              this.props.latency +
-              'ms. Please close this window.'
+                this.props.latency +
+                'ms. Please close this window.'
             : 'Please press the space bar when you hear the kick drum.'
         )}
         <div className='ExperimentSceneのprogress'>
@@ -92,6 +83,6 @@ export default class ExperimentScene extends React.Component {
   }
 }
 
-function easeOut (x) {
+function easeOut(x) {
   return 1 - Math.pow(1 - x, 2)
 }

@@ -1,0 +1,10 @@
+{
+  "name": "bemuse-e2e",
+  "version": "45.1.0",
+  "private": true,
+  "dependencies": {
+    "expect": "^23.6.0",
+    "prescript": "^0.5555.55",
+    "puppeteer": "^1.11.0"
+  }
+}

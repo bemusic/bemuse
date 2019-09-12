@@ -14,10 +14,11 @@ import connectIO from '../../impure-react/connectIO'
 
 const enhance = compose(
   connect(state => ({
-    log: ReduxState.selectCustomSongLoaderLog(state)
+    log: ReduxState.selectCustomSongLoaderLog(state),
   })),
   connectIO({
-    onFileDrop: () => event => CustomSongsIO.handleCustomSongFolderDrop(event)
+    onFileDrop: () => event => CustomSongsIO.handleCustomSongFolderDrop(event),
+    onPaste: () => e => CustomSongsIO.handleClipboardPaste(e),
   })
 )
 
@@ -25,15 +26,24 @@ class CustomBMS extends React.Component {
   static propTypes = {
     log: PropTypes.arrayOf(PropTypes.string),
     onFileDrop: PropTypes.func,
-    onSongLoaded: PropTypes.func
+    onPaste: PropTypes.func,
+    onSongLoaded: PropTypes.func,
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = { hover: false }
   }
 
-  render () {
+  componentDidMount() {
+    window.addEventListener('paste', this.handlePaste)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('paste', this.handlePaste)
+  }
+
+  render() {
     return (
       <Panel className='CustomBMS' title='Load Custom BMS'>
         <div className='CustomBMSのwrapper'>
@@ -41,14 +51,17 @@ class CustomBMS extends React.Component {
             Please drag and drop a BMS folder into the drop zone below.
           </div>
           <div className='CustomBMSのremark'>
-            This feature is only supported in Google Chrome.
+            This feature is only supported in Google Chrome and Firefox.
           </div>
           <div className='CustomBMSのremark'>
             Please don’t play unauthorized / illegally obtained BMS files.
           </div>
+          <div className='CustomBMSのremark'>
+            Experimental: You can paste IPFS path/URL here.
+          </div>
           <div
             className={c('CustomBMSのdropzone', {
-              'is-hover': this.state.hover
+              'is-hover': this.state.hover,
             })}
             onDragOver={this.handleDragOver}
             onDragEnter={this.handleDragEnter}
@@ -58,7 +71,9 @@ class CustomBMS extends React.Component {
             {this.props.log ? (
               this.props.log.length ? (
                 <div className='CustomBMSのlog'>
-                  {this.props.log.map(text => <p>{text}</p>)}
+                  {this.props.log.map((text, i) => (
+                    <p key={i}>{text}</p>
+                  ))}
                 </div>
               ) : (
                 <div className='CustomBMSのlog'>
@@ -98,6 +113,13 @@ class CustomBMS extends React.Component {
     promise.then(song => {
       if (this.props.onSongLoaded) this.props.onSongLoaded(song)
     })
+  }
+
+  handlePaste = async e => {
+    const song = await this.props.onPaste(e)
+    if (song) {
+      if (this.props.onSongLoaded) this.props.onSongLoaded(song)
+    }
   }
 }
 

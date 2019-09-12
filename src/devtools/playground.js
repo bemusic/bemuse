@@ -3,7 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import query from 'bemuse/utils/query'
 
-const availablePlaygrounds = (function (context) {
+const availablePlaygrounds = (function(context) {
   let playgrounds = {}
   for (let key of context.keys()) {
     let name = key.match(/\w[^.]+/)[0]
@@ -13,11 +13,11 @@ const availablePlaygrounds = (function (context) {
 })(require.context('./playgrounds', false, /\.jsx?$/))
 
 class DefaultPlayground extends React.Component {
-  static main () {
+  static main() {
     ReactDOM.render(<DefaultPlayground />, MAIN)
   }
 
-  render () {
+  render() {
     const linkStyle = { color: '#abc' }
     return (
       <div>
@@ -37,6 +37,6 @@ class DefaultPlayground extends React.Component {
   }
 }
 
-export function main () {
+export function main() {
   void (availablePlaygrounds[query.playground] || DefaultPlayground).main()
 }

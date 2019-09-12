@@ -1,0 +1,39 @@
+{
+  "name": "bemuse-indexer",
+  "version": "45.1.0",
+  "description": "Parse and index BMS notecharts",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.js",
+  "files": [
+    "src",
+    "lib"
+  ],
+  "scripts": {
+    "test": "nyc -r text -r lcov mocha -r ts-node/register 'src/**/*.spec.ts'",
+    "prepare": "rimraf lib && tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bemusic/indexer.git"
+  },
+  "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bemusic/indexer/issues"
+  },
+  "homepage": "https://github.com/bemusic/indexer",
+  "dependencies": {
+    "bluebird": "^3.5.2",
+    "bms": "^45.1.0",
+    "bmson": "^45.1.0",
+    "invariant": "^2.2.4",
+    "lodash": "^4.17.11",
+    "object-assign": "^4.1.1"
+  },
+  "devDependencies": {
+    "@types/object-assign": "^4.0.30",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^5.2.0"
+  }
+}

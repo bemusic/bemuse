@@ -2,6 +2,8 @@
 
 git fetch
 git checkout origin/master
-npm version "$@" -m ':bookmark: %s'
-git push origin HEAD:master --follow-tags
-
+git branch -d master || true
+git checkout -b master
+./bin/strip-changelog-pre-version-postfix
+git commit -a -m 'Remove prerelease version suffixes from CHANGELOG.md'
+yarn lerna version "$@"

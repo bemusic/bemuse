@@ -6,24 +6,24 @@ let BUTTONS = ['p1_1', 'p1_2', 'p1_3', 'p1_4', 'p1_5', 'p1_6', 'p1_7', 'start']
 
 window.BEMUSE_TOUCH_STATS = []
 
-function StatsRecorder () {
+function StatsRecorder() {
   const stats = []
   window.BEMUSE_TOUCH_STATS.push(stats)
   return {
-    record (input) {
+    record(input) {
       for (let { x, y } of input) {
         stats.push({ x: Math.round(x), y: Math.round(y) })
       }
     },
-    done () {
+    done() {
       if (stats.length) {
         localStorage['_stats_touch'] = JSON.stringify(window.BEMUSE_TOUCH_STATS)
       }
-    }
+    },
   }
 }
 
-export function TouchPlugin (context) {
+export function TouchPlugin(context) {
   let scratchStartY = null
   let scratchY = null
   let getInput = bench.wrap('input:touch:I', _getInput)
@@ -35,7 +35,7 @@ export function TouchPlugin (context) {
   const pinchThreshold = touch3dMode ? touch3d.getRow(0.8).y : 550
   return {
     name: 'TouchPlugin',
-    get () {
+    get() {
       let input = getInput()
       let output = {}
       if (bench.enabled) bench.stats['input:touch:n'] = '' + input.length
@@ -53,11 +53,11 @@ export function TouchPlugin (context) {
       output['p1_pinch'] = getPinch(input)
       return output
     },
-    destroy () {
+    destroy() {
       statsRecorder.done()
-    }
+    },
   }
-  function _expand (rectangle, amount = 4) {
+  function _expand(rectangle, amount = 4) {
     const newRect = rectangle.clone()
     newRect.x -= amount
     newRect.y -= amount
@@ -65,10 +65,10 @@ export function TouchPlugin (context) {
     newRect.height += amount * 2
     return newRect
   }
-  function _getInput () {
+  function _getInput() {
     return context.input
   }
-  function _getButton (input, button) {
+  function _getButton(input, button) {
     let objects = context.refs[button]
     if (objects) {
       for (let object of objects) {
@@ -80,7 +80,7 @@ export function TouchPlugin (context) {
     }
     return 0
   }
-  function _getScratch (input) {
+  function _getScratch(input) {
     let objects = context.refs['p1_SC']
     if (!objects) return 0
     scratchY = null
@@ -109,9 +109,11 @@ export function TouchPlugin (context) {
     }
     return scratchY > scratchStartY + 4
       ? -1
-      : scratchY < scratchStartY - 4 ? 1 : 0
+      : scratchY < scratchStartY - 4
+      ? 1
+      : 0
   }
-  function _getPinch (input) {
+  function _getPinch(input) {
     let a = null
     let b = null
     for (let p of input) {

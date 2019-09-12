@@ -1,0 +1,51 @@
+extends:
+  - standard
+  - standard-react
+  - ./.eslintrc.config.import.js
+  - prettier
+  - prettier/react
+  - prettier/standard
+parserOptions:
+  ecmaVersion: 6
+  sourceType: module
+  jsx: true
+  ecmaFeatures:
+    jsx: true
+env:
+  browser: true
+  node: true
+  es6: true
+globals:
+  mocha: false
+  describe: false
+  it: false
+  expect: false
+  beforeEach: false
+  afterEach: false
+  before: false
+  after: false
+  xdescribe: false
+  xit: false
+  sinon: false
+  BemuseLogger: false
+parser: '@typescript-eslint/parser'
+plugins:
+  - react
+rules:
+  react/prop-types: warn
+  react/jsx-no-bind: off
+  no-mixed-operators: off
+  node/no-deprecated-api: warn
+  no-sequences: off
+  import/named: warn
+overrides:
+  - files:
+      - '**/*.ts'
+      - '**/*.tsx'
+    rules:
+      no-undef: off
+      no-unused-vars: off
+      no-use-before-define: off
+      import/no-unresolved: off
+      import/export: off
+      no-useless-constructor: off

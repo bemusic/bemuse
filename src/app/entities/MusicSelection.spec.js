@@ -1,14 +1,14 @@
 import * as MusicSelection from './MusicSelection'
 import { given, shouldEqual } from 'circumstance'
 
-describe('MusicSelection', function () {
+describe('MusicSelection', function() {
   it('allows selecting song', () =>
     given(MusicSelection.initialState)
       .when(MusicSelection.selectSong('song1'))
       .then(
         MusicSelection.selectedSongGivenSongs([
           { id: 'song0', title: 'TEST' },
-          { id: 'song1', title: 'BY MY SIDE' }
+          { id: 'song1', title: 'BY MY SIDE' },
         ]),
         shouldEqual({ id: 'song1', title: 'BY MY SIDE' })
       ))
@@ -18,7 +18,7 @@ describe('MusicSelection', function () {
       .then(
         MusicSelection.selectedSongGivenSongs([
           { id: 'song0', title: 'TEST' },
-          { id: 'song2', title: 'RUNNING OUT' }
+          { id: 'song2', title: 'RUNNING OUT' },
         ]),
         shouldEqual({ id: 'song0', title: 'TEST' })
       ))
@@ -37,7 +37,7 @@ describe('MusicSelection', function () {
       MusicSelection.selectedChartGivenCharts([
         { file: 'chart0.bml', info: { level: 1 } },
         { file: 'chart1.bml', info: { level: 8 } },
-        { file: 'chart2.bml', info: { level: 12 } }
+        { file: 'chart2.bml', info: { level: 12 } },
       ]),
       shouldEqual({ file: 'chart1.bml', info: { level: 8 } })
     ))
@@ -46,7 +46,7 @@ describe('MusicSelection', function () {
       MusicSelection.selectedChartGivenCharts([
         { file: 'pattern0.bml', info: { level: 2 } },
         { file: 'pattern1.bml', info: { level: 9 } },
-        { file: 'pattern2.bml', info: { level: 10 } }
+        { file: 'pattern2.bml', info: { level: 10 } },
       ]),
       shouldEqual({ file: 'pattern1.bml', info: { level: 9 } })
     ))

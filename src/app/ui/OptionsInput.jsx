@@ -29,12 +29,12 @@ const enhance = compose(
   connect(state => ({
     scratch: Options.scratchPosition(state.options),
     texts: selectKeyboardMappingTexts(state),
-    mode: Options.playMode(state.options)
+    mode: Options.playMode(state.options),
   })),
   withState('editing', 'setEditing', null),
   connectIO({
     onSetKeyCode: ({ mode, editing }) => keyCode =>
-      OptionsIO.updateOptions(Options.changeKeyMapping(mode, editing, keyCode))
+      OptionsIO.updateOptions(Options.changeKeyMapping(mode, editing, keyCode)),
   }),
   withHandlers({
     onEdit: ({ editing, setEditing }) => key => {
@@ -49,7 +49,7 @@ const enhance = compose(
         onSetKeyCode(keyCode)
         setEditing(Options.nextKeyToEdit(editing, scratch))
       }
-    }
+    },
   })
 )
 
@@ -59,11 +59,11 @@ class OptionsInput extends React.Component {
     texts: PropTypes.object,
     editing: PropTypes.string,
     onEdit: PropTypes.func,
-    onKey: PropTypes.func
+    onKey: PropTypes.func,
   }
-  render () {
+  render() {
     const className = c('OptionsInput', {
-      'is-reverse': this.props.scratch === 'right'
+      'is-reverse': this.props.scratch === 'right',
     })
     return (
       <div className={className}>
@@ -78,7 +78,9 @@ class OptionsInput extends React.Component {
                 editIndex={
                   this.props.editing === 'SC'
                     ? 0
-                    : this.props.editing === 'SC2' ? 1 : -1
+                    : this.props.editing === 'SC2'
+                    ? 1
+                    : -1
                 }
                 onEdit={this.handleEdit}
               />
@@ -103,7 +105,7 @@ class OptionsInput extends React.Component {
   handleEdit = key => {
     this.props.onEdit(key)
   }
-  componentDidMount () {
+  componentDidMount() {
     // XXX: debounce is needed because some gamepad inputs trigger multiple
     // buttons
     this._dispose = key川()
@@ -112,7 +114,7 @@ class OptionsInput extends React.Component {
       .onValue(this.handleKey)
     window.addEventListener('keydown', this.handleKeyboardEvent, true)
   }
-  componentWillUnmount () {
+  componentWillUnmount() {
     if (this._dispose) this._dispose()
     window.removeEventListener('keydown', this.handleKeyboardEvent, true)
   }

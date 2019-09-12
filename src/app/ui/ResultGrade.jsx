@@ -10,7 +10,7 @@ const ResultGrade = ({ grade }) => (
 )
 
 ResultGrade.propTypes = {
-  grade: PropTypes.string.isRequired
+  grade: PropTypes.string.isRequired,
 }
 
 export default ResultGrade

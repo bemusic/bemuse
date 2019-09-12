@@ -1,20 +1,23 @@
-
 // The common library for user interface.
 // This file must not emit any CSS code! It can only contain variable,
 // mixin, or silent class declarations.
 
-$ui-font: "Source Sans Pro", "Segoe UI", "Helvetica Neue", sans-serif;
+$ui-font: 'Source Sans Pro', 'Segoe UI', 'Helvetica Neue', sans-serif;
 $link-color: #039;
 
 @mixin full-screen {
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
 @mixin centered {
   position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 @mixin scrolling-y {

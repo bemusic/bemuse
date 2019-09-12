@@ -1,69 +1,59 @@
+@import '~bemuse/ui/common';
 
 .Boot {
-
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-
-  &のtitle {
-    color: #8b8685;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &のcontent {
+    animation: 0.5s boot--in cubic-bezier(0.215, 0.61, 0.355, 1);
   }
-
+  &のdj {
+    width: 64px;
+    height: 64px;
+    background: url(~bemuse/ui/images/loading/dj.png) center no-repeat;
+    background-size: contain;
+    animation: 2s boot--dj--spin linear infinite;
+    margin: 0 auto 0.5em;
+  }
   &のtext {
-    letter-spacing: 0.5ex;
-    &:not(:first-child) {
-      margin-left: 0.5ex;
-    }
-  }
-
-  &のstar {
-    display: inline-block;
-  }
-
-  &のprogress {
-    width: 100px;
-    margin: 10px auto 3px;
-    padding: 1px;
-    border: 1px solid #8b8685;
-  }
-
-  &のprogress-bar {
-    $a: rgba(#8b8685, 0.7);
-    $b: rgba(#8b8685, 0);
-    width: 100%;
-    background: #8b8685;
-    height: 5px;
-    &.is-indeterminate {
-      background: linear-gradient(to bottom right,
-        $a 0%, $a 25%,
-        $b 25%, $b 50%,
-        $a 50%, $a 75%,
-        $b 75%, $b 100%);
-      background-size: 7px 7px;
-      animation: 1s Bootのindeterminate linear infinite;
-    }
-  }
-
-  &のdescription {
-    font-size: 10px;
+    text-align: center;
+    font-size: 16px;
     color: #8b8685;
-    text-transform: uppercase;
-    letter-spacing: 1.5ex;
-    padding-left: 1.5ex;
+    animation: 1s boot--text--pulse linear infinite;
   }
-
-  &のversion {
-    margin-top: 10px;
-    font-size: 9px;
-    font-weight: bold;
-    color: #656463;
-  }
-
 }
 
-@keyframes Bootのindeterminate {
-  from { background-position: 0 0; }
-  to { background-position: 7px 0; }
+@keyframes boot--dj--spin {
+  from {
+    transform: perspective(480px) rotateY(0deg);
+  }
+  to {
+    transform: perspective(480px) rotateY(-360deg);
+  }
+}
+
+@keyframes boot--text--pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  0% {
+    opacity: 1;
+  }
+}
+
+@keyframes boot--in {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

@@ -1,5 +1,3 @@
-
 require('dotenv').load()
-require('babel-register')
-require('babel-polyfill')
+require('ts-node/register/transpile-only')
 global.Promise = require('bluebird')

@@ -1,5 +1,4 @@
-
-@import "~bemuse/ui/common";
+@import '~bemuse/ui/common';
 
 .AboutScene {
   @include scene-background(url(~bemuse/ui/images/bg/c.jpg));
@@ -10,14 +9,15 @@
   > section {
     @include scrolling-y;
     @include full-screen;
-    padding: 25vmin 5vw 3em;
+    padding: 10rem 3.85rem 3em;
     background: rgba(black, 0.64);
     font-size: 17px;
   }
   @media (orientation: landscape) {
     > section {
       overflow-y: hidden;
-      right: 5vw; left: 5vw;
+      right: 5vw;
+      left: 5vw;
       padding-left: 2vw;
       padding-right: 2vw;
       display: flex;
@@ -62,5 +62,4 @@
     padding-left: 1ex;
     margin-top: 0;
   }
-
 }

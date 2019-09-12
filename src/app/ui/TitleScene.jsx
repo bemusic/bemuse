@@ -7,22 +7,19 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 import Scene from 'bemuse/ui/Scene'
-import SceneToolbar from 'bemuse/ui/SceneToolbar'
-import TipContainer from 'bemuse/ui/TipContainer'
-import screenfull from 'screenfull'
 import version from 'bemuse/utils/version'
+import { hot } from 'react-hot-loader'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
-import { shouldDisableFullScreen } from 'bemuse/devtools/query-flags'
+import connectIO from 'bemuse/impure-react/connectIO'
 
 import * as Analytics from '../analytics'
 import * as Options from '../entities/Options'
 import * as OptionsIO from '../io/OptionsIO'
 import AboutScene from './AboutScene'
 import ChangelogPanel from './ChangelogPanel'
-import FirstTimeTip from './FirstTimeTip'
 import ModeSelectScene from './ModeSelectScene'
-import connectIO from '../../impure-react/connectIO'
+import Toolbar from './Toolbar'
 
 const HAS_PARENT = (() => {
   try {
@@ -33,12 +30,13 @@ const HAS_PARENT = (() => {
 })()
 
 const enhance = compose(
+  hot(module),
   connectIO({
     onMarkChangelogAsSeen: () => () =>
-      OptionsIO.updateOptions(Options.updateLastSeenVersion(version))
+      OptionsIO.updateOptions(Options.updateLastSeenVersion(version)),
   }),
   connect(state => ({
-    hasSeenChangelog: Options.lastSeenVersion(state.options) === version
+    hasSeenChangelog: Options.lastSeenVersion(state.options) === version,
   }))
 )
 
@@ -46,17 +44,50 @@ class TitleScene extends React.Component {
   static propTypes = {
     hasSeenChangelog: PropTypes.bool,
     onTwitterButtonClick: PropTypes.func,
-    onMarkChangelogAsSeen: PropTypes.func.isRequired
+    onMarkChangelogAsSeen: PropTypes.func.isRequired,
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      changelogModalVisible: false
+      changelogModalVisible: false,
     }
   }
 
-  render () {
+  getToolbarItems() {
+    return [
+      Toolbar.item('About', {
+        onClick: this.showAbout,
+      }),
+      Toolbar.item('Docs', {
+        href: '/project/',
+      }),
+      Toolbar.item(this.renderVersion(), {
+        onClick: this.viewChangelog,
+        tip: 'What’s new?',
+        tipVisible: !this.props.hasSeenChangelog,
+      }),
+      Toolbar.spacer(),
+      Toolbar.item('Discord', {
+        href: 'https://discord.gg/aB6ucmx',
+        tip: 'Join our Discord server',
+        tipFeatureKey: 'discord',
+      }),
+      Toolbar.item('Facebook', {
+        href: 'https://www.facebook.com/bemusegame',
+      }),
+      Toolbar.item('Twitter', {
+        href: 'https://twitter.com/bemusegame',
+        tip: 'Follow us :)',
+        tipFeatureKey: 'twitter',
+      }),
+      Toolbar.item('Fork me on GitHub', {
+        href: 'https://github.com/bemusic/bemuse',
+      }),
+    ]
+  }
+
+  render() {
     const shouldShowHomepage = !HAS_PARENT
     return (
       <Scene className='TitleScene'>
@@ -70,7 +101,11 @@ class TitleScene extends React.Component {
               <img src={require('./images/logo-with-shadow.svg')} />
             </div>
             <div className='TitleSceneのenter'>
-              <a href='javascript://' onClick={this.enterGame}>
+              <a
+                href='javascript://'
+                onClick={this.enterGame}
+                data-testid='enter-game'
+              >
                 Enter Game
               </a>
             </div>
@@ -81,35 +116,7 @@ class TitleScene extends React.Component {
             </div>
           ) : null}
         </div>
-        <SceneToolbar>
-          <a onClick={this.showAbout} href='javascript://'>
-            About
-          </a>
-          <a onClick={this.openLink} href='https://bemuse.readthedocs.org'>
-            Docs
-          </a>
-          <a onClick={this.viewChangelog} href='javascript://'>
-            {this.renderVersion()}
-          </a>
-          <SceneToolbar.Spacer />
-          <a
-            onClick={this.openLink}
-            href='https://www.facebook.com/bemusegame'
-          >
-            Facebook
-          </a>
-          <a
-            onClick={this.openTwitterLink}
-            href='https://twitter.com/bemusegame'
-          >
-            <FirstTimeTip tip='Like &amp; follow us :)' featureKey='twitter'>
-              Twitter
-            </FirstTimeTip>
-          </a>
-          <a onClick={this.openLink} href='https://github.com/bemusic/bemuse'>
-            Fork me on GitHub
-          </a>
-        </SceneToolbar>
+        <Toolbar items={this.getToolbarItems()} />
         <div className='TitleSceneのcurtain' />
         <ModalPopup
           visible={this.state.changelogModalVisible}
@@ -121,15 +128,15 @@ class TitleScene extends React.Component {
     )
   }
 
-  renderVersion () {
+  renderVersion() {
     return (
-      <TipContainer tip='What’s new?' tipVisible={!this.props.hasSeenChangelog}>
+      <React.Fragment>
         <strong>Bemuse</strong> v{version}
-      </TipContainer>
+      </React.Fragment>
     )
   }
 
-  openLink = (e) => {
+  openLink = e => {
     e.preventDefault()
     window.open(
       $(e.target)
@@ -139,23 +146,17 @@ class TitleScene extends React.Component {
     )
   }
 
-  openTwitterLink = (e) => {
+  openTwitterLink = e => {
     this.openLink(e)
     if (this.props.onTwitterButtonClick) this.props.onTwitterButtonClick()
   }
 
-  enterGame () {
+  enterGame() {
     SCENE_MANAGER.push(<ModeSelectScene />).done()
     Analytics.send('TitleScene', 'enter game')
-    // go fullscreen
-    if (screenfull.enabled && !shouldDisableFullScreen()) {
-      let safari =
-        /Safari/.test(navigator.userAgent) && !/Chrom/.test(navigator.userAgent)
-      if (!safari) screenfull.request()
-    }
   }
 
-  showAbout () {
+  showAbout() {
     SCENE_MANAGER.push(<AboutScene />).done()
     Analytics.send('TitleScene', 'show about')
   }
@@ -166,7 +167,7 @@ class TitleScene extends React.Component {
     Analytics.send('TitleScene', 'view changelog')
   }
 
-  toggleChangelogModal () {
+  toggleChangelogModal() {
     this.setState({ changelogModalVisible: !this.state.changelogModalVisible })
   }
 }

@@ -16,7 +16,7 @@ const OptionsCheckbox = ({ checked, children, onToggle }) => {
 OptionsCheckbox.propTypes = {
   checked: PropTypes.bool,
   children: PropTypes.node,
-  onToggle: PropTypes.func
+  onToggle: PropTypes.func,
 }
 
 export default OptionsCheckbox

@@ -1,0 +1,31 @@
+{
+  "name": "bemuse-notechart",
+  "version": "45.1.0",
+  "description": "Bemuse notechart data structure, supports BMS and bmsons.",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "prepare": "rimraf lib && tsc",
+    "test": "nyc -r text -r lcov mocha -r ts-node/register 'src/**/*.spec.ts'"
+  },
+  "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/bluebird": "^3.5.24",
+    "@types/chai": "^4.1.7",
+    "bluebird": "^3.5.2",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
+  },
+  "dependencies": {
+    "bms": "^45.1.0",
+    "bmson": "^45.1.0",
+    "lodash": "^4.17.11"
+  },
+  "peerDependencies": {
+    "bluebird": "^3.5.1"
+  }
+}

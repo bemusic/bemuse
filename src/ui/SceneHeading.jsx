@@ -7,10 +7,10 @@ import c from 'classnames'
 export default class SceneHeading extends React.Component {
   static propTypes = {
     className: PropTypes.string,
-    children: PropTypes.node
+    children: PropTypes.node,
   }
 
-  render () {
+  render() {
     return (
       <div className={c('SceneHeading', this.props.className)}>
         {this.props.children}

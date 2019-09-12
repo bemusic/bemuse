@@ -11,12 +11,12 @@ import ReactDOM from 'react-dom'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 import Scene from 'bemuse/ui/Scene'
 import SceneHeading from 'bemuse/ui/SceneHeading'
-import SceneToolbar from 'bemuse/ui/SceneToolbar'
 import c from 'classnames'
 import compose from 'recompose/compose'
 import getPreviewUrl from 'bemuse/music-collection/getPreviewUrl'
 import online from 'bemuse/online/instance'
 import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
+import { hot } from 'react-hot-loader'
 import { connect } from 'react-redux'
 import { connect as connectToLegacyStore } from 'bemuse/flux'
 import { createSelector, createStructuredSelector } from 'reselect'
@@ -34,6 +34,7 @@ import OptionsView from './Options'
 import RageQuitPopup from './RageQuitPopup'
 import UnofficialPanel from './UnofficialPanel'
 import { connectIO } from '../../impure-react/connectIO'
+import Toolbar from './Toolbar'
 
 const selectMusicSelectState = (() => {
   const selectLegacyServerObjectForCurrentCollection = createSelector(
@@ -57,16 +58,17 @@ const selectMusicSelectState = (() => {
     filterText: ReduxState.selectSearchInputText,
     highlight: ReduxState.selectSearchText,
     unofficial: selectIsCurrentCollectionUnofficial,
-    playMode: ReduxState.selectPlayMode
+    playMode: ReduxState.selectPlayMode,
   })
 })()
 
 const enhance = compose(
+  hot(module),
   connectToLegacyStore({ user: online && online.user川 }),
   connect(state => ({
     musicSelect: selectMusicSelectState(state),
     collectionUrl: ReduxState.selectCurrentCollectionUrl(state),
-    musicPreviewEnabled: Options.isPreviewEnabled(state.options)
+    musicPreviewEnabled: Options.isPreviewEnabled(state.options),
   })),
   connectIO({
     onSelectChart: () => (song, chart) =>
@@ -78,7 +80,7 @@ const enhance = compose(
         musicSelect.server,
         musicSelect.song,
         musicSelect.chart
-      )
+      ),
   })
 )
 
@@ -91,26 +93,26 @@ class MusicSelectScene extends React.PureComponent {
     onFilterTextChange: PropTypes.func,
     onLaunchGame: PropTypes.func,
     collectionUrl: PropTypes.string,
-    musicPreviewEnabled: PropTypes.bool
+    musicPreviewEnabled: PropTypes.bool,
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       optionsVisible: shouldShowOptions(),
       customBMSVisible: false,
       unofficialDisclaimerVisible: false,
       inSong: false,
-      authenticationPopupVisible: false
+      authenticationPopupVisible: false,
     }
   }
 
-  getPreviewUrl () {
+  getPreviewUrl() {
     const song = this.props.musicSelect.song
     return getPreviewUrl(this.props.collectionUrl, song)
   }
 
-  render () {
+  render() {
     let musicSelect = this.props.musicSelect
     return (
       <Scene
@@ -132,19 +134,7 @@ class MusicSelectScene extends React.PureComponent {
 
         {this.renderMain()}
 
-        <SceneToolbar>
-          <a onClick={this.popScene} href='javascript://'>
-            Exit
-          </a>
-          <a onClick={this.handleCustomBMSOpen} href='javascript://'>
-            Play Custom BMS
-          </a>
-          <SceneToolbar.Spacer />
-          {this.renderOnlineToolbarButtons()}
-          <a onClick={this.handleOptionsOpen} href='javascript://'>
-            Options
-          </a>
-        </SceneToolbar>
+        <Toolbar items={this.getToolbarItems()} />
 
         <ModalPopup
           visible={this.state.optionsVisible}
@@ -184,7 +174,7 @@ class MusicSelectScene extends React.PureComponent {
     )
   }
 
-  renderUnofficialDisclaimer () {
+  renderUnofficialDisclaimer() {
     if (!this.props.musicSelect.unofficial) return null
     return (
       <div
@@ -196,7 +186,7 @@ class MusicSelectScene extends React.PureComponent {
     )
   }
 
-  renderMain () {
+  renderMain() {
     const musicSelect = this.props.musicSelect
     if (musicSelect.loading) {
       return <div className='MusicSelectSceneのloading'>Loading…</div>
@@ -212,7 +202,7 @@ class MusicSelectScene extends React.PureComponent {
     return (
       <div
         className={c('MusicSelectSceneのmain', {
-          'is-in-song': this.state.inSong
+          'is-in-song': this.state.inSong,
         })}
       >
         <MusicList
@@ -236,37 +226,41 @@ class MusicSelectScene extends React.PureComponent {
     )
   }
 
-  renderOnlineToolbarButtons () {
-    if (!online) return null
-    let buttons = []
-    if (this.props.user) {
-      buttons.push(
-        <a
-          onClick={this.handleLogout}
-          href='javascript://online/logout'
-          key='logout'
-        >
-          Log Out ({this.props.user.username})
-        </a>
-      )
-    } else {
-      buttons.push(
-        <a
-          onClick={this.handleAuthenticate}
-          href='javascript://online/logout'
-          key='auth'
-        >
-          Log In / Create an Account
-        </a>
-      )
-    }
-    return buttons
+  getToolbarItems() {
+    return [
+      Toolbar.item('Exit', {
+        onClick: this.popScene,
+      }),
+      Toolbar.item('Play Custom BMS', {
+        onClick: this.handleCustomBMSOpen,
+      }),
+      Toolbar.spacer(),
+      ...this.getOnlineToolbarButtons(),
+      Toolbar.item('Options', {
+        onClick: this.handleOptionsOpen,
+      }),
+    ]
   }
-
-  componentDidMount () {
+  getOnlineToolbarButtons() {
+    if (!online) return []
+    if (this.props.user) {
+      return [
+        Toolbar.item(<span>Log Out ({this.props.user.username})</span>, {
+          onClick: this.handleLogout,
+        }),
+      ]
+    } else {
+      return [
+        Toolbar.item('Log In / Create an Account', {
+          onClick: this.handleAuthenticate,
+        }),
+      ]
+    }
+  }
+  componentDidMount() {
     this.ensureSelectedSongInView()
   }
-  ensureSelectedSongInView () {
+  ensureSelectedSongInView() {
     const $this = $(ReactDOM.findDOMNode(this))
     const active = $this.find('.js-active-song')[0]
     if (!active) return
@@ -350,7 +344,7 @@ class MusicSelectScene extends React.PureComponent {
   handleAuthenticationFinish = () => {
     this.setState({ authenticationPopupVisible: false })
   }
-  popScene () {
+  popScene() {
     SCENE_MANAGER.pop().done()
   }
 }

@@ -13,7 +13,7 @@ describe('an inactive gauge', () => {
 })
 
 describe('a hope gauge', () => {
-  function setup (maxPossibleScore, progress) {
+  function setup(maxPossibleScore, progress) {
     const gauge = getGauge('hope')
     const [numJudgments, totalCombo] = progress
     const playerStats = { maxPossibleScore, numJudgments, totalCombo }

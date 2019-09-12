@@ -10,7 +10,7 @@ const chartPropType = PropTypes.shape({
     init: PropTypes.number,
     max: PropTypes.number,
     median: PropTypes.number,
-    min: PropTypes.number
+    min: PropTypes.number,
   }),
   duration: PropTypes.number,
   file: PropTypes.string,
@@ -21,11 +21,11 @@ const chartPropType = PropTypes.shape({
     subtitles: PropTypes.arrayOf(PropTypes.string),
     subartists: PropTypes.arrayOf(PropTypes.string),
     difficulty: PropTypes.number,
-    level: PropTypes.number
+    level: PropTypes.number,
   }),
   keys: PropTypes.string,
   md5: PropTypes.string,
-  noteCount: PropTypes.number
+  noteCount: PropTypes.number,
 })
 
 const songPropType = PropTypes.shape({
@@ -37,24 +37,26 @@ const songPropType = PropTypes.shape({
   id: PropTypes.string,
   resources: PropTypes.any,
   title: PropTypes.string,
-  warning: PropTypes.array
+  warning: PropTypes.array,
 })
 
 class MusicList extends React.PureComponent {
   static propTypes = {
-    groups: PropTypes.arrayOf(PropTypes.shape({
-      title: PropTypes.string,
-      songs: PropTypes.arrayOf(songPropType)
-    })),
+    groups: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string,
+        songs: PropTypes.arrayOf(songPropType),
+      })
+    ),
     onTouch: PropTypes.func,
     onSelect: PropTypes.func,
     selectedSong: PropTypes.object,
     selectedChart: chartPropType,
     playMode: PropTypes.string,
-    highlight: PropTypes.string
+    highlight: PropTypes.string,
   }
 
-  render () {
+  render() {
     return (
       <ul
         className='MusicList js-scrollable-view'
@@ -74,13 +76,13 @@ class MusicList extends React.PureComponent {
               onSelect={this.props.onSelect}
               highlight={this.props.highlight}
             />
-          ))
+          )),
         ])}
       </ul>
     )
   }
 
-  getSelectedChart (song) {
+  getSelectedChart(song) {
     // Performance issue:
     //
     // We cannot just send `this.props.selectedChart` into every MusicListItem,

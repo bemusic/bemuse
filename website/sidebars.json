@@ -1,0 +1,14 @@
+{
+  "docs": {
+    "Users": ["user-guide", "scoring-and-judgment", "faq"],
+    "Creators": ["music-server", "bms-support", "bms-extensions"],
+    "Developers": [
+      "developer-guide",
+      "architecture",
+      "game-loop",
+      "skinning",
+      "options",
+      "colors"
+    ]
+  }
+}

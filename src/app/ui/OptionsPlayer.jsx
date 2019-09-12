@@ -17,7 +17,7 @@ import connectIO from '../../impure-react/connectIO'
 const SettingRow = compose(
   connect(state => ({ options: state.options })),
   connectIO({
-    onUpdateOptions: () => updater => OptionsIO.updateOptions(updater)
+    onUpdateOptions: () => updater => OptionsIO.updateOptions(updater),
   })
 )(props => {
   const { label, isVisible, help, renderControl } = props // user-supplied
@@ -34,9 +34,9 @@ const SettingRow = compose(
 
 class OptionsPlayer extends React.Component {
   static propTypes = {
-    onClose: PropTypes.func
+    onClose: PropTypes.func,
   }
-  render () {
+  render() {
     return (
       <div className='OptionsPlayer'>
         <SettingRow
@@ -50,8 +50,9 @@ class OptionsPlayer extends React.Component {
           )}
           help={
             <span>
-              You can also change the speed in-game<br />using the Up and Down
-              arrow keys.
+              You can also change the speed in-game
+              <br />
+              using the Up and Down arrow keys.
             </span>
           }
         />
@@ -73,8 +74,9 @@ class OptionsPlayer extends React.Component {
           )}
           help={
             <span>
-              Speed will be automatically adjusted<br />to maintain a consistent
-              note velocity.
+              Speed will be automatically adjusted
+              <br />
+              to maintain a consistent note velocity.
             </span>
           }
         />
@@ -87,7 +89,7 @@ class OptionsPlayer extends React.Component {
               options={[
                 { value: 'left', label: 'Left' },
                 { value: 'right', label: 'Right' },
-                { value: 'off', label: 'Disabled' }
+                { value: 'off', label: 'Disabled' },
               ]}
               value={Options.scratchPosition(options)}
               onSelect={position =>
@@ -106,7 +108,7 @@ class OptionsPlayer extends React.Component {
                 { value: 'left', label: 'Left' },
                 { value: 'center', label: 'Center' },
                 { value: 'right', label: 'Right' },
-                { value: '3d', label: '3D [Beta]' }
+                { value: '3d', label: '3D [Beta]' },
               ]}
               onSelect={value =>
                 onUpdateOptions(Options.changePanelPlacement(value))
@@ -199,9 +201,9 @@ class OptionsPlayerRow extends React.Component {
   static propTypes = {
     hidden: PropTypes.bool,
     label: PropTypes.node,
-    children: PropTypes.node
+    children: PropTypes.node,
   }
-  render () {
+  render() {
     return (
       <div
         className='OptionsPlayerのrow'

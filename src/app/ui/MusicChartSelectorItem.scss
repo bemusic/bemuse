@@ -1,5 +1,4 @@
-
-@import "~bemuse/ui/common";
+@import '~bemuse/ui/common';
 
 .MusicChartSelectorItem {
   list-style: none;
@@ -8,7 +7,7 @@
   font-size: 2rem;
   text-align: center;
   background: rgba(#fff, 0.8);
-  border-radius: 2vmin;
+  border-radius: 0.8rem;
   cursor: pointer;
   position: relative;
   box-sizing: border-box;
@@ -25,7 +24,8 @@
     opacity: 0;
     transition: 0.3s opacity;
   }
-  &:not(.is-tutorial).is-active:hover, &.is-replayable:hover {
+  &:not(.is-tutorial).is-active:hover,
+  &.is-replayable:hover {
     .MusicChartSelectorItemのplay {
       opacity: 1;
     }
@@ -49,9 +49,15 @@
   @keyframes #{$animation-name} {
     $color1: lighten($color, 10%);
     $color2: darken($color, 10%);
-    0% { background: $color1; }
-    50% { background: $color2; }
-    100% { background: $color1; }
+    0% {
+      background: $color1;
+    }
+    50% {
+      background: $color2;
+    }
+    100% {
+      background: $color1;
+    }
   }
 }
 

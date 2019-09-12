@@ -1,5 +1,4 @@
-
-@import "./common.scss";
+@import './common.scss';
 
 .Scene {
   @include full-screen;
@@ -7,10 +6,17 @@
   font-family: $ui-font;
   > .SceneHeading {
     position: absolute;
-    top: 2rem; right: 0; left: 0;
+    top: 20px;
+    right: 0;
+    left: 0;
+    @media (min-width: 720px) {
+      top: 2rem;
+    }
   }
   > .SceneToolbar {
     position: absolute;
-    right: 0; bottom: 0; left: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
   }
 }
