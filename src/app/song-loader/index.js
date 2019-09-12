@@ -4,6 +4,10 @@ import Worker from './song-loader.worker.js'
 
 export function loadSongFromResources(resources, options = {}) {
   var onMessage = options.onMessage || (() => {})
+  console.log(resources)
+  if (resources.setLoggingFunction) {
+    resources.setLoggingFunction(onMessage)
+  }
   return resources.fileList
     .then(fileList => {
       console.log(fileList)
