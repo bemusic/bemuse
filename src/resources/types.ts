@@ -2,6 +2,7 @@ import Progress from 'bemuse/progress'
 
 export interface IResources {
   file(name: string): PromiseLike<IResource>
+  setLoggingFunction?: (logFn: LoggingFunction) => void
 }
 
 export interface IResource {
@@ -14,3 +15,4 @@ export interface IResource {
 }
 
 export type FileEntry = { name: string; file: File }
+export type LoggingFunction = (text: string) => void
