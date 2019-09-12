@@ -66,22 +66,22 @@ export class Context {
     let onTouch = e => {
       touches = [].slice.call(e.touches)
     }
-    const view = this._touchEventTarget || this.view
+    const touchTarget = this._touchEventTarget || this.view
     let width = this._skin.width
     let height = this._skin.height
-    view.addEventListener('mousedown', onMouse, false)
-    view.addEventListener('mousemove', onUpdateMouse, false)
-    view.addEventListener('mouseup', onNoMouse, false)
-    view.addEventListener('touchstart', onTouch, false)
-    view.addEventListener('touchmove', onTouch, false)
-    view.addEventListener('touchend', onTouch, false)
+    touchTarget.addEventListener('mousedown', onMouse, false)
+    touchTarget.addEventListener('mousemove', onUpdateMouse, false)
+    touchTarget.addEventListener('mouseup', onNoMouse, false)
+    touchTarget.addEventListener('touchstart', onTouch, false)
+    touchTarget.addEventListener('touchmove', onTouch, false)
+    touchTarget.addEventListener('touchend', onTouch, false)
     this._teardownInteractivity = () => {
-      view.removeEventListener('mousedown', onMouse, false)
-      view.removeEventListener('mousemove', onUpdateMouse, false)
-      view.removeEventListener('mouseup', onNoMouse, false)
-      view.removeEventListener('touchstart', onTouch, false)
-      view.removeEventListener('touchmove', onTouch, false)
-      view.removeEventListener('touchend', onTouch, false)
+      touchTarget.removeEventListener('mousedown', onMouse, false)
+      touchTarget.removeEventListener('mousemove', onUpdateMouse, false)
+      touchTarget.removeEventListener('mouseup', onNoMouse, false)
+      touchTarget.removeEventListener('touchstart', onTouch, false)
+      touchTarget.removeEventListener('touchmove', onTouch, false)
+      touchTarget.removeEventListener('touchend', onTouch, false)
     }
     this._input = {
       get: () => {
