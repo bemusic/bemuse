@@ -76,7 +76,7 @@ export function load(spec: LoadSpec) {
       Scintillator,
       skin
     ) {
-      return new Scintillator.Context(skin)
+      return new Scintillator.Context(skin, { touchEventTarget: window })
     })
 
     if (assets.progress) {
