@@ -1,13 +1,26 @@
 import * as ProgressUtils from 'bemuse/progress/utils'
 import readBlob from 'bemuse/utils/read-blob'
-import { IResources, IResource, FileEntry } from './types'
+import { IResources, IResource, FileEntry, LoggingFunction } from './types'
 import Progress from 'bemuse/progress'
 import { unarchive } from './unarchiver'
+import ResourceLogging from './resource-logging'
+import download from 'bemuse/utils/download'
+
+const ARCHIVE_REGEXP = /\.(?:zip|rar|7z|tar(?:\.(?:gz|bz2))?)/i
+
+// http://nekokan.dyndns.info/tool/DropboxReplacer/index.html
+const DROPBOX_REGEXP = /https?:\/\/(?:(?:www|dl)\.dropbox\.com|dl\.dropboxusercontent\.com)\/(sh?)\/([^?]*)(.*)?$/
 
 export class DndResources implements IResources {
+  _logging = new ResourceLogging()
   _files: Promise<FileEntry[]>
+
+  public setLoggingFunction = this._logging.setLoggingFunction
+
   constructor(event: DragEvent) {
-    this._files = getFilesFromEvent(event).then(unarchiveIfNeeded)
+    this._files = getFilesFromEvent(event, this._logging.log).then(files =>
+      unarchiveIfNeeded(files, this._logging.log)
+    )
   }
   file(name: string) {
     return this._files.then(function(files) {
@@ -42,13 +55,44 @@ export class FileResource implements IResource {
 
 export default DndResources
 
-async function getFilesFromEvent(event: DragEvent) {
+async function getFilesFromEvent(event: DragEvent, log: LoggingFunction) {
   let out: FileEntry[] = []
   const dataTransfer = event.dataTransfer
   if (!dataTransfer) {
     throw new Error('Expect event.dataTransfer to be present')
   }
-  if (dataTransfer.items) {
+  if (dataTransfer.types.indexOf('text/uri-list') > -1) {
+    let url = dataTransfer
+      .getData('text/uri-list')
+      .split(/\r\n|\r|\n/)
+      .filter(t => t && !t.startsWith('#'))[0]
+    if (ARCHIVE_REGEXP.test(url && url.replace(/[?#].*/, ''))) {
+      const name = url
+        .replace(/[?#].*/, '')
+        .split('/')
+        .pop()
+      log('Link to archive file detected. Trying to download')
+
+      {
+        // Try Dropbox URL replacement
+        const match = url.match(DROPBOX_REGEXP)
+        if (match) {
+          url = `https://dl.dropboxusercontent.com/${match[1]}/${match[2]}`
+        }
+      }
+
+      const progress = new Progress()
+      let lastTime = 0
+      progress.watch(() => {
+        if (Date.now() < lastTime + 5e3) return
+        log(`Downloading: ${progress}`)
+        lastTime = Date.now()
+      })
+      const blob = await download(url).as('blob', progress)
+      blob.name = name
+      addFile(blob)
+    }
+  } else if (dataTransfer.items) {
     for (let item of Array.from(dataTransfer.items)) {
       await readItem(item)
     }
@@ -110,12 +154,14 @@ async function getFilesFromEvent(event: DragEvent) {
 }
 
 export async function unarchiveIfNeeded(
-  files: FileEntry[]
+  files: FileEntry[],
+  log: LoggingFunction
 ): Promise<FileEntry[]> {
   if (files.length !== 1) return files
   const fileEntry = files[0]
-  if (!fileEntry.name.match(/\.(?:zip|rar|7z|tar(?:\.(?:gz|bz2))?)/i)) {
+  if (!fileEntry.name.match(ARCHIVE_REGEXP)) {
     return files
   }
+  log('Archive file detected! Now unarchiving…')
   return unarchive(fileEntry.file)
 }

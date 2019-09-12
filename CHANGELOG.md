@@ -8,6 +8,33 @@
 [@resir014]: https://github.com/resir014
 [@thakkaryash94]: https://github.com/thakkaryash94
 [@hajimehoshi]: https://github.com/hajimehoshi
+[@nekokan]: https://github.com/Nekokan
+
+## v46.0.0-pre.201909121844
+
+### New stuff
+
+- **You can now drop a link to a BMS archive (.zip, .rar) from another web page
+  into the “Custom BMS” panel.** When you do it, Bemuse will attempt to download
+  and extract the file. Note that for this to work, the web server that serves
+  the file must set up [cross-origin resource sharing](https://enable-cors.org/)
+  to allow Bemuse to download it. Both Dropbox and IPFS gateways has this set up
+  already.
+
+  Dropbox URL normalization code is based on [@Nekokan]’s
+  [Dropbox Replacer](http://nekokan.dyndns.info/tool/DropboxReplacer/), thanks!
+  [#554], by [@dtinth]
+
+### Improvements
+
+- Fixed an issue where a player, when playing using a touch screen in 3D mode,
+  cannot touch below canvas to activate the note. [#472], by [@dtinth]
+- Fixed an issue where the OGG sound decoder crashes when decoding some OGG
+  files in iOS. [#553], by [@dtinth]
+
+[#472]: https://github.com/bemusic/bemuse/pull/472
+[#553]: https://github.com/bemusic/bemuse/pull/553
+[#554]: https://github.com/bemusic/bemuse/pull/554
 
 ## v45.1.0 (2019-09-02)
 
