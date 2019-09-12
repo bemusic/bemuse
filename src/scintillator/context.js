@@ -19,9 +19,10 @@ function hackPIXIToForceNewBlendModes() {
 }
 
 export class Context {
-  constructor(skin) {
+  constructor(skin, { touchEventTarget } = {}) {
     this.refs = {}
     this._skin = skin
+    this._touchEventTarget = touchEventTarget
     this._instance = skin.instantiate(this)
     this._renderer = createRenderer(skin.width, skin.height)
     this.stage = this._instance.object
@@ -65,21 +66,22 @@ export class Context {
     let onTouch = e => {
       touches = [].slice.call(e.touches)
     }
+    const view = this._touchEventTarget || this.view
     let width = this._skin.width
     let height = this._skin.height
-    window.addEventListener('mousedown', onMouse, false)
-    window.addEventListener('mousemove', onUpdateMouse, false)
-    window.addEventListener('mouseup', onNoMouse, false)
-    window.addEventListener('touchstart', onTouch, false)
-    window.addEventListener('touchmove', onTouch, false)
-    window.addEventListener('touchend', onTouch, false)
+    view.addEventListener('mousedown', onMouse, false)
+    view.addEventListener('mousemove', onUpdateMouse, false)
+    view.addEventListener('mouseup', onNoMouse, false)
+    view.addEventListener('touchstart', onTouch, false)
+    view.addEventListener('touchmove', onTouch, false)
+    view.addEventListener('touchend', onTouch, false)
     this._teardownInteractivity = () => {
-      window.removeEventListener('mousedown', onMouse, false)
-      window.removeEventListener('mousemove', onUpdateMouse, false)
-      window.removeEventListener('mouseup', onNoMouse, false)
-      window.removeEventListener('touchstart', onTouch, false)
-      window.removeEventListener('touchmove', onTouch, false)
-      window.removeEventListener('touchend', onTouch, false)
+      view.removeEventListener('mousedown', onMouse, false)
+      view.removeEventListener('mousemove', onUpdateMouse, false)
+      view.removeEventListener('mouseup', onNoMouse, false)
+      view.removeEventListener('touchstart', onTouch, false)
+      view.removeEventListener('touchmove', onTouch, false)
+      view.removeEventListener('touchend', onTouch, false)
     }
     this._input = {
       get: () => {
