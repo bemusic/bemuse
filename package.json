@@ -152,7 +152,7 @@
   "dependencies": {
     "audio-context": "^1.0.3",
     "auth0-js": "^9.8.0",
-    "axios": "^0.17.1",
+    "axios": "^0.18.1",
     "baconjs": "^0.7.95",
     "bemuse-indexer": "^45.1.0",
     "bemuse-notechart": "^45.1.0",
