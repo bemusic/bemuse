@@ -4,5 +4,5 @@ const data = fs.readFileSync('CHANGELOG.md', 'utf8')
 const date = new Date().toJSON().split('T')[0]
 fs.writeFileSync(
   'CHANGELOG.md',
-  data.replace(/(## v[\d.]+)-pre\.\d+/g, `$1 (${date})`)
+  data.replace(/(## v[\d.]+?)(?:\.0)?(?:\.0)?-pre\.\d+/g, `$1 (${date})`)
 )
