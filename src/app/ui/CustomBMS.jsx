@@ -11,6 +11,10 @@ import * as Analytics from '../analytics'
 import * as CustomSongsIO from '../io/CustomSongsIO'
 import * as ReduxState from '../redux/ReduxState'
 import connectIO from '../../impure-react/connectIO'
+import {
+  hasPendingArchiveToLoad,
+  consumePendingArchiveURL,
+} from '../PreloadedCustomBMS'
 
 const enhance = compose(
   connect(state => ({
@@ -19,6 +23,7 @@ const enhance = compose(
   connectIO({
     onFileDrop: () => event => CustomSongsIO.handleCustomSongFolderDrop(event),
     onPaste: () => e => CustomSongsIO.handleClipboardPaste(e),
+    loadFromURL: () => url => CustomSongsIO.handleCustomSongURLLoad(url),
   })
 )
 
@@ -28,6 +33,7 @@ class CustomBMS extends React.Component {
     onFileDrop: PropTypes.func,
     onPaste: PropTypes.func,
     onSongLoaded: PropTypes.func,
+    loadFromURL: PropTypes.func,
   }
 
   constructor(props) {
@@ -37,6 +43,11 @@ class CustomBMS extends React.Component {
 
   componentDidMount() {
     window.addEventListener('paste', this.handlePaste)
+    if (hasPendingArchiveToLoad()) {
+      this.props.loadFromURL(consumePendingArchiveURL()).then(song => {
+        if (this.props.onSongLoaded) this.props.onSongLoaded(song)
+      })
+    }
   }
 
   componentWillUnmount() {
@@ -109,8 +120,7 @@ class CustomBMS extends React.Component {
     this.setState({ hover: false })
     Analytics.send('CustomBMS', 'drop')
     e.preventDefault()
-    const promise = this.props.onFileDrop(e.nativeEvent)
-    promise.then(song => {
+    this.props.onFileDrop(e.nativeEvent).then(song => {
       if (this.props.onSongLoaded) this.props.onSongLoaded(song)
     })
   }

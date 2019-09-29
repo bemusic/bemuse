@@ -1,6 +1,6 @@
 {
   "name": "bemuse",
-  "version": "46.0.0",
+  "version": "47.0.0-pre.201909291634",
   "description": "BEAT☆MUSIC☆SEQUENCE, a web-based music game of the future",
   "main": "index.js",
   "private": true,
@@ -145,14 +145,14 @@
     "web-audio-test-api": "^0.5.2",
     "webpack": "4.20.2",
     "webpack-dev-middleware": "^3.4.0",
-    "webpack-dev-server": "3.1.9",
+    "webpack-dev-server": "3.1.11",
     "worker-loader": "^2.0.0",
     "yn": "^1.3.0"
   },
   "dependencies": {
     "audio-context": "^1.0.3",
     "auth0-js": "^9.8.0",
-    "axios": "^0.17.1",
+    "axios": "^0.18.1",
     "baconjs": "^0.7.95",
     "bemuse-indexer": "^45.1.0",
     "bemuse-notechart": "^45.1.0",

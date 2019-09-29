@@ -3,12 +3,26 @@ import * as ReduxState from '../redux/ReduxState'
 import { createIO } from 'impure'
 
 import DndResources from '../../resources/dnd-resources'
+import {
+  downloadFileEntryFromURL,
+  CustomSongResources,
+} from '../../resources/custom-song-resources'
 import { getIPFSResources } from '../../resources/ipfs-resources'
 
 export function handleCustomSongFolderDrop(event) {
   return createIO(async ({ store, customSongLoader }) => {
     const resources = new DndResources(event)
     const initialLog = ['Examining dropped items...']
+    return loadCustomSong(resources, initialLog, { store, customSongLoader })
+  })
+}
+
+export function handleCustomSongURLLoad(url) {
+  return createIO(async ({ store, customSongLoader }) => {
+    const resources = new CustomSongResources({
+      getFiles: async log => [await downloadFileEntryFromURL(url, log)],
+    })
+    const initialLog = ['Loading from ' + url]
     return loadCustomSong(resources, initialLog, { store, customSongLoader })
   })
 }
