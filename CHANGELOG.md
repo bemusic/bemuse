@@ -10,6 +10,32 @@
 [@hajimehoshi]: https://github.com/hajimehoshi
 [@nekokan]: https://github.com/Nekokan
 
+## v47.0.0-pre.201909291634
+
+### New stuff
+
+- Add support for `?archive` query flag
+  ([requested](https://twitter.com/Nekokan_Server/status/1173186650865713153) by
+  [@Nekokan]) [#568], by [@dtinth]
+
+### Internals
+
+- Updated some dependencies in response to
+  [GitHub security alerts for vulnerable dependencies](https://help.github.com/en/articles/about-security-alerts-for-vulnerable-dependencies).
+  [#567], by [@dtinth]
+
+### Improvements
+
+- Fixed a CHANGELOG formatting issue where changelog text is broken into
+  multiple lines when viewed in Bemuse. [#569], by [@dtinth]
+- Minor CHANGELOG update: Removed trailing .0.0 in version number. [#570], by
+  [@dtinth]
+
+[#567]: https://github.com/bemusic/bemuse/pull/567
+[#568]: https://github.com/bemusic/bemuse/pull/568
+[#569]: https://github.com/bemusic/bemuse/pull/569
+[#570]: https://github.com/bemusic/bemuse/pull/570
+
 ## v46 (2019-09-12)
 
 ### New stuff
