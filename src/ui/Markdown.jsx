@@ -12,7 +12,6 @@ const markdown = new Markdown({
 const safeMarkdown = new Markdown({
   html: true,
   linkify: true,
-  breaks: true,
   typographer: true,
 })
 
