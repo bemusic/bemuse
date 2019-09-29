@@ -5,6 +5,14 @@ import {
   downloadFileEntryFromURL,
 } from './custom-song-resources'
 
+// TODO: Remove the `DndResources` class and have users of this class create a `CustomSongResources` directly.
+//
+// The original implementation of DndResources class has been extracted
+// into a CustomSongResources superclass in commit cc6a6e70586487ef476890f5a7911837186a7a32,
+// so that part of its logic can be re-used in other contexts, such as in commit ba9e15bab72fec17a144e40433cb3a4ffd31db5b.
+//
+// Now this `DndResources` class is really dumb and we want to prefer composition over inheritance.
+// This class should be removed.
 export class DndResources extends CustomSongResources implements IResources {
   constructor(event: DragEvent) {
     super({

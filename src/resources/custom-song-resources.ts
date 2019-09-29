@@ -11,10 +11,17 @@ export const ARCHIVE_REGEXP = /\.(?:zip|rar|7z|tar(?:\.(?:gz|bz2))?)/i
 // http://nekokan.dyndns.info/tool/DropboxReplacer/index.html
 const DROPBOX_REGEXP = /https?:\/\/(?:(?:www|dl)\.dropbox\.com|dl\.dropboxusercontent\.com)\/(sh?)\/([^?]*)(.*)?$/
 
+/**
+ * A resource provider for custom songs.
+ * It may retrieve the files from, e.g., a drag and drop event or an `?archive` flag.
+ */
 export interface CustomResourceProvider {
   getFiles(loggingFunction: LoggingFunction): PromiseLike<FileEntry[]>
 }
 
+/**
+ * An IResources for songs provided by a CustomResourceProvider.
+ */
 export class CustomSongResources implements IResources {
   private _logging = new ResourceLogging()
   private _files: PromiseLike<FileEntry[]>
@@ -56,6 +63,9 @@ export class FileResource implements IResource {
   }
 }
 
+/**
+ * If only 1 FileEntry is present and it is an archive file, extract it.
+ */
 export async function unarchiveIfNeeded(
   files: FileEntry[],
   log: LoggingFunction
@@ -69,6 +79,9 @@ export async function unarchiveIfNeeded(
   return unarchive(fileEntry.file)
 }
 
+/**
+ * Downloads a URL as a FileEntry.
+ */
 export async function downloadFileEntryFromURL(
   url: string,
   log: LoggingFunction
