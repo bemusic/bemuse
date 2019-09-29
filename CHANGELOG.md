@@ -10,7 +10,7 @@
 [@hajimehoshi]: https://github.com/hajimehoshi
 [@nekokan]: https://github.com/Nekokan
 
-## v46.0.0 (2019-09-12)
+## v46 (2019-09-12)
 
 ### New stuff
 
@@ -36,7 +36,7 @@
 [#553]: https://github.com/bemusic/bemuse/pull/553
 [#554]: https://github.com/bemusic/bemuse/pull/554
 
-## v45.1.0 (2019-09-02)
+## v45.1 (2019-09-02)
 
 ### Internals
 
@@ -45,7 +45,7 @@
 
 [#549]: https://github.com/bemusic/bemuse/pull/549
 
-## v45.0.0 (2019-08-31)
+## v45 (2019-08-31)
 
 ### New stuff
 
@@ -67,7 +67,7 @@
 [#546]: https://github.com/bemusic/bemuse/pull/546
 [#547]: https://github.com/bemusic/bemuse/pull/547
 
-## v44.5.0 (2019-08-30)
+## v44.5 (2019-08-30)
 
 ### Internals
 
@@ -78,7 +78,7 @@
 
 [#544]: https://github.com/bemusic/bemuse/pull/544
 
-## v44.4.0 (2019-08-29)
+## v44.4 (2019-08-29)
 
 ### New stuff
 
@@ -92,7 +92,7 @@
 [#541]: https://github.com/bemusic/bemuse/pull/541
 [#542]: https://github.com/bemusic/bemuse/pull/542
 
-## v44.3.0 (2019-08-29)
+## v44.3 (2019-08-29)
 
 ### Internals
 
@@ -116,7 +116,7 @@
 
 [#536]: https://github.com/bemusic/bemuse/pull/536
 
-## v44.1.0 (2019-08-29)
+## v44.1 (2019-08-29)
 
 ### New stuff
 
