@@ -1,61 +1,32 @@
-import * as ProgressUtils from 'bemuse/progress/utils'
-import readBlob from 'bemuse/utils/read-blob'
-import { IResources, IResource, FileEntry, LoggingFunction } from './types'
-import Progress from 'bemuse/progress'
-import { unarchive } from './unarchiver'
-import ResourceLogging from './resource-logging'
-import download from 'bemuse/utils/download'
+import { IResources, FileEntry, LoggingFunction } from './types'
+import {
+  CustomSongResources,
+  ARCHIVE_REGEXP,
+  downloadFileEntryFromURL,
+} from './custom-song-resources'
 
-const ARCHIVE_REGEXP = /\.(?:zip|rar|7z|tar(?:\.(?:gz|bz2))?)/i
-
-// http://nekokan.dyndns.info/tool/DropboxReplacer/index.html
-const DROPBOX_REGEXP = /https?:\/\/(?:(?:www|dl)\.dropbox\.com|dl\.dropboxusercontent\.com)\/(sh?)\/([^?]*)(.*)?$/
-
-export class DndResources implements IResources {
-  _logging = new ResourceLogging()
-  _files: Promise<FileEntry[]>
-
-  public setLoggingFunction = this._logging.setLoggingFunction
-
+// TODO: Remove the `DndResources` class and have users of this class create a `CustomSongResources` directly.
+//
+// The original implementation of DndResources class has been extracted
+// into a CustomSongResources superclass in commit cc6a6e70586487ef476890f5a7911837186a7a32,
+// so that part of its logic can be re-used in other contexts, such as in commit ba9e15bab72fec17a144e40433cb3a4ffd31db5b.
+//
+// Now this `DndResources` class is really dumb and we want to prefer composition over inheritance.
+// This class should be removed.
+export class DndResources extends CustomSongResources implements IResources {
   constructor(event: DragEvent) {
-    this._files = getFilesFromEvent(event, this._logging.log).then(files =>
-      unarchiveIfNeeded(files, this._logging.log)
-    )
-  }
-  file(name: string) {
-    return this._files.then(function(files) {
-      for (let file of files) {
-        if (file.name.toLowerCase() === name.toLowerCase()) {
-          return new FileResource(file.file)
-        }
-      }
-      throw new Error('unable to find ' + name)
+    super({
+      getFiles: log => getFilesFromEvent(event, log),
     })
-  }
-  get fileList() {
-    return Promise.resolve(this._files.map(f => f.name))
-  }
-}
-
-export class FileResource implements IResource {
-  constructor(private _file: File) {}
-  read(progress: Progress) {
-    return ProgressUtils.atomic(
-      progress,
-      readBlob(this._file).as('arraybuffer')
-    )
-  }
-  resolveUrl() {
-    return Promise.resolve(URL.createObjectURL(this._file))
-  }
-  get name() {
-    return this._file.name
   }
 }
 
 export default DndResources
 
-async function getFilesFromEvent(event: DragEvent, log: LoggingFunction) {
+async function getFilesFromEvent(
+  event: DragEvent,
+  log: LoggingFunction
+): Promise<FileEntry[]> {
   let out: FileEntry[] = []
   const dataTransfer = event.dataTransfer
   if (!dataTransfer) {
@@ -67,30 +38,8 @@ async function getFilesFromEvent(event: DragEvent, log: LoggingFunction) {
       .split(/\r\n|\r|\n/)
       .filter(t => t && !t.startsWith('#'))[0]
     if (ARCHIVE_REGEXP.test(url && url.replace(/[?#].*/, ''))) {
-      const name = url
-        .replace(/[?#].*/, '')
-        .split('/')
-        .pop()
       log('Link to archive file detected. Trying to download')
-
-      {
-        // Try Dropbox URL replacement
-        const match = url.match(DROPBOX_REGEXP)
-        if (match) {
-          url = `https://dl.dropboxusercontent.com/${match[1]}/${match[2]}`
-        }
-      }
-
-      const progress = new Progress()
-      let lastTime = 0
-      progress.watch(() => {
-        if (Date.now() < lastTime + 5e3) return
-        log(`Downloading: ${progress}`)
-        lastTime = Date.now()
-      })
-      const blob = await download(url).as('blob', progress)
-      blob.name = name
-      addFile(blob)
+      return [await downloadFileEntryFromURL(url, log)]
     }
   } else if (dataTransfer.items) {
     for (let item of Array.from(dataTransfer.items)) {
@@ -151,17 +100,4 @@ async function getFilesFromEvent(event: DragEvent, log: LoggingFunction) {
       out.push({ name: file.name, file })
     }
   }
-}
-
-export async function unarchiveIfNeeded(
-  files: FileEntry[],
-  log: LoggingFunction
-): Promise<FileEntry[]> {
-  if (files.length !== 1) return files
-  const fileEntry = files[0]
-  if (!fileEntry.name.match(ARCHIVE_REGEXP)) {
-    return files
-  }
-  log('Archive file detected! Now unarchiving…')
-  return unarchive(fileEntry.file)
 }
