@@ -21,6 +21,7 @@ import { connect } from 'react-redux'
 import { connect as connectToLegacyStore } from 'bemuse/flux'
 import { createSelector, createStructuredSelector } from 'reselect'
 import { shouldShowOptions } from 'bemuse/devtools/query-flags'
+import { hasPendingArchiveToLoad } from '../PreloadedCustomBMS'
 
 import * as Analytics from '../analytics'
 import * as MusicSearchIO from '../io/MusicSearchIO'
@@ -100,7 +101,7 @@ class MusicSelectScene extends React.PureComponent {
     super(props)
     this.state = {
       optionsVisible: shouldShowOptions(),
-      customBMSVisible: false,
+      customBMSVisible: hasPendingArchiveToLoad(),
       unofficialDisclaimerVisible: false,
       inSong: false,
       authenticationPopupVisible: false,

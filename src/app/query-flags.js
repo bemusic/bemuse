@@ -4,6 +4,10 @@ export function getMusicServer() {
   return query.BEMUSE_MUSIC_SERVER || query.server
 }
 
+export function getPreloadArchiveFlag() {
+  return query.archive
+}
+
 export function getInitialGrepString() {
   return query.grep
 }
