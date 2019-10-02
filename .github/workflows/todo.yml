@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - master
+      - todo
 name: Process TODO comments
 jobs:
   collectTODO:
