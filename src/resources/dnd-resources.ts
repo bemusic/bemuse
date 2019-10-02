@@ -5,7 +5,7 @@ import {
   downloadFileEntryFromURL,
 } from './custom-song-resources'
 
-// TODO: Remove the `DndResources` class and have users of this class create a `CustomSongResources` directly.
+// TODO [$5d94c82086dc190007494e88]: Remove the `DndResources` class and have users of this class create a `CustomSongResources` directly.
 //
 // The original implementation of DndResources class has been extracted
 // into a CustomSongResources superclass in commit cc6a6e70586487ef476890f5a7911837186a7a32,

@@ -48,7 +48,7 @@ function Cache(path) {
   }
 }
 
-// TODO: Convert usage of `co` to async function in [bemuse-tools] src/indexer.js
+// TODO [$5d94c82086dc190007494e7d]: Convert usage of `co` to async function in [bemuse-tools] src/indexer.js
 // See issue #575 for more details.
 export function index(path, { recursive }) {
   return co(function*() {

@@ -8,7 +8,7 @@ describe('Scintillator', function() {
   describe('#load', function() {
     it(
       'should load skin and return skin node',
-      // TODO: Convert all `co.wrap()` calls in src/scintillator/index.spec.js to async functions
+      // TODO [$5d94c82086dc190007494e8a]: Convert all `co.wrap()` calls in src/scintillator/index.spec.js to async functions
       // See issue #575 for more details.
       co.wrap(function*() {
         let skin = yield Scintillator.load(fixture('bare.xml'))

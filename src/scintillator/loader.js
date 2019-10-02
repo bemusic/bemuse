@@ -10,7 +10,7 @@ import Resources from './resources'
 
 const log = debug('scintillator:loader')
 
-// TODO: Convert the `load` function to async function (instead of using `co`) in src/scintillator/loader.js
+// TODO [$5d94c82086dc190007494e8b]: Convert the `load` function to async function (instead of using `co`) in src/scintillator/loader.js
 // See issue #575 for more details.
 export function load(xmlPath, progress) {
   return co(function*() {
