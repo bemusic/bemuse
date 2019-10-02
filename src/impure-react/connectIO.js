@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { compose, getContext, mapProps, withHandlers } from 'recompose'
 
+// TODO: Convert `impure-react` to use React’s new context API.
 export const connectIO = handlers =>
   compose(
     getContext({
