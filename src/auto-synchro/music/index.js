@@ -1,5 +1,4 @@
 import _ from 'lodash'
-import co from 'co'
 import context from 'bemuse/audio-context'
 import download from 'bemuse/utils/download'
 import SamplingMaster from 'bemuse/sampling-master'
@@ -17,24 +16,21 @@ let ASSET_URLS = {
 /**
  * Loads the files and create a music instance.
  */
-export function load() {
-  // TODO [#626]: Convert the `load` function to async function (instead of using `co`) in src/auto-synchro/music.js
-  // See issue #575 for more details.
-  return co(function*() {
-    let master = new SamplingMaster(context)
-    let sample = name =>
-      download(ASSET_URLS[`${name}.ogg`])
-        .as('arraybuffer')
-        .then(buf => master.sample(buf))
-    let samples = _.fromPairs(
-      yield Promise.all(
-        ['bgm', 'intro', 'kick', 'snare'].map(name =>
-          sample(name).then(sampleObj => [name, sampleObj])
-        )
+export async function load() {
+  let master = new SamplingMaster(context)
+
+  let sample = name =>
+    download(ASSET_URLS[`${name}.ogg`])
+      .as('arraybuffer')
+      .then(buf => master.sample(buf))
+  let samples = _.fromPairs(
+    await Promise.all(
+      ['bgm', 'intro', 'kick', 'snare'].map(name =>
+        sample(name).then(sampleObj => [name, sampleObj])
       )
     )
-    return music(master, samples)
-  })
+  )
+  return music(master, samples)
 }
 
 /**
