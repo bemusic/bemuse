@@ -10,6 +10,15 @@
 [@hajimehoshi]: https://github.com/hajimehoshi
 [@nekokan]: https://github.com/Nekokan
 
+## v47.1.0-pre.201910021435
+
+### Improvements
+
+- Laid groundwork for gradually migrating part of the codebase to MobX (see
+  #573). [#572], by [@dtinth]
+
+[#572]: https://github.com/bemusic/bemuse/pull/572
+
 ## v47 (2019-09-29)
 
 ### New stuff
