@@ -18,6 +18,8 @@ let ASSET_URLS = {
  * Loads the files and create a music instance.
  */
 export function load() {
+  // TODO: Convert the `load` function to async function (instead of using `co`) in src/auto-synchro/music.js
+  // See issue #575 for more details.
   return co(function*() {
     let master = new SamplingMaster(context)
     let sample = name =>

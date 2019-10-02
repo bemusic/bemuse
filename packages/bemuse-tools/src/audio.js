@@ -28,6 +28,8 @@ export class AudioConvertor {
   _doConvert(path, type) {
     return this._SoX(path, type)
   }
+  // TODO: Convert the `_SoX` method to async function (instead of using `co`) in [bemuse-tools] src/audio.js
+  // See issue #575 for more details.
   _SoX(path, type) {
     return co(
       function*() {

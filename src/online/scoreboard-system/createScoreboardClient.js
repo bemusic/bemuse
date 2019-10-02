@@ -214,6 +214,8 @@ export default function createScoreboardClient({
       invariant(typeof username === 'string', 'username must be a string')
       invariant(typeof password === 'string', 'password must be a string')
       invariant(typeof email === 'string', 'email must be a string')
+      // TODO: Convert the `signUp` method to async function (instead of using `co`) in src/online/scoreboard-system/createScoreboardClient.js
+      // See issue #575 for more details.
       return co(function*() {
         const { idToken } = yield* authenticationFlow.signUp(
           username,
@@ -233,6 +235,7 @@ export default function createScoreboardClient({
     loginByUsernamePassword({ username, password }) {
       invariant(typeof username === 'string', 'username must be a string')
       invariant(typeof password === 'string', 'password must be a string')
+      // TODO: Convert the `loginByUsernamePassword` method to async function (instead of using `co`) in src/online/scoreboard-system/createScoreboardClient.js
       return co(function*() {
         const { idToken } = yield* authenticationFlow.loginByUsernamePassword(
           username,
