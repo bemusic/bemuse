@@ -32,9 +32,7 @@ export function main() {
     })
   }
 
-  // TODO [#630]: Convert the `getSong` function to async function (instead of using `co.wrap`) in src/game/index.js
-  // See issue #575 for more details.
-  let getSong = co.wrap(function*() {
+  let getSong = async function() {
     let kbm = (query.keyboard || '').split(',').map(x => +x)
     let options = {
       url: query.bms || '/music/[snack]dddd/dddd_sph.bme',
@@ -63,7 +61,7 @@ export function main() {
         },
       ],
     }
-    options = yield displayShell(options)
+    options = await displayShell(options)
     let url = options.url
     let assetsUrl = resolveUrl(url, 'assets/')
     let metadata = {
@@ -80,7 +78,7 @@ export function main() {
       options: Object.assign({}, options.game, { players: options.players }),
     }
     return loadSpec
-  })
+  }
 
   // TODO [#631]: Convert the `co` invocation to async function IIFE in src/game/index.js
   co(function*() {
