@@ -8,7 +8,9 @@ const state = observable({
 })
 
 export function useCustomSongLoaderLog() {
-  return useObserver(() => state.loaderLog)
+  // We need to clone the array to make sure that all items inside it gets properly tracked.
+  // Since this array will be very small, performance impact is negligible.
+  return useObserver(() => state.loaderLog && Array.from(state.loaderLog))
 }
 
 export async function loadCustomSong(
@@ -16,7 +18,8 @@ export async function loadCustomSong(
   initialLog: string[],
   { customSongLoader, store }: { customSongLoader: TODO; store: TODO }
 ) {
-  const log = (state.loaderLog = [...initialLog])
+  state.loaderLog = [...initialLog]
+  const log = state.loaderLog
   try {
     const song = await customSongLoader.loadSongFromResources(resources, {
       onMessage(text: string) {
