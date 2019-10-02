@@ -1,18 +1,17 @@
-import Promise from 'bluebird'
-import co from 'co'
 import fs from 'fs'
 import _ from 'lodash'
 import chalk from 'chalk'
 import json from 'format-json'
 import yaml from 'js-yaml'
+import util from 'util'
 
 import { getSongInfo } from 'bemuse-indexer'
 import { join, dirname, basename } from 'path'
 
-let fileStat = Promise.promisify(fs.stat, fs)
-let readFile = Promise.promisify(fs.readFile, fs)
-let writeFile = Promise.promisify(fs.writeFile, fs)
-let glob = Promise.promisify(require('glob'))
+let fileStat = util.promisify(fs.stat, fs)
+let readFile = util.promisify(fs.readFile, fs)
+let writeFile = util.promisify(fs.writeFile, fs)
+let glob = util.promisify(require('glob'))
 
 function Cache(path) {
   let data = load()
@@ -48,98 +47,92 @@ function Cache(path) {
   }
 }
 
-// TODO [#623]: Convert usage of `co` to async function in [bemuse-tools] src/indexer.js
-// See issue #575 for more details.
-export function index(path, { recursive }) {
-  return co(function*() {
-    let stat = yield fileStat(path)
-    if (!stat.isDirectory()) throw new Error('Not a directory: ' + path)
+export async function index(path, { recursive }) {
+  let stat = await fileStat(path)
+  if (!stat.isDirectory()) throw new Error('Not a directory: ' + path)
 
-    let cache = new Cache(join(path, 'index.cache'))
+  let cache = new Cache(join(path, 'index.cache'))
 
-    console.log('-> Scanning files...')
-    let dirs = new Map()
-    let pattern = (recursive ? '**/' : '') + '*/*.{bms,bme,bml,bmson}'
-    for (var name of yield glob(pattern, { cwd: path })) {
-      let bmsPath = join(path, name)
-      put(dirs, dirname(bmsPath), () => []).push(basename(bmsPath))
-    }
+  console.log('-> Scanning files...')
+  let dirs = new Map()
+  let pattern = (recursive ? '**/' : '') + '*/*.{bms,bme,bml,bmson}'
+  for (var name of await glob(pattern, { cwd: path })) {
+    let bmsPath = join(path, name)
+    put(dirs, dirname(bmsPath), () => []).push(basename(bmsPath))
+  }
 
-    let songs = []
-    let maxDirLength = _(Array.from(dirs.keys()))
-      .map('length')
-      .max()
-    for (let [dir, files] of dirs) {
-      let filesToParse = []
+  let songs = []
+  let maxDirLength = _(Array.from(dirs.keys()))
+    .map('length')
+    .max()
+  for (let [dir, files] of dirs) {
+    let filesToParse = []
 
-      for (let file of files) {
-        let buf = yield readFile(join(dir, file))
-        if (buf.length > 1048576) {
-          console.error(chalk.red('BMS file is too long:'), join(dir, file))
-          continue
-        }
-        filesToParse.push({ name: file, data: buf })
+    for (let file of files) {
+      let buf = await readFile(join(dir, file))
+      if (buf.length > 1048576) {
+        console.error(chalk.red('BMS file is too long:'), join(dir, file))
+        continue
       }
-
-      let extra = yield getExtra(dir)
-      let song = yield getSongInfo(filesToParse, { cache, extra })
-      song.id = dir
-      song.path = dir
-
-      let levels = _(song.charts)
-        .sortBy(chart => chart.info.level)
-        .map(chart => {
-          let ch =
-            chart.keys === '5K'
-              ? chalk.gray
-              : chart.keys === '7K'
-              ? chalk.green
-              : chart.keys === '10K'
-              ? chalk.magenta
-              : chart.keys === '14K'
-              ? chalk.red
-              : chalk.inverse
-          return ch(chart.info.level)
-        })
-      console.log(
-        chalk.dim(_.padEnd(dir, maxDirLength)),
-        chalk.yellow(_.padStart(Math.round(song.bpm) + 'bpm', 7)),
-        chalk.cyan('[' + song.genre + ']'),
-        song.artist + '-' + song.title,
-        levels.join(' '),
-        song.readme ? '' : chalk.red('[no-meta]')
-      )
-      songs.push(song)
+      filesToParse.push({ name: file, data: buf })
     }
 
-    let collection = {
-      songs: songs,
-    }
+    let extra = await getExtra(dir)
+    let song = await getSongInfo(filesToParse, { cache, extra })
+    song.id = dir
+    song.path = dir
 
-    writeFile(join(path, 'index.json'), json.diffy(collection))
-  })
+    let levels = _(song.charts)
+      .sortBy(chart => chart.info.level)
+      .map(chart => {
+        let ch =
+          chart.keys === '5K'
+            ? chalk.gray
+            : chart.keys === '7K'
+            ? chalk.green
+            : chart.keys === '10K'
+            ? chalk.magenta
+            : chart.keys === '14K'
+            ? chalk.red
+            : chalk.inverse
+        return ch(chart.info.level)
+      })
+    console.log(
+      chalk.dim(_.padEnd(dir, maxDirLength)),
+      chalk.yellow(_.padStart(Math.round(song.bpm) + 'bpm', 7)),
+      chalk.cyan('[' + song.genre + ']'),
+      song.artist + '-' + song.title,
+      levels.join(' '),
+      song.readme ? '' : chalk.red('[no-meta]')
+    )
+    songs.push(song)
+  }
+
+  let collection = {
+    songs: songs,
+  }
+
+  writeFile(join(path, 'index.json'), json.diffy(collection))
 }
 
-function getExtra(dir) {
-  return co(function*() {
-    let readme
-    let extra = {}
+async function getExtra(dir) {
+  let readme
+  let extra = {}
+  try {
+    readme = await readFile(join(dir, 'README.md'), 'utf-8')
+    extra.readme = 'README.md'
+  } catch (e) {
+    readme = null
+  }
+  if (readme !== null) {
     try {
-      readme = yield readFile(join(dir, 'README.md'), 'utf-8')
-      extra.readme = 'README.md'
+      let meta = yaml.safeLoad(readme.substr(0, readme.indexOf('---', 3)))
+      extra = Object.assign({}, meta, extra)
     } catch (e) {
-      readme = null
+      console.error(chalk.red('Unable to read metadata:'), '' + e)
     }
-    if (readme !== null) {
-      try {
-        let meta = yaml.safeLoad(readme.substr(0, readme.indexOf('---', 3)))
-        extra = Object.assign({}, meta, extra)
-      } catch (e) {
-        console.error(chalk.red('Unable to read metadata:'), '' + e)
-      }
-    }
-    return extra
-  })
+  }
+  return extra
 }
 
 function put(map, key, f) {

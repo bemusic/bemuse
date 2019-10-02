@@ -53,3 +53,4 @@ Icon
 /.otto/
 /packages/*/lib/
 .nyc_output
+/.idea/
