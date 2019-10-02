@@ -32,7 +32,7 @@ export function main() {
     })
   }
 
-  // TODO [$5d94c82086dc190007494e84]: Convert the `getSong` function to async function (instead of using `co.wrap`) in src/game/index.js
+  // TODO [#630]: Convert the `getSong` function to async function (instead of using `co.wrap`) in src/game/index.js
   // See issue #575 for more details.
   let getSong = co.wrap(function*() {
     let kbm = (query.keyboard || '').split(',').map(x => +x)
@@ -82,7 +82,7 @@ export function main() {
     return loadSpec
   })
 
-  // TODO [$5d94c82086dc190007494e85]: Convert the `co` invocation to async function IIFE in src/game/index.js
+  // TODO [#631]: Convert the `co` invocation to async function IIFE in src/game/index.js
   co(function*() {
     let loadSpec = yield getSong()
     let { tasks, promise } = GameLoader.load(loadSpec)

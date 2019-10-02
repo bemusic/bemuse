@@ -53,7 +53,7 @@ export async function launch({
   invariant(options, 'Options must be passed!')
 
   // initialize the loading specification
-  // TODO [$5d94c82086dc190007494e7f]: Create the LoadSpec object at the end instead of building object from blank.
+  // TODO [#625]: Create the LoadSpec object at the end instead of building object from blank.
   let loadSpec: LoadSpec = {} as any
   loadSpec.songId = song.id
 
