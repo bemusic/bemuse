@@ -1,5 +1,4 @@
 import Promise from 'bluebird'
-import co from 'co'
 import fs from 'fs'
 import Throat from 'throat'
 import { cpus } from 'os'
@@ -28,47 +27,35 @@ export class AudioConvertor {
   _doConvert(path, type) {
     return this._SoX(path, type)
   }
-  // TODO [#621]: Convert the `_SoX` method to async function (instead of using `co`) in [bemuse-tools] src/audio.js
-  // See issue #575 for more details.
-  _SoX(path, type) {
-    return co(
-      function*() {
-        let typeArgs = []
-        try {
-          let fd = yield Promise.promisify(fs.open, fs)(path, 'r')
-          let buffer = Buffer.alloc(4)
-          let read = yield Promise.promisify(fs.read, fs)(
-            fd,
-            buffer,
-            0,
-            4,
-            null
-          )
-          yield Promise.promisify(fs.close, fs)(fd)
-          if (read === 0) {
-            console.error('[WARN] Empty keysound file.')
-          } else if (
-            buffer[0] === 0x49 &&
-            buffer[1] === 0x44 &&
-            buffer[2] === 0x33
-          ) {
-            typeArgs = ['-t', 'mp3']
-          } else if (buffer[0] === 0xff && buffer[1] === 0xfb) {
-            typeArgs = ['-t', 'mp3']
-          } else if (
-            buffer[0] === 0x4f &&
-            buffer[1] === 0x67 &&
-            buffer[2] === 0x67 &&
-            buffer[3] === 0x53
-          ) {
-            typeArgs = ['-t', 'ogg']
-          }
-        } catch (e) {
-          console.error('[WARN] Unable to detect file type!')
-        }
-        return yield this._doSoX(path, type, typeArgs)
-      }.bind(this)
-    )
+  async _SoX(path, type) {
+    let typeArgs = []
+    try {
+      let fd = await Promise.promisify(fs.open)(path, 'r')
+      let buffer = Buffer.alloc(4)
+      let read = await Promise.promisify(fs.read)(fd, buffer, 0, 4, null)
+      await Promise.promisify(fs.close)(fd)
+      if (read === 0) {
+        console.error('[WARN] Empty keysound file.')
+      } else if (
+        buffer[0] === 0x49 &&
+        buffer[1] === 0x44 &&
+        buffer[2] === 0x33
+      ) {
+        typeArgs = ['-t', 'mp3']
+      } else if (buffer[0] === 0xff && buffer[1] === 0xfb) {
+        typeArgs = ['-t', 'mp3']
+      } else if (
+        buffer[0] === 0x4f &&
+        buffer[1] === 0x67 &&
+        buffer[2] === 0x67 &&
+        buffer[3] === 0x53
+      ) {
+        typeArgs = ['-t', 'ogg']
+      }
+    } catch (e) {
+      console.error('[WARN] Unable to detect file type!')
+    }
+    return this._doSoX(path, type, typeArgs)
   }
   _doSoX(path, type, inputTypeArgs) {
     return throat(
