@@ -33,7 +33,7 @@ export function main(element) {
   }
 }
 
-// TODO: Convert the `go` function to async function (instead of using `co`) in src/coming-soon/demo/index.js
+// TODO [#627]: Convert the `go` function to async function (instead of using `co`) in src/coming-soon/demo/index.js
 // See issue #575 for more details.
 function go(loader, element) {
   let master = new SamplingMaster(ctx)

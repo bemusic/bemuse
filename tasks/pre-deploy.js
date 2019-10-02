@@ -8,7 +8,7 @@ const readFile = Promise.promisify(fs.readFile, fs)
 
 gulp.task(
   'pre-deploy',
-  // TODO: Convert the `co.wrap()` call in tasks/pre-deploy.js to async function
+  // TODO [#638]: Convert the `co.wrap()` call in tasks/pre-deploy.js to async function
   // See issue #575 for more details.
   co.wrap(function*() {
     let data = yield readFile(path('dist', 'index.html'), 'utf-8')

@@ -60,7 +60,7 @@ export class SceneManager {
     })
   }
 
-  // TODO: Convert the `_transitionTo` method to async function (instead of using `co`) in src/scene-manager/index.js
+  // TODO [#635]: Convert the `_transitionTo` method to async function (instead of using `co`) in src/scene-manager/index.js
   // See issue #575 for more details.
   _transitionTo(getNextScene) {
     return co(

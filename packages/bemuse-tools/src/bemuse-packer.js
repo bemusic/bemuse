@@ -27,7 +27,7 @@ export class BemusePacker {
     this._refs.push(ref)
     return ref
   }
-  // TODO: Convert the `write` method to async function (instead of using `co`) in [bemuse-tools] src/bemuse-packer.js
+  // TODO [#622]: Convert the `write` method to async function (instead of using `co`) in [bemuse-tools] src/bemuse-packer.js
   // See issue #575 for more details.
   write(folder) {
     return co(

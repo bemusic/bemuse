@@ -222,7 +222,7 @@ export class PlayerDisplay {
 
 export default PlayerDisplay
 
-// TODO: MOVE THIS (getKeyMode) TO bemuse-notechart
+// TODO [#629]: MOVE THIS (getKeyMode) TO bemuse-notechart
 //
 function getKeyMode(notechart, scratch) {
   const usedColumns = {}
