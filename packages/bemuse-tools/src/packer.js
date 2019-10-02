@@ -12,6 +12,8 @@ import BemusePacker from './bemuse-packer'
 let mkdirp = Promise.promisify(require('mkdirp'))
 let fileStat = Promise.promisify(fs.stat, fs)
 
+// TODO: Convert the `packIntoBemuse` function to async function (instead of using `co`) in [bemuse-tools] src/packer.js
+// See issue #575 for more details.
 export function packIntoBemuse(path) {
   return co(function*() {
     let stat = yield fileStat(path)
