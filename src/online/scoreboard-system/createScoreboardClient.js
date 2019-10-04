@@ -107,27 +107,25 @@ export default function createScoreboardClient({
     )
   }
 
-  function resolvePlayerId(playerName) {
-    return Promise.resolve(
-      graphql({
-        query: `
-          query resolvePlayerId ($name: String!) {
-            player (name: $name) {
-              id
-            }
+  async function resolvePlayerId(playerName) {
+    const result = await graphql({
+      query: `
+        query resolvePlayerId ($name: String!) {
+          player (name: $name) {
+            id
           }
-        `,
-        variables: {
-          name: playerName,
-        },
-      }).then(result => {
-        if (result.data.player === null) {
-          return { error: 'Player not found...' }
-        } else {
-          return { playerId: result.data.player.id }
         }
-      })
-    )
+      `,
+      variables: {
+        name: playerName,
+      },
+    })
+
+    if (result.data.player === null) {
+      return { error: 'Player not found...' }
+    } else {
+      return { playerId: result.data.player.id }
+    }
   }
 
   function reservePlayerId(playerName) {
