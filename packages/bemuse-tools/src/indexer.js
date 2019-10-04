@@ -8,9 +8,9 @@ import util from 'util'
 import { getSongInfo } from 'bemuse-indexer'
 import { join, dirname, basename } from 'path'
 
-let fileStat = util.promisify(fs.stat, fs)
-let readFile = util.promisify(fs.readFile, fs)
-let writeFile = util.promisify(fs.writeFile, fs)
+let fileStat = util.promisify(fs.stat)
+let readFile = util.promisify(fs.readFile)
+let writeFile = util.promisify(fs.writeFile)
 let glob = util.promisify(require('glob'))
 
 function Cache(path) {
