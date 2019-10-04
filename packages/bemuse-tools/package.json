@@ -1,6 +1,6 @@
 {
   "name": "bemuse-tools",
-  "version": "45.1.0",
+  "version": "47.1.0",
   "description": "bemuse-tools: Tools for Bemuse",
   "files": [
     "src",
@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/bemusic/bemuse-tools",
   "dependencies": {
-    "bemuse-indexer": "^45.1.0",
+    "bemuse-indexer": "^47.1.0",
     "bluebird": "^3.5.2",
     "bytes": "^3.0.0",
     "chalk": "^2.4.1",
