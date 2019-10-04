@@ -10,7 +10,7 @@
 [@hajimehoshi]: https://github.com/hajimehoshi
 [@nekokan]: https://github.com/Nekokan
 
-## v47.1.0-pre.201910021435
+## v47.1 (2019-10-04)
 
 ### Improvements
 
