@@ -1,7 +1,6 @@
-import * as ReduxState from '../redux/ReduxState'
-
 import { createIO } from 'impure'
 
+import { loadCustomSong } from '../CustomSongs'
 import DndResources from '../../resources/dnd-resources'
 import {
   downloadFileEntryFromURL,
@@ -49,32 +48,4 @@ export function handleClipboardPaste(e) {
       return loadCustomSong(resources, initialLog, { store, customSongLoader })
     }
   })
-}
-
-async function loadCustomSong(
-  resources,
-  initialText,
-  { store, customSongLoader }
-) {
-  try {
-    store.dispatch({ type: ReduxState.CUSTOM_SONG_LOAD_STARTED })
-    for (const text of initialText) {
-      store.dispatch({ type: ReduxState.CUSTOM_SONG_LOG_EMITTED, text })
-    }
-    const song = await customSongLoader.loadSongFromResources(resources, {
-      onMessage(text) {
-        store.dispatch({ type: ReduxState.CUSTOM_SONG_LOG_EMITTED, text })
-      },
-    })
-    if (song && song.charts && song.charts.length) {
-      store.dispatch({ type: ReduxState.CUSTOM_SONG_LOADED, song })
-      return song
-    } else {
-      store.dispatch({ type: ReduxState.CUSTOM_SONG_LOAD_FAILED })
-    }
-  } catch (e) {
-    const text = `Error caught: ${e}`
-    store.dispatch({ type: ReduxState.CUSTOM_SONG_LOG_EMITTED, text })
-    throw e
-  }
 }
