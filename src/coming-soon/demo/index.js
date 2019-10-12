@@ -55,14 +55,14 @@ async function go(loader, element) {
     .text(JSON.stringify(info, null, 2))
     .appendTo($sampler)
   log('Loading samples')
-  var samples = await loadSamples(notes, chart)
+  var loadedSamples = await loadSamples(notes, chart)
   log('Click the button to play!')
   await waitForPlay()
   void (function() {
     master.unmute()
     for (let note of notes.all()) {
       setTimeout(() => {
-        let sample = samples[note.keysound]
+        let sample = loadedSamples[note.keysound]
         if (!sample) {
           console.log('warn: unknown sample ' + note.keysound)
           return
@@ -94,17 +94,17 @@ async function go(loader, element) {
     $log.text(t)
   }
 
-  function loadSamples(notes, chart) {
+  function loadSamples(_notes, _chart) {
     var samples = {}
     var promises = []
     let completed = 0
 
-    for (let note of notes.all()) {
+    for (let note of _notes.all()) {
       let keysound = note.keysound
       if (!(keysound in samples)) {
         samples[keysound] = null
         promises.push(
-          loadKeysound(chart.headers.get('wav' + keysound))
+          loadKeysound(_chart.headers.get('wav' + keysound))
             .then(blob => master.sample(blob))
             .then(sample => (samples[keysound] = sample))
             .catch(e => console.error('Unable to load ' + keysound + ': ' + e))
