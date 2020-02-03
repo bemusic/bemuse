@@ -187,8 +187,6 @@ describe('Scintillator', function() {
     it('should display child when correct value', function() {
       context.render({ a: 'b' })
       expect(stage.children[0].children).to.have.length(1)
-    })
-    it('should not display child when correct value', function() {
       context.render({ a: 'x' })
       expect(stage.children[0].children).to.have.length(0)
     })
