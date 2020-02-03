@@ -8,7 +8,8 @@
     "lib"
   ],
   "scripts": {
-    "prepare": "rimraf lib && tsc",
+    "clean": "rimraf build",
+    "prepare": "tsc -b .",
     "test": "nyc -r text -r lcov mocha -r ts-node/register 'src/**/*.spec.ts'"
   },
   "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
