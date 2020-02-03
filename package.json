@@ -10,8 +10,7 @@
   "workspaces": [
     "website",
     "e2e",
-    "packages/*",
-    "."
+    "packages/*"
   ],
   "browserslist": [
     ">0.25%",

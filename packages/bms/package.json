@@ -9,7 +9,8 @@
     "lib"
   ],
   "scripts": {
-    "prepare": "rimraf lib && tsc",
+    "clean": "rimraf build",
+    "prepare": "tsc -b .",
     "test": "nyc -r text -r lcov gulp test",
     "dev": "tsc --watch",
     "pretest": "gulp bmspec:update"

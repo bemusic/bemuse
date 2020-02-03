@@ -9,8 +9,9 @@
     "lib"
   ],
   "scripts": {
+    "clean": "rimraf build",
     "test": "nyc -r text -r lcov mocha -r ts-node/register 'src/**/*.spec.ts'",
-    "prepare": "rimraf lib && tsc"
+    "prepare": "tsc -b ."
   },
   "repository": {
     "type": "git",

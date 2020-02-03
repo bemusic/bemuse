@@ -8,8 +8,9 @@
     "bin"
   ],
   "scripts": {
+    "clean": "rimraf build",
     "test": "nyc -r text -r lcov mocha -r ts-node/register spec/*_spec.js",
-    "prepare": "rimraf lib && tsc"
+    "prepare": "tsc -b ."
   },
   "bin": {
     "bemuse-tools": "./bin/bemuse-tools"
