@@ -9,7 +9,7 @@
     "lib"
   ],
   "scripts": {
-    "clean": "rimraf build",
+    "clean": "rimraf lib tsconfig.tsbuildinfo",
     "prepare": "tsc -b .",
     "test": "nyc -r text -r lcov gulp test",
     "dev": "tsc --watch",
