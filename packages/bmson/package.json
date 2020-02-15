@@ -9,7 +9,8 @@
     "lib"
   ],
   "scripts": {
-    "prepare": "rimraf lib && tsc",
+    "clean": "rimraf lib tsconfig.tsbuildinfo",
+    "prepare": "tsc -b .",
     "test": "nyc -r text -r lcov mocha -r ts-node/register './src/**/*.spec.ts'"
   },
   "keywords": [
