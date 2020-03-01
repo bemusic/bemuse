@@ -6,7 +6,6 @@ import GameDisplay from 'bemuse/game/display'
 import GameInput from 'bemuse/game/input'
 import GameState from 'bemuse/game/state'
 import MAIN from 'bemuse/utils/main-element'
-import co from 'co'
 import { fromBMSChart } from 'bemuse-notechart/lib/loader/BMSNotechartLoader'
 
 // TODO [#628]: Convert the `main` method to async function (instead of using `co`) in src/devtools/playgrounds/skin.js
