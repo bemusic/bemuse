@@ -147,10 +147,6 @@ class AboutScene extends React.Component {
                 existing features. CircleCI also builds and deploys new version
                 of the game automatically for us.
               </li>
-              <li>
-                <a href='https://waffle.io/'>Waffle.io</a> helps us manage the
-                project.
-              </li>
             </ul>
           </article>
         </section>
