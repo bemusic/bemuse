@@ -1,12 +1,11 @@
 export class AxisLogic {
-  private threshold = 5
   private stop = 1
   private charge = 0
   private previous: false | number = false
   private active = false
   private positive = false
 
-  public update(axis: number) {
+  public update(axis: number, threshold: number = 3) {
     if (this.previous === false) {
       this.previous = axis
       return 0
@@ -21,15 +20,14 @@ export class AxisLogic {
       }
 
       let immediateOutput = delta > 0
-      const ticks = Math.ceil(Math.abs(delta) / 0.01)
 
       if (this.active && this.positive !== immediateOutput) {
         this.positive = immediateOutput
         this.active = false
         this.charge = 0
       } else if (!this.active) {
-        if (this.charge === 0 || this.stop <= this.threshold) {
-          this.charge += ticks
+        if (this.charge === 0 || this.stop <= threshold) {
+          this.charge += Math.ceil(Math.abs(delta) / 0.01)
         }
 
         if (this.charge >= 2) {
@@ -42,7 +40,7 @@ export class AxisLogic {
       this.previous = axis
     }
 
-    if (this.stop > this.threshold * 2) {
+    if (this.stop > threshold * 2) {
       this.active = false
       this.charge = 0
       this.stop = 0

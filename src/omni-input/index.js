@@ -31,9 +31,8 @@ export class OmniInput {
     const midi川 = (options.getMidi川 || getMidi川)()
     this._window = win
     this._exclusive = !!options.exclusive
-
-    this._deadzone = options.deadzone || 0.02
-    this._continousAxis = !!options.continous
+    this._continuousAxis = !!options.continuous
+    this.setGamepadSensitivity(options.sensitivity || 3)
 
     this._disposables = [
       listen(win, 'keydown', e => this._handleKeyDown(e)),
@@ -110,7 +109,7 @@ export class OmniInput {
       const axisName = `${prefix}.axis.${i}`
       let axis = gamepad.axes[i]
 
-      if (this._continousAxis) {
+      if (this._continuousAxis) {
         if (this._axis[axisName] == null) {
           this._axis[axisName] = new AxisLogic()
         }
@@ -125,6 +124,18 @@ export class OmniInput {
     this._updateGamepads()
     return this._status
   }
+
+  setGamepadSensitivity(sensitivity) {
+    this._sensitivity = sensitivity
+    this._deadzone = (9 - this._sensitivity) * 0.05
+    if (this._deadzone < 0.01) this._deadzone = 0.01
+    this._analogThreshold = 18 - this._sensitivity * 2
+  }
+
+  setGamepadContinuousAxisEnabled(enabled) {
+    this._continuousAxis = enabled
+  }
+
   dispose() {
     for (let dispose of this._disposables) {
       dispose()
@@ -134,10 +145,7 @@ export class OmniInput {
 
 // Public: Returns a Bacon EventStream of keys pressed.
 //
-export function key川(
-  input = new OmniInput(window, { continous: true }),
-  win = window
-) {
+export function key川(input = new OmniInput(), win = window) {
   return _key川ForUpdate川(
     Bacon.fromBinder(sink => {
       const handle = win.setInterval(() => {

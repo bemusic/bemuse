@@ -99,6 +99,8 @@ export async function launch({
         gauge: Options.getGauge(options),
         input: {
           keyboard: keyboardMapping as any,
+          continuous: Options.isContinuousAxisEnabled(options),
+          sensitivity: Options.sensitivity(options),
         },
       },
     ],
