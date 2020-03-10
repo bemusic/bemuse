@@ -10,6 +10,11 @@ function OmniInputPlugin(game) {
   let kbm = game.players[0].options.input.keyboard
   const scratch = new DualInput()
 
+  // Don't use Btn8 or Btn9 if they are binded
+  // TODO: make start and select button bindable
+  const isBtn8Free = Object.values(kbm).indexOf('gamepad.0.button.8') < 0
+  const isBtn9Free = Object.values(kbm).indexOf('gamepad.0.button.9') < 0
+
   return {
     name: 'GameKBPlugin',
     get() {
@@ -29,8 +34,8 @@ function OmniInputPlugin(game) {
         ),
         p1_speedup: data[38],
         p1_speeddown: data[40],
-        start: data[13] || data['gamepad.0.button.9'],
-        select: data[18] || data['gamepad.0.button.8'],
+        start: data[13] || (isBtn9Free && data['gamepad.0.button.9']),
+        select: data[18] || (isBtn8Free && data['gamepad.0.button.8']),
       }
       if (result['start'] || result['select']) {
         if (
