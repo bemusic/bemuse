@@ -2,7 +2,7 @@ import { OmniInput } from 'bemuse/omni-input'
 import { DualInput } from './dual-input'
 
 function OmniInputPlugin(game) {
-  const input = new OmniInput(window, { exclusive: true })
+  const input = new OmniInput(window, { exclusive: true, continous: true })
   let kbm = game.players[0].options.input.keyboard
   const scratch = new DualInput()
 

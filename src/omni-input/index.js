@@ -2,6 +2,7 @@ import keycode from 'keycode'
 import _ from 'lodash'
 import Bacon from 'baconjs'
 import getMidi川 from './midi'
+import { AxisLogic } from './axis-logic'
 
 // Public: OmniInput is a poll-based class that handles the key-pressed state of
 // multiple inputs.
@@ -30,12 +31,17 @@ export class OmniInput {
     const midi川 = (options.getMidi川 || getMidi川)()
     this._window = win
     this._exclusive = !!options.exclusive
+
+    this._deadzone = options.deadzone || 0.02
+    this._continousAxis = !!options.continous
+
     this._disposables = [
       listen(win, 'keydown', e => this._handleKeyDown(e)),
       listen(win, 'keyup', e => this._handleKeyUp(e)),
       midi川.onValue(e => this._handleMIDIMessage(e)),
     ]
     this._status = {}
+    this._axis = {}
   }
   _handleKeyDown(e) {
     this._status[`${e.which}`] = true
@@ -101,9 +107,18 @@ export class OmniInput {
       this._status[`${prefix}.button.${i}`] = button && button.value >= 0.5
     }
     for (let i = 0; i < gamepad.axes.length; i++) {
-      const axis = gamepad.axes[i]
-      this._status[`${prefix}.axis.${i}.positive`] = axis >= 0.01
-      this._status[`${prefix}.axis.${i}.negative`] = axis <= -0.01
+      const axisName = `${prefix}.axis.${i}`
+      let axis = gamepad.axes[i]
+
+      if (this._continousAxis) {
+        if (this._axis[axisName] == null) {
+          this._axis[axisName] = new AxisLogic()
+        }
+        axis = this._axis[axisName].update(axis)
+      }
+
+      this._status[`${axisName}.positive`] = axis >= this._deadzone
+      this._status[`${axisName}.negative`] = axis <= -this._deadzone
     }
   }
   update() {
@@ -119,7 +134,10 @@ export class OmniInput {
 
 // Public: Returns a Bacon EventStream of keys pressed.
 //
-export function key川(input = new OmniInput(), win = window) {
+export function key川(
+  input = new OmniInput(window, { continous: true }),
+  win = window
+) {
   return _key川ForUpdate川(
     Bacon.fromBinder(sink => {
       const handle = win.setInterval(() => {
