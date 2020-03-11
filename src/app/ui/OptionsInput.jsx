@@ -71,12 +71,12 @@ class OptionsInput extends React.Component {
     onUpdateOptions: PropTypes.func,
   }
   render() {
-    const className = c('OptionsInput', {
+    const className = c('OptionsInputのbinding', {
       'is-reverse': this.props.scratch === 'right',
     })
     return (
-      <div className={className}>
-        <div className='OptionsInputのbinding'>
+      <div className='OptionsInput'>
+        <div className={className}>
           {this.props.scratch !== 'off' ? (
             <div className='OptionsInputのzone is-scratch'>
               <div className='OptionsInputのcontrol'>
