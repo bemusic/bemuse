@@ -10,6 +10,7 @@
     "website",
     "e2e",
     "bemuse",
+    "build-scripts",
     "packages/*"
   ],
   "scripts": {
