@@ -65,6 +65,40 @@ yargs
       }
     }
   })
+  .command('release', 'Release a new version of Bemuse', {}, async () => {
+    await run('git fetch')
+    await run('git checkout origin/master')
+    await run('git branch -d master || true')
+    await run('git checkout -b master')
+    await run('node build-scripts release:changelog')
+    await run(
+      "git commit -a -m 'Remove prerelease version suffixes from CHANGELOG.md'"
+    )
+    const version = await exec('node build-scripts release:get-next-version')
+    await run(`yarn lerna version "${version}"`)
+  })
+  .command(
+    'release:changelog',
+    'Remove prerelease version suffixes from CHANGELOG.md',
+    {},
+    async () => {
+      const data = fs.readFileSync('CHANGELOG.md', 'utf8')
+      const date = new Date().toJSON().split('T')[0]
+      fs.writeFileSync(
+        'CHANGELOG.md',
+        data.replace(/(## v[\d.]+?)(?:\.0)?(?:\.0)?-pre\.\d+/g, `$1 (${date})`)
+      )
+    }
+  )
+  .command(
+    'release:get-next-version',
+    'Prints the version of the upcoming release',
+    {},
+    async () => {
+      const { version } = JSON.parse(fs.readFileSync('package.json', 'utf8'))
+      console.log(version.replace(/-.*/, ''))
+    }
+  )
   .parse()
 
 async function run(shellCommand) {
@@ -73,4 +107,12 @@ async function run(shellCommand) {
     shell: true,
     stdio: 'inherit',
   })
+}
+
+async function exec(shellCommand) {
+  console.error(`Running: "${shellCommand}"`)
+  const result = await execa(shellCommand, {
+    shell: true,
+  })
+  return result.stdout
 }
