@@ -204,6 +204,24 @@ export class Notechart {
     return this._spacing.factor(beat)
   }
 
+  /**
+   * Gets the keyMode from scratch
+   * @param scratch
+   * @returns {string}
+   */
+  getKeyMode(scratch: string): string {
+    const usedColumns: { [column: string]: boolean } = {}
+    for (const note of this.notes) {
+      usedColumns[note.column] = true
+    }
+    if (scratch === 'off' && !usedColumns['1'] && !usedColumns['7']) return '5K'
+    if (scratch === 'left' && !usedColumns['6'] && !usedColumns['7'])
+      return '5K'
+    if (scratch === 'right' && !usedColumns['1'] && !usedColumns['2'])
+      return '5K'
+    return '7K'
+  }
+
   _preTransform(
     bmsNotes: BMS.BMSNote[],
     playerOptions: Partial<PlayerOptions>
@@ -211,7 +229,7 @@ export class Notechart {
     let chain = _.chain(bmsNotes)
     let keys = getKeys(bmsNotes)
     if (playerOptions.scratch === 'off') {
-      chain = chain.map(note => {
+      chain = chain.map((note: BMS.BMSNote) => {
         if (note.column && note.column === 'SC') {
           return Object.assign({}, note, { column: null })
         } else {
