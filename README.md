@@ -9,8 +9,7 @@
   <a href="https://twitter.com/bemusegame"><img src="https://img.shields.io/badge/twitter-@bemusegame-blue.svg" alt="twitter" /></a>
   <br>
   <a href="https://bemuse.ninja/project"><img src="https://img.shields.io/badge/read%20the-docs-brightgreen.svg?style=flat" alt="Docs"></a>
-  <a href="https://david-dm.org/bemusic/bemuse" title="Dependency status"><img src="https://david-dm.org/bemusic/bemuse.svg" alt="david-dm Dependency Status"></a>
-  <a href="https://david-dm.org/bemusic/bemuse#info=devDependencies" title="devDependency status"><img src="https://david-dm.org/bemusic/bemuse/dev-status.svg" alt="david-dm Development Dependency Status"></a>
+  <a href="https://gitpod.io/#https://github.com/bemusic/bemuse" title="Dependency status"><img src="https://img.shields.io/badge/develop-in%20gitpod.svg?style=flat"></a>
 </p>
 
 **Bemuse** is an open-source, online, web-based rhythm game. It plays songs in
