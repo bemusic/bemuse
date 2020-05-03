@@ -3,7 +3,6 @@ import React from 'react'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 import URLResource from 'bemuse/resources/url'
 import audioContext from 'bemuse/audio-context'
-import co from 'co'
 import query from 'bemuse/utils/query'
 import { resolveUrl } from 'url'
 import { unmuteAudio } from 'bemuse/sampling-master'
@@ -13,7 +12,7 @@ import GameScene from './game-scene'
 import GameShellScene from './ui/GameShellScene.jsx'
 import LoadingScene from './ui/LoadingScene.jsx'
 
-export function main() {
+export async function main() {
   // iOS
   window.addEventListener('touchstart', function unmute() {
     unmuteAudio(audioContext)
@@ -32,9 +31,7 @@ export function main() {
     })
   }
 
-  // TODO [#630]: Convert the `getSong` function to async function (instead of using `co.wrap`) in src/game/index.js
-  // See issue #575 for more details.
-  let getSong = co.wrap(function*() {
+  let getSong = async function() {
     let kbm = (query.keyboard || '').split(',').map(x => +x)
     let options = {
       url: query.bms || '/music/[snack]dddd/dddd_sph.bme',
@@ -63,7 +60,7 @@ export function main() {
         },
       ],
     }
-    options = yield displayShell(options)
+    options = await displayShell(options)
     let url = options.url
     let assetsUrl = resolveUrl(url, 'assets/')
     let metadata = {
@@ -73,27 +70,23 @@ export function main() {
       genre: '',
       subartists: [],
     }
-    let loadSpec = {
+    return {
       bms: options.resource || new URLResource(url),
       assets: options.resources || new BemusePackageResources(assetsUrl),
       metadata: metadata,
       options: Object.assign({}, options.game, { players: options.players }),
     }
-    return loadSpec
-  })
+  }
 
-  // TODO [#631]: Convert the `co` invocation to async function IIFE in src/game/index.js
-  co(function*() {
-    let loadSpec = yield getSong()
-    let { tasks, promise } = GameLoader.load(loadSpec)
-    yield SCENE_MANAGER.display(
-      React.createElement(LoadingScene, {
-        tasks: tasks,
-        song: loadSpec.metadata,
-      })
-    )
-    let controller = yield promise
-    yield SCENE_MANAGER.display(new GameScene(controller.display))
-    controller.start()
-  }).done()
+  let loadSpec = await getSong()
+  let { tasks, promise } = GameLoader.load(loadSpec)
+  await SCENE_MANAGER.display(
+    React.createElement(LoadingScene, {
+      tasks: tasks,
+      song: loadSpec.metadata,
+    })
+  )
+  let controller = await promise
+  await SCENE_MANAGER.display(new GameScene(controller.display))
+  controller.start()
 }

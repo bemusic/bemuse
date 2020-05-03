@@ -1,0 +1,3 @@
+tasks:
+  - init: nvm i && yarn && yarn lerna run prepare
+    command: nvm i && yarn start

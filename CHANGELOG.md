@@ -9,6 +9,44 @@
 [@thakkaryash94]: https://github.com/thakkaryash94
 [@hajimehoshi]: https://github.com/hajimehoshi
 [@nekokan]: https://github.com/Nekokan
+[@tayhobbs]: https://github.com/TayHobbs
+[@mslourens]: https://github.com/mslourens
+[@setheal]: https://github.com/setheal
+[@511v41]: https://github.com/511V41
+[@aboudicheng]: https://github.com/aboudicheng
+[@pnkapadia64]: https://github.com/pnkapadia64
+[@tsfreddie]: https://github.com/TsFreddie
+[@s-pace]: https://github.com/s-pace
+
+## v48 (2020-05-03)
+
+### New stuff
+
+- **Added support to gamepad controllers that sets the axis value in a
+  continuous fashion.** Some controllers call this INFINITAS mode. This also
+  adds a new “turntable sensitivity” settings. In addition, if the buttons 8 or
+  9 are mapped, they will no longer function as a “start” and “select” buttons
+  (to avoid changing speed on a single button on some controllers). [#662], by
+  [@TsFreddie]
+
+### Improvements
+
+- **Our documentation site is now searchable.** Courtesy of Algolia’s
+  [DocSearch](https://docsearch.algolia.com/) program. [#663], by [@s-pace]
+
+[#662]: https://github.com/bemusic/bemuse/pull/662
+[#663]: https://github.com/bemusic/bemuse/pull/663
+
+## v47.2 (2020-05-03)
+
+### Internals
+
+- Migrate part of the code from `co` to `async function`s. (#639, by
+  [@TayHobbs]; #641, #642, #643, #645, #649, by [@mslourens]; #646, by
+  [@setheal]; #652, by [@511V41]; #656, by [@aboudicheng]; #657, by
+  [@pnkapadia64]). [#655], by [@dtinth]
+
+[#655]: https://github.com/bemusic/bemuse/pull/655
 
 ## v47.1 (2019-10-04)
 

@@ -21,6 +21,7 @@ function generateBaseConfig() {
       contentBase: false,
       publicPath: '/',
       stats: { colors: true, chunkModules: false },
+      disableHostCheck: true,
     },
     module: {
       strictExportPresence: true,
