@@ -18,7 +18,7 @@
 [@tsfreddie]: https://github.com/TsFreddie
 [@s-pace]: https://github.com/s-pace
 
-## v48.0.0-pre.202005031027
+## v48 (2020-05-03)
 
 ### New stuff
 
@@ -37,7 +37,7 @@
 [#662]: https://github.com/bemusic/bemuse/pull/662
 [#663]: https://github.com/bemusic/bemuse/pull/663
 
-## v47.2.0-pre.202005030946
+## v47.2 (2020-05-03)
 
 ### Internals
 
