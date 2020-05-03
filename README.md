@@ -4,7 +4,6 @@
 
 <p align="center">
   <a href="https://circleci.com/gh/bemusic/bemuse"><img src="https://img.shields.io/circleci/project/bemusic/bemuse/master.svg?style=flat" alt="CircleCI"></a>
-  <a href="https://codeclimate.com/github/bemusic/bemuse"><img src="https://img.shields.io/codeclimate/github/bemusic/bemuse.svg?style=flat" alt="Code Climate"></a>
   <a href="https://codecov.io/gh/bemusic/bemuse"><img src="https://codecov.io/gh/bemusic/bemuse/branch/master/graph/badge.svg" alt="Codecov" /></a>
   <a href="https://twitter.com/bemusegame"><img src="https://img.shields.io/badge/twitter-@bemusegame-blue.svg" alt="twitter" /></a>
   <br>
