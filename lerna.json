@@ -1,6 +1,6 @@
 {
   "lerna": "3.16.4",
-  "packages": ["packages/*"],
+  "packages": ["packages/*", "bemuse"],
   "version": "48.0.0",
   "npmClient": "yarn",
   "useWorkspaces": true,

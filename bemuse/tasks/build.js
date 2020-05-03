@@ -20,7 +20,6 @@ gulp.task('build', ['dist'], async function() {
     )
   }
   await postProcess()
-  await generateDocs()
 })
 
 function postProcess() {
@@ -55,18 +54,4 @@ function ssi(html) {
 
 function scriptTag(text) {
   return `<script>${text}</script>`
-}
-
-async function generateDocs() {
-  require('child_process').execSync('yarn build', {
-    cwd: path('website'),
-    stdio: 'inherit',
-  })
-  await new Promise((resolve, reject) => {
-    gulp
-      .src(path('website', 'build', 'bemuse', '**', '*'))
-      .on('error', reject)
-      .pipe(gulp.dest(path('dist', 'project')))
-      .on('end', resolve)
-  })
 }

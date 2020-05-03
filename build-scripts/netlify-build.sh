@@ -15,4 +15,4 @@ lerna bootstrap
 lerna run prepare
 
 # Build it
-NODE_ENV=production gulp build
+node build-scripts build
