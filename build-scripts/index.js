@@ -73,7 +73,7 @@ yargs
     await run('git checkout -b master')
     await run('node build-scripts release:changelog')
     await run(
-      "git commit -a -m 'Remove prerelease version suffixes from CHANGELOG.md'"
+      "git commit -a -m 'Remove prerelease version suffixes from CHANGELOG.md' || true"
     )
     const version = await exec('node build-scripts release:get-next-version')
     await run(`yarn lerna version "${version}"`)
