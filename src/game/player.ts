@@ -20,6 +20,8 @@ export type PlayerOptionsGauge = 'off' | 'hope'
 
 type PlayerOptionsInputMapping = {
   keyboard: { [control in PlayerControlKeys]: string }
+  continuous: boolean
+  sensitivity: number
 }
 
 type PlayerOptionsInternal = {

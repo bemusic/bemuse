@@ -41,6 +41,10 @@ export const DEFAULTS = {
   // Gauge type (off, hope)
   'player.P1.gauge': 'off',
 
+  // Gamepad settings
+  'gamepad.continuous': '0',
+  'gamepad.sensitivity': '4',
+
   // Offsets
   'system.offset.audio-input': '0',
   'system.offset.audio-visual': '0',
