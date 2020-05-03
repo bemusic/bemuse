@@ -9,6 +9,23 @@
 [@thakkaryash94]: https://github.com/thakkaryash94
 [@hajimehoshi]: https://github.com/hajimehoshi
 [@nekokan]: https://github.com/Nekokan
+[@tayhobbs]: https://github.com/TayHobbs
+[@mslourens]: https://github.com/mslourens
+[@setheal]: https://github.com/setheal
+[@511v41]: https://github.com/511V41
+[@aboudicheng]: https://github.com/aboudicheng
+[@pnkapadia64]: https://github.com/pnkapadia64
+
+## v47.2.0-pre.202005030946
+
+### Internals
+
+- Migrate part of the code from `co` to `async function`s. (#639, by
+  [@TayHobbs]; #641, #642, #643, #645, #649, by [@mslourens]; #646, by
+  [@setheal]; #652, by [@511V41]; #656, by [@aboudicheng]; #657, by
+  [@pnkapadia64]). [#655], by [@dtinth]
+
+[#655]: https://github.com/bemusic/bemuse/pull/655
 
 ## v47.1 (2019-10-04)
 
