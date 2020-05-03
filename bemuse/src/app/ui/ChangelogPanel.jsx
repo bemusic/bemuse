@@ -10,7 +10,7 @@ class ChangelogPanel extends React.Component {
   }
 
   componentDidMount() {
-    const promise = import('!!raw-loader!../../../CHANGELOG.md').then(
+    const promise = import('!!raw-loader!../../../../CHANGELOG.md').then(
       m => m.default
     )
     promise.then(

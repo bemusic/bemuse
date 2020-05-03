@@ -22,6 +22,7 @@ export function start() {
   var compiler = webpack(config)
   var server = new WebpackDevServer(compiler, config.devServer)
 
+  server.use('/', express.static(path('..', 'public')))
   for (let route of routes) {
     server.use('/' + route.dest.join('/'), express.static(route.src))
   }

@@ -18,7 +18,7 @@ if (danger.github) {
 const cli = new CLIEngine({})
 const filesToCheck = danger.git.created_files
   .concat(danger.git.modified_files)
-  .filter(path => !cli.isPathIgnored(path))
+  .filter(path => !!path && !cli.isPathIgnored(path))
 
 // ESLint
 const eslintPattern = '*.{js,jsx,ts,tsx}'

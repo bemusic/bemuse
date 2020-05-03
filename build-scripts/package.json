@@ -1,0 +1,12 @@
+{
+  "name": "build-scripts",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "execa": "^4.0.0",
+    "gulp-rename": "^2.0.0",
+    "merge-stream": "^2.0.0",
+    "vinyl-fs": "^3.0.3",
+    "yargs": "^15.3.1"
+  }
+}
