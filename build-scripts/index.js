@@ -1,6 +1,7 @@
 const yargs = require('yargs')
 const execa = require('execa')
 const vfs = require('vinyl-fs')
+const fs = require('fs')
 const merge = require('merge-stream')
 const rename = require('gulp-rename')
 
@@ -49,6 +50,21 @@ yargs
       })
     }
   )
+  .command('pre-deploy', 'Performs a pre-deploy check', {}, async () => {
+    const data = fs.readFileSync('dist/index.html', 'utf-8')
+    check('New Relic inlined', () => /NREUM/.test(data))
+    check('Boot script inlined', () => /webpackJsonp/.test(data))
+    check('Google Analytics inlined', () => /GoogleAnalyticsObject/.test(data))
+
+    function check(title, condition) {
+      if (condition()) {
+        console.log('[OK!!]', title)
+      } else {
+        console.log('[FAIL]', title)
+        throw new Error('Pre-deploy check error: ' + title)
+      }
+    }
+  })
   .parse()
 
 async function run(shellCommand) {

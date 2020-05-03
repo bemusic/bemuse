@@ -97,7 +97,7 @@ jobs:
           name: build
           command: |
             rm -rf dist
-            env NODE_ENV=production yarn build
+            node build-scripts build
       - run:
           name: checks
           command: yarn pre-deploy

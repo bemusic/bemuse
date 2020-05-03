@@ -15,9 +15,9 @@
   ],
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "build": "yarn workspace bemuse run build",
-    "build:netlify": "yarn workspace bemuse run build:netlify",
-    "pre-deploy": "yarn workspace bemuse run pre-deploy",
+    "build": "node build-scripts build",
+    "build:netlify": "./build-scripts/netlify-build.sh",
+    "pre-deploy": "node build-scripts pre-deploy",
     "codecov": "codecov",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
