@@ -2,7 +2,7 @@ import path from './path'
 
 export default [
   {
-    src: path('public'),
+    src: path('..', 'public'),
     dest: [],
   },
   {
