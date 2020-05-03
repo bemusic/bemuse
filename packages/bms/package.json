@@ -1,6 +1,6 @@
 {
   "name": "bms",
-  "version": "48.0.0",
+  "version": "48.2.0",
   "description": "BMS Parser for JavaScript",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",

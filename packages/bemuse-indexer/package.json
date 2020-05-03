@@ -1,6 +1,6 @@
 {
   "name": "bemuse-indexer",
-  "version": "48.0.0",
+  "version": "48.2.0",
   "description": "Parse and index BMS notecharts",
   "main": "lib/index.js",
   "typings": "lib/index.d.js",
@@ -25,8 +25,8 @@
   "homepage": "https://github.com/bemusic/indexer",
   "dependencies": {
     "bluebird": "^3.5.2",
-    "bms": "^48.0.0",
-    "bmson": "^48.0.0",
+    "bms": "^48.2.0",
+    "bmson": "^48.2.0",
     "invariant": "^2.2.4",
     "lodash": "^4.17.11",
     "object-assign": "^4.1.1"
