@@ -18,7 +18,7 @@
 [@tsfreddie]: https://github.com/TsFreddie
 [@s-pace]: https://github.com/s-pace
 
-## v48.2.0-pre.202005031522
+## v48.2 (2020-05-03)
 
 ### Internals
 
