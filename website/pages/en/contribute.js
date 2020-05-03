@@ -46,11 +46,6 @@ class Help extends React.Component {
           "Read through our [issues thread](https://github.com/bemusic/bemuse/issues) and pick an issue. If you're confused, we recommend starting out with [these issues](https://github.com/bemusic/bemuse/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22).",
         title: 'Pick an issue',
       },
-      {
-        content:
-          "We have a [Waffle board](https://waffle.io/bemusic/bemuse) which we use to track this project's development progress.",
-        title: 'Track progress',
-      },
     ]
 
     return (

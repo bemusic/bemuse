@@ -1,6 +1,5 @@
 import * as PIXI from 'pixi.js'
 import $ from 'jquery'
-import co from 'co'
 import debug from 'debug'
 import url from 'url'
 import { PERCENTAGE_FORMATTER } from 'bemuse/progress/formatters'
@@ -10,36 +9,30 @@ import Resources from './resources'
 
 const log = debug('scintillator:loader')
 
-// TODO [#637]: Convert the `load` function to async function (instead of using `co`) in src/scintillator/loader.js
-// See issue #575 for more details.
-export function load(xmlPath, progress) {
-  return co(function*() {
-    log('load XML from %s', xmlPath)
-    let $xml = yield loadXml(xmlPath)
+export async function load(xmlPath, progress) {
+  log('load XML from %s', xmlPath)
+  let $xml = await loadXml(xmlPath)
 
-    // scan all images
-    let resources = new Resources()
-    let paths = new Set()
-    for (let element of Array.from($xml.find('[image]'))) {
-      paths.add($(element).attr('image'))
-    }
-    for (let element of Array.from($xml.find('[font-src]'))) {
-      paths.add($(element).attr('font-src'))
-    }
-    for (let path of paths) {
-      let assetUrl = url.resolve(xmlPath, path)
-      resources.add(path, assetUrl)
-    }
+  // scan all images
+  let resources = new Resources()
+  let paths = new Set()
+  for (let element of Array.from($xml.find('[image]'))) {
+    paths.add($(element).attr('image'))
+  }
+  for (let element of Array.from($xml.find('[font-src]'))) {
+    paths.add($(element).attr('font-src'))
+  }
+  for (let path of paths) {
+    let assetUrl = url.resolve(xmlPath, path)
+    resources.add(path, assetUrl)
+  }
 
-    // load all images + progress reporting
-    yield loadResources(resources, progress)
+  // load all images + progress reporting
+  await loadResources(resources, progress)
 
-    // compile the skin
-    log('compiling')
-    let skin = new Compiler({ resources }).compile($xml)
-
-    return skin
-  })
+  // compile the skin
+  log('compiling')
+  return new Compiler({ resources }).compile($xml)
 }
 
 function loadXml(xmlUrl) {
