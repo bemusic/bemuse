@@ -18,6 +18,16 @@
 [@tsfreddie]: https://github.com/TsFreddie
 [@s-pace]: https://github.com/s-pace
 
+## v48.2.0-pre.202005031522
+
+### Internals
+
+- The game code has been moved to the `bemuse` subdirectory inside the
+  [bemusic/bemuse](https://github.com/bemusic/bemuse) monorepo. This can help
+  streamline future releases. [#668], by [@dtinth]
+
+[#668]: https://github.com/bemusic/bemuse/pull/668
+
 ## v48.1 (2020-05-03)
 
 ### Internals
