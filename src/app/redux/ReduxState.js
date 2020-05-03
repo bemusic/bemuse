@@ -28,9 +28,7 @@ export const COLLECTION_LOADING_BEGAN = 'COLLECTION_LOADING_BEGAN'
 export const COLLECTION_LOADING_ERRORED = 'COLLECTION_LOADING_ERRORED'
 export const COLLECTION_LOADED = 'COLLECTION_LOADED'
 export const CUSTOM_SONG_LOAD_STARTED = 'CUSTOM_SONG_LOAD_STARTED'
-export const CUSTOM_SONG_LOG_EMITTED = 'CUSTOM_SONG_LOG_EMITTED'
 export const CUSTOM_SONG_LOADED = 'CUSTOM_SONG_LOADED'
-export const CUSTOM_SONG_LOAD_FAILED = 'CUSTOM_SONG_LOAD_FAILED'
 export const MUSIC_SEARCH_TEXT_TYPED = 'MUSIC_SEARCH_TEXT_TYPED'
 export const MUSIC_SEARCH_TEXT_INITIALIZED = 'MUSIC_SEARCH_TEXT_INITIALIZED'
 export const MUSIC_SEARCH_DEBOUNCED = 'MUSIC_SEARCH_DEBOUNCED'
@@ -58,13 +56,6 @@ export const reducer = combineReducers({
   }),
   customSongs: createReducer([], {
     [CUSTOM_SONG_LOADED]: action => state => [action.song],
-  }),
-  customSongLoaderLog: createReducer(null, {
-    [CUSTOM_SONG_LOAD_STARTED]: action => state => [],
-    [CUSTOM_SONG_LOG_EMITTED]: action => state =>
-      state && [...state, action.text],
-    [CUSTOM_SONG_LOADED]: action => state => null,
-    [CUSTOM_SONG_LOAD_FAILED]: action => state => null,
   }),
   currentCollection: createReducer('', {
     [COLLECTION_LOADING_BEGAN]: action => state =>
@@ -112,8 +103,6 @@ export const selectCurrentCollection = createSelector(
   (collections, currentCollection) =>
     Collections.getCollectionByUrl(currentCollection)(collections)
 )
-
-export const selectCustomSongLoaderLog = state => state.customSongLoaderLog
 
 export const selectIsCurrentCollectionLoading = state =>
   LoadState.isLoading(selectCurrentCollection(state))

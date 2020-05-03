@@ -5,21 +5,22 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import c from 'classnames'
 import { compose } from 'recompose'
-import { connect } from 'react-redux'
 
 import * as Analytics from '../analytics'
 import * as CustomSongsIO from '../io/CustomSongsIO'
-import * as ReduxState from '../redux/ReduxState'
 import connectIO from '../../impure-react/connectIO'
 import {
   hasPendingArchiveToLoad,
   consumePendingArchiveURL,
 } from '../PreloadedCustomBMS'
+import { useCustomSongLoaderLog } from '../CustomSongs'
 
 const enhance = compose(
-  connect(state => ({
-    log: ReduxState.selectCustomSongLoaderLog(state),
-  })),
+  BaseComponent =>
+    function LogProvider(props) {
+      const log = useCustomSongLoaderLog()
+      return <BaseComponent {...props} log={log} />
+    },
   connectIO({
     onFileDrop: () => event => CustomSongsIO.handleCustomSongFolderDrop(event),
     onPaste: () => e => CustomSongsIO.handleClipboardPaste(e),
