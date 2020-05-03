@@ -5,15 +5,17 @@ import { getGauge } from './Gauge'
 
 export class PlayerDisplay {
   constructor(player, skinData) {
-    let notechart = player.notechart
     this._currentSpeed = 1
     this._player = player
-    this._noteArea = new NoteArea(notechart.notes, notechart.barLines)
+    this._noteArea = new NoteArea(
+      player.notechart.notes,
+      player.notechart.barLines
+    )
     this._stateful = {}
     this._defaultData = {
       placement: player.options.placement,
       scratch: player.options.scratch,
-      key_mode: getKeyMode(notechart, player.options.scratch),
+      key_mode: player.notechart.getKeyMode(player.options.scratch),
       lane_lift: Math.max(0, -player.options.laneCover),
       lane_press: Math.max(0, player.options.laneCover),
     }
@@ -221,16 +223,3 @@ export class PlayerDisplay {
 }
 
 export default PlayerDisplay
-
-// TODO [#629]: MOVE THIS (getKeyMode) TO bemuse-notechart
-//
-function getKeyMode(notechart, scratch) {
-  const usedColumns = {}
-  for (const note of notechart.notes) {
-    usedColumns[note.column] = true
-  }
-  if (scratch === 'off' && !usedColumns['1'] && !usedColumns['7']) return '5K'
-  if (scratch === 'left' && !usedColumns['6'] && !usedColumns['7']) return '5K'
-  if (scratch === 'right' && !usedColumns['1'] && !usedColumns['2']) return '5K'
-  return '7K'
-}

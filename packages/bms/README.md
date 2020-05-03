@@ -3,7 +3,6 @@
 <h3 align="center">BMS Parser for JavaScript</h3>
 
 <p align="center">
-  <a href="https://waffle.io/bemusic/bemuse?source=bemusic%2Fbms-js"><img src="http://img.shields.io/badge/wow%20much-waffle-green.svg?style=flat" alt="Waffles"></a>
   <a href="https://codeclimate.com/github/bemusic/bms-js"><img src="https://img.shields.io/codeclimate/github/bemusic/bms-js.svg?style=flat" alt="Code Climate"></a>
   <a href="https://coveralls.io/r/bemusic/bms-js"><img src="https://img.shields.io/coveralls/bemusic/bms-js.svg?style=flat" alt="Coveralls"></a>
   <a href="https://david-dm.org/bemusic/bms-js" title="Dependency status"><img src="https://david-dm.org/bemusic/bms-js.svg" alt="david-dm Dependency Status"></a>

@@ -1,6 +1,7 @@
 /dist/
 *.mp3
 package-lock.json
+*.tsbuildinfo
 
 # created by git-ignore
 # Logs
