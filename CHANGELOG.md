@@ -18,6 +18,17 @@
 [@tsfreddie]: https://github.com/TsFreddie
 [@s-pace]: https://github.com/s-pace
 
+## v48.1.0-pre.202005031235
+
+### Internals
+
+- **You can now develop Bemuse in your web browser,** courtesy of
+  [GitPod](https://gitpod.io/), which provides an on-demand cloud-based
+  environment where all the project dependencies are already installed, usable
+  from your web browser. [#666], by [@dtinth]
+
+[#666]: https://github.com/bemusic/bemuse/pull/666
+
 ## v48 (2020-05-03)
 
 ### New stuff
