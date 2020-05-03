@@ -2,10 +2,15 @@
 
 .OptionsInput {
   display: flex;
-  align-items: stretch;
-  padding: 2em;
-  &.is-reverse {
-    flex-direction: row-reverse;
+  flex-direction: column;
+
+  &のbinding {
+    display: flex;
+    align-items: stretch;
+    padding: 2em;
+    &.is-reverse {
+      flex-direction: row-reverse;
+    }
   }
   &のzone {
     display: flex;
@@ -20,5 +25,50 @@
     text-align: center;
     padding-top: 1ex;
     color: #8b8685;
+  }
+
+  &のgamepad {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+  }
+
+  &のgroup {
+    display: flex;
+    align-items: baseline;
+  }
+
+  &のgroup > label {
+    font-weight: bold;
+    color: #8b8685;
+    margin-right: 1em;
+  }
+
+  &のsensitivity {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 0.5em;
+  }
+
+  &のsensitivity > .OptionsInputField {
+    text-align: center;
+    width: 1em;
+    border-radius: 0;
+    margin-left: -1px;
+  }
+
+  &のminus .OptionsButton {
+    width: 2em;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &のplus .OptionsButton {
+    width: 2em;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-left: -1px;
   }
 }

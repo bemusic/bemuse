@@ -1,6 +1,10 @@
 'use strict'
 
 const siteConfig = {
+  algolia: {
+    apiKey: 'a113c79cadd1ce125abb6011106af056',
+    indexName: 'bemuse',
+  },
   title: 'Bemuse' /* title for your website */,
   tagline: 'online, web-based rhythm game',
   url: 'https://bemuse.ninja' /* your website url */,

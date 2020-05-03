@@ -137,6 +137,18 @@ export const changeAudioInputLatency = latency =>
     'system.offset.audio-input': `${latency}`,
   })
 
+// Gamepad Continuous Axis
+export const isContinuousAxisEnabled = state =>
+  toggleOptionEnabled(state['gamepad.continuous'])
+export const toggleContinuousAxis = u({
+  'gamepad.continuous': toggleOption,
+})
+
+// Gamepad Sensitivity
+export const sensitivity = state => state['gamepad.sensitivity']
+export const changeSensitivity = sensitivity =>
+  u({ 'gamepad.sensitivity': sensitivity })
+
 // Latest version
 export const lastSeenVersion = state => state['system.last-seen-version']
 export const updateLastSeenVersion = newVersion =>

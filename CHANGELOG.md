@@ -15,6 +15,27 @@
 [@511v41]: https://github.com/511V41
 [@aboudicheng]: https://github.com/aboudicheng
 [@pnkapadia64]: https://github.com/pnkapadia64
+[@tsfreddie]: https://github.com/TsFreddie
+[@s-pace]: https://github.com/s-pace
+
+## v48.0.0-pre.202005031027
+
+### New stuff
+
+- **Added support to gamepad controllers that sets the axis value in a
+  continuous fashion.** Some controllers call this INFINITAS mode. This also
+  adds a new “turntable sensitivity” settings. In addition, if the buttons 8 or
+  9 are mapped, they will no longer function as a “start” and “select” buttons
+  (to avoid changing speed on a single button on some controllers). [#662], by
+  [@TsFreddie]
+
+### Improvements
+
+- **Our documentation site is now searchable.** Courtesy of Algolia’s
+  [DocSearch](https://docsearch.algolia.com/) program. [#663], by [@s-pace]
+
+[#662]: https://github.com/bemusic/bemuse/pull/662
+[#663]: https://github.com/bemusic/bemuse/pull/663
 
 ## v47.2.0-pre.202005030946
 
