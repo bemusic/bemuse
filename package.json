@@ -1,6 +1,6 @@
 {
   "name": "bemuse-workspace",
-  "version": "48.2.0-pre.202005031522",
+  "version": "48.2.1-pre.202005031522",
   "description": "BEAT☆MUSIC☆SEQUENCE, a web-based music game of the future",
   "private": true,
   "engines": {
