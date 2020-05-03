@@ -37,7 +37,9 @@ rules:
   no-mixed-operators: off
   node/no-deprecated-api: warn
   no-sequences: off
-  import/named: warn
+  import/no-unresolved: off
+  import/export: off
+  import/named: off
 overrides:
   - files:
       - '**/*.ts'
@@ -46,6 +48,4 @@ overrides:
       no-undef: off
       no-unused-vars: off
       no-use-before-define: off
-      import/no-unresolved: off
-      import/export: off
       no-useless-constructor: off
