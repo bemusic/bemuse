@@ -4,6 +4,7 @@ const vfs = require('vinyl-fs')
 const fs = require('fs')
 const merge = require('merge-stream')
 const rename = require('gulp-rename')
+const ghpages = require('gh-pages')
 
 yargs
   .demandCommand()
@@ -97,6 +98,30 @@ yargs
     async () => {
       const { version } = JSON.parse(fs.readFileSync('package.json', 'utf8'))
       console.log(version.replace(/-.*/, ''))
+    }
+  )
+  .command(
+    'deploy',
+    'Deploys the `dist` directory to GitHub Pages',
+    {},
+    async () => {
+      await new Promise((resolve, reject) => {
+        ghpages.publish(
+          'dist',
+          {
+            branch: 'master',
+            remote: 'www',
+            message: `Update ${new Date().toJSON()}`,
+          },
+          function(err) {
+            if (err) {
+              reject(err)
+            } else {
+              resolve()
+            }
+          }
+        )
+      })
     }
   )
   .parse()

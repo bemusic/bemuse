@@ -109,7 +109,7 @@ jobs:
               git remote add www https://akibot:$GH_TOKEN@github.com/bemusic/bemusic.github.io.git
               git config --global user.email "aki@spacet.me"
               git config --global user.name "Aki running on CircleCI"
-              ./node_modules/.bin/gulp deploy
+              node build-scripts deploy
             else
               echo 'Not a release commit, skipped!'
             fi
