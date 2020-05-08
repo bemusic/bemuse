@@ -5,6 +5,7 @@ import now from 'bemuse/utils/now'
 import serviceWorkerRuntime from 'serviceworker-webpack-plugin/lib/runtime'
 import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
 import { createIO, createRun } from 'impure'
+import { monetize } from 'monetizer'
 import {
   shouldShowAbout,
   shouldShowModeSelect,
@@ -78,6 +79,9 @@ export function main() {
   if (timeSynchroServer) now.synchronize(timeSynchroServer)
 
   trackFullscreenEvents()
+
+  // add web monetization meta tag
+  monetize('$twitter.xrptipbot.com/bemusegame')
 }
 
 function displayFirstScene() {
