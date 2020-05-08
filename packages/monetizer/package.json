@@ -1,0 +1,29 @@
+{
+  "name": "monetizer",
+  "version": "48.2.0",
+  "description": "Web Monetization API for JavaScript",
+  "main": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "files": [
+    "src",
+    "lib"
+  ],
+  "scripts": {
+    "clean": "rimraf lib tsconfig.tsbuildinfo",
+    "prepare": "tsc -b .",
+    "test": "jest"
+  },
+  "keywords": [
+    "webmonetization"
+  ],
+  "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bemusic/bemuse.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bemusic/bemuse/issues"
+  },
+  "homepage": "https://github.com/bemusic/bemuse/tree/master/packages/monetizer#readme"
+}
