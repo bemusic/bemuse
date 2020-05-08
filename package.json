@@ -4,7 +4,7 @@
   "description": "BEAT☆MUSIC☆SEQUENCE, a web-based music game of the future",
   "private": true,
   "engines": {
-    "node": ">=10.14.1"
+    "node": ">=10.20.1"
   },
   "workspaces": [
     "website",
@@ -49,6 +49,7 @@
   },
   "homepage": "https://github.com/spacetme/bemuse",
   "devDependencies": {
+    "@types/jest": "^25.2.1",
     "codeclimate-test-reporter": "^0.5.1",
     "codecov": "^3.1.0",
     "cross-env": "^5.2.0",
@@ -66,11 +67,13 @@
     "eslint-plugin-standard": "^4.0.0",
     "husky": "^1.2.0",
     "import-sort-style-renke": "^2.4.0",
+    "jest": "^26.0.1",
     "lerna": "^3.16.4",
     "lint-staged": "^8.1.0",
     "markdown-toc": "^1.2.0",
     "nyc": "^11.9.0",
     "prettier": "^1.15.3",
+    "ts-jest": "^25.5.0",
     "ts-loader": "^5.3.1",
     "ts-node": "^8.6.2",
     "typescript": "^3.6.2"
