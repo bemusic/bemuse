@@ -1,6 +1,6 @@
 {
   "name": "bemuse",
-  "version": "48.2.1",
+  "version": "48.3.0",
   "description": "BEAT☆MUSIC☆SEQUENCE, a web-based music game of the future",
   "private": true,
   "browserslist": [
@@ -69,7 +69,7 @@
     "merge-stream": "^1.0.1",
     "minimatch": "^3.0.4",
     "mocha": "^5.2.0",
-    "monetizer": "^48.2.0",
+    "monetizer": "^48.3.0",
     "node-env": "^0.1.6",
     "node-sass": "^4.9.3",
     "pegjs": "^0.10.0",
