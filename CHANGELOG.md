@@ -18,6 +18,19 @@
 [@tsfreddie]: https://github.com/TsFreddie
 [@s-pace]: https://github.com/s-pace
 
+## v48.3.0-pre.202005081724
+
+### Internals
+
+- Added a _passive_ web monetization using the upcoming open standard,
+  [Web Monetization API](https://webmonetization.org/), to see if this can
+  potentially help offset server costs. If you are a [Coil](https://coil.com/)
+  member, your membership will help support the server costs. As for Bemuse,
+  nothing will go behind a monetization-wall. The game will remain completely
+  free without any ads. [#671], by [@dtinth]
+
+[#671]: https://github.com/bemusic/bemuse/pull/671
+
 ## v48.2.1 (2020-05-03)
 
 ### Internals
