@@ -46,6 +46,10 @@
       "user-guide": {
         "title": "User Guide",
         "sidebar_label": "User Guide"
+      },
+      "workflows": {
+        "title": "Workflows for development, release, and deployment",
+        "sidebar_label": "Workflows"
       }
     },
     "links": {

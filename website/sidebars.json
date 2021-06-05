@@ -8,7 +8,8 @@
       "game-loop",
       "skinning",
       "options",
-      "colors"
+      "colors",
+      "workflows"
     ]
   }
 }
