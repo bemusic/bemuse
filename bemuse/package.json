@@ -1,6 +1,6 @@
 {
   "name": "bemuse",
-  "version": "48.3.0",
+  "version": "48.4.0",
   "description": "BEAT☆MUSIC☆SEQUENCE, a web-based music game of the future",
   "private": true,
   "browserslist": [
@@ -102,11 +102,11 @@
     "auth0-js": "^9.8.0",
     "axios": "^0.18.1",
     "baconjs": "^0.7.95",
-    "bemuse-indexer": "^48.2.0",
-    "bemuse-notechart": "^48.2.0",
+    "bemuse-indexer": "^48.4.0",
+    "bemuse-notechart": "^48.4.0",
     "bluebird": "^3.5.2",
-    "bms": "^48.2.0",
-    "bmson": "^48.2.0",
+    "bms": "^48.4.0",
+    "bmson": "^48.4.0",
     "bson-objectid": "^1.2.4",
     "bytes": "^3.0.0",
     "classnames": "^2.2.6",
