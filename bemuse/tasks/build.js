@@ -11,16 +11,19 @@ import path from '../config/path'
 const readFile = Promise.promisify(fs.readFile, fs)
 const writeFile = Promise.promisify(fs.writeFile, fs)
 
-gulp.task('build', ['dist'], async function() {
-  const stats = await Promise.promisify(webpack)(config)
-  gutil.log('[webpack]', stats.toString({ colors: true }))
-  if (stats.hasErrors()) {
-    throw new Error(
-      'Failed to build Bemuse, please check the logs above.... T_T'
-    )
-  }
-  await postProcess()
-})
+gulp.task(
+  'build',
+  gulp.series('dist', async function() {
+    const stats = await Promise.promisify(webpack)(config)
+    gutil.log('[webpack]', stats.toString({ colors: true }))
+    if (stats.hasErrors()) {
+      throw new Error(
+        'Failed to build Bemuse, please check the logs above.... T_T'
+      )
+    }
+    await postProcess()
+  })
+)
 
 function postProcess() {
   return readFile(path('dist', 'index.html'), 'utf-8')

@@ -42,7 +42,7 @@
     "bluebird": "^3.5.2",
     "chai": "^4.2.0",
     "codeclimate-test-reporter": "0.0.4",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-cucumber": "git://github.com/dtinth/gulp-cucumber",
     "gulp-mocha": "^6.0.0",
     "hide-stack-frames-from": "^1.0.0",

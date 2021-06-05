@@ -4,7 +4,7 @@
   "description": "BEAT☆MUSIC☆SEQUENCE, a web-based music game of the future",
   "private": true,
   "engines": {
-    "node": ">=10.20.1"
+    "node": ">=16.3.0"
   },
   "workspaces": [
     "website",
@@ -92,5 +92,8 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "volta": {
+    "node": "16.3.0"
   }
 }
