@@ -18,6 +18,16 @@
 [@tsfreddie]: https://github.com/TsFreddie
 [@s-pace]: https://github.com/s-pace
 
+## v48.4.0-pre.202106050742
+
+### Internals
+
+- Upgraded project dependencies so that it can be run on Node 16.3.0. This
+  should make it easier for new developers to get started playing around with
+  the codebase. [#679], by [@dtinth]
+
+[#679]: https://github.com/bemusic/bemuse/pull/679
+
 ## v48.3 (2020-05-08)
 
 ### Internals

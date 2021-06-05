@@ -26,4 +26,4 @@ gulp.task('watch', function() {
   gulp.watch(sources, ['compile'])
 })
 
-gulp.task('default', ['compile', 'watch'])
+gulp.task('default', gulp.parallel('compile', 'watch'))

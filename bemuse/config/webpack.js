@@ -139,7 +139,9 @@ function generateLoadersConfig() {
         {
           loader: 'sass-loader',
           options: {
-            outputStyle: 'expanded',
+            sassOptions: {
+              outputStyle: 'expanded',
+            },
           },
         },
       ],
