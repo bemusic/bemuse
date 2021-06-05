@@ -1,3 +1,3 @@
 import gulp from 'gulp'
 
-gulp.task('default', ['server'])
+gulp.task('default', gulp.series('server'))
