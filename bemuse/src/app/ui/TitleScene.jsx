@@ -59,6 +59,11 @@ class TitleScene extends React.Component {
       Toolbar.item('About', {
         onClick: this.showAbout,
       }),
+      Toolbar.item('Community FAQ', {
+        href: 'https://faq.bemuse.ninja',
+        tip: 'New',
+        tipFeatureKey: 'faq',
+      }),
       Toolbar.item('Docs', {
         href: '/project/',
       }),
@@ -70,18 +75,13 @@ class TitleScene extends React.Component {
       Toolbar.spacer(),
       Toolbar.item('Discord', {
         href: 'https://discord.gg/aB6ucmx',
-        tip: 'Join our Discord server',
+        tip: 'Join our community',
         tipFeatureKey: 'discord',
-      }),
-      Toolbar.item('Facebook', {
-        href: 'https://www.facebook.com/bemusegame',
       }),
       Toolbar.item('Twitter', {
         href: 'https://twitter.com/bemusegame',
-        tip: 'Follow us :)',
-        tipFeatureKey: 'twitter',
       }),
-      Toolbar.item('Fork me on GitHub', {
+      Toolbar.item('GitHub', {
         href: 'https://github.com/bemusic/bemuse',
       }),
     ]
