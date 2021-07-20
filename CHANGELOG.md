@@ -18,7 +18,7 @@
 [@tsfreddie]: https://github.com/TsFreddie
 [@s-pace]: https://github.com/s-pace
 
-## v48.5.0-pre.202107201725
+## v48.5 (2021-07-20)
 
 ### Others
 
