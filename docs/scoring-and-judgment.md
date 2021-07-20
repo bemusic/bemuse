@@ -9,12 +9,12 @@ The scoring system and judgment system in Bemuse focuses on both accuracy and co
 
 When hitting the note, the accuracy of your button press will be judged according to this table:
 
-| Judgment   | Normal | Level5 | Level4 | Level3 | Beginner |
-| ---------- | -----: | -----: | -----: | -----: | -------: |
-| Meticulous |   20ms |   21ms |   22ms |   23ms |     24ms |
-| Precise    |   50ms |   60ms |   70ms |   80ms |    100ms |
-| Good       |  100ms |  120ms |  140ms |  160ms |    180ms |
-| Offbeat    |  200ms |  200ms |  200ms |  200ms |    200ms |
+| Judgment   | Normal | Level5 | Level4 | Level3 | Beginner | Score |
+| ---------- | -----: | -----: | -----: | -----: | -------: | -----:|
+| Meticulous |   20ms |   21ms |   22ms |   23ms |     24ms |  100% |
+| Precise    |   50ms |   60ms |   70ms |   80ms |    100ms |   80% |
+| Good       |  100ms |  120ms |  140ms |  160ms |    180ms |   50% |
+| Offbeat    |  200ms |  200ms |  200ms |  200ms |    200ms |    0% |
 
 The different timegates are designed to make the game easier for beginners, with a gradual increase in difficulty the harder the song gets. They are divided as follows:
 
