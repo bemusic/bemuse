@@ -14,6 +14,7 @@ const siteConfig = {
   headerLinks: [
     { href: 'https://bemuse.ninja', label: 'Play' },
     { doc: 'user-guide', label: 'Docs' },
+    { href: 'https://faq.bemuse.ninja', label: 'Community FAQ' },
     { page: 'contribute', label: 'Contribute' },
     { href: 'https://discord.gg/aB6ucmx', label: 'Discord' },
     { href: 'https://github.com/bemusic/bemuse', label: 'GitHub' },

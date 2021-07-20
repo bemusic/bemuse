@@ -18,6 +18,18 @@
 [@tsfreddie]: https://github.com/TsFreddie
 [@s-pace]: https://github.com/s-pace
 
+## v48.5.0-pre.202107201725
+
+### Others
+
+- **Added a [Community FAQ page](https://faq.bemuse.ninja/).** This page is
+  maintained by the community on
+  [Bemuse Discord server](https://discord.gg/aB6ucmx) and is aimed to answer
+  common questions. If you don’t find your question answered, feel free to ask
+  your questions in `#general`! [#683], by [@dtinth]
+
+[#683]: https://github.com/bemusic/bemuse/pull/683
+
 ## v48.4 (2021-06-05)
 
 ### Internals
