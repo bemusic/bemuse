@@ -26,9 +26,11 @@ var matchers = {
 
 /**
  * Reads the string representing the BMS notechart, parses it,
- * and compiles into a {BMSChart}.
- * @param text the BMS notechart
- * @param options additional parser options
+ * and compiles into a {@link BMSChart}.
+ *
+ * @param text - the BMS notechart
+ * @param options - additional parser options
+ * @public
  */
 export function compile(text: string, options?: Partial<BMSCompileOptions>) {
   options = options || {}
@@ -149,6 +151,9 @@ function eachLine(
     })
 }
 
+/**
+ * @public
+ */
 export interface BMSCompileOptions {
   /** File format */
   format: 'bms' | 'dtx'

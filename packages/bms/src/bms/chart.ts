@@ -12,24 +12,26 @@ import { TimeSignatures } from '../time-signatures'
  *
  * To extract information from a BMSChart,
  * please look at the documentation of higher-level classes,
- * such as {Keysounds}, {Notes}, and {Timing}.
+ * such as {@link Keysounds}, {@link Notes}, and {@link Timing}.
+ *
+ * @public
  */
 export class BMSChart {
+  /**
+   * BMS-specific headers of this notechart
+   */
   headers: BMSHeaders
+  /**
+   * All objects of this notechart
+   */
   objects: BMSObjects
+  /**
+   * The time signature information in this chart
+   */
   timeSignatures: TimeSignatures
   constructor() {
-    /**
-     * {BMSHeaders} representing the BMS-specific headers of this notechart
-     */
     this.headers = new BMSHeaders()
-    /**
-     * {BMSObjects} representing all objects of this notechart
-     */
     this.objects = new BMSObjects()
-    /**
-     * {TimeSignatures} representing the time signature information in this chart
-     */
     this.timeSignatures = new TimeSignatures()
   }
 
@@ -37,8 +39,8 @@ export class BMSChart {
    * Public: Converts measure number and fraction into beat.
    * A single beat is equivalent to a quarter note in common time signature.
    *
-   * @param {number} measure representing the measure number, starting from 0
-   * @param {number} fraction representing the fraction inside that measure, from 0 to 1
+   * @param measure - the measure number, starting from 0
+   * @param fraction - the fraction inside that measure, from 0 to 1
    */
   measureToBeat(measure: number, fraction: number) {
     return this.timeSignatures.measureToBeat(measure, fraction)

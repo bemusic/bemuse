@@ -1,3 +1,6 @@
+/**
+ * @public
+ */
 export const IIDX_P1 = {
   '11': '1',
   '12': '2',

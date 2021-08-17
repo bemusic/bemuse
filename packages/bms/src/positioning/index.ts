@@ -8,12 +8,13 @@ import { SpeedSegment } from '../speedcore/segment'
  *
  * In some rhythm games, the amount of scrolling per beat may be different.
  * StepMania’s `#SCROLL` segments is an example.
+ *
+ * @public
  */
 export class Positioning {
   _speedcore: Speedcore
   /**
    * Constructs a Positioning from the given `segments`.
-   * @param segments
    */
   constructor(segments: PositioningSegment[]) {
     this._speedcore = new Speedcore(segments)
@@ -21,7 +22,7 @@ export class Positioning {
 
   /**
    * Returns the scrolling speed at specified beat.
-   * @param beat the beat number
+   * @param beat - the beat number
    */
   speed(beat: number) {
     return this._speedcore.dx(beat)
@@ -29,15 +30,15 @@ export class Positioning {
 
   /**
    * Returns the total elapsed scrolling amount at specified beat.
-   * @param beat the beat number
+   * @param beat - the beat number
    */
   position(beat: number) {
     return this._speedcore.x(beat)
   }
 
   /**
-   * Creates a {Positioning} object from the {BMSChart}.
-   * @param {BMSChart} chart A {BMSChart} to construct a {Positioning} from
+   * Creates a {@link Positioning} object from the {@link BMSChart}.
+   * @param chart - A BMSChart to construct a Positioning from
    */
   static fromBMSChart(chart: BMSChart) {
     void BMSChart
@@ -72,6 +73,9 @@ export class Positioning {
   }
 }
 
+/**
+ * @public
+ */
 export interface PositioningSegment extends SpeedSegment {
   /** the beat number */
   t: number

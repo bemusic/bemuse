@@ -1,11 +1,17 @@
 import DataStructure from 'data-structure'
 
+/**
+ * @internal
+ */
 export const Segment = DataStructure<SpeedSegment>({
   t: 'number',
   x: 'number',
   dx: 'number',
 })
 
+/**
+ * @public
+ */
 export interface SpeedSegment {
   t: number
   x: number

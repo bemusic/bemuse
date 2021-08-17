@@ -9,6 +9,8 @@ import { SpeedSegment } from '../speedcore/segment'
  * In some rhythm games, such as Pump It Up!,
  * the speed (note spacing factor) may be adjusted by the notechart.
  * StepMania’s `#SPEED` segments is an example.
+ * 
+ * @public
  */
 export class Spacing {
   private _speedcore?: Speedcore
@@ -23,7 +25,7 @@ export class Spacing {
 
   /**
    * Returns the note spacing factor at the specified beat.
-   * @param beat the beat
+   * @param beat - the beat
    */
   factor(beat: number) {
     if (this._speedcore) {
@@ -34,7 +36,7 @@ export class Spacing {
   }
 
   /**
-   * Creates a {Spacing} object from the {BMSChart}.
+   * Creates a Spacing object from the {@link BMSChart}.
    *
    * ## `#SPEED` and `#xxxSP`
    *
@@ -50,9 +52,7 @@ export class Spacing {
    * In this example, the note spacing factor will gradually change
    * from 1.0x at beat 1 to 2.0x at beat 2.
    *
-   * Returns a {Spacing} object
-   *
-   * @param {BMSChart} chart the chart
+   * @param chart - the chart
    */
   static fromBMSChart(chart: BMSChart) {
     void BMSChart
@@ -86,6 +86,9 @@ export class Spacing {
   }
 }
 
+/**
+ * @public
+ */
 export interface SpacingSegment extends SpeedSegment {
   /** the beat number */
   t: number

@@ -1,6 +1,7 @@
 /**
  * Given the filename, returns the reader options.
- * @param {string} filename
+ *
+ * @public
  */
 export function getReaderOptionsFromFilename(filename: string) {
   let forceEncoding

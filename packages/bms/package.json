@@ -6,7 +6,9 @@
   "typings": "./lib/index.d.ts",
   "files": [
     "src",
-    "lib"
+    "lib",
+    "lib-commonjs",
+    "dist"
   ],
   "scripts": {},
   "repository": {

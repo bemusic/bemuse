@@ -7,7 +7,7 @@ import { BMSObject } from '../bms/objects'
 export { BMSNote }
 
 /**
- * A Notes holds the {Note} objects in the game.
+ * A Notes holds the {@link BMSNote} objects in the game.
  * A note object may or may not be playable.
  *
  * ## Example
@@ -18,8 +18,8 @@ export { BMSNote }
  * #00111:AA
  * ```
  *
- * Having parsed it using a {Compiler} into a {BMSChart},
- * you can create a {Notes} using `fromBMSChart()`:
+ * Having parsed it using `Compiler.compile` into a {@link BMSChart},
+ * you can create a {@link Notes} using `fromBMSChart()`:
  *
  * ```js
  * var notes = Notes.fromBMSChart(bmsChart)
@@ -30,13 +30,15 @@ export { BMSNote }
  * ```js
  * notes.all()
  * ```
+ *
+ * @public
  */
 export class Notes {
   _notes: BMSNote[]
   static CHANNEL_MAPPING = ChannelMapping
 
   /**
-   * @param {BMSNote[]} notes An array of Note objects
+   * @param notes - An array of Note objects
    */
   constructor(notes: BMSNote[]) {
     notes.forEach(Note)
@@ -60,8 +62,8 @@ export class Notes {
 
   /**
    * Creates a Notes object from a BMSChart.
-   * @param chart the chart to process
-   * @param options options
+   * @param chart - the chart to process
+   * @param options - options
    */
   static fromBMSChart(chart: BMSChart, options?: BMSChartOptions) {
     void BMSChart

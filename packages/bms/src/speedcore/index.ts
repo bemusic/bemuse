@@ -4,11 +4,11 @@ import { Segment, SpeedSegment } from './segment'
  * Speedcore is a small internally-used library.
  * A Speedcore represents a single dimensional keyframed linear motion
  * (as in equation x = f(t)), and is useful when working
- * with BPM changes ({Timing}), note spacing factor ({Spacing}), or scrolling
- * segments ({Positioning}).
+ * with BPM changes ({@link Timing}), note spacing factor ({@link Spacing}), or scrolling
+ * segments ({@link Positioning}).
  * A Speedcore is constructed from an array of Segments.
  *
- * A {Segment} is defined as `{ t, x, dx }`, such that:
+ * A {@link SpeedSegment} is defined as `{ t, x, dx }`, such that:
  *
  * * speedcore.x(segment.t) = segment.x
  * * speedcore.t(segment.x) = segment.t
@@ -64,6 +64,8 @@ import { Segment, SpeedSegment } from './segment'
  *   [1]: { t: 12.8,  x: 32,  dx: 0,    inclusive: true  },
  *   [2]: { t: 13.6,  x: 32,  dx: 2.5,  inclusive: false } ]
  * ```
+ * 
+ * @internal
  */
 export class Speedcore<S extends SpeedSegment = SpeedSegment> {
   _segments: S[]
@@ -105,7 +107,6 @@ export class Speedcore<S extends SpeedSegment = SpeedSegment> {
 
   /**
    * Calculates the _x_, given _t_.
-   * @param {number} t
    */
   x(t: number) {
     var segment = this.segmentAtT(t)
@@ -114,7 +115,6 @@ export class Speedcore<S extends SpeedSegment = SpeedSegment> {
 
   /**
    * Finds the _dx_, given _t_.
-   * @param {number} t
    */
   dx(t: number) {
     var segment = this.segmentAtT(t)
@@ -124,3 +124,5 @@ export class Speedcore<S extends SpeedSegment = SpeedSegment> {
 
 var T = (segment: SpeedSegment) => segment.t
 var X = (segment: SpeedSegment) => segment.x
+
+export { SpeedSegment }

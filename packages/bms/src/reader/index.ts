@@ -11,7 +11,9 @@ import iconv from 'iconv-lite'
 /**
  * Reads the buffer, detect the character set, and returns the decoded
  * string synchronously.
+ *
  * @returns the decoded text
+ * @public
  */
 export function read(
   buffer: Buffer,
@@ -29,14 +31,19 @@ export function read(
 
 /**
  * Like `read(buffer)`, but this is the asynchronous version.
+ *
+ * @public
  */
 export function readAsync(
   buffer: Buffer,
   options: ReaderOptions | null,
   callback?: ReadCallback
 ): void
+
 /**
  * Like `read(buffer)`, but this is the asynchronous version.
+ *
+ * @public
  */
 export function readAsync(buffer: Buffer, callback?: ReadCallback): void
 
@@ -56,7 +63,7 @@ export function readAsync(...args: any[]) {
     try {
       result = { value: exports.read(buffer, options) }
     } catch (e) {
-      result = { error: e }
+      result = { error: e as Error }
     }
     if (result.error) {
       callback!(result.error)

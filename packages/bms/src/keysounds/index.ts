@@ -14,8 +14,8 @@ import { BMSChart } from '../bms/chart'
  * #WAVAA cat.wav
  * ```
  *
- * Having parsed it using a {Compiler} into a {BMSChart},
- * you can create a {Keysounds} using `fromBMSChart()`:
+ * Having parsed it using `Compiler.compile` into a {@link BMSChart},
+ * you can create a {@link Keysounds} using `fromBMSChart()`:
  *
  * ```js
  * var keysounds = Keysounds.fromBMSChart(bmsChart)
@@ -26,6 +26,8 @@ import { BMSChart } from '../bms/chart'
  * ```js
  * keysounds.get('aa') // => 'cat.wav'
  * ```
+ * 
+ * @public
  */
 export class Keysounds {
   _map: { [id: string]: string }
@@ -35,7 +37,7 @@ export class Keysounds {
 
   /**
    * Returns the keysound file at the specified ID.
-   * @param id the two-character keysound ID
+   * @param id - the two-character keysound ID
    * @returns the sound filename
    */
   get(id: string): string | undefined {
@@ -61,8 +63,7 @@ export class Keysounds {
   }
 
   /**
-   * Constructs a new {Keysounds} object from a {BMSChart}.
-   * @param chart
+   * Constructs a new Keysounds object from a {@link BMSChart}.
    */
   static fromBMSChart(chart: BMSChart) {
     void BMSChart

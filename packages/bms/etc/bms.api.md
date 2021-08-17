@@ -14,12 +14,9 @@ export interface BaseTimingAction {
 // @public
 export class BMSChart {
     constructor();
-    // (undocumented)
     headers: BMSHeaders;
     measureToBeat(measure: number, fraction: number): number;
-    // (undocumented)
     objects: BMSObjects;
-    // (undocumented)
     timeSignatures: TimeSignatures;
 }
 
@@ -116,19 +113,12 @@ const IIDX_P1: {
 
 // @public (undocumented)
 export interface ISongInfoData {
-    // (undocumented)
     artist: string;
-    // (undocumented)
     difficulty: number;
-    // (undocumented)
     genre: string;
-    // (undocumented)
     level: number;
-    // (undocumented)
     subartists: string[];
-    // (undocumented)
     subtitles: string[];
-    // (undocumented)
     title: string;
 }
 
@@ -170,12 +160,12 @@ export class Positioning {
     static fromBMSChart(chart: BMSChart): Positioning;
     position(beat: number): number;
     speed(beat: number): number;
+    // Warning: (ae-incompatible-release-tags) The symbol "_speedcore" is marked as @public, but its signature references "Speedcore" which is marked as @internal
+    //
     // (undocumented)
     _speedcore: Speedcore;
 }
 
-// Warning: (ae-forgotten-export) The symbol "SpeedSegment" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export interface PositioningSegment extends SpeedSegment {
     dx: number;
@@ -247,7 +237,9 @@ export interface SpacingSegment extends SpeedSegment {
     x: number;
 }
 
-// @public
+// Warning: (ae-internal-missing-underscore) The name "Speedcore" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
 export class Speedcore<S extends SpeedSegment = SpeedSegment> {
     constructor(segments: S[]);
     dx(t: number): number;
@@ -263,6 +255,16 @@ export class Speedcore<S extends SpeedSegment = SpeedSegment> {
     _segments: S[];
     t(x: number): number;
     x(t: number): number;
+}
+
+// @public (undocumented)
+export interface SpeedSegment {
+    dx: number;
+    inclusive: boolean;
+    // (undocumented)
+    t: number;
+    // (undocumented)
+    x: number;
 }
 
 // @public (undocumented)
@@ -292,6 +294,7 @@ export class Timing {
     getEventBeats(): number[];
     secondsToBeat(seconds: number): number;
     // Warning: (ae-forgotten-export) The symbol "TimingSegment" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-incompatible-release-tags) The symbol "_speedcore" is marked as @public, but its signature references "Speedcore" which is marked as @internal
     //
     // (undocumented)
     _speedcore: Speedcore<TimingSegment>;

@@ -1,5 +1,7 @@
 /**
  * BMSObjects holds a collection of objects inside a BMS notechart.
+ *
+ * @public
  */
 export class BMSObjects {
   private _objects: BMSObject[]
@@ -12,7 +14,8 @@ export class BMSObjects {
    * Adds a new object to this collection.
    * If an object already exists on the same channel and position,
    * the object is replaced (except for autokeysound tracks).
-   * @param object the object to add
+   *
+   * @param object - the object to add
    */
   add(object: BMSObject) {
     if (object.channel !== '01') {
@@ -50,7 +53,11 @@ export class BMSObjects {
   }
 }
 
-/** An object inside a {BMSChart}. */
+/**
+ * An object inside a {@link BMSChart}.
+ *
+ * @public
+ */
 export interface BMSObject {
   /** the raw two-character BMS channel of this object */
   channel: string

@@ -14,6 +14,8 @@ var precedence = { bpm: 1, stop: 2 }
  *
  * - BPM changes.
  * - STOP action.
+ * 
+ * @public
  */
 export class Timing {
   _speedcore: Speedcore<TimingSegment>
@@ -82,7 +84,6 @@ export class Timing {
 
   /**
    * Convert the given beat into seconds.
-   * @param {number} beat
    */
   beatToSeconds(beat: number) {
     return this._speedcore.t(beat)
@@ -90,7 +91,6 @@ export class Timing {
 
   /**
    * Convert the given second into beats.
-   * @param {number} seconds
    */
   secondsToBeat(seconds: number) {
     return this._speedcore.x(seconds)
@@ -98,7 +98,6 @@ export class Timing {
 
   /**
    * Returns the BPM at the specified beat.
-   * @param {number} beat
    */
   bpmAtBeat(beat: number) {
     return this._speedcore.segmentAtX(beat).bpm
@@ -113,7 +112,6 @@ export class Timing {
 
   /**
    * Creates a Timing instance from a BMSChart.
-   * @param {BMSChart} chart
    */
   static fromBMSChart(chart: BMSChart) {
     void BMSChart
@@ -136,22 +134,31 @@ export class Timing {
   }
 }
 
+/** @public */
 export type TimingAction = BPMTimingAction | StopTimingAction
+
+/** @public */
 export interface BaseTimingAction {
   /** where this action occurs */
   beat: number
 }
+
+/** @public */
 export interface BPMTimingAction extends BaseTimingAction {
   type: 'bpm'
   /** BPM to change to */
   bpm: number
 }
+
+/** @public */
 export interface StopTimingAction extends BaseTimingAction {
   type: 'stop'
   /** number of beats to stop */
   stopBeats: number
 }
 
+
+/** @public */
 interface TimingSegment extends SpeedSegment {
   bpm: number
 }
