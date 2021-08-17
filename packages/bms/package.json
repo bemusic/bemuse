@@ -10,7 +10,10 @@
     "lib-commonjs",
     "dist"
   ],
-  "scripts": {},
+  "scripts": {
+    "build": "heft build",
+    "test": "heft test"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/bemusic/bms-js.git"
