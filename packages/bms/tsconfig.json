@@ -1,0 +1,10 @@
+{
+  "extends": "./node_modules/@rushstack/heft-web-rig/profiles/library/tsconfig-base.json",
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "types": [
+      "heft-jest",
+      "node"
+    ]
+  }
+}

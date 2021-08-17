@@ -1,0 +1,55 @@
+{
+  "name": "bms",
+  "version": "48.4.0",
+  "description": "BMS Parser for JavaScript",
+  "main": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "files": [
+    "src",
+    "lib"
+  ],
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bemusic/bms-js.git"
+  },
+  "keywords": [
+    "BMS"
+  ],
+  "browser": {
+    "./reader/index.js": "./reader/index.web.js"
+  },
+  "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bemusic/bms-js/issues"
+  },
+  "homepage": "https://github.com/bemusic/bms-js",
+  "devDependencies": {
+    "@rushstack/heft": "^0.36.2",
+    "@types/invariant": "^2.2.29",
+    "@types/lodash.assign": "^4.2.4",
+    "@types/lodash.map": "^4.6.13",
+    "@types/lodash.uniq": "^4.5.4",
+    "@types/lodash.values": "^4.3.4",
+    "@types/node": "^10.12.12",
+    "artstep": "^5555.0.0",
+    "chai": "^4.2.0",
+    "@types/heft-jest": "1.0.2",
+    "@types/chai": "~4.2.21"
+  },
+  "dependencies": {
+    "@rushstack/heft-web-rig": "^0.4.3",
+    "bemuse-chardet": "0.0.8",
+    "data-structure": "^1.2.0",
+    "iconv-lite": "^0.4.24",
+    "invariant": "^2.2.4",
+    "lodash.assign": "^4.2.0",
+    "lodash.map": "^4.6.0",
+    "lodash.uniq": "^4.5.0",
+    "lodash.values": "^4.3.0"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  }
+}
