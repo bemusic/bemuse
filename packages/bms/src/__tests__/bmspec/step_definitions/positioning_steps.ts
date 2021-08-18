@@ -1,4 +1,5 @@
 import steps from '../cucumber-dsl'
+import { expect } from 'chai'
 
 export default steps()
   .Then(

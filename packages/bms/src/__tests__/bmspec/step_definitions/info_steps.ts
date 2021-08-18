@@ -1,4 +1,5 @@
 import steps from '../cucumber-dsl'
+import { expect } from 'chai'
 
 export default steps()
   .Then(/^song title should be "([^"]*)"$/, function (text) {
@@ -30,7 +31,7 @@ export default steps()
   })
 
   .Then(/^song subartist should be "([^"]*)"$/, function (text) {
-    expect(this.songInfo.subartist[0]).to.equal(text)
+    expect(this.songInfo.subartists[0]).to.equal(text)
   })
 
   .Then(/^song subartist should be:$/, function (text) {
