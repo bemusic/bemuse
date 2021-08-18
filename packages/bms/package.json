@@ -41,7 +41,8 @@
     "artstep": "^5555.0.0",
     "chai": "^4.2.0",
     "@types/heft-jest": "1.0.2",
-    "@types/chai": "~4.2.21"
+    "@types/chai": "~4.2.21",
+    "jest-cucumber": "~3.0.1"
   },
   "dependencies": {
     "@rushstack/heft-web-rig": "^0.4.3",
