@@ -1,8 +1,8 @@
-var steps = require('artstep')
+import steps from '../cucumber-dsl'
 
-module.exports = steps().Then(
+export default steps().Then(
   /^the header "([^"]*)" should have value "([^"]*)"$/,
-  function(name, value) {
+  function (name, value) {
     expect(this.chart.headers.get(name)).to.equal(value)
-  }
+  },
 )

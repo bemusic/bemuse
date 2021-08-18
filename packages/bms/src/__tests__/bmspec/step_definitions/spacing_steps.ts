@@ -1,8 +1,8 @@
-var steps = require('artstep')
+import steps from '../cucumber-dsl'
 
-module.exports = steps().Then(
+export default steps().Then(
   /^note spacing at beat ([-\d.]+) is ([-\d.]+)$/,
-  function(beat, value) {
+  function (beat, value) {
     expect(this.spacing.factor(+beat)).to.equal(+value)
-  }
+  },
 )
