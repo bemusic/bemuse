@@ -18,8 +18,10 @@ specifiers:
   data-structure: ^1.2.0
   iconv-lite: ^0.4.24
   invariant: ^2.2.4
+  jest-cucumber: ~3.0.1
   lodash.assign: ^4.2.0
   lodash.map: ^4.6.0
+  lodash.once: ~4.1.1
   lodash.uniq: ^4.5.0
   lodash.values: ^4.3.0
 
@@ -41,8 +43,10 @@ dependencies:
   data-structure: 1.2.0
   iconv-lite: 0.4.24
   invariant: 2.2.4
+  jest-cucumber: 3.0.1
   lodash.assign: 4.2.0
   lodash.map: 4.6.0
+  lodash.once: 4.1.1
   lodash.uniq: 4.5.0
   lodash.values: 4.3.0
 
@@ -556,7 +560,7 @@ packages:
     engines: {node: '>= 10.14.2'}
     dependencies:
       '@jest/types': 26.6.2
-      '@types/node': 11.15.54
+      '@types/node': 16.6.1
       chalk: 4.1.2
       jest-message-util: 26.6.2
       jest-util: 26.6.2
@@ -611,7 +615,7 @@ packages:
       '@jest/test-result': 26.6.2
       '@jest/transform': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 11.15.54
+      '@types/node': 16.6.1
       ansi-escapes: 4.3.2
       chalk: 4.1.2
       exit: 0.1.2
@@ -927,7 +931,7 @@ packages:
     dependencies:
       '@types/istanbul-lib-coverage': 2.0.3
       '@types/istanbul-reports': 3.0.1
-      '@types/node': 11.15.54
+      '@types/node': 16.6.1
       '@types/yargs': 15.0.14
       chalk: 4.1.2
     dev: false
@@ -1244,7 +1248,7 @@ packages:
     resolution: {integrity: sha512-w+LsMxKyYQm347Otw+IfBXOv9UWVjpHpCDdbBMt8Kz/xbvCYNjP+0qPh91Km3iKfSRLBB0P7fAMf0KHrPu+MyA==}
     dependencies:
       '@types/minimatch': 3.0.5
-      '@types/node': 11.15.54
+      '@types/node': 16.6.1
     dev: false
 
   /@types/graceful-fs/4.1.5:
@@ -1308,6 +1312,12 @@ packages:
 
   /@types/lodash.map/4.6.13:
     resolution: {integrity: sha512-kppRBzlpuvQQsr7R2nv/DDDZds8fglRFNAK70WUOkOC18KOcuQ22oQF9Kgy5Z2v/eDNkBm0ltrT6FThSkuWwow==}
+    dependencies:
+      '@types/lodash': 4.14.172
+    dev: false
+
+  /@types/lodash.once/4.1.6:
+    resolution: {integrity: sha512-kawTe2cBNZ5OI4CvTJT9cs8wacGZK4BoakKAGASl/jH3LxflMTuy82wN2U5klYsxYjrABkNWmzgO33volt7urQ==}
     dependencies:
       '@types/lodash': 4.14.172
     dev: false
@@ -5112,7 +5122,7 @@ packages:
     dependencies:
       '@jest/types': 26.6.2
       '@types/graceful-fs': 4.1.5
-      '@types/node': 11.15.54
+      '@types/node': 16.6.1
       anymatch: 3.1.2
       fb-watchman: 2.0.1
       graceful-fs: 4.2.8
@@ -5384,7 +5394,7 @@ packages:
       '@jest/environment': 26.6.2
       '@jest/test-result': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 11.15.54
+      '@types/node': 16.6.1
       chalk: 4.1.2
       emittery: 0.7.2
       exit: 0.1.2
@@ -5580,7 +5590,7 @@ packages:
     engines: {node: '>= 10.14.2'}
     dependencies:
       '@jest/types': 26.6.2
-      '@types/node': 11.15.54
+      '@types/node': 16.6.1
       chalk: 4.1.2
       graceful-fs: 4.2.8
       is-ci: 2.0.0
@@ -5629,7 +5639,7 @@ packages:
     dependencies:
       '@jest/test-result': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 11.15.54
+      '@types/node': 16.6.1
       ansi-escapes: 4.3.2
       chalk: 4.1.2
       jest-util: 26.6.2
@@ -5979,6 +5989,10 @@ packages:
 
   /lodash.merge/4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
+    dev: false
+
+  /lodash.once/4.1.1:
+    resolution: {integrity: sha1-DdOXEhPHxW34gJd9UEyI+0cal6w=}
     dev: false
 
   /lodash.sortby/4.7.0:
@@ -9099,7 +9113,7 @@ packages:
     dev: false
 
   file:projects/bms.tgz:
-    resolution: {integrity: sha512-2CdNRJOfgyQB9nG5/m1uRRlpNNvFYsePR6gubtL4llObzVvIlyhzkaDaI4yWqT4SeI38IECtiLa3TzFeYbu/aQ==, tarball: file:projects/bms.tgz}
+    resolution: {integrity: sha512-A64Pxw2YZ+RS+Ey1IRtpxYnj3dVlQweJHUhCcUpyLHqpoU/eSMUT9KMB7L7ieQLZgzucEIs/VWh1TInP9kiUvA==, tarball: file:projects/bms.tgz}
     name: '@rush-temp/bms'
     version: 0.0.0
     dependencies:
@@ -9111,6 +9125,7 @@ packages:
       '@types/invariant': 2.2.34
       '@types/lodash.assign': 4.2.6
       '@types/lodash.map': 4.6.13
+      '@types/lodash.once': 4.1.6
       '@types/lodash.uniq': 4.5.6
       '@types/lodash.values': 4.3.6
       '@types/node': 10.17.60
@@ -9123,6 +9138,7 @@ packages:
       jest-cucumber: 3.0.1
       lodash.assign: 4.2.0
       lodash.map: 4.6.0
+      lodash.once: 4.1.1
       lodash.uniq: 4.5.0
       lodash.values: 4.3.0
     transitivePeerDependencies:
