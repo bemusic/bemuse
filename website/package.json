@@ -11,5 +11,8 @@
   },
   "devDependencies": {
     "docusaurus": "^1.5.0"
+  },
+  "volta": {
+    "extends": "../package.json"
   }
 }

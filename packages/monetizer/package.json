@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/bemusic/bemuse/issues"
   },
-  "homepage": "https://github.com/bemusic/bemuse/tree/master/packages/monetizer#readme"
+  "homepage": "https://github.com/bemusic/bemuse/tree/master/packages/monetizer#readme",
+  "volta": {
+    "extends": "../../package.json"
+  }
 }
