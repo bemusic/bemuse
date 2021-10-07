@@ -43,7 +43,7 @@ jobs:
       - run:
           name: typecheck
           command: |
-            yarn tsc
+            yarn workspace bemuse tsc
   test:
     working_directory: ~/bemuse
     environment:
