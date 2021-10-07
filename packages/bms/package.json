@@ -58,5 +58,8 @@
     "lodash.map": "^4.6.0",
     "lodash.uniq": "^4.5.0",
     "lodash.values": "^4.3.0"
+  },
+  "volta": {
+    "extends": "../../package.json"
   }
 }
