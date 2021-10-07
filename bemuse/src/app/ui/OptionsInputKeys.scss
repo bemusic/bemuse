@@ -1,3 +1,4 @@
+@use "sass:math";
 @import '~bemuse/ui/common';
 
 .OptionsInputKeys {
@@ -59,30 +60,30 @@
   &[data-arrangement='kb'] {
     width: 420px;
     .OptionsInputKey {
-      width: (100% / 7);
+      width: math.div(100%, 7);
       top: 0%;
       &[data-n='1'] {
-        left: (100% / 7) * 0;
+        left: math.div(100%, 7) * 0;
       }
       &[data-n='2'] {
-        left: (100% / 7) * 1;
+        left: math.div(100%, 7) * 1;
       }
       &[data-n='3'] {
-        left: (100% / 7) * 2;
+        left: math.div(100%, 7) * 2;
       }
       &[data-n='4'] {
-        left: (100% / 7) * 1;
-        width: (100% / 7) * 5;
+        left: math.div(100%, 7) * 1;
+        width: math.div(100%, 7) * 5;
         top: 50%;
       }
       &[data-n='5'] {
-        left: (100% / 7) * 4;
+        left: math.div(100%, 7) * 4;
       }
       &[data-n='6'] {
-        left: (100% / 7) * 5;
+        left: math.div(100%, 7) * 5;
       }
       &[data-n='7'] {
-        left: (100% / 7) * 6;
+        left: math.div(100%, 7) * 6;
       }
     }
   }
