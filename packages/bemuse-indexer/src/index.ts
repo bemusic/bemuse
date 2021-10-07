@@ -191,7 +191,7 @@ async function getSongInfo(
           return [{ ...info, file: name }]
         }
       } catch (e) {
-        onError(e, name)
+        onError(e as Error, name)
         warnings.push('Unable to parse ' + name + ': ' + e)
         return []
       } finally {

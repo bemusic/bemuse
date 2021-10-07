@@ -38,5 +38,8 @@
   },
   "dependencies": {
     "lodash": "^4.17.11"
+  },
+  "volta": {
+    "extends": "../../package.json"
   }
 }

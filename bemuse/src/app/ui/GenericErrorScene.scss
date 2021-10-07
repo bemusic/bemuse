@@ -1,0 +1,23 @@
+@import '~bemuse/ui/common';
+
+.GenericErrorScene {
+  @include scene-background(url(~bemuse/ui/images/bg/c.jpg));
+
+  &のwrapper {
+    padding: 1em;
+    width: 32em;
+    max-width: 90vw;
+    box-sizing: border-box;
+  }
+  &のstack {
+    @include input;
+    color: #faa;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    height: 16em;
+    margin: 0 0 0.5em;
+    font-family: Menlo, Consolas, monospace;
+    font-size: 0.72em;
+  }
+}

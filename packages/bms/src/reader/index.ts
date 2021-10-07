@@ -59,7 +59,7 @@ export function readAsync(...args: any[]) {
       result = { error: e }
     }
     if (result.error) {
-      callback!(result.error)
+      callback!(result.error as Error)
     } else {
       callback!(null, result.value)
     }
