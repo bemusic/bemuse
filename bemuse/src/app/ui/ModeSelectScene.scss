@@ -1,3 +1,4 @@
+@use "sass:math";
 @import '~bemuse/ui/common';
 
 .ModeSelectScene {
@@ -51,7 +52,7 @@
     border-radius: 1em;
     background: rgba(#41454b, 0.8);
     width: 22em;
-    height: 22em * 9 / 16;
+    height: math.div(22em * 9, 16);
     box-shadow: 0 2px 8px black;
     rect,
     circle {

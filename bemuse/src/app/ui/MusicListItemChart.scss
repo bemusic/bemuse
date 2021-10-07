@@ -1,3 +1,4 @@
+@use "sass:math";
 @import '~bemuse/ui/common';
 
 .MusicListItemChart {
@@ -9,7 +10,7 @@
   width: $size;
   height: $size;
   border: 1px solid rgba(#000, 0.3);
-  border-radius: $size / 5;
+  border-radius: math.div($size, 5);
   font-size: 1rem;
   color: rgba(#000, 0.6);
   text-align: center;
