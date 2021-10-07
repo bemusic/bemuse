@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "clean": "rimraf lib tsconfig.tsbuildinfo",
-    "test": "nyc -r text -r lcov mocha -r ts-node/register spec/*_spec.js",
+    "test": "nyc -r text -r lcov mocha -r ts-node/register/transpile-only spec/*_spec.js",
     "prepare": "tsc -b ."
   },
   "bin": {
