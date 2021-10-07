@@ -16,7 +16,24 @@
 [@aboudicheng]: https://github.com/aboudicheng
 [@pnkapadia64]: https://github.com/pnkapadia64
 [@tsfreddie]: https://github.com/TsFreddie
+[@vishal5251]: https://github.com/vishal5251
 [@s-pace]: https://github.com/s-pace
+
+## v48.5.1-pre.202110071821
+
+### Internals
+
+- Upgraded the build infrastructure to TypeScript 4.4.3 [#687], by [@dtinth]
+- Fixed compiler warnings in stylesheet files. [#689], by [@vishal5251]
+
+### Improvements
+
+- You can go back to Music Selection Screen when the game fails to load a song.
+  (Previously, the game would softlock.) [#690], by [@dtinth]
+
+[#687]: https://github.com/bemusic/bemuse/pull/687
+[#689]: https://github.com/bemusic/bemuse/pull/689
+[#690]: https://github.com/bemusic/bemuse/pull/690
 
 ## v48.5 (2021-07-20)
 
