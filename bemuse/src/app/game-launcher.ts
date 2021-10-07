@@ -20,6 +20,7 @@ import { Song, Chart, StoredOptions } from './types'
 import { LoadSpec } from 'bemuse/game/loaders/game-loader'
 import Player from 'bemuse/game/player'
 import PlayerState from 'bemuse/game/state/player-state'
+import GenericErrorScene from './ui/GenericErrorScene'
 
 const Log = BemuseLogger.forModule('game-launcher')
 
@@ -37,15 +38,45 @@ type LaunchOptions = {
   onRagequitted: () => void
 }
 
-export async function launch({
-  server,
-  song,
-  chart,
-  options,
-  saveSpeed,
-  saveLeadTime,
-  onRagequitted,
-}: LaunchOptions) {
+export async function launch(launchOptions: LaunchOptions) {
+  const sceneDisplayContext = new SceneDisplayContext()
+  let currentWork = 'launching the game'
+  try {
+    await launchGame(
+      launchOptions,
+      sceneDisplayContext,
+      work => (currentWork = work)
+    )
+  } catch (e) {
+    await new Promise<void>((resolve, reject) => {
+      sceneDisplayContext
+        .showScene(
+          GenericErrorScene.getScene({
+            preamble: `Bemuse has encountered a problem while ${currentWork}`,
+            error: e as Error,
+            onContinue: resolve,
+          })
+        )
+        .catch(reject)
+    })
+  } finally {
+    await sceneDisplayContext.end()
+  }
+}
+
+async function launchGame(
+  {
+    server,
+    song,
+    chart,
+    options,
+    saveSpeed,
+    saveLeadTime,
+    onRagequitted,
+  }: LaunchOptions,
+  sceneDisplayContext: SceneDisplayContext,
+  setCurrentWork: (work: string) => void
+) {
   // Unmute audio immediately so that it sounds on iOS and Chrome and some other browsers as well!
   unmuteAudio()
 
@@ -121,6 +152,7 @@ export async function launch({
   do {
     // start loading the game
     const loadStart = Date.now()
+    setCurrentWork('loading the game')
     Log.info(`Loading game: ${describeChart(chart)}`)
     const GameLoader: typeof import('bemuse/game/loaders/game-loader') = require('bemuse/game/loaders/game-loader')
     let loader = GameLoader.load(loadSpec)
@@ -132,14 +164,10 @@ export async function launch({
       song: chart.info,
       eyecatchImagePromise: loader.get('EyecatchImage'),
     })
-    if (replay) {
-      await SCENE_MANAGER.display(loadingScene)
-    } else {
-      await SCENE_MANAGER.push(loadingScene)
-    }
+    await sceneDisplayContext.showScene(loadingScene)
     replay = false
 
-    // if in title display mode, stop
+    // if in title display mode, stop here
     if (isTitleDisplayMode()) return
 
     // send data to analytics
@@ -148,7 +176,8 @@ export async function launch({
 
     // wait for game to load and display the game
     let controller = await promise
-    await SCENE_MANAGER.display(GameScene(controller.display))
+    setCurrentWork('running the game')
+    await sceneDisplayContext.showScene(GameScene(controller.display))
     controller.start()
 
     // send the timing data
@@ -163,6 +192,8 @@ export async function launch({
 
     // wait for final game state
     const playResult = await controller.promise
+    setCurrentWork('handling game results')
+
     const state = controller.state
     const game = controller.game
     const [player] = game.players
@@ -176,10 +207,17 @@ export async function launch({
     // send data to analytics & display evaluation
     window.removeEventListener('beforeunload', onUnload, false)
     if (state.finished) {
+      setCurrentWork('showing game results')
       Analytics.gameFinish(song, chart, state, gameMode)
-      const exitResult = await showResult(player, playerState, chart)
+      const exitResult = await showResult(
+        player,
+        playerState,
+        chart,
+        sceneDisplayContext
+      )
       replay = exitResult.replay
     } else {
+      setCurrentWork('exiting the game')
       Analytics.gameEscape(song, chart, state)
       replay = playResult.replay
       if (!replay) {
@@ -188,9 +226,6 @@ export async function launch({
     }
     controller.destroy()
   } while (replay)
-
-  // go back to previous scene
-  await SCENE_MANAGER.pop()
 }
 
 async function findVideoUrl(song: Song, assets: LoadSpec['assets']) {
@@ -209,8 +244,13 @@ async function findVideoUrl(song: Song, assets: LoadSpec['assets']) {
   }
 }
 
-function showResult(player: Player, playerState: PlayerState, chart: Chart) {
-  return new Promise<{ replay: boolean }>(resolve => {
+function showResult(
+  player: Player,
+  playerState: PlayerState,
+  chart: Chart,
+  sceneDisplayContext: SceneDisplayContext
+) {
+  return new Promise<{ replay: boolean }>((resolve, reject) => {
     let stats = playerState.stats
     let playMode = playerState.player.options.scratch === 'off' ? 'KB' : 'BM'
     let props = {
@@ -236,7 +276,9 @@ function showResult(player: Player, playerState: PlayerState, chart: Chart) {
       onExit: () => resolve({ replay: false }),
       onReplay: () => resolve({ replay: true }),
     }
-    SCENE_MANAGER.display(React.createElement(ResultScene, props)).done()
+    sceneDisplayContext
+      .showScene(React.createElement(ResultScene, props))
+      .catch(reject)
   })
 }
 
@@ -259,4 +301,22 @@ function replayGainFor(song: Song) {
 function describeChart(chart: Chart) {
   const { info } = chart
   return `[${info.genre}] ${info.title} ／ ${info.artist}`
+}
+
+class SceneDisplayContext {
+  shown = false
+  async showScene(scene: any) {
+    if (!this.shown) {
+      await SCENE_MANAGER.push(scene)
+      this.shown = true
+    } else {
+      await SCENE_MANAGER.display(scene)
+    }
+  }
+  async end() {
+    if (this.shown) {
+      await SCENE_MANAGER.pop()
+      this.shown = false
+    }
+  }
 }
