@@ -4,6 +4,7 @@ import MAIN from 'bemuse/utils/main-element'
 import ReactDOM from 'react-dom'
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import {
+  clearCustomFolder,
   getCustomFolderState,
   getDefaultCustomFolderContext,
   scanFolder,
@@ -39,10 +40,26 @@ const CustomFolderTester = () => {
       await scanFolder(context, {
         log: text => console.log(text),
         setStatus: _.throttle(text => setStatus(text), 100),
+        updateState: newState => {
+          queryClient.setQueryData('customFolder', newState)
+        },
       })
     } catch (e) {
       console.error(e)
       alert(`An error has occurred: ${e}`)
+    } finally {
+      queryClient.invalidateQueries('customFolder')
+    }
+  }
+
+  const clear = async () => {
+    try {
+      await clearCustomFolder(context)
+    } catch (e) {
+      console.error(e)
+      alert(`An error has occurred: ${e}`)
+    } finally {
+      queryClient.invalidateQueries('customFolder')
     }
   }
 
@@ -56,6 +73,9 @@ const CustomFolderTester = () => {
           <p>
             <button onClick={scan}>Scan</button> &larr; open devtools to see
             logs
+          </p>
+          <p>
+            <button onClick={clear}>Clear</button>
           </p>
         </div>
       ) : (

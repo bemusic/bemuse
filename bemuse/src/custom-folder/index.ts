@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { get, set } from 'idb-keyval'
+import { get, set, del } from 'idb-keyval'
 import {
   CustomFolderChartFile,
   CustomFolderFolderEntry,
@@ -13,11 +13,13 @@ import { FileResource } from 'bemuse/resources/custom-song-resources'
 export interface CustomFolderContext {
   get: (key: string) => Promise<CustomFolderState | undefined>
   set: (key: string, value: CustomFolderState) => Promise<void>
+  del: (key: string) => Promise<void>
 }
 
 export class CustomFolderContextImpl implements CustomFolderContext {
   get = get
   set = set
+  del = del
 }
 
 const CUSTOM_FOLDER_KEYVAL_KEY = 'custom-folder-1'
@@ -29,6 +31,9 @@ export async function setCustomFolder(
   await context.set(CUSTOM_FOLDER_KEYVAL_KEY, {
     handle: folder,
   })
+}
+export async function clearCustomFolder(context: CustomFolderContext) {
+  await context.del(CUSTOM_FOLDER_KEYVAL_KEY)
 }
 
 export async function getCustomFolderState(context: CustomFolderContext) {
@@ -42,6 +47,7 @@ export const getDefaultCustomFolderContext = _.once(
 type CustomFolderScanIO = {
   log: (message: string) => void
   setStatus: (message: string) => void
+  updateState: (state: CustomFolderState) => void
 }
 
 export async function scanFolder(
@@ -49,7 +55,7 @@ export async function scanFolder(
   io: CustomFolderScanIO
 ) {
   let state = await getCustomFolderState(context)
-  const { log, setStatus } = io
+  const { log, setStatus, updateState } = io
   for (let i = 1; ; i++) {
     log(`Iteration #${i} start`)
     const result = await scanIteration(state, context, io)
@@ -58,6 +64,7 @@ export async function scanFolder(
     }
     if (result.nextState) {
       state = result.nextState
+      updateState(state)
       setStatus(`Saving state (iteration #${i})`)
       await context.set(CUSTOM_FOLDER_KEYVAL_KEY, state)
     }
@@ -181,13 +188,16 @@ async function scanIteration(
         folder.path,
         state.chartFiles || []
       )
-      const song = await loadSongFromResources(resources, {
-        onMessage: text => {
-          log(text)
-          setStatus(`${statusPrefix} ${text}`)
-        },
-      })
-      if (song.charts.length === 0) {
+      const { resources: _unused, ...song } = await loadSongFromResources(
+        resources,
+        {
+          onMessage: text => {
+            log(text)
+            setStatus(`${statusPrefix} ${text}`)
+          },
+        }
+      )
+      if (song.charts.length > 0) {
         songsToSave.push({
           path: folder.path,
           song: song,
