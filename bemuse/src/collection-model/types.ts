@@ -15,6 +15,7 @@ export type Song = {
 
   /** Added by Bemuse at runtime */
   resources?: IResources
+  custom?: boolean
 }
 
 export type Chart = {

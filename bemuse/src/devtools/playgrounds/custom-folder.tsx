@@ -65,7 +65,6 @@ const CustomFolderTester = () => {
 
   return (
     <div>
-      <h1>Custom folder</h1>
       {data ? (
         <div>
           <p>{(data.songs || []).length || 0} songs</p>
@@ -90,7 +89,9 @@ const CustomFolderTester = () => {
 export function main() {
   ReactDOM.render(
     <QueryClientProvider client={queryClient}>
-      <CustomFolderTester />
+      <div style={{ margin: '0 auto', maxWidth: '720px', padding: '0 1em' }}>
+        <CustomFolderTester />
+      </div>
     </QueryClientProvider>,
     MAIN
   )

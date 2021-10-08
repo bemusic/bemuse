@@ -28,6 +28,10 @@ import {
   getTimeSynchroServer,
 } from './query-flags'
 import { isBrowserSupported } from './browser-support'
+import {
+  getSongsFromCustomFolders,
+  getDefaultCustomFolderContext,
+} from 'bemuse/custom-folder'
 
 /* eslint import/no-webpack-loader-syntax: off */
 export const runIO = createRun({
@@ -57,6 +61,15 @@ function bootUp() {
       text: getInitialGrepString(),
     })
     run(OptionsIO.loadInitialOptions())
+
+    getSongsFromCustomFolders(getDefaultCustomFolderContext()).then(songs => {
+      if (songs.length > 0) {
+        store.dispatch({
+          type: ReduxState.CUSTOM_SONGS_LOADED,
+          songs,
+        })
+      }
+    })
   })
 }
 

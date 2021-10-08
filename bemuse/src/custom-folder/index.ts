@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import { get, set, del } from 'idb-keyval'
+import pMemoize from 'p-memoize'
 import {
   CustomFolderChartFile,
   CustomFolderFolderEntry,
@@ -7,8 +8,9 @@ import {
   CustomFolderState,
 } from './types'
 import { loadSongFromResources } from 'bemuse/custom-song-loader'
-import { ICustomSongResources } from 'bemuse/resources/types'
+import { ICustomSongResources, IResources } from 'bemuse/resources/types'
 import { FileResource } from 'bemuse/resources/custom-song-resources'
+import { Song } from 'bemuse/collection-model/types'
 
 export interface CustomFolderContext {
   get: (key: string) => Promise<CustomFolderState | undefined>
@@ -345,4 +347,60 @@ class ChartFileScanner {
 }
 function formatPath(childPath: string[]) {
   return childPath.join('¥')
+}
+
+export async function getSongsFromCustomFolders(
+  context: CustomFolderContext
+): Promise<Song[]> {
+  const state = await getCustomFolderState(context)
+  if (!state || !state.handle) {
+    return []
+  }
+
+  const customFolderSongs = state.songs || []
+  const resourceFactory = new CustomFolderResourceFactory(state.handle)
+  const out: Song[] = []
+  for (const customFolderSong of customFolderSongs) {
+    try {
+      const resources = resourceFactory.getResources(customFolderSong.path)
+      out.push({
+        ...customFolderSong.song,
+        resources,
+        custom: true,
+        id: '__custom_' + formatPath(customFolderSong.path),
+      })
+    } catch (e) {
+      console.error(e)
+    }
+  }
+  return out
+}
+
+class CustomFolderResourceFactory {
+  constructor(private rootFolderHandle: FileSystemDirectoryHandle) {}
+  getGrant = pMemoize(async () => {
+    const handle = this.rootFolderHandle
+    let permission = await handle.queryPermission({ mode: 'read' })
+    if (permission === 'prompt') {
+      permission = await handle.requestPermission({ mode: 'read' })
+    }
+    if (permission !== 'granted') {
+      throw new Error('Permission has not been granted')
+    }
+    return permission
+  })
+  getResources(path: string[]): IResources {
+    const getFolderHandle = pMemoize(async () => {
+      await this.getGrant()
+      return getFolderHandleByPath(this.rootFolderHandle, path)
+    })
+    return {
+      async file(name) {
+        const folder = await getFolderHandle()
+        const fileHandle = await folder.getFileHandle(name)
+        const file = await fileHandle.getFile()
+        return new FileResource(file)
+      },
+    }
+  }
 }
