@@ -5,6 +5,7 @@ import { IResources } from 'bemuse/resources/types'
 
 export type Song = {
   id: string
+  title: string
   path: string
   tutorial?: boolean
   video_url?: string

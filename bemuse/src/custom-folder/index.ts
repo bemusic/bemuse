@@ -360,14 +360,14 @@ export async function getSongsFromCustomFolders(
   const customFolderSongs = state.songs || []
   const resourceFactory = new CustomFolderResourceFactory(state.handle)
   const out: Song[] = []
-  for (const customFolderSong of customFolderSongs) {
+  for (const [i, customFolderSong] of customFolderSongs.entries()) {
     try {
       const resources = resourceFactory.getResources(customFolderSong.path)
       out.push({
         ...customFolderSong.song,
         resources,
         custom: true,
-        id: '__custom_' + formatPath(customFolderSong.path),
+        id: '__custom_' + i,
       })
     } catch (e) {
       console.error(e)
