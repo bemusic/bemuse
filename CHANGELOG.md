@@ -19,7 +19,7 @@
 [@vishal5251]: https://github.com/vishal5251
 [@s-pace]: https://github.com/s-pace
 
-## v48.5.1-pre.202110071821
+## v48.5.1 (2021-10-08)
 
 ### Internals
 
