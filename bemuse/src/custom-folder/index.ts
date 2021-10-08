@@ -3,8 +3,12 @@ import { get, set } from 'idb-keyval'
 import {
   CustomFolderChartFile,
   CustomFolderFolderEntry,
+  CustomFolderSong,
   CustomFolderState,
 } from './types'
+import { loadSongFromResources } from 'bemuse/custom-song-loader'
+import { ICustomSongResources } from 'bemuse/resources/types'
+import { FileResource } from 'bemuse/resources/custom-song-resources'
 
 export interface CustomFolderContext {
   get: (key: string) => Promise<CustomFolderState | undefined>
@@ -54,6 +58,7 @@ export async function scanFolder(
     }
     if (result.nextState) {
       state = result.nextState
+      setStatus(`Saving state (iteration #${i})`)
       await context.set(CUSTOM_FOLDER_KEYVAL_KEY, state)
     }
     if (!result.moreIterationsNeeded) {
@@ -158,12 +163,96 @@ async function scanIteration(
   if (state.foldersToUpdate && state.foldersToUpdate.length > 0) {
     const foldersToUpdate = [...state.foldersToUpdate]
     const n = foldersToUpdate.length
+    const songsToSave: CustomFolderSong[] = []
+    const updatedPathSet = new Set<string>()
+    const deadline = Date.now() + 5000
+
     for (const [i, folder] of foldersToUpdate.entries()) {
+      updatedPathSet.add(JSON.stringify(folder.path))
+
       const pathStr = formatPath(folder.path)
-      log(`Updating folder ${i + 1}/${n}: ${pathStr}`)
-      setStatus(`Updating folder ${i + 1}/${n}: ${pathStr}`)
+      const remaining = n - i
+      log(`Updating folder “${pathStr}” (${remaining} remaining)`)
+      const statusPrefix = `Folder “${pathStr}” (${remaining} remaining)`
+      setStatus(statusPrefix)
+
+      const resources = await getResourcesForFolder(
+        handle,
+        folder.path,
+        state.chartFiles || []
+      )
+      const song = await loadSongFromResources(resources, {
+        onMessage: text => {
+          log(text)
+          setStatus(`${statusPrefix} ${text}`)
+        },
+      })
+      if (song.charts.length === 0) {
+        songsToSave.push({
+          path: folder.path,
+          song: song,
+        })
+      }
+      if (Date.now() > deadline) {
+        break
+      }
+    }
+
+    const songsToSavePathSet = new Set(
+      songsToSave.map(song => JSON.stringify(song.path))
+    )
+    const newSongs = [
+      ...(state.songs || []).filter(
+        song => !songsToSavePathSet.has(JSON.stringify(song.path))
+      ),
+      ...songsToSave,
+    ]
+    const newFoldersToUpdate = foldersToUpdate.filter(
+      folder => !updatedPathSet.has(JSON.stringify(folder.path))
+    )
+    return {
+      nextState: {
+        ...state,
+        foldersToUpdate: newFoldersToUpdate,
+        songs: newSongs,
+      },
+      moreIterationsNeeded: true,
     }
   }
+}
+
+async function getResourcesForFolder(
+  rootFolderHandle: FileSystemDirectoryHandle,
+  path: string[],
+  chartFiles: CustomFolderChartFile[]
+): Promise<ICustomSongResources> {
+  const folderHandle = await getFolderHandleByPath(rootFolderHandle, path)
+  const files = chartFiles.filter(
+    file =>
+      file.path.length === path.length + 1 &&
+      path.every((p, i) => p === file.path[i])
+  )
+  return {
+    fileList: Promise.resolve(
+      files.map(file => file.path[file.path.length - 1])
+    ),
+    async file(name) {
+      const fileHandle = await folderHandle.getFileHandle(name)
+      const file = await fileHandle.getFile()
+      return new FileResource(file)
+    },
+  }
+}
+
+async function getFolderHandleByPath(
+  rootFolderHandle: FileSystemDirectoryHandle,
+  path: string[]
+): Promise<FileSystemDirectoryHandle> {
+  let handle = rootFolderHandle
+  for (const name of path) {
+    handle = await handle.getDirectoryHandle(name)
+  }
+  return handle
 }
 
 type ScanIterationResult = {

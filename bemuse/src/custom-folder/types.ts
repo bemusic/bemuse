@@ -1,3 +1,5 @@
+import { Song } from 'bemuse/collection-model/types'
+
 export interface CustomFolderState {
   /**
    * The filesystem handle.
@@ -37,4 +39,5 @@ export interface CustomFolderChartFile {
 
 export interface CustomFolderSong {
   path: string[]
+  song: Song
 }

@@ -11,6 +11,7 @@ export type Song = {
   video_file?: string
   video_offset?: number
   replaygain?: string
+  charts: Chart[]
 
   /** Added by Bemuse at runtime */
   resources?: IResources
