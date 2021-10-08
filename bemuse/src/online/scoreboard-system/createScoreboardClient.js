@@ -250,6 +250,25 @@ export default function createScoreboardClient({
         return { playerToken: yield resolvePlayerTokenFromIdToken(idToken) }
       })
     },
+    changePassword({ email }) {
+      return new Promise((resolve, reject) => {
+        log('Auth0 forgot password')
+        auth.changePassword(
+          {
+            connection: 'Username-Password-Authentication',
+            email,
+          },
+          function(err, response) {
+            if (err) {
+              log('Auth0 password reset error', err)
+              return reject(coerceAuth0ErrorToErrorObject(err))
+            }
+            log('Auth result', response)
+            resolve({})
+          }
+        )
+      })
+    },
     submitScore({ playerToken, md5, playMode, input }) {
       return graphql({
         query: `

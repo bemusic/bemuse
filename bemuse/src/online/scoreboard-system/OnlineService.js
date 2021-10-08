@@ -91,6 +91,10 @@ export class OnlineService {
       })
   }
 
+  changePassword({ email }) {
+    return this._scoreboardClient.changePassword({ email })
+  }
+
   async logOut() {
     delete localStorage[`${this._storagePrefix}.id`]
     this._updateUserFromStorage()

@@ -96,18 +96,25 @@ export default class AuthenticationPanel extends React.Component {
     })
   }
 
-  doLogIn = formData => {
-    return Promise.try(() => {
-      if (!formData.username.trim()) {
-        throw new Error('Please enter your username.')
+  doLogIn = async formData => {
+    if (!formData.username.trim() && !formData.password.trim()) {
+      if (window.confirm('Did you forget your password?')) {
+        const email = window.prompt('Please enter your email address.')
+        if (email) {
+          await online.changePassword({ email })
+          throw new Error('Please check your email')
+        }
       }
-      if (!formData.password.trim()) {
-        throw new Error('Please enter your password.')
-      }
-      return online.logIn(formData).then(() => {
-        if (this.props.onFinish) this.props.onFinish()
-        return 'Welcome back!'
-      })
+    }
+    if (!formData.username.trim()) {
+      throw new Error('Please enter your username.')
+    }
+    if (!formData.password.trim()) {
+      throw new Error('Please enter your password.')
+    }
+    return online.logIn(formData).then(() => {
+      if (this.props.onFinish) this.props.onFinish()
+      return 'Welcome back!'
     })
   }
 

@@ -49,7 +49,7 @@ Icon
 
 /public/jspm_packages/
 
-/.env
+.env
 
 /.otto/
 /packages/*/lib/
