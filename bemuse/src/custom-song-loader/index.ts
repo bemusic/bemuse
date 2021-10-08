@@ -8,7 +8,6 @@ export function loadSongFromResources(
   options: LoadSongOptions = {}
 ) {
   var onMessage = options.onMessage || (() => {})
-  console.log(resources)
   if (resources.setLoggingFunction) {
     resources.setLoggingFunction(onMessage)
   }
