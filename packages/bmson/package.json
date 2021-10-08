@@ -1,6 +1,6 @@
 {
   "name": "bmson",
-  "version": "48.4.0",
+  "version": "48.5.1",
   "description": "BMSON support for Bemuse",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
@@ -31,7 +31,7 @@
   "devDependencies": {
     "@types/mocha": "^5.2.5",
     "@types/power-assert": "^1.5.0",
-    "bms": "^48.4.0",
+    "bms": "^48.5.1",
     "gulp": "^4.0.2",
     "mocha": "^5.2.0",
     "power-assert": "^1.6.1"
