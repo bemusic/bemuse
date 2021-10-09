@@ -47,23 +47,42 @@ it('allows setting custom folder and loading it in-game', async () => {
     song1,
     song2,
   }
-  const context = new CustomFolderContextMock()
-  await setCustomFolder(context, createMockFileSystemDirectoryHandle(folder))
-
-  const checkState = async (f: (state: CustomFolderState) => Promise<void>) => {
-    const state = await getCustomFolderState(context)
-    void expect(state).not.to.equal(undefined)
-    await f(state!)
-  }
-  await checkState(async state => {
+  const tester = new CustomFolderTestHarness()
+  await tester.setFolder(folder)
+  await tester.checkState(async state => {
     expect(state.chartFilesScanned).not.to.equal(true)
   })
 
-  await scanFolder(context, mockFolderScanIO)
-  await checkState(async state => {
+  await tester.scan()
+  await tester.checkState(async state => {
     expect(state.songs).to.have.length(2)
   })
 })
+
+class CustomFolderTestHarness {
+  private context = new CustomFolderContextMock()
+
+  constructor() {
+    this.context = new CustomFolderContextMock()
+  }
+
+  async setFolder(data: MockFolder) {
+    await setCustomFolder(
+      this.context,
+      createMockFileSystemDirectoryHandle(data)
+    )
+  }
+
+  async scan() {
+    await scanFolder(this.context, mockFolderScanIO)
+  }
+
+  async checkState(f: (state: CustomFolderState) => Promise<void>) {
+    const state = await getCustomFolderState(this.context)
+    void expect(state).not.to.equal(undefined)
+    await f(state!)
+  }
+}
 
 type MockFolder = {
   [name: string]: MockFolder | string
