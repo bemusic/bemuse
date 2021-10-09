@@ -65,23 +65,41 @@ const CustomFolderTester = () => {
     }
   }
 
+  const songCount = ((data && data.songs) || []).length || 0
+  const highlightIf = (condition: boolean) =>
+    condition ? { color: '#ff8' } : {}
   return (
     <div>
       {data ? (
         <div>
           <p>✅ A folder has been selected.</p>
           <hr />
-          <p>
+          <p style={highlightIf(songCount === 0)}>
             Click the Scan button to scan for new songs 👉{' '}
             <button onClick={scan}>🕵️ Scan</button>
           </p>
           <p>
-            Scan status: {status}
+            <strong>Scan status:</strong>
             <br />
-            Number of songs in the database: {(data.songs || []).length || 0}
+            <textarea
+              value={status}
+              readOnly
+              style={{
+                boxSizing: 'border-box',
+                border: 'none',
+                width: '100%',
+                background: '#333',
+                color: '#8e8',
+                font: 'inherit',
+              }}
+              rows={3}
+            />
           </p>
           <p>
-            Once the songs are in the database, you can
+            <strong>Number of songs in the database:</strong> {songCount}
+          </p>
+          <p style={highlightIf(songCount > 0)}>
+            Once the songs are in the database, you can{' '}
             <a href='.' style={{ color: '#abc' }}>
               play them in Bemuse!
             </a>
@@ -95,10 +113,13 @@ const CustomFolderTester = () => {
       ) : (
         <div>
           <p>No folder selected.</p>
-          <button onClick={setFolder}>Set folder</button>
+          <p style={highlightIf(true)}>
+            To get started 👉{' '}
+            <button onClick={setFolder}>Set custom songs folder</button>
+          </p>
           <p>
-            To get started, click the button above to select a song folder. (It
-            can contain many songs, each song in its own folder.)
+            The custom songs folder can contain any number of songs, but each
+            song must be in a separate folder.
           </p>
         </div>
       )}
@@ -110,14 +131,31 @@ export function main() {
   ReactDOM.render(
     <QueryClientProvider client={queryClient}>
       <div style={{ margin: '0 auto', maxWidth: '32em', padding: '0 1em' }}>
-        <h1>Bemuse custom song folder console</h1>
+        <h1>Bemuse custom songs folder console</h1>
         <p>
           This is a console for testing an upcoming feature: ✨
-          <strong>custom song folders</strong>✨. You can set a folder to scan
-          for custom songs, and it will be available in Bemuse game, no need to
-          drag individual songs anymore! A more polished UI may be added in
-          later, I hope.
+          <a
+            style={{ color: '#abc' }}
+            href='https://github.com/bemusic/bemuse/discussions/696'
+            target='_blank'
+          >
+            <strong>custom songs folder</strong>
+          </a>
+          ✨. You can set a folder to scan for custom songs, and it will be
+          available in Bemuse game, no need to drag individual songs anymore! A
+          more polished UI may be added in later, I hope.
         </p>
+        <p>
+          <a
+            style={{ color: '#abc' }}
+            href='https://github.com/bemusic/bemuse/discussions/696'
+            target='_blank'
+          >
+            Check out the announcement post for troubleshooting and known
+            issues.
+          </a>
+        </p>
+        <hr />
         <CustomFolderTester />
       </div>
     </QueryClientProvider>,
