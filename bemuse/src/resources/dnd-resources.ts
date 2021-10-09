@@ -1,4 +1,4 @@
-import { IResources, FileEntry, LoggingFunction } from './types'
+import { FileEntry, LoggingFunction, ICustomSongResources } from './types'
 import {
   CustomSongResources,
   ARCHIVE_REGEXP,
@@ -13,7 +13,8 @@ import {
 //
 // Now this `DndResources` class is really dumb and we want to prefer composition over inheritance.
 // This class should be removed.
-export class DndResources extends CustomSongResources implements IResources {
+export class DndResources extends CustomSongResources
+  implements ICustomSongResources {
   constructor(event: DragEvent) {
     super({
       getFiles: log => getFilesFromEvent(event, log),
