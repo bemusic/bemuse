@@ -101,7 +101,8 @@ async function scanIteration(
     handleMessage
   )
   if (!result) return
-  const { handle } = state as CustomFolderState
+  const handle = (state as CustomFolderState)
+    .handle as FileSystemDirectoryHandle
 
   // Enumerate all the files.
   if (!state!.chartFilesScanned) {
@@ -135,7 +136,7 @@ async function scanIteration(
   }
 
   if ((state?.foldersToUpdate?.length ?? 0) > 0) {
-    return await updateFolders(state!, context, io)
+    return await updateFolders(state!, handle, io)
   }
 }
 
