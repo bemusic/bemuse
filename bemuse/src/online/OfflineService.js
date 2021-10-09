@@ -21,6 +21,10 @@ export class OfflineService {
     return no()
   }
 
+  changePassword({ email }) {
+    return no()
+  }
+
   submitScore(info) {
     return Promise.reject(new Error('Online services not enabled.'))
   }

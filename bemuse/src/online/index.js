@@ -35,6 +35,10 @@ export function Online(service) {
     )
   }
 
+  function changePassword(options) {
+    return Promise.resolve(service.changePassword(options))
+  }
+
   function logOut() {
     return service.logOut().tap(() => user口.push(null))
   }
@@ -225,6 +229,7 @@ export function Online(service) {
     signUp,
     logIn,
     logOut,
+    changePassword,
     submitScore,
     scoreboard: getScoreboard,
     Ranking,
