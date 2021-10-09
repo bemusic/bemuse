@@ -43,16 +43,29 @@ const song2: MockFolder = {
 }
 
 it('allows setting custom folder and loading it in-game', async () => {
-  const folder: MockFolder = {
-    song1,
-    song2,
-  }
+  const folder: MockFolder = { song1, song2 }
   const tester = new CustomFolderTestHarness()
   await tester.setFolder(folder)
   await tester.checkState(async state => {
     expect(state.chartFilesScanned).not.to.equal(true)
   })
 
+  await tester.scan()
+  await tester.checkState(async state => {
+    expect(state.songs).to.have.length(2)
+  })
+})
+
+it('can scan for new songs', async () => {
+  const folder: MockFolder = { song1 }
+  const tester = new CustomFolderTestHarness()
+  await tester.setFolder(folder)
+  await tester.scan()
+  await tester.checkState(async state => {
+    expect(state.songs).to.have.length(1)
+  })
+
+  folder['song2'] = song2
   await tester.scan()
   await tester.checkState(async state => {
     expect(state.songs).to.have.length(2)

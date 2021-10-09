@@ -62,6 +62,13 @@ export async function scanFolder(
   for (let i = 1; ; i++) {
     log(`Iteration #${i} start`)
     const result = await scanIteration(state, context, io)
+
+    // If there is nothing to be done in the very first iteration, let’s rescan the folder for new chart files.
+    if (!result && i === 1) {
+      state = { ...state, chartFilesScanned: false }
+      continue
+    }
+
     if (!result) {
       break
     }
