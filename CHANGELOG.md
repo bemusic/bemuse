@@ -19,6 +19,27 @@
 [@vishal5251]: https://github.com/vishal5251
 [@s-pace]: https://github.com/s-pace
 
+## v49.0.0-pre.202110090716
+
+### New stuff
+
+- **If you forgot your password you can now reset it.** Click the login button
+  without specifying the username or password, then Bemuse will ask for your
+  email. A better UI may be implemented in later releases. [#694], by [@dtinth]
+- **Feature preview: Custom songs folder.**
+
+  Currently, to play custom songs, you must drag the song you want to play into
+  Bemuse window. This can be a bit inconvenient if you have many songs to play.
+
+  This new feature, currently in preview, lets you pick a folder that contains
+  all your custom songs. The folder selection is saved locally, so next time you
+  return to Bemuse your custom songs will be there.
+  [Check out the announcement post to find out how to access this feature preview.](https://github.com/bemusic/bemuse/discussions/696)
+  [#695], by [@dtinth]
+
+[#694]: https://github.com/bemusic/bemuse/pull/694
+[#695]: https://github.com/bemusic/bemuse/pull/695
+
 ## v48.5.1 (2021-10-08)
 
 ### Internals
