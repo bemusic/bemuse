@@ -34,6 +34,7 @@ export async function setCustomFolder(
     handle: folder,
   })
 }
+
 export async function clearCustomFolder(context: CustomFolderContext) {
   await context.del(CUSTOM_FOLDER_KEYVAL_KEY)
 }
@@ -46,7 +47,7 @@ export const getDefaultCustomFolderContext = _.once(
   () => new CustomFolderContextImpl()
 )
 
-type CustomFolderScanIO = {
+export type CustomFolderScanIO = {
   log: (message: string) => void
   setStatus: (message: string) => void
   updateState: (state: CustomFolderState) => void
