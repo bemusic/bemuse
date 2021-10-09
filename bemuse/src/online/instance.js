@@ -19,7 +19,7 @@ if (config.AUTH0_CLIENT_ID && config.AUTH0_DOMAIN && config.SCOREBOARD_SERVER) {
   )
 } else {
   console.warn(
-    'Warning: No Parse API keys specified. Online functionalities wilt not work.'
+    'Warning: No Auth0 API keys specified. Online functionalities wilt not work.'
   )
   instance = new Online(new OfflineService())
 }

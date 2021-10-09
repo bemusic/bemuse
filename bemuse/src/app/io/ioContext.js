@@ -8,7 +8,7 @@ import createCollectionLoader from '../interactors/createCollectionLoader'
 import findMatchingSong from '../interactors/findMatchingSong'
 import store from '../redux/instance'
 import { getInitiallySelectedSong } from '../query-flags'
-import { loadSongFromResources } from '../song-loader'
+import { loadSongFromResources } from '../../custom-song-loader'
 
 // Configure a collection loader, which loads the Bemuse music collection.
 const collectionLoader = createCollectionLoader({

@@ -1,10 +1,13 @@
-import Worker from './song-loader.worker.js'
+import { Song } from 'bemuse/collection-model/types'
+import { ICustomSongResources } from 'bemuse/resources/types'
+import Worker from './song-loader.worker'
 
 /* eslint import/no-webpack-loader-syntax: off */
-
-export function loadSongFromResources(resources, options = {}) {
+export function loadSongFromResources(
+  resources: ICustomSongResources,
+  options: LoadSongOptions = {}
+) {
   var onMessage = options.onMessage || (() => {})
-  console.log(resources)
   if (resources.setLoggingFunction) {
     resources.setLoggingFunction(onMessage)
   }
@@ -34,7 +37,7 @@ export function loadSongFromResources(resources, options = {}) {
       })
     })
     .then(files => {
-      return new Promise((resolve, reject) => {
+      return new Promise<Song>((resolve, reject) => {
         let worker = new Worker()
         worker.onmessage = function({ data }) {
           if (data.type === 'result') {
@@ -67,4 +70,8 @@ export function loadSongFromResources(resources, options = {}) {
       song.resources = resources
       return song
     })
+}
+
+export interface LoadSongOptions {
+  onMessage?: (message: string) => void
 }

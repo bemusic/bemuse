@@ -1,5 +1,10 @@
 import * as ProgressUtils from 'bemuse/progress/utils'
-import { IResources, FileEntry, LoggingFunction, IResource } from './types'
+import {
+  FileEntry,
+  LoggingFunction,
+  IResource,
+  ICustomSongResources,
+} from './types'
 import ResourceLogging from './resource-logging'
 import { unarchive } from './unarchiver'
 import readBlob from 'bemuse/utils/read-blob'
@@ -22,7 +27,7 @@ export interface CustomResourceProvider {
 /**
  * An IResources for songs provided by a CustomResourceProvider.
  */
-export class CustomSongResources implements IResources {
+export class CustomSongResources implements ICustomSongResources {
   private _logging = new ResourceLogging()
   private _files: PromiseLike<FileEntry[]>
   public setLoggingFunction = this._logging.setLoggingFunction
@@ -42,7 +47,7 @@ export class CustomSongResources implements IResources {
       throw new Error('unable to find ' + name)
     })
   }
-  get fileList() {
+  get fileList(): Promise<string[]> {
     return Promise.resolve(this._files).map(f => f.name)
   }
 }

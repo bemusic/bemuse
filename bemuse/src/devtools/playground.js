@@ -10,7 +10,7 @@ const availablePlaygrounds = (function(context) {
     playgrounds[name] = context(key)
   }
   return playgrounds
-})(require.context('./playgrounds', false, /\.jsx?$/))
+})(require.context('./playgrounds', false, /\.[jt]sx?$/))
 
 class DefaultPlayground extends React.Component {
   static main() {
