@@ -1,6 +1,6 @@
 {
   "name": "build-scripts",
-  "version": "48.5.1",
+  "version": "49.0.0",
   "private": true,
   "dependencies": {
     "execa": "^4.0.0",
