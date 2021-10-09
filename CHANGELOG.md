@@ -19,7 +19,7 @@
 [@vishal5251]: https://github.com/vishal5251
 [@s-pace]: https://github.com/s-pace
 
-## v49.0.0-pre.202110090716
+## v49 (2021-10-09)
 
 ### New stuff
 
