@@ -136,7 +136,7 @@ async function scanIteration(
   }
 
   if ((state?.foldersToUpdate?.length ?? 0) > 0) {
-    return await updateFolders(state!, handle, io)
+    return updateFolders(state!, handle, io)
   }
 }
 
@@ -239,7 +239,7 @@ async function updateFolders(
       const { resources: _unused, ...song } = await loadSongFromResources(
         resources,
         {
-          onMessage: text => {
+          onMessage: (text) => {
             log(text)
             setStatus(`${statusPrefix} ${text}`)
           },
@@ -257,16 +257,16 @@ async function updateFolders(
     }
 
     const songsToSavePathSet = new Set(
-      songsToSave.map(song => JSON.stringify(song.path))
+      songsToSave.map((song) => JSON.stringify(song.path))
     )
     const newSongs = [
       ...(state.songs || []).filter(
-        song => !songsToSavePathSet.has(JSON.stringify(song.path))
+        (song) => !songsToSavePathSet.has(JSON.stringify(song.path))
       ),
       ...songsToSave,
     ]
     const newFoldersToUpdate = foldersToUpdate.filter(
-      folder => !updatedPathSet.has(JSON.stringify(folder.path))
+      (folder) => !updatedPathSet.has(JSON.stringify(folder.path))
     )
     return {
       nextState: {
@@ -286,13 +286,13 @@ async function getResourcesForFolder(
 ): Promise<ICustomSongResources> {
   const folderHandle = await getFolderHandleByPath(rootFolderHandle, path)
   const files = chartFiles.filter(
-    file =>
+    (file) =>
       file.path.length === path.length + 1 &&
       path.every((p, i) => p === file.path[i])
   )
   return {
     fileList: Promise.resolve(
-      files.map(file => file.path[file.path.length - 1])
+      files.map((file) => file.path[file.path.length - 1])
     ),
     async file(name) {
       const fileHandle = await folderHandle.getFileHandle(name)
@@ -331,10 +331,10 @@ class ChartFileScanner {
     private fast = false
   ) {
     this.existingMap = new Map(
-      _.map(this.previous, file => [JSON.stringify(file.path), file])
+      _.map(this.previous, (file) => [JSON.stringify(file.path), file])
     )
     this.existingFolderSet = new Set(
-      _.map(this.previous, file => JSON.stringify(file.path.slice(0, -1)))
+      _.map(this.previous, (file) => JSON.stringify(file.path.slice(0, -1)))
     )
   }
 
@@ -374,15 +374,15 @@ class ChartFileScanner {
   }
 
   getFoldersToUpdate(): CustomFolderFolderEntry[] {
-    return [...this.updatedFolderSet].map(folderKey => ({
+    return [...this.updatedFolderSet].map((folderKey) => ({
       path: JSON.parse(folderKey) as string[],
     }))
   }
 
   getFoldersToRemove(): CustomFolderFolderEntry[] {
     return [...this.existingFolderSet]
-      .filter(folderKey => !this.foundFolderSet.has(folderKey))
-      .map(folderKey => ({
+      .filter((folderKey) => !this.foundFolderSet.has(folderKey))
+      .map((folderKey) => ({
         path: JSON.parse(folderKey) as string[],
       }))
   }
