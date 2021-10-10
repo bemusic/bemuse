@@ -180,7 +180,7 @@ async function searchForChartFiles(
   chartFileScanner: ChartFileScanner,
   io: CustomFolderScanIO,
   parentPath: string[] = []
-): Promise<any> {
+): Promise<void> {
   let entriesRead = 0
   const { log, setStatus } = io
   for await (let [name, handle] of directoryHandle) {
