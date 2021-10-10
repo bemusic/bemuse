@@ -90,48 +90,14 @@ async function scanIteration(
   context: CustomFolderContext,
   io: CustomFolderScanIO
 ): Promise<ScanIterationResult | undefined> {
-  const { log, setStatus } = io
-  const stateMessage = 'No custom folder set.'
-  const handleMessage = 'No folder selected.'
-
-  const result = await checkFolderStateAndPermissions(
-    inputState,
-    io,
-    stateMessage,
-    handleMessage
-  )
-  if (!result) return
+  const result = await checkFolderStateAndPermissions(inputState, io)
+  if (!result) {
+    return
+  }
   const { state, handle } = result
 
-  // Enumerate all the files.
   if (!state!.chartFilesScanned) {
-    const chartFileScanner = new ChartFileScanner(state!.chartFiles, true)
-    await searchForChartFiles(handle, chartFileScanner, io)
-
-    const newChartFiles = chartFileScanner.getNewChartFiles()
-    const foldersToUpdate = chartFileScanner.getFoldersToUpdate()
-    const foldersToRemove = chartFileScanner.getFoldersToRemove()
-    const message =
-      'Scanning done. ' +
-      [
-        `Charts: ${newChartFiles.length}`,
-        `Folders: ${chartFileScanner.getFolderCount()}`,
-        `Folders to update: ${foldersToUpdate.length}`,
-        `Folders to remove: ${foldersToRemove.length}`,
-      ].join('; ')
-    log(message)
-    setStatus(message)
-
-    return {
-      nextState: {
-        ...state,
-        chartFiles: newChartFiles,
-        chartFilesScanned: true,
-        foldersToUpdate,
-        foldersToRemove,
-      },
-      moreIterationsNeeded: true,
-    }
+    return scanAllChartFiles(state, handle, io)
   }
 
   if ((state?.foldersToUpdate?.length ?? 0) > 0) {
@@ -141,9 +107,7 @@ async function scanIteration(
 
 async function checkFolderStateAndPermissions(
   state: CustomFolderState | undefined,
-  io: CustomFolderScanIO,
-  stateMessage: string,
-  handleMessage: string
+  io: CustomFolderScanIO
 ): Promise<
   | {
       state: CustomFolderState
@@ -153,19 +117,20 @@ async function checkFolderStateAndPermissions(
 > {
   const { log, setStatus } = io
   if (!state) {
-    log(stateMessage)
-    setStatus(stateMessage)
+    const message = 'No custom folder set.'
+    log(message)
+    setStatus(message)
     return
   }
 
   const { handle } = state
   if (!handle) {
-    log(handleMessage)
-    setStatus(handleMessage)
+    const message = 'No folder selected.'
+    log(message)
+    setStatus(message)
     return
   }
 
-  // Check permissions.
   let permission = await handle.queryPermission({ mode: 'read' })
   if (permission === 'prompt') {
     setStatus('Waiting for permission — please grant access to the folder.')
@@ -178,6 +143,41 @@ async function checkFolderStateAndPermissions(
   }
 
   return { state, handle }
+}
+
+async function scanAllChartFiles(
+  state: CustomFolderState,
+  handle: FileSystemDirectoryHandle,
+  io: CustomFolderScanIO
+): Promise<ScanIterationResult | undefined> {
+  const { log, setStatus } = io
+  const chartFileScanner = new ChartFileScanner(state!.chartFiles, true)
+  await searchForChartFiles(handle, chartFileScanner, io)
+
+  const newChartFiles = chartFileScanner.getNewChartFiles()
+  const foldersToUpdate = chartFileScanner.getFoldersToUpdate()
+  const foldersToRemove = chartFileScanner.getFoldersToRemove()
+  const message =
+    'Scanning done. ' +
+    [
+      `Charts: ${newChartFiles.length}`,
+      `Folders: ${chartFileScanner.getFolderCount()}`,
+      `Folders to update: ${foldersToUpdate.length}`,
+      `Folders to remove: ${foldersToRemove.length}`,
+    ].join('; ')
+  log(message)
+  setStatus(message)
+
+  return {
+    nextState: {
+      ...state,
+      chartFiles: newChartFiles,
+      chartFilesScanned: true,
+      foldersToUpdate,
+      foldersToRemove,
+    },
+    moreIterationsNeeded: true,
+  }
 }
 
 async function searchForChartFiles(
@@ -218,7 +218,7 @@ async function updateFolders(
   state: CustomFolderState,
   handle: FileSystemDirectoryHandle,
   io: CustomFolderScanIO
-) {
+): Promise<ScanIterationResult | undefined> {
   const { log, setStatus } = io
   if ((state?.foldersToUpdate?.length || 0) > 0) {
     const foldersToUpdate = [...state.foldersToUpdate!]
