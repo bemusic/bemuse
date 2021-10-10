@@ -25,7 +25,7 @@ export function download(url) {
         xh.onerror = () => reject(new Error(`Unable to download ${url}`))
         if (progress) {
           progress.formatter = BYTES_FORMATTER
-          xh.onprogress = e => progress.report(e.loaded, e.total)
+          xh.onprogress = (e) => progress.report(e.loaded, e.total)
         }
         xh.send(null)
       })

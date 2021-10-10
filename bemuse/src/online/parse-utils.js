@@ -1,7 +1,7 @@
 // Wraps a Parse promise with a Bluebird promise,
 // and throws a proper Error object, instead of a custom one.
 export function wrapPromise(promise) {
-  return Promise.resolve(promise).catch(function(error) {
+  return Promise.resolve(promise).catch(function (error) {
     if (error instanceof Error) {
       throw error
     } else {

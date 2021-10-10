@@ -1,9 +1,9 @@
 var { Keysounds } = require('../lib')
 const { expect } = require('chai')
 
-describe('Keysounds', function() {
-  describe('#files', function() {
-    it('should get list of all files', function() {
+describe('Keysounds', function () {
+  describe('#files', function () {
+    it('should get list of all files', function () {
       expect(
         new Keysounds({
           AA: 'a.wav',
@@ -14,8 +14,8 @@ describe('Keysounds', function() {
     })
   })
 
-  describe('#all', function() {
-    it('should return the keysound map', function() {
+  describe('#all', function () {
+    it('should return the keysound map', function () {
       expect(
         new Keysounds({
           AA: 'a.wav',

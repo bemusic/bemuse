@@ -3,8 +3,8 @@ import { given, shouldEqual, withReducer } from 'circumstance'
 
 const { dispatch, initialState } = withReducer(ReduxState.reducer)
 
-describe('ReduxState', function() {
-  describe('integration test', function() {
+describe('ReduxState', function () {
+  describe('integration test', function () {
     const givenLoadedCollection = given(initialState)
       .and(
         dispatch({
@@ -88,12 +88,12 @@ describe('ReduxState', function() {
       givenLoadedCollection
         .then(
           ReduxState.selectSelectedSong,
-          song => song.title,
+          (song) => song.title,
           shouldEqual('Anhedonia')
         )
         .and(
           ReduxState.selectSelectedChart,
-          chart => chart.file,
+          (chart) => chart.file,
           shouldEqual('00_anhedonia_7b.bms')
         ))
   })

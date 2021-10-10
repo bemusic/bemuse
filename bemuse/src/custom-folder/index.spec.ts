@@ -10,10 +10,10 @@ import { CustomFolderState } from './types'
 const debugging = false
 
 const mockFolderScanIO: CustomFolderScanIO = {
-  log: text => {
+  log: (text) => {
     debugging && console.log('scanFolder: [log]', text)
   },
-  setStatus: text => {
+  setStatus: (text) => {
     debugging && console.debug('scanFolder: [setStatus]', text)
   },
   updateState: () => {},
@@ -46,12 +46,12 @@ it('allows setting custom folder and loading it in-game', async () => {
   const folder: MockFolder = { song1, song2 }
   const tester = new CustomFolderTestHarness()
   await tester.setFolder(folder)
-  await tester.checkState(async state => {
+  await tester.checkState(async (state) => {
     expect(state.chartFilesScanned).not.to.equal(true)
   })
 
   await tester.scan()
-  await tester.checkState(async state => {
+  await tester.checkState(async (state) => {
     expect(state.songs).to.have.length(2)
   })
 })
@@ -61,13 +61,13 @@ it('can scan for new songs', async () => {
   const tester = new CustomFolderTestHarness()
   await tester.setFolder(folder)
   await tester.scan()
-  await tester.checkState(async state => {
+  await tester.checkState(async (state) => {
     expect(state.songs).to.have.length(1)
   })
 
   folder['song2'] = song2
   await tester.scan()
-  await tester.checkState(async state => {
+  await tester.checkState(async (state) => {
     expect(state.songs).to.have.length(2)
   })
 })
@@ -107,7 +107,7 @@ function createMockFileSystemDirectoryHandle(
   return {
     kind: 'directory',
     queryPermission: async () => 'granted',
-    [Symbol.asyncIterator]: async function*() {
+    [Symbol.asyncIterator]: async function* () {
       for (const [name, value] of Object.entries(data)) {
         if (typeof value === 'string') {
           yield [name, createMockFileSystemFileHandle(name, value)] as const

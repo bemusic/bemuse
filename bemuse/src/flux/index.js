@@ -5,9 +5,9 @@ export { Bacon }
 
 let lock = false
 
-export function Action(transform = x => x) {
+export function Action(transform = (x) => x) {
   var bus = new Bacon.Bus()
-  var action = function() {
+  var action = function () {
     if (lock) {
       throw new Error(
         'An action should not fire another action! (' + lock.stack + ')'
@@ -22,8 +22,8 @@ export function Action(transform = x => x) {
     }
   }
   action.bus = bus
-  action.debug = function(prefix) {
-    bus.map(value => [prefix, value]).log()
+  action.debug = function (prefix) {
+    bus.map((value) => [prefix, value]).log()
     return action
   }
   return action
@@ -34,7 +34,7 @@ export function Store(store, options = {}) {
   store = toProperty(store)
   store.get = () => {
     let data
-    let unsubscribe = store.onValue(_data => (data = _data))
+    let unsubscribe = store.onValue((_data) => (data = _data))
     setTimeout(unsubscribe)
     return data
   }
@@ -56,7 +56,7 @@ function toProperty(store) {
   }
 }
 
-export const connect = props川 => Component => {
+export const connect = (props川) => (Component) => {
   let propsProperty = toProperty(props川)
   return class extends React.Component {
     constructor(props) {
@@ -64,7 +64,7 @@ export const connect = props川 => Component => {
       this._unsubscribe = propsProperty.onValue(this.handleValue)
       let initialValue
       const initialUnsubscribe = propsProperty.onValue(
-        value => (initialValue = value)
+        (value) => (initialValue = value)
       )
       initialUnsubscribe()
       this.state = { value: initialValue }
@@ -79,12 +79,12 @@ export const connect = props川 => Component => {
       this._mounted = true
     }
 
-    handleValue = value => {
+    handleValue = (value) => {
       if (this._mounted) this.setState({ value })
     }
 
     render() {
-      return <Component {...this.state.value || {}} {...this.props} />
+      return <Component {...(this.state.value || {})} {...this.props} />
     }
   }
 }

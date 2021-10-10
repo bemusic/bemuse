@@ -130,8 +130,8 @@ export function judgeTimeWith(f: (timegate: Timegate) => number) {
   }
 }
 
-export const judgeTime = judgeTimeWith(t => t.timegate)
-export const judgeEndTime = judgeTimeWith(t => t.endTimegate)
+export const judgeTime = judgeTimeWith((t) => t.timegate)
+export const judgeEndTime = judgeTimeWith((t) => t.endTimegate)
 
 export function timegate(judgment: Judgment, judge = NORMAL_JUDGE) {
   return _.find(judge.getTimegates(null, null), { value: judgment })!.timegate

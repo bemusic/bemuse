@@ -48,7 +48,7 @@ class NativeIPFSResources {
     throw new Error('unable to find ' + name)
   }
   get fileList() {
-    return this._getLinks().then(links => links.map(l => l.name))
+    return this._getLinks().then((links) => links.map((l) => l.name))
   }
 }
 
@@ -60,7 +60,7 @@ class NativeIPFSFileResource {
   read(progress) {
     return ProgressUtils.atomic(
       progress,
-      window.ipfs.files.cat(this._multihash).then(a => a.buffer)
+      window.ipfs.files.cat(this._multihash).then((a) => a.buffer)
     )
   }
   get name() {
@@ -104,7 +104,7 @@ class GatewayIPFSResources {
     for (const l of links) {
       if (l.Name.toLowerCase() === name.toLowerCase()) {
         const pathname =
-          '/' + [...base, l.Name].map(x => encodeURIComponent(x)).join('/')
+          '/' + [...base, l.Name].map((x) => encodeURIComponent(x)).join('/')
         return new LimitedConcurrencyResource(
           this._throat,
           new URLResource(`${this._gateway}${pathname}`)
@@ -114,7 +114,7 @@ class GatewayIPFSResources {
     throw new Error('unable to find ' + name)
   }
   get fileList() {
-    return this._getLinks().then(links => links.map(l => l.Name))
+    return this._getLinks().then((links) => links.map((l) => l.Name))
   }
 }
 

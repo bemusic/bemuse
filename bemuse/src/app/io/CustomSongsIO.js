@@ -19,7 +19,7 @@ export function handleCustomSongFolderDrop(event) {
 export function handleCustomSongURLLoad(url) {
   return createIO(async ({ store, customSongLoader }) => {
     const resources = new CustomSongResources({
-      getFiles: async log => [await downloadFileEntryFromURL(url, log)],
+      getFiles: async (log) => [await downloadFileEntryFromURL(url, log)],
     })
     const initialLog = ['Loading from ' + url]
     return loadCustomSong(resources, initialLog, { store, customSongLoader })

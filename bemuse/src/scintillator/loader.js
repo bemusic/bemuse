@@ -36,29 +36,29 @@ export async function load(xmlPath, progress) {
 }
 
 function loadXml(xmlUrl) {
-  return Promise.resolve($.ajax({ url: xmlUrl, dataType: 'xml' })).then(xml =>
+  return Promise.resolve($.ajax({ url: xmlUrl, dataType: 'xml' })).then((xml) =>
     $(xml.documentElement)
   )
 }
 
 function loadResources(resources, progress) {
   log('loading resources')
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     if (resources.urls.length === 0) return resolve()
     let loader = new PIXI.loaders.Loader()
     for (let url of resources.urls) {
       loader.add(url, url)
     }
-    loader.once('complete', function() {
+    loader.once('complete', function () {
       log('resources finished loading')
       resolve()
     })
     if (progress) {
       progress.formatter = PERCENTAGE_FORMATTER
-      loader.once('complete', function() {
+      loader.once('complete', function () {
         progress.report(100, 100)
       })
-      loader.on('progress', function() {
+      loader.on('progress', function () {
         progress.report(loader.progress, 100)
       })
     }

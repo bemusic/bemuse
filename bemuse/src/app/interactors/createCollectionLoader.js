@@ -11,15 +11,15 @@ export function createCollectionLoader({
 }) {
   const collectionUrl川 = new Rx.Subject()
   const sideEffect川 = collectionUrl川
-    .groupBy(url => url)
-    .flatMap(url川 =>
-      url川.switchMap(url =>
+    .groupBy((url) => url)
+    .flatMap((url川) =>
+      url川.switchMap((url) =>
         Rx.Observable.concat(
           Rx.Observable.of(() => onBeginLoading(url)),
           Rx.Observable.fromPromise(
             loadCollection(url, { fetch }).then(
-              data => () => onLoad(url, data),
-              error => () => onErrorLoading(url, error)
+              (data) => () => onLoad(url, data),
+              (error) => () => onErrorLoading(url, error)
             )
           )
         )

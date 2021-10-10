@@ -10,12 +10,12 @@ export default readBlob
 export function readBlob(blob) {
   return {
     as(type) {
-      return new Promise(function(resolve, reject) {
+      return new Promise(function (resolve, reject) {
         let reader = new FileReader()
-        reader.onload = function() {
+        reader.onload = function () {
           resolve(reader.result)
         }
-        reader.onerror = function() {
+        reader.onerror = function () {
           reject(new Error('Unable to read from Blob'))
         }
         switch (type) {

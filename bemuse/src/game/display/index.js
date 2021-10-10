@@ -13,7 +13,10 @@ export class GameDisplay {
     this._context = context
     const skinData = context.skinData
     this._players = new Map(
-      game.players.map(player => [player, new PlayerDisplay(player, skinData)])
+      game.players.map((player) => [
+        player,
+        new PlayerDisplay(player, skinData),
+      ])
     )
     this._stateful = {}
     this._wrapper = this._createWrapper({
@@ -119,16 +122,14 @@ export class GameDisplay {
       .append('<div class="game-display--bg js-back-image"></div>')
       .append(this.view)
     if (backgroundImagePromise) {
-      Promise.resolve(backgroundImagePromise).then(image =>
+      Promise.resolve(backgroundImagePromise).then((image) =>
         $wrapper.find('.js-back-image').append(image)
       )
     }
     if (video) {
       this._video = video.element
       this._videoOffset = video.offset
-      $(video.element)
-        .addClass('game-display--video-bg')
-        .appendTo($wrapper)
+      $(video.element).addClass('game-display--video-bg').appendTo($wrapper)
     }
     return $wrapper[0]
   }
@@ -181,12 +182,12 @@ function createTouchButton(onClick, className) {
   let button = document.createElement('button')
   button.addEventListener(
     'touchstart',
-    e => {
+    (e) => {
       e.stopPropagation()
     },
     true
   )
-  button.onclick = e => {
+  button.onclick = (e) => {
     e.preventDefault()
     onClick()
   }

@@ -19,11 +19,11 @@ export async function main() {
     window.removeEventListener('touchstart', unmute)
   })
 
-  let displayShell = function(options) {
-    return new Promise(function(resolve) {
+  let displayShell = function (options) {
+    return new Promise(function (resolve) {
       let scene = React.createElement(GameShellScene, {
         options: options,
-        play: function(data) {
+        play: function (data) {
           resolve(data)
         },
       })
@@ -31,8 +31,8 @@ export async function main() {
     })
   }
 
-  let getSong = async function() {
-    let kbm = (query.keyboard || '').split(',').map(x => +x)
+  let getSong = async function () {
+    let kbm = (query.keyboard || '').split(',').map((x) => +x)
     let options = {
       url: query.bms || '/music/[snack]dddd/dddd_sph.bme',
       game: {
@@ -46,13 +46,13 @@ export async function main() {
           scratch: query.scratch || 'left',
           input: {
             keyboard: {
-              '1': kbm[0] || 83,
-              '2': kbm[1] || 68,
-              '3': kbm[2] || 70,
-              '4': kbm[3] || 32,
-              '5': kbm[4] || 74,
-              '6': kbm[5] || 75,
-              '7': kbm[6] || 76,
+              1: kbm[0] || 83,
+              2: kbm[1] || 68,
+              3: kbm[2] || 70,
+              4: kbm[3] || 32,
+              5: kbm[4] || 74,
+              6: kbm[5] || 75,
+              7: kbm[6] || 76,
               SC: kbm[7] || 65,
               SC2: kbm[8] || 16,
             },

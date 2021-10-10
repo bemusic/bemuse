@@ -107,7 +107,7 @@ function ReactScene(element, ReactSceneContainer) {
     let teardown = () => {}
     const clonedElement = React.cloneElement(element, {
       scene: element,
-      registerTeardownCallback: callback => {
+      registerTeardownCallback: (callback) => {
         teardown = callback
       },
     })

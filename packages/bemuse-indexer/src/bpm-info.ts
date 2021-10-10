@@ -2,15 +2,12 @@ import _ from 'lodash'
 import * as BMS from 'bms'
 
 export function getBpmInfo(notes: BMS.Notes, timing: BMS.Timing) {
-  var maxBeat =
-    _(notes.all())
-      .map('beat')
-      .max() || 0
+  var maxBeat = _(notes.all()).map('beat').max() || 0
   var beats = _(timing.getEventBeats())
     .concat([0, maxBeat])
     .sortBy()
     .uniq()
-    .filter(beat => beat! <= maxBeat)
+    .filter((beat) => beat! <= maxBeat)
     .value()
   var data: [number, number][] = []
   for (var i = 0; i + 1 < beats.length; i++) {

@@ -15,11 +15,11 @@ import OptionsSpeed from './OptionsSpeed'
 import connectIO from '../../impure-react/connectIO'
 
 const SettingRow = compose(
-  connect(state => ({ options: state.options })),
+  connect((state) => ({ options: state.options })),
   connectIO({
-    onUpdateOptions: () => updater => OptionsIO.updateOptions(updater),
+    onUpdateOptions: () => (updater) => OptionsIO.updateOptions(updater),
   })
-)(props => {
+)((props) => {
   const { label, isVisible, help, renderControl } = props // user-supplied
   const { options, onUpdateOptions } = props // from higher-order component
   const visible = isVisible ? isVisible(options) : true
@@ -41,11 +41,11 @@ class OptionsPlayer extends React.Component {
       <div className='OptionsPlayer'>
         <SettingRow
           label='Speed'
-          isVisible={options => !Options.isAutoVelocityEnabled(options)}
+          isVisible={(options) => !Options.isAutoVelocityEnabled(options)}
           renderControl={(options, onUpdateOptions) => (
             <OptionsSpeed
               value={Options.speed(options)}
-              onChange={speed => onUpdateOptions(Options.changeSpeed(speed))}
+              onChange={(speed) => onUpdateOptions(Options.changeSpeed(speed))}
             />
           )}
           help={
@@ -59,14 +59,14 @@ class OptionsPlayer extends React.Component {
 
         <SettingRow
           label='LeadTime'
-          isVisible={options => Options.isAutoVelocityEnabled(options)}
+          isVisible={(options) => Options.isAutoVelocityEnabled(options)}
           renderControl={(options, onUpdateOptions) => (
             <OptionsInputField
-              parse={str => parseInt(str, 10)}
-              stringify={value => String(value) + 'ms'}
+              parse={(str) => parseInt(str, 10)}
+              stringify={(value) => String(value) + 'ms'}
               validator={/^\d+(ms)?$/}
               value={Options.leadTime(options)}
-              onChange={leadTime =>
+              onChange={(leadTime) =>
                 onUpdateOptions(Options.changeLeadTime(leadTime))
               }
               style={{ width: '5em' }}
@@ -92,7 +92,7 @@ class OptionsPlayer extends React.Component {
                 { value: 'off', label: 'Disabled' },
               ]}
               value={Options.scratchPosition(options)}
-              onSelect={position =>
+              onSelect={(position) =>
                 onUpdateOptions(Options.changeScratchPosition(position))
               }
             />
@@ -110,7 +110,7 @@ class OptionsPlayer extends React.Component {
                 { value: 'right', label: 'Right' },
                 { value: '3d', label: '3D [Beta]' },
               ]}
-              onSelect={value =>
+              onSelect={(value) =>
                 onUpdateOptions(Options.changePanelPlacement(value))
               }
               value={Options.panelPlacement(options)}
@@ -122,11 +122,11 @@ class OptionsPlayer extends React.Component {
           label='Cover'
           renderControl={(options, onUpdateOptions) => (
             <OptionsInputField
-              parse={str => parseInt(str, 10) / 100}
-              stringify={value => Math.round(value * 100 || 0) + '%'}
+              parse={(str) => parseInt(str, 10) / 100}
+              stringify={(value) => Math.round(value * 100 || 0) + '%'}
               validator={/^-?\d+(%)?$/}
               value={Options.laneCover(options)}
-              onChange={laneCover =>
+              onChange={(laneCover) =>
                 onUpdateOptions(Options.changeLaneCover(laneCover))
               }
               style={{ width: '5em' }}

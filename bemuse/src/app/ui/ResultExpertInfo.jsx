@@ -15,16 +15,15 @@ export default class ResultExpertInfo extends React.Component {
   }
   getStats = (() => {
     const selectNonMissedDeltas = createSelector(
-      props => props.deltas,
-      deltas => getNonMissedDeltas(deltas)
+      (props) => props.deltas,
+      (deltas) => getNonMissedDeltas(deltas)
     )
-    const selectMean = createSelector(
-      selectNonMissedDeltas,
-      deltas => mean(deltas)
+    const selectMean = createSelector(selectNonMissedDeltas, (deltas) =>
+      mean(deltas)
     )
     const selectStandardDeviation = createSelector(
       selectNonMissedDeltas,
-      deltas => Math.sqrt(variance(deltas))
+      (deltas) => Math.sqrt(variance(deltas))
     )
     const selectStats = createStructuredSelector({
       mean: selectMean,

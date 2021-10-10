@@ -1,5 +1,5 @@
 export function filterSongs(songs, filterText) {
-  return songs.filter(song => matches(song, filterText))
+  return songs.filter((song) => matches(song, filterText))
 }
 
 function matches(song, filterText) {

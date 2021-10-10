@@ -57,7 +57,7 @@ export class Spacing {
   static fromBMSChart(chart: BMSChart) {
     void BMSChart
     var segments: SpacingSegment[] = []
-    chart.objects.allSorted().forEach(function(object) {
+    chart.objects.allSorted().forEach(function (object) {
       if (object.channel === 'SP') {
         var beat = chart.measureToBeat(object.measure, object.fraction)
         var factor = +chart.headers.get('speed' + object.value)!

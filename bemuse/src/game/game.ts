@@ -21,7 +21,7 @@ export class Game {
     notecharts: Notechart[],
     public readonly options: GamePlayerOptionsInput
   ) {
-    this.players = options.players.map(function(playerOptions, index) {
+    this.players = options.players.map(function (playerOptions, index) {
       playerOptions = Object.assign({}, playerOptions, {
         autosound: options.audioInputLatency >= 0.01,
         tutorial: options.tutorial,

@@ -19,7 +19,7 @@ export class AudioConvertor {
       return Promise.resolve(file)
     } else {
       let name = basename(file.name, ext) + '.' + this._target
-      return this._doConvert(file.path, this._target).then(buffer =>
+      return this._doConvert(file.path, this._target).then((buffer) =>
         file.derive(name, buffer)
       )
     }
@@ -70,7 +70,7 @@ export class AudioConvertor {
             '-',
           ])
           sox.stdin.end()
-          sox.stderr.on('data', x => process.stderr.write(x))
+          sox.stderr.on('data', (x) => process.stderr.write(x))
           let data = new Promise((resolve, reject) => {
             sox.stdout.pipe(
               endpoint((err, buffer) => {
@@ -83,7 +83,7 @@ export class AudioConvertor {
               })
             )
           })
-          sox.on('close', code => {
+          sox.on('close', (code) => {
             if (code === 0) {
               resolve(data)
             } else {

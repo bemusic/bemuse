@@ -40,9 +40,9 @@ const CustomFolderTester = () => {
   const scan = async () => {
     try {
       await scanFolder(context, {
-        log: text => console.log(text),
-        setStatus: _.throttle(text => setStatus(text), 100),
-        updateState: newState => {
+        log: (text) => console.log(text),
+        setStatus: _.throttle((text) => setStatus(text), 100),
+        updateState: (newState) => {
           queryClient.setQueryData('customFolder', newState)
         },
       })

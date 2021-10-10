@@ -2,7 +2,7 @@ import assert from 'power-assert'
 
 import getLR2Score from './getLR2Score'
 
-describe('Calculating LR2 score', function() {
+describe('Calculating LR2 score', function () {
   const LR2_NORMAL_TIMEGATE = [18, 40]
   it('perfect great = 2 points', () => {
     assert(getLR2Score([0.001], LR2_NORMAL_TIMEGATE) === 2)

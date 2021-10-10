@@ -21,7 +21,7 @@ export class OnlineService {
   }
 
   _updateUserFromStorage() {
-    const loadUser = text => {
+    const loadUser = (text) => {
       if (!text) return null
       try {
         const data = JSON.parse(text)
@@ -46,7 +46,7 @@ export class OnlineService {
     const username = this._currentUser.username
     return this._scoreboardClient
       .renewPlayerToken({ playerToken })
-      .then(newToken => {
+      .then((newToken) => {
         localStorage[`${this._storagePrefix}.id`] = JSON.stringify({
           username: username,
           playerToken: newToken,
@@ -69,7 +69,7 @@ export class OnlineService {
   signUp({ username, password, email }) {
     return this._scoreboardClient
       .signUp({ username, password, email })
-      .then(signUpResult => {
+      .then((signUpResult) => {
         localStorage[`${this._storagePrefix}.id`] = JSON.stringify({
           username: username,
           playerToken: signUpResult.playerToken,
@@ -81,7 +81,7 @@ export class OnlineService {
   logIn({ username, password }) {
     return this._scoreboardClient
       .loginByUsernamePassword({ username, password })
-      .then(loginResult => {
+      .then((loginResult) => {
         localStorage[`${this._storagePrefix}.id`] = JSON.stringify({
           username: username,
           playerToken: loginResult.playerToken,
@@ -161,9 +161,9 @@ export class OnlineService {
   async retrieveMultipleRecords(items) {
     const result = await this._scoreboardClient.retrieveRankingEntries({
       playerToken: this._currentUser.playerToken,
-      md5s: items.map(item => item.md5),
+      md5s: items.map((item) => item.md5),
     })
-    const entries = result.data.me.records.map(item => ({
+    const entries = result.data.me.records.map((item) => ({
       ...toEntry(item),
       md5: item.md5,
       playMode: item.playMode,

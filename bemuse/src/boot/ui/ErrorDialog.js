@@ -10,7 +10,7 @@ function show(message, e, url, line, col) {
   if (close) {
     close.addEventListener(
       'click',
-      function() {
+      function () {
         div.parentNode.removeChild(div)
       },
       false

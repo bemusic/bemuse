@@ -124,13 +124,13 @@ export default class ResultScene extends React.Component {
       encodeURIComponent(text)
     )
   }
-  onTweet = e => {
+  onTweet = (e) => {
     e.preventDefault()
     e.stopPropagation()
     Analytics.send('ResultScene', 'tweet')
     window.open(this.getTweetLink(), 'intent', 'width=550,height=420')
   }
-  handleExit = e => {
+  handleExit = (e) => {
     this.props.onExit(e)
     Analytics.send('ResultScene', 'exit')
   }

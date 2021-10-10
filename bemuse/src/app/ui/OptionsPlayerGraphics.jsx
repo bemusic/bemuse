@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import c from 'classnames'
 
-const PANEL_PATH = (function() {
+const PANEL_PATH = (function () {
   const x = 48
   const w = 14
   const y = 20
@@ -22,7 +22,7 @@ const PANEL_PATH = (function() {
           L${x4} ${y4} L${x4} ${y3} L${x3} ${y2} L${x3} ${y1}`
 })()
 
-const PANEL_3D_PATH = (function() {
+const PANEL_3D_PATH = (function () {
   const down = []
   const up = []
   for (let i = 0; i <= 11; i++) {
@@ -64,7 +64,7 @@ export default class OptionsPlayerGraphics extends React.Component {
     return (
       <svg width='96' height='54'>
         <g transform={'translate(' + bx + ' 32)'}>
-          {[0, 1, 2, 3, 4, 5, 6].map(i => (
+          {[0, 1, 2, 3, 4, 5, 6].map((i) => (
             <rect
               key={i}
               className='OptionsPlayerGraphicsのline'

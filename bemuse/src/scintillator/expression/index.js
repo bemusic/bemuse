@@ -20,8 +20,8 @@ export function Expression(text) {
   if (f.constant) {
     evaluate = f
   } else {
-    evaluate = function(data) {
-      return f(function(key) {
+    evaluate = function (data) {
+      return f(function (key) {
         return data[key]
       })
     }

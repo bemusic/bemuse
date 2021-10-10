@@ -46,7 +46,7 @@ export function main(bootContext) {
   }
 
   function getLatency(samples) {
-    let data = samples.map(d => d[1])
+    let data = samples.map((d) => d[1])
     data.sort((a, b) => a - b)
     let count = 0
     let sum = 0
@@ -58,7 +58,7 @@ export function main(bootContext) {
     return Math.round((sum / count) * 1000)
   }
 
-  return Music.load().then(music => {
+  return Music.load().then((music) => {
     let bound = 56
     let samples = []
     state口.push({ loading: false })
@@ -79,12 +79,12 @@ export function main(bootContext) {
       }
       setTimeout(() => {
         state口.push({ listening: true })
-        window.addEventListener('keydown', e => {
+        window.addEventListener('keydown', (e) => {
           if (e.which !== 32) return
           e.preventDefault()
           tap()
         })
-        window.addEventListener('touchstart', e => {
+        window.addEventListener('touchstart', (e) => {
           if (e.touches.length !== 1) return
           e.preventDefault()
           tap()

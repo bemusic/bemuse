@@ -1,9 +1,9 @@
 import { Progress } from './Progress'
 import * as ProgressUtils from './utils'
 
-describe('ProgressUtils', function() {
-  describe('.fixed', function() {
-    it('should report for fixed number of items', function() {
+describe('ProgressUtils', function () {
+  describe('.fixed', function () {
+    it('should report for fixed number of items', function () {
       let progress = new Progress()
       let advance = ProgressUtils.fixed(10, progress)
       expect(progress.current).to.equal(0)
@@ -15,10 +15,10 @@ describe('ProgressUtils', function() {
     })
   })
 
-  describe('.wrapPromise', function() {
-    it('should report number of fulfilled promises', function() {
+  describe('.wrapPromise', function () {
+    it('should report number of fulfilled promises', function () {
       let progress = new Progress()
-      let f = ProgressUtils.wrapPromise(progress, promise => promise)
+      let f = ProgressUtils.wrapPromise(progress, (promise) => promise)
       let a = f(new Promise(() => {}))
       let b = f(Promise.resolve(1))
       let c = f(Promise.reject(new Error('no')))
@@ -32,8 +32,8 @@ describe('ProgressUtils', function() {
     })
   })
 
-  describe('.bind', function() {
-    it('should bind from one progress to another', function() {
+  describe('.bind', function () {
+    it('should bind from one progress to another', function () {
       let a = new Progress()
       let b = new Progress()
       a.report(10, 20)
@@ -46,8 +46,8 @@ describe('ProgressUtils', function() {
     })
   })
 
-  describe('.simultaneous', function() {
-    it('should report in fifo manner', function() {
+  describe('.simultaneous', function () {
+    it('should report in fifo manner', function () {
       let out = new Progress()
       let simultaneous = ProgressUtils.simultaneous(out)
       let a = new Progress()

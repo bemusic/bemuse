@@ -18,9 +18,11 @@ const limit = throat(1)
 function getDecoder() {
   if (!decoderPromise) {
     // @ts-ignore
-    decoderPromise = import(/* webpackChunkName: 'stbvorbis' */ 'raw-loader!./vendor/stbvorbis/stbvorbis-e6da5fe-NDEBUG.js')
-      .then(ns => ns.default)
-      .then(src => {
+    decoderPromise = import(
+      /* webpackChunkName: 'stbvorbis' */ 'raw-loader!./vendor/stbvorbis/stbvorbis-e6da5fe-NDEBUG.js'
+    )
+      .then((ns) => ns.default)
+      .then((src) => {
         // eslint-disable-next-line no-eval
         return (0, eval)(src + ';stbvorbis')
       })
@@ -48,7 +50,7 @@ function doDecodeOGG(
     const buffers: Float32Array[][] = []
     let totalLength = 0
     let sampleRate: number
-    stbvorbis.decode(arrayBuffer, function(e) {
+    stbvorbis.decode(arrayBuffer, function (e) {
       if (e.data) {
         sampleRate = e.sampleRate
         buffers.push(e.data)

@@ -47,10 +47,8 @@ export class BemusePackageResources implements IResources {
     }
     this.loadPayload = ProgressUtils.wrapPromise(
       this.progress.all,
-      throat(2, payloadUrl =>
-        download(payloadUrl)
-          .as('blob', nextProgress())
-          .then(getPayload)
+      throat(2, (payloadUrl) =>
+        download(payloadUrl).as('blob', nextProgress()).then(getPayload)
       )
     )
   }
@@ -61,7 +59,7 @@ export class BemusePackageResources implements IResources {
   })
   private _getRefs = _.once(async () => {
     const metadata = await this._getMetadata()
-    return metadata.refs.map(spec => new Ref(this, spec))
+    return metadata.refs.map((spec) => new Ref(this, spec))
   })
   private _getFileMap = _.once(async () => {
     const metadata = await this._getMetadata()
@@ -109,7 +107,7 @@ class BemusePackageFileResource implements IResource {
       progress,
       this.resources
         .getBlob(this.ref)
-        .then(blob => readBlob(blob).as('arraybuffer'))
+        .then((blob) => readBlob(blob).as('arraybuffer'))
     )
   }
   async resolveUrl() {

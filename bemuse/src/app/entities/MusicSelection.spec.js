@@ -1,7 +1,7 @@
 import * as MusicSelection from './MusicSelection'
 import { given, shouldEqual } from 'circumstance'
 
-describe('MusicSelection', function() {
+describe('MusicSelection', function () {
   it('allows selecting song', () =>
     given(MusicSelection.initialState)
       .when(MusicSelection.selectSong('song1'))
@@ -25,9 +25,9 @@ describe('MusicSelection', function() {
   it('should allow selecting chart', () =>
     given(MusicSelection.initialState)
       .when(MusicSelection.selectChart('song1', 'chart1.bml', 8))
-      .then(state => state.selectedSongId, shouldEqual('song1'))
-      .and(state => state.selectedChartId, shouldEqual('chart1.bml'))
-      .and(state => state.selectedChartLevel, shouldEqual(8)))
+      .then((state) => state.selectedSongId, shouldEqual('song1'))
+      .and((state) => state.selectedChartId, shouldEqual('chart1.bml'))
+      .and((state) => state.selectedChartLevel, shouldEqual(8)))
 
   const givenSelectedChart = given(MusicSelection.initialState).and(
     MusicSelection.selectChart('song1', 'chart1.bml', 8)

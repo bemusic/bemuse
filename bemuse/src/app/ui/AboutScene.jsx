@@ -14,9 +14,9 @@ class AboutScene extends React.Component {
 
   componentDidMount() {
     fetch('/music/artists.json')
-      .then(res => res.json())
-      .then(a => this.setState({ artists: a }))
-      .catch(err => console.error(err))
+      .then((res) => res.json())
+      .then((a) => this.setState({ artists: a }))
+      .catch((err) => console.error(err))
   }
 
   render() {

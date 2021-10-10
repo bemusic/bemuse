@@ -50,7 +50,7 @@ export class GameInput {
     let state: { [key: string]: number } = {}
     let name = 'input:' + plugin.name
     this._plugins.push({
-      get: bench.wrap(name, function() {
+      get: bench.wrap(name, function () {
         let out = plugin.get()
         let diff = []
         for (let key of _.union(_.keys(out), _.keys(state))) {

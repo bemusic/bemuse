@@ -104,7 +104,7 @@ export class SongInfo implements ISongInfoData {
     var subtitles = chart.headers.getAll('subtitle')
     var subartists = chart.headers.getAll('subartist')
     if (typeof title === 'string' && !subtitles) {
-      var extractSubtitle = function(m: string[]) {
+      var extractSubtitle = function (m: string[]) {
         title = m[1]
         subtitles = [m[2]]
       }

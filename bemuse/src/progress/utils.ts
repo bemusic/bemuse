@@ -21,7 +21,7 @@ export function atomic<T>(
   promise: PromiseLike<T>
 ): PromiseLike<T> {
   if (!progress) return promise
-  return Promise.resolve(promise).tap(data => {
+  return Promise.resolve(promise).tap((data) => {
     if (hasByteLength(data)) {
       progress.formatter = BYTES_FORMATTER
       progress.report(data.byteLength, data.byteLength)
@@ -44,7 +44,7 @@ export function wrapPromise<A extends any[], R>(
 ): (...args: A) => PromiseLike<R> {
   let current = 0
   let total = 0
-  return function(this: any, ...args: A) {
+  return function (this: any, ...args: A) {
     progress.report(current, ++total)
     return Promise.resolve(f.apply(this, args)).tap(() =>
       progress.report(++current, total)

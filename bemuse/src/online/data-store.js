@@ -12,7 +12,7 @@ export function store川(action川) {
 }
 
 export function item川(state川, id) {
-  return state川.map(state => get(state, id)).skipDuplicates()
+  return state川.map((state) => get(state, id)).skipDuplicates()
 }
 
 export function reduce(state = INITIAL_STATE, action) {

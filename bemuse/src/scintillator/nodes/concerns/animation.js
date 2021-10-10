@@ -2,15 +2,15 @@ import _ from 'lodash'
 import $ from 'jquery'
 import keytime from 'keytime'
 
-let createKeytime = def => Object.assign({}, def, { data: keytime(def.data) })
+let createKeytime = (def) => Object.assign({}, def, { data: keytime(def.data) })
 
 export class Animation {
   constructor(animations, timeKey) {
     this._timeKey = timeKey || 't'
     this._properties = _(animations)
-      .map(animation => _.map(animation.data, 'name'))
+      .map((animation) => _.map(animation.data, 'name'))
       .flatten()
-      .thru(array => new Set(array))
+      .thru((array) => new Set(array))
       .value()
     this._animations = _.map(animations, createKeytime)
     this._events = _.uniq(_.map(animations, 'on'))
@@ -19,7 +19,7 @@ export class Animation {
     if (!this._properties.has(name)) {
       return fallback
     }
-    return data => {
+    return (data) => {
       let values = this._getAnimation(data)
       if (values.hasOwnProperty(name)) {
         return values[name]
@@ -30,16 +30,16 @@ export class Animation {
   }
   _getAnimation(data) {
     let event = _(this._events)
-      .filter(e => e === '' || e in data)
-      .maxBy(e => data[e] || 0)
+      .filter((e) => e === '' || e in data)
+      .maxBy((e) => data[e] || 0)
     let t = data[this._timeKey] - (data[event] || 0)
-    let animations = this._animations.filter(a => a.on === event)
-    let values = animations.map(a => a.data.values(t))
+    let animations = this._animations.filter((a) => a.on === event)
+    let values = animations.map((a) => a.data.values(t))
     return Object.assign({}, ...values)
   }
   static compile(compiler, $el) {
     let animationElements = Array.from($el.children('animation'))
-    let animations = _.map(animationElements, el => _compile($(el)))
+    let animations = _.map(animationElements, (el) => _compile($(el)))
     let timeKey = $el.attr('t') || 't'
     return new Animation(animations, timeKey)
   }
@@ -71,7 +71,7 @@ function _createKeyframes(name) {
 
 export function _attrs(el) {
   return _(el.attributes)
-    .map(n => [n.name.toLowerCase(), n.value])
+    .map((n) => [n.name.toLowerCase(), n.value])
     .fromPairs()
     .value()
 }

@@ -26,7 +26,7 @@ class OptionsSpeed extends React.PureComponent {
     let nextSpeed = speed + (speed < 0.5 ? 0.3 : 0.5)
     this.props.onChange(this.stringifySpeed(nextSpeed))
   }
-  handleSpeedInputChange = nextSpeed => {
+  handleSpeedInputChange = (nextSpeed) => {
     this.props.onChange(this.stringifySpeed(nextSpeed))
   }
   render() {

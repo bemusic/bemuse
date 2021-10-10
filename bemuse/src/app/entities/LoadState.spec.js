@@ -2,7 +2,7 @@ import * as LoadState from './LoadState'
 
 import { given, shouldEqual } from 'circumstance'
 
-describe('LoadState', function() {
+describe('LoadState', function () {
   it('initLoading should be loading', () =>
     given(LoadState.initLoading()).then(LoadState.isLoading, shouldEqual(true)))
   it('completeWithValue should turn it into completed', () =>
@@ -18,4 +18,4 @@ describe('LoadState', function() {
       .and(LoadState.error, errorMessage, shouldEqual('x')))
 })
 
-const errorMessage = error => error.message
+const errorMessage = (error) => error.message

@@ -97,7 +97,7 @@ class BMSNoteBuilder {
     this._objects = this._chart.objects.allSorted()
   }
   build() {
-    this._objects.forEach(object => {
+    this._objects.forEach((object) => {
       this._handle(object)
     })
     return new Notes(this._notes)

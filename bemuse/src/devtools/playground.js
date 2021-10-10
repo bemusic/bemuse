@@ -3,7 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import query from 'bemuse/utils/query'
 
-const availablePlaygrounds = (function(context) {
+const availablePlaygrounds = (function (context) {
   let playgrounds = {}
   for (let key of context.keys()) {
     let name = key.match(/\w[^.]+/)[0]
@@ -24,7 +24,7 @@ class DefaultPlayground extends React.Component {
         <h1>Bemuse Playground</h1>
         <p>Please select a playground</p>
         <ul>
-          {Object.keys(availablePlaygrounds).map(key => (
+          {Object.keys(availablePlaygrounds).map((key) => (
             <li>
               <a style={linkStyle} href={'?mode=playground&playground=' + key}>
                 {key}

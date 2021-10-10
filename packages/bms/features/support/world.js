@@ -1,12 +1,12 @@
 var lazy = require('lazy-property')
 
-module.exports = function() {
+module.exports = function () {
   if (this.World.plugins) return
 
   function World(callback) {
     this.prop = lazy.bind(null, this)
     World.plugins.forEach(
-      function(plugin) {
+      function (plugin) {
         plugin.call(this)
       }.bind(this)
     )
@@ -17,12 +17,12 @@ module.exports = function() {
 
   World.plugins = []
 
-  World.plug = function(plugin) {
+  World.plug = function (plugin) {
     this.plugins.push(plugin)
   }
 
-  World.prop = function(name, getter) {
-    this.plug(function() {
+  World.prop = function (name, getter) {
+    this.plug(function () {
       this.prop(name, getter)
     })
   }

@@ -16,15 +16,16 @@ import {
 import { useCustomSongLoaderLog } from '../CustomSongs'
 
 const enhance = compose(
-  BaseComponent =>
+  (BaseComponent) =>
     function LogProvider(props) {
       const log = useCustomSongLoaderLog()
       return <BaseComponent {...props} log={log} />
     },
   connectIO({
-    onFileDrop: () => event => CustomSongsIO.handleCustomSongFolderDrop(event),
-    onPaste: () => e => CustomSongsIO.handleClipboardPaste(e),
-    loadFromURL: () => url => CustomSongsIO.handleCustomSongURLLoad(url),
+    onFileDrop: () => (event) =>
+      CustomSongsIO.handleCustomSongFolderDrop(event),
+    onPaste: () => (e) => CustomSongsIO.handleClipboardPaste(e),
+    loadFromURL: () => (url) => CustomSongsIO.handleCustomSongURLLoad(url),
   })
 )
 
@@ -45,7 +46,7 @@ class CustomBMS extends React.Component {
   componentDidMount() {
     window.addEventListener('paste', this.handlePaste)
     if (hasPendingArchiveToLoad()) {
-      this.props.loadFromURL(consumePendingArchiveURL()).then(song => {
+      this.props.loadFromURL(consumePendingArchiveURL()).then((song) => {
         if (this.props.onSongLoaded) this.props.onSongLoaded(song)
       })
     }
@@ -103,30 +104,30 @@ class CustomBMS extends React.Component {
     )
   }
 
-  handleDragEnter = e => {
+  handleDragEnter = (e) => {
     e.preventDefault()
   }
 
-  handleDragOver = e => {
+  handleDragOver = (e) => {
     this.setState({ hover: true })
     e.preventDefault()
   }
 
-  handleDragLeave = e => {
+  handleDragLeave = (e) => {
     this.setState({ hover: false })
     e.preventDefault()
   }
 
-  handleDrop = e => {
+  handleDrop = (e) => {
     this.setState({ hover: false })
     Analytics.send('CustomBMS', 'drop')
     e.preventDefault()
-    this.props.onFileDrop(e.nativeEvent).then(song => {
+    this.props.onFileDrop(e.nativeEvent).then((song) => {
       if (this.props.onSongLoaded) this.props.onSongLoaded(song)
     })
   }
 
-  handlePaste = async e => {
+  handlePaste = async (e) => {
     const song = await this.props.onPaste(e)
     if (song) {
       if (this.props.onSongLoaded) this.props.onSongLoaded(song)

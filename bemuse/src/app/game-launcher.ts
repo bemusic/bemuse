@@ -46,7 +46,7 @@ export async function launch(launchOptions: LaunchOptions) {
     await launchGame(
       launchOptions,
       sceneDisplayContext,
-      work => (currentWork = work)
+      (work) => (currentWork = work)
     )
   } catch (e) {
     await new Promise<void>((resolve, reject) => {

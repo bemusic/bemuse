@@ -1,21 +1,21 @@
 import _ from 'lodash'
 
 const grouping = [
-  { title: 'Custom Song', criteria: song => song.custom },
-  { title: 'Tutorial', criteria: song => song.tutorial },
-  { title: 'Unreleased', criteria: song => song.unreleased },
+  { title: 'Custom Song', criteria: (song) => song.custom },
+  { title: 'Tutorial', criteria: (song) => song.tutorial },
+  { title: 'Unreleased', criteria: (song) => song.unreleased },
   {
     title: 'Recently Added Songs',
-    criteria: song =>
+    criteria: (song) =>
       song.added && Date.now() - Date.parse(song.added) < 60 * 86400000,
-    sort: song => song.added,
+    sort: (song) => song.added,
     reverse: true,
   },
   { title: '☆', criteria: () => true },
 ]
 
 export function groupSongsIntoCategories(songs) {
-  let groups = grouping.map(group => ({
+  let groups = grouping.map((group) => ({
     input: group,
     output: { title: group.title, songs: [] },
   }))
@@ -33,7 +33,7 @@ export function groupSongsIntoCategories(songs) {
   }
   return _(groups)
     .map('output')
-    .filter(group => group.songs.length > 0)
+    .filter((group) => group.songs.length > 0)
     .value()
 }
 

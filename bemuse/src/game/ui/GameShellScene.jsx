@@ -23,7 +23,7 @@ class CustomChartSelector extends React.Component {
       <div className='drop-zone'>
         {files.length ? (
           <ul>
-            {files.map(file => (
+            {files.map((file) => (
               <li>
                 <a
                   href='javascript://'
@@ -55,19 +55,21 @@ class CustomChartSelector extends React.Component {
     )
   }
 
-  handleDrop = e => {
+  handleDrop = (e) => {
     e.preventDefault()
     let event = e.nativeEvent
     let resources = new DndResources(event)
     resources.fileList
-      .then(list => {
-        return list.filter(filename => /\.(bms|bme|bml)$/i.test(filename))
+      .then((list) => {
+        return list.filter((filename) => /\.(bms|bme|bml)$/i.test(filename))
       })
-      .map(name => resources.file(name).then(resource => ({ name, resource })))
-      .then(bms => {
+      .map((name) =>
+        resources.file(name).then((resource) => ({ name, resource }))
+      )
+      .then((bms) => {
         this.setState({ files: bms, resources: resources })
       })
-      .catch(err => {
+      .catch((err) => {
         if (err.constructor.name === 'FileError') {
           throw new Error('File Error code ' + e.code)
         } else {
@@ -77,7 +79,7 @@ class CustomChartSelector extends React.Component {
       .done()
   }
 
-  handleItemClick = file => {
+  handleItemClick = (file) => {
     return () => {
       this.props.onSelect(this.state.resources, file.resource)
     }
@@ -157,7 +159,7 @@ export default class GameShellScene extends React.Component {
           </div>
           <div className='radio'>
             <h3>Placement</h3>
-            {['left', 'center', 'right'].map(placement => (
+            {['left', 'center', 'right'].map((placement) => (
               <label>
                 <input
                   type='radio'
@@ -177,23 +179,23 @@ export default class GameShellScene extends React.Component {
     )
   }
 
-  submit = e => {
+  submit = (e) => {
     e.preventDefault()
     this.props.play(this.state.options)
   }
 
-  bindOption = binder => {
-    return event => {
+  bindOption = (binder) => {
+    return (event) => {
       binder(this.state.options, event.target.value)
       this.forceUpdate()
     }
   }
 
-  handleDragOver = e => {
+  handleDragOver = (e) => {
     e.preventDefault()
   }
 
-  handleDrop = e => {
+  handleDrop = (e) => {
     e.preventDefault()
     this.refs.dropzone.handleDrop(e)
   }

@@ -2,7 +2,7 @@ import assert from 'power-assert'
 
 import findMatchingSong from './findMatchingSong'
 
-describe('selecting a song by title', function() {
+describe('selecting a song by title', function () {
   // Using &song=... URL parameter, we can specify what song to be selected
   // at the beginning…
   const songs = [
@@ -12,7 +12,7 @@ describe('selecting a song by title', function() {
     'Piece of Mine',
     'Goliath',
   ]
-  const getTitle = song => song
+  const getTitle = (song) => song
 
   it('finds a matching song', () => {
     assert(

@@ -2,7 +2,7 @@ const { action, defer, to } = require('prescript')
 const puppeteer = require('puppeteer')
 const expect = require('expect')
 
-action('Open browser', async state => {
+action('Open browser', async (state) => {
   const puppeteerOptions = { headless: true }
   if (process.env.CIRCLECI) {
     puppeteerOptions.args = ['--no-sandbox', '--disable-setuid-sandbox']
@@ -17,11 +17,11 @@ action('Open browser', async state => {
   await state.page.goto(url)
 })
 
-defer('Close browser', async state => {
+defer('Close browser', async (state) => {
   await state.browser.close()
 })
 
-action('Turn on test mode', async state => {
+action('Turn on test mode', async (state) => {
   await state.page.waitForFunction(
     () => {
       if (window.BemuseTestMode) {
@@ -35,26 +35,26 @@ action('Turn on test mode', async state => {
   )
 })
 
-action('Enter game', async state => {
+action('Enter game', async (state) => {
   await state.page.waitForSelector('[data-testid="enter-game"]')
   await state.page.click('[data-testid="enter-game"]')
   await state.page.waitForSelector('[data-testid="keyboard-mode"]')
 })
 
-action('Select keyboard mode', async state => {
+action('Select keyboard mode', async (state) => {
   await state.page.waitForSelector('[data-testid="keyboard-mode"]')
   await state.page.click('[data-testid="keyboard-mode"]')
   await state.page.waitForSelector('[data-testid="play-selected-chart"]')
 })
 
-action('Select the song and start the game', async state => {
+action('Select the song and start the game', async (state) => {
   await state.page.waitForSelector('[data-testid="play-selected-chart"]')
   await state.page.click('[data-testid="play-selected-chart"]')
   await state.page.waitForSelector('.game-display canvas', { visible: true })
 })
 
 to('Play through the game', () => {
-  action('Press Enter to start the song', async state => {
+  action('Press Enter to start the song', async (state) => {
     await state.page.waitFor(100)
     await state.page.keyboard.down('Enter')
     await state.page.waitFor(100)
@@ -72,9 +72,10 @@ to('Play through the game', () => {
   ]
   for (const [i, event] of keys.entries()) {
     const t = (event.beat * 60) / 140
-    action`Hit key ${event.key} at t=${t.toFixed(2)} (note #${i +
-      1}) (score should be ${event.expectedScore})`(async (state, context) => {
-      await state.page.evaluate(t => {
+    action`Hit key ${event.key} at t=${t.toFixed(2)} (note #${
+      i + 1
+    }) (score should be ${event.expectedScore})`(async (state, context) => {
+      await state.page.evaluate((t) => {
         window.TEST_pausePromise = window.BemuseTestMode.pauseAt(t)
       }, t)
       await state.page.evaluate(() => window.TEST_pausePromise)
@@ -90,7 +91,7 @@ to('Play through the game', () => {
 
   action(
     'Let the game finish and wait for result screen to show',
-    async state => {
+    async (state) => {
       await takeScreenshot(state.page, 'gameplay')
       await state.page.evaluate(() => {
         window.BemuseTestMode.unpause()

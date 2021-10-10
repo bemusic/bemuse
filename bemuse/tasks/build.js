@@ -13,7 +13,7 @@ const writeFile = Promise.promisify(fs.writeFile, fs)
 
 gulp.task(
   'build',
-  gulp.series('dist', async function() {
+  gulp.series('dist', async function () {
     const stats = await Promise.promisify(webpack)(config)
     gutil.log('[webpack]', stats.toString({ colors: true }))
     if (stats.hasErrors()) {
@@ -30,17 +30,15 @@ function postProcess() {
     .then(updateTitle)
     .then(inlineBootScript)
     .then(ssi)
-    .then(result => writeFile(path('dist', 'index.html'), result, 'utf-8'))
+    .then((result) => writeFile(path('dist', 'index.html'), result, 'utf-8'))
 }
 
 function updateTitle(html) {
-  return html.replace(/<title>Bemuse/, a => {
+  return html.replace(/<title>Bemuse/, (a) => {
     if (buildConfig.name === 'Bemuse') {
       return a
     }
-    return `<meta name="robots" content="noindex" /><title>${
-      buildConfig.name
-    } ${buildConfig.version}`
+    return `<meta name="robots" content="noindex" /><title>${buildConfig.name} ${buildConfig.version}`
   })
 }
 

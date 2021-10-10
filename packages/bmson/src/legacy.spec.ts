@@ -5,9 +5,9 @@ import { LegacyBmson } from './legacy'
 import { Note } from './types'
 
 /* global describe, it */
-describe('legacy bmson', function() {
-  describe('songInfoForBmson', function() {
-    it('should return a song info', function() {
+describe('legacy bmson', function () {
+  describe('songInfoForBmson', function () {
+    it('should return a song info', function () {
       const info = bmson.songInfoForBmson({
         info: {
           title: 'Reminiscentia',
@@ -23,37 +23,41 @@ describe('legacy bmson', function() {
     })
   })
 
-  describe('barLinesForBmson', function() {
-    it('should return barlines in beat', function() {
+  describe('barLinesForBmson', function () {
+    it('should return barlines in beat', function () {
       const beats = bmson.barLinesForBmson({
-        lines: [{ y: 0, k: 0 }, { y: 960, k: 0 }, { y: 1920, k: 0 }],
+        lines: [
+          { y: 0, k: 0 },
+          { y: 960, k: 0 },
+          { y: 1920, k: 0 },
+        ],
       } as any)
       assert.deepEqual(beats, [0, 4, 8])
     })
   })
 
-  describe('timingInfoForBmson', function() {
-    it('should return timing of initial bpm', function() {
-      let { initialBPM } = bmson.timingInfoForBmson(({
+  describe('timingInfoForBmson', function () {
+    it('should return timing of initial bpm', function () {
+      let { initialBPM } = bmson.timingInfoForBmson({
         info: { initBPM: 180 },
-      } as LegacyBmson) as any)
+      } as LegacyBmson as any)
       assert(initialBPM === 180)
     })
 
-    it('supports BPM changes', function() {
-      let { initialBPM, actions } = bmson.timingInfoForBmson(({
+    it('supports BPM changes', function () {
+      let { initialBPM, actions } = bmson.timingInfoForBmson({
         info: { initBPM: 120 },
         bpmNotes: [{ y: 2880, v: 196 }],
-      } as LegacyBmson) as any)
+      } as LegacyBmson as any)
       assert(initialBPM === 120)
       assert.deepEqual(actions, [{ type: 'bpm', beat: 12, bpm: 196 }])
     })
 
-    it('supports stops', function() {
-      let { initialBPM, actions } = bmson.timingInfoForBmson(({
+    it('supports stops', function () {
+      let { initialBPM, actions } = bmson.timingInfoForBmson({
         info: { initBPM: 120 },
         stopNotes: [{ y: 2880, v: 196 }],
-      } as LegacyBmson) as any)
+      } as LegacyBmson as any)
       assert(initialBPM === 120)
       assert.deepEqual(actions, [
         { type: 'stop', beat: 12, stopBeats: 196 / 240 },
@@ -61,7 +65,7 @@ describe('legacy bmson', function() {
     })
   })
 
-  describe('musicalScoreForBmson', function() {
+  describe('musicalScoreForBmson', function () {
     function setup(notes: Note[]) {
       let data = {
         info: {
@@ -77,12 +81,12 @@ describe('legacy bmson', function() {
       return bmson.musicalScoreForBmson(data as any)
     }
 
-    it('returns a timing', function() {
+    it('returns a timing', function () {
       const score = setup([])
       assert(typeof score.timing.beatToSeconds === 'function')
     })
 
-    it('generates keysounds and notes', function() {
+    it('generates keysounds and notes', function () {
       let score = setup([{ x: 1, y: 240, l: 0, c: false }])
       assert.deepEqual(score.notes.all(), [
         {
@@ -97,7 +101,7 @@ describe('legacy bmson', function() {
       assert(score.keysounds.get('0001') === 'piano.wav')
     })
 
-    it('handles long notes', function() {
+    it('handles long notes', function () {
       let score = setup([{ x: 1, y: 240, l: 480, c: false }])
       assert.deepEqual(score.notes.all(), [
         {
@@ -111,7 +115,7 @@ describe('legacy bmson', function() {
       ])
     })
 
-    it('handles keysound slices', function() {
+    it('handles keysound slices', function () {
       let score = setup([
         { x: 1, y: 240, l: 0, c: false },
         { x: 1, y: 480, l: 0, c: true },
@@ -124,8 +128,8 @@ describe('legacy bmson', function() {
     })
   })
 
-  describe('_slicesForNotesAndTiming (private)', function() {
-    it('returns sound slices by y', function() {
+  describe('_slicesForNotesAndTiming (private)', function () {
+    it('returns sound slices by y', function () {
       let timing = new BMS.Timing(100, [])
 
       let slices = bmson._slicesForNotesAndTiming(
@@ -161,38 +165,38 @@ describe('legacy bmson', function() {
     })
   })
 
-  describe('hasScratch', function() {
-    it('should return true if there is a scratch in 1P', function() {
-      const data = ({
+  describe('hasScratch', function () {
+    it('should return true if there is a scratch in 1P', function () {
+      const data = {
         soundChannel: [{ notes: [{ x: 1 }] }, { notes: [{ x: 3 }, { x: 8 }] }],
-      } as LegacyBmson) as any
+      } as LegacyBmson as any
       assert(bmson.hasScratch(data))
     })
-    it('should return true if there is a scratch in 2P', function() {
-      const data = ({
+    it('should return true if there is a scratch in 2P', function () {
+      const data = {
         soundChannel: [
           { notes: [{ x: 1 }] },
           { notes: [{ x: 13 }, { x: 18 }] },
         ],
-      } as LegacyBmson) as any
+      } as LegacyBmson as any
       assert(bmson.hasScratch(data))
     })
-    it('should return false if scratch not found', function() {
-      const data = ({
+    it('should return false if scratch not found', function () {
+      const data = {
         soundChannel: [{ notes: [{ x: 1 }] }, { notes: [{ x: 3 }, { x: 7 }] }],
-      } as LegacyBmson) as any
+      } as LegacyBmson as any
       assert(!bmson.hasScratch(data))
     })
   })
 
-  describe('keysForBmson', function() {
+  describe('keysForBmson', function () {
     function testcase(xs: number[], keys: string) {
-      it('should work with ' + keys, function() {
-        const actual = bmson.keysForBmson(({
-          soundChannel: xs.map(x => ({
+      it('should work with ' + keys, function () {
+        const actual = bmson.keysForBmson({
+          soundChannel: xs.map((x) => ({
             notes: [{ x }],
           })),
-        } as LegacyBmson) as any)
+        } as LegacyBmson as any)
         assert(actual === keys)
       })
     }

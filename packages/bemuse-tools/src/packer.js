@@ -24,7 +24,7 @@ export async function packIntoBemuse(path) {
   console.log('-> Converting audio to ogg [better audio performance]')
   let oggc = new AudioConvertor('ogg', '-C', '3')
   oggc.force = true
-  let oggs = await dotMap(audio, file => oggc.convert(file))
+  let oggs = await dotMap(audio, (file) => oggc.convert(file))
   packer.pack('ogg', oggs)
 
   console.log('-> Writing...')
@@ -34,16 +34,16 @@ export async function packIntoBemuse(path) {
 }
 
 function dotMap(array, map) {
-  return Promise.map(array, item =>
+  return Promise.map(array, (item) =>
     Promise.resolve(map(item))
       .tap(() => process.stdout.write('.'))
-      .then(result => [result])
-      .catch(e => {
+      .then((result) => [result])
+      .catch((e) => {
         process.stdout.write('x')
         process.stderr.write('[ERR] ' + e.stack)
         return []
       })
   )
-    .then(results => _.flatten(results))
+    .then((results) => _.flatten(results))
     .tap(() => process.stdout.write('\n'))
 }

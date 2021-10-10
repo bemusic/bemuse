@@ -12,7 +12,7 @@ function Stat() {
   let lastSec = 0
   let secAvg = 0
   return {
-    push: function(delta) {
+    push: function (delta) {
       let t = now()
       sum += delta
       count += 1
@@ -40,7 +40,7 @@ function Benchmarker() {
     enabled: true,
     stats,
     wrap(title, f) {
-      return function() {
+      return function () {
         try {
           var start = now()
           return f.apply(this, arguments)
@@ -56,7 +56,7 @@ function Benchmarker() {
     },
     toString() {
       var lines = []
-      Object.keys(stats).forEach(function(key) {
+      Object.keys(stats).forEach(function (key) {
         lines.push('- ' + key + ': ' + stats[key])
       })
       return lines.join('\n')
@@ -76,6 +76,6 @@ function FakeBenchmarker() {
   }
 }
 
-export default (window.BEMUSE_BENCHMARK = shouldEnableBenchmark()
+export default window.BEMUSE_BENCHMARK = shouldEnableBenchmark()
   ? new Benchmarker()
-  : new FakeBenchmarker())
+  : new FakeBenchmarker()

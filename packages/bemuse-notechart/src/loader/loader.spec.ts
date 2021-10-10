@@ -4,16 +4,16 @@ import { PlayerOptions } from '../types'
 
 const options: PlayerOptions = { scratch: 'left' }
 
-describe('NotechartLoader', function() {
-  describe('with BMS file', function() {
-    it('should be able to read', async function() {
+describe('NotechartLoader', function () {
+  describe('with BMS file', function () {
+    it('should be able to read', async function () {
       let loader = new NotechartLoader()
       let buffer = Buffer.from(`#TITLE meow`)
 
       const notechart = await loader.load(buffer, { name: 'wow.bms' }, options)
       expect(notechart.songInfo.title).to.equal('meow')
     })
-    it('also reads judge rank', async function() {
+    it('also reads judge rank', async function () {
       let loader = new NotechartLoader()
       let buffer = Buffer.from(`#RANK 1`)
 
@@ -23,8 +23,8 @@ describe('NotechartLoader', function() {
     })
   })
 
-  describe('with bmson file', function() {
-    it('should be able to read', async function() {
+  describe('with bmson file', function () {
+    it('should be able to read', async function () {
       let loader = new NotechartLoader()
       let data = {
         info: { title: 'Running Out' },
@@ -38,7 +38,7 @@ describe('NotechartLoader', function() {
       )
       expect(notechart.songInfo.title).to.equal('Running Out')
     })
-    it('should read the judge_rank of the song', async function() {
+    it('should read the judge_rank of the song', async function () {
       let loader = new NotechartLoader()
       let data = {
         info: { title: 'Running Out', judge_rank: 200 },

@@ -1,14 +1,14 @@
 import Bacon from 'baconjs'
 
 function observeMidiAccess(access) {
-  return Bacon.fromBinder(sink => {
+  return Bacon.fromBinder((sink) => {
     for (let port of access.inputs.values()) {
       sink(new Bacon.Next(port))
     }
     for (let port of access.outputs.values()) {
       sink(new Bacon.Next(port))
     }
-    access.onstatechange = e => {
+    access.onstatechange = (e) => {
       sink(new Bacon.Next(e.port))
     }
   })
@@ -24,7 +24,7 @@ function requestMIDIAccess() {
 export function getMidi川() {
   return Bacon.fromPromise(requestMIDIAccess())
     .flatMap(observeMidiAccess)
-    .flatMapError(e => (console.warn('MIDI Error:', e.stack), Bacon.never()))
+    .flatMapError((e) => (console.warn('MIDI Error:', e.stack), Bacon.never()))
     .flatMap(message川ForPort)
     .doLog('messageforport')
 }
