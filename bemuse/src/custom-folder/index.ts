@@ -61,7 +61,7 @@ export async function scanFolder(
   const { log, setStatus, updateState } = io
   for (let i = 1; ; i++) {
     log(`Iteration #${i} start`)
-    const result = await scanIteration(state, context, io)
+    const result = await scanIteration(state, io)
 
     // If there is nothing to be done in the very first iteration, let’s rescan the folder for new chart files.
     if (!result && i === 1) {
@@ -87,7 +87,6 @@ export async function scanFolder(
 
 async function scanIteration(
   inputState: CustomFolderState | undefined,
-  context: CustomFolderContext,
   io: CustomFolderScanIO
 ): Promise<ScanIterationResult | undefined> {
   const result = await checkFolderStateAndPermissions(inputState, io)
