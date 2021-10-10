@@ -86,7 +86,7 @@ export async function scanFolder(
 }
 
 async function scanIteration(
-  state: CustomFolderState | undefined,
+  inputState: CustomFolderState | undefined,
   context: CustomFolderContext,
   io: CustomFolderScanIO
 ): Promise<ScanIterationResult | undefined> {
@@ -95,14 +95,13 @@ async function scanIteration(
   const handleMessage = 'No folder selected.'
 
   const result = await checkFolderStateAndPermissions(
-    state,
+    inputState,
     io,
     stateMessage,
     handleMessage
   )
   if (!result) return
-  const handle = (state as CustomFolderState)
-    .handle as FileSystemDirectoryHandle
+  const { state, handle } = result
 
   // Enumerate all the files.
   if (!state!.chartFilesScanned) {
@@ -145,19 +144,25 @@ async function checkFolderStateAndPermissions(
   io: CustomFolderScanIO,
   stateMessage: string,
   handleMessage: string
-): Promise<boolean> {
+): Promise<
+  | {
+      state: CustomFolderState
+      handle: FileSystemDirectoryHandle
+    }
+  | undefined
+> {
   const { log, setStatus } = io
   if (!state) {
     log(stateMessage)
     setStatus(stateMessage)
-    return false
+    return
   }
 
   const { handle } = state
   if (!handle) {
     log(handleMessage)
     setStatus(handleMessage)
-    return false
+    return
   }
 
   // Check permissions.
@@ -169,10 +174,10 @@ async function checkFolderStateAndPermissions(
   if (permission !== 'granted') {
     log('Unable to read the folder due to lack of permissions.')
     setStatus('Unable to read the folder due to lack of permissions.')
-    return false
+    return
   }
 
-  return true
+  return { state, handle }
 }
 
 async function searchForChartFiles(
