@@ -72,6 +72,21 @@ it('can scan for new songs', async () => {
   })
 })
 
+xit('detects deleted folders', async () => {
+  const folder: MockFolder = { song1, song2 }
+  const tester = new CustomFolderTestHarness()
+  await tester.setFolder(folder)
+  await tester.scan()
+  await tester.checkState(async (state) => {
+    expect(state.songs).to.have.length(2)
+  })
+
+  delete folder['song1']
+  await tester.scan()
+  await tester.checkState(async (state) => {
+    expect(state.songs).to.have.length(1)
+  })
+})
 class CustomFolderTestHarness {
   private context = new CustomFolderContextMock()
 
