@@ -5,8 +5,8 @@ import Player from '../player'
 import PlayerState from './player-state'
 import { notechart } from '../test-helpers'
 
-describe('PlayerState', function() {
-  it('updates the input', function() {
+describe('PlayerState', function () {
+  it('updates the input', function () {
     let state = new PlayerState({
       number: 1,
       columns: ['wow'],
@@ -14,13 +14,13 @@ describe('PlayerState', function() {
       options: { speed: 1 },
     })
     let input = {
-      get: name => ({ name }),
+      get: (name) => ({ name }),
     }
     state.update(0, input)
     assert(state.input.get('wow').name === 'p1_wow')
   })
 
-  describe('with player and chart', function() {
+  describe('with player and chart', function () {
     let chart
     let player
     let state
@@ -42,8 +42,8 @@ describe('PlayerState', function() {
       state.update(time, input)
     }
 
-    describe('node judging', function() {
-      it('judges notes', function() {
+    describe('node judging', function () {
+      it('judges notes', function () {
         setup(`
           #BPM 120
           #00111:0101
@@ -85,7 +85,7 @@ describe('PlayerState', function() {
         assert.equal(state.stats.poor, true)
       })
 
-      it('judges multiple notes in different column', function() {
+      it('judges multiple notes in different column', function () {
         setup(`
           #BPM 120
           #00111:01
@@ -97,7 +97,7 @@ describe('PlayerState', function() {
         assert(state.getNoteStatus(chart.notes[1]) === 'judged')
       })
 
-      it('judges single note from one column at a time', function() {
+      it('judges single note from one column at a time', function () {
         setup(`
           #BPM 480
           #00111:01010100000000000000000000000000
@@ -123,7 +123,7 @@ describe('PlayerState', function() {
         assert(state.getNoteJudgment(chart.notes[2]) > 1)
       })
 
-      it('leaves note unjudged when bad and there are closer note', function() {
+      it('leaves note unjudged when bad and there are closer note', function () {
         setup(`
           #BPM 120
           #00111:01010100000000000000000000000000
@@ -135,7 +135,7 @@ describe('PlayerState', function() {
         assert(state.getNoteStatus(chart.notes[2]) === 'unjudged')
       })
 
-      it('records delta when pressed', function() {
+      it('records delta when pressed', function () {
         setup(`
           #BPM 120
           #00111:01
@@ -145,7 +145,7 @@ describe('PlayerState', function() {
         assert(state.stats.handleDelta.calledWith(2.01 - 2))
       })
 
-      it('does not record delta when missed', function() {
+      it('does not record delta when missed', function () {
         setup(`
           #BPM 120
           #00111:01
@@ -155,16 +155,16 @@ describe('PlayerState', function() {
         assert(state.stats.handleDelta.callCount === 0)
       })
 
-      describe('with long note', function() {
+      describe('with long note', function () {
         let note
-        beforeEach(function() {
+        beforeEach(function () {
           setup(`
             #BPM 120
             #00151:0101
           `)
           note = chart.notes[0]
         })
-        it('judges long note', function() {
+        it('judges long note', function () {
           advance(2, { p1_1: 1 })
           assert(state.getNoteStatus(note) === 'active')
           assert(state.getNoteJudgment(note) === 1)
@@ -174,41 +174,41 @@ describe('PlayerState', function() {
           assert(state.getNoteJudgment(note) === 1)
           assert(state.notifications.judgments[0].judgment === 1)
         })
-        it('gives 2 discrete judgments, one for down and one for up', function() {
+        it('gives 2 discrete judgments, one for down and one for up', function () {
           advance(2, { p1_1: 1 })
           assert(state.stats.numJudgments === 1)
           advance(3, { p1_1: 0 })
           assert(state.stats.numJudgments === 2)
         })
-        it('records delta once', function() {
+        it('records delta once', function () {
           sinon.spy(state.stats, 'handleDelta')
           advance(2, { p1_1: 1 })
           advance(3, { p1_1: 0 })
           assert(state.stats.handleDelta.callCount === 1)
         })
-        it('judges missed long note', function() {
+        it('judges missed long note', function () {
           advance(2.3, { p1_1: 1 })
           assert(state.getNoteStatus(note) === 'judged')
           assert(state.getNoteJudgment(note) === -1)
         })
-        it('gives 2 missed judgment for missed longnote', function() {
+        it('gives 2 missed judgment for missed longnote', function () {
           advance(2.3, { p1_1: 1 })
           assert(state.stats.numJudgments === 2)
         })
-        it('judges long note lifted too fast as missed', function() {
+        it('judges long note lifted too fast as missed', function () {
           advance(2, { p1_1: 1 })
           advance(2.01, { p1_1: 0 })
           assert(state.getNoteStatus(note) === 'judged')
           assert(state.getNoteJudgment(note) === -1)
           assert(state.stats.numJudgments === 2)
         })
-        it('does not end automatically', function() {
+        it('does not end automatically', function () {
           advance(2, { p1_1: 1 })
           advance(3.1, { p1_1: 1 })
           assert(state.getNoteStatus(note) === 'active')
           assert(state.stats.numJudgments === 1)
         })
-        it('judges long note lifted too slow as missed', function() {
+        it('judges long note lifted too slow as missed', function () {
           advance(2, { p1_1: 1 })
           advance(4, { p1_1: 1 })
           assert(state.getNoteStatus(note) === 'judged')
@@ -222,16 +222,16 @@ describe('PlayerState', function() {
         })
       })
 
-      describe('with long scratch note', function() {
+      describe('with long scratch note', function () {
         let note
-        beforeEach(function() {
+        beforeEach(function () {
           setup(`
             #BPM 120
             #00156:0101
           `)
           note = chart.notes[0]
         })
-        it('ends automatically', function() {
+        it('ends automatically', function () {
           advance(2, { p1_SC: 1 })
           assert(state.getNoteStatus(note) === 'active')
           assert(state.getNoteJudgment(note) === 1)
@@ -243,15 +243,15 @@ describe('PlayerState', function() {
         })
       })
 
-      describe('with long scratch note next to each other', function() {
-        beforeEach(function() {
+      describe('with long scratch note next to each other', function () {
+        beforeEach(function () {
           setup(`
 #BPM 120
 #00156:0100000000000000000000000000000000000000000000000000000000000001
 #00256:0100000000000000000000000000000000000000000000000000000000000001
           `)
         })
-        it('should switch to next one on change', function() {
+        it('should switch to next one on change', function () {
           advance(2, { p1_SC: 1 })
           advance(4, { p1_SC: -1 })
           assert(state.getNoteStatus(chart.notes[0]) === 'judged')
@@ -259,8 +259,8 @@ describe('PlayerState', function() {
         })
       })
 
-      describe('sound notifications', function() {
-        it('notifies of note hit', function() {
+      describe('sound notifications', function () {
+        it('notifies of note hit', function () {
           setup(`
             #BPM 120
             #00111:0102
@@ -269,7 +269,7 @@ describe('PlayerState', function() {
           assert(state.notifications.sounds[0].note === chart.notes[0])
           assert(state.notifications.sounds[0].type === 'hit')
         })
-        it('should notify missed notes as break', function() {
+        it('should notify missed notes as break', function () {
           setup(`
             #BPM 120
             #00111:01
@@ -278,7 +278,7 @@ describe('PlayerState', function() {
           assert(state.notifications.sounds[0].note === chart.notes[0])
           assert(state.notifications.sounds[0].type === 'break')
         })
-        it('notifies of free keysound hit', function() {
+        it('notifies of free keysound hit', function () {
           setup(`
             #BPM 60
             #00111:01
@@ -314,7 +314,7 @@ describe('PlayerState', function() {
           advance(7.5, { p1_1: 1 })
           assert(state.notifications.sounds[0].note === chart.notes[1])
         })
-        it('suppresses freestyle keysound when column is sandwiched between 2 adjacent notes in 3d mode', function() {
+        it('suppresses freestyle keysound when column is sandwiched between 2 adjacent notes in 3d mode', function () {
           setup(
             `
               #BPM 60
@@ -332,7 +332,7 @@ describe('PlayerState', function() {
           assert.equal(state.notifications.sounds.length, 0)
           advance(4, { p1_2: 0 })
         })
-        it('does not suppress freestyle keysound outside 3d mode', function() {
+        it('does not suppress freestyle keysound outside 3d mode', function () {
           setup(
             `
               #BPM 60
@@ -353,24 +353,24 @@ describe('PlayerState', function() {
       })
     })
 
-    describe('speed', function() {
-      it('infers speed from player', function() {
+    describe('speed', function () {
+      it('infers speed from player', function () {
         setup('', { speed: 2 })
         assert(state.speed === 2)
       })
-      it('updates speed on dedicated buttons', function() {
+      it('updates speed on dedicated buttons', function () {
         setup('', { speed: 2 })
         advance(1.0, { p1_speedup: 1 })
         assert(state.speed === 2.5)
         advance(1.2, { p1_speedup: 0, p1_speeddown: 1 })
         assert(state.speed === 2)
       })
-      it('supports fine-grained speed modifications', function() {
+      it('supports fine-grained speed modifications', function () {
         setup('', { speed: 2 })
         advance(1.0, { p1_speedup: 1, select: 1 })
         assert(state.speed === 2.1)
       })
-      it('supports pinching to zoom', function() {
+      it('supports pinching to zoom', function () {
         setup('', { speed: 2 })
         advance(1.0, { p1_pinch: 300 })
         advance(1.2, { p1_pinch: 450 })
@@ -378,8 +378,8 @@ describe('PlayerState', function() {
       })
     })
 
-    describe('finish', function() {
-      it('should become true when song is finished', function() {
+    describe('finish', function () {
+      it('should become true when song is finished', function () {
         setup('#00111:0101')
         assert(state.finished === false)
         advance(4.0, {})

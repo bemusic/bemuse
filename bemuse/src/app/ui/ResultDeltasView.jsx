@@ -11,12 +11,12 @@ import { timegate } from 'bemuse/game/judgments'
 
 import getNonMissedDeltas from '../interactors/getNonMissedDeltas'
 
-const ms = delta => `${(delta * 1000).toFixed(1)} ms`
+const ms = (delta) => `${(delta * 1000).toFixed(1)} ms`
 
-const group = deltas =>
+const group = (deltas) =>
   _(deltas)
-    .map(delta => Math.floor(delta * 100))
-    .countBy(bucket => bucket)
+    .map((delta) => Math.floor(delta * 100))
+    .countBy((bucket) => bucket)
     .value()
 
 export default class ResultDeltasView extends React.Component {
@@ -27,18 +27,16 @@ export default class ResultDeltasView extends React.Component {
   render() {
     const deltas = this.props.deltas
     const nonMissDeltas = getNonMissedDeltas(deltas)
-    const offDeltas = deltas.filter(delta => timegate(1) <= Math.abs(delta))
-    const earlyCount = offDeltas.filter(delta => delta < 0).length
-    const lateCount = offDeltas.filter(delta => delta > 0).length
+    const offDeltas = deltas.filter((delta) => timegate(1) <= Math.abs(delta))
+    const earlyCount = offDeltas.filter((delta) => delta < 0).length
+    const lateCount = offDeltas.filter((delta) => delta > 0).length
     const groups = group(deltas)
-    const stats = _.range(-20, 20).map(bucket => ({
+    const stats = _.range(-20, 20).map((bucket) => ({
       bucket,
       count: groups[bucket] || 0,
     }))
-    const max = _(stats)
-      .map('count')
-      .max()
-    const height = value => Math.ceil((value / Math.max(max, 1)) * 128)
+    const max = _(stats).map('count').max()
+    const height = (value) => Math.ceil((value / Math.max(max, 1)) * 128)
     return (
       <div className='ResultDeltasView'>
         <Panel title='Accuracy Data'>

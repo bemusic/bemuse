@@ -17,7 +17,20 @@
 [@pnkapadia64]: https://github.com/pnkapadia64
 [@tsfreddie]: https://github.com/TsFreddie
 [@vishal5251]: https://github.com/vishal5251
+[@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
+
+## v49.0.1-pre.202110111207
+
+### Internals
+
+- Improved the code readability of custom songs folder feature. [#699], by
+  [@dimitrov-d]
+- Prepare the codebase for implementing the detection of removed custom song
+  folder and upgraded Prettier to v2. [#700], by [@dtinth]
+
+[#699]: https://github.com/bemusic/bemuse/pull/699
+[#700]: https://github.com/bemusic/bemuse/pull/700
 
 ## v49 (2021-10-09)
 

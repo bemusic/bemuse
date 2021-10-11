@@ -71,7 +71,7 @@ export class Notechart {
     this._samples = this._generateKeysoundFiles(keysounds)
     this._infos = new Map<GameNote, NoteInfo>(
       this._notes.map(
-        note => [note, this._getNoteInfo(note)] as [GameNote, NoteInfo]
+        (note) => [note, this._getNoteInfo(note)] as [GameNote, NoteInfo]
       )
     )
     this._songInfo = songInfo
@@ -266,8 +266,8 @@ export class Notechart {
   _generatePlayableNotesFromBMS(bmsNotes: BMS.BMSNote[]) {
     let nextId = 1
     return bmsNotes
-      .filter(note => note.column)
-      .map(note => {
+      .filter((note) => note.column)
+      .map((note) => {
         let spec = this._generateEvent(note.beat) as GameNote
         spec.id = nextId++
         spec.column = note.column!
@@ -291,8 +291,8 @@ export class Notechart {
 
   _generateAutoKeysoundEventsFromBMS(bmsNotes: BMS.BMSNote[]) {
     return bmsNotes
-      .filter(note => !note.column)
-      .map(note => {
+      .filter((note) => !note.column)
+      .map((note) => {
         let spec = this._generateEvent(note.beat) as SoundedEvent
         spec.keysound = note.keysound
         spec.keysoundStart = note.keysoundStart
@@ -313,7 +313,7 @@ export class Notechart {
   }
 
   _generateBarLineEvents(beats: number[]) {
-    return beats.map(beat => this._generateEvent(beat))
+    return beats.map((beat) => this._generateEvent(beat))
   }
 
   _generateEvent(beat: number): GameEvent {

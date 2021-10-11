@@ -36,7 +36,7 @@ export class TextNode extends SkinNode {
       bindings: [
         [
           this.data,
-          v => {
+          (v) => {
             text.text = this.text.replace('%s', v)
             text.updateText()
             text.x = text.width * -this.align

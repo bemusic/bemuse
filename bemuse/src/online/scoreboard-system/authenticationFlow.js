@@ -2,7 +2,7 @@ export function* loginByUsernamePassword(
   username,
   password,
   {
-    log = message => console.log('[loginByUsernamePassword]', message),
+    log = (message) => console.log('[loginByUsernamePassword]', message),
 
     // (usernameOrEmail, password) => Promise
     // - If result contain `idToken` property => OK.
@@ -60,7 +60,7 @@ export function* signUp(
   email,
   password,
   {
-    log = message => console.log('[signUp]', message),
+    log = (message) => console.log('[signUp]', message),
 
     // (username, email, password) => Promise
     // - Result should always contain `idToken` property.

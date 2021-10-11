@@ -11,7 +11,7 @@ export default class AuthenticationForm extends React.Component {
     mode: PropTypes.string,
   }
 
-  onButtonClick = e => {
+  onButtonClick = (e) => {
     e.preventDefault()
     this.props.onSubmit({
       username: ReactDOM.findDOMNode(this.refs.username).value,
@@ -23,7 +23,7 @@ export default class AuthenticationForm extends React.Component {
   }
 
   componentDidMount() {
-    $(ReactDOM.findDOMNode(this)).on('keydown keyup keypress', e => {
+    $(ReactDOM.findDOMNode(this)).on('keydown keyup keypress', (e) => {
       e.stopPropagation()
     })
   }

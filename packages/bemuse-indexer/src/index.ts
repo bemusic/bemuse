@@ -63,7 +63,7 @@ interface ExtensionMap {
 const _extensions: ExtensionMap = {}
 export { _extensions as extensions }
 
-_extensions['.bms'] = async function(source, meta) {
+_extensions['.bms'] = async function (source, meta) {
   const options = Reader.getReaderOptionsFromFilename(meta.name)
   const str = await readBMS(source, options)
   var chart = Compiler.compile(str).chart
@@ -79,7 +79,7 @@ _extensions['.bms'] = async function(source, meta) {
   }
 }
 
-_extensions['.bmson'] = async function(source) {
+_extensions['.bmson'] = async function (source) {
   const string = Buffer.from(source).toString('utf8')
   const object = JSON.parse(string)
   var info = songInfoForBmson(object)
@@ -111,7 +111,7 @@ async function getFileInfo(
 
   var md5 =
     meta.md5 ||
-    (function() {
+    (function () {
       var hash = createHash('md5')
       hash.update(data)
       return hash.digest('hex')
@@ -162,10 +162,10 @@ async function getSongInfo(
   var warnings: string[] = []
   var cache = options.cache || undefined
   var extra = options.extra || {}
-  var report = options.onProgress || function() {}
+  var report = options.onProgress || function () {}
   var onError =
     options.onError ||
-    function(e, name) {
+    function (e, name) {
       if (global.console && console.error) {
         console.error('Error while parsing ' + name, e)
       }
@@ -174,7 +174,7 @@ async function getSongInfo(
   var doGetFileInfo = options.getFileInfo || getFileInfo
   const results: OutputChart[][] = await Bluebird.map(
     files,
-    async function(file): Promise<OutputChart[]> {
+    async function (file): Promise<OutputChart[]> {
       var name = file.name
       var fileData = file.data
       var hash = createHash('md5')
@@ -254,9 +254,6 @@ function common<T>(array: T[], f: (item: T) => string) {
 }
 
 function median<T>(array: T[], f: (item: T) => number) {
-  var arr = _(array)
-    .map(f)
-    .sortBy()
-    .value()
+  var arr = _(array).map(f).sortBy().value()
   return arr[Math.floor(arr.length / 2)]
 }

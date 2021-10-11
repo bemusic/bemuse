@@ -30,7 +30,7 @@ export default class RunningNumber extends React.Component {
     }, 16)
   }
 
-  _getText = value => {
+  _getText = (value) => {
     if (this.props.formatter) return this.props.formatter(value)
     return value.toFixed(0)
   }

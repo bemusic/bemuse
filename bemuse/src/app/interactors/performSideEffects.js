@@ -1,5 +1,5 @@
 export function performSideEffects(sideEffect川) {
-  const subscription = sideEffect川.subscribe(f => f())
+  const subscription = sideEffect川.subscribe((f) => f())
   return {
     dispose: () => subscription.unsubscribe(),
   }

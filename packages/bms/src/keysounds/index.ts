@@ -67,7 +67,7 @@ export class Keysounds {
   static fromBMSChart(chart: BMSChart) {
     void BMSChart
     var map: { [id: string]: string } = {}
-    chart.headers.each(function(name, value) {
+    chart.headers.each(function (name, value) {
       var match = name.match(/^wav(\S\S)$/i)
       if (!match) return
       map[match[1].toLowerCase()] = value

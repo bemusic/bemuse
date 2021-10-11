@@ -61,8 +61,9 @@ function autoVelocity({
 }): VelocityController {
   const visiblePortion = 1 - Math.abs(laneCover)
   const nominalSpeedLeadTime = ((60000 * 5) / songBPM) * visiblePortion
-  const initialSpeed = _.minBy(_.range(1, 999).map(x => x / 10), speed =>
-    Math.abs(desiredLeadTime - nominalSpeedLeadTime / speed)
+  const initialSpeed = _.minBy(
+    _.range(1, 999).map((x) => x / 10),
+    (speed) => Math.abs(desiredLeadTime - nominalSpeedLeadTime / speed)
   )!
   return {
     getInitialSpeed() {

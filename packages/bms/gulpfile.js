@@ -27,7 +27,7 @@ var files = {
       )
       return []
     }
-    return require('./features').map(function(file) {
+    return require('./features').map(function (file) {
       var filePath = home + '/features/' + file
       if (!fs.existsSync(filePath)) {
         console.error('WARNING! ' + filePath + ' does not exist.')
@@ -41,7 +41,7 @@ gulp.task('test:cucumber', cucumberTest)
 gulp.task('test:mocha', mochaTest)
 gulp.task('test', gulp.series('test:mocha', 'test:cucumber'))
 
-gulp.task('bmspec:update', async function() {
+gulp.task('bmspec:update', async function () {
   if (!fs.existsSync('bmspec')) {
     console.log('* Cloning bmspec...')
     childProcess.execSync(

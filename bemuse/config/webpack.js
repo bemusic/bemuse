@@ -245,10 +245,7 @@ function applyKarmaConfig(config) {
   return config
 }
 
-export const generateWebConfig = flowRight(
-  applyWebConfig,
-  generateBaseConfig
-)
+export const generateWebConfig = flowRight(applyWebConfig, generateBaseConfig)
 
 export const generateKarmaConfig = flowRight(
   applyKarmaConfig,
@@ -259,7 +256,7 @@ export default generateWebConfig()
 
 function CompileProgressPlugin() {
   const gauge = new Gauge()
-  return new webpack.ProgressPlugin(function(percentage, message) {
+  return new webpack.ProgressPlugin(function (percentage, message) {
     if (percentage === 1) gauge.hide()
     else gauge.show(message, percentage)
   })

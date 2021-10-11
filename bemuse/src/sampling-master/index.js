@@ -60,7 +60,7 @@ export class SamplingMaster {
   // Decodes the audio data from a Blob or an ArrayBuffer.
   // Returns an AudioBuffer which can be re-used in other sampling masters.
   decode(blobOrArrayBuffer) {
-    return this._coerceToArrayBuffer(blobOrArrayBuffer).then(arrayBuffer =>
+    return this._coerceToArrayBuffer(blobOrArrayBuffer).then((arrayBuffer) =>
       this._decodeAudio(arrayBuffer)
     )
   }
@@ -74,7 +74,7 @@ export class SamplingMaster {
         return this.decode(blobOrArrayBufferOrAudioBuffer)
       }
     })()
-    return audioBufferPromise.then(audioBuffer => {
+    return audioBufferPromise.then((audioBuffer) => {
       if (this._destroyed) throw new Error('SamplingMaster already destroyed!')
       var sample = new Sample(this, audioBuffer)
       this._samples.push(sample)

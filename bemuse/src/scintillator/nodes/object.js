@@ -12,7 +12,7 @@ function ChildManager(expr, child, poolSize) {
       initPool()
       return new Instance({
         context: context,
-        onData: data => {
+        onData: (data) => {
           update(expr(data))
         },
       })

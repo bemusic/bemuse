@@ -13,7 +13,7 @@ export function getBmsonBga(
   if (object.bga.bga_events.length !== 1) return undefined
 
   var mapping: { [id: string]: string } = {}
-  object.bga.bga_header.forEach(function(bgaHeader) {
+  object.bga.bga_header.forEach(function (bgaHeader) {
     mapping[bgaHeader.id] = bgaHeader.name
   })
 

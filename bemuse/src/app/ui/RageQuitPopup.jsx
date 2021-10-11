@@ -9,10 +9,10 @@ import * as ReduxState from '../redux/ReduxState'
 import OptionsButton from './OptionsButton'
 
 const enhance = connect(
-  state => ({
+  (state) => ({
     visible: ReduxState.selectRageQuittedFlag(state),
   }),
-  dispatch => ({
+  (dispatch) => ({
     onClose: () => dispatch({ type: ReduxState.RAGEQUIT_DISMISSED }),
   })
 )

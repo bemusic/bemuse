@@ -49,7 +49,7 @@ export class Positioning {
       dx: 1,
       inclusive: true,
     })
-    chart.objects.allSorted().forEach(function(object) {
+    chart.objects.allSorted().forEach(function (object) {
       if (object.channel === 'SC') {
         var beat = chart.measureToBeat(object.measure, object.fraction)
         var dx = +chart.headers.get('scroll' + object.value)!

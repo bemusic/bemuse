@@ -25,8 +25,11 @@ export class Monetizer {
   _runtime: Runtime = window
 
   monetize(options: MonetizationOptions | string) {
-    const { content, weight = 1, priority = 0 } =
-      typeof options === 'string' ? { content: options } : options
+    const {
+      content,
+      weight = 1,
+      priority = 0,
+    } = typeof options === 'string' ? { content: options } : options
     const configuration: MonetizationConfiguration = {
       content,
       weight,
@@ -42,9 +45,9 @@ export class Monetizer {
   update() {
     const active = Array.from(this._active)
     const maxPriority = Math.max(
-      ...active.map(configuration => configuration.priority)
+      ...active.map((configuration) => configuration.priority)
     )
-    const considered = active.filter(item => item.priority === maxPriority)
+    const considered = active.filter((item) => item.priority === maxPriority)
     const sum = considered.reduce((sum, item) => sum + item.weight, 0)
     let choice = this._runtime.Math.random() * sum
     let targetPointer = ''

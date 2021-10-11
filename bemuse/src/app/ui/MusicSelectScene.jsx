@@ -40,12 +40,12 @@ import Toolbar from './Toolbar'
 const selectMusicSelectState = (() => {
   const selectLegacyServerObjectForCurrentCollection = createSelector(
     ReduxState.selectCurrentCollectionUrl,
-    url => ({ url })
+    (url) => ({ url })
   )
 
   const selectIsCurrentCollectionUnofficial = createSelector(
     ReduxState.selectCurrentCollectionUrl,
-    url => url !== OFFICIAL_SERVER_URL
+    (url) => url !== OFFICIAL_SERVER_URL
   )
 
   return createStructuredSelector({
@@ -66,7 +66,7 @@ const selectMusicSelectState = (() => {
 const enhance = compose(
   hot(module),
   connectToLegacyStore({ user: online && online.user川 }),
-  connect(state => ({
+  connect((state) => ({
     musicSelect: selectMusicSelectState(state),
     collectionUrl: ReduxState.selectCurrentCollectionUrl(state),
     musicPreviewEnabled: Options.isPreviewEnabled(state.options),
@@ -74,14 +74,17 @@ const enhance = compose(
   connectIO({
     onSelectChart: () => (song, chart) =>
       MusicSelectionIO.selectChart(song, chart),
-    onSelectSong: () => song => MusicSelectionIO.selectSong(song),
-    onFilterTextChange: () => text => MusicSearchIO.handleSearchTextType(text),
-    onLaunchGame: ({ musicSelect }) => () =>
-      MusicSelectionIO.launchGame(
-        musicSelect.server,
-        musicSelect.song,
-        musicSelect.chart
-      ),
+    onSelectSong: () => (song) => MusicSelectionIO.selectSong(song),
+    onFilterTextChange: () => (text) =>
+      MusicSearchIO.handleSearchTextType(text),
+    onLaunchGame:
+      ({ musicSelect }) =>
+      () =>
+        MusicSelectionIO.launchGame(
+          musicSelect.server,
+          musicSelect.song,
+          musicSelect.chart
+        ),
   })
 )
 
@@ -292,7 +295,7 @@ class MusicSelectScene extends React.PureComponent {
   handleMusicListTouch = () => {
     this.setState({ inSong: false })
   }
-  handleChartClick = chart => {
+  handleChartClick = (chart) => {
     if (this.props.musicSelect.chart.md5 === chart.md5) {
       Analytics.send('MusicSelectScene', 'launch game')
       MusicPreviewer.go()
@@ -302,7 +305,7 @@ class MusicSelectScene extends React.PureComponent {
       this.props.onSelectChart(this.props.musicSelect.song, chart)
     }
   }
-  handleFilter = e => {
+  handleFilter = (e) => {
     this.props.onFilterTextChange(e.target.value)
   }
   handleOptionsOpen = () => {
@@ -319,7 +322,7 @@ class MusicSelectScene extends React.PureComponent {
   handleCustomBMSClose = () => {
     this.setState({ customBMSVisible: false })
   }
-  handleCustomSong = song => {
+  handleCustomSong = (song) => {
     this.setState({ customBMSVisible: false })
   }
   handleUnofficialClick = () => {

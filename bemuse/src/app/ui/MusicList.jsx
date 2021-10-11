@@ -66,7 +66,7 @@ class MusicList extends React.PureComponent {
           <li key={title} className='MusicListのgroupTitle'>
             {title}
           </li>,
-          songs.map(song => (
+          songs.map((song) => (
             <MusicListItem
               key={song.id}
               song={song}
@@ -93,7 +93,7 @@ class MusicList extends React.PureComponent {
     // bother sending it in (just keep it as undefined).
     //
     let selectedChart = this.props.selectedChart
-    return _.find(song.charts, chart => chart === selectedChart)
+    return _.find(song.charts, (chart) => chart === selectedChart)
   }
 }
 

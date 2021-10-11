@@ -24,24 +24,24 @@ if (
   }
 }
 
-addEventListener('message', function({ data }) {
+addEventListener('message', function ({ data }) {
   let files = data.files.map(convertBuffer)
   postMessage({ type: 'started' })
   function onProgress(current, total, file) {
     postMessage({ type: 'progress', current, total, file })
   }
-  Promise.try(function() {
+  Promise.try(function () {
     return indexer.getSongInfo(files, { onProgress })
   })
-    .then(function(song) {
-      song.warnings.forEach(function(warning) {
+    .then(function (song) {
+      song.warnings.forEach(function (warning) {
         if (global.console && console.warn) {
           console.warn(warning)
         }
       })
       postMessage({ type: 'result', song: song })
     })
-    .catch(function(e) {
+    .catch(function (e) {
       console.error('CAUGHT', e)
     })
     .done()

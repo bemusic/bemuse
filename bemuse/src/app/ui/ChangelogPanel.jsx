@@ -11,10 +11,11 @@ class ChangelogPanel extends React.Component {
 
   componentDidMount() {
     const promise = import('!!raw-loader!../../../../CHANGELOG.md').then(
-      m => m.default
+      (m) => m.default
     )
     promise.then(
-      changelog => this.setState({ data: { status: 'completed', changelog } }),
+      (changelog) =>
+        this.setState({ data: { status: 'completed', changelog } }),
       () => this.setState({ data: { status: 'error' } })
     )
   }

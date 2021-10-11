@@ -62,7 +62,7 @@ function bootUp() {
     })
     run(OptionsIO.loadInitialOptions())
 
-    getSongsFromCustomFolders(getDefaultCustomFolderContext()).then(songs => {
+    getSongsFromCustomFolders(getDefaultCustomFolderContext()).then((songs) => {
       if (songs.length > 0) {
         store.dispatch({
           type: ReduxState.CUSTOM_SONGS_LOADED,
@@ -79,9 +79,7 @@ export function main() {
   // setup service worker
   let promise = setupServiceWorker()
   if (promise && promise.then) {
-    Promise.resolve(promise)
-      .finally(displayFirstScene)
-      .done()
+    Promise.resolve(promise).finally(displayFirstScene).done()
   } else {
     displayFirstScene()
   }

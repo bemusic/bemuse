@@ -9,7 +9,7 @@ import * as Options from './entities/Options'
 import getLR2Score from './interactors/getLR2Score'
 import getNonMissedDeltas from './interactors/getNonMissedDeltas'
 
-let ga = window.ga || function() {}
+let ga = window.ga || function () {}
 const startTime = Date.now()
 const sid = ObjectID.generate()
 

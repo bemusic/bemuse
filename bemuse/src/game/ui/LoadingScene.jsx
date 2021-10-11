@@ -40,7 +40,7 @@ export default class LoadingScene extends React.Component {
 
   componentDidMount() {
     if (this.props.eyecatchImagePromise) {
-      this.props.eyecatchImagePromise.then(image => {
+      this.props.eyecatchImagePromise.then((image) => {
         ReactDOM.findDOMNode(this.refs.eyecatch).appendChild(image)
       })
     }

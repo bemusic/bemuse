@@ -25,13 +25,13 @@ describe('Options', () => {
     it('can be retrieved for current mode by column', () => {
       given(Options.initialState)
         .when(Options.changePlayMode('KB'))
-        .then(Options.keyboardMapping, mapping => {
+        .then(Options.keyboardMapping, (mapping) => {
           assert(mapping['4'] === '32') // KB mode, 4th button is space.
         })
 
       given(Options.initialState)
         .when(Options.changePlayMode('BM'))
-        .then(Options.keyboardMapping, mapping => {
+        .then(Options.keyboardMapping, (mapping) => {
           assert(mapping['4'] === '68') // BM mode, 4th button is D.
         })
     })
@@ -80,7 +80,7 @@ describe('Options', () => {
       given(Options.initialState)
         .when(Options.changeScratchPosition('off'))
         .then(Options.scratchPosition, shouldEqual('off'))
-        .and(state => {
+        .and((state) => {
           assert(state['player.P1.mode'] === 'KB')
         })
     })
@@ -88,7 +88,7 @@ describe('Options', () => {
       given(Options.initialState)
         .when(Options.changeScratchPosition('right'))
         .then(Options.scratchPosition, shouldEqual('right'))
-        .and(state => {
+        .and((state) => {
           assert(state['player.P1.mode'] === 'BM')
         })
     })
@@ -97,7 +97,7 @@ describe('Options', () => {
         .when(Options.changeScratchPosition('right'))
         .and(Options.changeScratchPosition('off'))
         .then(Options.scratchPosition, shouldEqual('off'))
-        .and(state => {
+        .and((state) => {
           assert(state['player.P1.mode'] === 'KB')
           assert(state['player.P1.scratch'] === 'right')
         })

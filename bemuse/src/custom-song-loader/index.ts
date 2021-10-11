@@ -12,34 +12,34 @@ export function loadSongFromResources(
     resources.setLoggingFunction(onMessage)
   }
   return resources.fileList
-    .then(fileList => {
+    .then((fileList) => {
       console.log(fileList)
-      return fileList.filter(filename =>
+      return fileList.filter((filename) =>
         /\.(bms|bme|bml|bmson)$/i.test(filename)
       )
     })
-    .then(bmsFileList => {
+    .then((bmsFileList) => {
       onMessage(bmsFileList.length + ' file(s) found. Reading them...')
-      return Promise.map(bmsFileList, filename => {
+      return Promise.map(bmsFileList, (filename) => {
         const start = Date.now()
         return resources
           .file(filename)
-          .then(file => file.read())
-          .then(x => {
+          .then((file) => file.read())
+          .then((x) => {
             const elapsed = Date.now() - start
             if (elapsed > 1000) onMessage('Read: ' + filename)
             return x
           })
-          .then(arrayBuffer => ({
+          .then((arrayBuffer) => ({
             name: filename,
             data: arrayBuffer,
           }))
       })
     })
-    .then(files => {
+    .then((files) => {
       return new Promise<Song>((resolve, reject) => {
         let worker = new Worker()
-        worker.onmessage = function({ data }) {
+        worker.onmessage = function ({ data }) {
           if (data.type === 'result') {
             resolve(data.song)
             worker.terminate()
@@ -58,7 +58,7 @@ export function loadSongFromResources(
             )
           }
         }
-        worker.onerror = function(e) {
+        worker.onerror = function (e) {
           onMessage('Worker error: ' + e)
           console.error('Worker error: ' + e)
           reject(e.error)
@@ -66,7 +66,7 @@ export function loadSongFromResources(
         worker.postMessage({ files })
       })
     })
-    .then(song => {
+    .then((song) => {
       song.resources = resources
       return song
     })

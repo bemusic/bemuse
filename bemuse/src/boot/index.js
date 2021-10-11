@@ -15,7 +15,7 @@ import * as Boot from './ui/Boot'
 import * as ErrorDialog from './ui/ErrorDialog'
 import loadModule from './loader'
 
-window.onerror = function(message, url, line, col, e) {
+window.onerror = function (message, url, line, col, e) {
   ErrorDialog.show(message, e, url, line, col)
 }
 
@@ -28,7 +28,7 @@ window.onerror = function(message, url, line, col, e) {
 let mode = query.mode || 'app'
 
 import(/* webpackChunkName: 'environment' */ './environment')
-  .then(_ => {
+  .then((_) => {
     if (loadModule[mode]) {
       // >>
       // The main script is then loaded and imported into the environment,
@@ -42,12 +42,12 @@ import(/* webpackChunkName: 'environment' */ './environment')
       //
       Boot.setStatus(`Loading ${mode} bundle`)
       loadModule[mode]()
-        .then(loadedModule => {
+        .then((loadedModule) => {
           Boot.setStatus(`Initializing`)
           return loadedModule.main({ setStatus: Boot.setStatus })
         })
         .then(() => Boot.hide())
-        .catch(err => {
+        .catch((err) => {
           ErrorDialog.show(
             `An error occurred while initializing "${mode}"`,
             err
@@ -57,7 +57,7 @@ import(/* webpackChunkName: 'environment' */ './environment')
       ErrorDialog.show(`Invalid mode: ${mode}`)
     }
   })
-  .catch(err => {
+  .catch((err) => {
     ErrorDialog.show(
       'Failed to load environment bundle. Please refresh the page to try again.',
       err

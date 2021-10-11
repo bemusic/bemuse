@@ -21,16 +21,16 @@ export function Online(service) {
   const user川 = user口
     // https://github.com/baconjs/bacon.js/issues/536
     .toProperty(null)
-    .map(user => user || service.getCurrentUser())
+    .map((user) => user || service.getCurrentUser())
 
   function signUp(options) {
-    return Promise.resolve(service.signUp(options)).tap(user =>
+    return Promise.resolve(service.signUp(options)).tap((user) =>
       user口.push(user)
     )
   }
 
   function logIn(options) {
-    return Promise.resolve(service.logIn(options)).tap(user =>
+    return Promise.resolve(service.logIn(options)).tap((user) =>
       user口.push(user)
     )
   }
@@ -44,7 +44,7 @@ export function Online(service) {
   }
 
   function submitScore(info) {
-    return service.submitScore(info).tap(record => submitted口.push(record))
+    return service.submitScore(info).tap((record) => submitted口.push(record))
   }
 
   function getScoreboard(level) {
@@ -64,9 +64,9 @@ export function Online(service) {
       .scan(new Immutable.Map(), (map, seen) =>
         map.merge(_.zipObject(seen.map(id), seen))
       )
-      .map(map => map.valueSeq())
+      .map((map) => map.valueSeq())
       .skipDuplicates(Immutable.is)
-      .map(seq => seq.toJS())
+      .map((seq) => seq.toJS())
   }
 
   function records川ForUser(user) {
@@ -76,11 +76,8 @@ export function Online(service) {
       const action川 = Bacon.mergeAll(
         // Need to convert a property to EventStream to work around the
         // first-subscriber-only problem.
-        allSeen川
-          .toEventStream()
-          .delay(0)
-          .flatMap(fetch),
-        submitted口.map(record =>
+        allSeen川.toEventStream().delay(0).flatMap(fetch),
+        submitted口.map((record) =>
           DataStore.put(id(record), completedStateTransition(record))
         )
       )
@@ -88,7 +85,7 @@ export function Online(service) {
     }
 
     function fetch(levels) {
-      const levelsToFetch = levels.filter(level => !seen[id(level)])
+      const levelsToFetch = levels.filter((level) => !seen[id(level)])
       for (let level of levelsToFetch) {
         seen[id(level)] = true
       }
@@ -98,7 +95,7 @@ export function Online(service) {
           : Promise.resolve([])
       return Bacon.fromPromise(
         promise
-          .then(function(results) {
+          .then(function (results) {
             let loadedRecords = _.zipObject(
               results.map(id),
               results.map(completedStateTransition)
@@ -110,7 +107,7 @@ export function Online(service) {
             let transitions = _.defaults(loadedRecords, nullResults)
             return DataStore.putMultiple(transitions)
           })
-          .catch(function(e) {
+          .catch(function (e) {
             console.error('Cannot fetch levels:', e)
             return DataStore.putMultiple({})
           })
@@ -126,10 +123,10 @@ export function Online(service) {
     {
       const rankingModel川 = user川.map(rankingModelForUser)
       const self川 = rankingModel川
-        .flatMapLatest(model => model.self川)
+        .flatMapLatest((model) => model.self川)
         .toProperty(INITIAL_OPERATION_STATE)
       const scoreboardTrigger川 = rankingModel川.flatMapLatest(
-        model => model.scoreboardTrigger川
+        (model) => model.scoreboardTrigger川
       )
       const scoreboard川 = getScoreboardState川(scoreboardTrigger川)
       const state川 = Bacon.combineTemplate({
@@ -174,7 +171,7 @@ export function Online(service) {
       const self川 = submitScoreState川(user)
       const selfDone川 = self川
         .toEventStream()
-        .filter(state => !isWaiting(state))
+        .filter((state) => !isWaiting(state))
       return {
         self川,
         scoreboardTrigger川: selfDone川.map(() => ({ force: true })),

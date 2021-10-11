@@ -31,7 +31,7 @@ export default class MarkdownContent extends React.Component {
   }
 
   componentDidMount() {
-    ReactDOM.findDOMNode(this).addEventListener('click', e => {
+    ReactDOM.findDOMNode(this).addEventListener('click', (e) => {
       e.preventDefault()
       if (e.target.href) {
         window.open(e.target.href, '_blank')

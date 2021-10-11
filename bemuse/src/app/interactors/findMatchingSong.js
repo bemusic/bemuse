@@ -10,12 +10,8 @@ function findMatchingSong({ songs, title, getTitle }) {
 
 function titleFullyMatches(haystack, needle) {
   return (
-    String(haystack)
-      .toLowerCase()
-      .trim() ===
-    String(needle)
-      .toLowerCase()
-      .trim()
+    String(haystack).toLowerCase().trim() ===
+    String(needle).toLowerCase().trim()
   )
 }
 

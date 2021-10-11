@@ -2,7 +2,7 @@ import gulp from 'gulp'
 import fs from 'fs'
 import path from 'path'
 
-gulp.task('lint-changelog', async function() {
+gulp.task('lint-changelog', async function () {
   const changelogPath = path.resolve(__dirname, '../CHANGELOG.md')
   const data = fs.readFileSync(changelogPath, 'utf8')
   const defined = new Set()

@@ -14,7 +14,8 @@ import download from 'bemuse/utils/download'
 export const ARCHIVE_REGEXP = /\.(?:zip|rar|7z|tar(?:\.(?:gz|bz2))?)/i
 
 // http://nekokan.dyndns.info/tool/DropboxReplacer/index.html
-const DROPBOX_REGEXP = /https?:\/\/(?:(?:www|dl)\.dropbox\.com|dl\.dropboxusercontent\.com)\/(sh?)\/([^?]*)(.*)?$/
+const DROPBOX_REGEXP =
+  /https?:\/\/(?:(?:www|dl)\.dropbox\.com|dl\.dropboxusercontent\.com)\/(sh?)\/([^?]*)(.*)?$/
 
 /**
  * A resource provider for custom songs.
@@ -34,11 +35,11 @@ export class CustomSongResources implements ICustomSongResources {
 
   constructor(provider: CustomResourceProvider) {
     this._files = Promise.resolve(provider.getFiles(this._logging.log)).then(
-      files => unarchiveIfNeeded(files, this._logging.log)
+      (files) => unarchiveIfNeeded(files, this._logging.log)
     )
   }
   file(name: string) {
-    return this._files.then(function(files) {
+    return this._files.then(function (files) {
       for (let file of files) {
         if (file.name.toLowerCase() === name.toLowerCase()) {
           return new FileResource(file.file)
@@ -48,7 +49,7 @@ export class CustomSongResources implements ICustomSongResources {
     })
   }
   get fileList(): Promise<string[]> {
-    return Promise.resolve(this._files).map(f => f.name)
+    return Promise.resolve(this._files).map((f) => f.name)
   }
 }
 

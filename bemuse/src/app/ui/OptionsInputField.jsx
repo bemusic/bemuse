@@ -13,8 +13,8 @@ class OptionsInputField extends React.PureComponent {
     value: PropTypes.any,
   }
   static defaultProps = {
-    stringify: x => `${x}`,
-    parse: x => x,
+    stringify: (x) => `${x}`,
+    parse: (x) => x,
     onChange: () => {},
   }
 
@@ -38,7 +38,7 @@ class OptionsInputField extends React.PureComponent {
       />
     )
   }
-  handleInputChange = e => {
+  handleInputChange = (e) => {
     let input = e.target
     let valid = this.props.validator.test(input.value)
     input.classList[valid ? 'remove' : 'add']('is-invalid')

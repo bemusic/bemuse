@@ -43,7 +43,7 @@ export class BMSObjects {
    */
   allSorted() {
     var list = this.all()
-    list.sort(function(a, b) {
+    list.sort(function (a, b) {
       return a.measure + a.fraction - (b.measure + b.fraction)
     })
     return list

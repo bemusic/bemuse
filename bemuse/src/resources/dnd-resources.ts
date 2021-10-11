@@ -13,11 +13,13 @@ import {
 //
 // Now this `DndResources` class is really dumb and we want to prefer composition over inheritance.
 // This class should be removed.
-export class DndResources extends CustomSongResources
-  implements ICustomSongResources {
+export class DndResources
+  extends CustomSongResources
+  implements ICustomSongResources
+{
   constructor(event: DragEvent) {
     super({
-      getFiles: log => getFilesFromEvent(event, log),
+      getFiles: (log) => getFilesFromEvent(event, log),
     })
   }
 }
@@ -37,7 +39,7 @@ async function getFilesFromEvent(
     let url = dataTransfer
       .getData('text/uri-list')
       .split(/\r\n|\r|\n/)
-      .filter(t => t && !t.startsWith('#'))[0]
+      .filter((t) => t && !t.startsWith('#'))[0]
     if (ARCHIVE_REGEXP.test(url && url.replace(/[?#].*/, ''))) {
       log('Link to archive file detected. Trying to download')
       return [await downloadFileEntryFromURL(url, log)]
@@ -74,7 +76,7 @@ async function getFilesFromEvent(
   function readFile(entry: any) {
     return new Promise<File>((resolve, reject) => {
       entry.file(resolve, reject)
-    }).tap(file => {
+    }).tap((file) => {
       addFile(file)
     })
   }

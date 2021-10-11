@@ -54,16 +54,16 @@ export class Context {
   _setupInteractivity() {
     let mouse = null
     let touches = []
-    let onMouse = e => {
+    let onMouse = (e) => {
       mouse = e
     }
-    let onUpdateMouse = e => {
+    let onUpdateMouse = (e) => {
       mouse = mouse && e
     }
     let onNoMouse = () => {
       mouse = null
     }
-    let onTouch = e => {
+    let onTouch = (e) => {
       touches = [].slice.call(e.touches)
     }
     const touchTarget = this._touchEventTarget || this.view

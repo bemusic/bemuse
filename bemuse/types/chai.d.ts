@@ -1,1 +1,1 @@
-declare var expect: (typeof import('chai'))['expect']
+declare var expect: typeof import('chai')['expect']

@@ -35,9 +35,9 @@ export class OmniInput {
     this.setGamepadSensitivity(options.sensitivity || 3)
 
     this._disposables = [
-      listen(win, 'keydown', e => this._handleKeyDown(e)),
-      listen(win, 'keyup', e => this._handleKeyUp(e)),
-      midi川.onValue(e => this._handleMIDIMessage(e)),
+      listen(win, 'keydown', (e) => this._handleKeyDown(e)),
+      listen(win, 'keyup', (e) => this._handleKeyUp(e)),
+      midi川.onValue((e) => this._handleMIDIMessage(e)),
     ]
     this._status = {}
     this._axis = {}
@@ -53,7 +53,7 @@ export class OmniInput {
     if (!e || !e.data) return
     const data = e.data
     const prefix = `midi.${e.target.id}.${e.data[0] & 0x0f}`
-    const handleNote = state => {
+    const handleNote = (state) => {
       this._status[`${prefix}.note.${data[1]}`] = state
     }
     if ((data[0] & 0xf0) === 0x80) {
@@ -147,7 +147,7 @@ export class OmniInput {
 //
 export function key川(input = new OmniInput(), win = window) {
   return _key川ForUpdate川(
-    Bacon.fromBinder(sink => {
+    Bacon.fromBinder((sink) => {
       const handle = win.setInterval(() => {
         sink(new Bacon.Next(input.update()))
       }, 16)
@@ -158,9 +158,9 @@ export function key川(input = new OmniInput(), win = window) {
 
 export function _key川ForUpdate川(update川) {
   return update川
-    .map(update => Object.keys(update).filter(key => update[key]))
+    .map((update) => Object.keys(update).filter((key) => update[key]))
     .diff([], (previous, current) => _.difference(current, previous))
-    .flatMap(array => Bacon.fromArray(array))
+    .flatMap((array) => Bacon.fromArray(array))
 }
 
 export default OmniInput

@@ -37,7 +37,7 @@ export function songInfoForBmson(bmson: Bmson) {
  */
 export function barLinesForBmson(bmson: Bmson) {
   if (!bmson.version)
-    return legacy.barLinesForBmson((bmson as any) as legacy.LegacyBmson)
+    return legacy.barLinesForBmson(bmson as any as legacy.LegacyBmson)
   let beatForPulse = beatForPulseForBmson(bmson)
   let lines = bmson.lines
   return _(lines)
@@ -53,7 +53,7 @@ export function barLinesForBmson(bmson: Bmson) {
  */
 export function timingInfoForBmson(bmson: Bmson): utils.TimingInfo {
   if (!bmson.version)
-    return legacy.timingInfoForBmson((bmson as any) as legacy.LegacyBmson)
+    return legacy.timingInfoForBmson(bmson as any as legacy.LegacyBmson)
   let beatForPulse = beatForPulseForBmson(bmson)
   return {
     initialBPM: bmson.info.init_bpm,
@@ -117,7 +117,7 @@ export function musicalScoreForBmson(bmson: Bmson) {
 function soundChannelsForBmson(bmson: Bmson) {
   return bmson.version
     ? bmson.sound_channels
-    : ((bmson as any) as legacy.LegacyBmson).soundChannel
+    : (bmson as any as legacy.LegacyBmson).soundChannel
 }
 
 function notesDataAndKeysoundsDataForBmsonAndTiming(

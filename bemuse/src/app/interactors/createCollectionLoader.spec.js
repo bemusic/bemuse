@@ -18,12 +18,12 @@ function setup({ fetch }) {
 }
 
 describe('createCollectionLoader', () => {
-  describe('load(url)', function() {
+  describe('load(url)', function () {
     it(
       'should load the collection and call `onLoad`',
-      co.wrap(function*() {
+      co.wrap(function* () {
         const { collectionLoader, onBeginLoading, onLoad } = setup({
-          fetch: url => {
+          fetch: (url) => {
             assert(
               url === '/src/app/test-fixtures/example-music-server/index.json'
             )
@@ -41,9 +41,9 @@ describe('createCollectionLoader', () => {
 
     it(
       'should load the collection and call `onErrorLoading` when there is an error',
-      co.wrap(function*() {
+      co.wrap(function* () {
         const { collectionLoader, onErrorLoading } = setup({
-          fetch: url => Promise.reject(new Error('???')),
+          fetch: (url) => Promise.reject(new Error('???')),
         })
         collectionLoader.load('/src/app/test-fixtures/example-music-server')
         yield waitUntil(() => assert(onErrorLoading.called))

@@ -53,7 +53,7 @@ export default class ExperimentScene extends React.Component {
     )
   }
 
-  renderMessage = text => {
+  renderMessage = (text) => {
     return <div className='ExperimentSceneのmessage'>{text}</div>
   }
 

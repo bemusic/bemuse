@@ -13,7 +13,7 @@ import { loadSongFromResources } from '../../custom-song-loader'
 // Configure a collection loader, which loads the Bemuse music collection.
 const collectionLoader = createCollectionLoader({
   fetch: fetch,
-  onBeginLoading: url =>
+  onBeginLoading: (url) =>
     store.dispatch({
       type: ReduxState.COLLECTION_LOADING_BEGAN,
       url: url,
@@ -34,7 +34,7 @@ const collectionLoader = createCollectionLoader({
     if (initiallySelectedSong) {
       const matchingSong = findMatchingSong({
         songs: data.songs,
-        getTitle: song => song.title,
+        getTitle: (song) => song.title,
         title: initiallySelectedSong,
       })
       if (matchingSong) {

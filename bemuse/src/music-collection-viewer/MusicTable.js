@@ -8,8 +8,8 @@ import groupSongsIntoCategories from 'bemuse/music-collection/groupSongsIntoCate
 import sortSongs from 'bemuse/music-collection/sortSongs'
 
 const sorters = {
-  ingame: songs => groupSongsIntoCategories(sortSongs(songs)),
-  added: songs => [
+  ingame: (songs) => groupSongsIntoCategories(sortSongs(songs)),
+  added: (songs) => [
     {
       title: 'Sorted by added date',
       songs: _.reverse(_.sortBy(songs, getAdded)),
@@ -17,7 +17,7 @@ const sorters = {
   ],
 }
 
-const getAdded = song =>
+const getAdded = (song) =>
   song.added || (song.initial ? '0000-00-00' : '9999-99-99')
 
 function validateSong(song) {
@@ -47,7 +47,7 @@ function validateSong(song) {
   if (!song.bmssearch_id && !song.exclusive) {
     report('No BMS search ID', 'bmssearch_id')
   }
-  if (!song.charts.filter(chart => chart.keys === '5K').length) {
+  if (!song.charts.filter((chart) => chart.keys === '5K').length) {
     report('No 5-key charts', '5key')
   }
   for (const chart of getPlayableCharts(song.charts)) {
@@ -65,7 +65,7 @@ function renderSongWarnings(song) {
     <div>
       {problems.map((problem, index) => (
         <div key={index}>
-          {problem.keys.map(key => (
+          {problem.keys.map((key) => (
             <code
               key={key}
               style={{
@@ -145,7 +145,7 @@ export class MusicTable extends React.Component {
     const button = (
       <button
         onClick={() => {
-          this.setState(s => ({ previewEnabled: !s.previewEnabled }))
+          this.setState((s) => ({ previewEnabled: !s.previewEnabled }))
         }}
       >
         {this.state.previewEnabled ? 'disable' : 'enable'}

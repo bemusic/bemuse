@@ -35,7 +35,7 @@ const enhance = compose(
     onMarkChangelogAsSeen: () => () =>
       OptionsIO.updateOptions(Options.updateLastSeenVersion(version)),
   }),
-  connect(state => ({
+  connect((state) => ({
     hasSeenChangelog: Options.lastSeenVersion(state.options) === version,
   }))
 )
@@ -136,17 +136,12 @@ class TitleScene extends React.Component {
     )
   }
 
-  openLink = e => {
+  openLink = (e) => {
     e.preventDefault()
-    window.open(
-      $(e.target)
-        .closest('a')
-        .get(0).href,
-      '_blank'
-    )
+    window.open($(e.target).closest('a').get(0).href, '_blank')
   }
 
-  openTwitterLink = e => {
+  openTwitterLink = (e) => {
     this.openLink(e)
     if (this.props.onTwitterButtonClick) this.props.onTwitterButtonClick()
   }
