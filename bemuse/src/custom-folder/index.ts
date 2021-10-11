@@ -95,12 +95,12 @@ async function scanIteration(
   }
   const { state, handle } = result
 
-  if (!state!.chartFilesScanned) {
+  if (!state.chartFilesScanned) {
     return scanAllChartFiles(state, handle, io)
   }
 
   if ((state?.foldersToUpdate?.length ?? 0) > 0) {
-    return updateFolders(state!, handle, io)
+    return updateFolders(state, handle, io)
   }
 }
 
@@ -150,7 +150,7 @@ async function scanAllChartFiles(
   io: CustomFolderScanIO
 ): Promise<ScanIterationResult | undefined> {
   const { log, setStatus } = io
-  const chartFileScanner = new ChartFileScanner(state!.chartFiles, true)
+  const chartFileScanner = new ChartFileScanner(state.chartFiles, true)
   await searchForChartFiles(handle, chartFileScanner, io)
 
   const newChartFiles = chartFileScanner.getNewChartFiles()
