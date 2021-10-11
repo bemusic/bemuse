@@ -61,7 +61,7 @@ export async function scanFolder(
   const { log, setStatus, updateState } = io
   for (let i = 1; ; i++) {
     log(`Iteration #${i} start`)
-    const result = await scanIteration(state, context, io)
+    const result = await scanIteration(state, io)
 
     // If there is nothing to be done in the very first iteration, let’s rescan the folder for new chart files.
     if (!result && i === 1) {
@@ -86,81 +86,50 @@ export async function scanFolder(
 }
 
 async function scanIteration(
-  state: CustomFolderState | undefined,
-  context: CustomFolderContext,
+  inputState: CustomFolderState | undefined,
   io: CustomFolderScanIO
 ): Promise<ScanIterationResult | undefined> {
-  const { log, setStatus } = io
-  const stateMessage = 'No custom folder set.'
-  const handleMessage = 'No folder selected.'
+  const result = await checkFolderStateAndPermissions(inputState, io)
+  if (!result) {
+    return
+  }
+  const { state, handle } = result
 
-  const result = await checkFolderStateAndPermissions(
-    state,
-    io,
-    stateMessage,
-    handleMessage
-  )
-  if (!result) return
-  const handle = (state as CustomFolderState)
-    .handle as FileSystemDirectoryHandle
-
-  // Enumerate all the files.
-  if (!state!.chartFilesScanned) {
-    const chartFileScanner = new ChartFileScanner(state!.chartFiles, true)
-    await searchForChartFiles(handle, chartFileScanner, io)
-
-    const newChartFiles = chartFileScanner.getNewChartFiles()
-    const foldersToUpdate = chartFileScanner.getFoldersToUpdate()
-    const foldersToRemove = chartFileScanner.getFoldersToRemove()
-    const message =
-      'Scanning done. ' +
-      [
-        `Charts: ${newChartFiles.length}`,
-        `Folders: ${chartFileScanner.getFolderCount()}`,
-        `Folders to update: ${foldersToUpdate.length}`,
-        `Folders to remove: ${foldersToRemove.length}`,
-      ].join('; ')
-    log(message)
-    setStatus(message)
-
-    return {
-      nextState: {
-        ...state,
-        chartFiles: newChartFiles,
-        chartFilesScanned: true,
-        foldersToUpdate,
-        foldersToRemove,
-      },
-      moreIterationsNeeded: true,
-    }
+  if (!state.chartFilesScanned) {
+    return scanAllChartFiles(state, handle, io)
   }
 
   if ((state?.foldersToUpdate?.length ?? 0) > 0) {
-    return await updateFolders(state!, handle, io)
+    return updateFolders(state, handle, io)
   }
 }
 
 async function checkFolderStateAndPermissions(
   state: CustomFolderState | undefined,
-  io: CustomFolderScanIO,
-  stateMessage: string,
-  handleMessage: string
-): Promise<boolean> {
+  io: CustomFolderScanIO
+): Promise<
+  | {
+      state: CustomFolderState
+      handle: FileSystemDirectoryHandle
+    }
+  | undefined
+> {
   const { log, setStatus } = io
   if (!state) {
-    log(stateMessage)
-    setStatus(stateMessage)
-    return false
+    const message = 'No custom folder set.'
+    log(message)
+    setStatus(message)
+    return
   }
 
   const { handle } = state
   if (!handle) {
-    log(handleMessage)
-    setStatus(handleMessage)
-    return false
+    const message = 'No folder selected.'
+    log(message)
+    setStatus(message)
+    return
   }
 
-  // Check permissions.
   let permission = await handle.queryPermission({ mode: 'read' })
   if (permission === 'prompt') {
     setStatus('Waiting for permission — please grant access to the folder.')
@@ -169,10 +138,45 @@ async function checkFolderStateAndPermissions(
   if (permission !== 'granted') {
     log('Unable to read the folder due to lack of permissions.')
     setStatus('Unable to read the folder due to lack of permissions.')
-    return false
+    return
   }
 
-  return true
+  return { state, handle }
+}
+
+async function scanAllChartFiles(
+  state: CustomFolderState,
+  handle: FileSystemDirectoryHandle,
+  io: CustomFolderScanIO
+): Promise<ScanIterationResult | undefined> {
+  const { log, setStatus } = io
+  const chartFileScanner = new ChartFileScanner(state.chartFiles, true)
+  await searchForChartFiles(handle, chartFileScanner, io)
+
+  const newChartFiles = chartFileScanner.getNewChartFiles()
+  const foldersToUpdate = chartFileScanner.getFoldersToUpdate()
+  const foldersToRemove = chartFileScanner.getFoldersToRemove()
+  const message =
+    'Scanning done. ' +
+    [
+      `Charts: ${newChartFiles.length}`,
+      `Folders: ${chartFileScanner.getFolderCount()}`,
+      `Folders to update: ${foldersToUpdate.length}`,
+      `Folders to remove: ${foldersToRemove.length}`,
+    ].join('; ')
+  log(message)
+  setStatus(message)
+
+  return {
+    nextState: {
+      ...state,
+      chartFiles: newChartFiles,
+      chartFilesScanned: true,
+      foldersToUpdate,
+      foldersToRemove,
+    },
+    moreIterationsNeeded: true,
+  }
 }
 
 async function searchForChartFiles(
@@ -180,7 +184,7 @@ async function searchForChartFiles(
   chartFileScanner: ChartFileScanner,
   io: CustomFolderScanIO,
   parentPath: string[] = []
-): Promise<any> {
+): Promise<void> {
   let entriesRead = 0
   const { log, setStatus } = io
   for await (let [name, handle] of directoryHandle) {
@@ -213,7 +217,7 @@ async function updateFolders(
   state: CustomFolderState,
   handle: FileSystemDirectoryHandle,
   io: CustomFolderScanIO
-) {
+): Promise<ScanIterationResult | undefined> {
   const { log, setStatus } = io
   if ((state?.foldersToUpdate?.length || 0) > 0) {
     const foldersToUpdate = [...state.foldersToUpdate!]
@@ -239,7 +243,7 @@ async function updateFolders(
       const { resources: _unused, ...song } = await loadSongFromResources(
         resources,
         {
-          onMessage: text => {
+          onMessage: (text) => {
             log(text)
             setStatus(`${statusPrefix} ${text}`)
           },
@@ -257,16 +261,16 @@ async function updateFolders(
     }
 
     const songsToSavePathSet = new Set(
-      songsToSave.map(song => JSON.stringify(song.path))
+      songsToSave.map((song) => JSON.stringify(song.path))
     )
     const newSongs = [
       ...(state.songs || []).filter(
-        song => !songsToSavePathSet.has(JSON.stringify(song.path))
+        (song) => !songsToSavePathSet.has(JSON.stringify(song.path))
       ),
       ...songsToSave,
     ]
     const newFoldersToUpdate = foldersToUpdate.filter(
-      folder => !updatedPathSet.has(JSON.stringify(folder.path))
+      (folder) => !updatedPathSet.has(JSON.stringify(folder.path))
     )
     return {
       nextState: {
@@ -286,13 +290,13 @@ async function getResourcesForFolder(
 ): Promise<ICustomSongResources> {
   const folderHandle = await getFolderHandleByPath(rootFolderHandle, path)
   const files = chartFiles.filter(
-    file =>
+    (file) =>
       file.path.length === path.length + 1 &&
       path.every((p, i) => p === file.path[i])
   )
   return {
     fileList: Promise.resolve(
-      files.map(file => file.path[file.path.length - 1])
+      files.map((file) => file.path[file.path.length - 1])
     ),
     async file(name) {
       const fileHandle = await folderHandle.getFileHandle(name)
@@ -331,10 +335,10 @@ class ChartFileScanner {
     private fast = false
   ) {
     this.existingMap = new Map(
-      _.map(this.previous, file => [JSON.stringify(file.path), file])
+      _.map(this.previous, (file) => [JSON.stringify(file.path), file])
     )
     this.existingFolderSet = new Set(
-      _.map(this.previous, file => JSON.stringify(file.path.slice(0, -1)))
+      _.map(this.previous, (file) => JSON.stringify(file.path.slice(0, -1)))
     )
   }
 
@@ -374,15 +378,15 @@ class ChartFileScanner {
   }
 
   getFoldersToUpdate(): CustomFolderFolderEntry[] {
-    return [...this.updatedFolderSet].map(folderKey => ({
+    return [...this.updatedFolderSet].map((folderKey) => ({
       path: JSON.parse(folderKey) as string[],
     }))
   }
 
   getFoldersToRemove(): CustomFolderFolderEntry[] {
     return [...this.existingFolderSet]
-      .filter(folderKey => !this.foundFolderSet.has(folderKey))
-      .map(folderKey => ({
+      .filter((folderKey) => !this.foundFolderSet.has(folderKey))
+      .map((folderKey) => ({
         path: JSON.parse(folderKey) as string[],
       }))
   }

@@ -26,7 +26,7 @@ export default class AuthenticationPanel extends React.Component {
     }
   }
 
-  onSubmit = formData => {
+  onSubmit = (formData) => {
     if (this.state.mode === 'signUp') {
       this.runPromise(this.doSignUp(formData))
     } else {
@@ -34,7 +34,7 @@ export default class AuthenticationPanel extends React.Component {
     }
   }
 
-  runPromise = promise => {
+  runPromise = (promise) => {
     this.setState({
       authentication: {
         status: 'loading',
@@ -43,7 +43,7 @@ export default class AuthenticationPanel extends React.Component {
     })
     promise
       .then(
-        message => {
+        (message) => {
           this.setState({
             authentication: {
               status: 'completed',
@@ -51,7 +51,7 @@ export default class AuthenticationPanel extends React.Component {
             },
           })
         },
-        error => {
+        (error) => {
           this.setState({
             authentication: {
               status: 'error',
@@ -63,7 +63,7 @@ export default class AuthenticationPanel extends React.Component {
       .done()
   }
 
-  doSignUp = formData => {
+  doSignUp = (formData) => {
     return Promise.try(() => {
       if (!formData.username.trim()) {
         throw new Error('Please enter a username.')
@@ -96,7 +96,7 @@ export default class AuthenticationPanel extends React.Component {
     })
   }
 
-  doLogIn = async formData => {
+  doLogIn = async (formData) => {
     if (!formData.username.trim() && !formData.password.trim()) {
       if (window.confirm('Did you forget your password?')) {
         const email = window.prompt('Please enter your email address.')
@@ -186,7 +186,7 @@ export default class AuthenticationPanel extends React.Component {
     )
   }
 
-  renderModeActiveClass = mode => {
+  renderModeActiveClass = (mode) => {
     return mode === this.state.mode ? 'is-active' : ''
   }
 }

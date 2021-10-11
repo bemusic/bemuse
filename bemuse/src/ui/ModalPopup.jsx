@@ -25,7 +25,7 @@ export default class ModalPopup extends React.Component {
             <div className='ModalPopupのcontentsContainer'>
               <div
                 className='ModalPopupのcontents'
-                onClick={e => e.stopPropagation()}
+                onClick={(e) => e.stopPropagation()}
               >
                 {this.props.children}
               </div>

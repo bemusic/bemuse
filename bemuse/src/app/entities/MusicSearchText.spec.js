@@ -1,7 +1,7 @@
 import * as MusicSearchText from './MusicSearchText'
 import { given, shouldEqual } from 'circumstance'
 
-describe('MusicSearchText', function() {
+describe('MusicSearchText', function () {
   it('is initially blank', () =>
     given(MusicSearchText.initialState)
       .then(MusicSearchText.searchText, shouldEqual(''))

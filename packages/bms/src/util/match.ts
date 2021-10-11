@@ -1,7 +1,7 @@
 export function match(text: string) {
   var matched = false
   return {
-    when: function(
+    when: function (
       pattern: RegExp,
       callback: (match: RegExpMatchArray) => void
     ) {
@@ -13,7 +13,7 @@ export function match(text: string) {
       }
       return this
     },
-    else: function(callback: () => void) {
+    else: function (callback: () => void) {
       if (matched) return this
       callback()
     },

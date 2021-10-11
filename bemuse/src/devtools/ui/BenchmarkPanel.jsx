@@ -44,7 +44,7 @@ export default class BenchmarkPanel extends React.Component {
     return (
       <table>
         <tbody>
-          {Object.keys(stats).map(key => {
+          {Object.keys(stats).map((key) => {
             let stat = stats[key]
             return (
               <tr>
@@ -60,7 +60,7 @@ export default class BenchmarkPanel extends React.Component {
     )
   }
 
-  handleInteraction = e => {
+  handleInteraction = (e) => {
     e.preventDefault()
     e.stopPropagation()
     this.setState({ show: !this.state.show })

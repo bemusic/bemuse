@@ -52,7 +52,7 @@ export default class MusicListItemChart extends React.Component {
     )
   }
 
-  handleClick = e => {
+  handleClick = (e) => {
     if (this.props.onClick) {
       this.props.onClick(this.props.chart, e)
     }

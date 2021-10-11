@@ -19,17 +19,17 @@ import OptionsInputField from './OptionsInputField'
 import OptionsButton from './OptionsButton'
 
 const selectKeyboardMapping = createSelector(
-  state => state.options,
-  options => Options.keyboardMapping(options)
+  (state) => state.options,
+  (options) => Options.keyboardMapping(options)
 )
 
 const selectKeyboardMappingTexts = createSelector(
   selectKeyboardMapping,
-  mapping => _.mapValues(mapping, getName)
+  (mapping) => _.mapValues(mapping, getName)
 )
 
 const enhance = compose(
-  connect(state => ({
+  connect((state) => ({
     scratch: Options.scratchPosition(state.options),
     texts: selectKeyboardMappingTexts(state),
     mode: Options.playMode(state.options),
@@ -38,24 +38,32 @@ const enhance = compose(
   })),
   withState('editing', 'setEditing', null),
   connectIO({
-    onSetKeyCode: ({ mode, editing }) => keyCode =>
-      OptionsIO.updateOptions(Options.changeKeyMapping(mode, editing, keyCode)),
-    onUpdateOptions: () => updater => OptionsIO.updateOptions(updater),
+    onSetKeyCode:
+      ({ mode, editing }) =>
+      (keyCode) =>
+        OptionsIO.updateOptions(
+          Options.changeKeyMapping(mode, editing, keyCode)
+        ),
+    onUpdateOptions: () => (updater) => OptionsIO.updateOptions(updater),
   }),
   withHandlers({
-    onEdit: ({ editing, setEditing }) => key => {
-      if (editing === key) {
-        setEditing(null)
-      } else {
-        setEditing(key)
-      }
-    },
-    onKey: ({ editing, onSetKeyCode, setEditing, scratch }) => keyCode => {
-      if (editing) {
-        onSetKeyCode(keyCode)
-        setEditing(Options.nextKeyToEdit(editing, scratch))
-      }
-    },
+    onEdit:
+      ({ editing, setEditing }) =>
+      (key) => {
+        if (editing === key) {
+          setEditing(null)
+        } else {
+          setEditing(key)
+        }
+      },
+    onKey:
+      ({ editing, onSetKeyCode, setEditing, scratch }) =>
+      (keyCode) => {
+        if (editing) {
+          onSetKeyCode(keyCode)
+          setEditing(Options.nextKeyToEdit(editing, scratch))
+        }
+      },
   })
 )
 
@@ -132,8 +140,8 @@ class OptionsInput extends React.Component {
                 </OptionsButton>
               </span>
               <OptionsInputField
-                parse={str => parseInt(str, 10) - 1}
-                stringify={value => String(parseInt(value, 10) + 1)}
+                parse={(str) => parseInt(str, 10) - 1}
+                stringify={(value) => String(parseInt(value, 10) + 1)}
                 validator={/^[0-9]+$/}
                 value={this.props.sensitivity}
                 onChange={this.handleSensitivityChange}
@@ -149,7 +157,7 @@ class OptionsInput extends React.Component {
       </div>
     )
   }
-  handleEdit = key => {
+  handleEdit = (key) => {
     this.props.onEdit(key)
   }
   componentDidMount() {
@@ -169,17 +177,17 @@ class OptionsInput extends React.Component {
     if (this._input) this._input.dispose()
     window.removeEventListener('keydown', this.handleKeyboardEvent, true)
   }
-  handleKey = key => {
+  handleKey = (key) => {
     if (this.props.editing) {
       this.props.onKey(key)
     }
   }
-  handleKeyboardEvent = e => {
+  handleKeyboardEvent = (e) => {
     if (this.props.editing) {
       e.preventDefault()
     }
   }
-  handleSensitivityChange = sensitivity => {
+  handleSensitivityChange = (sensitivity) => {
     if (sensitivity < 0) sensitivity = 0
     else if (sensitivity >= 10) sensitivity = 9
     this._input.setGamepadSensitivity(sensitivity)

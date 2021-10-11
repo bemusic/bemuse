@@ -19,7 +19,7 @@ export class GameState {
 
   constructor(public readonly game: Game) {
     this._players = new Map(
-      game.players.map(player => [player, new PlayerState(player)])
+      game.players.map((player) => [player, new PlayerState(player)])
     )
   }
   update(gameTime: number, input: GameInput, timer: GameTimer) {

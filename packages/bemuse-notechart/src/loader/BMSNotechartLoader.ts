@@ -35,7 +35,7 @@ function getJudgmentWindowFromBMS(bms: BMS.BMSChart): ExpertJudgmentWindow {
 }
 
 function generateBarLinesFromBMS(bmsNotes: BMS.BMSNote[], bms: BMS.BMSChart) {
-  let max = _.max(bmsNotes.map(note => note.endBeat || note.beat)) || 0
+  let max = _.max(bmsNotes.map((note) => note.endBeat || note.beat)) || 0
   let barLines = [0]
   let currentBeat = 0
   let currentMeasure = 0

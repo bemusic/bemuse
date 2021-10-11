@@ -10,7 +10,7 @@ export function main() {
   div.innerHTML = template()
 
   import(/* webpackChunkName: 'comingSoonDemo' */ './demo').then(
-    loadedModule => {
+    (loadedModule) => {
       const button = div.querySelector('.coming-soon--demo')
       loadedModule.main(button)
     }

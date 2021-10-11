@@ -26,7 +26,7 @@ function Cache(path) {
     } catch (e) {
       return out
     }
-    text.split(/\n/).forEach(function(line) {
+    text.split(/\n/).forEach(function (line) {
       if (line.length < 34) return
       let md5 = line.substr(0, 32)
       let payload = JSON.parse(line.substr(33))
@@ -36,10 +36,10 @@ function Cache(path) {
   }
 
   return {
-    get: function(key) {
+    get: function (key) {
       return data[key]
     },
-    put: function(key, value) {
+    put: function (key, value) {
       if (key.length !== 32) throw new Error('Keys should be 32 chars only')
       data[key] = value
       stream.write(key + ' ' + JSON.stringify(value) + '\n')
@@ -51,7 +51,7 @@ function Cache(path) {
 // TODO [#623]: Convert usage of `co` to async function in [bemuse-tools] src/indexer.js
 // See issue #575 for more details.
 export function index(path, { recursive }) {
-  return co(function*() {
+  return co(function* () {
     let stat = yield fileStat(path)
     if (!stat.isDirectory()) throw new Error('Not a directory: ' + path)
 
@@ -66,9 +66,7 @@ export function index(path, { recursive }) {
     }
 
     let songs = []
-    let maxDirLength = _(Array.from(dirs.keys()))
-      .map('length')
-      .max()
+    let maxDirLength = _(Array.from(dirs.keys())).map('length').max()
     for (let [dir, files] of dirs) {
       let filesToParse = []
 
@@ -87,8 +85,8 @@ export function index(path, { recursive }) {
       song.path = dir
 
       let levels = _(song.charts)
-        .sortBy(chart => chart.info.level)
-        .map(chart => {
+        .sortBy((chart) => chart.info.level)
+        .map((chart) => {
           let ch =
             chart.keys === '5K'
               ? chalk.gray
@@ -121,7 +119,7 @@ export function index(path, { recursive }) {
 }
 
 function getExtra(dir) {
-  return co(function*() {
+  return co(function* () {
     let readme
     let extra = {}
     try {

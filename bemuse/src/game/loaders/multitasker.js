@@ -10,8 +10,8 @@ export function start(callback) {
   function task(name, text, dependencies, f) {
     let progress = new Progress()
     if (text) taskList.push({ text, progress })
-    tasks[name] = function() {
-      return Promise.all(dependencies.map(run)).then(deps =>
+    tasks[name] = function () {
+      return Promise.all(dependencies.map(run)).then((deps) =>
         f(...deps.concat([progress]))
       )
     }
@@ -28,7 +28,7 @@ export function start(callback) {
   }
 
   function getTaskStatuses() {
-    return taskList.map(t => {
+    return taskList.map((t) => {
       return {
         text: t.text,
         progress: t.progress.progress,

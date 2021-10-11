@@ -6,18 +6,18 @@ import {
 import $ from 'jquery'
 import assert from 'power-assert'
 
-let $xml = xml => $($.parseXML(xml).documentElement)
+let $xml = (xml) => $($.parseXML(xml).documentElement)
 
-describe('Scintillator::Animation', function() {
-  describe('_attrs', function() {
-    it('lists all attributes of an element', function() {
+describe('Scintillator::Animation', function () {
+  describe('_attrs', function () {
+    it('lists all attributes of an element', function () {
       let xml = $xml('<keyframe t="0" x="10" y="30" />')[0]
       expect(_attrs(xml)).to.deep.equal({ t: '0', x: '10', y: '30' })
     })
   })
 
-  describe('_compile', function() {
-    it('compiles animation into keyframes', function() {
+  describe('_compile', function () {
+    it('compiles animation into keyframes', function () {
       let xml = $xml(`<animation>
         <keyframe t="0" x="10" y="30" />
         <keyframe t="2" x="20" />
@@ -44,7 +44,7 @@ describe('Scintillator::Animation', function() {
         ],
       })
     })
-    it('throws when there is no time', function() {
+    it('throws when there is no time', function () {
       let xml = $xml(`<animation>
         <keyframe />
       </animation>`)
@@ -52,8 +52,8 @@ describe('Scintillator::Animation', function() {
     })
   })
 
-  describe('#_properties', function() {
-    it('should return a set of properties', function() {
+  describe('#_properties', function () {
+    it('should return a set of properties', function () {
       let anim = Animation.compile(
         null,
         $xml(`<group>
@@ -71,8 +71,8 @@ describe('Scintillator::Animation', function() {
     })
   })
 
-  describe('#prop', function() {
-    it('should return the function for given prop', function() {
+  describe('#prop', function () {
+    it('should return the function for given prop', function () {
       let anim = Animation.compile(
         null,
         $xml(`<group>
@@ -84,7 +84,7 @@ describe('Scintillator::Animation', function() {
       )
       assert(anim.prop('x')({ t: 0.4 }) === 14)
     })
-    it('should choose animation that occurs last', function() {
+    it('should choose animation that occurs last', function () {
       let anim = Animation.compile(
         null,
         $xml(`<group>
@@ -103,8 +103,8 @@ describe('Scintillator::Animation', function() {
     })
   })
 
-  describe('#_events', function() {
-    it('list distinct events', function() {
+  describe('#_events', function () {
+    it('list distinct events', function () {
       let anim = Animation.compile(
         null,
         $xml(`<group>

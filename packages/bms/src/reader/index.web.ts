@@ -25,10 +25,10 @@ export function readAsync(...args: any[]) {
   }
   var charset = (options && options.forceEncoding) || chardet.detect(buffer)
   var reader = new FileReader()
-  reader.onload = function() {
+  reader.onload = function () {
     callback(null, reader.result as string)
   }
-  reader.onerror = function() {
+  reader.onerror = function () {
     callback(new Error('cannot read it'))
   }
   reader.readAsText(new Blob([buffer]), charset)

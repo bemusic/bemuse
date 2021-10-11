@@ -4,7 +4,7 @@ import { timegate } from 'bemuse/game/judgments'
 // given an array of deltas,
 // we want to get filter it to contain only data for non-missed notes.
 export function getNonMissedDeltas(deltas) {
-  return deltas.filter(delta => Math.abs(delta) < timegate(4))
+  return deltas.filter((delta) => Math.abs(delta) < timegate(4))
 }
 
 export default getNonMissedDeltas

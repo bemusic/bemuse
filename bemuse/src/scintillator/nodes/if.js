@@ -26,7 +26,7 @@ export class IfNode extends SkinNode {
       context: context,
       parent: container,
       object: object,
-      onData: data => {
+      onData: (data) => {
         if (String(expr(data)) === value) {
           if (child === null) {
             child = childNode.instantiate(context, object)

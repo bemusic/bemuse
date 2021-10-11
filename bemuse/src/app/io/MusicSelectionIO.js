@@ -33,10 +33,10 @@ export function launchGame(server, song, chart) {
         song,
         chart,
         options: store.getState().options,
-        saveSpeed: speed => {
+        saveSpeed: (speed) => {
           run(OptionsIO.updateOptions(Options.changeSpeed(speed)))
         },
-        saveLeadTime: leadTime => {
+        saveLeadTime: (leadTime) => {
           run(OptionsIO.updateOptions(Options.changeLeadTime(leadTime)))
         },
         onRagequitted: () => {

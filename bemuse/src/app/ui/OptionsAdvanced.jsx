@@ -13,11 +13,11 @@ import OptionsButton from './OptionsButton'
 import OptionsInputField from './OptionsInputField'
 
 const enhance = compose(
-  connect(state => ({
+  connect((state) => ({
     options: state.options,
   })),
   connectIO({
-    onUpdateOptions: () => updater => OptionsIO.updateOptions(updater),
+    onUpdateOptions: () => (updater) => OptionsIO.updateOptions(updater),
   }),
   pure
 )
@@ -59,7 +59,7 @@ class OptionsAdvanced extends React.Component {
       </div>
     )
   }
-  handleAudioInputLatencyChange = value => {
+  handleAudioInputLatencyChange = (value) => {
     this.props.onUpdateOptions(Options.changeAudioInputLatency(value))
   }
   handleCalibrateButtonClick = () => {
@@ -83,7 +83,7 @@ class LatencyMessageListener extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('message', this.handleMessage)
   }
-  handleMessage = event => {
+  handleMessage = (event) => {
     if (event.data && typeof event.data.latency === 'number') {
       this.props.onLatency(event.data.latency)
     }

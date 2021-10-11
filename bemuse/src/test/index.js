@@ -39,7 +39,7 @@ function runMocha() {
         console.error(test.err.stack)
       }
     })
-    .on('test end', function(test) {
+    .on('test end', function (test) {
       if (test.state === 'passed') {
         specs.push({
           fullName: test.title,
@@ -60,9 +60,9 @@ function runMocha() {
         })
       }
     })
-    .on('suite end', function(suite) {
+    .on('suite end', function (suite) {
       if (suite.root) {
-        if (specs.some(spec => spec.status === 'failed')) {
+        if (specs.some((spec) => spec.status === 'failed')) {
           document.documentElement.classList.add('mocha-is-failing')
         } else {
           document.documentElement.classList.add('mocha-is-passing')

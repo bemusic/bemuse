@@ -18,17 +18,17 @@ if (danger.github) {
 const cli = new CLIEngine({})
 const filesToCheck = danger.git.created_files
   .concat(danger.git.modified_files)
-  .filter(path => !!path && !cli.isPathIgnored(path))
+  .filter((path) => !!path && !cli.isPathIgnored(path))
 
 // ESLint
 const eslintPattern = '*.{js,jsx,ts,tsx}'
-const filesToLint = filesToCheck.filter(path =>
+const filesToLint = filesToCheck.filter((path) =>
   minimatch(path, eslintPattern, { matchBase: true })
 )
 const report = cli.executeOnFiles(filesToLint)
-report.results.forEach(result => {
+report.results.forEach((result) => {
   const { filePath } = result
-  result.messages.forEach(msg => {
+  result.messages.forEach((msg) => {
     const { line, message, ruleId } = msg
     const rule = ruleId || 'N/A'
     const messageText = `${filePath} line ${line} – ${message} (${rule})`
@@ -43,7 +43,7 @@ report.results.forEach(result => {
 // Prettier
 let prettierFailed = false
 const prettierPattern = '*.{js,jsx,ts,tsx,json,scss,css,yml}'
-filesToCheck.forEach(filePath => {
+filesToCheck.forEach((filePath) => {
   const matchesPattern = minimatch(filePath, prettierPattern, {
     matchBase: true,
   })

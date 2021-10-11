@@ -67,7 +67,7 @@ export default class RankingContainer extends React.Component {
     if (this.unsubscribe) this.unsubscribe()
   }
 
-  onStoreTrigger = state => {
+  onStoreTrigger = (state) => {
     if (this.mounted) this.setState(state)
   }
 

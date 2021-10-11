@@ -9,9 +9,7 @@ import ctx from 'bemuse/audio-context'
 import template from './template.jade'
 
 export function main(element) {
-  $(element)
-    .text('Technical Demo!')
-    .on('click', handler)
+  $(element).text('Technical Demo!').on('click', handler)
 
   function handler() {
     ui()
@@ -23,7 +21,7 @@ export function main(element) {
   function ui() {
     var el = $(template()).appendTo('body')
     el.find('.js-play').hide()
-    el.on('dragover', () => false).on('drop', e => {
+    el.on('dragover', () => false).on('drop', (e) => {
       e.preventDefault()
       let dndLoader = new DndResources(e.originalEvent)
       go(dndLoader, el)
@@ -40,7 +38,7 @@ async function go(loader, element) {
 
   log('Loading file list')
   let list = await loader.fileList
-  let bmsFile = list.filter(f => f.match(/\.(?:bms|bme|bml|pms)$/i))[0]
+  let bmsFile = list.filter((f) => f.match(/\.(?:bms|bme|bml|pms)$/i))[0]
   log('Loading ' + bmsFile)
 
   let loadedFile = await loader.file(bmsFile)
@@ -51,14 +49,12 @@ async function go(loader, element) {
   var timing = Timing.fromBMSChart(chart)
   var notes = Notes.fromBMSChart(chart)
   var info = SongInfo.fromBMSChart(chart)
-  $('<pre wrap></pre>')
-    .text(JSON.stringify(info, null, 2))
-    .appendTo($sampler)
+  $('<pre wrap></pre>').text(JSON.stringify(info, null, 2)).appendTo($sampler)
   log('Loading samples')
   var loadedSamples = await loadSamples(notes, chart)
   log('Click the button to play!')
   await waitForPlay()
-  void (function() {
+  void (function () {
     master.unmute()
     for (let note of notes.all()) {
       setTimeout(() => {
@@ -72,7 +68,7 @@ async function go(loader, element) {
           .appendTo($sampler)
         let instance = sample.play()
         $sampler[0].scrollTop = $sampler[0].scrollHeight
-        instance.onstop = function() {
+        instance.onstop = function () {
           span.addClass('is-off')
         }
       }, timing.beatToSeconds(note.beat) * 1000)
@@ -81,7 +77,7 @@ async function go(loader, element) {
   })()
 
   function waitForPlay() {
-    return new Promise(function(resolve) {
+    return new Promise(function (resolve) {
       $play.show()
       $play.on('click', () => {
         resolve()
@@ -105,9 +101,11 @@ async function go(loader, element) {
         samples[keysound] = null
         promises.push(
           loadKeysound(_chart.headers.get('wav' + keysound))
-            .then(blob => master.sample(blob))
-            .then(sample => (samples[keysound] = sample))
-            .catch(e => console.error('Unable to load ' + keysound + ': ' + e))
+            .then((blob) => master.sample(blob))
+            .then((sample) => (samples[keysound] = sample))
+            .catch((e) =>
+              console.error('Unable to load ' + keysound + ': ' + e)
+            )
             .tap(() =>
               log(
                 '[loaded ' + ++completed + '/' + promises.length + ' samples]'
@@ -127,6 +125,6 @@ async function go(loader, element) {
       .catch(() => loader.file(name.replace(/\.\w+$/, '.ogg')))
       .catch(() => loader.file(name.replace(/\.\w+$/, '.mp3')))
       .catch(() => loader.file(name.replace(/\.\w+$/, '.wav')))
-      .then(file => file.read())
+      .then((file) => file.read())
   }
 }

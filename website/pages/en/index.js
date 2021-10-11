@@ -39,7 +39,7 @@ Button.defaultProps = {
   target: '_self',
 }
 
-const SplashContainer = props => (
+const SplashContainer = (props) => (
   <div
     className='homeContainer'
     style={{
@@ -52,21 +52,21 @@ const SplashContainer = props => (
   </div>
 )
 
-const Logo = props => (
+const Logo = (props) => (
   <div className='projectLogo'>
     {siteConfig.tagline && <div className='tagline'>{siteConfig.tagline}</div>}
     <img src={props.img_src} />
   </div>
 )
 
-const ProjectTitle = props => (
+const ProjectTitle = (props) => (
   <h2 className='projectTitle'>
     {siteConfig.title}
     <small>{siteConfig.tagline}</small>
   </h2>
 )
 
-const PromoSection = props => (
+const PromoSection = (props) => (
   <div className='section promoSection'>
     <div className='promoRow'>
       <div className='pluginRowBlock'>{props.children}</div>
@@ -74,7 +74,7 @@ const PromoSection = props => (
   </div>
 )
 
-const CTAButtons = props => (
+const CTAButtons = (props) => (
   <PromoSection>
     <Button
       href='https://bemuse.ninja'
@@ -107,7 +107,7 @@ class HomeSplash extends React.Component {
   }
 }
 
-const FooterButtons = props => (
+const FooterButtons = (props) => (
   <div
     className='productShowcaseSection highlightBackground'
     style={{ textAlign: 'center' }}
@@ -116,7 +116,7 @@ const FooterButtons = props => (
   </div>
 )
 
-const FeatureBlock = props => (
+const FeatureBlock = (props) => (
   <Container
     padding={['bottom', 'top']}
     id={props.id}
@@ -132,7 +132,7 @@ const FeatureBlock = props => (
   </Container>
 )
 
-const BrowserScreenshot = props => (
+const BrowserScreenshot = (props) => (
   <div className='BrowserScreenshot'>
     <p>
       <img {...props} />
@@ -140,7 +140,7 @@ const BrowserScreenshot = props => (
   </div>
 )
 
-const FeatureTour = props => (
+const FeatureTour = (props) => (
   <div>
     <FeatureBlock
       title='Web-based'

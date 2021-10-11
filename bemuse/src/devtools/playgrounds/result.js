@@ -7,10 +7,10 @@ import { Provider } from 'react-redux'
 export function main() {
   let props = {
     result: {
-      '1': 9999,
-      '2': 999,
-      '3': 99,
-      '4': 9,
+      1: 9999,
+      2: 999,
+      3: 99,
+      4: 9,
       missed: 123,
       score: 543210,
       maxCombo: 5555,

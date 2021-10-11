@@ -10,9 +10,9 @@ export class Directory {
     this._path = path
   }
   files(pattern) {
-    return glob(pattern, { cwd: this._path }).map(name =>
+    return glob(pattern, { cwd: this._path }).map((name) =>
       readFile(path.join(this._path, name)).then(
-        buffer => new FileEntry(this, name, buffer)
+        (buffer) => new FileEntry(this, name, buffer)
       )
     )
   }

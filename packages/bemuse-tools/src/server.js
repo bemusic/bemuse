@@ -11,7 +11,7 @@ let stat = Promise.promisify(fs.stat)
 
 export function start(dir, port) {
   port = +port || 3456
-  return new Promise(function() {
+  return new Promise(function () {
     const app = express()
     app.use(cors())
     app.use(express.static(dir))
@@ -25,7 +25,7 @@ export function start(dir, port) {
 function bemuseAssets(dir) {
   let serveSongAssets = createAssetServer()
   dir = path.normalize(fs.realpathSync(dir))
-  return function(req, res, next) {
+  return function (req, res, next) {
     let match = req.path.match(/^\/+(.+)\/assets\/([^/]+)$/)
     if (!match) return next()
     let song = decodeURIComponent(match[1])
@@ -38,7 +38,7 @@ function bemuseAssets(dir) {
 
 function createAssetServer() {
   var songCache = {}
-  return function(target, file, res, next) {
+  return function (target, file, res, next) {
     void (songCache[target] || (songCache[target] = createSongServer(target)))(
       file,
       res,
@@ -49,13 +49,13 @@ function createAssetServer() {
 
 function createSongServer(dir) {
   let promise = glob('**/*.{wav,ogg,mp3,m4a}', { cwd: dir })
-    .map(name =>
-      stat(path.join(dir, name)).then(stats => ({
+    .map((name) =>
+      stat(path.join(dir, name)).then((stats) => ({
         name: name,
         size: stats.size,
       }))
     )
-    .then(files => {
+    .then((files) => {
       let ref = { path: 'data.bemuse' }
       let metadata = { files: [], refs: [ref] }
       let current = 0
@@ -77,9 +77,9 @@ function createSongServer(dir) {
       )
       return { metadata, files }
     })
-  return function(file, res, next) {
+  return function (file, res, next) {
     promise
-      .then(function({ metadata, files }) {
+      .then(function ({ metadata, files }) {
         if (file === 'metadata.json') {
           res.json(metadata)
         } else if (file === 'data.bemuse') {
@@ -88,7 +88,7 @@ function createSongServer(dir) {
           throw new Error('Invalid file!')
         }
       })
-      .catch(e => next(e))
+      .catch((e) => next(e))
   }
 }
 
@@ -96,21 +96,21 @@ function streamFiles(dir, files, res) {
   let stream = Rx.Observable.concat([
     Rx.Observable.just(Buffer.from('BEMUSEPACK')),
     Rx.Observable.just(Buffer.from([0, 0, 0, 0])),
-    Rx.Observable.concat(files.map(file => streamFile(dir, file))),
+    Rx.Observable.concat(files.map((file) => streamFile(dir, file))),
   ])
   stream.subscribe(
-    buffer => res.write(buffer),
-    err => console.error(err),
+    (buffer) => res.write(buffer),
+    (err) => console.error(err),
     () => res.end()
   )
 }
 
 function streamFile(dir, file) {
-  return Rx.Observable.create(function(observer) {
+  return Rx.Observable.create(function (observer) {
     let stream = fs.createReadStream(path.join(dir, file.name))
-    stream.on('data', b => observer.onNext(b))
+    stream.on('data', (b) => observer.onNext(b))
     stream.on('end', () => observer.onCompleted())
-    stream.on('error', e => observer.onError(e))
-    return function() {}
+    stream.on('error', (e) => observer.onError(e))
+    return function () {}
   })
 }

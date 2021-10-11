@@ -42,7 +42,7 @@ export function withPersonalRecord(Component) {
       user: online.user川,
       onlineRecords: online.records川,
     }),
-    connect(state => ({
+    connect((state) => ({
       playMode: ReduxState.selectPlayMode(state),
     }))
   )

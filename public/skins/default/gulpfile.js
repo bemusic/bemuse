@@ -11,7 +11,7 @@ function createCompiler(template, globals) {
   }
 }
 
-gulp.task('compile', function() {
+gulp.task('compile', function () {
   var globals = yaml.safeLoad(fs.readFileSync('skin_data.yml', 'utf8'))
   var template = jade.compileFile('skin_template.jade', { pretty: true })
   var compile = createCompiler(template, globals)
@@ -22,7 +22,7 @@ gulp.task('compile', function() {
 
 var sources = ['**/*.jade', '**/*.yml']
 
-gulp.task('watch', function() {
+gulp.task('watch', function () {
   gulp.watch(sources, ['compile'])
 })
 

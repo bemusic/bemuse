@@ -36,7 +36,8 @@ type Notifications = {
   sounds: (
     | { type: 'hit'; note: GameNote; judgment: Judgment }
     | { type: 'free'; note: GameNote }
-    | { type: 'break'; note: GameNote })[]
+    | { type: 'break'; note: GameNote }
+  )[]
   judgments: {}[]
 }
 
@@ -72,8 +73,8 @@ export class PlayerState {
   constructor(public readonly player: Player) {
     this._columns = player.columns
     this._noteBufferByColumn = _(player.notechart.notes)
-      .sortBy(n => n.time)
-      .groupBy(n => n.column)
+      .sortBy((n) => n.time)
+      .groupBy((n) => n.column)
       .mapValues(noteBuffer(this))
       .value()
     this._noteResult = new Map()
@@ -113,7 +114,7 @@ export class PlayerState {
   }
   _updateInputColumnMap() {
     this.input = new Map(
-      this._columns.map(column => [column, this.getPlayerInput(column)])
+      this._columns.map((column) => [column, this.getPlayerInput(column)])
     )
   }
   _judgeNotes() {
@@ -195,10 +196,10 @@ export class PlayerState {
     }
   }
   _getClosestNote(notes: GameNote[]) {
-    return _.minBy(notes, note => Math.abs(this._gameTime - note.time))
+    return _.minBy(notes, (note) => Math.abs(this._gameTime - note.time))
   }
   _getFreestyleNote(notes: GameNote[]) {
-    return _.minBy(notes, note => {
+    return _.minBy(notes, (note) => {
       let distance = Math.abs(this._gameTime - note.time)
       let penalty = this._gameTime < note.time - 1 ? 1000000 : 0
       return distance + penalty
@@ -213,11 +214,11 @@ export class PlayerState {
       '6': ['5', '7'],
     }
     if (!mapping[column]) return false
-    return mapping[column].every(adjacentColumn => {
+    return mapping[column].every((adjacentColumn) => {
       const buffer = this._noteBufferByColumn[adjacentColumn]
       if (!buffer) return false
       return buffer.notes.some(
-        note => Math.abs(this._gameTime - note.time) < 0.1
+        (note) => Math.abs(this._gameTime - note.time) < 0.1
       )
     })
   }

@@ -12,7 +12,7 @@ export default class LoadingSceneProgress extends React.Component {
   render() {
     return (
       <div className='LoadingSceneProgress'>
-        {this.props.tasks.value.map(task => this.renderItem(task))}
+        {this.props.tasks.value.map((task) => this.renderItem(task))}
       </div>
     )
   }

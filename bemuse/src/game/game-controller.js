@@ -20,7 +20,7 @@ export class GameController {
     this._input = new GameInput()
     this._timer = new GameTimer(this._clock, this._input)
     this._state = new GameState(game)
-    this._promise = new Promise(resolve => (this._resolvePromise = resolve))
+    this._promise = new Promise((resolve) => (this._resolvePromise = resolve))
     this._display.setEscapeHandler(() => this._quitGame())
     this._display.setReplayHandler(() => this._replayGame())
     this.initializeBenchmark()
@@ -63,7 +63,7 @@ export class GameController {
 
   // Exits the game when escape is pressed.
   _handleEscape() {
-    let onKeyDown = e => {
+    let onKeyDown = (e) => {
       const ESCAPE_KEY = 27
       const F1_KEY = 112
       if (e.keyCode === ESCAPE_KEY) {
@@ -78,7 +78,7 @@ export class GameController {
     }
     window.addEventListener('keydown', onKeyDown, true)
     this._promise
-      .finally(function() {
+      .finally(function () {
         window.removeEventListener('keydown', onKeyDown, true)
       })
       .done()
@@ -159,9 +159,9 @@ export class GameController {
   initializeTestModeHooks() {
     if (!BemuseTestMode.isTestModeEnabled()) return
     BemuseTestMode.setGameLifecycleHandler({
-      pauseAt: t => {
+      pauseAt: (t) => {
         this._timer.pauseAt(t)
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
           const interval = setInterval(() => {
             if (this._timer.time >= t) {
               clearInterval(interval)

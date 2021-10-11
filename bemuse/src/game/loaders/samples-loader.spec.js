@@ -2,21 +2,21 @@ import assert from 'power-assert'
 
 import SamplesLoader from './samples-loader'
 
-describe('SamplesLoader', function() {
+describe('SamplesLoader', function () {
   var assets
   var master
   var loader
   var keysoundCache
 
-  beforeEach(function() {
+  beforeEach(function () {
     assets = { file: sinon.stub() }
     master = { decode: sinon.stub(), sample: sinon.stub() }
     keysoundCache = { isCached: () => false, cache: sinon.spy(() => {}) }
     loader = new SamplesLoader(assets, master, { keysoundCache })
   })
 
-  describe('#loadFiles', function() {
-    it('should not include undecodable audio', function() {
+  describe('#loadFiles', function () {
+    it('should not include undecodable audio', function () {
       assets.file.returns(Promise.reject(new Error('cannot decode')))
       assets.file.withArgs('a.wav').returns(
         Promise.resolve({
@@ -27,7 +27,7 @@ describe('SamplesLoader', function() {
       return expect(loader.loadFiles(['a.wav'])).to.eventually.deep.eq({})
     })
 
-    it('should cache', function() {
+    it('should cache', function () {
       assets.file.returns(Promise.reject(new Error('invalid filename')))
       assets.file.withArgs('a.wav').returns(
         Promise.resolve({
@@ -42,10 +42,10 @@ describe('SamplesLoader', function() {
       })
     })
 
-    it('should use cache', function() {
+    it('should use cache', function () {
       assets.file.returns(Promise.reject(new Error('unexpected call')))
-      keysoundCache.isCached = name => name === 'name.wav'
-      keysoundCache.get = name => {
+      keysoundCache.isCached = (name) => name === 'name.wav'
+      keysoundCache.get = (name) => {
         if (name === 'name.wav') return 'buffer'
         throw new Error('expected name.wav')
       }
@@ -55,7 +55,7 @@ describe('SamplesLoader', function() {
       })
     })
 
-    it('should try mp3', function() {
+    it('should try mp3', function () {
       assets.file.returns(Promise.reject(new Error('invalid filename')))
       assets.file.withArgs('a.mp3').returns(
         Promise.resolve({
@@ -69,7 +69,7 @@ describe('SamplesLoader', function() {
       })
     })
 
-    it('should not include failed matches', function() {
+    it('should not include failed matches', function () {
       assets.file.returns(Promise.reject(new Error('i give up')))
       return expect(loader.loadFiles(['a.wav'])).to.eventually.deep.eq({})
     })

@@ -6,7 +6,7 @@ export class GameAudio {
     this._master = master
     this._context = master.audioContext
     this._players = new Map(
-      game.players.map(player => [
+      game.players.map((player) => [
         player,
         new PlayerAudio({ player, samples, master, volume }),
       ])

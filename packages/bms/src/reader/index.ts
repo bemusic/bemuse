@@ -51,7 +51,7 @@ export function readAsync(...args: any[]) {
     options = null
     callback = args[1]
   }
-  setTimeout(function() {
+  setTimeout(function () {
     var result
     try {
       result = { value: exports.read(buffer, options) }

@@ -1,7 +1,7 @@
 import NoteArea from './note-area'
 
-describe('NoteArea', function() {
-  it('allows querying the visible note from a list of notes', function() {
+describe('NoteArea', function () {
+  it('allows querying the visible note from a list of notes', function () {
     let notes = [
       { position: 1, column: 'A' },
       { position: 2, column: 'A' },
@@ -23,7 +23,7 @@ describe('NoteArea', function() {
     expect(area.getVisibleNotes(12.5, 14)).to.have.length(0)
   })
 
-  it('allows querying barlines', function() {
+  it('allows querying barlines', function () {
     let area = new NoteArea(
       [],
       [

@@ -52,32 +52,36 @@ export function load(spec: LoadSpec) {
   const bms = spec.bms
   const songId = spec.songId
 
-  return Multitasker.start<Tasks, GameController>(function(task, run) {
-    task('Scintillator', 'Loading game engine', [], function(progress) {
+  return Multitasker.start<Tasks, GameController>(function (task, run) {
+    task('Scintillator', 'Loading game engine', [], function (progress) {
       return atomic(
         progress,
         import(/* webpackChunkName: 'gameEngine' */ 'bemuse/scintillator')
       )
     })
 
-    task('Skin', 'Loading skin', ['Scintillator'], function(
-      Scintillator,
-      progress
-    ) {
-      return Scintillator.load(
-        Scintillator.getSkinUrl({
-          displayMode: spec.displayMode,
-        }),
-        progress
-      )
-    })
+    task(
+      'Skin',
+      'Loading skin',
+      ['Scintillator'],
+      function (Scintillator, progress) {
+        return Scintillator.load(
+          Scintillator.getSkinUrl({
+            displayMode: spec.displayMode,
+          }),
+          progress
+        )
+      }
+    )
 
-    task('SkinContext', null, ['Scintillator', 'Skin'], function(
-      Scintillator,
-      skin
-    ) {
-      return new Scintillator.Context(skin, { touchEventTarget: window })
-    })
+    task(
+      'SkinContext',
+      null,
+      ['Scintillator', 'Skin'],
+      function (Scintillator, skin) {
+        return new Scintillator.Context(skin, { touchEventTarget: window })
+      }
+    )
 
     if (assets.progress) {
       if (assets.progress.current) {
@@ -88,17 +92,17 @@ export function load(spec: LoadSpec) {
       }
     }
 
-    task('Notechart', 'Loading ' + spec.bms.name, [], async progress => {
+    task('Notechart', 'Loading ' + spec.bms.name, [], async (progress) => {
       let loader = new NotechartLoader()
       let arraybuffer = await bms.read(progress)
       return loader.load(arraybuffer, spec.bms, spec.options.players[0])
     })
 
-    task('EyecatchImage', null, ['Notechart'], function(notechart) {
+    task('EyecatchImage', null, ['Notechart'], function (notechart) {
       return loadImage(assets, notechart.eyecatchImage)
     })
 
-    task('BackgroundImage', null, ['Notechart'], function(notechart) {
+    task('BackgroundImage', null, ['Notechart'], function (notechart) {
       return loadImage(assets, notechart.backgroundImage)
     })
 
@@ -116,7 +120,7 @@ export function load(spec: LoadSpec) {
       'Video',
       spec.videoUrl ? 'Loading video' : null,
       ['Notechart'],
-      function(notechart, progress) {
+      function (notechart, progress) {
         if (!spec.videoUrl) return Promise.resolve(null)
         const videoUrl = spec.videoUrl
         return new Promise((resolve, reject) => {
@@ -159,7 +163,7 @@ export function load(spec: LoadSpec) {
       }
     )
 
-    task('Game', null, ['Notechart'], async notechart => {
+    task('Game', null, ['Notechart'], async (notechart) => {
       return new Game([notechart], spec.options)
     })
 
@@ -177,7 +181,7 @@ export function load(spec: LoadSpec) {
       }
     )
 
-    task('Samples', null, ['SamplingMaster', 'Game'], function(master, game) {
+    task('Samples', null, ['SamplingMaster', 'Game'], function (master, game) {
       keysoundCache.receiveSongId(songId)
       const samplesLoader = new SamplesLoader(assets, master)
       return samplesLoader.loadFiles(

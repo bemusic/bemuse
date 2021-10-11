@@ -36,10 +36,10 @@ export class Timing {
       inclusive: true,
     })
     actions = actions.slice()
-    actions.sort(function(a, b) {
+    actions.sort(function (a, b) {
       return a.beat - b.beat || precedence[a.type] - precedence[b.type]
     })
-    actions.forEach(function(action) {
+    actions.forEach(function (action) {
       var beat = action.beat
       var seconds = state.seconds + ((beat - state.beat) * 60) / state.bpm
       switch (action.type) {
@@ -77,7 +77,7 @@ export class Timing {
       state.seconds = seconds
     })
     this._speedcore = new Speedcore(segments)
-    this._eventBeats = uniq(map(actions, action => action.beat))
+    this._eventBeats = uniq(map(actions, (action) => action.beat))
   }
 
   /**
@@ -118,7 +118,7 @@ export class Timing {
   static fromBMSChart(chart: BMSChart) {
     void BMSChart
     var actions: TimingAction[] = []
-    chart.objects.all().forEach(function(object) {
+    chart.objects.all().forEach(function (object) {
       var bpm
       var beat = chart.measureToBeat(object.measure, object.fraction)
       if (object.channel === '03') {

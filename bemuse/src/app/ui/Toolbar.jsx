@@ -143,12 +143,7 @@ class MobileToolbar extends React.PureComponent {
 
 function openLink(e) {
   e.preventDefault()
-  window.open(
-    $(e.target)
-      .closest('a')
-      .get(0).href,
-    '_blank'
-  )
+  window.open($(e.target).closest('a').get(0).href, '_blank')
 }
 
 export default Toolbar

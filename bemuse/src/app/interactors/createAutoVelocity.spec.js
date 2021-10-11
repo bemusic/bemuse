@@ -2,8 +2,8 @@ import assert from 'power-assert'
 
 import createAutoVelocity from './createAutoVelocity'
 
-describe('createAutoVelocity', function() {
-  describe('when disabled', function() {
+describe('createAutoVelocity', function () {
+  describe('when disabled', function () {
     it('initial speed should be from options', () => {
       const autoVelocity = createAutoVelocity({
         enabled: false,
@@ -28,7 +28,7 @@ describe('createAutoVelocity', function() {
     })
   })
 
-  describe('when enabled', function() {
+  describe('when enabled', function () {
     it('initial speed should be from song’s BPM', () => {
       const autoVelocity = createAutoVelocity({
         enabled: true,

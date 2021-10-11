@@ -14,23 +14,20 @@ export default function GenericErrorScene(props: {
   onContinue: () => void
 }) {
   const { preamble, error, onContinue } = props
-  const details = React.useMemo(
-    () => {
-      return [
-        preamble,
-        '',
-        '[Error]',
-        String(error),
-        '',
-        '[User agent]',
-        navigator.userAgent,
-        '',
-        '[Stack trace]',
-        String((error && error.stack) || error),
-      ].join('\n')
-    },
-    [error, preamble]
-  )
+  const details = React.useMemo(() => {
+    return [
+      preamble,
+      '',
+      '[Error]',
+      String(error),
+      '',
+      '[User agent]',
+      navigator.userAgent,
+      '',
+      '[Stack trace]',
+      String((error && error.stack) || error),
+    ].join('\n')
+  }, [error, preamble])
   return (
     <Scene className='GenericErrorScene'>
       <ModalPopup>

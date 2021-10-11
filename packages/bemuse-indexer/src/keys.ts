@@ -12,7 +12,7 @@ export function getKeys(chart: BMS.BMSChart): Keys {
     if (channel > 29) continue
     stat[channel] = (stat[channel] || 0) + 1
   }
-  var channels = Object.keys(stat).map(function(ch) {
+  var channels = Object.keys(stat).map(function (ch) {
     return +ch
   })
   if (channels.length === 0) return 'empty'

@@ -12,18 +12,15 @@ export class SamplesLoader {
   loadFiles(files, loadProgress, decodeProgress) {
     let onload = ProgressUtils.fixed(files.length, loadProgress)
     let ondecode = ProgressUtils.fixed(files.length, decodeProgress)
-    let load = name =>
-      new Promise(resolve => {
+    let load = (name) =>
+      new Promise((resolve) => {
         requestAnimationFrame(() => {
           resolve(this._loadSample(name, onload, ondecode))
         })
       })
     if (decodeProgress) decodeProgress.formatter = EXTRA_FORMATTER
-    return Promise.map(files, load, { concurrency: 64 }).then(arr =>
-      _(arr)
-        .filter()
-        .fromPairs()
-        .value()
+    return Promise.map(files, load, { concurrency: 64 }).then((arr) =>
+      _(arr).filter().fromPairs().value()
     )
   }
   _loadSample(name, onload, ondecode) {
@@ -34,14 +31,14 @@ export class SamplesLoader {
           ondecode(name)
         })
       } else {
-        return this._getFile(name).then(file =>
+        return this._getFile(name).then((file) =>
           file
             .read()
             .tap(() => {
               onload(name)
             })
-            .then(buffer => this._decode(buffer))
-            .tap(audioBuffer => {
+            .then((buffer) => this._decode(buffer))
+            .tap((audioBuffer) => {
               this._keysoundCache.cache(name, audioBuffer)
               ondecode(name)
             })
@@ -49,9 +46,9 @@ export class SamplesLoader {
       }
     })()
     return audioBufferPromise
-      .then(audioBuffer => this._master.sample(audioBuffer))
-      .then(sample => [name, sample])
-      .catch(e => {
+      .then((audioBuffer) => this._master.sample(audioBuffer))
+      .then((sample) => [name, sample])
+      .catch((e) => {
         console.error('Unable to load keysound: ' + name, e)
         return null
       })

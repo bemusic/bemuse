@@ -25,7 +25,7 @@ export class PlayerStats {
 
   constructor(notechart: Notechart) {
     this.totalCombo = _(notechart.notes)
-      .map(note => notechart.info(note)!.combos)
+      .map((note) => notechart.info(note)!.combos)
       .sum()
     this.totalNotes = notechart.notes.length
     this.combo = 0
@@ -87,9 +87,8 @@ export class PlayerStats {
       const remainingJudgments = this.totalCombo - this.numJudgments
       this.combo = 0
       this.poor = true
-      this._remainingMaxPossibleRawComboScore = this._calculateRawTotalComboScore(
-        remainingJudgments
-      )
+      this._remainingMaxPossibleRawComboScore =
+        this._calculateRawTotalComboScore(remainingJudgments)
     } else {
       this.combo += 1
       const rawComboScore = this._calculateRawComboScore(this.combo)

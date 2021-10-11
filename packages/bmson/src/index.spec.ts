@@ -3,9 +3,9 @@ import * as bmson from '.'
 import { Note } from './types'
 
 /* global describe, it */
-describe('bmson v1.0.0', function() {
-  describe('songInfoForBmson', function() {
-    it('should return a song info', function() {
+describe('bmson v1.0.0', function () {
+  describe('songInfoForBmson', function () {
+    it('should return a song info', function () {
       const info = bmson.songInfoForBmson({
         version: '1.0.0',
         info: {
@@ -19,7 +19,7 @@ describe('bmson v1.0.0', function() {
       assert(info.artist === 'flicknote')
       assert(info.genre === 'Dramatic Trance')
     })
-    it('should put chart_name into subtitles field', function() {
+    it('should put chart_name into subtitles field', function () {
       const info = bmson.songInfoForBmson({
         version: '1.0.0',
         info: {
@@ -28,7 +28,7 @@ describe('bmson v1.0.0', function() {
       } as any)
       assert.deepEqual(info.subtitles, ['FOUR DIMENSIONS'])
     })
-    it('should put each line of subtitle into subtitles field', function() {
+    it('should put each line of subtitle into subtitles field', function () {
       const info = bmson.songInfoForBmson({
         version: '1.0.0',
         info: {
@@ -40,7 +40,7 @@ describe('bmson v1.0.0', function() {
         'return of the cat meow',
       ])
     })
-    it('should skip blank chart names and subtitle', function() {
+    it('should skip blank chart names and subtitle', function () {
       const info = bmson.songInfoForBmson({
         version: '1.0.0',
         info: {
@@ -50,7 +50,7 @@ describe('bmson v1.0.0', function() {
       } as any)
       assert.deepEqual(info.subtitles, [])
     })
-    it('should have subartists', function() {
+    it('should have subartists', function () {
       const info = bmson.songInfoForBmson({
         version: '1.0.0',
         info: {
@@ -62,8 +62,8 @@ describe('bmson v1.0.0', function() {
     })
   })
 
-  describe('barLinesForBmson', function() {
-    it('should return barlines in beat', function() {
+  describe('barLinesForBmson', function () {
+    it('should return barlines in beat', function () {
       const beats = bmson.barLinesForBmson({
         version: '1.0.0',
         info: {
@@ -75,8 +75,8 @@ describe('bmson v1.0.0', function() {
     })
   })
 
-  describe('timingInfoForBmson', function() {
-    it('should return timing of initial bpm', function() {
+  describe('timingInfoForBmson', function () {
+    it('should return timing of initial bpm', function () {
       let { initialBPM } = bmson.timingInfoForBmson({
         version: '1.0.0',
         info: {
@@ -86,7 +86,7 @@ describe('bmson v1.0.0', function() {
       assert(initialBPM === 180)
     })
 
-    it('supports BPM changes', function() {
+    it('supports BPM changes', function () {
       let { initialBPM, actions } = bmson.timingInfoForBmson({
         version: '1.0.0',
         info: { init_bpm: 120 },
@@ -96,7 +96,7 @@ describe('bmson v1.0.0', function() {
       assert.deepEqual(actions, [{ type: 'bpm', beat: 12, bpm: 196 }])
     })
 
-    it('supports stops', function() {
+    it('supports stops', function () {
       let { initialBPM, actions } = bmson.timingInfoForBmson({
         version: '1.0.0',
         info: { init_bpm: 120, resolution: 8 },
@@ -107,7 +107,7 @@ describe('bmson v1.0.0', function() {
     })
   })
 
-  describe('musicalScoreForBmson', function() {
+  describe('musicalScoreForBmson', function () {
     function setup(notes: Note[]) {
       let data = {
         version: '1.0.0',
@@ -125,13 +125,13 @@ describe('bmson v1.0.0', function() {
       return bmson.musicalScoreForBmson(data)
     }
 
-    it('returns a timing', function() {
+    it('returns a timing', function () {
       const score = setup([])
       assert(typeof score.timing.beatToSeconds === 'function')
       assert(score.timing.beatToSeconds(1) === 60 / 100)
     })
 
-    it('generates keysounds and notes', function() {
+    it('generates keysounds and notes', function () {
       let score = setup([{ x: 1, y: 24, l: 0, c: false }])
       assert.deepEqual(score.notes.all(), [
         {
@@ -146,7 +146,7 @@ describe('bmson v1.0.0', function() {
       assert(score.keysounds.get('0001') === 'piano.wav')
     })
 
-    it('handles long notes', function() {
+    it('handles long notes', function () {
       let score = setup([{ x: 1, y: 24, l: 48, c: false }])
       assert.deepEqual(score.notes.all(), [
         {
@@ -160,7 +160,7 @@ describe('bmson v1.0.0', function() {
       ])
     })
 
-    it('handles keysound slices', function() {
+    it('handles keysound slices', function () {
       let score = setup([
         { x: 1, y: 24, l: 0, c: false },
         { x: 1, y: 48, l: 0, c: true },
@@ -173,8 +173,8 @@ describe('bmson v1.0.0', function() {
     })
   })
 
-  describe('hasScratch', function() {
-    it('should return true if there is a scratch in 1P', function() {
+  describe('hasScratch', function () {
+    it('should return true if there is a scratch in 1P', function () {
       const data = {
         version: '1.0.0',
         sound_channels: [
@@ -184,7 +184,7 @@ describe('bmson v1.0.0', function() {
       }
       assert(bmson.hasScratch(data as any))
     })
-    it('should return true if there is a scratch in 2P', function() {
+    it('should return true if there is a scratch in 2P', function () {
       const data = {
         version: '1.0.0',
         sound_channels: [
@@ -194,7 +194,7 @@ describe('bmson v1.0.0', function() {
       }
       assert(bmson.hasScratch(data as any))
     })
-    it('should return false if scratch not found', function() {
+    it('should return false if scratch not found', function () {
       const data = {
         version: '1.0.0',
         sound_channels: [
@@ -206,12 +206,12 @@ describe('bmson v1.0.0', function() {
     })
   })
 
-  describe('keysForBmson', function() {
+  describe('keysForBmson', function () {
     function testcase(xs: number[], keys: string) {
-      it('should work with ' + keys, function() {
+      it('should work with ' + keys, function () {
         const actual = bmson.keysForBmson({
           version: '1.0',
-          sound_channels: xs.map(x => ({
+          sound_channels: xs.map((x) => ({
             notes: [{ x }],
           })),
         } as any)

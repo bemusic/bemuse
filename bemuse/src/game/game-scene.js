@@ -1,7 +1,7 @@
 import $ from 'jquery'
 
 export default function GameScene(display) {
-  return function(container) {
+  return function (container) {
     let handler = () => false
     $(window).on('touchstart', handler)
     showCanvas(display, container)

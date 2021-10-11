@@ -62,8 +62,8 @@ export async function main() {
   }
 
   display.start()
-  display._getData = (getData =>
-    function() {
+  display._getData = ((getData) =>
+    function () {
       let result = getData.apply(display, arguments)
       result['p1_score'] = (new Date().getTime() - started) % 555556
       window.LATEST_DATA = result

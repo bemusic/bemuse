@@ -13,11 +13,11 @@ import Markdown from 'bemuse/ui/Markdown'
 import YouTube from 'bemuse/ui/YouTube'
 
 const enhance = compose(
-  connect(state => ({
+  connect((state) => ({
     readme: ReduxState.selectReadmeTextForSelectedSong(state),
   })),
   connectIO({
-    onRequestReadme: () => song => ReadmeIO.requestReadme(song),
+    onRequestReadme: () => (song) => ReadmeIO.requestReadme(song),
   })
 )
 

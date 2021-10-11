@@ -27,7 +27,7 @@ export default function createScoreboardClient({
             playerName: playerName,
           },
         },
-        function(err) {
+        function (err) {
           if (err) {
             log('Auth0 signup error', err)
             return reject(coerceAuth0ErrorToErrorObject(err))
@@ -40,7 +40,7 @@ export default function createScoreboardClient({
               password: password,
               scope: 'openid email profile',
             },
-            function(err, authResult) {
+            function (err, authResult) {
               if (err) {
                 log('Auth0 login error', err)
                 return reject(coerceAuth0ErrorToErrorObject(err))
@@ -57,7 +57,7 @@ export default function createScoreboardClient({
   function graphql({ query, variables }) {
     return client
       .post('graphql', { query, variables })
-      .then(response => response.data)
+      .then((response) => response.data)
   }
 
   function usernamePasswordLogin(playerId, password) {
@@ -70,7 +70,7 @@ export default function createScoreboardClient({
           password: password,
           scope: 'openid email profile',
         },
-        function(err, authResult) {
+        function (err, authResult) {
           if (err) {
             log('Auth0 login error', err)
             return reject(coerceAuth0ErrorToErrorObject(err))
@@ -95,7 +95,7 @@ export default function createScoreboardClient({
         variables: {
           name: playerName,
         },
-      }).then(result => {
+      }).then((result) => {
         log('checkPlayerNameAvailability response', result)
         if (result.data.player && result.data.player.linked) {
           log('checkPlayerNameAvailability: Player name already taken.')
@@ -121,7 +121,7 @@ export default function createScoreboardClient({
         variables: {
           name: playerName,
         },
-      }).then(result => {
+      }).then((result) => {
         if (result.data.player === null) {
           return { error: 'Player not found...' }
         } else {
@@ -144,7 +144,7 @@ export default function createScoreboardClient({
         variables: {
           name: playerName,
         },
-      }).then(result => {
+      }).then((result) => {
         const playerId = result.data.registerPlayer.id
         log('reservePlayerId response', result, 'playerId', playerId)
         return playerId
@@ -166,7 +166,7 @@ export default function createScoreboardClient({
         variables: {
           jwt: idToken,
         },
-      }).then(result => {
+      }).then((result) => {
         const playerId = result.data.linkPlayer.id
         const playerName = result.data.linkPlayer.name
         log('ensureLink response', result, 'playerId', playerId)
@@ -186,7 +186,7 @@ export default function createScoreboardClient({
         variables: {
           jwt: idToken,
         },
-      }).then(result => {
+      }).then((result) => {
         return result.data.authenticatePlayer.playerToken
       })
     )
@@ -216,13 +216,13 @@ export default function createScoreboardClient({
       invariant(typeof email === 'string', 'email must be a string')
       // TODO [#632]: Convert the `signUp` method to async function (instead of using `co`) in src/online/scoreboard-system/createScoreboardClient.js
       // See issue #575 for more details.
-      return co(function*() {
+      return co(function* () {
         const { idToken } = yield* authenticationFlow.signUp(
           username,
           email,
           password,
           {
-            log: message => log('[signUp]', message),
+            log: (message) => log('[signUp]', message),
             userSignUp,
             checkPlayerNameAvailability,
             reservePlayerId,
@@ -236,12 +236,12 @@ export default function createScoreboardClient({
       invariant(typeof username === 'string', 'username must be a string')
       invariant(typeof password === 'string', 'password must be a string')
       // TODO [#633]: Convert the `loginByUsernamePassword` method to async function (instead of using `co`) in src/online/scoreboard-system/createScoreboardClient.js
-      return co(function*() {
+      return co(function* () {
         const { idToken } = yield* authenticationFlow.loginByUsernamePassword(
           username,
           password,
           {
-            log: message => log('[loginByUsernamePassword]', message),
+            log: (message) => log('[loginByUsernamePassword]', message),
             usernamePasswordLogin,
             resolvePlayerId,
             ensureLink,
@@ -258,7 +258,7 @@ export default function createScoreboardClient({
             connection: 'Username-Password-Authentication',
             email,
           },
-          function(err, response) {
+          function (err, response) {
             if (err) {
               log('Auth0 password reset error', err)
               return reject(coerceAuth0ErrorToErrorObject(err))
@@ -350,7 +350,7 @@ export default function createScoreboardClient({
           }
         `,
         variables: { playerToken },
-      }).then(result => result.data.renewPlayerToken.playerToken)
+      }).then((result) => result.data.renewPlayerToken.playerToken)
     },
   }
 

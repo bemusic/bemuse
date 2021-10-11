@@ -30,14 +30,14 @@ yargs
         vfs.src('public/**'),
         vfs.src('bemuse/dist/**'),
         vfs.src('website/build/bemuse/**').pipe(
-          rename(function(path) {
+          rename(function (path) {
             path.dirname = 'project/' + path.dirname
           })
         )
       )
       const seen = new Set()
       const dest = stream.pipe(vfs.dest('dist'))
-      dest.on('data', file => {
+      dest.on('data', (file) => {
         if (file.isDirectory()) {
           return
         }
@@ -113,7 +113,7 @@ yargs
             remote: 'www',
             message: `Update ${new Date().toJSON()}`,
           },
-          function(err) {
+          function (err) {
             if (err) {
               reject(err)
             } else {
