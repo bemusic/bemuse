@@ -40,6 +40,8 @@ rules:
   import/no-unresolved: off
   import/export: off
   import/named: off
+  no-use-before-define: off
+  import/no-webpack-loader-syntax: off
 overrides:
   - files:
       - '**/*.ts'
@@ -47,5 +49,5 @@ overrides:
     rules:
       no-undef: off
       no-unused-vars: off
-      no-use-before-define: off
+      no-redeclare: off
       no-useless-constructor: off
