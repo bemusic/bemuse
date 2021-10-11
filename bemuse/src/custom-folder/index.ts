@@ -91,65 +91,23 @@ async function scanIteration(
   io: CustomFolderScanIO
 ): Promise<ScanIterationResult | undefined> {
   const { log, setStatus } = io
-  if (!state) {
-    log('No custom folder set.')
-    setStatus('No custom folder set.')
-    return
-  }
+  const stateMessage = 'No custom folder set.'
+  const handleMessage = 'No folder selected.'
 
-  const { handle } = state
-  if (!handle) {
-    log('No folder selected.')
-    setStatus('No folder selected.')
-    return
-  }
-
-  // Check permissions.
-  let permission = await handle.queryPermission({ mode: 'read' })
-  if (permission === 'prompt') {
-    setStatus('Waiting for permission — please grant access to the folder.')
-    permission = await handle.requestPermission({ mode: 'read' })
-  }
-  if (permission !== 'granted') {
-    log('Unable to read the folder due to lack of permissions.')
-    setStatus('Unable to read the folder due to lack of permissions.')
-    return
-  }
+  const result = await checkFolderStateAndPermissions(
+    state,
+    io,
+    stateMessage,
+    handleMessage
+  )
+  if (!result) return
+  const handle = (state as CustomFolderState)
+    .handle as FileSystemDirectoryHandle
 
   // Enumerate all the files.
-  if (!state.chartFilesScanned) {
-    const chartFileScanner = new ChartFileScanner(state.chartFiles, true)
-    let entriesRead = 0
-    const searchForChartFiles = async (
-      directoryHandle: FileSystemDirectoryHandle,
-      parentPath: string[] = []
-    ) => {
-      for await (let [name, handle] of directoryHandle) {
-        const childPath = [...parentPath, name]
-        try {
-          if (handle.kind === 'directory') {
-            await searchForChartFiles(handle, childPath)
-          } else if (/\.(bms|bme|bml|bmson)$/i.test(name)) {
-            const fileHandle = handle
-            await chartFileScanner.addPath(childPath, {
-              getModifiedDate: async () => {
-                const file = await fileHandle.getFile()
-                return file.lastModified
-              },
-            })
-          }
-        } catch (error) {
-          log(`Error while processing ${childPath.join('/')}: ${error}`)
-          console.error(error)
-        }
-        entriesRead++
-        const childPathStr = formatPath(childPath)
-        setStatus(
-          `Scanning for chart files. ${entriesRead} entries read. Just processed: ${childPathStr}`
-        )
-      }
-    }
-    await searchForChartFiles(handle)
+  if (!state!.chartFilesScanned) {
+    const chartFileScanner = new ChartFileScanner(state!.chartFiles, true)
+    await searchForChartFiles(handle, chartFileScanner, io)
 
     const newChartFiles = chartFileScanner.getNewChartFiles()
     const foldersToUpdate = chartFileScanner.getFoldersToUpdate()
@@ -177,8 +135,88 @@ async function scanIteration(
     }
   }
 
-  if (state.foldersToUpdate && state.foldersToUpdate.length > 0) {
-    const foldersToUpdate = [...state.foldersToUpdate]
+  if ((state?.foldersToUpdate?.length ?? 0) > 0) {
+    return await updateFolders(state!, handle, io)
+  }
+}
+
+async function checkFolderStateAndPermissions(
+  state: CustomFolderState | undefined,
+  io: CustomFolderScanIO,
+  stateMessage: string,
+  handleMessage: string
+): Promise<boolean> {
+  const { log, setStatus } = io
+  if (!state) {
+    log(stateMessage)
+    setStatus(stateMessage)
+    return false
+  }
+
+  const { handle } = state
+  if (!handle) {
+    log(handleMessage)
+    setStatus(handleMessage)
+    return false
+  }
+
+  // Check permissions.
+  let permission = await handle.queryPermission({ mode: 'read' })
+  if (permission === 'prompt') {
+    setStatus('Waiting for permission — please grant access to the folder.')
+    permission = await handle.requestPermission({ mode: 'read' })
+  }
+  if (permission !== 'granted') {
+    log('Unable to read the folder due to lack of permissions.')
+    setStatus('Unable to read the folder due to lack of permissions.')
+    return false
+  }
+
+  return true
+}
+
+async function searchForChartFiles(
+  directoryHandle: FileSystemDirectoryHandle,
+  chartFileScanner: ChartFileScanner,
+  io: CustomFolderScanIO,
+  parentPath: string[] = []
+): Promise<any> {
+  let entriesRead = 0
+  const { log, setStatus } = io
+  for await (let [name, handle] of directoryHandle) {
+    const childPath = [...parentPath, name]
+    try {
+      if (handle.kind === 'directory') {
+        await searchForChartFiles(handle, chartFileScanner, io, childPath)
+      } else if (/\.(bms|bme|bml|bmson)$/i.test(name)) {
+        const fileHandle = handle
+        await chartFileScanner.addPath(childPath, {
+          getModifiedDate: async () => {
+            const file = await fileHandle.getFile()
+            return file.lastModified
+          },
+        })
+      }
+    } catch (error) {
+      log(`Error while processing ${childPath.join('/')}: ${error}`)
+      console.error(error)
+    }
+    entriesRead++
+    const childPathStr = formatPath(childPath)
+    setStatus(
+      `Scanning for chart files. ${entriesRead} entries read. Just processed: ${childPathStr}`
+    )
+  }
+}
+
+async function updateFolders(
+  state: CustomFolderState,
+  handle: FileSystemDirectoryHandle,
+  io: CustomFolderScanIO
+) {
+  const { log, setStatus } = io
+  if ((state?.foldersToUpdate?.length || 0) > 0) {
+    const foldersToUpdate = [...state.foldersToUpdate!]
     const n = foldersToUpdate.length
     const songsToSave: CustomFolderSong[] = []
     const updatedPathSet = new Set<string>()
@@ -210,7 +248,7 @@ async function scanIteration(
       if (song.charts.length > 0) {
         songsToSave.push({
           path: folder.path,
-          song: song,
+          song,
         })
       }
       if (Date.now() > deadline) {
@@ -290,7 +328,7 @@ class ChartFileScanner {
 
   constructor(
     private previous: CustomFolderState['chartFiles'] = [],
-    private fast: boolean
+    private fast = false
   ) {
     this.existingMap = new Map(
       _.map(this.previous, file => [JSON.stringify(file.path), file])
@@ -375,7 +413,7 @@ export async function getSongsFromCustomFolders(
         ...customFolderSong.song,
         resources,
         custom: true,
-        id: '__custom_' + i,
+        id: `__custom_${i}`,
       })
     } catch (e) {
       console.error(e)
