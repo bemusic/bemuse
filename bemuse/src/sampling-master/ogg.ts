@@ -17,8 +17,8 @@ const limit = throat(1)
 
 function getDecoder() {
   if (!decoderPromise) {
-    // @ts-ignore
     decoderPromise = import(
+      // @ts-ignore
       /* webpackChunkName: 'stbvorbis' */ 'raw-loader!./vendor/stbvorbis/stbvorbis-e6da5fe-NDEBUG.js'
     )
       .then((ns) => ns.default)
