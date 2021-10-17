@@ -120,6 +120,7 @@
     "idb-keyval": "^6.0.2",
     "immutable": "^3.8.2",
     "impure": "^1.0.0",
+    "immer": "^9.0.6",
     "invariant": "^2.2.4",
     "jquery": "^3.3.1",
     "keycode": "^2.2.0",
@@ -155,7 +156,6 @@
     "serviceworker-webpack-plugin": "^1.0.1",
     "throat": "^2.0.2",
     "timesynchro": "^1.0.1",
-    "updeep": "^0.16.0",
     "variance": "0.0.1",
     "whatwg-fetch": "^1.1.1"
   },

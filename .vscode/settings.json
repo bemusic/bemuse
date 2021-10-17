@@ -39,6 +39,7 @@
     "gameplay",
     "gmail",
     "hardcoded",
+    "immer",
     "interop",
     "joezeng",
     "kbps",
@@ -77,7 +78,6 @@
     "timesynchro",
     "tocstop",
     "transpiler",
-    "updeep",
     "workspaces"
   ],
   "eslint.enable": true
