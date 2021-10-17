@@ -36,6 +36,7 @@ import RageQuitPopup from './RageQuitPopup'
 import UnofficialPanel from './UnofficialPanel'
 import { connectIO } from '../../impure-react/connectIO'
 import Toolbar from './Toolbar'
+import SongPreviewer from './SongPreviewer'
 
 const selectMusicSelectState = (() => {
   const selectLegacyServerObjectForCurrentCollection = createSelector(
@@ -172,7 +173,10 @@ class MusicSelectScene extends React.PureComponent {
         <RageQuitPopup />
 
         {!!this.props.musicPreviewEnabled && (
-          <MusicSelectPreviewer url={this.getPreviewUrl()} />
+          <SongPreviewer
+            song={this.props.musicSelect.song}
+            serverUrl={this.props.collectionUrl}
+          />
         )}
       </Scene>
     )

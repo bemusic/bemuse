@@ -81,7 +81,7 @@ export interface SongMetadata {
   preview_start?: number
 
   /** The URL to the MP3 file. Default is `_bemuse_preview.mp3` */
-  preview_url?: number
+  preview_url?: string
 
   /** Whether this song is a tutorial. */
   tutorial?: number

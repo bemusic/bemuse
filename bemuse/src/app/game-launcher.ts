@@ -1,3 +1,4 @@
+import { getSongResources } from 'bemuse/music-collection/getSongResources'
 import { Chart, Song } from 'bemuse/collection-model/types'
 import { isTitleDisplayMode } from 'bemuse/devtools/query-flags'
 import GameScene from 'bemuse/game/game-scene'
@@ -6,9 +7,6 @@ import { LoadSpec } from 'bemuse/game/loaders/game-loader'
 import Player from 'bemuse/game/player'
 import PlayerState from 'bemuse/game/state/player-state'
 import LoadingScene from 'bemuse/game/ui/LoadingScene.jsx'
-import BemusePackageResources from 'bemuse/resources/bemuse-package'
-import { IResources } from 'bemuse/resources/types'
-import { URLResources } from 'bemuse/resources/url'
 import { getGrade } from 'bemuse/rules/grade'
 import { unmuteAudio } from 'bemuse/sampling-master'
 import SCENE_MANAGER from 'bemuse/scene-manager'
@@ -88,14 +86,7 @@ async function launchGame(
   let loadSpec: LoadSpec = {} as any
   loadSpec.songId = song.id
 
-  const baseResources =
-    song.resources ||
-    new URLResources(
-      new URL(song.path.replace(/\/?$/, '/'), server.url.replace(/\/?$/, '/'))
-    )
-
-  const assetResources = wrapAssetResources(baseResources, song.bemusepack_url)
-
+  const { baseResources, assetResources } = getSongResources(song, server.url)
   loadSpec.assets = assetResources
   loadSpec.bms = await baseResources.file(chart.file)
 
@@ -298,53 +289,6 @@ function replayGainFor(song: Song) {
 function describeChart(chart: Chart) {
   const { info } = chart
   return `[${info.genre}] ${info.title} ／ ${info.artist}`
-}
-
-function wrapAssetResources(
-  base: IResources,
-  bemusepackUrl: string | null | undefined
-): IResources {
-  if (bemusepackUrl === null) {
-    return base
-  }
-  if (bemusepackUrl === undefined) {
-    bemusepackUrl = 'assets/metadata.json'
-  }
-  const [assetsBase, metadataFilename] = resolveAssetsBase(base, bemusepackUrl)
-  return new BemusePackageResources(assetsBase, {
-    metadataFilename: metadataFilename,
-    fallback: base,
-    fallbackPattern: /\.(?:png|jpg|webm|mp4|m4v)/,
-  })
-}
-
-function resolveAssetsBase(
-  base: IResources,
-  bemusepackUrl: string
-): [IResources, string] {
-  if (bemusepackUrl.includes('://')) {
-    // Absolute URL
-    return [
-      new URLResources(new URL(bemusepackUrl)),
-      bemusepackUrl.split('/').slice(-1)[0],
-    ]
-  }
-
-  const parts = bemusepackUrl.split('/')
-  let current = base
-  while (parts.length > 1) {
-    const dirName = parts.shift()!
-    current = new DirectoryResources(current, dirName)
-  }
-  return [current, parts[0]]
-}
-
-class DirectoryResources implements IResources {
-  constructor(private base: IResources, private dirName: string) {}
-
-  async file(filename: string) {
-    return this.base.file(`${this.dirName}/${filename}`)
-  }
 }
 
 class SceneDisplayContext {
