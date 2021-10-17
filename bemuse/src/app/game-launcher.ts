@@ -3,7 +3,7 @@ import GameScene from 'bemuse/game/game-scene'
 import LoadingScene from 'bemuse/game/ui/LoadingScene.jsx'
 import React from 'react'
 import SCENE_MANAGER from 'bemuse/scene-manager'
-import URLResource from 'bemuse/resources/url'
+import URLResource, { URLResources } from 'bemuse/resources/url'
 import invariant from 'invariant'
 import query from 'bemuse/utils/query'
 import { MISSED } from 'bemuse/game/judgments'
@@ -22,6 +22,7 @@ import { LoadSpec } from 'bemuse/game/loaders/game-loader'
 import Player from 'bemuse/game/player'
 import PlayerState from 'bemuse/game/state/player-state'
 import GenericErrorScene from './ui/GenericErrorScene'
+import { IResources } from 'bemuse/resources/types'
 
 const Log = BemuseLogger.forModule('game-launcher')
 
@@ -89,19 +90,16 @@ async function launchGame(
   let loadSpec: LoadSpec = {} as any
   loadSpec.songId = song.id
 
-  if (song.resources) {
-    loadSpec.assets = song.resources
-    loadSpec.bms = await song.resources.file(chart.file)
-  } else {
-    let url =
-      server.url + '/' + song.path + '/' + encodeURIComponent(chart.file)
-    let assetsUrl = resolveUrl(url, 'assets/')
-    loadSpec.bms = new URLResource(url)
-    loadSpec.assets = new BemusePackageResources(assetsUrl, {
-      fallback: url,
-      fallbackPattern: /\.(?:png|jpg|webm|mp4|m4v)/,
-    })
-  }
+  const baseResources =
+    song.resources ||
+    new URLResources(
+      new URL(song.path.replace(/\/?$/, '/'), server.url.replace(/\/?$/, '/'))
+    )
+
+  const assetResources = wrapAssetResources(baseResources, song.bemusepack_url)
+
+  loadSpec.assets = assetResources
+  loadSpec.bms = await baseResources.file(chart.file)
 
   const latency =
     +query.latency || +options['system.offset.audio-input'] / 1000 || 0
@@ -302,6 +300,53 @@ function replayGainFor(song: Song) {
 function describeChart(chart: Chart) {
   const { info } = chart
   return `[${info.genre}] ${info.title} ／ ${info.artist}`
+}
+
+function wrapAssetResources(
+  base: IResources,
+  bemusepackUrl: string | null | undefined
+): IResources {
+  if (bemusepackUrl === null) {
+    return base
+  }
+  if (bemusepackUrl === undefined) {
+    bemusepackUrl = 'assets/metadata.json'
+  }
+  const [assetsBase, metadataFilename] = resolveAssetsBase(base, bemusepackUrl)
+  return new BemusePackageResources(assetsBase, {
+    metadataFilename: metadataFilename,
+    fallback: base,
+    fallbackPattern: /\.(?:png|jpg|webm|mp4|m4v)/,
+  })
+}
+
+function resolveAssetsBase(
+  base: IResources,
+  bemusepackUrl: string
+): [IResources, string] {
+  if (bemusepackUrl.includes('://')) {
+    // Absolute URL
+    return [
+      new URLResources(new URL(bemusepackUrl)),
+      bemusepackUrl.split('/').slice(-1)[0],
+    ]
+  }
+
+  const parts = bemusepackUrl.split('/')
+  let current = base
+  while (parts.length > 1) {
+    const dirName = parts.shift()!
+    current = new DirectoryResources(current, dirName)
+  }
+  return [current, parts[0]]
+}
+
+class DirectoryResources implements IResources {
+  constructor(private base: IResources, private dirName: string) {}
+
+  async file(filename: string) {
+    return this.base.file(`${this.dirName}/${filename}`)
+  }
 }
 
 class SceneDisplayContext {
