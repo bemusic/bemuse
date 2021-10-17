@@ -22,11 +22,6 @@
 
 ## v49.1.1-pre.202110171159
 
-### Internals
-
-- Introduced `bemuse-types` package to publish type definition in a music
-  collection. [#705], by [@dtinth]
-
 ### Improvements
 
 - Improved support for loading sound files inside directories. For example, the
@@ -40,21 +35,18 @@
   player base, and it is advised to update your browser. If you have an
   up-to-date browser and you run into issues, please report them either in
   Issues tracker or Discord. [#706], by [@dtinth]
-
-[#705]: https://github.com/bemusic/bemuse/pull/705
-[#706]: https://github.com/bemusic/bemuse/pull/706
-
-## v49.1.0-pre.202110171125
-
-## v49.0.1-pre.202110111207
-
-### Internals
-
 - Improved the code readability of custom songs folder feature. [#699], by
   [@dimitrov-d]
 - Prepare the codebase for implementing the detection of removed custom song
   folder and upgraded Prettier to v2. [#700], by [@dtinth]
 
+### Internals
+
+- Introduced `bemuse-types` package to publish type definition in a music
+  collection. [#705], by [@dtinth]
+
+[#705]: https://github.com/bemusic/bemuse/pull/705
+[#706]: https://github.com/bemusic/bemuse/pull/706
 [#699]: https://github.com/bemusic/bemuse/pull/699
 [#700]: https://github.com/bemusic/bemuse/pull/700
 
