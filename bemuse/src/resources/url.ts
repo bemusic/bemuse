@@ -1,7 +1,7 @@
+import Progress from 'bemuse/progress'
 import download from 'bemuse/utils/download'
 import { basename } from 'path'
-import { IResource, IResources, LoggingFunction } from './types'
-import Progress from 'bemuse/progress'
+import { IResource, IResources } from './types'
 
 export class URLResource implements IResource {
   constructor(private url: string) {}
