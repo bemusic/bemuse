@@ -1,42 +1,38 @@
-import './MusicSelectScene.scss'
-
+import { shouldShowOptions } from 'bemuse/devtools/query-flags'
+import { connect as connectToLegacyStore } from 'bemuse/flux'
+import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
 import * as MusicPreviewer from 'bemuse/music-previewer'
-import $ from 'jquery'
+import online from 'bemuse/online/instance'
 import AuthenticationPopup from 'bemuse/online/ui/AuthenticationPopup'
-import ModalPopup from 'bemuse/ui/ModalPopup'
-import MusicSelectPreviewer from 'bemuse/music-previewer/MusicSelectPreviewer'
-import PropTypes from 'prop-types'
-import React from 'react'
-import ReactDOM from 'react-dom'
 import SCENE_MANAGER from 'bemuse/scene-manager'
+import ModalPopup from 'bemuse/ui/ModalPopup'
 import Scene from 'bemuse/ui/Scene'
 import SceneHeading from 'bemuse/ui/SceneHeading'
 import c from 'classnames'
-import compose from 'recompose/compose'
-import getPreviewUrl from 'bemuse/music-collection/getPreviewUrl'
-import online from 'bemuse/online/instance'
-import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
+import $ from 'jquery'
+import PropTypes from 'prop-types'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import { hot } from 'react-hot-loader'
 import { connect } from 'react-redux'
-import { connect as connectToLegacyStore } from 'bemuse/flux'
+import compose from 'recompose/compose'
 import { createSelector, createStructuredSelector } from 'reselect'
-import { shouldShowOptions } from 'bemuse/devtools/query-flags'
-import { hasPendingArchiveToLoad } from '../PreloadedCustomBMS'
-
+import { connectIO } from '../../impure-react/connectIO'
 import * as Analytics from '../analytics'
+import * as Options from '../entities/Options'
 import * as MusicSearchIO from '../io/MusicSearchIO'
 import * as MusicSelectionIO from '../io/MusicSelectionIO'
-import * as Options from '../entities/Options'
+import { hasPendingArchiveToLoad } from '../PreloadedCustomBMS'
 import * as ReduxState from '../redux/ReduxState'
 import CustomBMS from './CustomBMS'
 import MusicInfo from './MusicInfo'
 import MusicList from './MusicList'
+import './MusicSelectScene.scss'
 import OptionsView from './Options'
 import RageQuitPopup from './RageQuitPopup'
-import UnofficialPanel from './UnofficialPanel'
-import { connectIO } from '../../impure-react/connectIO'
-import Toolbar from './Toolbar'
 import SongPreviewer from './SongPreviewer'
+import Toolbar from './Toolbar'
+import UnofficialPanel from './UnofficialPanel'
 
 const selectMusicSelectState = (() => {
   const selectLegacyServerObjectForCurrentCollection = createSelector(
@@ -110,11 +106,6 @@ class MusicSelectScene extends React.PureComponent {
       inSong: false,
       authenticationPopupVisible: false,
     }
-  }
-
-  getPreviewUrl() {
-    const song = this.props.musicSelect.song
-    return getPreviewUrl(this.props.collectionUrl, song)
   }
 
   render() {

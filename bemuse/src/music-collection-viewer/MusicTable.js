@@ -3,9 +3,9 @@ import MusicSelectPreviewer from 'bemuse/music-previewer/MusicSelectPreviewer'
 import React from 'react'
 import PropTypes from 'prop-types'
 import getPlayableCharts from 'bemuse/music-collection/getPlayableCharts'
-import getPreviewUrl from 'bemuse/music-collection/getPreviewUrl'
 import groupSongsIntoCategories from 'bemuse/music-collection/groupSongsIntoCategories'
 import sortSongs from 'bemuse/music-collection/sortSongs'
+import getPreviewResourceUrl from 'bemuse/music-collection/getPreviewResourceUrl'
 
 const sorters = {
   ingame: (songs) => groupSongsIntoCategories(sortSongs(songs)),
@@ -186,8 +186,11 @@ export class MusicTable extends React.Component {
             <td style={{ textAlign: 'center', background: '#353433' }}>
               <span
                 style={{ color: '#8b8685' }}
-                onClick={() => {
-                  const previewUrl = getPreviewUrl(this.props.url, song)
+                onClick={async () => {
+                  const previewUrl = await getPreviewResourceUrl(
+                    song,
+                    this.props.url
+                  )
                   this.setState({ previewUrl })
                 }}
               >
