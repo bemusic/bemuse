@@ -1,13 +1,10 @@
-import * as ProgressUtils from 'bemuse/progress/utils'
-import _ from 'lodash'
-import download from 'bemuse/utils/download'
-import readBlob from 'bemuse/utils/read-blob'
-import throat from 'throat'
 import Progress from 'bemuse/progress'
-import { resolve } from 'url'
-
-import { URLResource } from './url'
-import { IResources, IResource } from './types'
+import * as ProgressUtils from 'bemuse/progress/utils'
+import readBlob from 'bemuse/utils/read-blob'
+import _ from 'lodash'
+import throat from 'throat'
+import { IResource, IResources } from './types'
+import { URLResources } from './url'
 
 type MetadataFileJSON = {
   files: BemusePackFileEntry[]
@@ -18,10 +15,13 @@ type BemusePackFileEntry = { name: string; ref: BemusePackContentRef }
 type BemusePackContentRef = [number, number, number]
 
 export class BemusePackageResources implements IResources {
-  private _url: string
-  private _fallback: string | undefined
+  private _base: IResources
+  private _fallback: IResources | undefined
   private _fallbackPattern: RegExp | undefined
-  public loadPayload: (payloadUrl: string) => PromiseLike<Blob>
+  private _metadataFilename: string
+  public loadPayload: (
+    resourcePromise: PromiseLike<IResource>
+  ) => PromiseLike<Blob>
 
   public progress = {
     all: new Progress(),
@@ -29,15 +29,26 @@ export class BemusePackageResources implements IResources {
   }
 
   constructor(
-    url: string,
+    base: string | IResources,
     options: {
-      fallback?: string
+      metadataFilename?: string
+      fallback?: string | IResources
       fallbackPattern?: RegExp
     } = {}
   ) {
-    this._url = url
-    this._fallback = options.fallback
+    if (typeof base === 'string') {
+      base = new URLResources(new URL(base, location.href))
+    }
+
+    const fallback =
+      typeof options.fallback === 'string'
+        ? new URLResources(new URL(options.fallback, location.href))
+        : options.fallback
+
+    this._base = base
+    this._fallback = fallback
     this._fallbackPattern = options.fallbackPattern
+    this._metadataFilename = options.metadataFilename || 'metadata.json'
 
     let simultaneous = ProgressUtils.simultaneous(this.progress.current)
     let nextProgress = () => {
@@ -47,15 +58,20 @@ export class BemusePackageResources implements IResources {
     }
     this.loadPayload = ProgressUtils.wrapPromise(
       this.progress.all,
-      throat(2, (payloadUrl) =>
-        download(payloadUrl).as('blob', nextProgress()).then(getPayload)
+      throat(2, (resourcePromise) =>
+        resourcePromise
+          .then((resource) => resource.read(nextProgress()))
+          .then((arrayBuffer) => new Blob([arrayBuffer]))
+          .then(getPayload)
       )
     )
   }
 
   private _getMetadata = _.once(async () => {
-    const str = await download(resolve(this._url, 'metadata.json')).as('text')
-    return JSON.parse(str) as MetadataFileJSON
+    const file = await this._base.file(this._metadataFilename)
+    const data = await file.read()
+    const text = await new Blob([data]).text()
+    return JSON.parse(text) as MetadataFileJSON
   })
   private _getRefs = _.once(async () => {
     const metadata = await this._getMetadata()
@@ -70,8 +86,8 @@ export class BemusePackageResources implements IResources {
     return files
   })
 
-  get url() {
-    return this._url
+  get base() {
+    return this._base
   }
   async file(name: string): Promise<IResource> {
     const fileMap = await this._getFileMap()
@@ -83,7 +99,7 @@ export class BemusePackageResources implements IResources {
       this._fallbackPattern &&
       this._fallbackPattern.test(name)
     ) {
-      return new URLResource(resolve(this._fallback, name))
+      return this._fallback.file(name)
     } else {
       throw new Error('Unable to find: ' + name)
     }
@@ -117,17 +133,18 @@ class BemusePackageFileResource implements IResource {
 }
 
 class Ref {
-  private _url: string
+  private _basePromise: PromiseLike<IResource>
   private _promise: PromiseLike<Blob> | undefined
   constructor(
     private resources: BemusePackageResources,
     spec: BemusePackRefEntry
   ) {
-    this._url = resolve(resources.url, spec.path)
+    this._basePromise = resources.base.file(spec.path)
   }
   load() {
     return (
-      this._promise || (this._promise = this.resources.loadPayload(this._url))
+      this._promise ||
+      (this._promise = this.resources.loadPayload(this._basePromise))
     )
   }
 }

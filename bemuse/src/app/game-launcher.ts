@@ -1,27 +1,24 @@
-import BemusePackageResources from 'bemuse/resources/bemuse-package'
-import GameScene from 'bemuse/game/game-scene'
-import LoadingScene from 'bemuse/game/ui/LoadingScene.jsx'
-import React from 'react'
-import SCENE_MANAGER from 'bemuse/scene-manager'
-import URLResource from 'bemuse/resources/url'
-import invariant from 'invariant'
-import query from 'bemuse/utils/query'
-import { MISSED } from 'bemuse/game/judgments'
-import { getGrade } from 'bemuse/rules/grade'
+import { getSongResources } from 'bemuse/music-collection/getSongResources'
+import { Chart, Song } from 'bemuse/collection-model/types'
 import { isTitleDisplayMode } from 'bemuse/devtools/query-flags'
-import { resolve as resolveUrl } from 'url'
-import { unmuteAudio } from 'bemuse/sampling-master'
-import { Song, Chart } from 'bemuse/collection-model/types'
-
-import * as Analytics from './analytics'
-import * as Options from './entities/Options'
-import ResultScene from './ui/ResultScene'
-import createAutoVelocity from './interactors/createAutoVelocity'
-import { StoredOptions } from './types'
+import GameScene from 'bemuse/game/game-scene'
+import { MISSED } from 'bemuse/game/judgments'
 import { LoadSpec } from 'bemuse/game/loaders/game-loader'
 import Player from 'bemuse/game/player'
 import PlayerState from 'bemuse/game/state/player-state'
+import LoadingScene from 'bemuse/game/ui/LoadingScene.jsx'
+import { getGrade } from 'bemuse/rules/grade'
+import { unmuteAudio } from 'bemuse/sampling-master'
+import SCENE_MANAGER from 'bemuse/scene-manager'
+import query from 'bemuse/utils/query'
+import invariant from 'invariant'
+import React from 'react'
+import * as Analytics from './analytics'
+import * as Options from './entities/Options'
+import createAutoVelocity from './interactors/createAutoVelocity'
+import { StoredOptions } from './types'
 import GenericErrorScene from './ui/GenericErrorScene'
+import ResultScene from './ui/ResultScene'
 
 const Log = BemuseLogger.forModule('game-launcher')
 
@@ -89,19 +86,9 @@ async function launchGame(
   let loadSpec: LoadSpec = {} as any
   loadSpec.songId = song.id
 
-  if (song.resources) {
-    loadSpec.assets = song.resources
-    loadSpec.bms = await song.resources.file(chart.file)
-  } else {
-    let url =
-      server.url + '/' + song.path + '/' + encodeURIComponent(chart.file)
-    let assetsUrl = resolveUrl(url, 'assets/')
-    loadSpec.bms = new URLResource(url)
-    loadSpec.assets = new BemusePackageResources(assetsUrl, {
-      fallback: url,
-      fallbackPattern: /\.(?:png|jpg|webm|mp4|m4v)/,
-    })
-  }
+  const { baseResources, assetResources } = getSongResources(song, server.url)
+  loadSpec.assets = assetResources
+  loadSpec.bms = await baseResources.file(chart.file)
 
   const latency =
     +query.latency || +options['system.offset.audio-input'] / 1000 || 0

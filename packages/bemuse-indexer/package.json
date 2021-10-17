@@ -27,6 +27,7 @@
     "bluebird": "^3.5.2",
     "bms": "^49.0.0",
     "bmson": "^49.0.0",
+    "bemuse-types": "^49.0.0",
     "invariant": "^2.2.4",
     "lodash": "^4.17.11",
     "object-assign": "^4.1.1"
