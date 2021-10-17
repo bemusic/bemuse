@@ -106,6 +106,7 @@
     "baconjs": "^0.7.95",
     "bemuse-indexer": "^49.0.0",
     "bemuse-notechart": "^49.0.0",
+    "bemuse-types": "^49.0.0",
     "bluebird": "^3.5.2",
     "bms": "^49.0.0",
     "bmson": "^49.0.0",

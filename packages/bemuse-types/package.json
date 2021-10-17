@@ -1,0 +1,11 @@
+{
+  "name": "bemuse-types",
+  "version": "49.0.0",
+  "description": "Type definition for Bemuse Music Collection",
+  "author": "dtinth <dtinth@spacet.me>",
+  "license": "MIT",
+  "files": [
+    "index.d.ts"
+  ],
+  "types": "./index.d.ts"
+}
