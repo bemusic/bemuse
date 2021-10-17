@@ -57,6 +57,7 @@ export class SamplesLoader {
     return this._master.decode(buffer)
   }
   _getFile(name) {
+    name = name.replace(/\\/g, '/')
     return Promise.try(() => this._assets.file(name.replace(/\.\w+$/, '.ogg')))
       .catch(() => this._assets.file(name.replace(/\.\w+$/, '.m4a')))
       .catch(() => this._assets.file(name.replace(/\.\w+$/, '.mp3')))

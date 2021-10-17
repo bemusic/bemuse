@@ -80,14 +80,17 @@ export interface SongMetadata {
   /** The start offset of the preview into the song. */
   preview_start?: number
 
-  /** The URL to the MP3 file. Dedfault is `_bemuse_preview.mp3` */
-  preview_url?: number
+  /** The URL to the MP3 file. Default is `_bemuse_preview.mp3` */
+  preview_url?: string
 
   /** Whether this song is a tutorial. */
   tutorial?: number
 
   /** Whether this song is exclusive to Bemuse (not published elsewhere). */
   exclusive?: boolean
+
+  /** The URL to the bemuse pack assets file. If undefined, defaults to `assets/metadata.json`. To use real files, must be explicitly set to `null`. */
+  bemusepack_url?: string | null | undefined
 }
 
 export interface SongMetadataInCollection extends SongMetadata {
