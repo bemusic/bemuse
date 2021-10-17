@@ -1,4 +1,9 @@
-import { SongInfo } from 'bms'
+import type {
+  ChartBga as BGAInfo,
+  ChartBpm as BPMInfo,
+  Chart as OutputChart,
+  SongMetadata,
+} from 'bemuse-types'
 
 /* eslint camelcase: off */
 /* REASON: Our indexed JSON file is snake-cased */
@@ -10,43 +15,22 @@ export interface IndexingInputFile {
   data: Buffer
 }
 
-export interface BGAInfo {
-  file: string
-  offset: number
-}
+export type { BGAInfo, BPMInfo, OutputChart }
 
-export interface BPMInfo {
-  init: number
-  min: number
-  max: number
-  median: number
-}
+export interface OutputFileInfo extends Omit<OutputChart, 'file'> {}
 
-export interface OutputFileInfo {
-  md5: string
-  info: SongInfo
-  noteCount: number
-  bpm: BPMInfo
-  duration: number
-  scratch: boolean
-  keys: Keys
-  bga?: BGAInfo
-}
+export interface OutputSongInfoVideo
+  extends Pick<SongMetadata, 'video_file' | 'video_offset'> {}
 
-export interface OutputSongInfoVideo {
-  video_file?: string
-  video_offset?: number
-}
-
-export interface OutputSongInfo extends OutputSongInfoVideo {
-  title: string
-  artist: string
-  genre: string
-  bpm: number
-  charts: OutputChart[]
-  warnings: string[]
-}
-
-export interface OutputChart extends OutputFileInfo {
-  file: string
-}
+export interface OutputSongInfo
+  extends Pick<
+    SongMetadata,
+    | 'title'
+    | 'artist'
+    | 'genre'
+    | 'bpm'
+    | 'charts'
+    | 'warnings'
+    | 'video_file'
+    | 'video_offset'
+  > {}
