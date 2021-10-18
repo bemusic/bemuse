@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import u from 'updeep'
+import { useImmer } from 'use-immer'
 
 import * as options from '../options'
 
@@ -25,7 +25,7 @@ export const changeKeyMapping = (mode, key, keyCode) =>
 // Play mode
 export const playMode = (state) => state['player.P1.mode']
 export const changePlayMode = (mode) =>
-  u({
+  useImmer({
     'player.P1.mode': mode,
     'player.P1.panel': (panel) =>
       panel === '3d' && mode !== 'KB' ? 'center' : panel,
@@ -33,7 +33,7 @@ export const changePlayMode = (mode) =>
 
 // Speed
 export const speed = (state) => state['player.P1.speed']
-export const changeSpeed = (speed) => u({ 'player.P1.speed': speed })
+export const changeSpeed = (speed) => useImmer({ 'player.P1.speed': speed })
 
 // Lead time
 export const leadTime = (state) => {
@@ -43,7 +43,7 @@ export const leadTime = (state) => {
   return parsed
 }
 export const changeLeadTime = (leadTime) =>
-  u({ 'player.P1.lead-time': leadTime })
+  useImmer({ 'player.P1.lead-time': leadTime })
 
 // Scratch position
 export const scratchPosition = (state) => {
@@ -57,14 +57,14 @@ export const changeScratchPosition = (position) => {
   if (position === 'off') {
     return changePlayMode('KB')
   } else {
-    return _.flow(changePlayMode('BM'), u({ 'player.P1.scratch': position }))
+    return _.flow(changePlayMode('BM'), useImmer({ 'player.P1.scratch': position }))
   }
 }
 
 // Panel
 export const panelPlacement = (state) => state['player.P1.panel']
 export const changePanelPlacement = (placement) =>
-  u({
+  useImmer({
     'player.P1.panel': placement,
     'player.P1.mode': (mode) =>
       placement === '3d' && mode !== 'KB' ? 'KB' : mode,
@@ -80,33 +80,33 @@ export const laneCover = (state) => {
   )
 }
 export const changeLaneCover = (laneCover) =>
-  u({ 'player.P1.lane-cover': laneCover })
+  useImmer({ 'player.P1.lane-cover': laneCover })
 
 // BGA
 export const isBackgroundAnimationsEnabled = (state) =>
   toggleOptionEnabled(state['system.bga.enabled'])
-export const toggleBackgroundAnimations = u({
+export const toggleBackgroundAnimations = useImmer({
   'system.bga.enabled': toggleOption,
 })
 
 // Auto-velocity
 export const isAutoVelocityEnabled = (state) =>
   toggleOptionEnabled(state['player.P1.auto-velocity'])
-export const toggleAutoVelocity = u({
+export const toggleAutoVelocity = useImmer({
   'player.P1.auto-velocity': toggleOption,
 })
 
 // Song preview enabled
 export const isPreviewEnabled = (state) =>
   toggleOptionEnabled(state['system.preview.enabled'])
-export const togglePreview = u({
+export const togglePreview = useImmer({
   'system.preview.enabled': toggleOption,
 })
 
 // Gauge
 export const isGaugeEnabled = (state) => getGauge(state) !== 'off'
 export const getGauge = (state) => state['player.P1.gauge']
-export const toggleGauge = u({
+export const toggleGauge = useImmer({
   'player.P1.gauge': (gauge) => (gauge === 'off' ? 'hope' : 'off'),
 })
 
@@ -124,33 +124,33 @@ export const keyboardMapping = (state) => {
 export const hasAcknowledged = (featureKey) => (state) =>
   state[`system.ack.${featureKey}`] === '1'
 export const acknowledge = (featureKey) =>
-  u({
+  useImmer({
     [`system.ack.${featureKey}`]: '1',
   })
 
 // Audio-input latency
 export const audioInputLatency = (state) => +state['system.offset.audio-input']
 export const changeAudioInputLatency = (latency) =>
-  u({
+  useImmer({
     'system.offset.audio-input': `${latency}`,
   })
 
 // Gamepad Continuous Axis
 export const isContinuousAxisEnabled = (state) =>
   toggleOptionEnabled(state['gamepad.continuous'])
-export const toggleContinuousAxis = u({
+export const toggleContinuousAxis = useImmer({
   'gamepad.continuous': toggleOption,
 })
 
 // Gamepad Sensitivity
 export const sensitivity = (state) => state['gamepad.sensitivity']
 export const changeSensitivity = (sensitivity) =>
-  u({ 'gamepad.sensitivity': sensitivity })
+  useImmer({ 'gamepad.sensitivity': sensitivity })
 
 // Latest version
 export const lastSeenVersion = (state) => state['system.last-seen-version']
 export const updateLastSeenVersion = (newVersion) =>
-  u({
+  useImmer({
     'system.last-seen-version': newVersion,
   })
 

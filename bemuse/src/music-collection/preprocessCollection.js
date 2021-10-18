@@ -1,17 +1,18 @@
-import u from 'updeep'
+import { useImmer } from "use-immer"
 
 export const preprocessCollection = u({
   songs: u.map(preprocessSong),
 })
 
 function preprocessSong(song) {
+  const useImmerMap = new Map()
   if (song.chart_names) {
-    song = u(
+    song = useImmer(
       {
-        charts: u.map((chart) => {
+        charts: useImmerMap((chart) => {
           const name = song.chart_names[chart.file]
           if (!name) return chart
-          return u(
+          return useImmer(
             {
               info: {
                 subtitles: (subtitles) => [...subtitles, name],

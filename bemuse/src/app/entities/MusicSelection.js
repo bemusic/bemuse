@@ -1,4 +1,4 @@
-import u from 'updeep'
+import { useImmer } from 'use-immer'
 import _ from 'lodash'
 
 export const initialState = {
@@ -24,11 +24,11 @@ export const selectedChartGivenCharts = (charts) => (state) => {
 
 // Updater
 export const selectSong = (songId) =>
-  u({
+  useImmer({
     selectedSongId: songId,
   })
 export const selectChart = (songId, chartId, chartLevel) =>
-  u({
+  useImmer({
     selectedSongId: songId,
     selectedChartId: chartId,
     selectedChartLevel: chartLevel,
