@@ -20,6 +20,15 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## v49.1.2-pre.202110201653
+
+### Improvements
+
+- **Download retries.** When a file failed to download, it will be retried up to
+  3 times. [#712], by [@dtinth]
+
+[#712]: https://github.com/bemusic/bemuse/pull/712
+
 ## v49.1.1-pre.202110171159
 
 ### Improvements
@@ -35,6 +44,7 @@
   player base, and it is advised to update your browser. If you have an
   up-to-date browser and you run into issues, please report them either in
   Issues tracker or Discord. [#706], by [@dtinth]
+
 - Improved the code readability of custom songs folder feature. [#699], by
   [@dimitrov-d]
 - Prepare the codebase for implementing the detection of removed custom song
