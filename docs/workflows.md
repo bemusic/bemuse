@@ -43,3 +43,11 @@ node build-scripts release
 ## Deploying to production
 
 Upon releasing a new version, it will automatically be deployed to production.
+
+## Publishing npm packages
+
+Right now this is done manually using this command after releasing the new version:
+
+```
+yarn lerna publish from-git
+```
