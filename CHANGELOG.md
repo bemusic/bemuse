@@ -20,7 +20,7 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
-## v49.1.2-pre.202110201653
+## v49.1.2 (2021-10-20)
 
 ### Improvements
 
