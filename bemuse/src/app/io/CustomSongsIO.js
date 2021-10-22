@@ -51,19 +51,19 @@ export function handleClipboardPaste(e) {
           customSongLoader,
         })
       }
-      {
-        const match = text.match(
-          /https?:\/\/[a-zA-Z0-9:.-]+\/\S+\/bemuse-song\.json/
-        )
-        if (match) {
-          const url = match[0]
-          const initialLog = ['Loading prepared song...']
-          const resources = new PreparedSongResources(new URL(url))
-          return loadCustomSong(resources, initialLog, {
-            store,
-            customSongLoader,
-          })
-        }
+    }
+    {
+      const match = text.match(
+        /https?:\/\/[a-zA-Z0-9:.-]+\/\S+\/bemuse-song\.json/
+      )
+      if (match) {
+        const url = match[0]
+        const initialLog = ['Loading prepared song...']
+        const resources = new PreparedSongResources(new URL(url))
+        return loadCustomSong(resources, initialLog, {
+          store,
+          customSongLoader,
+        })
       }
     }
   })
