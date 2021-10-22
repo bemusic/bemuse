@@ -90,6 +90,13 @@ async function launchGame(
   loadSpec.assets = assetResources
   loadSpec.bms = await baseResources.file(chart.file)
 
+  if (song.eyecatch_image_url) {
+    loadSpec.eyecatchImageUrl = song.eyecatch_image_url
+  }
+  if (song.back_image_url) {
+    loadSpec.backImageUrl = song.back_image_url
+  }
+
   const latency =
     +query.latency || +options['system.offset.audio-input'] / 1000 || 0
   const volume = getVolume(song)
