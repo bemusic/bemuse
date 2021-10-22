@@ -38,7 +38,7 @@ It is recommended to play this game on Google Chrome.
 
 ## Quick Tour
 
-![Music selection](website/static/img/screenshots/music-select.jpg)
+![Music selection](website/static/img/screenshots/music-selection.jpg)
 
 - You can play **online songs** instantly in your browser.
 
