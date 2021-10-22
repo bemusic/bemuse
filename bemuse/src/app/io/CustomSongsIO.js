@@ -9,13 +9,10 @@ import {
 import { getIPFSResources } from '../../resources/ipfs-resources'
 
 export function handleCustomSongFileSelect(selectedfile) {
-  console.log('before')
   return createIO(async ({ store, customSongLoader }) => {
-    console.log('async')
     const resources = new CustomSongResources({
       getFiles: async () => [{ name: selectedfile.name, file: selectedfile }],
     })
-    console.log('after')
     const initialLog = ['Examining selected items...']
     return loadCustomSong(resources, initialLog, { store, customSongLoader })
   })
