@@ -248,3 +248,8 @@ dl dd {
 .admonition.srcref li a {
   font-style: normal;
 }
+
+figure img {
+  border: 2px solid #de809a;
+  box-shadow: 0 4px 12px #e9a8bb;
+}

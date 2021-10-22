@@ -1,8 +1,14 @@
 ---
 id: music-server
-title: How to Host a Music Server
+title: How to Host a Music Server (Legacy Method)
 sidebar_label: Music Server
 ---
+
+<div class="admonition warning">
+<p class="admonition-title">Note</p>
+<p>A new easier workflow for creating a music server is being developed.
+Please check out the <a href="song-workshop.html">new draft documentation</a> for more information.</p>
+</div>
 
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>

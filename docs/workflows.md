@@ -34,6 +34,8 @@ We use a semi-automated [release-train](https://github.com/bemusic/release-train
 
 ## Release a new version
 
+If any refinement is needed in the CHANGELOG, they can be editing on the `master` branch directly.
+
 Once a release candidate is accepted, we should release it to everyone. To promote the latest release candidate to an actual release, run:
 
 ```
