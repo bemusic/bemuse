@@ -17,6 +17,8 @@ export function download(url) {
         } catch (error) {
           console.error(`Unable to download ${url} [attempt ${i}]`, error)
           if (i >= 3) throw error
+          const waitMs = Math.random() * 3000
+          await new Promise((resolve) => setTimeout(resolve, waitMs))
         }
       }
       function attempt() {
