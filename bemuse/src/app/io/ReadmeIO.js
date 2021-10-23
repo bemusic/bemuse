@@ -1,6 +1,5 @@
 import { getSongResources } from 'bemuse/music-collection/getSongResources'
 import { createIO } from 'impure'
-import $ from 'jquery'
 import * as ReduxState from '../redux/ReduxState'
 
 export function requestReadme(song) {
