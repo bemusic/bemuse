@@ -100,7 +100,7 @@ class CustomBMS extends React.Component {
               <div className='CustomBMSのdropzoneHint'>
                 Drop BMS folder here.
                 <input type="file" id="CustomBMSのdropzoneInput" className="CustomBMSのdropzoneInput" accept=".zip,.7z,.rar" onChange={() => { this.handleFileSelect(document.getElementById('CustomBMSのdropzoneInput').files[0]) }} />
-                <label htmlFor="CustomBMSのdropzoneInput" className='CustomBMSのdropzoneInputLabel'>Select File to Upload.</label>
+                <label htmlFor="CustomBMSのdropzoneInput" className='CustomBMSのdropzoneInputLabel'>Select File on Device.</label>
               </div>
             )}
           </div>
