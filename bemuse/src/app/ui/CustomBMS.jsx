@@ -26,6 +26,8 @@ const enhance = compose(
       CustomSongsIO.handleCustomSongFolderDrop(event),
     onPaste: () => (e) => CustomSongsIO.handleClipboardPaste(e),
     loadFromURL: () => (url) => CustomSongsIO.handleCustomSongURLLoad(url),
+    onFileSelect: () => (file) =>
+      CustomSongsIO.handleCustomSongFileSelect(file),
   })
 )
 
@@ -36,6 +38,7 @@ class CustomBMS extends React.Component {
     onPaste: PropTypes.func,
     onSongLoaded: PropTypes.func,
     loadFromURL: PropTypes.func,
+    onFileSelect: PropTypes.func,
   }
 
   constructor(props) {
@@ -96,6 +99,8 @@ class CustomBMS extends React.Component {
             ) : (
               <div className='CustomBMSのdropzoneHint'>
                 Drop BMS folder here.
+                <input type="file" id="CustomBMSのdropzoneInput" className="CustomBMSのdropzoneInput" accept=".zip,.7z,.rar" onChange={() => { this.handleFileSelect(document.getElementById('CustomBMSのdropzoneInput').files[0]) }} />
+                <label htmlFor="CustomBMSのdropzoneInput" className='CustomBMSのdropzoneInputLabel'>Select File on Device.</label>
               </div>
             )}
           </div>
@@ -126,7 +131,10 @@ class CustomBMS extends React.Component {
       if (this.props.onSongLoaded) this.props.onSongLoaded(song)
     })
   }
-
+  handleFileSelect = (file) => {
+    Analytics.send('CustomBMS', 'select')
+    this.props.onFileSelect(file)
+  }
   handlePaste = async (e) => {
     const song = await this.props.onPaste(e)
     if (song) {

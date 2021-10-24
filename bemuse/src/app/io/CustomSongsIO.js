@@ -8,6 +8,16 @@ import {
 } from '../../resources/custom-song-resources'
 import { getIPFSResources } from '../../resources/ipfs-resources'
 
+export function handleCustomSongFileSelect(selectedfile) {
+  return createIO(async ({ store, customSongLoader }) => {
+    const resources = new CustomSongResources({
+      getFiles: async () => [{ name: selectedfile.name, file: selectedfile }],
+    })
+    const initialLog = ['Examining selected items...']
+    return loadCustomSong(resources, initialLog, { store, customSongLoader })
+  })
+}
+
 export function handleCustomSongFolderDrop(event) {
   return createIO(async ({ store, customSongLoader }) => {
     const resources = new DndResources(event)
