@@ -1,6 +1,10 @@
 import download from 'bemuse/utils/download'
 
 describe('download', function () {
+  const options = {
+    getRetryDelay: () => 0,
+  }
+
   it('resolves with correct type', function () {
     return expect(
       download('/src/utils/test-fixtures/download/hello.txt').as('text')
@@ -12,7 +16,8 @@ describe('download', function () {
   })
 
   it('rejects for bad url', function () {
-    return expect(download('file:///nonexistant').as('blob')).to.be.rejected
+    return expect(download('file:///nonexistant', options).as('blob')).to.be
+      .rejected
   })
 
   it('rejects for XHR error', function () {
@@ -22,7 +27,7 @@ describe('download', function () {
         this.onerror(new Error('...'))
       })
     return expect(
-      download('/spec/download/fixtures/hello.txt')
+      download('/spec/download/fixtures/hello.txt', options)
         .as('blob')
         .finally(() => stub.restore())
     ).to.be.rejected
