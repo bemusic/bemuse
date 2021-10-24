@@ -32,6 +32,15 @@
     text-transform: uppercase;
     color: #8b8685;
   }
+  &のdropzoneInputLabel {
+    display: block;
+    font-size: 0.8em;
+    text-decoration: underline;
+    text-align: center;
+  }
+  &のdropzoneInput {
+    display: none;
+  }
   &のlog {
     @include scrolling-y;
     width: 100%;

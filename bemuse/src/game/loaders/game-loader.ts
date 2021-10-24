@@ -13,6 +13,7 @@ import SamplesLoader from './samples-loader'
 import loadImage from './loadImage'
 import Notechart from 'bemuse-notechart'
 import { IResources } from 'bemuse/resources/types'
+import { resolveRelativeResources } from 'bemuse/resources/resolveRelativeResource'
 
 type Tasks = {
   Scintillator: TODO
@@ -42,6 +43,8 @@ export type LoadSpec = {
   bms: TODO
   songId: string
   displayMode?: 'touch3d' | 'normal'
+  backImageUrl?: string
+  eyecatchImageUrl?: string
   videoUrl?: string
   videoOffset?: number
   options: GamePlayerOptionsInput
@@ -99,10 +102,24 @@ export function load(spec: LoadSpec) {
     })
 
     task('EyecatchImage', null, ['Notechart'], function (notechart) {
+      if (spec.eyecatchImageUrl) {
+        const [base, filename] = resolveRelativeResources(
+          assets,
+          spec.eyecatchImageUrl
+        )
+        return loadImage(base, filename)
+      }
       return loadImage(assets, notechart.eyecatchImage)
     })
 
     task('BackgroundImage', null, ['Notechart'], function (notechart) {
+      if (spec.backImageUrl) {
+        const [base, filename] = resolveRelativeResources(
+          assets,
+          spec.backImageUrl
+        )
+        return loadImage(base, filename)
+      }
       return loadImage(assets, notechart.backgroundImage)
     })
 
@@ -120,9 +137,15 @@ export function load(spec: LoadSpec) {
       'Video',
       spec.videoUrl ? 'Loading video' : null,
       ['Notechart'],
-      function (notechart, progress) {
+      async function (notechart, progress) {
         if (!spec.videoUrl) return Promise.resolve(null)
-        const videoUrl = spec.videoUrl
+        let videoUrl = spec.videoUrl
+        if (!videoUrl.includes('://')) {
+          // This is a relative URL, we need to load from assets.
+          const [base, filename] = resolveRelativeResources(assets, videoUrl)
+          const file = await base.file(filename)
+          videoUrl = await file.resolveUrl()
+        }
         return new Promise((resolve, reject) => {
           const video = document.createElement('video')
           if (!video.canPlayType('video/webm')) return resolve(null)

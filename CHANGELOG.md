@@ -17,8 +17,26 @@
 [@pnkapadia64]: https://github.com/pnkapadia64
 [@tsfreddie]: https://github.com/TsFreddie
 [@vishal5251]: https://github.com/vishal5251
+[@aj-ya]: https://github.com/aj-ya
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
+
+## v49.2.0-pre.202110241029
+
+### Improvements
+
+- **You can now play custom BMS songs on your mobile phone.** The custom BMS
+  dialog now displays a button to let you pick a file on your device. When you
+  select a BMS archive file (zip/rar/7z), Bemuse will decompress and load the
+  song. It consumes some RAM, and may not work on lower-end devices. [#714], by
+  [@aj-ya]
+
+### Internals
+
+- Various internal improvements. [#715], by [@dtinth]
+
+[#714]: https://github.com/bemusic/bemuse/pull/714
+[#715]: https://github.com/bemusic/bemuse/pull/715
 
 ## v49.1.2 (2021-10-20)
 
@@ -27,7 +45,8 @@
 - **Download retries.** When a file failed to download, it will be retried up to
   3 times. [#712], by [@dtinth]
 
-- **Improved support for loading sound files inside directories.** For example, the
+- **Improved support for loading sound files inside directories.** For example,
+  the
   [BMS OF FOON entry “miss” by Yosk!](https://manbow.nothing.sh/event/event.cgi?action=More_def&num=79&event=128)
   now plays properly on Bemuse.
 

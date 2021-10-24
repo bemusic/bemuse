@@ -72,7 +72,13 @@ class MusicInfoTabInformation extends React.Component {
     }
     if (song.bmssearch_id) {
       buttons.push(
-        link('BMS Search', 'http://bmssearch.net/bms?id=' + song.bmssearch_id)
+        link(
+          'BMS Search',
+          typeof song.bmssearch_id === 'number' ||
+            String(song.bmssearch_id).match(/^\d{1,6}$/)
+            ? `http://bmssearch.net/bms?id=${song.bmssearch_id}`
+            : `https://bmssearch.net/bmses/${song.bmssearch_id}`
+        )
       )
     }
     if (buttons.length === 0) {
