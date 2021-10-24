@@ -20,11 +20,14 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
-## v49.1.1-pre.202110171159
+## v49.1.2 (2021-10-20)
 
 ### Improvements
 
-- Improved support for loading sound files inside directories. For example, the
+- **Download retries.** When a file failed to download, it will be retried up to
+  3 times. [#712], by [@dtinth]
+
+- **Improved support for loading sound files inside directories.** For example, the
   [BMS OF FOON entry “miss” by Yosk!](https://manbow.nothing.sh/event/event.cgi?action=More_def&num=79&event=128)
   now plays properly on Bemuse.
 
@@ -35,20 +38,23 @@
   player base, and it is advised to update your browser. If you have an
   up-to-date browser and you run into issues, please report them either in
   Issues tracker or Discord. [#706], by [@dtinth]
-- Improved the code readability of custom songs folder feature. [#699], by
-  [@dimitrov-d]
-- Prepare the codebase for implementing the detection of removed custom song
-  folder and upgraded Prettier to v2. [#700], by [@dtinth]
 
 ### Internals
 
-- Introduced `bemuse-types` package to publish type definition in a music
+- Introduced `bemuse-types` package to publish type definitions in a music
   collection. [#705], by [@dtinth]
+
+- Improved the code readability of custom songs folder feature. [#699], by
+  [@dimitrov-d]
+
+- Prepare the codebase for implementing the detection of removed custom song
+  folder and upgraded Prettier to v2. [#700], by [@dtinth]
 
 [#705]: https://github.com/bemusic/bemuse/pull/705
 [#706]: https://github.com/bemusic/bemuse/pull/706
 [#699]: https://github.com/bemusic/bemuse/pull/699
 [#700]: https://github.com/bemusic/bemuse/pull/700
+[#712]: https://github.com/bemusic/bemuse/pull/712
 
 ## v49 (2021-10-09)
 
