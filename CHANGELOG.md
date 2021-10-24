@@ -21,7 +21,7 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
-## v49.2.0-pre.202110241029
+## v49.2 (2021-10-24)
 
 ### Improvements
 
@@ -30,6 +30,9 @@
   select a BMS archive file (zip/rar/7z), Bemuse will decompress and load the
   song. It consumes some RAM, and may not work on lower-end devices. [#714], by
   [@aj-ya]
+
+- The [Community FAQ page](https://faq.bemuse.ninja/) now contains [a list of Bemuse servers](https://faq.bemuse.ninja/).
+  You can check that out if you are looking for more songs to play.
 
 ### Internals
 
