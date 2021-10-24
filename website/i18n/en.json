@@ -30,8 +30,8 @@
         "title": "The Game Loop"
       },
       "music-server": {
-        "title": "How to Host a Music Server",
-        "sidebar_label": "Music Server"
+        "title": "How to Host a Music Server (Legacy Method)",
+        "sidebar_label": "Music Server [Old]"
       },
       "options": {
         "title": "Game Options and Configuration",
@@ -42,6 +42,10 @@
       },
       "skinning": {
         "title": "Skinning"
+      },
+      "song-workshop": {
+        "title": "How to Host a Music Server (New Method, Draft)",
+        "sidebar_label": "Music Server [New] (Draft)"
       },
       "user-guide": {
         "title": "User Guide",

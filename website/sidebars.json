@@ -1,7 +1,12 @@
 {
   "docs": {
     "Users": ["user-guide", "scoring-and-judgment", "faq"],
-    "Creators": ["music-server", "bms-support", "bms-extensions"],
+    "Creators": [
+      "music-server",
+      "song-workshop",
+      "bms-support",
+      "bms-extensions"
+    ],
     "Developers": [
       "developer-guide",
       "architecture",

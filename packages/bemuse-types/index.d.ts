@@ -53,6 +53,12 @@ export interface SongMetadata {
   /** When in the song to begin playing the video */
   video_offset?: number | string
 
+  /** Eyecatch image override. This is displayed while loading a song */
+  eyecatch_image_url?: string
+
+  /** Back image override. This is displayed while in-game */
+  back_image_url?: string
+
   /** ID for https://bmssearch.net/ */
   bmssearch_id?: number | string
 
