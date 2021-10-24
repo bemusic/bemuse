@@ -21,7 +21,7 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
-## v49.2.0-pre.202110241029
+## v49.2 (2021-10-24)
 
 ### Improvements
 
