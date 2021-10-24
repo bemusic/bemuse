@@ -11,12 +11,15 @@ import { BYTES_FORMATTER } from 'bemuse/progress/formatters'
 export function download(url) {
   return {
     async as(type, progress) {
+      let shouldGiveUp = false
       for (let i = 1; ; i++) {
         try {
           return await attempt()
         } catch (error) {
           console.error(`Unable to download ${url} [attempt ${i}]`, error)
-          if (i >= 3) throw error
+          if (i >= 3 || shouldGiveUp) throw error
+          const waitMs = 1000 + Math.random() * 4000
+          await new Promise((resolve) => setTimeout(resolve, waitMs))
         }
       }
       function attempt() {
@@ -28,6 +31,9 @@ export function download(url) {
             if (+xh.status === 200) {
               resolve(xh.response)
             } else {
+              if (+xh.status === 403 || +xh.status === 404) {
+                shouldGiveUp = true
+              }
               reject(new Error(`Unable to download ${url}: HTTP ${xh.status}`))
             }
           }

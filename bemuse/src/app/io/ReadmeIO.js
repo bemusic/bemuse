@@ -1,5 +1,5 @@
+import { getSongResources } from 'bemuse/music-collection/getSongResources'
 import { createIO } from 'impure'
-import $ from 'jquery'
 import * as ReduxState from '../redux/ReduxState'
 
 export function requestReadme(song) {
@@ -8,22 +8,31 @@ export function requestReadme(song) {
       store.getState()
     )
     if (song && song.readme) {
-      const readmeUrl = collectionUrl + '/' + song.path + '/' + song.readme
-      return run(requestReadmeForUrl(song.id, readmeUrl))
+      return run(requestReadmeForUrl(collectionUrl, song))
     } else {
       return null
     }
   })
 }
 
-function requestReadmeForUrl(songId, url) {
+function requestReadmeForUrl(serverUrl, song) {
   return createIO(async ({ store }) => {
     store.dispatch({ type: ReduxState.README_LOADING_STARTED })
     try {
-      const text = stripFrontMatter(String(await Promise.resolve($.get(url))))
+      const resources = getSongResources(song, serverUrl)
+      const readme = song.readme
+        ? await resources.baseResources
+            .file(song.readme)
+            .then((f) => f.read())
+            .then((ab) => new Blob([ab], { type: 'text/plain' }).text())
+        : ''
+      const text = stripFrontMatter(readme)
       store.dispatch({ type: ReduxState.README_LOADED, text })
     } catch (e) {
-      store.dispatch({ type: ReduxState.README_LOADING_ERRORED, url })
+      store.dispatch({
+        type: ReduxState.README_LOADING_ERRORED,
+        url: song.readme,
+      })
     }
   })
 }
