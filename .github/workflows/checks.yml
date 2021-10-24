@@ -1,0 +1,18 @@
+name: 'Lint and Test'
+
+on: push
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Deps
+        run: yarn install
+      - name: Lint
+        run: yarn lint
+      - name: Type Check
+        run: yarn workspace bemuse tsc
