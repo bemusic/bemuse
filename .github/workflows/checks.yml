@@ -11,7 +11,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Deps
-        run: yarn install
+        run: yarn install && yarn lerna run prepare
       - name: Lint
         run: yarn lint
       - name: Type Check
