@@ -47,6 +47,6 @@ jobs:
       - name: Install Deps
         run: yarn install && yarn lerna run prepare
       - name: Test Packages
-        run: yarn learna run test
+        run: yarn lerna run test
       - name: Code Coverage
         run: yarn codecov
