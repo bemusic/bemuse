@@ -17,9 +17,19 @@
 [@pnkapadia64]: https://github.com/pnkapadia64
 [@tsfreddie]: https://github.com/TsFreddie
 [@vishal5251]: https://github.com/vishal5251
+[@vtno]: https://github.com/vtno
 [@aj-ya]: https://github.com/aj-ya
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
+
+## v49.2.1-pre.202110251852
+
+### Internals
+
+- Migrated some workflows from CircleCI to GitHub Actions to speed up builds.
+  [#718], by [@vtno]
+
+[#718]: https://github.com/bemusic/bemuse/pull/718
 
 ## v49.2 (2021-10-24)
 
@@ -31,8 +41,9 @@
   song. It consumes some RAM, and may not work on lower-end devices. [#714], by
   [@aj-ya]
 
-- The [Community FAQ page](https://faq.bemuse.ninja/) now contains [a list of Bemuse servers](https://faq.bemuse.ninja/).
-  You can check that out if you are looking for more songs to play.
+- The [Community FAQ page](https://faq.bemuse.ninja/) now contains
+  [a list of Bemuse servers](https://faq.bemuse.ninja/). You can check that out
+  if you are looking for more songs to play.
 
 ### Internals
 
