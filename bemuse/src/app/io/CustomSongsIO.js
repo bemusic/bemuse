@@ -41,6 +41,20 @@ export function handleClipboardPaste(e) {
   return createIO(async ({ store, customSongLoader }) => {
     const text = e.clipboardData.getData('text/plain')
     {
+      const match = text.match(
+        /https?:\/\/[a-zA-Z0-9:.-]+(?:\/\S+)?\/bemuse-song\.json/
+      )
+      if (match) {
+        const url = match[0]
+        const initialLog = ['Loading prepared song...']
+        const resources = new PreparedSongResources(new URL(url))
+        return loadCustomSong(resources, initialLog, {
+          store,
+          customSongLoader,
+        })
+      }
+    }
+    {
       const match = text.match(/(https?:\/\/[a-zA-Z0-9:.-]+)?(\/ipfs\/\S+)/)
       if (match) {
         const gateway = match[1] || undefined
@@ -56,20 +70,6 @@ export function handleClipboardPaste(e) {
             'WARNING: Loading http URL from https. This will likely fail!'
           )
         }
-        return loadCustomSong(resources, initialLog, {
-          store,
-          customSongLoader,
-        })
-      }
-    }
-    {
-      const match = text.match(
-        /https?:\/\/[a-zA-Z0-9:.-]+\/\S+\/bemuse-song\.json/
-      )
-      if (match) {
-        const url = match[0]
-        const initialLog = ['Loading prepared song...']
-        const resources = new PreparedSongResources(new URL(url))
         return loadCustomSong(resources, initialLog, {
           store,
           customSongLoader,

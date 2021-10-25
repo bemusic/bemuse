@@ -111,7 +111,14 @@ class GatewayIPFSResources {
         )
       }
     }
-    throw new Error('unable to find ' + name)
+    {
+      const pathname =
+        '/' + [...base, name].map((x) => encodeURIComponent(x)).join('/')
+      return new LimitedConcurrencyResource(
+        this._throat,
+        new URLResource(`${this._gateway}${pathname}`)
+      )
+    }
   }
   get fileList() {
     return this._getLinks().then((links) => links.map((l) => l.Name))
