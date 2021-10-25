@@ -1,0 +1,57 @@
+name: 'Lint and Test'
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Deps
+        run: yarn install && yarn lerna run prepare
+      - name: Lint
+        run: yarn lint
+      - name: Type Check
+        run: yarn workspace bemuse tsc
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Deps
+        run: yarn install && yarn lerna run prepare
+      - name: Test
+        run: yarn test
+      - name: Code Coverage
+        run: yarn codecov
+  test_packages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Deps
+        run: yarn install && yarn lerna run prepare
+      - name: Test Packages
+        run: yarn lerna run test
+      - name: Code Coverage
+        run: yarn codecov
