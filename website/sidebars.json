@@ -5,7 +5,8 @@
       "music-server",
       "song-workshop",
       "bms-support",
-      "bms-extensions"
+      "bms-extensions",
+      "bemusepack"
     ],
     "Developers": [
       "developer-guide",

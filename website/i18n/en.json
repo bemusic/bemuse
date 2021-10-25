@@ -9,6 +9,10 @@
         "title": "Project Architecture",
         "sidebar_label": "Architecture"
       },
+      "bemusepack": {
+        "title": "The .bemuse file format",
+        "sidebar_label": ".bemuse file format"
+      },
       "bms-extensions": {
         "title": "Bemuse's BMS Extensions",
         "sidebar_label": "BMS Extensions"
@@ -31,7 +35,7 @@
       },
       "music-server": {
         "title": "How to Host a Music Server (Legacy Method)",
-        "sidebar_label": "Music Server [Old]"
+        "sidebar_label": "Music Server"
       },
       "options": {
         "title": "Game Options and Configuration",
