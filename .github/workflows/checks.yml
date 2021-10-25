@@ -1,6 +1,12 @@
 name: 'Lint and Test'
 
-on: push
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 jobs:
   lint:
     runs-on: ubuntu-latest
