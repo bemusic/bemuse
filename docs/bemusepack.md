@@ -1,7 +1,7 @@
 ---
 id: bemusepack
-title: The .bemuse file format
-sidebar_label: .bemuse file format
+title: The .bemuse File Format
+sidebar_label: .bemuse File Format
 ---
 
 The `.bemuse` file format is created for efficient distribution of sound assets
