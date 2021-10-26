@@ -26,17 +26,15 @@
 
 ### New stuff
 
+- **4 songs have been added to the Music Server.**
+
 - **For creators: The tool to prepare songs and manage a Bemuse Music Server has
-  been rewritten from scratch to be easier to use.** In previous versions, in
-  order to set up a Bemuse Music Server, you would have to install a lot of
-  software and use the command line. Now you can prepare songs and set up a
+  been rewritten from scratch to be easier to use.** In previous versions,
+  to set up a Bemuse Music Server, you would have to install a lot of programs
+  and use the command line tools. Now you can prepare songs and set up a
   Bemuse Music Server from your web browser.
   [Check out the documentation for more info.](https://bemuse.ninja/project/docs/song-workshop.html)
   [#721], by [@dtinth]
-
-[#721]: https://github.com/bemusic/bemuse/pull/721
-
-## v49.2.1-pre.202110251852
 
 ### Internals
 
@@ -44,6 +42,7 @@
   [#718], by [@vtno]
 
 [#718]: https://github.com/bemusic/bemuse/pull/718
+[#721]: https://github.com/bemusic/bemuse/pull/721
 
 ## v49.2 (2021-10-24)
 
