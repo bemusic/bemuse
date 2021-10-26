@@ -10,8 +10,8 @@
         "sidebar_label": "Architecture"
       },
       "bemusepack": {
-        "title": "The .bemuse file format",
-        "sidebar_label": ".bemuse file format"
+        "title": "The .bemuse File Format",
+        "sidebar_label": ".bemuse File Format"
       },
       "bms-extensions": {
         "title": "Bemuse's BMS Extensions",
@@ -35,7 +35,7 @@
       },
       "music-server": {
         "title": "How to Host a Music Server (Legacy Method)",
-        "sidebar_label": "Music Server"
+        "sidebar_label": "Legacy Music Server"
       },
       "options": {
         "title": "Game Options and Configuration",
@@ -48,8 +48,8 @@
         "title": "Skinning"
       },
       "song-workshop": {
-        "title": "Preparing BMS work for online play in Bemuse (New Method, Draft)",
-        "sidebar_label": "Music Server [New] (Draft)"
+        "title": "Preparing BMS Song for Online Play in Bemuse [new method]",
+        "sidebar_label": "Preparing Song for Online Play [NEW]"
       },
       "user-guide": {
         "title": "User Guide",
