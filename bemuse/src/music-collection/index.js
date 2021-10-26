@@ -1,4 +1,4 @@
-export const OFFICIAL_SERVER_URL = 'https://music.bemuse.ninja/live'
+export const OFFICIAL_SERVER_URL = 'https://music4.bemuse.ninja/server'
 
 export async function load(serverUrl, { fetch = global.fetch } = {}) {
   const indexUrl = getServerIndexFileUrl(serverUrl)
