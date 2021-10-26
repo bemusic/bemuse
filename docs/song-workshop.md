@@ -1,7 +1,7 @@
 ---
 id: song-workshop
-title: Preparing BMS work for online play in Bemuse (New Method, Draft)
-sidebar_label: Music Server [New] (Draft)
+title: Preparing BMS Song for Online Play in Bemuse [new method]
+sidebar_label: Preparing Song for Online Play [NEW]
 ---
 
 This guide will walk you through the steps of preparing a BMS song to make it
@@ -41,7 +41,8 @@ This guide will cover:
 
 1. How to prepare a BMS song for playing in Bemuse.
 2. How to test it in Bemuse locally.
-3. How to publish them as Music Servers.
+3. How to test it online in Bemuse.
+4. How to publish multiple songs as Music Servers.
 
 ## What you need
 
@@ -266,48 +267,77 @@ To test your song locally,
 - Launch **Bemuse**.
 - Drag the song folder into the **Custom BMS** dialog.
 
-Bemuse will detect `bemuse-song.json` and load the song. You should hear the
-song preview, see the images, video, and other information.
+Bemuse will detect `bemuse-song.json` in the folder and load the song. You
+should hear the song preview, see the images, video, and other information.
 
 ## Upload your song
 
+Now that your song is prepared and tested, it’s time to put it online!
+
 - Upload the song folder to a hosting service.
+
+  ![Screenshot](assets/song-workshop/upload-song.png)
+
 - Obtain the URL to the `bemuse-song.json` file.
+
+  - For example:
+    <https://music4.bemuse.ninja/songs/[frums]credits/bemuse-song.json>
 
 ## Test your song online
 
-To test your song locally,
+Now that your song is online, you can test it!
 
-- Copy the URL of `bemuse-song.json` to the clipboard.
-- Launch **Bemuse**.
-- Open the **Custom BMS** dialog.
-- Press **Ctrl+V** (Windows) **Cmd+V** (Mac) to paste the URL.
+- Go to
+  <code>https:/<i></i>/bemuse.ninja/?server=<em>&lt;url/to/bemuse-song.json&gt;</em></code><br>
 
-If you can play the song, then congratulations! It is now ready to be published
-in a Music Server.
+  - For example:
+    <https://bemuse.ninja/?server=https://music4.bemuse.ninja/songs/[frums]credits/bemuse-song.json>
 
-## Create a music server
+  - (Alternatively, you can launch Bemuse normally and then paste the URL into
+    the Custom BMS dialog.)
 
-- Go to the Bemuse Song Workshop app.
+If you can play the song, then congratulations! Your song has been prepared for
+online play and is now online.
+
+## Create a music server file to publish multiple songs
+
+So far, you have created a “single-song server” which lets you select one song.
+But what if you want to publish multiple songs for people to play at the same
+place? In this case you would create a **music server file.**
+
+- Go to the **Bemuse Song Workshop** app.
 - Select **Server Manager**.
 - Click **Create a new server file**.
 - Create an empty directory for the server and save the `index.json` file there.
-- Paste in the URL of `bemuse-song.json` file.
+- Paste in the URLs of `bemuse-song.json` file.
 - Click **Add**. The URL should be added to the list.
-- Click **Scan songs**.
+- Click **Update data**.
 - Check the results.
+
+  <figure>
+
+  ![Screenshot](assets/song-workshop/server.png)
+
+  </figure>
 
 ## Upload your music server
 
 - Upload the `index.json` file to a hosting service.
+
+  ![Screenshot](assets/song-workshop/upload-index.png)
+
 - Obtain the URL to the `index.json` file.
 
-  - This is your server URL.
+  - This is your **Server URL**.
   - You can remove the `/index.json` part as Bemuse will add it automatically.
+  - For example, my server is at <https://flicknote.bemuse.ninja/index.json>
 
 ## Test and share your music server
 
 Now that your music server is online, you can try it in Bemuse and share it with
 your friends!
 
-Go to `https://bemuse.ninja/?server=<server_url>`
+- Go to <code>https:/<i></i>/bemuse.ninja/?server=<em>&lt;Server
+  URL&gt;</em></code><br>
+
+  - For example, <https://bemuse.ninja/?server=https://flicknote.bemuse.ninja>
