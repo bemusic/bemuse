@@ -61,9 +61,9 @@ This guide will cover:
 Using Google Chrome or Microsoft Edge, go to the Bemuse Song Workshop
 application at this URL:
 
-<div style="text-align: center; font-size: 1.5em">
+<div style="text-align: center; font-size: 2em">
 
-<https://song-workshop.bemuse.ninja/>
+**<https://song-workshop.bemuse.ninja/>**
 
 </div>
 
@@ -72,9 +72,10 @@ We will use this application throughout the rest of this guide.
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 
-Please note that this application is **very buggy** and the developer currently
-does not have the resources to provide support. However if you are a developer,
-you can
+Please note that this application can be **very buggy** and the developer
+currently does not have the resources to provide support, although Bemuse’s
+developers also use this app to manage the official server. However if you are a
+developer, you can
 [find the source code on GitHub](https://github.com/bemusic/song-workshop). If
 you managed to fix some issues, pull requests are welcome.
 
