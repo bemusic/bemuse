@@ -4,6 +4,7 @@ import * as GameLauncher from '../game-launcher'
 import * as Options from '../entities/Options'
 import * as OptionsIO from './OptionsIO'
 import * as ReduxState from '../redux/ReduxState'
+import { getChartLevel } from '../entities/MusicSelection'
 
 export function selectSong(song) {
   return createIO(({ store }) => {
@@ -20,7 +21,7 @@ export function selectChart(song, chart) {
       type: ReduxState.MUSIC_CHART_SELECTED,
       songId: song.id,
       chartId: chart.file,
-      chartLevel: chart.info.level,
+      chartLevel: getChartLevel(chart),
     })
   })
 }

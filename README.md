@@ -147,7 +147,6 @@ use on npm.
 
 ## License
 
-[AGPLv3](LICENSE), for now. After the project matures, it may be released into a
-more permissive license. Note that this license only applies to the main Bemuse
+[AGPLv3](LICENSE). Note that this license only applies to the main Bemuse
 project, not the [sub-projects](#sub-projects), which has its own license terms
 (mostly MIT).
