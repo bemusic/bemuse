@@ -19,9 +19,7 @@ export class GameController {
     this._clock = new Clock(this._audio)
     this._input = new GameInput()
     this._timer = new GameTimer(this._clock, this._input)
-    let wow
-    this._state =
-    new GameState(game)
+    this._state = new GameState(game)
     this._promise = new Promise((resolve) => (this._resolvePromise = resolve))
     this._display.setEscapeHandler(() => this._quitGame())
     this._display.setReplayHandler(() => this._replayGame())
