@@ -41,6 +41,8 @@ jobs:
         run: yarn test
       - name: Code Coverage
         run: yarn codecov
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
   test_packages:
     runs-on: ubuntu-latest
     steps:
@@ -55,3 +57,5 @@ jobs:
         run: yarn lerna run test
       - name: Code Coverage
         run: yarn codecov
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
