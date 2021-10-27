@@ -24,7 +24,9 @@ jobs:
       - name: Install Deps
         run: yarn install && yarn lerna run prepare
       - name: Lint
-        run: yarn lint
+        run: yarn danger ci
+        env:
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Type Check
         run: yarn workspace bemuse tsc
   test:
