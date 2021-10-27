@@ -21,65 +21,6 @@ references:
         - ./packages/bms/node_modules
         - ./packages/bmson/node_modules
 jobs:
-  lint:
-    working_directory: ~/bemuse
-    environment:
-      FORCE_COLOR: '1'
-    docker:
-      - image: circleci/node:16.3.0-browsers
-    steps:
-      - run: sudo npm i -g lerna
-      - checkout
-      - *restore_node_modules_cache
-      - *bootstrap
-      - *save_node_modules_cache
-      - run:
-          name: danger
-          command: |
-            if [ "$DANGER_GITHUB_API_TOKEN" ]
-            then
-              yarn danger ci
-            fi
-      - run:
-          name: typecheck
-          command: |
-            yarn workspace bemuse tsc
-  test:
-    working_directory: ~/bemuse
-    environment:
-      FORCE_COLOR: '1'
-    docker:
-      - image: circleci/node:16.3.0-browsers
-    steps:
-      - run: sudo npm i -g lerna
-      - checkout
-      - *restore_node_modules_cache
-      - *bootstrap
-      - *save_node_modules_cache
-      - run:
-          name: test
-          command: yarn test
-      - run:
-          name: codecov
-          command: yarn codecov
-  test_packages:
-    working_directory: ~/bemuse
-    environment:
-      FORCE_COLOR: '1'
-    docker:
-      - image: circleci/node:16.3.0-browsers
-    steps:
-      - run: sudo npm i -g lerna
-      - checkout
-      - *restore_node_modules_cache
-      - *bootstrap
-      - *save_node_modules_cache
-      - run:
-          name: lerna run test
-          command: lerna run test
-      - run:
-          name: codecov
-          command: yarn codecov
   build:
     working_directory: ~/bemuse
     environment:
@@ -153,9 +94,6 @@ workflows:
   version: 2
   tests:
     jobs:
-      - lint
-      - test
-      - test_packages
       - build
       - e2e:
           requires:
