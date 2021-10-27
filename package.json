@@ -53,7 +53,7 @@
     "codeclimate-test-reporter": "^0.5.1",
     "codecov": "^3.1.0",
     "cross-env": "^5.2.0",
-    "danger": "^6.1.9",
+    "danger": "^10.7.0",
     "dotenv": "^6.1.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^3.3.0",
