@@ -22,6 +22,32 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## v50.1.0-pre.202110271733
+
+### New stuff
+
+- **Random songs of the day.** Bemuse will show a random selection of 3 songs on
+  each day to help you discover more songs. [#725], by [@dtinth]
+
+### Improvements
+
+- Upgraded Pixi.js to version 4.8.9. [#724], by [@dtinth]
+- Increased the delay after finishing song before displaying the results screen
+  from 1 second to 3 seconds to give more time for BG animations. [#726], by
+  [@dtinth]
+
+### Internals
+
+- Fixed GitHub Actions workflow to upload code coverage data properly. [#727],
+  by [@dtinth]
+- Migrated some more jobs from CircleCI to GitHub Actions. [#728], by [@dtinth]
+
+[#724]: https://github.com/bemusic/bemuse/pull/724
+[#725]: https://github.com/bemusic/bemuse/pull/725
+[#726]: https://github.com/bemusic/bemuse/pull/726
+[#727]: https://github.com/bemusic/bemuse/pull/727
+[#728]: https://github.com/bemusic/bemuse/pull/728
+
 ## v50 (2021-10-26)
 
 ### New stuff
@@ -29,10 +55,10 @@
 - **4 songs have been added to the Music Server.**
 
 - **For creators: The tool to prepare songs and manage a Bemuse Music Server has
-  been rewritten from scratch to be easier to use.** In previous versions,
-  to set up a Bemuse Music Server, you would have to install a lot of programs
-  and use the command line tools. Now you can prepare songs and set up a
-  Bemuse Music Server from your web browser.
+  been rewritten from scratch to be easier to use.** In previous versions, to
+  set up a Bemuse Music Server, you would have to install a lot of programs and
+  use the command line tools. Now you can prepare songs and set up a Bemuse
+  Music Server from your web browser.
   [Check out the documentation for more info.](https://bemuse.ninja/project/docs/song-workshop.html)
   [#721], by [@dtinth]
 
