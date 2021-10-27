@@ -18,7 +18,7 @@ export const selectedChartGivenCharts = (charts) => (state) => {
   const chart = _.find(charts, { file: state.selectedChartId })
   if (chart) return chart
   return _.minBy(charts, (chart) =>
-    Math.abs(chart.info.level - state.selectedChartLevel)
+    Math.abs(getChartLevel(chart) - state.selectedChartLevel)
   )
 }
 
@@ -33,3 +33,8 @@ export const selectChart = (songId, chartId, chartLevel) =>
     selectedChartId: chartId,
     selectedChartLevel: chartLevel,
   })
+
+// Utilities
+export function getChartLevel(chart) {
+  return chart.info.level + (chart.info.difficulty === 5 ? 1000 : 0)
+}

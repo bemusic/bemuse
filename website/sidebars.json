@@ -2,10 +2,11 @@
   "docs": {
     "Users": ["user-guide", "scoring-and-judgment", "faq"],
     "Creators": [
-      "music-server",
       "song-workshop",
+      "music-server",
       "bms-support",
-      "bms-extensions"
+      "bms-extensions",
+      "bemusepack"
     ],
     "Developers": [
       "developer-guide",

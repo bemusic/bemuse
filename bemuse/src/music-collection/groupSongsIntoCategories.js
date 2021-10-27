@@ -28,8 +28,15 @@ export function groupSongsIntoCategories(songs) {
     }
   }
   for (let { input, output } of groups) {
-    if (input.sort) output.songs = _.sortBy(output.songs, input.sort)
-    if (input.reverse) output.songs.reverse()
+    if (input.sort) {
+      output.songs = _.orderBy(
+        output.songs,
+        [input.sort],
+        [input.reverse ? 'desc' : 'asc']
+      )
+    } else if (input.reverse) {
+      output.songs.reverse()
+    }
   }
   return _(groups)
     .map('output')

@@ -1,7 +1,7 @@
 ---
 id: music-server
 title: How to Host a Music Server (Legacy Method)
-sidebar_label: Music Server
+sidebar_label: Legacy Music Server
 ---
 
 <div class="admonition warning">
