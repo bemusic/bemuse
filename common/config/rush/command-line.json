@@ -11,6 +11,13 @@
    * "rush my-global-command --help".
    */
   "commands": [
+    {
+      "name": "format",
+      "commandKind": "global",
+      "summary": "Format source code.",
+      "shellCommand": "pretty-quick --staged",
+      "autoinstallerName": "bemuse-linter"
+    }
     // {
     //   /**
     //    * (Required) Determines the type of custom command.
