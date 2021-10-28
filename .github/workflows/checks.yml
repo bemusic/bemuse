@@ -22,13 +22,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Deps
-        run: yarn install && yarn lerna run prepare
+        run: node common/scripts/install-run-rush.js install
       - name: Lint
-        run: yarn danger ci
+        run: node common/scripts/install-run-rush.js danger-ci
         env:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Type Check
-        run: yarn workspace bemuse tsc
+      - name: Typecheck
+        run: node ../common/scripts/install-run-rushx.js typecheck
+        working-directory: bemuse
   test:
     runs-on: ubuntu-latest
     steps:
@@ -38,9 +39,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Deps
-        run: yarn install && yarn lerna run prepare
+        run: node common/scripts/install-run-rush.js install
+      - name: Build
+        run: node common/scripts/install-run-rush.js build --to-except bemuse
       - name: Test
-        run: yarn test
+        run: node ../common/scripts/install-run-rushx.js test
+        working-directory: bemuse
       - uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -53,9 +57,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Deps
-        run: yarn install && yarn lerna run prepare
+        run: node common/scripts/install-run-rush.js install
+      - name: Build
+        run: node common/scripts/install-run-rush.js build --to-except bemuse
       - name: Test Packages
-        run: yarn lerna run test
+        run: node common/scripts/install-run-rush.js test --to-except bemuse
       - uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}

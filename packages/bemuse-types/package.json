@@ -9,7 +9,8 @@
   ],
   "types": "./index.d.ts",
   "scripts": {
-    "build": "true"
+    "build": "true",
+    "test": "tsc --noEmit index.d.ts"
   },
   "devDependencies": {
     "typescript": "^4.4.3"

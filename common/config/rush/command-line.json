@@ -45,6 +45,12 @@
       "summary": "Run Danger locally.",
       "shellCommand": "danger local",
       "autoinstallerName": "bemuse-linter"
+    },
+    {
+      "name": "test",
+      "commandKind": "bulk",
+      "summary": "Run test.",
+      "enableParallelism": true
     }
     // {
     //   /**
