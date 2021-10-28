@@ -11,6 +11,8 @@ specifiers:
   '@rush-temp/monetizer': file:./projects/monetizer.tgz
   '@types/bluebird-global': '3'
   '@types/eslint': ^4.16.4
+  '@types/jest': ^25.2.1
+  '@types/lodash': ^4.14.176
   '@types/lodash.assign': ^4.2.4
   '@types/lodash.map': ^4.6.13
   '@types/lodash.uniq': ^4.5.4
@@ -24,7 +26,6 @@ specifiers:
   '@types/react-dom': '16'
   '@types/webpack-env': ^1.14.0
   '@types/wicg-file-system-access': ^2020.9.4
-  '@typescript-eslint/parser': ^4.33.0
   artstep: ^5555.0.0
   audio-context: ^1.0.3
   auth0-js: ^9.8.0
@@ -106,7 +107,7 @@ specifiers:
   p-memoize: '4'
   pegjs: ^0.10.0
   pegjs-loader: ^0.5.4
-  pixi.js: ^4.1.0
+  pixi.js: ^4.8.9
   postcss-flexbugs-fixes: ^4.1.0
   postcss-loader: ^3.0.0
   power-assert: ^1.6.1
@@ -143,6 +144,7 @@ specifiers:
   through2: ^2.0.3
   timesynchro: ^1.0.1
   transform-loader: ^0.2.4
+  typescript: ^4.4.3
   undertaker-forward-reference: ^1.0.2
   updeep: ^0.16.0
   url-loader: ^1.1.2
@@ -167,6 +169,8 @@ dependencies:
   '@rush-temp/monetizer': file:projects/monetizer.tgz
   '@types/bluebird-global': 3.5.13
   '@types/eslint': 4.16.8
+  '@types/jest': 25.2.3
+  '@types/lodash': 4.14.176
   '@types/lodash.assign': 4.2.6
   '@types/lodash.map': 4.6.13
   '@types/lodash.uniq': 4.5.6
@@ -180,7 +184,6 @@ dependencies:
   '@types/react-dom': 16.9.14
   '@types/webpack-env': 1.16.3
   '@types/wicg-file-system-access': 2020.9.4
-  '@typescript-eslint/parser': 4.33.0
   artstep: 5555.0.0
   audio-context: 1.0.3
   auth0-js: 9.17.0
@@ -299,6 +302,7 @@ dependencies:
   through2: 2.0.5
   timesynchro: 1.0.1
   transform-loader: 0.2.4
+  typescript: 4.4.4
   undertaker-forward-reference: 1.0.2
   updeep: 0.16.1
   url-loader: 1.1.2_webpack@4.46.0
@@ -403,6 +407,16 @@ packages:
     resolution: {integrity: sha512-rLu3wcBWH4P5q1CGoSSH/i9hrXs7SlbRLkoq9IGuoPYNGQvDJ3pt/wmOM+XgYjIDRMVIdkUWt0RsfzF50JfnCw==}
     dev: false
 
+  /@jest/types/25.5.0:
+    resolution: {integrity: sha512-OXD0RgQ86Tu3MazKo8bnrkDRaDXXMGUqd+kTtLtK1Zb7CRzQcaSRPPPV37SvYTdevXEBVxe0HXylEjs8ibkmCw==}
+    engines: {node: '>= 8.3'}
+    dependencies:
+      '@types/istanbul-lib-coverage': 2.0.3
+      '@types/istanbul-reports': 1.1.2
+      '@types/yargs': 15.0.14
+      chalk: 3.0.0
+    dev: false
+
   /@nodelib/fs.scandir/2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -505,6 +519,30 @@ packages:
     resolution: {integrity: sha512-DxX1V9P8zdJPYQat1gHyY0xj3efl8gnMVjiM9iCY6y27lj+PoQWkgjt8jDqmovPqULkKVpKRg8J36iQiA+EtEg==}
     dev: false
 
+  /@types/istanbul-lib-coverage/2.0.3:
+    resolution: {integrity: sha512-sz7iLqvVUg1gIedBOvlkxPlc8/uVzyS5OwGz1cKjXzkl3FpL3al0crU8YGU1WoHkxn0Wxbw5tyi6hvzJKNzFsw==}
+    dev: false
+
+  /@types/istanbul-lib-report/3.0.0:
+    resolution: {integrity: sha512-plGgXAPfVKFoYfa9NpYDAkseG+g6Jr294RqeqcqDixSbU34MZVJRi/P+7Y8GDpzkEwLaGZZOpKIEmeVZNtKsrg==}
+    dependencies:
+      '@types/istanbul-lib-coverage': 2.0.3
+    dev: false
+
+  /@types/istanbul-reports/1.1.2:
+    resolution: {integrity: sha512-P/W9yOX/3oPZSpaYOCQzGqgCQRXn0FFO/V8bWrCQs+wLmvVVxk6CRBXALEvNs9OHIatlnlFokfhuDo2ug01ciw==}
+    dependencies:
+      '@types/istanbul-lib-coverage': 2.0.3
+      '@types/istanbul-lib-report': 3.0.0
+    dev: false
+
+  /@types/jest/25.2.3:
+    resolution: {integrity: sha512-JXc1nK/tXHiDhV55dvfzqtmP4S3sy3T3ouV2tkViZgxY/zeUkcpQcQPGRlgF4KmWzWW5oiWYSZwtCB+2RsE4Fw==}
+    dependencies:
+      jest-diff: 25.5.0
+      pretty-format: 25.5.0
+    dev: false
+
   /@types/json-schema/7.0.9:
     resolution: {integrity: sha512-qcUXuemtEu+E5wZSJHNxUXeCZhAfXKQ41D+duX+VYPde7xyEVZci+/oXKJL13tnRs9lR2pr4fod59GT6/X1/yQ==}
     dev: false
@@ -596,6 +634,16 @@ packages:
 
   /@types/wicg-file-system-access/2020.9.4:
     resolution: {integrity: sha512-o43jUljwP0ZrQ927mPjGdJaBMfS12nf3VPj6Z52fMucxILrSs8tnfLbMDSn6cP3hrrLChc3SYneeEvecknNVtA==}
+    dev: false
+
+  /@types/yargs-parser/20.2.1:
+    resolution: {integrity: sha512-7tFImggNeNBVMsn0vLrpn1H1uPrUBdnARPTpZoitY37ZrdJREzf7I16tMrlK3hen349gr1NYh8CmZQa7CTG6Aw==}
+    dev: false
+
+  /@types/yargs/15.0.14:
+    resolution: {integrity: sha512-yEJzHoxf6SyQGhBhIYGXQDSCkJjB6HohDShto7m8vaKg9Yp0Yn8+71J9eakh2bnPg6BfsH9PRMhiRTZnd4eXGQ==}
+    dependencies:
+      '@types/yargs-parser': 20.2.1
     dev: false
 
   /@types/yauzl/2.9.2:
@@ -1008,6 +1056,11 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
+  /ansi-regex/5.0.1:
+    resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
+    engines: {node: '>=8'}
+    dev: false
+
   /ansi-styles/2.2.1:
     resolution: {integrity: sha1-tDLdM1i2NM914eRmQ2gkBTPB3b4=}
     engines: {node: '>=0.10.0'}
@@ -1018,6 +1071,13 @@ packages:
     engines: {node: '>=4'}
     dependencies:
       color-convert: 1.9.3
+    dev: false
+
+  /ansi-styles/4.3.0:
+    resolution: {integrity: sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==}
+    engines: {node: '>=8'}
+    dependencies:
+      color-convert: 2.0.1
     dev: false
 
   /ansi-wrap/0.1.0:
@@ -2096,6 +2156,14 @@ packages:
       supports-color: 5.5.0
     dev: false
 
+  /chalk/3.0.0:
+    resolution: {integrity: sha512-4D3B6Wf41KOYRFdszmDqMCGq5VV/uMAB273JILmO+3jAlh8X4qDtdtgCR3fxtbLEMzSx22QdhnDcJvu2u1fVwg==}
+    engines: {node: '>=8'}
+    dependencies:
+      ansi-styles: 4.3.0
+      supports-color: 7.2.0
+    dev: false
+
   /change-emitter/0.1.6:
     resolution: {integrity: sha1-6LL+PX8at9aaMhma/5HqaTFAlRU=}
     dev: false
@@ -2328,8 +2396,19 @@ packages:
       color-name: 1.1.3
     dev: false
 
+  /color-convert/2.0.1:
+    resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
+    engines: {node: '>=7.0.0'}
+    dependencies:
+      color-name: 1.1.4
+    dev: false
+
   /color-name/1.1.3:
     resolution: {integrity: sha1-p9BVi9icQveV3UIyj3QIMcpTvCU=}
+    dev: false
+
+  /color-name/1.1.4:
+    resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
     dev: false
 
   /color-support/1.1.3:
@@ -3093,6 +3172,11 @@ packages:
 
   /diff-match-patch/1.0.5:
     resolution: {integrity: sha512-IayShXAgj/QMXgB0IWmKx+rOPuGMhqm5w6jvFxmVenXKIzRqTAAsbBPT3kWQeGANj3jGgvcvv4yK6SxqYmikgw==}
+    dev: false
+
+  /diff-sequences/25.2.6:
+    resolution: {integrity: sha512-Hq8o7+6GaZeoFjtpgvRBUknSXNeJiCx7V9Fr94ZMljNiCr9n9L8H8aJqgWOQiDDGdyn29fRNcDdRVJ5fdyihfg==}
+    engines: {node: '>= 8.3'}
     dev: false
 
   /diff/3.5.0:
@@ -4587,6 +4671,11 @@ packages:
     engines: {node: '>=4'}
     dev: false
 
+  /has-flag/4.0.0:
+    resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
+    engines: {node: '>=8'}
+    dev: false
+
   /has-gulplog/0.1.0:
     resolution: {integrity: sha1-ZBTIKRNpfaUVkDl9r7EvIpZ4Ec4=}
     engines: {node: '>= 0.10'}
@@ -5511,6 +5600,21 @@ packages:
       uglify-js: 2.8.29
       void-elements: 2.0.1
       with: 4.0.3
+    dev: false
+
+  /jest-diff/25.5.0:
+    resolution: {integrity: sha512-z1kygetuPiREYdNIumRpAHY6RXiGmp70YHptjdaxTWGmA085W3iCnXNx0DhflK3vwrKmrRWyY1wUpkPMVxMK7A==}
+    engines: {node: '>= 8.3'}
+    dependencies:
+      chalk: 3.0.0
+      diff-sequences: 25.2.6
+      jest-get-type: 25.2.6
+      pretty-format: 25.5.0
+    dev: false
+
+  /jest-get-type/25.2.6:
+    resolution: {integrity: sha512-DxjtyzOHjObRM+sM1knti6or+eOgcGU4xVSb2HNP1TqO4ahsT+rqZg+nyqHWJSvWgKC5cG3QjGFBqxLghiF/Ig==}
+    engines: {node: '>= 8.3'}
     dev: false
 
   /jquery/3.6.0:
@@ -6544,7 +6648,7 @@ packages:
       JSONStream: 1.3.5
       parents: 1.0.1
       readable-stream: 1.1.14
-      resolve: 1.1.7
+      resolve: 1.20.0
       stream-combiner2: 1.0.2
       subarg: 1.0.0
       through2: 1.1.1
@@ -7578,6 +7682,16 @@ packages:
   /prelude-ls/1.1.2:
     resolution: {integrity: sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=}
     engines: {node: '>= 0.8.0'}
+    dev: false
+
+  /pretty-format/25.5.0:
+    resolution: {integrity: sha512-kbo/kq2LQ/A/is0PQwsEHM7Ca6//bGPPvU6UnsdDRSKTWxT/ru/xb88v4BJf6a69H+uTytOEsTusT9ksd/1iWQ==}
+    engines: {node: '>= 8.3'}
+    dependencies:
+      '@jest/types': 25.5.0
+      ansi-regex: 5.0.1
+      ansi-styles: 4.3.0
+      react-is: 16.13.1
     dev: false
 
   /pretty-hrtime/1.0.3:
@@ -9290,6 +9404,13 @@ packages:
       has-flag: 3.0.0
     dev: false
 
+  /supports-color/7.2.0:
+    resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
+    engines: {node: '>=8'}
+    dependencies:
+      has-flag: 4.0.0
+    dev: false
+
   /sver-compat/1.5.0:
     resolution: {integrity: sha1-PPh9/rTQe0o/FIJ7wYaz/QxkXNg=}
     dependencies:
@@ -9664,6 +9785,12 @@ packages:
 
   /typedarray/0.0.6:
     resolution: {integrity: sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=}
+    dev: false
+
+  /typescript/4.4.4:
+    resolution: {integrity: sha512-DqGhF5IKoBl8WNf8C1gu8q0xZSInh9j1kJJMqT3a94w1JzVaBU4EXOSMrz9yDqMT0xt3selp83fuFMQ0uzv6qA==}
+    engines: {node: '>=4.2.0'}
+    hasBin: true
     dev: false
 
   /ua-parser-js/0.7.31:
@@ -10542,10 +10669,15 @@ packages:
     dev: false
 
   file:projects/bemuse-indexer.tgz:
-    resolution: {integrity: sha512-cZcn6icB1NghGEhLG/wwuWfQR21IquJPT48Qf7nlRTwAX0wKyNtpj4Q4IE3H/LBrejy3Mnmip+khUC4mp2XbeQ==, tarball: file:projects/bemuse-indexer.tgz}
+    resolution: {integrity: sha512-CNXDgvucbGG5l/f3b3lDtfoDHcx047yXoR6zJX0J0KWdqrao4xnZauiRTAm0LJP2MHP1ZY6FNtv3e46SzC1ciQ==, tarball: file:projects/bemuse-indexer.tgz}
     name: '@rush-temp/bemuse-indexer'
     version: 0.0.0
     dependencies:
+      '@types/bluebird': 3.5.36
+      '@types/chai': 4.2.22
+      '@types/invariant': 2.2.35
+      '@types/lodash': 4.14.176
+      '@types/mocha': 5.2.7
       '@types/object-assign': 4.0.30
       bluebird: 3.7.2
       chai: 4.3.4
@@ -10554,23 +10686,28 @@ packages:
       lodash: 4.17.21
       mocha: 5.2.0
       object-assign: 4.1.1
+      typescript: 4.4.4
     dev: false
 
   file:projects/bemuse-notechart.tgz:
-    resolution: {integrity: sha512-ggKUyBk6DL+OiXUN3OftGJevQ+dtwm9t5qZG9MPxNtBuadCFS3WKyG1a5j2dl8t6fPAbTWrerPwiM4zBiZdMiw==, tarball: file:projects/bemuse-notechart.tgz}
+    resolution: {integrity: sha512-xSQy3snBDuys1+alEWirNI8CBaR5+kOTOfkNjkO6G+4Q530kGdC0HlzsId3PG0kFM7OH4DKzjroEDILA+1JZ+Q==, tarball: file:projects/bemuse-notechart.tgz}
     name: '@rush-temp/bemuse-notechart'
     version: 0.0.0
     dependencies:
       '@types/bluebird': 3.5.36
       '@types/chai': 4.2.22
+      '@types/invariant': 2.2.35
+      '@types/lodash': 4.14.176
+      '@types/mocha': 5.2.7
       bluebird: 3.7.2
       chai: 4.3.4
       lodash: 4.17.21
       mocha: 5.2.0
+      typescript: 4.4.4
     dev: false
 
   file:projects/bemuse-tools.tgz:
-    resolution: {integrity: sha512-CVNklWulGVb70creXUg8nl5vsrrkCrBeJUIAA8F5X9sNEnkbbC8OCt0zdtqj04mf0h7GcOLI4eo816K5FA5EYg==, tarball: file:projects/bemuse-tools.tgz}
+    resolution: {integrity: sha512-PsQc5INQiHeQjeads+wDycUQKPXARBHqidI4eFDMYwvFM3X2ruDzRjLAwYyrgVvfGHaaFH9qZwcE0QcWDyeQ8Q==, tarball: file:projects/bemuse-tools.tgz}
     name: '@rush-temp/bemuse-tools'
     version: 0.0.0
     dependencies:
@@ -10594,16 +10731,19 @@ packages:
       rx: 2.5.3
       temp: 0.8.4
       throat: 1.0.0
+      typescript: 4.4.4
     dev: false
 
   file:projects/bemuse-types.tgz:
-    resolution: {integrity: sha512-PgSXkegI1FGiRwtDK5OOLzVodBDOQqCVfRCJtdz9HVVyLbmzp6UvhUuqJXdPrPrcbZdWXMIsz9pR6sb/a8a7ew==, tarball: file:projects/bemuse-types.tgz}
+    resolution: {integrity: sha512-v4sb8AxzWtZtRoIpMr4fYWEQGCVcZGsdFVMMUKaeNBHd9EnhyTytWtjzeS/G/j9VCOUvvMtYi0M5Pg+Gc/NtIw==, tarball: file:projects/bemuse-types.tgz}
     name: '@rush-temp/bemuse-types'
     version: 0.0.0
+    dependencies:
+      typescript: 4.4.4
     dev: false
 
   file:projects/bemuse.tgz:
-    resolution: {integrity: sha512-bzaIPR73iYlb9CQUulT9EzCed6oevfQSruaTEBtGxg4nbxIi1kcNok5XNt2F+k6DxOFDFu/9t3iukyxOYVe3wg==, tarball: file:projects/bemuse.tgz}
+    resolution: {integrity: sha512-LuqNTBRp506wyBfy62BZisqf4iAk8J2wN99RACYEKRlo508reIDPd2orzyuXyD6/q+yS4P8j2jVASKFeSzTeSw==, tarball: file:projects/bemuse.tgz}
     name: '@rush-temp/bemuse'
     version: 0.0.0
     dependencies:
@@ -10720,6 +10860,7 @@ packages:
       through2: 2.0.5
       timesynchro: 1.0.1
       transform-loader: 0.2.4
+      typescript: 4.4.4
       undertaker-forward-reference: 1.0.2
       updeep: 0.16.1
       url-loader: 1.1.2_webpack@4.46.0
@@ -10734,19 +10875,17 @@ packages:
       yn: 1.3.0
     transitivePeerDependencies:
       - bufferutil
-      - eslint
       - fibers
       - node-sass
       - react-native
       - supports-color
-      - typescript
       - utf-8-validate
       - webpack-cli
       - webpack-command
     dev: false
 
   file:projects/bms.tgz:
-    resolution: {integrity: sha512-RloRHtY8b+Z6DEHWPmy194vkmtqI/R4Ups8TM/umAizKCu3+sTkgRnC612tkgL3a3667SvfgxivMOftpfXWF2A==, tarball: file:projects/bms.tgz}
+    resolution: {integrity: sha512-w/PSh3tz4eTBfKAScq+3aKQ1t+IIfnElfEO124T/SkDC3N6At2TFoc9c5W715PZ6HRR97sKLWknCOR9ko5gQ6Q==, tarball: file:projects/bms.tgz}
     name: '@rush-temp/bms'
     version: 0.0.0
     dependencies:
@@ -10774,25 +10913,31 @@ packages:
       lodash.uniq: 4.5.0
       lodash.values: 4.3.0
       stack-chain: 1.3.7
+      typescript: 4.4.4
     dev: false
 
   file:projects/bmson.tgz:
-    resolution: {integrity: sha512-Or994BUeXJJAStJ81vo74o/QX6DRjK+/gdFxLJUq9rQ04L+K6h4ImtqaTUQ4BQfW+YagESVfk/HUtt9WKFV8Cw==, tarball: file:projects/bmson.tgz}
+    resolution: {integrity: sha512-7fhgthm6wZFU1SQVMaM8udevaKgEn57Da7TbgnwYUoOglXA6b+dh5NfLN2hMm3v7uZT51RcuRJz6w4QaP6IJuA==, tarball: file:projects/bmson.tgz}
     name: '@rush-temp/bmson'
     version: 0.0.0
     dependencies:
+      '@types/lodash': 4.14.176
       '@types/mocha': 5.2.7
       '@types/power-assert': 1.5.5
       gulp: 4.0.2
       lodash: 4.17.21
       mocha: 5.2.0
       power-assert: 1.6.1
+      typescript: 4.4.4
     dev: false
 
   file:projects/monetizer.tgz:
-    resolution: {integrity: sha512-2ix6dN5CRRGrlUXuTRGBIE8ktvvqeslMpXomPAnUTL09GBMlAblufT4wnZlNYEOWyud+lc7W+ppLsfohXZto8w==, tarball: file:projects/monetizer.tgz}
+    resolution: {integrity: sha512-/85RRk5l2l4kYZHFOZhzVT1kGo9Ap9hO6iRNVl/IIrXpkbwpKAiKY5fZ4Ss0puhXy76KGizQTfX9qKAn93QNIA==, tarball: file:projects/monetizer.tgz}
     name: '@rush-temp/monetizer'
     version: 0.0.0
+    dependencies:
+      '@types/jest': 25.2.3
+      typescript: 4.4.4
     dev: false
 
   github.com/dtinth/gulp-cucumber/687f16096f61729d8b11f65e266b95dcd8b8ef00:

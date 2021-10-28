@@ -96,7 +96,8 @@
     "webpack-dev-middleware": "^3.4.0",
     "webpack-dev-server": "^3.11.2",
     "worker-loader": "^2.0.0",
-    "yn": "^1.3.0"
+    "yn": "^1.3.0",
+    "typescript": "^4.4.3"
   },
   "dependencies": {
     "audio-context": "^1.0.3",

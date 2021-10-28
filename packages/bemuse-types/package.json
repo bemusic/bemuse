@@ -10,5 +10,8 @@
   "types": "./index.d.ts",
   "scripts": {
     "build": "true"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.3"
   }
 }

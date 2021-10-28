@@ -34,9 +34,15 @@
   },
   "devDependencies": {
     "@types/object-assign": "^4.0.30",
+    "@types/lodash": "^4.14.176",
+    "@types/bluebird": "^3.5.24",
+    "@types/invariant": "^2.2.30",
+    "@types/chai": "^4.2.0",
+    "@types/mocha": "^5.2.5",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "typescript": "^4.4.3"
   },
   "volta": {
     "extends": "../../package.json"

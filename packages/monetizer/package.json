@@ -28,5 +28,9 @@
   "homepage": "https://github.com/bemusic/bemuse/tree/master/packages/monetizer#readme",
   "volta": {
     "extends": "../../package.json"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.2.1",
+    "typescript": "^4.4.3"
   }
 }
