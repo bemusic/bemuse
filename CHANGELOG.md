@@ -26,6 +26,8 @@
 
 ### New stuff
 
+- **2 songs have been added to the Music Server.**
+
 - **Random songs of the day.** Bemuse will show a random selection of 3 songs on
   each day to help you discover more songs. [#725], by [@dtinth]
 
