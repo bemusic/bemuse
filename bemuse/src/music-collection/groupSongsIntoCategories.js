@@ -4,10 +4,6 @@ import { SongOfTheDay } from './SongOfTheDay'
 const grouping = [
   { title: 'Custom Song', criteria: (song) => song.custom },
   { title: 'Tutorial', criteria: (song) => song.tutorial },
-  {
-    title: 'Random Songs of the Day',
-    criteria: (song, context) => context.songOfTheDay.isSongOfTheDay(song.id),
-  },
   { title: 'Unreleased', criteria: (song) => song.unreleased },
   {
     title: 'Recently Added Songs',
@@ -15,6 +11,10 @@ const grouping = [
       song.added && Date.now() - Date.parse(song.added) < 60 * 86400000,
     sort: (song) => song.added,
     reverse: true,
+  },
+  {
+    title: 'Random Songs of the Day',
+    criteria: (song, context) => context.songOfTheDay.isSongOfTheDay(song.id),
   },
   { title: '☆', criteria: () => true },
 ]
