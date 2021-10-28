@@ -394,6 +394,10 @@
       "projectFolder": "bemuse"
     },
     {
+      "packageName": "bemuse-docs",
+      "projectFolder": "website"
+    },
+    {
       "packageName": "build-scripts",
       "projectFolder": "build-scripts"
     },
