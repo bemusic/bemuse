@@ -11,7 +11,7 @@
   "scripts": {
     "clean": "rimraf lib tsconfig.tsbuildinfo",
     "test": "nyc -r text -r lcov mocha -r ts-node/register 'src/**/*.spec.ts'",
-    "prepare": "tsc -b ."
+    "build": "tsc -b ."
   },
   "repository": {
     "type": "git",
