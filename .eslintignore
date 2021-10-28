@@ -4,4 +4,7 @@
 **/dist/**/*
 **/build/**/*
 **/coverage/**/*
+**/common/scripts/**/*
+**/temp/**/*
+**/tmp/**/*
 **/.yarn/**/*

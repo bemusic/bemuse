@@ -36,7 +36,6 @@
     "@types/react-dom": "16",
     "@types/webpack-env": "^1.14.0",
     "@types/wicg-file-system-access": "^2020.9.4",
-    "@typescript-eslint/parser": "^4.33.0",
     "autoprefixer": "^9.1.5",
     "body-parser": "^1.18.3",
     "brfs": "^1.6.1",

@@ -17,6 +17,13 @@
       "summary": "Format source code.",
       "shellCommand": "pretty-quick --staged",
       "autoinstallerName": "bemuse-linter"
+    },
+    {
+      "name": "lint",
+      "commandKind": "global",
+      "summary": "Lint source code.",
+      "shellCommand": "eslint --ext .js,.jsx,.ts,.tsx .",
+      "autoinstallerName": "bemuse-linter"
     }
     // {
     //   /**
