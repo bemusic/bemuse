@@ -28,7 +28,8 @@
   "dependencies": {
     "bms": "^50.0.0",
     "bmson": "^50.0.0",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "invariant": "^2.2.4"
   },
   "peerDependencies": {
     "bluebird": "^3.5.1"

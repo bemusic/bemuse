@@ -394,6 +394,10 @@
       "projectFolder": "bemuse"
     },
     {
+      "packageName": "build-scripts",
+      "projectFolder": "build-scripts"
+    },
+    {
       "packageName": "bemuse-indexer",
       "projectFolder": "packages/bemuse-indexer",
       "shouldPublish": true
