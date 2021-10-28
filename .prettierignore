@@ -1,4 +1,5 @@
 **/node_modules/**/*
+**/public/**/*
 **/vendor/**/*
 **/lib/**/*
 **/dist/**/*
@@ -6,10 +7,12 @@
 **/coverage/**/*
 **/.nyc_output/**/*
 **/.yarn/**/*
-common/changes/
-common/scripts/
-common/config/
+common/changes/**/*
+common/temp/**/*
+common/scripts/**/*
+common/config/**/*
 pnpm-lock.yaml
 yarn.lock
 package-lock.json
 shrinkwrap.json
+**/*.md

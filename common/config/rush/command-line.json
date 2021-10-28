@@ -19,10 +19,31 @@
       "autoinstallerName": "bemuse-linter"
     },
     {
+      "name": "check-format",
+      "commandKind": "global",
+      "summary": "Checks if source code is properly formatted.",
+      "shellCommand": "prettier --check .",
+      "autoinstallerName": "bemuse-linter"
+    },
+    {
       "name": "lint",
       "commandKind": "global",
       "summary": "Lint source code.",
       "shellCommand": "eslint --ext .js,.jsx,.ts,.tsx .",
+      "autoinstallerName": "bemuse-linter"
+    },
+    {
+      "name": "danger-ci",
+      "commandKind": "global",
+      "summary": "Run Danger on CI.",
+      "shellCommand": "danger ci",
+      "autoinstallerName": "bemuse-linter"
+    },
+    {
+      "name": "danger-local",
+      "commandKind": "global",
+      "summary": "Run Danger locally.",
+      "shellCommand": "danger local",
       "autoinstallerName": "bemuse-linter"
     }
     // {
