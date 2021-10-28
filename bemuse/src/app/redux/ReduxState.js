@@ -145,9 +145,17 @@ export const { selectGroups, selectSongs } = (() => {
     selectSearchText,
     (songList, searchText) => filterSongs(songList, searchText)
   )
+  const selectSongOfTheDayEnabled = createSelector(
+    selectCurrentCollectionValue,
+    (collectionData) => collectionData && collectionData.songOfTheDayEnabled
+  )
   const selectGroups = createSelector(
     selectFilteredSongList,
-    groupSongsIntoCategories
+    selectSongOfTheDayEnabled,
+    (songs, songOfTheDayEnabled) =>
+      groupSongsIntoCategories(songs, {
+        songOfTheDayEnabled,
+      })
   )
   const selectSongs = createSelector(selectGroups, (groups) =>
     _(groups).map('songs').flatten().value()
