@@ -1,18 +1,11 @@
 #!/bin/bash
 set -e
 
-# Install Yarn
-curl -o- -L https://yarnpkg.com/install.sh | bash
-
-# Install Lerna
-npm i -g lerna
-
-# Make Yarn available
-export PATH=~/.yarn/bin:"$PATH"
+# Install Rush
+npm install --global @microsoft/rush
 
 # Bootstrap project
-lerna bootstrap
-lerna run prepare
+rush install
 
 # Build it
 node build-scripts build

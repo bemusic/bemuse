@@ -110,24 +110,26 @@ It is recommended to play this game on Google Chrome.
 
 ## Development
 
-Install [Node.js](https://nodejs.org/en/) and
-[Yarn](https://github.com/yarnpkg).
+Install [Node.js](https://nodejs.org/en/)
 
 ```
+# Install Rush
+npm install --global @microsoft/rush
+
 # Clone Bemuse
-git clone git@github.com:bemusic/bemuse.git
+git clone https://github.com/bemusic/bemuse.git
 
 # Enter the main repository
 cd bemuse
 
 # Install the dependencies
-yarn
+rush update
 
 # Prepare all sub-projects
-yarn lerna run prepare
+rush build --to-except bemuse
 
 # Start development server
-yarn start
+rush dev
 ```
 
 Note: Online ranking features are not available.

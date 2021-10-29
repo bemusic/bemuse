@@ -12,5 +12,8 @@
   },
   "volta": {
     "extends": "../package.json"
+  },
+  "scripts": {
+    "build": "true"
   }
 }

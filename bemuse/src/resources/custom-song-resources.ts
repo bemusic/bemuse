@@ -49,7 +49,7 @@ export class CustomSongResources implements ICustomSongResources {
     })
   }
   get fileList(): Promise<string[]> {
-    return Promise.resolve(this._files).map((f) => f.name)
+    return Promise.resolve(this._files).then((a) => a.map((f) => f.name))
   }
 }
 
