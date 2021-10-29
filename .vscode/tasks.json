@@ -7,6 +7,9 @@
       "label": "Run Bemuse development server",
       "type": "npm",
       "script": "start",
+      "options": {
+        "cwd": "${workspaceFolder}/bemuse"
+      },
       "group": {
         "kind": "build",
         "isDefault": true

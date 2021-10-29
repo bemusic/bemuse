@@ -52,6 +52,12 @@
       "summary": "Run test.",
       "enableParallelism": true,
       "allowWarningsInSuccessfulBuild": true
+    },
+    {
+      "name": "dev",
+      "commandKind": "global",
+      "summary": "Run development server.",
+      "shellCommand": "cd bemuse && npm start"
     }
     // {
     //   /**
