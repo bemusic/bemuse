@@ -391,6 +391,10 @@
       "projectFolder": "website"
     },
     {
+      "packageName": "bemuse-e2e",
+      "projectFolder": "e2e"
+    },
+    {
       "packageName": "build-scripts",
       "projectFolder": "build-scripts"
     },

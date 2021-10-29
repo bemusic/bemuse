@@ -11,7 +11,8 @@ jobs:
       - add_ssh_keys
       - run:
           name: install deps
-          command: node common/scripts/install-run-rush.js install
+          command: |
+            node common/scripts/install-run-rush.js install --to bemuse --to bemuse-docs
       - run:
           name: build
           command: |
@@ -19,7 +20,8 @@ jobs:
             node build-scripts build
       - run:
           name: checks
-          command: yarn pre-deploy
+          command: |
+            node build-scripts pre-deploy
       - run:
           name: deploy
           command: |
@@ -36,8 +38,6 @@ jobs:
           root: .
           paths:
             - dist
-            - node_modules
-            - e2e/node_modules
   e2e:
     working_directory: ~/bemuse
     environment:
@@ -49,6 +49,10 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
+      - run:
+          name: install deps
+          command: |
+            node common/scripts/install-run-rush.js install --to bemuse-e2e
       - run:
           name: Install HTTP server
           command: |
@@ -63,7 +67,7 @@ jobs:
           command: |
             cd e2e
             mkdir -p "$SCREENSHOT_DIR"
-            env BEMUSE_PORT=8089 yarn prescript tests/Gameplay-test.js
+            env BEMUSE_PORT=8089 npx prescript tests/Gameplay-test.js
           no_output_timeout: 1m
       - store_artifacts:
           path: /tmp/bemuse-e2e-screenshot

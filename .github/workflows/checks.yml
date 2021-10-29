@@ -41,7 +41,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Deps
-        run: node common/scripts/install-run-rush.js install
+        run: node common/scripts/install-run-rush.js install --to bemuse
       - name: Build
         run: node common/scripts/install-run-rush.js build --to-except bemuse
       - name: Test
@@ -59,7 +59,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Deps
-        run: node common/scripts/install-run-rush.js install
+        run: node common/scripts/install-run-rush.js install --to-except bemuse
       - name: Build
         run: node common/scripts/install-run-rush.js build --to-except bemuse
       - name: Test Packages
