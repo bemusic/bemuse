@@ -48,8 +48,8 @@ Upon releasing a new version, it will automatically be deployed to production.
 
 ## Publishing npm packages
 
-Right now this is done manually using this command after releasing the new version:
+Right now this is done manually using this command:
 
 ```
-yarn lerna publish from-git
+rush publish --apply --target-branch master --publish --npm-auth-token $NPM_TOKEN
 ```
