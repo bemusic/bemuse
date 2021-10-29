@@ -19,6 +19,13 @@
       "autoinstallerName": "bemuse-linter"
     },
     {
+      "name": "format-readme",
+      "commandKind": "global",
+      "summary": "Format readme file.",
+      "shellCommand": "markdown-toc -i README.md && prettier --write README.md",
+      "autoinstallerName": "bemuse-linter"
+    },
+    {
       "name": "check-format",
       "commandKind": "global",
       "summary": "Checks if source code is properly formatted.",

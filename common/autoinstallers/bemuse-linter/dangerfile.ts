@@ -69,7 +69,7 @@ filesToCheck.forEach((filePath) => {
 })
 if (prettierFailed) {
   message(
-    'You can run `yarn style:fix` to automatically format all files using Prettier.'
+    'You can run `rush format` to automatically format all files using Prettier.'
   )
 }
 
@@ -80,6 +80,6 @@ const formattedReadme = format(insert(readme, {}), {
 })
 if (formattedReadme !== readme) {
   fail(
-    'Please format the README and update its table of contents using `yarn readme:update`.'
+    'Please format the README and update its table of contents using `rush format-readme`.'
   )
 }
