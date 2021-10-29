@@ -1,25 +1,4 @@
 version: 2
-references:
-  restore_node_modules_cache: &restore_node_modules_cache
-    restore_cache:
-      keys:
-        - deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
-        - deps-{{ .Branch }}-
-        - deps-
-  bootstrap: &bootstrap
-    run:
-      name: lerna bootstrap
-      command: lerna bootstrap && lerna run prepare
-  save_node_modules_cache: &save_node_modules_cache
-    save_cache:
-      key: deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
-      paths:
-        - ./node_modules
-        - ./packages/bemuse-indexer/node_modules
-        - ./packages/bemuse-notechart/node_modules
-        - ./packages/bemuse-tools/node_modules
-        - ./packages/bms/node_modules
-        - ./packages/bmson/node_modules
 jobs:
   build:
     working_directory: ~/bemuse
@@ -28,12 +7,11 @@ jobs:
     docker:
       - image: circleci/node:16.3.0-browsers
     steps:
-      - run: sudo npm i -g lerna
       - checkout
       - add_ssh_keys
-      - *restore_node_modules_cache
-      - *bootstrap
-      - *save_node_modules_cache
+      - run:
+          name: install deps
+          command: node common/scripts/install-run-rush.js install
       - run:
           name: build
           command: |
