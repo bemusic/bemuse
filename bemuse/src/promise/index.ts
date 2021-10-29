@@ -1,5 +1,8 @@
 import Bluebird from 'bluebird'
 
+// Disabled for purely historical reasons.
+/* eslint no-extend-native: off */
+
 function wrapBluebirdInstanceMethod<K extends keyof Bluebird<any>>(
   methodName: K
 ) {
