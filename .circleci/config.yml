@@ -5,7 +5,7 @@ jobs:
     environment:
       FORCE_COLOR: '1'
     docker:
-      - image: circleci/node:16.3.0-browsers
+      - image: circleci/node:16.13.0-browsers
     steps:
       - checkout
       - add_ssh_keys
@@ -44,7 +44,7 @@ jobs:
       FORCE_COLOR: '1'
       SCREENSHOT_DIR: /tmp/bemuse-e2e-screenshot
     docker:
-      - image: circleci/node:16.3.0-browsers
+      - image: circleci/node:16.13.0-browsers
     steps:
       - checkout
       - attach_workspace:
