@@ -16,7 +16,9 @@ yargs
     {},
     async () => {
       process.env.NODE_ENV = 'production'
-      await run('rush build --to bemuse --to bemuse-docs')
+      await run(
+        'node common/scripts/install-run-rush.js build --to bemuse --to bemuse-docs'
+      )
       await run('node build-scripts build:dist')
     }
   )
