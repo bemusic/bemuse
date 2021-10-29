@@ -54,6 +54,7 @@ gulp.task('bmspec:update', async function () {
     console.log('* Updating bmspec...')
     childProcess.execSync(`git pull`, {
       stdio: 'inherit',
+      cwd: 'bmspec',
     })
   }
 })

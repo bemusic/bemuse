@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "clean": "rimraf lib tsconfig.tsbuildinfo",
-    "prepare": "tsc -b .",
+    "build": "tsc -b .",
     "test": "jest"
   },
   "keywords": [
@@ -28,5 +28,11 @@
   "homepage": "https://github.com/bemusic/bemuse/tree/master/packages/monetizer#readme",
   "volta": {
     "extends": "../../package.json"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.2.1",
+    "typescript": "^4.4.3",
+    "jest": "^27.2.4",
+    "ts-jest": "^27.0.5"
   }
 }

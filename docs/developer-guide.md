@@ -22,8 +22,7 @@ You can launch a workspace by going to the below link:
 ### Windows, macOS and Linux
 
 - [Git](http://git-scm.com/)
-- [Node.js](http://nodejs.org/) (v16.3.0+)
-- [Yarn](https://yarnpkg.com/)
+- [Node.js](http://nodejs.org/) (v16.13.0+)
 - Text Editor with [EditorConfig](http://editorconfig.org/) &
   [Prettier](https://prettier.io/) support. (We recommend
   [Visual Studio Code](https://code.visualstudio.com/))
@@ -44,14 +43,15 @@ git version 2.17.0
 
 ```sh-session
 $ node -v
-v16.3.0
+v16.13.0
 ```
 
-**Yarn**: You should see the version number:
+### Install Rush
+
+We use [Rush](https://rushjs.io/) to manage the dependencies of this project, so we first need to install it.
 
 ```sh-session
-$ yarn -v
-1.22.10
+$ npm install -g @microsoft/rush
 ```
 
 ### Setting Up the Project
@@ -66,7 +66,7 @@ $ cd Bemuse
 Then, clone the Bemuse repository:
 
 ```bash
-$ git clone git@github.com:bemusic/bemuse.git
+$ git clone https://github.com/bemusic/bemuse.git
 ```
 
 After these repository has been cloned, `cd` into the Bemuse repository:
@@ -75,16 +75,16 @@ After these repository has been cloned, `cd` into the Bemuse repository:
 $ cd bemuse
 ```
 
-Install the project's dependencies. Note that we use Yarn, not npm:
+Install the project's dependencies using Rush:
 
 ```sh-session
-$ yarn
+$ rush update
 ```
 
-Before running the development server, you will have to compile all subprojects:
+Before running the development server, you will have to compile the subprojects that Bemuse depends on:
 
 ```sh-session
-$ yarn lerna run prepare
+$ rush build --to-except bemuse
 ```
 
 ## Running Bemuse
@@ -93,57 +93,26 @@ After everything is installed and all subprojects have been compiled, you can
 start the development server:
 
 ```sh-session
-$ yarn start
+$ rush dev
 ```
 
 The game should be accessible at `http://localhost:8080/`.
 
 To run unit tests, go to `http://localhost:8080/?mode=test`.
 
-### Coverage Mode
-
-We measure the code coverage to make sure that most part of our code is covered
-by some tests. This helps us be more confident in modifying our code.
-
-To turn on the coverage mode, start the server with the `BEMUSE_COV` environment
-variable set to `true`:
-
-```sh-session
-$ yarn cross-env BEMUSE_COV=true npm start
-```
-
-Then run the unit tests. After the unit tests are run, the coverage report will
-be generated. They can be viewed at `http://localhost:8080/coverage/`.
-
 ## Building Bemuse
 
 To build the source code into a static web application, run:
 
 ```sh-session
-$ yarn build
+$ node build-scripts build
 ```
 
-The built files will reside in the `build` directory.
-
-## Running Tests from Command Line
-
-You can run tests from the command line by running:
-
-```sh-session
-$ yarn test
-```
-
-This will effectively
-
-1.  build Bemuse with coverage mode turned on,
-2.  start a web server,
-3.  start a web browser and navigate to the test page, effectively running the
-    tests,
-4.  collect the results and code coverage and write reports.
+The built files will reside in the `dist` directory.
 
 ## Working on the project website
 
 ```sh-session
 $ cd website
-$ yarn start
+$ npm start
 ```

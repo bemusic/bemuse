@@ -7,5 +7,12 @@
   "files": [
     "index.d.ts"
   ],
-  "types": "./index.d.ts"
+  "types": "./index.d.ts",
+  "scripts": {
+    "build": "true",
+    "test": "tsc --noEmit index.d.ts"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.3"
+  }
 }
