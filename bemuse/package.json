@@ -28,7 +28,6 @@
   "license": "AGPL-1.0",
   "devDependencies": {
     "@types/bluebird": "3",
-    "@types/bluebird-global": "3",
     "@types/chai": "^4.2.0",
     "@types/eslint": "^4.16.4",
     "@types/invariant": "^2.2.30",

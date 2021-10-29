@@ -81,5 +81,8 @@
     "updeep",
     "workspaces"
   ],
-  "eslint.enable": true
+  "eslint.enable": true,
+  "search.exclude": {
+    "**/.yarn": true
+  }
 }
