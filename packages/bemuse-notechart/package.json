@@ -1,6 +1,6 @@
 {
   "name": "bemuse-notechart",
-  "version": "50.0.0",
+  "version": "50.0.1",
   "description": "Bemuse notechart data structure, supports BMS and bmsons.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -26,8 +26,8 @@
     "typescript": "^4.4.3"
   },
   "dependencies": {
-    "bms": "^50.0.0",
-    "bmson": "^50.0.0",
+    "bms": "^50.0.1",
+    "bmson": "^50.0.1",
     "lodash": "^4.17.11",
     "invariant": "^2.2.4"
   },

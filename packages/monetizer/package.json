@@ -1,6 +1,6 @@
 {
   "name": "monetizer",
-  "version": "50.0.0",
+  "version": "50.0.1",
   "description": "Web Monetization API for JavaScript",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
