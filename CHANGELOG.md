@@ -22,6 +22,15 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## v50.1.1-pre.202110291915
+
+### Internals
+
+- Changed the monorepo manager from Yarn+Lerna to Rush+pnpm. [#730], by
+  [@dtinth]
+
+[#730]: https://github.com/bemusic/bemuse/pull/730
+
 ## v50.1 (2021-10-28)
 
 ### New stuff
