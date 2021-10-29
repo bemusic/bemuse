@@ -97,7 +97,9 @@ yargs
     'Prints the version of the upcoming release',
     {},
     async () => {
-      const { version } = JSON.parse(fs.readFileSync('package.json', 'utf8'))
+      const { version } = JSON.parse(
+        fs.readFileSync('bemuse/package.json', 'utf8')
+      )
       console.log(version.replace(/-.*/, ''))
     }
   )
