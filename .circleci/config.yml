@@ -12,7 +12,7 @@ jobs:
       - run:
           name: install deps
           command: |
-            node common/scripts/install-run-rush.js install --to bemuse --to bemuse-docs
+            node common/scripts/install-run-rush.js install
       - run:
           name: build
           command: |
@@ -52,7 +52,7 @@ jobs:
       - run:
           name: install deps
           command: |
-            node common/scripts/install-run-rush.js install --to bemuse-e2e
+            node common/scripts/install-run-rush.js install
       - run:
           name: Install HTTP server
           command: |
