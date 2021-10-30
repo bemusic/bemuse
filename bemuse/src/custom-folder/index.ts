@@ -310,7 +310,7 @@ async function removeFolders(
       const statusPrefix = `Folder “${pathStr}” (${remaining} remaining)`
       setStatus(statusPrefix)
 
-      remainingSongs = state.songs?.filter((song) => {
+      remainingSongs = remainingSongs.filter((song) => {
         return !song.path.includes(pathStr)
       })
 
