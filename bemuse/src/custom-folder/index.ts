@@ -295,7 +295,7 @@ async function removeFolders(
   const { log, setStatus } = io
 
   if ((state.foldersToRemove?.length ?? 0) > 0) {
-    let remainingSongs
+    let remainingSongs = state.songs || []
     const foldersToRemove = [...state.foldersToRemove!]
     const n = foldersToRemove.length
     const removedPathSet = new Set<string>()
