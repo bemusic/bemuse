@@ -78,7 +78,7 @@ yargs
     ).trim()
     await run(`git commit -a -m ':bookmark: v${version}' || true`)
     await run(`git tag "v${version}"`)
-    await run(`git push --follow-tags`)
+    await run(`git push --follow-tags --set-upstream origin master`)
   })
   .command(
     'release:changelog',
