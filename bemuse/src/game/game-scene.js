@@ -17,6 +17,13 @@ function showCanvas(display, container) {
   var { view, wrapper } = display
   var { width, height } = view
   container.appendChild(wrapper)
+  container.addEventListener('touchstart', disableContextMenu)
+  function disableContextMenu() {
+    container.removeEventListener('touchstart', disableContextMenu)
+    container.addEventListener('contextmenu', e => {
+      e.preventDefault()
+    })
+  }
 
   resize()
   $(window).on('resize', resize)
