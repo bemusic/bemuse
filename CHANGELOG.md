@@ -22,7 +22,7 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
-## v50.1.1-pre.202110291915
+## v50.1.1 (2021-10-30)
 
 ### Internals
 
