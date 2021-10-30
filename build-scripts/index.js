@@ -76,6 +76,9 @@ yargs
     const version = (
       await exec('node build-scripts release:get-next-version')
     ).trim()
+    await exec(
+      `node build-scripts release:write-version --newVersion '${version}'`
+    )
     await run(`git commit -a -m ':bookmark: v${version}' || true`)
     await run(`git tag "v${version}"`)
     await run(`git push --follow-tags --set-upstream origin master`)
@@ -102,6 +105,19 @@ yargs
         fs.readFileSync('bemuse/package.json', 'utf8')
       )
       console.log(version.replace(/-.*/, ''))
+    }
+  )
+  .command(
+    'release:write-version',
+    'Sets the version of Bemuse project',
+    { newVersion: { type: 'string', demand: true } },
+    async (args) => {
+      const contents = fs.readFileSync('bemuse/package.json', 'utf8')
+      const newContents = contents.replace(
+        /"version":\s*"([^"]+)"/,
+        `"version": "${args.newVersion}"`
+      )
+      fs.writeFileSync('bemuse/package.json', newContents, 'utf8')
     }
   )
   .command(
