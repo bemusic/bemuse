@@ -10,6 +10,15 @@ export function getMusicServer() {
 }
 
 /**
+ * The `?volume` flag specifies the sound volume.
+ *
+ * @see https://bemuse.ninja/project/docs/music-server.html
+ */
+export function getSoundVolume() {
+  return +query.volume || 1
+}
+
+/**
  * The `?archive` flag specifies a URL to a BMS archive file to be downloaded when the player enters the game.
  *
  * @see https://github.com/bemusic/bemuse/pull/568

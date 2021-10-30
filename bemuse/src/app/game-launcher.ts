@@ -19,6 +19,7 @@ import createAutoVelocity from './interactors/createAutoVelocity'
 import { StoredOptions } from './types'
 import GenericErrorScene from './ui/GenericErrorScene'
 import ResultScene from './ui/ResultScene'
+import { getSoundVolume } from './query-flags'
 
 const Log = BemuseLogger.forModule('game-launcher')
 
@@ -282,7 +283,10 @@ const DEFAULT_REPLAYGAIN = -12.2 // dB
 
 function getVolume(song: Song) {
   const gain = replayGainFor(song)
-  return Math.pow(10, ((gain == null ? DEFAULT_REPLAYGAIN : gain) + 8) / 20)
+  return (
+    Math.pow(10, ((gain == null ? DEFAULT_REPLAYGAIN : gain) + 4) / 20) *
+    getSoundVolume()
+  )
 }
 
 function replayGainFor(song: Song) {

@@ -1,6 +1,6 @@
 {
   "name": "bemuse",
-  "version": "50.1.1",
+  "version": "51.2.0-pre.202110301544",
   "description": "BEAT☆MUSIC☆SEQUENCE, a web-based music game of the future",
   "private": true,
   "browserslist": [
@@ -181,6 +181,6 @@
     ]
   },
   "volta": {
-    "extends": "../package.json"
+    "extends": "../volta.json"
   }
 }

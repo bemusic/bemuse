@@ -102,6 +102,10 @@ async function scanIteration(
   if ((state?.foldersToUpdate?.length ?? 0) > 0) {
     return updateFolders(state, handle, io)
   }
+
+  if ((state?.foldersToRemove?.length ?? 0) > 0) {
+    return removeFolders(state, handle, io)
+  }
 }
 
 async function checkFolderStateAndPermissions(
@@ -277,6 +281,50 @@ async function updateFolders(
         ...state,
         foldersToUpdate: newFoldersToUpdate,
         songs: newSongs,
+      },
+      moreIterationsNeeded: true,
+    }
+  }
+}
+
+async function removeFolders(
+  state: CustomFolderState,
+  handle: FileSystemDirectoryHandle,
+  io: CustomFolderScanIO
+): Promise<ScanIterationResult | undefined> {
+  const { log, setStatus } = io
+
+  if ((state.foldersToRemove?.length ?? 0) > 0) {
+    let remainingSongs = state.songs || []
+    const foldersToRemove = [...state.foldersToRemove!]
+    const n = foldersToRemove.length
+    const removedPathSet = new Set<string>()
+    const deadline = Date.now() + 5000
+
+    for (const [i, folder] of foldersToRemove.entries()) {
+      removedPathSet.add(JSON.stringify(folder.path))
+
+      const pathStr = formatPath(folder.path)
+      const remaining = n - i
+      log(`Removing folder “${pathStr}” (${remaining} remaining)`)
+      const statusPrefix = `Folder “${pathStr}” (${remaining} remaining)`
+      setStatus(statusPrefix)
+
+      remainingSongs = remainingSongs.filter((song) => {
+        return !song.path.includes(pathStr)
+      })
+
+      if (Date.now() > deadline) break
+    }
+
+    const newFoldersToRemove = foldersToRemove.filter(
+      (folder) => !removedPathSet.has(JSON.stringify(folder.path))
+    )
+    return {
+      nextState: {
+        ...state,
+        foldersToRemove: newFoldersToRemove,
+        songs: remainingSongs,
       },
       moreIterationsNeeded: true,
     }
