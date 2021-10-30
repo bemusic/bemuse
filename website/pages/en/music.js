@@ -68,6 +68,18 @@ const content = `
 
 <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
 <script>
+  const artistAliases = {
+    'BEMUSE SOUND TEAM': 'flicknote',
+    'flicknote vs Dekdekbaloo feat. MindaRyn': 'flicknote',
+    'Larimar': 'Dachs',
+    'Ｎｅｇｏ＿ｔｉａｔｏｒ/映像：Fiz': 'Nego_tiator',
+    'Ym1024 feat. lamie*': 'Ym1024',
+  }
+  const artistSortKeys = {
+    'ああああ': 'aaaa',
+    'すてらべえ': 'stellabee',
+    '葵': 'aoi',
+  }
   new Vue({
     el: '#artists',
     data: {
@@ -86,10 +98,11 @@ const content = `
         const result = [ ]
         const map = { }
         for (const song of this.songs) {
-          const artistName = song.alias_of || song.artist
+          const artistName = song.alias_of || artistAliases[song.artist] || song.artist
           if (!map[artistName]) {
             map[artistName] = {
               name: artistName,
+              sortKey: (artistSortKeys[artistName] || artistName).toLowerCase(),
               url: song.artist_url,
               songs: [ ]
             }
@@ -97,11 +110,13 @@ const content = `
           }
           map[artistName].songs.push(song)
         }
-        return result
+        return result.sort((a, b) => {
+          return a.sortKey < b.sortKey ? -1 : 1
+        })
       }
     },
     created () {
-      fetch('https://music.bemuse.ninja/live/index.json')
+      fetch('https://music4.bemuse.ninja/server/index.json')
         .then(r => {
           if (r.ok) {
             return r.json()
