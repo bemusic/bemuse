@@ -35,6 +35,6 @@
     "bluebird": "^3.5.1"
   },
   "volta": {
-    "extends": "../../package.json"
+    "extends": "../../volta.json"
   }
 }
