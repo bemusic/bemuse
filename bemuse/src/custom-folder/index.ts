@@ -310,9 +310,9 @@ async function removeFolders(
       const statusPrefix = `Folder “${pathStr}” (${remaining} remaining)`
       setStatus(statusPrefix)
 
-      remainingSongs = state.songs?.filter(song => {
+      remainingSongs = state.songs?.filter((song) => {
         return !song.path.includes(pathStr)
-      });
+      })
 
       if (Date.now() > deadline) break
     }
