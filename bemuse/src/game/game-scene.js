@@ -20,7 +20,7 @@ function showCanvas(display, container) {
   container.addEventListener('touchstart', disableContextMenu)
   function disableContextMenu() {
     container.removeEventListener('touchstart', disableContextMenu)
-    container.addEventListener('contextmenu', e => {
+    container.addEventListener('contextmenu', (e) => {
       e.preventDefault()
     })
   }
