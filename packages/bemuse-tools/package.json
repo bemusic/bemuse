@@ -1,6 +1,6 @@
 {
   "name": "bemuse-tools",
-  "version": "50.0.0",
+  "version": "50.0.1",
   "description": "bemuse-tools: Tools for Bemuse",
   "files": [
     "src",
@@ -10,7 +10,7 @@
   "scripts": {
     "clean": "rimraf lib tsconfig.tsbuildinfo",
     "test": "nyc -r text -r lcov mocha -r ts-node/register/transpile-only spec/*_spec.js",
-    "prepare": "tsc -b ."
+    "build": "tsc -b ."
   },
   "bin": {
     "bemuse-tools": "./bin/bemuse-tools"
@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/bemusic/bemuse-tools",
   "dependencies": {
-    "bemuse-indexer": "^50.0.0",
+    "bemuse-indexer": "^50.0.1",
     "bluebird": "^3.5.2",
     "bytes": "^3.0.0",
     "chalk": "^2.4.1",
@@ -48,9 +48,10 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "typescript": "^4.4.3"
   },
   "volta": {
-    "extends": "../../package.json"
+    "extends": "../../volta.json"
   }
 }

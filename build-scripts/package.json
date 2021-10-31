@@ -11,6 +11,9 @@
     "yargs": "^15.3.1"
   },
   "volta": {
-    "extends": "../package.json"
+    "extends": "../volta.json"
+  },
+  "scripts": {
+    "build": "true"
   }
 }

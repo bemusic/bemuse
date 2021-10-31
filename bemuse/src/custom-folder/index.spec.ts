@@ -72,7 +72,7 @@ it('can scan for new songs', async () => {
   })
 })
 
-xit('detects deleted folders', async () => {
+it('detects deleted folders', async () => {
   const folder: MockFolder = { song1, song2 }
   const tester = new CustomFolderTestHarness()
   await tester.setFolder(folder)

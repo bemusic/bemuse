@@ -16,8 +16,9 @@ yargs
     {},
     async () => {
       process.env.NODE_ENV = 'production'
-      await run('yarn workspace bemuse build')
-      await run('yarn workspace bemuse-docs build')
+      await run(
+        'node common/scripts/install-run-rush.js build --to bemuse --to bemuse-docs'
+      )
       await run('node build-scripts build:dist')
     }
   )
@@ -72,11 +73,15 @@ yargs
     await run('git branch -d master || true')
     await run('git checkout -b master')
     await run('node build-scripts release:changelog')
-    await run(
-      "git commit -a -m 'Remove prerelease version suffixes from CHANGELOG.md' || true"
+    const version = (
+      await exec('node build-scripts release:get-next-version')
+    ).trim()
+    await exec(
+      `node build-scripts release:write-version --newVersion '${version}'`
     )
-    const version = await exec('node build-scripts release:get-next-version')
-    await run(`yarn lerna version "${version}"`)
+    await run(`git commit -a -m ':bookmark: v${version}' || true`)
+    await run(`git tag "v${version}"`)
+    await run(`git push --follow-tags --set-upstream origin master`)
   })
   .command(
     'release:changelog',
@@ -96,8 +101,23 @@ yargs
     'Prints the version of the upcoming release',
     {},
     async () => {
-      const { version } = JSON.parse(fs.readFileSync('package.json', 'utf8'))
+      const { version } = JSON.parse(
+        fs.readFileSync('bemuse/package.json', 'utf8')
+      )
       console.log(version.replace(/-.*/, ''))
+    }
+  )
+  .command(
+    'release:write-version',
+    'Sets the version of Bemuse project',
+    { newVersion: { type: 'string', demand: true } },
+    async (args) => {
+      const contents = fs.readFileSync('bemuse/package.json', 'utf8')
+      const newContents = contents.replace(
+        /"version":\s*"([^"]+)"/,
+        `"version": "${args.newVersion}"`
+      )
+      fs.writeFileSync('bemuse/package.json', newContents, 'utf8')
     }
   )
   .command(

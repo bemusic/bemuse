@@ -1,0 +1,17 @@
+{
+  "name": "monetizer",
+  "entries": [
+    {
+      "version": "50.0.1",
+      "tag": "monetizer_v50.0.1",
+      "date": "Fri, 29 Oct 2021 19:57:09 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Added missing dependencies and updated versioning policy -- starting at v50 this package is now versioned independently of Bemuse"
+          }
+        ]
+      }
+    }
+  ]
+}

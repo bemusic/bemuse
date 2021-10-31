@@ -18,9 +18,74 @@
 [@tsfreddie]: https://github.com/TsFreddie
 [@vishal5251]: https://github.com/vishal5251
 [@vtno]: https://github.com/vtno
+[@fresult]: https://github.com/fResult
 [@aj-ya]: https://github.com/aj-ya
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
+
+## v51.2 (2021-10-30)
+
+### Internals
+
+- Detect song folder removals when rescanning the
+  [custom songs folder](https://github.com/bemusic/bemuse/discussions/696).
+  [#734], by [@fResult]
+- Updated build tooling to generate more modern code for better performance and
+  easier debugging. [#736], by [@dtinth]
+
+### Improvements
+
+- **Reduced sound volume by 4dB** to prevent sound distortion in Windows. If the
+  game sounds quieter, please increase your sound volume. [#735], by [@dtinth]
+- Fixed a problem on Microsoft Surface devices where holding a note (in
+  Microsoft Edge) or triggering 2 simultaneous notes (in Google Chrome)
+  [triggers a context menu](https://github.com/bemusic/bemuse/pull/737). [#737],
+  by [@dtinth]
+- The [artists showcase](https://bemuse.ninja/project/music.html) has been
+  updated to reflect the latest song list. [#738], by [@dtinth]
+
+[#734]: https://github.com/bemusic/bemuse/pull/734
+[#735]: https://github.com/bemusic/bemuse/pull/735
+[#736]: https://github.com/bemusic/bemuse/pull/736
+[#737]: https://github.com/bemusic/bemuse/pull/737
+[#738]: https://github.com/bemusic/bemuse/pull/738
+
+## v50.1.1 (2021-10-30)
+
+### Internals
+
+- Changed the monorepo manager from Yarn+Lerna to Rush+pnpm. [#730], by
+  [@dtinth]
+
+[#730]: https://github.com/bemusic/bemuse/pull/730
+
+## v50.1 (2021-10-28)
+
+### New stuff
+
+- **2 songs have been added to the Music Server.**
+
+- **Random songs of the day.** Bemuse will show a random selection of 3 songs on
+  each day to help you discover more songs. [#725], by [@dtinth]
+
+### Improvements
+
+- Upgraded Pixi.js to version 4.8.9. [#724], by [@dtinth]
+- Increased the delay after finishing song before displaying the results screen
+  from 1 second to 3 seconds to give more time for BG animations. [#726], by
+  [@dtinth]
+
+### Internals
+
+- Fixed GitHub Actions workflow to upload code coverage data properly. [#727],
+  by [@dtinth]
+- Migrated some more jobs from CircleCI to GitHub Actions. [#728], by [@dtinth]
+
+[#724]: https://github.com/bemusic/bemuse/pull/724
+[#725]: https://github.com/bemusic/bemuse/pull/725
+[#726]: https://github.com/bemusic/bemuse/pull/726
+[#727]: https://github.com/bemusic/bemuse/pull/727
+[#728]: https://github.com/bemusic/bemuse/pull/728
 
 ## v50 (2021-10-26)
 
@@ -29,10 +94,10 @@
 - **4 songs have been added to the Music Server.**
 
 - **For creators: The tool to prepare songs and manage a Bemuse Music Server has
-  been rewritten from scratch to be easier to use.** In previous versions,
-  to set up a Bemuse Music Server, you would have to install a lot of programs
-  and use the command line tools. Now you can prepare songs and set up a
-  Bemuse Music Server from your web browser.
+  been rewritten from scratch to be easier to use.** In previous versions, to
+  set up a Bemuse Music Server, you would have to install a lot of programs and
+  use the command line tools. Now you can prepare songs and set up a Bemuse
+  Music Server from your web browser.
   [Check out the documentation for more info.](https://bemuse.ninja/project/docs/song-workshop.html)
   [#721], by [@dtinth]
 

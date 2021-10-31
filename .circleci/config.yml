@@ -1,98 +1,18 @@
 version: 2
-references:
-  restore_node_modules_cache: &restore_node_modules_cache
-    restore_cache:
-      keys:
-        - deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
-        - deps-{{ .Branch }}-
-        - deps-
-  bootstrap: &bootstrap
-    run:
-      name: lerna bootstrap
-      command: lerna bootstrap && lerna run prepare
-  save_node_modules_cache: &save_node_modules_cache
-    save_cache:
-      key: deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
-      paths:
-        - ./node_modules
-        - ./packages/bemuse-indexer/node_modules
-        - ./packages/bemuse-notechart/node_modules
-        - ./packages/bemuse-tools/node_modules
-        - ./packages/bms/node_modules
-        - ./packages/bmson/node_modules
 jobs:
-  lint:
-    working_directory: ~/bemuse
-    environment:
-      FORCE_COLOR: '1'
-    docker:
-      - image: circleci/node:16.3.0-browsers
-    steps:
-      - run: sudo npm i -g lerna
-      - checkout
-      - *restore_node_modules_cache
-      - *bootstrap
-      - *save_node_modules_cache
-      - run:
-          name: danger
-          command: |
-            if [ "$DANGER_GITHUB_API_TOKEN" ]
-            then
-              yarn danger ci
-            fi
-      - run:
-          name: typecheck
-          command: |
-            yarn workspace bemuse tsc
-  test:
-    working_directory: ~/bemuse
-    environment:
-      FORCE_COLOR: '1'
-    docker:
-      - image: circleci/node:16.3.0-browsers
-    steps:
-      - run: sudo npm i -g lerna
-      - checkout
-      - *restore_node_modules_cache
-      - *bootstrap
-      - *save_node_modules_cache
-      - run:
-          name: test
-          command: yarn test
-      - run:
-          name: codecov
-          command: yarn codecov
-  test_packages:
-    working_directory: ~/bemuse
-    environment:
-      FORCE_COLOR: '1'
-    docker:
-      - image: circleci/node:16.3.0-browsers
-    steps:
-      - run: sudo npm i -g lerna
-      - checkout
-      - *restore_node_modules_cache
-      - *bootstrap
-      - *save_node_modules_cache
-      - run:
-          name: lerna run test
-          command: lerna run test
-      - run:
-          name: codecov
-          command: yarn codecov
   build:
     working_directory: ~/bemuse
     environment:
       FORCE_COLOR: '1'
     docker:
-      - image: circleci/node:16.3.0-browsers
+      - image: circleci/node:16.12.0-browsers
     steps:
-      - run: sudo npm i -g lerna
       - checkout
       - add_ssh_keys
-      - *restore_node_modules_cache
-      - *bootstrap
-      - *save_node_modules_cache
+      - run:
+          name: install deps
+          command: |
+            node common/scripts/install-run-rush.js install
       - run:
           name: build
           command: |
@@ -100,7 +20,8 @@ jobs:
             node build-scripts build
       - run:
           name: checks
-          command: yarn pre-deploy
+          command: |
+            node build-scripts pre-deploy
       - run:
           name: deploy
           command: |
@@ -117,19 +38,21 @@ jobs:
           root: .
           paths:
             - dist
-            - node_modules
-            - e2e/node_modules
   e2e:
     working_directory: ~/bemuse
     environment:
       FORCE_COLOR: '1'
       SCREENSHOT_DIR: /tmp/bemuse-e2e-screenshot
     docker:
-      - image: circleci/node:16.3.0-browsers
+      - image: circleci/node:16.12.0-browsers
     steps:
       - checkout
       - attach_workspace:
           at: .
+      - run:
+          name: install deps
+          command: |
+            node common/scripts/install-run-rush.js install
       - run:
           name: Install HTTP server
           command: |
@@ -144,7 +67,7 @@ jobs:
           command: |
             cd e2e
             mkdir -p "$SCREENSHOT_DIR"
-            env BEMUSE_PORT=8089 yarn prescript tests/Gameplay-test.js
+            env BEMUSE_PORT=8089 npx prescript tests/Gameplay-test.js
           no_output_timeout: 1m
       - store_artifacts:
           path: /tmp/bemuse-e2e-screenshot
@@ -153,9 +76,6 @@ workflows:
   version: 2
   tests:
     jobs:
-      - lint
-      - test
-      - test_packages
       - build
       - e2e:
           requires:

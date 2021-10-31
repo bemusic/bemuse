@@ -40,7 +40,7 @@ const CustomFolderTester = () => {
   const scan = async () => {
     try {
       await scanFolder(context, {
-        log: (text) => console.log(text),
+        log: console.log,
         setStatus: _.throttle((text) => setStatus(text), 100),
         updateState: (newState) => {
           queryClient.setQueryData('customFolder', newState)
@@ -72,7 +72,7 @@ const CustomFolderTester = () => {
     <div>
       {data ? (
         <div>
-          <p>✅ A folder has been selected.</p>
+          <p>✅ A folder has been selected</p>
           <hr />
           <p style={highlightIf(songCount === 0)}>
             Click the Scan button to scan for new songs 👉{' '}

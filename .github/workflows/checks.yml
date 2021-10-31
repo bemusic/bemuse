@@ -9,7 +9,7 @@ on:
       - master
 
 concurrency:
-  group: ${{ github.head_ref }}
+  group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -22,11 +22,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Deps
-        run: yarn install && yarn lerna run prepare
+        run: node common/scripts/install-run-rush.js install
       - name: Lint
-        run: yarn lint
-      - name: Type Check
-        run: yarn workspace bemuse tsc
+        run: node common/scripts/install-run-rush.js danger-ci
+        env:
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build dependencies
+        run: node common/scripts/install-run-rush.js build --to-except bemuse
+      - name: Typecheck
+        run: node ../common/scripts/install-run-rushx.js typecheck
+        working-directory: bemuse
   test:
     runs-on: ubuntu-latest
     steps:
@@ -36,11 +41,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Deps
-        run: yarn install && yarn lerna run prepare
+        run: node common/scripts/install-run-rush.js install
+      - name: Build
+        run: node common/scripts/install-run-rush.js build --to-except bemuse
       - name: Test
-        run: yarn test
-      - name: Code Coverage
-        run: yarn codecov
+        run: node ../common/scripts/install-run-rushx.js test
+        working-directory: bemuse
+      - uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
   test_packages:
     runs-on: ubuntu-latest
     steps:
@@ -50,8 +59,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Deps
-        run: yarn install && yarn lerna run prepare
+        run: node common/scripts/install-run-rush.js install
+      - name: Build
+        run: node common/scripts/install-run-rush.js build --to-except bemuse
       - name: Test Packages
-        run: yarn lerna run test
-      - name: Code Coverage
-        run: yarn codecov
+        run: node common/scripts/install-run-rush.js test --to-except bemuse
+      - uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

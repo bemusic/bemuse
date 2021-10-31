@@ -1,6 +1,6 @@
 {
   "name": "bemuse-notechart",
-  "version": "50.0.0",
+  "version": "50.0.1",
   "description": "Bemuse notechart data structure, supports BMS and bmsons.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "clean": "rimraf lib tsconfig.tsbuildinfo",
-    "prepare": "tsc -b .",
+    "build": "tsc -b .",
     "test": "nyc -r text -r lcov mocha -r ts-node/register 'src/**/*.spec.ts'"
   },
   "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
@@ -17,19 +17,24 @@
   "devDependencies": {
     "@types/bluebird": "^3.5.24",
     "@types/chai": "^4.1.7",
+    "@types/invariant": "^2.2.30",
+    "@types/lodash": "^4.14.176",
+    "@types/mocha": "^5.2.5",
     "bluebird": "^3.5.2",
     "chai": "^4.2.0",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "typescript": "^4.4.3"
   },
   "dependencies": {
-    "bms": "^50.0.0",
-    "bmson": "^50.0.0",
-    "lodash": "^4.17.11"
+    "bms": "^50.0.1",
+    "bmson": "^50.0.1",
+    "lodash": "^4.17.11",
+    "invariant": "^2.2.4"
   },
   "peerDependencies": {
     "bluebird": "^3.5.1"
   },
   "volta": {
-    "extends": "../../package.json"
+    "extends": "../../volta.json"
   }
 }

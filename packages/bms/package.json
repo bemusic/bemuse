@@ -1,6 +1,6 @@
 {
   "name": "bms",
-  "version": "50.0.0",
+  "version": "50.0.1",
   "description": "BMS Parser for JavaScript",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
@@ -10,10 +10,9 @@
   ],
   "scripts": {
     "clean": "rimraf lib tsconfig.tsbuildinfo",
-    "prepare": "tsc -b .",
-    "test": "nyc -r text -r lcov gulp test",
-    "dev": "tsc --watch",
-    "pretest": "gulp bmspec:update"
+    "build": "tsc -b .",
+    "test": "gulp bmspec:update && nyc -r text -r lcov gulp test",
+    "dev": "tsc --watch"
   },
   "repository": {
     "type": "git",
@@ -47,7 +46,9 @@
     "gulp-mocha": "^6.0.0",
     "hide-stack-frames-from": "^1.0.0",
     "lazy-property": "^1.0.0",
-    "stack-chain": "^1.3.0"
+    "nyc": "^11.9.0",
+    "stack-chain": "^1.3.0",
+    "typescript": "^4.4.3"
   },
   "dependencies": {
     "bemuse-chardet": "0.0.8",
@@ -60,6 +61,6 @@
     "lodash.values": "^4.3.0"
   },
   "volta": {
-    "extends": "../../package.json"
+    "extends": "../../volta.json"
   }
 }

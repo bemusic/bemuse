@@ -1,6 +1,6 @@
 {
   "name": "bmson",
-  "version": "50.0.0",
+  "version": "50.0.1",
   "description": "BMSON support for Bemuse",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "clean": "rimraf lib tsconfig.tsbuildinfo",
-    "prepare": "tsc -b .",
+    "build": "tsc -b .",
     "test": "nyc -r text -r lcov mocha -r ts-node/register './src/**/*.spec.ts'"
   },
   "keywords": [
@@ -30,16 +30,18 @@
   "homepage": "https://github.com/dtinth/bmson#readme",
   "devDependencies": {
     "@types/mocha": "^5.2.5",
+    "@types/lodash": "^4.14.176",
     "@types/power-assert": "^1.5.0",
-    "bms": "^50.0.0",
+    "bms": "^50.0.1",
     "gulp": "^4.0.2",
     "mocha": "^5.2.0",
-    "power-assert": "^1.6.1"
+    "power-assert": "^1.6.1",
+    "typescript": "^4.4.3"
   },
   "dependencies": {
     "lodash": "^4.17.11"
   },
   "volta": {
-    "extends": "../../package.json"
+    "extends": "../../volta.json"
   }
 }

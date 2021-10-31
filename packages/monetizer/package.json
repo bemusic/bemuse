@@ -1,6 +1,6 @@
 {
   "name": "monetizer",
-  "version": "50.0.0",
+  "version": "50.0.1",
   "description": "Web Monetization API for JavaScript",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "clean": "rimraf lib tsconfig.tsbuildinfo",
-    "prepare": "tsc -b .",
+    "build": "tsc -b .",
     "test": "jest"
   },
   "keywords": [
@@ -27,6 +27,12 @@
   },
   "homepage": "https://github.com/bemusic/bemuse/tree/master/packages/monetizer#readme",
   "volta": {
-    "extends": "../../package.json"
+    "extends": "../../volta.json"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.2.1",
+    "typescript": "^4.4.3",
+    "jest": "^27.2.4",
+    "ts-jest": "^27.0.5"
   }
 }

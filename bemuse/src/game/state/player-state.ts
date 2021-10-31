@@ -96,7 +96,7 @@ export class PlayerState {
     this._updateInputColumnMap()
     this._judgeNotes()
     this._updateSpeed()
-    if (gameTime > this._duration + 1) this.finished = true
+    if (gameTime > this._duration + 3) this.finished = true
   }
 
   getNoteStatus(note: GameNote): NoteStatus {
