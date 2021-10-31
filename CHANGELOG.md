@@ -23,6 +23,17 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## v51.3.0-pre.202110311237
+
+### Improvements
+
+- **Autoplay mode**: If you hold down Alt key while clicking the chart button to
+  start a game, Bemuse will enter into Autoplay mode where notes will be played
+  automatically. The UI will clearly mark the game as autoplayed both in-game
+  and in the result screen. [#740], by [@dtinth]
+
+[#740]: https://github.com/bemusic/bemuse/pull/740
+
 ## v51.2 (2021-10-30)
 
 ### Internals
