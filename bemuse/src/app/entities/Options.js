@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { useImmer } from 'use-immer'
+import produce from "immer"
 
 import * as options from '../options'
 
@@ -25,15 +25,15 @@ export const changeKeyMapping = (mode, key, keyCode) =>
 // Play mode
 export const playMode = (state) => state['player.P1.mode']
 export const changePlayMode = (mode) =>
-  useImmer({
-    'player.P1.mode': mode,
-    'player.P1.panel': (panel) =>
-      panel === '3d' && mode !== 'KB' ? 'center' : panel,
+  produce((draft) => {
+    draft['player.P1'.mode] = mode
+    draft['player.P1.panel'] = (panel) =>
+      panel === '3d' && mode !== 'KB' ? 'center' : panel;
   })
 
 // Speed
 export const speed = (state) => state['player.P1.speed']
-export const changeSpeed = (speed) => useImmer({ 'player.P1.speed': speed })
+export const changeSpeed = (speed) => produce((draft) => { draft['player.P1'.speed] = speed })
 
 // Lead time
 export const leadTime = (state) => {
@@ -43,7 +43,7 @@ export const leadTime = (state) => {
   return parsed
 }
 export const changeLeadTime = (leadTime) =>
-  useImmer({ 'player.P1.lead-time': leadTime })
+  produce((draft) => { draft['player.P1.lead-time'] = leadTime })
 
 // Scratch position
 export const scratchPosition = (state) => {
@@ -57,17 +57,17 @@ export const changeScratchPosition = (position) => {
   if (position === 'off') {
     return changePlayMode('KB')
   } else {
-    return _.flow(changePlayMode('BM'), useImmer({ 'player.P1.scratch': position }))
+    return _.flow(changePlayMode('BM'), produce((draft) => { draft['player.P1.scratch'] = position }))
   }
 }
 
 // Panel
 export const panelPlacement = (state) => state['player.P1.panel']
 export const changePanelPlacement = (placement) =>
-  useImmer({
-    'player.P1.panel': placement,
-    'player.P1.mode': (mode) =>
-      placement === '3d' && mode !== 'KB' ? 'KB' : mode,
+  produce((draft) => {
+    draft['player.P1.panel'] = placement,
+    draft['player.P1.mode'] = (mode) =>
+      placement === '3d' && mode !== 'KB' ? 'KB' : mode;
   })
 
 // Lane cover
@@ -85,29 +85,29 @@ export const changeLaneCover = (laneCover) =>
 // BGA
 export const isBackgroundAnimationsEnabled = (state) =>
   toggleOptionEnabled(state['system.bga.enabled'])
-export const toggleBackgroundAnimations = useImmer({
-  'system.bga.enabled': toggleOption,
+export const toggleBackgroundAnimations = produce((draft) => {
+  draft['system.bga.enabled'] = toggleOption
 })
 
 // Auto-velocity
 export const isAutoVelocityEnabled = (state) =>
   toggleOptionEnabled(state['player.P1.auto-velocity'])
-export const toggleAutoVelocity = useImmer({
-  'player.P1.auto-velocity': toggleOption,
+export const toggleAutoVelocity = produce((draft) => {
+  draft['player.P1.auto-velocity'] = toggleOption
 })
 
 // Song preview enabled
 export const isPreviewEnabled = (state) =>
   toggleOptionEnabled(state['system.preview.enabled'])
-export const togglePreview = useImmer({
-  'system.preview.enabled': toggleOption,
+export const togglePreview = produce((draft) => {
+  draft['system.preview.enabled'] = toggleOption
 })
 
 // Gauge
 export const isGaugeEnabled = (state) => getGauge(state) !== 'off'
 export const getGauge = (state) => state['player.P1.gauge']
-export const toggleGauge = useImmer({
-  'player.P1.gauge': (gauge) => (gauge === 'off' ? 'hope' : 'off'),
+export const toggleGauge = produce((draft) => {
+  draft['player.P1.gauge'] = (gauge) => (gauge === 'off' ? 'hope' : 'off')
 })
 
 // Queries
@@ -124,34 +124,34 @@ export const keyboardMapping = (state) => {
 export const hasAcknowledged = (featureKey) => (state) =>
   state[`system.ack.${featureKey}`] === '1'
 export const acknowledge = (featureKey) =>
-  useImmer({
-    [`system.ack.${featureKey}`]: '1',
+  produce((draft) => {
+    draft[`system.ack.${featureKey}`] = '1'
   })
 
 // Audio-input latency
 export const audioInputLatency = (state) => +state['system.offset.audio-input']
 export const changeAudioInputLatency = (latency) =>
-  useImmer({
-    'system.offset.audio-input': `${latency}`,
+  produce((draft) => {
+    draft['system.offset.audio-input'] = `${latency}`
   })
 
 // Gamepad Continuous Axis
 export const isContinuousAxisEnabled = (state) =>
   toggleOptionEnabled(state['gamepad.continuous'])
-export const toggleContinuousAxis = useImmer({
-  'gamepad.continuous': toggleOption,
+export const toggleContinuousAxis = produce((draft) => {
+  draft['gamepad.continuous'] = toggleOption
 })
 
 // Gamepad Sensitivity
 export const sensitivity = (state) => state['gamepad.sensitivity']
 export const changeSensitivity = (sensitivity) =>
-  useImmer({ 'gamepad.sensitivity': sensitivity })
+  produce((draft) => { draft['gamepad.sensitivity'] = sensitivity })
 
 // Latest version
 export const lastSeenVersion = (state) => state['system.last-seen-version']
 export const updateLastSeenVersion = (newVersion) =>
-  useImmer({
-    'system.last-seen-version': newVersion,
+  produce((draft) => {
+    draft['system.last-seen-version'] = newVersion
   })
 
 // Utils

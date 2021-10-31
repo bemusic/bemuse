@@ -1,4 +1,4 @@
-import { useImmer } from "use-immer"
+import produce from "immer"
 
 export const preprocessCollection = u({
   songs: u.map(preprocessSong),
@@ -7,12 +7,12 @@ export const preprocessCollection = u({
 function preprocessSong(song) {
   const useImmerMap = new Map()
   if (song.chart_names) {
-    song = useImmer(
+    song = u(
       {
-        charts: useImmerMap((chart) => {
+        charts: u.map((chart) => {
           const name = song.chart_names[chart.file]
           if (!name) return chart
-          return useImmer(
+          return u(
             {
               info: {
                 subtitles: (subtitles) => [...subtitles, name],

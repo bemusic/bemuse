@@ -1,4 +1,4 @@
-import { useImmer } from 'use-immer'
+import produce from "immer"
 import _ from 'lodash'
 
 export const initialState = {
@@ -24,14 +24,14 @@ export const selectedChartGivenCharts = (charts) => (state) => {
 
 // Updater
 export const selectSong = (songId) =>
-  useImmer({
-    selectedSongId: songId,
+  produce ((draft) => {
+    draft.selectedSongId = songId
   })
 export const selectChart = (songId, chartId, chartLevel) =>
-  useImmer({
-    selectedSongId: songId,
-    selectedChartId: chartId,
-    selectedChartLevel: chartLevel,
+  produce ((draft) => {
+    draft.selectedSongId = songId
+    draft.selectedChartId = chartId
+    draft.selectedChartLevel = chartLevel
   })
 
 // Utilities
