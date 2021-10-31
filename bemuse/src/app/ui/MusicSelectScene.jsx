@@ -76,11 +76,12 @@ const enhance = compose(
       MusicSearchIO.handleSearchTextType(text),
     onLaunchGame:
       ({ musicSelect }) =>
-      () =>
+      (extraOptions) =>
         MusicSelectionIO.launchGame(
           musicSelect.server,
           musicSelect.song,
-          musicSelect.chart
+          musicSelect.chart,
+          extraOptions
         ),
   })
 )
@@ -290,11 +291,13 @@ class MusicSelectScene extends React.PureComponent {
   handleMusicListTouch = () => {
     this.setState({ inSong: false })
   }
-  handleChartClick = (chart) => {
+  handleChartClick = (chart, e) => {
     if (this.props.musicSelect.chart.md5 === chart.md5) {
       Analytics.send('MusicSelectScene', 'launch game')
       MusicPreviewer.go()
-      this.props.onLaunchGame()
+      this.props.onLaunchGame({
+        autoplayEnabled: e.altKey,
+      })
     } else {
       Analytics.send('MusicSelectScene', 'select chart')
       this.props.onSelectChart(this.props.musicSelect.song, chart)
