@@ -1,8 +1,9 @@
 import produce from "immer"
 
-export const preprocessCollection = u({
-  songs: u.map(preprocessSong),
-})
+export const preprocessCollection = (song) => 
+  produce((draft) => {
+    draft.song = preprocessSong(song)
+  })
 
 function preprocessSong(song) {
   return produce(song, draft => {
@@ -14,7 +15,6 @@ function preprocessSong(song) {
       }
     }
   })
-  return song
 }
 
 export default preprocessCollection
