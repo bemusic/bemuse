@@ -35,6 +35,7 @@ type LaunchOptions = {
   saveSpeed: (speed: number) => void
   saveLeadTime: (speed: number) => void
   onRagequitted: () => void
+  autoplayEnabled: boolean
 }
 
 export async function launch(launchOptions: LaunchOptions) {
@@ -72,6 +73,7 @@ async function launchGame(
     saveSpeed,
     saveLeadTime,
     onRagequitted,
+    autoplayEnabled,
   }: LaunchOptions,
   sceneDisplayContext: SceneDisplayContext,
   setCurrentWork: (work: string) => void
@@ -119,6 +121,7 @@ async function launchGame(
     tutorial: !!song.tutorial,
     players: [
       {
+        autoplayEnabled: autoplayEnabled,
         speed: autoVelocity.getInitialSpeed(),
         placement: options['player.P1.panel'],
         scratch: scratch,

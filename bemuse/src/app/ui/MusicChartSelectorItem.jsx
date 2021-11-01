@@ -46,8 +46,8 @@ class MusicChartSelectorItem extends React.Component {
       </span>
     )
   }
-  handleClick = () => {
-    this.props.onChartClick(this.props.chart)
+  handleClick = (e) => {
+    this.props.onChartClick(this.props.chart, e)
   }
 }
 

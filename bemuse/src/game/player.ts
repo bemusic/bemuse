@@ -25,6 +25,7 @@ type PlayerOptionsInputMapping = {
 }
 
 type PlayerOptionsInternal = {
+  autoplayEnabled: boolean
   autosound: boolean
   speed: number
   placement: PlayerOptionsPlacement
@@ -36,6 +37,7 @@ type PlayerOptionsInternal = {
 }
 
 export type PlayerOptionsInput = PlayerOptions & {
+  autoplayEnabled?: boolean
   autosound?: boolean
   speed: number
   placement?: PlayerOptionsPlacement
@@ -54,6 +56,7 @@ export class Player {
     options: PlayerOptionsInput
   ) {
     this.options = {
+      autoplayEnabled: !!options.autoplayEnabled,
       autosound: !!options.autosound,
       speed: +options.speed,
       placement: options.placement || 'center',
