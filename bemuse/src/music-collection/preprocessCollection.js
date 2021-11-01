@@ -5,26 +5,15 @@ export const preprocessCollection = u({
 })
 
 function preprocessSong(song) {
-  const useImmerMap = new Map()
-  if (song.chart_names) {
-    song = u(
-      {
-        charts: u.map((chart) => {
-          const name = song.chart_names[chart.file]
-          if (!name) return chart
-          return u(
-            {
-              info: {
-                subtitles: (subtitles) => [...subtitles, name],
-              },
-            },
-            chart
-          )
-        }),
-      },
-      song
-    )
-  }
+  return produce(song, draft => {
+    if (draft.chart_names) {
+      for (const chart of draft.charts) {
+        const name = draft.chart_names[chart.file]
+        if (!name) continue
+        chart.info.subtitles.push(name)
+      }
+    }
+  })
   return song
 }
 
