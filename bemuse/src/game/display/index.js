@@ -37,9 +37,10 @@ export class GameDisplay {
   }
   start() {
     this._started = new Date().getTime()
-    let player = this._game.players[0]
-    let songInfo = player.notechart.songInfo
-    this._stateful['song_title'] = songInfo.title
+    const player = this._game.players[0]
+    const songInfo = player.notechart.songInfo
+    const prefix = player.options.autoplayEnabled ? '[AUTOPLAY] ' : ''
+    this._stateful['song_title'] = prefix + songInfo.title
     this._stateful['song_artist'] = songInfo.artist
     this._duration = player.notechart.duration
   }

@@ -155,6 +155,9 @@ export class PlayerState {
     this.speed += direction * amount
     if (this.speed < 0.2) this.speed = 0.2
   }
+  _shouldAutoplay() {
+    return this.player.options.autoplayEnabled || isAutoplayEnabled()
+  }
   _judgeColumn(buffer: NoteBuffer, control: Control, column: string) {
     let judgedNote
     let judgment
@@ -166,7 +169,7 @@ export class PlayerState {
         let shouldBreak = this.getNoteStatus(note) !== 'active'
         judgedNote = note
         judgment = this._judgeNote(note)
-        if (isAutoplayEnabled()) {
+        if (this._shouldAutoplay()) {
           autoPlayed = true
         }
         if (shouldBreak) break
@@ -225,7 +228,7 @@ export class PlayerState {
   _shouldJudge(note: GameNote, control: Control, buffer: NoteBuffer) {
     let status = this.getNoteStatus(note)
     if (status === 'unjudged') {
-      if (isAutoplayEnabled() && this._gameTime >= note.time) {
+      if (this._shouldAutoplay() && this._gameTime >= note.time) {
         this.tainted = true
         return true
       }
@@ -238,7 +241,7 @@ export class PlayerState {
       return missed || hit
     } else if (status === 'active') {
       const noteEnd = note.end || invariant(false, 'note.end must exist')
-      if (isAutoplayEnabled() && this._gameTime >= noteEnd.time) {
+      if (this._shouldAutoplay() && this._gameTime >= noteEnd.time) {
         this.tainted = true
         return true
       }
@@ -258,7 +261,7 @@ export class PlayerState {
     let result = this._noteResult.get(note)
     let isDown = !result || result.status === 'unjudged'
     let isUp = result && result.status === 'active'
-    if (isAutoplayEnabled() && judgment >= 1) {
+    if (this._shouldAutoplay() && judgment >= 1) {
       judgment = 1
     }
     if (note.end) {

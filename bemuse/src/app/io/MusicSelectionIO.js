@@ -26,7 +26,7 @@ export function selectChart(song, chart) {
   })
 }
 
-export function launchGame(server, song, chart) {
+export function launchGame(server, song, chart, { autoplayEnabled }) {
   return createIO(({ store }, run) => {
     Promise.resolve(
       GameLauncher.launch({
@@ -43,6 +43,7 @@ export function launchGame(server, song, chart) {
         onRagequitted: () => {
           store.dispatch({ type: ReduxState.RAGEQUITTED })
         },
+        autoplayEnabled,
       })
     ).done()
   })
