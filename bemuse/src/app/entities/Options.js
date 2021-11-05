@@ -27,8 +27,8 @@ export const playMode = (state) => state['player.P1.mode']
 export const changePlayMode = (mode) =>
   produce((draft) => {
     draft['player.P1'.mode] = mode
-    draft['player.P1.panel'] = (panel) =>
-      panel === '3d' && mode !== 'KB' ? 'center' : panel;
+    const panel = draft['player.P1.panel']
+    draft['player.P1.panel'] = panel === '3d' && mode !== 'KB' ? 'center' : panel
   })
 
 // Speed
