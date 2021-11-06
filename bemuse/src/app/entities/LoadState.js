@@ -26,6 +26,6 @@ export const completeWithValue = (value) =>
 
 export const errorWithReason = (error) =>
   produce((draft) => {
-    draft.status = 'completed'
-    draft.value = value
+    draft.status = 'error'
+    draft.error = error
   })
