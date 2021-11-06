@@ -26,14 +26,14 @@ export const changeKeyMapping = (mode, key, keyCode) =>
 export const playMode = (state) => state['player.P1.mode']
 export const changePlayMode = (mode) =>
   produce((draft) => {
-    draft['player.P1'.mode] = mode
+    draft['player.P1.mode'] = mode
     const panel = draft['player.P1.panel']
     draft['player.P1.panel'] = panel === '3d' && mode !== 'KB' ? 'center' : panel
   })
 
 // Speed
 export const speed = (state) => state['player.P1.speed']
-export const changeSpeed = (speed) => produce((draft) => { draft['player.P1'.speed] = speed })
+export const changeSpeed = (speed) => produce((draft) => { draft['player.P1.speed'] = speed })
 
 // Lead time
 export const leadTime = (state) => {
@@ -65,7 +65,7 @@ export const changeScratchPosition = (position) => {
 export const panelPlacement = (state) => state['player.P1.panel']
 export const changePanelPlacement = (placement) =>
   produce((draft) => {
-    draft['player.P1.panel'] = placement,
+    draft['player.P1.panel'] = placement
     draft['player.P1.mode'] = (mode) =>
       placement === '3d' && mode !== 'KB' ? 'KB' : mode;
   })
