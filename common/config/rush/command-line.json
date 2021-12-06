@@ -19,6 +19,13 @@
       "autoinstallerName": "bemuse-linter"
     },
     {
+      "name": "format-all",
+      "commandKind": "global",
+      "summary": "Format all source code.",
+      "shellCommand": "markdown-toc -i README.md && prettier --write .",
+      "autoinstallerName": "bemuse-linter"
+    },
+    {
       "name": "format-readme",
       "commandKind": "global",
       "summary": "Format readme file.",
@@ -37,6 +44,13 @@
       "commandKind": "global",
       "summary": "Lint source code.",
       "shellCommand": "eslint --ext .js,.jsx,.ts,.tsx .",
+      "autoinstallerName": "bemuse-linter"
+    },
+    {
+      "name": "lint-fix",
+      "commandKind": "global",
+      "summary": "Lint source code, fixing any fixable problems.",
+      "shellCommand": "eslint --ext .js,.jsx,.ts,.tsx --fix .",
       "autoinstallerName": "bemuse-linter"
     },
     {
