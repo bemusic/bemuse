@@ -13,7 +13,9 @@
 
 **Bemuse** is an open-source, online, web-based rhythm game. It plays songs in
 BMS format (See:
-[Introduction to BMS](https://www.youtube.com/watch?v=Guv1vRAKanY)).
+[Introduction to BMS][bms-introduction]).
+
+[bms-introduction]: https://www.youtube.com/watch?v=Guv1vRAKanY "BMS Creation Notes #1: Introduction to BMS"
 
 It is recommended to play this game on Google Chrome.
 

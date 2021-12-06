@@ -5,7 +5,7 @@ const expect = require('expect')
 action('Open browser', async (state) => {
   const puppeteerOptions = { headless: true }
   if (process.env.CIRCLECI) {
-    puppeteerOptions.args = ['--no-sandbox', '--disable-setuid-sandbox']
+    puppeteerOptions.args = [ '--no-sandbox', '--disable-setuid-sandbox' ]
   }
   state.browser = await puppeteer.launch(puppeteerOptions)
   state.page = await state.browser.newPage()
