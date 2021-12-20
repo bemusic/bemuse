@@ -232,13 +232,29 @@ async function findVideoUrl(song: Song, assets: LoadSpec['assets']) {
     return song.video_url
   }
   if (song.video_file) {
-    try {
-      const file = await assets.file(song.video_file)
-      if (file.resolveUrl) {
-        return await file.resolveUrl()
+    const tryToLoad = async (name: string) => {
+      try {
+        const file = await assets.file(name)
+        if (file.resolveUrl) {
+          return await file.resolveUrl()
+        }
+      } catch (e) {
+        console.warn(
+          `[game-launcher] findVideoUrl: Cannot load video file "${name}":`,
+          e
+        )
       }
-    } catch (e) {
-      console.warn('[game-launcher] findVideoUrl: Cannot load video file:', e)
+    }
+    const extensionRegExp = /\.\w+$/
+    const replaceExtension = (name: string, ext: string) =>
+      name.replace(extensionRegExp, ext)
+    if (/\.(?:mp4|webm)$/.test(song.video_file)) {
+      return await tryToLoad(song.video_file)
+    } else if (extensionRegExp.test(song.video_file)) {
+      return (
+        (await tryToLoad(replaceExtension(song.video_file, '.webm'))) ||
+        (await tryToLoad(replaceExtension(song.video_file, '.mp4')))
+      )
     }
   }
 }

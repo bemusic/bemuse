@@ -117,6 +117,25 @@ describe('getFileInfo (bms)', function () {
       expect(bpm.max).to.equal(240)
     })
   })
+
+  describe('.bga', function () {
+    it('should be undefined for songs without bga', async function () {
+      var source = ['#BPM 120', '#00111:0101'].join('\n')
+      return expect((await info(source)).bga).to.equal(undefined)
+    })
+    it('should exist for songs with bga', async function () {
+      var source = [
+        '#BPM 120',
+        '#BMPBG meow.mpg',
+        '#00111:0101',
+        '#00104:01BG',
+      ].join('\n')
+      return expect((await info(source)).bga).to.deep.equal({
+        file: 'meow.mpg',
+        offset: 3,
+      })
+    })
+  })
 })
 
 describe('getFileInfo (bmson)', function () {

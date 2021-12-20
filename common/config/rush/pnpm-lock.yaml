@@ -17896,7 +17896,7 @@ packages:
     dev: false
 
   file:projects/bemuse-indexer.tgz:
-    resolution: {integrity: sha512-HuEGn4sgurUVfB96yQg5hNYXtuzxb0fL4qBqSM9ksrdhD22dBTZuQDVnueGKBwPgcGOv+MetUxSkL0P6Z5Al5g==, tarball: file:projects/bemuse-indexer.tgz}
+    resolution: {integrity: sha512-KzQ3RfiCTN7nPjaOSlAywd14j5X1RSTAMBFdeS1mn81ezV0+DtB2bxgLGlIEZqJOXsfertWBU+dzDQLVhdTHEw==, tarball: file:projects/bemuse-indexer.tgz}
     name: '@rush-temp/bemuse-indexer'
     version: 0.0.0
     dependencies:
@@ -17912,6 +17912,7 @@ packages:
       invariant: 2.2.4
       lodash: 4.17.21
       mocha: 5.2.0
+      nyc: 11.9.0
       object-assign: 4.1.1
       typescript: 4.4.4
     dev: false
@@ -17956,6 +17957,7 @@ packages:
       mime: 1.6.0
       mkdirp: 0.5.5
       mocha: 5.2.0
+      nyc: 11.9.0
       rx: 2.5.3
       temp: 0.8.4
       throat: 1.0.0

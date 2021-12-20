@@ -35,6 +35,7 @@ import {
   OutputSongInfo,
   OutputChart,
 } from './types'
+import { getBmsBga } from './bms-bga'
 
 var readBMS = Bluebird.promisify<string, Buffer, ReaderOptions | null>(
   Reader.readAsync
@@ -76,6 +77,7 @@ _extensions['.bms'] = async function (source, meta) {
     timing: timing,
     scratch: hasScratch(chart),
     keys: getKeys(chart),
+    bga: getBmsBga(chart, { timing }),
   }
 }
 
