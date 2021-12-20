@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "bemuse-indexer",
+      "comment": "Added initial support for indexing BGA file metadata for BMS files",
+      "type": "major"
+    }
+  ],
+  "packageName": "bemuse-indexer"
+}
