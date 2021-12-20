@@ -23,7 +23,7 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
-## v52.0.0-pre.202112201501
+## v52 (2021-12-20)
 
 ### New stuff
 
