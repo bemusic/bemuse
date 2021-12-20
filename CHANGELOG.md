@@ -23,6 +23,38 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## v52.0.0-pre.202112201501
+
+### New stuff
+
+- **HD-BGA support for BMS files.** Bemuse now tries to load BGAs in BMS files
+  when an `.mp4` and `.webm` files are provided.
+
+  ![bga-support](https://user-images.githubusercontent.com/193136/146781819-969d466b-c7ea-4c3e-9597-93d6bdde7bd9.png)
+
+  In prior versions, Bemuse did not support background animation (BGA) video for
+  the BMS format, because most BMS archives at that time comes with
+  low-resolution (256x256) video files. These files commonly use the MPG, AVI,
+  or WMV format, which cannot be played on the web.
+
+  In 2016, the bmson project introduced recommendations for high-definition BGAs
+  in bmson files. The
+  [specification recommended BGA files to be in MP4 or WebM format](https://bmson-spec.readthedocs.io/en/master/doc/index.html#bga-bga).
+  These formats can be played on the web and it is supported natively in Bemuse.
+  So since 2016, Bemuse supports BGA for bmson, but not BMS.
+
+  In 2018,
+  [beatoraja introduced support for high-definition BGAs in BMS files](https://github.com/exch-bms2/beatoraja/pull/190).
+  BMS authors can put `bga.mp4` and `bga.mpg` files side-by-side and `bga.mp4`
+  file will take precedence over `bga.mpg` even if `bga.mpg` is specified in the
+  BMS file (for backwards-compatibility with LR2).
+
+  In 2021, it is now more common for BMS authors to distribute BMS archives with
+  BGA files in both `.mp4` and `.mpg` format. Therefore, Bemuse now follows this
+  behavior by beatoraja. [#745], by [@dtinth]
+
+[#745]: https://github.com/bemusic/bemuse/pull/745
+
 ## v51.3 (2021-10-31)
 
 ### Improvements

@@ -6,6 +6,7 @@ import path from './path'
 import webpack from 'webpack'
 import webpackResolve from './webpackResolve'
 import ServiceWorkerWebpackPlugin from 'serviceworker-webpack-plugin'
+import TerserPlugin from 'terser-webpack-plugin'
 
 function generateBaseConfig() {
   let config = {
@@ -44,6 +45,19 @@ function generateBaseConfig() {
         entry: path('src/app/service-worker.js'),
       }),
     ],
+  }
+
+  if (Env.production()) {
+    config.optimization = {
+      minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            format: { semicolons: false },
+          },
+        }),
+      ],
+    }
   }
 
   if (Env.sourceMapsEnabled() && Env.development()) {
