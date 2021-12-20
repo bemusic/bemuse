@@ -249,10 +249,7 @@ async function findVideoUrl(song: Song, assets: LoadSpec['assets']) {
     const replaceExtension = (name: string, ext: string) =>
       name.replace(extensionRegExp, ext)
     const filesToTry: string[] = []
-    if (/\.(?:mp4)$/.test(song.video_file)) {
-      filesToTry.push(song.video_file)
-      filesToTry.push(replaceExtension(song.video_file, '.webm'))
-    } else if (/\.(?:webm)$/.test(song.video_file)) {
+    if (/\.webm$/i.test(song.video_file)) {
       filesToTry.push(song.video_file)
       filesToTry.push(replaceExtension(song.video_file, '.mp4'))
     } else if (extensionRegExp.test(song.video_file)) {
