@@ -8,8 +8,57 @@
   left: 0;
   font-size: 18px;
 
-  & > h1 {
+  &のheader {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 50px;
+    left: 0;
+    background-color: #e34e7a;
+    display: flex;
+    align-items: center;
+    padding: 0 1em;
+  }
+
+  &のheader > h1 {
     margin: 0;
-    font-size: 1em;
+    font-size: 20px;
+    font-weight: normal;
+  }
+
+  &のheader > h1 > strong {
+    font-weight: 600;
+  }
+
+  &のmain {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: flex-start;
+  }
+}
+
+.PreviewInfo {
+  padding: 1em;
+  & > h2 {
+    margin: 0 0 0em;
+  }
+
+  &のkeyHints {
+    color: #8b8685;
+    font-size: 12px;
+  }
+
+  &のkeyHints > kbd {
+    font-family: inherit;
+    padding: 0.1em 0.2em;
+    background: #222;
+    border: 1px solid #333;
+    border-radius: 4px;
+    box-shadow: 0 3px 0 #333;
+    display: inline-block;
   }
 }
