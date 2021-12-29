@@ -1,5 +1,5 @@
 import './BemusePreviewer.scss'
-import React, { useEffect } from 'react'
+import React, { ReactNode, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { PreviewCanvas } from './PreviewCanvas'
 import { PreviewInfo } from './PreviewInfo'
@@ -25,35 +25,23 @@ async function loadPreview() {
     }
   }
   console.log(directoryHandle)
-  console.log(chartHandles)
+
+  const chartHandle =
+    chartHandles.find((c) => c.name === data.chartFileName) || chartHandles[0]
+  if (!chartHandle) {
+    throw new Error('No chart found.')
+  }
+  console.log(chartHandle)
 }
 
 async function ensureReadable(directoryHandle: FileSystemDirectoryHandle) {
   try {
     await directoryHandle.requestPermission({ mode: 'read' })
   } catch (error) {
-    await new Promise<void>((resolve) => {
-      const container = document.createElement('div')
-      WARP.appendChild(container)
-      const onClick = () => {
-        WARP.removeChild(container)
-        ReactDOM.unmountComponentAtNode(container)
-        resolve()
-      }
-      const popup = (
-        <ModalPopup>
-          <Panel title='File system access required'>
-            <VBox padding={'1em'} gap={'0.75em'}>
-              <div>Please allow access to the filesystem.</div>
-              <div style={{ textAlign: 'right' }}>
-                <Button onClick={onClick}>OK</Button>
-              </div>
-            </VBox>
-          </Panel>
-        </ModalPopup>
-      )
-      ReactDOM.render(popup, container)
-    })
+    await showAlert(
+      'File system access required',
+      'Please allow access to the filesystem.'
+    )
     await directoryHandle.requestPermission({ mode: 'read' })
   }
 }
@@ -83,4 +71,28 @@ export const BemusePreviewer = () => {
       </div>
     </div>
   )
+}
+async function showAlert(title: string, message: ReactNode) {
+  await new Promise<void>((resolve) => {
+    const container = document.createElement('div')
+    WARP.appendChild(container)
+    const onClick = () => {
+      WARP.removeChild(container)
+      ReactDOM.unmountComponentAtNode(container)
+      resolve()
+    }
+    const popup = (
+      <ModalPopup>
+        <Panel title={title}>
+          <VBox padding={'1em'} gap={'0.75em'}>
+            <div>{message}</div>
+            <div style={{ textAlign: 'right' }}>
+              <Button onClick={onClick}>OK</Button>
+            </div>
+          </VBox>
+        </Panel>
+      </ModalPopup>
+    )
+    ReactDOM.render(popup, container)
+  })
 }
