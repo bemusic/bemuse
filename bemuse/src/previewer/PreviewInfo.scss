@@ -1,0 +1,21 @@
+.PreviewInfo {
+  padding: 1em;
+  & > h2 {
+    margin: 0 0 0em;
+  }
+
+  &のkeyHints {
+    color: #8b8685;
+    font-size: 12px;
+  }
+
+  &のkeyHints > kbd {
+    font-family: inherit;
+    padding: 0.1em 0.2em;
+    background: #222;
+    border: 1px solid #333;
+    border-radius: 4px;
+    box-shadow: 0 3px 0 #333;
+    display: inline-block;
+  }
+}
