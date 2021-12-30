@@ -5,7 +5,10 @@ import { PlayerOptions, NotechartInput, ExpertJudgmentWindow } from '../types'
 
 // Returns a new Notechart from a BMSChart.
 export function fromBMSChart(bms: BMS.BMSChart, playerOptions: PlayerOptions) {
-  let notes = BMS.Notes.fromBMSChart(bms).all()
+  const mapping = playerOptions.double
+    ? BMS.Notes.CHANNEL_MAPPING.IIDX_DP
+    : BMS.Notes.CHANNEL_MAPPING.IIDX_P1
+  let notes = BMS.Notes.fromBMSChart(bms, { mapping }).all()
   let timing = BMS.Timing.fromBMSChart(bms)
   let keysounds = BMS.Keysounds.fromBMSChart(bms)
   let songInfo = BMS.SongInfo.fromBMSChart(bms)

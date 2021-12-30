@@ -88,14 +88,28 @@ function timingForBmson(bmson: Bmson) {
 }
 
 /**
+ * Options for generating musical score
+ */
+export interface MusicalScoreOptions {
+  /**
+   * Double-play mode — in addition to channels 1-7 and SC, 8-14 and SC2 will be added.
+   */
+  double?: boolean
+}
+
+/**
  * Returns the musical score (comprised of BMS.Notes and BMS.Keysounds).
  * @param {Bmson} bmson
  */
-export function musicalScoreForBmson(bmson: Bmson) {
+export function musicalScoreForBmson(
+  bmson: Bmson,
+  options: MusicalScoreOptions = {}
+) {
   let timing = timingForBmson(bmson)
   let { notes, keysounds } = notesDataAndKeysoundsDataForBmsonAndTiming(
     bmson,
-    timing
+    timing,
+    options
   )
   return {
     /**
@@ -122,7 +136,8 @@ function soundChannelsForBmson(bmson: Bmson) {
 
 function notesDataAndKeysoundsDataForBmsonAndTiming(
   bmson: Bmson,
-  timing: BMS.Timing
+  timing: BMS.Timing,
+  options: MusicalScoreOptions
 ) {
   let nextKeysoundNumber = 1
   let beatForPulse = beatForPulseForBmson(bmson)
@@ -142,7 +157,7 @@ function notesDataAndKeysoundsDataForBmsonAndTiming(
 
       for (let { x, y, l } of sortedNotes) {
         let note: BMS.BMSNote = {
-          column: getColumn(x),
+          column: getColumn(x, options),
           beat: beatForPulse(y),
           keysound: keysoundId,
           endBeat: undefined,
@@ -169,7 +184,7 @@ export function beatForPulseForBmson(bmson: Bmson) {
   return (y: number) => y / resolution
 }
 
-function getColumn(x: any) {
+function getColumn(x: any, options: MusicalScoreOptions) {
   switch (x) {
     case 1:
       return '1'
@@ -189,24 +204,25 @@ function getColumn(x: any) {
       return 'SC'
   }
 
-  // DP
-  switch (x) {
-    case 9:
-      return '8'
-    case 10:
-      return '9'
-    case 11:
-      return '10'
-    case 12:
-      return '11'
-    case 13:
-      return '12'
-    case 14:
-      return '13'
-    case 15:
-      return '14'
-    case 16:
-      return 'SC2'
+  if (options.double) {
+    switch (x) {
+      case 9:
+        return '8'
+      case 10:
+        return '9'
+      case 11:
+        return '10'
+      case 12:
+        return '11'
+      case 13:
+        return '12'
+      case 14:
+        return '13'
+      case 15:
+        return '14'
+      case 16:
+        return 'SC2'
+    }
   }
   return undefined
 }

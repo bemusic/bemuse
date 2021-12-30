@@ -33,6 +33,7 @@ export interface NotechartImages {
 
 export interface PlayerOptions {
   scratch: 'off' | 'left' | 'right'
+  double?: boolean
 }
 
 export interface GameEvent {
