@@ -188,6 +188,26 @@ function getColumn(x: any) {
     case 8:
       return 'SC'
   }
+
+  // DP
+  switch (x) {
+    case 9:
+      return '8'
+    case 10:
+      return '9'
+    case 11:
+      return '10'
+    case 12:
+      return '11'
+    case 13:
+      return '12'
+    case 14:
+      return '13'
+    case 15:
+      return '14'
+    case 16:
+      return 'SC2'
+  }
   return undefined
 }
 
