@@ -10,6 +10,7 @@ import ModalPopup from 'bemuse/ui/ModalPopup'
 import Panel from 'bemuse/ui/Panel'
 import Button from 'bemuse/ui/Button'
 import VBox from 'bemuse/ui/VBox'
+import NotechartLoader from 'bemuse-notechart/lib/loader'
 
 const PREVIEWER_FS_HANDLE_KEYVAL_KEY = 'previewer-fs-handle'
 
@@ -31,7 +32,15 @@ async function loadPreview() {
   if (!chartHandle) {
     throw new Error('No chart found.')
   }
-  console.log(chartHandle)
+
+  const notechartLoader = new NotechartLoader()
+  const arrayBuffer = await (await chartHandle.handle.getFile()).arrayBuffer()
+  const notechart = await notechartLoader.load(
+    arrayBuffer,
+    { name: chartHandle.name },
+    { scratch: 'left' }
+  )
+  console.log(notechart)
 }
 
 async function ensureReadable(directoryHandle: FileSystemDirectoryHandle) {
