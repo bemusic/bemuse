@@ -1,14 +1,21 @@
 import './BemusePreviewer.scss'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 import { PreviewCanvas } from './PreviewCanvas'
 import { PreviewInfo } from './PreviewInfo'
 import { PreviewFileDropHandler } from './PreviewFileDropHandler'
 import { loadPreview, setPreview } from './PreviewLoader'
 import { createNullNotechartPreview } from './NotechartPreview'
+import { previewStateReducer } from './PreviewState'
+import { PreviewKeyHandler } from './PreviewKeyHandler'
 
 export const BemusePreviewer = () => {
+  const [previewState, dispatch] = useReducer(previewStateReducer, {
+    currentTime: 50,
+    hiSpeed: 1,
+  })
+
   const [notechartPreview, setNotechartPreview] = useState(
-    createNullNotechartPreview()
+    createNullNotechartPreview
   )
 
   useEffect(() => {
@@ -28,9 +35,16 @@ export const BemusePreviewer = () => {
         </h1>
       </div>
       <div className='BemusePreviewerのmain'>
-        <PreviewCanvas />
-        <PreviewInfo notechartPreview={notechartPreview} />
+        <PreviewCanvas
+          notechartPreview={notechartPreview}
+          previewState={previewState}
+        />
+        <PreviewInfo
+          notechartPreview={notechartPreview}
+          previewState={previewState}
+        />
         <PreviewFileDropHandler onDrop={onDrop} />
+        <PreviewKeyHandler dispatch={dispatch} />
       </div>
     </div>
   )

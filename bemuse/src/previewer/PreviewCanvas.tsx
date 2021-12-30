@@ -1,4 +1,7 @@
+import _ from 'lodash'
 import React, { useEffect, useMemo } from 'react'
+import { NotechartPreview } from './NotechartPreview'
+import { PreviewState } from './PreviewState'
 
 const noteSize = {
   s: 61,
@@ -7,20 +10,80 @@ const noteSize = {
   w: 34,
 }
 
-export const PreviewCanvas: React.FC<{}> = () => {
-  const keymap = '16s 11 12b 13 14g 15 18b 19 - 21 22b 23 24g 25 28b 29 26s'
-  const canvasRef = React.useRef<HTMLCanvasElement>(null)
-  const widths = useMemo(() => {
-    return keymap.split(' ').map((c) => {
-      if (c.endsWith('s')) return noteSize.s
-      if (c.endsWith('b')) return noteSize.b
-      if (c.endsWith('g')) return noteSize.g
-      if (c === '-') return 72
-      return noteSize.w
+export type PreviewColumn = {
+  x: number
+  width: number
+  column: string | null
+  sprite?: PreviewNoteSprite
+}
+
+export type PreviewNoteSprite = {
+  x: number
+  width: number
+  highlight?: boolean
+}
+
+const sprites = {
+  scratch: { x: 0, width: 61 },
+  white: { x: 62, width: 34, highlight: true },
+  blue: { x: 97, width: 26 },
+  green: { x: 159, width: 26 },
+}
+
+class PreviewLayout {
+  columns: PreviewColumn[]
+  totalWidth: number
+  columnMapping: Record<string, PreviewColumn>
+  constructor(keymap: string) {
+    let nextX = 0
+    const column = (width: number, name: string | null): PreviewColumn => {
+      const x = nextX
+      nextX += width + 1
+      return { x, width, column: name }
+    }
+    const noteColumn = (
+      sprite: PreviewNoteSprite,
+      name: string
+    ): PreviewColumn => {
+      return { ...column(sprite.width, name), sprite }
+    }
+    this.columns = keymap.split(' ').map((c) => {
+      if (c === '-') return column(72, null)
+      if (c.endsWith('s')) return noteColumn(sprites.scratch, c.slice(0, -1))
+      if (c.endsWith('b')) return noteColumn(sprites.blue, c.slice(0, -1))
+      if (c.endsWith('g')) return noteColumn(sprites.green, c.slice(0, -1))
+      return noteColumn(sprites.white, c)
     })
-  }, [keymap])
-  const width = widths.reduce((a, b) => a + 1 + b, 1)
-  const height = 550
+    this.totalWidth = nextX
+    this.columnMapping = _.fromPairs(
+      this.columns.filter((c) => c.column != null).map((c) => [c.column, c])
+    )
+  }
+}
+
+export const PreviewCanvas: React.FC<{
+  previewState: PreviewState
+  notechartPreview: NotechartPreview
+}> = (props) => {
+  const keymap = 'SCs 1 2b 3 4g 5 6b 79 - 8 9b 10 11g 12 13b 14 SC2s'
+  const notesImage = useImage('/skins/default/Note/DX/Note.png')
+  const canvasRef = React.useRef<HTMLCanvasElement>(null)
+
+  const layout = useMemo(() => new PreviewLayout(keymap), [keymap])
+  const width = layout.totalWidth
+  const height = 480
+
+  const notes = useMemo(() => {
+    return props.notechartPreview.getVisibleNotes(
+      props.previewState.currentTime,
+      props.previewState.hiSpeed
+    )
+  }, [
+    props.notechartPreview,
+    props.previewState.currentTime,
+    props.previewState.hiSpeed,
+  ])
+
   useEffect(() => {
     const ctx = canvasRef.current?.getContext('2d')
     if (!ctx) return
@@ -30,14 +93,37 @@ export const PreviewCanvas: React.FC<{}> = () => {
     ctx.fillRect(0, 0, width, height)
 
     // lines
-    ctx.fillStyle = '#555'
-    let x = 0
-    for (const w of widths) {
-      ctx.fillRect(x, 0, 1, height)
-      x += w + 1
+    for (const column of layout.columns) {
+      ctx.fillStyle = '#555'
+      ctx.fillRect(column.x, 0, 1, height)
+      if (column.sprite?.highlight) {
+        ctx.fillStyle = '#111'
+        ctx.fillRect(column.x + 1, 0, column.width, height)
+      }
     }
-    ctx.fillRect(x, 0, 1, height)
-  }, [width, height, widths])
+    ctx.fillRect(layout.totalWidth, 0, 1, height)
+
+    if (notesImage) {
+      for (const note of notes) {
+        const column = layout.columnMapping[note.gameNote.column]
+        if (column?.sprite) {
+          const y = Math.round(height - note.y * height) - 12
+          ctx.drawImage(
+            notesImage,
+            column.sprite.x,
+            0,
+            column.width,
+            12,
+            column.x + 1,
+            y,
+            column.width,
+            12
+          )
+        }
+      }
+    }
+  }, [width, height, layout, notes, notesImage])
+
   return (
     <canvas
       ref={canvasRef}
@@ -48,4 +134,17 @@ export const PreviewCanvas: React.FC<{}> = () => {
       }}
     />
   )
+}
+
+function useImage(src: string) {
+  const [image, setImage] = React.useState<HTMLImageElement | null>(null)
+  useEffect(() => {
+    const img = new Image()
+    img.src = src
+    img.onload = () => setImage(img)
+    return () => {
+      img.onload = null
+    }
+  }, [src])
+  return image
 }

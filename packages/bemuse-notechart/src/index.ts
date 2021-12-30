@@ -11,6 +11,8 @@ import {
   NotechartImages,
 } from './types'
 
+export * from './types'
+
 /**
  * A notechart holds every info about a single player's note chart that the
  * game will ever need.
