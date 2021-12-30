@@ -3,13 +3,6 @@ import React, { useEffect, useMemo } from 'react'
 import { NotechartPreview } from './NotechartPreview'
 import { PreviewState } from './PreviewState'
 
-const noteSize = {
-  s: 61,
-  b: 26,
-  g: 26,
-  w: 34,
-}
-
 export type PreviewColumn = {
   x: number
   width: number
@@ -70,7 +63,7 @@ export const PreviewCanvas: React.FC<{
   const canvasRef = React.useRef<HTMLCanvasElement>(null)
 
   const layout = useMemo(() => new PreviewLayout(keymap), [keymap])
-  const width = layout.totalWidth
+  const width = layout.totalWidth + 1
   const height = 480
 
   const notes = useMemo(() => {
