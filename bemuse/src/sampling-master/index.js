@@ -153,8 +153,8 @@ class SoundGroup {
 //
 // You don't invoke this constructor directly; it is invoked by
 // `SamplingMaster#create`.
-class Sample {
-  constructor(samplingMaster, audioBuffer) {
+export class Sample {
+  constructor(samplingMaster, /** @type {AudioBuffer} */ audioBuffer) {
     this._master = samplingMaster
     this._buffer = audioBuffer
   }
@@ -168,6 +168,10 @@ class Sample {
   destroy() {
     this._master = null
     this._buffer = null
+  }
+
+  get duration() {
+    return this._buffer.duration
   }
 }
 
