@@ -1,7 +1,11 @@
+import { showQuickPick } from 'bemuse/ui-dialogs'
 import { useEffect } from 'react'
 
 export const PreviewFileDropHandler: React.FC<{
-  onDrop: (handle: FileSystemDirectoryHandle) => void
+  onDrop: (
+    handle: FileSystemDirectoryHandle,
+    selectedChartFilename: string
+  ) => void
 }> = (props) => {
   useEffect(() => {
     const onDragOver = (e: DragEvent) => {
@@ -29,17 +33,21 @@ export const PreviewFileDropHandler: React.FC<{
         return
       }
       await handle.requestPermission({ mode: 'read' })
-      let numCharts = 0
+      const chartFiles: { filename: string; label: string }[] = []
       for await (let [name] of handle) {
         if (/\.(bms|bme|bml|bmson)$/i.test(name)) {
-          numCharts++
+          chartFiles.push({ filename: name, label: name })
         }
       }
-      if (!numCharts) {
+      if (chartFiles.length === 0) {
         alert('No BMS/bmson files found in folder.')
         return
       }
-      props.onDrop(handle)
+
+      const selectedChartFile = await showQuickPick(chartFiles, {
+        title: 'Select a chart file',
+      })
+      props.onDrop(handle, selectedChartFile.filename)
     }
     window.addEventListener('dragover', onDragOver)
     window.addEventListener('drop', onDrop)

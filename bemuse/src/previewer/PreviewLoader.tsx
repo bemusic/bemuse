@@ -9,8 +9,20 @@ const PREVIEWER_FS_HANDLE_KEYVAL_KEY = 'previewer-fs-handle'
 let getSamplingMaster = _.once(() => new SamplingMaster())
 const keysoundCache = new Map<string, Sample>()
 
-export async function loadPreview() {
-  const log = (message: string) => console.log(`[PreviewLoader] ${message}`)
+export async function getSavedPreviewInfo() {
+  const data = await get(PREVIEWER_FS_HANDLE_KEYVAL_KEY)
+  const chartFilename = data?.chartFilename
+  return chartFilename ? { chartFilename } : null
+}
+
+type LoadPreviewOptions = {
+  log: (message: string) => void
+}
+
+export async function loadPreview(loadOptions: LoadPreviewOptions) {
+  const log =
+    loadOptions.log ||
+    ((message: string) => console.log(`[PreviewLoader] ${message}`))
 
   log('Loading directory handle from IndexedDB')
   const data = await get(PREVIEWER_FS_HANDLE_KEYVAL_KEY)
@@ -29,7 +41,7 @@ export async function loadPreview() {
   console.log(directoryHandle)
 
   const chartHandle =
-    chartHandles.find((c) => c.name === data.chartFileName) || chartHandles[0]
+    chartHandles.find((c) => c.name === data.chartFilename) || chartHandles[0]
   if (!chartHandle) {
     throw new Error('No chart found.')
   }
@@ -107,8 +119,12 @@ async function ensureReadable(directoryHandle: FileSystemDirectoryHandle) {
   }
 }
 
-export async function setPreview(handle: FileSystemDirectoryHandle) {
+export async function setPreview(
+  handle: FileSystemDirectoryHandle,
+  selectedChartFilename: string
+) {
   await set(PREVIEWER_FS_HANDLE_KEYVAL_KEY, {
     directory: handle,
+    chartFilename: selectedChartFilename,
   })
 }

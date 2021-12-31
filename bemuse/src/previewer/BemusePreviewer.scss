@@ -40,4 +40,16 @@
     display: flex;
     align-items: flex-start;
   }
+
+  &のloading {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #0008;
+    color: #fff;
+    text-align: left;
+    padding: 2em;
+  }
 }

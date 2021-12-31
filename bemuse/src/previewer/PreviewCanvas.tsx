@@ -97,9 +97,12 @@ export const PreviewCanvas: React.FC<{
     ctx.fillStyle = '#555'
     ctx.fillRect(layout.totalWidth, 0, 1, height)
 
-    for (const barLineY of viewport.visibleBarLines) {
-      const y = Math.round(height - barLineY * height)
+    ctx.textAlign = 'center'
+    ctx.font = 'bold 18px sans-serif'
+    for (const barLine of viewport.visibleBarLines) {
+      const y = Math.round(height - barLine.y * height)
       ctx.fillRect(0, y - 1, layout.totalWidth, 1)
+      ctx.fillText('#' + barLine.measureNumber, layout.totalWidth / 2, y - 4)
     }
 
     if (notesImage) {
@@ -117,7 +120,7 @@ export const PreviewCanvas: React.FC<{
               column.width,
               8,
               column.x + 1,
-              y - 4,
+              y - 8,
               column.width,
               8
             )
@@ -132,7 +135,7 @@ export const PreviewCanvas: React.FC<{
               column.width,
               8
             )
-            const noteHeight = y - endY
+            const noteHeight = y - endY - 4
             if (noteHeight > 0) {
               ctx.drawImage(
                 notesImage,

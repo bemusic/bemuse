@@ -16,11 +16,13 @@ export interface NotechartPreview {
   getCurrentScroll(currentTime: number): number
   getCurrentSpeed(currentTime: number): number
   play(delegate: NotechartPreviewPlayerDelegate): NotechartPreviewPlayer
+  measureToSeconds(measure: number): number
+  getMeasureJumpTarget(currentTime: number, direction: number): number
 }
 
 export interface PreviewViewport {
   visibleNotes: VisibleNote[]
-  visibleBarLines: number[]
+  visibleBarLines: VisibleBarLine[]
 }
 
 export interface NotechartPreviewPlayer {
@@ -38,6 +40,11 @@ export type VisibleNote = {
   y: number
   long?: { endY: number; active: boolean }
   gameNote: GameNote
+}
+
+export type VisibleBarLine = {
+  y: number
+  measureNumber: number
 }
 
 export function createNullNotechartPreview(): NotechartPreview {
@@ -59,6 +66,8 @@ export function createNullNotechartPreview(): NotechartPreview {
       })
       return { stop: () => {} }
     },
+    measureToSeconds: () => 0,
+    getMeasureJumpTarget: () => 0,
   }
 }
 
@@ -145,12 +154,12 @@ class BemuseNotechartPreview implements NotechartPreview {
       }
       visibleNotes.push(visibleNote)
     }
-    const visibleBarLines: number[] = []
-    for (const barLine of this._notechart.barLines) {
+    const visibleBarLines: VisibleBarLine[] = []
+    for (const [i, barLine] of this._notechart.barLines.entries()) {
       if (barLine.position > position + windowSize * 1.5) continue
       if (barLine.position < position - windowSize * 0.5) continue
       const delta = barLine.position - position
-      visibleBarLines.push(delta / windowSize)
+      visibleBarLines.push({ y: delta / windowSize, measureNumber: i })
     }
     return { visibleNotes, visibleBarLines }
   }
@@ -165,6 +174,27 @@ class BemuseNotechartPreview implements NotechartPreview {
 
   getCurrentSpeed(currentTime: number): number {
     return this._notechart.spacingAtBeat(this._secondsToBeat(currentTime))
+  }
+
+  measureToSeconds(measure: number): number {
+    const beat = this._notechart.measureToBeat(measure)
+    return this._notechart.beatToSeconds(beat)
+  }
+
+  getMeasureJumpTarget(currentTime: number, direction: number): number {
+    const beat = this._secondsToBeat(currentTime)
+    const closestBarLine = _.minBy(this._notechart.barLines, (b) =>
+      Math.abs(b.beat - beat)
+    )
+    if (!closestBarLine) {
+      return currentTime
+    }
+    const index = this._notechart.barLines.indexOf(closestBarLine)
+    const target = this._notechart.barLines[index + direction]
+    if (!target) {
+      return currentTime
+    }
+    return target.time
   }
 
   private _secondsToBeat(currentTime: number) {
