@@ -78,7 +78,12 @@ export async function loadPreview() {
   console.log(samples)
 
   log('Loading preview')
-  const preview = createNotechartPreview(notechart, chartHandle.name)
+  const preview = createNotechartPreview(
+    notechart,
+    chartHandle.name,
+    master,
+    samples
+  )
   console.log(preview)
 
   return preview

@@ -1,4 +1,5 @@
-import Notechart, { GameNote } from 'bemuse-notechart'
+import Notechart, { GameNote, SoundedEvent } from 'bemuse-notechart'
+import SamplingMaster, { Sample } from 'bemuse/sampling-master'
 import _ from 'lodash'
 
 export interface NotechartPreview {
@@ -12,6 +13,18 @@ export interface NotechartPreview {
 
   getVisibleNotes(currentTime: number, hiSpeed: number): VisibleNote[]
   getCurrentBpm(currentTime: number): number
+  play(delegate: NotechartPreviewPlayerDelegate): NotechartPreviewPlayer
+}
+
+export interface NotechartPreviewPlayer {
+  stop(): void
+}
+
+export interface NotechartPreviewPlayerDelegate {
+  startTime: number
+
+  onFinish(): void
+  onTimeUpdate(currentTime: number): void
 }
 
 export type VisibleNote = {
@@ -28,21 +41,49 @@ export function createNullNotechartPreview(): NotechartPreview {
       'Drop a folder with BMS/bmson files into this window to preview it.',
     getVisibleNotes: () => [],
     getCurrentBpm: () => 0,
+    play: (delegate) => {
+      setTimeout(() => {
+        delegate.onFinish()
+      })
+      return { stop: () => {} }
+    },
   }
+}
+
+export type PreviewSoundSample = {
+  filename: string
+  sample: Sample | null
 }
 
 export function createNotechartPreview(
   notechart: Notechart,
-  filename: string
+  filename: string,
+  samplingMaster: SamplingMaster,
+  samples: PreviewSoundSample[]
 ): NotechartPreview {
-  return new BemuseNotechartPreview(notechart, filename)
+  return new BemuseNotechartPreview(
+    notechart,
+    filename,
+    samplingMaster,
+    samples
+  )
 }
 
 class BemuseNotechartPreview implements NotechartPreview {
   private _sortedGameNotes: GameNote[]
+  private _sortedSoundEvents: SoundedEvent[]
 
-  constructor(private _notechart: Notechart, private _filename: string) {
+  constructor(
+    private _notechart: Notechart,
+    private _filename: string,
+    private _samplingMaster: SamplingMaster,
+    private _samples: PreviewSoundSample[]
+  ) {
     this._sortedGameNotes = _.sortBy(this._notechart.notes, (e) => e.position)
+    this._sortedSoundEvents = _.sortBy(
+      [...this._notechart.notes, ...this._notechart.autos],
+      (e) => e.time
+    )
   }
 
   get duration() {
@@ -94,5 +135,14 @@ class BemuseNotechartPreview implements NotechartPreview {
 
   getCurrentBpm(currentTime: number): number {
     return this._notechart.bpmAtBeat(this._notechart.secondsToBeat(currentTime))
+  }
+
+  play(delegate: NotechartPreviewPlayerDelegate) {
+    this._samplingMaster.unmute()
+    console.log(this._sortedSoundEvents)
+    setTimeout(() => {
+      delegate.onFinish()
+    })
+    return { stop: () => {} }
   }
 }

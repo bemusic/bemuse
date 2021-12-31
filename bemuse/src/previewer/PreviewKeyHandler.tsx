@@ -6,12 +6,17 @@ export const PreviewKeyHandler: React.FC<{
 }> = (props) => {
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
+      console.log(e.key)
       if (e.key === 'ArrowUp') {
         props.dispatch({ speedUp: true })
         e.preventDefault()
       }
       if (e.key === 'ArrowDown') {
         props.dispatch({ speedDown: true })
+        e.preventDefault()
+      }
+      if (e.key === ' ') {
+        props.dispatch({ play: true })
         e.preventDefault()
       }
     }

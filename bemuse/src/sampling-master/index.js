@@ -47,6 +47,12 @@ export class SamplingMaster {
     return this._destination
   }
 
+  // The current time
+  // See: https://webaudio.github.io/web-audio-api/#dom-baseaudiocontext-currenttime
+  get currentTime() {
+    return this._audioContext.currentTime
+  }
+
   // Destroys this SamplingMaster, make it unusable.
   destroy() {
     if (this._destroyed) return
