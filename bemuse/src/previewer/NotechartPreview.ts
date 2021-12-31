@@ -19,6 +19,8 @@ export interface NotechartPreview {
   play(delegate: NotechartPreviewPlayerDelegate): NotechartPreviewPlayer
   measureToSeconds(measure: number): number
   getMeasureJumpTarget(currentTime: number, direction: number): number
+  getComboInfo(currentTime: number): ComboInfo | null
+  getMaxCombo(): number
 }
 
 export interface PreviewViewport {
@@ -31,6 +33,11 @@ export interface MeasureInfo {
   measureNumber: number
   measureStartBeat: number
   measureEndBeat?: number
+}
+
+export interface ComboInfo {
+  comboTime: number
+  comboCount: number
 }
 
 export interface NotechartPreviewPlayer {
@@ -86,6 +93,8 @@ export function createNullNotechartPreview(): NotechartPreview {
     },
     measureToSeconds: () => 0,
     getMeasureJumpTarget: () => 0,
+    getComboInfo: () => null,
+    getMaxCombo: () => 0,
   }
 }
 
@@ -112,6 +121,7 @@ class BemuseNotechartPreview implements NotechartPreview {
   private _sortedGameNotes: GameNote[]
   private _sortedSoundEvents: SoundedEvent[]
   private _secondsToBeatCache?: { seconds: number; beat: number }
+  private _comboPreviewer: ComboPreviewer
 
   constructor(
     private _notechart: Notechart,
@@ -124,6 +134,7 @@ class BemuseNotechartPreview implements NotechartPreview {
       [...this._notechart.notes, ...this._notechart.autos],
       (e) => e.time
     )
+    this._comboPreviewer = new ComboPreviewer(this._notechart.notes)
   }
 
   get duration() {
@@ -232,6 +243,14 @@ class BemuseNotechartPreview implements NotechartPreview {
       return currentTime
     }
     return target.time
+  }
+
+  getComboInfo(currentTime: number): ComboInfo | null {
+    return this._comboPreviewer.getComboInfo(currentTime)
+  }
+
+  getMaxCombo(): number {
+    return this._comboPreviewer.getMaxCombo()
   }
 
   private _secondsToBeat(currentTime: number) {
@@ -358,5 +377,36 @@ class BemuseNotechartPreviewPlayer implements NotechartPreviewPlayer {
       playing.destroy()
     }
     this._playingSamples.clear()
+  }
+}
+
+class ComboPreviewer {
+  private _events: number[]
+
+  constructor(notes: GameNote[]) {
+    this._events = _.sortBy(
+      _.flatMap(notes, (note) => {
+        if (note.end) {
+          return [note.time, note.end.time]
+        } else {
+          return [note.time]
+        }
+      }),
+      _.identity
+    )
+  }
+  getComboInfo(time: number): ComboInfo | null {
+    const index = _.sortedLastIndex(this._events, time)
+    if (index === 0) {
+      return null
+    }
+    const prev = this._events[index - 1]
+    return {
+      comboCount: index,
+      comboTime: prev,
+    }
+  }
+  getMaxCombo(): number {
+    return this._events.length
   }
 }

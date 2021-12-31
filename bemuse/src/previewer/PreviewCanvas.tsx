@@ -77,6 +77,12 @@ export const PreviewCanvas: React.FC<{
     props.previewState.hiSpeed,
   ])
 
+  const maxCombo = props.notechartPreview.getMaxCombo()
+
+  const comboInfo = useMemo(() => {
+    return props.notechartPreview.getComboInfo(props.previewState.currentTime)
+  }, [props.notechartPreview, props.previewState.currentTime])
+
   useEffect(() => {
     const ctx = canvasRef.current?.getContext('2d')
     if (!ctx) return
@@ -165,7 +171,31 @@ export const PreviewCanvas: React.FC<{
         }
       }
     }
-  }, [width, height, layout, viewport, notesImage])
+
+    if (comboInfo) {
+      const deltaTime = props.previewState.currentTime - comboInfo.comboTime
+      const opacity = Math.max(0, 1 - deltaTime)
+      if (opacity > 0) {
+        ctx.fillStyle = 'rgba(255, 255, 255, ' + opacity + ')'
+        ctx.font = 'bold 36px sans-serif'
+        ctx.textAlign = 'center'
+        ctx.fillText(
+          `${comboInfo.comboCount} / ${maxCombo}`,
+          layout.totalWidth / 2,
+          height - 64 - opacity ** 8 * 8
+        )
+      }
+    }
+  }, [
+    width,
+    height,
+    layout,
+    viewport,
+    notesImage,
+    maxCombo,
+    comboInfo,
+    props.previewState.currentTime,
+  ])
 
   return (
     <canvas
