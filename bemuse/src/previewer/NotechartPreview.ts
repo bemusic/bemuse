@@ -140,9 +140,95 @@ class BemuseNotechartPreview implements NotechartPreview {
   play(delegate: NotechartPreviewPlayerDelegate) {
     this._samplingMaster.unmute()
     console.log(this._sortedSoundEvents)
-    setTimeout(() => {
-      delegate.onFinish()
-    })
-    return { stop: () => {} }
+    console.log(this._notechart.keysounds)
+    const player = new BemuseNotechartPreviewPlayer(
+      this._samplingMaster,
+      this._sortedSoundEvents,
+      this._notechart.keysounds,
+      this._samples,
+      delegate
+    )
+    player.play()
+    return player
+  }
+}
+
+class BemuseNotechartPreviewPlayer implements NotechartPreviewPlayer {
+  private _cursor = 0
+  private _sampleMap = new Map<string, Sample>()
+  private _startAudioTime = 0
+  private _startSongTime = 0
+  private _stopped = false
+
+  constructor(
+    private _samplingMaster: SamplingMaster,
+    private _sortedSoundEvents: SoundedEvent[],
+    private _keysounds: Record<string, string>,
+    _samples: PreviewSoundSample[],
+    private _delegate: NotechartPreviewPlayerDelegate
+  ) {
+    for (const { filename, sample } of _samples) {
+      if (sample) {
+        this._sampleMap.set(filename, sample)
+      }
+    }
+  }
+
+  play() {
+    this._startAudioTime = this._samplingMaster.currentTime
+    this._startSongTime = this._delegate.startTime
+    const frame = () => {
+      if (this._stopped) return
+      this._advance()
+      requestAnimationFrame(frame)
+    }
+    requestAnimationFrame(frame)
+  }
+
+  private _advance() {
+    const currentTime =
+      this._samplingMaster.currentTime -
+      this._startAudioTime +
+      this._startSongTime
+    for (; this._cursor < this._sortedSoundEvents.length; this._cursor++) {
+      const nextEvent = this._sortedSoundEvents[this._cursor]
+      if (nextEvent.time > currentTime + 0.1) {
+        break
+      }
+
+      if (nextEvent.keysoundStart) {
+        // bmson’s "continue" notes do not trigger a new sound
+        continue
+      }
+
+      const keysound = nextEvent.keysound
+      const filename = this._keysounds[keysound.toLowerCase()]
+      if (!filename) {
+        continue
+      }
+
+      const sample = this._sampleMap.get(filename)
+      if (!sample) {
+        continue
+      }
+
+      let delay = 0
+      let offset = 0
+      if (nextEvent.time > currentTime) {
+        delay = nextEvent.time - currentTime
+      } else if (nextEvent.time < currentTime) {
+        offset = currentTime - nextEvent.time
+      }
+
+      if (offset >= sample.duration) {
+        continue
+      }
+      sample.play(delay, { start: offset })
+    }
+    this._delegate.onTimeUpdate(currentTime)
+  }
+
+  stop() {
+    this._stopped = true
   }
 }

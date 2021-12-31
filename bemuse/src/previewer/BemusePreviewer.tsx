@@ -73,11 +73,9 @@ function usePreviewPlayer(
       playerRef.current = notechartPreview.play({
         startTime: state.currentTime,
         onFinish: () => {
-          console.log('finish')
           dispatch({ playFinish: true })
         },
         onTimeUpdate: (t) => {
-          console.log('time update', t)
           dispatch({ updateTime: { time: t } })
         },
       })
