@@ -19,6 +19,7 @@ export const BarDot: React.FC<{
   </svg>
 )
 
+// Yoinked from StackOverflow: https://stackoverflow.com/a/18473154/559913
 function polarToCartesian(
   centerX: number,
   centerY: number,
@@ -33,6 +34,7 @@ function polarToCartesian(
   }
 }
 
+// Yoinked from StackOverflow: https://stackoverflow.com/a/18473154/559913
 function describeArc(
   x: number,
   y: number,
