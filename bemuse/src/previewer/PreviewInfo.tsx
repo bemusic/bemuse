@@ -107,7 +107,7 @@ const BarDots: React.FC<{ measureInfo: MeasureInfo }> = (props) => {
     dots.push(
       <BarDot
         key={dots.length}
-        fraction={dotCount > dotSize ? 1 : dotCount / dotSize}
+        fraction={dotCount > 1 ? 1 : dotCount}
         fill={filledDots > 0 ? '#e34e7a' : '#333'}
       />
     )
