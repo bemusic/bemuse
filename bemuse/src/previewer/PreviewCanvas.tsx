@@ -58,7 +58,7 @@ export const PreviewCanvas: React.FC<{
   previewState: PreviewState
   notechartPreview: NotechartPreview
 }> = (props) => {
-  const keymap = 'SCs 1 2b 3 4g 5 6b 79 - 8 9b 10 11g 12 13b 14 SC2s'
+  const keymap = 'SCs 1 2b 3 4g 5 6b 7 - 8 9b 10 11g 12 13b 14 SC2s'
   const notesImage = useImage('/skins/default/Note/DX/Note.png')
   const canvasRef = React.useRef<HTMLCanvasElement>(null)
 
