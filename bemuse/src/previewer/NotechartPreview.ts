@@ -48,11 +48,16 @@ export type VisibleBarLine = {
 }
 
 export function createNullNotechartPreview(): NotechartPreview {
+  const warning =
+    location.hostname !== 'bemuse.ninja'
+      ? ' [NOTE: Do not bookmark this URL because it is a preview and this URL will stop working in the future.]'
+      : ''
   return {
     duration: 0.99,
     name: 'No BMS/bmson loaded',
     description:
-      'Drop a folder with BMS/bmson files into this window to preview it.',
+      'Drop a folder with BMS/bmson files into this window to preview it.' +
+      warning,
     getViewport: () => ({
       visibleBarLines: [],
       visibleNotes: [],
