@@ -1,7 +1,8 @@
 import './PreviewInfo.scss'
 import React, { useMemo } from 'react'
-import { NotechartPreview } from './NotechartPreview'
+import { MeasureInfo, NotechartPreview } from './NotechartPreview'
 import { PreviewState } from './PreviewState'
+import { BarDot } from './BarDot'
 
 export const PreviewInfo: React.FC<{
   notechartPreview: NotechartPreview
@@ -9,6 +10,9 @@ export const PreviewInfo: React.FC<{
 }> = (props) => {
   const preview = props.notechartPreview
 
+  const measureInfo = useMemo(() => {
+    return props.notechartPreview.getMeasureInfo(props.previewState.currentTime)
+  }, [props.notechartPreview, props.previewState.currentTime])
   const bpm = useMemo(() => {
     return props.notechartPreview.getCurrentBpm(props.previewState.currentTime)
   }, [props.notechartPreview, props.previewState.currentTime])
@@ -24,13 +28,32 @@ export const PreviewInfo: React.FC<{
   }, [props.notechartPreview, props.previewState.currentTime])
   const hiSpeed = props.previewState.hiSpeed
   const format = (n: number) => n.toFixed(2)
+  const formatTime = (s: number) => {
+    return `${~~(s / 60)}:${(~~s % 60).toString().padStart(2, '0')}`
+  }
 
   return (
     <div className='PreviewInfo'>
       <h2>{preview.name}</h2>
       <p>{preview.description}</p>
       <table>
+        <col width={80} />
+        <col width={120} />
+        <col width={80} />
         <tbody>
+          <tr>
+            <th scope='row'>Time</th>
+            <td colSpan={2}>
+              {formatTime(props.previewState.currentTime)} /{' '}
+              {formatTime(props.notechartPreview.duration)}
+            </td>
+          </tr>
+          <tr>
+            <th scope='row'>Measure</th>
+            <td colSpan={2}>
+              <BarDots measureInfo={measureInfo} /> #{measureInfo.measureNumber}
+            </td>
+          </tr>
           <tr>
             <th scope='row'>#BPM</th>
             <td />
@@ -59,4 +82,37 @@ export const PreviewInfo: React.FC<{
       </p>
     </div>
   )
+}
+
+const BarDots: React.FC<{ measureInfo: MeasureInfo }> = (props) => {
+  const { measureInfo } = props
+  if (!measureInfo.measureEndBeat) return null
+  const measureSize = measureInfo.measureEndBeat - measureInfo.measureStartBeat
+  if (!measureSize) return null
+  let dotCount = measureSize
+  let dotSize = 1
+  while (dotCount >= 8) {
+    dotSize *= 2
+    dotCount /= 2
+  }
+  while (dotCount <= 2) {
+    dotSize /= 2
+    dotCount *= 2
+  }
+  const dots: React.ReactNode[] = []
+  let filledDots = Math.ceil(
+    (measureInfo.currentBeat - measureInfo.measureStartBeat) / dotSize
+  )
+  while (dotCount > 0) {
+    dots.push(
+      <BarDot
+        key={dots.length}
+        fraction={dotCount > dotSize ? 1 : dotCount / dotSize}
+        fill={filledDots > 0 ? '#e34e7a' : '#333'}
+      />
+    )
+    dotCount--
+    filledDots--
+  }
+  return <>{dots}</>
 }

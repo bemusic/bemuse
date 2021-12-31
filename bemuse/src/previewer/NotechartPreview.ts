@@ -12,6 +12,7 @@ export interface NotechartPreview {
   description: string
 
   getViewport(currentTime: number, hiSpeed: number): PreviewViewport
+  getMeasureInfo(currentTime: number): MeasureInfo
   getCurrentBpm(currentTime: number): number
   getCurrentScroll(currentTime: number): number
   getCurrentSpeed(currentTime: number): number
@@ -23,6 +24,13 @@ export interface NotechartPreview {
 export interface PreviewViewport {
   visibleNotes: VisibleNote[]
   visibleBarLines: VisibleBarLine[]
+}
+
+export interface MeasureInfo {
+  currentBeat: number
+  measureNumber: number
+  measureStartBeat: number
+  measureEndBeat?: number
 }
 
 export interface NotechartPreviewPlayer {
@@ -61,6 +69,11 @@ export function createNullNotechartPreview(): NotechartPreview {
     getViewport: () => ({
       visibleBarLines: [],
       visibleNotes: [],
+    }),
+    getMeasureInfo: () => ({
+      currentBeat: 0,
+      measureNumber: 0,
+      measureStartBeat: 0,
     }),
     getCurrentBpm: () => 0,
     getCurrentScroll: () => 0,
@@ -167,6 +180,25 @@ class BemuseNotechartPreview implements NotechartPreview {
       visibleBarLines.push({ y: delta / windowSize, measureNumber: i })
     }
     return { visibleNotes, visibleBarLines }
+  }
+
+  getMeasureInfo(currentTime: number): MeasureInfo {
+    const beat = this._secondsToBeat(currentTime)
+    let currentMeasure = 0
+    let currentMeasureStart = 0
+    for (const [i, barLine] of this._notechart.barLines.entries()) {
+      if (beat < barLine.beat) {
+        break
+      }
+      currentMeasure = i
+      currentMeasureStart = barLine.beat
+    }
+    return {
+      currentBeat: beat,
+      measureNumber: currentMeasure,
+      measureStartBeat: currentMeasureStart,
+      measureEndBeat: this._notechart.barLines[currentMeasure + 1]?.beat,
+    }
   }
 
   getCurrentBpm(currentTime: number): number {
