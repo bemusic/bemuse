@@ -1,3 +1,4 @@
+import { isModalActive } from 'bemuse/ui-dialogs'
 import { useEffect } from 'react'
 import { PreviewAction } from './PreviewState'
 
@@ -6,6 +7,7 @@ export const PreviewKeyHandler: React.FC<{
 }> = (props) => {
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
+      if (isModalActive()) return
       console.log(e.key)
       if (e.key === 'ArrowUp') {
         props.dispatch({ speedUp: true })

@@ -4,6 +4,7 @@ import React, { forwardRef } from 'react'
 const Button = forwardRef<
   HTMLButtonElement,
   {
+    children?: React.ReactNode
     onClick?: React.DOMAttributes<HTMLButtonElement>['onClick']
   }
 >(({ children, onClick }, ref) => (
