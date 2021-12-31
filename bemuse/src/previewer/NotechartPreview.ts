@@ -11,9 +11,14 @@ export interface NotechartPreview {
   name: string
   description: string
 
-  getVisibleNotes(currentTime: number, hiSpeed: number): VisibleNote[]
+  getViewport(currentTime: number, hiSpeed: number): PreviewViewport
   getCurrentBpm(currentTime: number): number
   play(delegate: NotechartPreviewPlayerDelegate): NotechartPreviewPlayer
+}
+
+export interface PreviewViewport {
+  visibleNotes: VisibleNote[]
+  visibleBarLines: number[]
 }
 
 export interface NotechartPreviewPlayer {
@@ -29,7 +34,7 @@ export interface NotechartPreviewPlayerDelegate {
 
 export type VisibleNote = {
   y: number
-  long?: { height: number }
+  long?: { endY: number }
   gameNote: GameNote
 }
 
@@ -39,7 +44,10 @@ export function createNullNotechartPreview(): NotechartPreview {
     name: 'No BMS/bmson loaded',
     description:
       'Drop a folder with BMS/bmson files into this window to preview it.',
-    getVisibleNotes: () => [],
+    getViewport: () => ({
+      visibleBarLines: [],
+      visibleNotes: [],
+    }),
     getCurrentBpm: () => 0,
     play: (delegate) => {
       setTimeout(() => {
@@ -98,7 +106,7 @@ class BemuseNotechartPreview implements NotechartPreview {
     return this._notechart.songInfo.title
   }
 
-  getVisibleNotes(currentTime: number, hiSpeed: number): VisibleNote[] {
+  getViewport(currentTime: number, hiSpeed: number): PreviewViewport {
     const beat = this._notechart.secondsToBeat(currentTime)
     const position = this._notechart.beatToPosition(beat)
     const speed = this._notechart.spacingAtBeat(beat)
@@ -124,13 +132,20 @@ class BemuseNotechartPreview implements NotechartPreview {
         y,
       }
       if (gameNote.end) {
-        const endDelta = gameNote.end.position - gameNote.position
+        const endDelta = gameNote.end.position - position
         const endY = endDelta / windowSize
-        visibleNote.long = { height: endY - y }
+        visibleNote.long = { endY }
       }
       visibleNotes.push(visibleNote)
     }
-    return visibleNotes
+    const visibleBarLines: number[] = []
+    for (const barLine of this._notechart.barLines) {
+      if (barLine.position > position + windowSize * 1.5) continue
+      if (barLine.position < position - windowSize * 0.5) continue
+      const delta = barLine.position - position
+      visibleBarLines.push(delta / windowSize)
+    }
+    return { visibleNotes, visibleBarLines }
   }
 
   getCurrentBpm(currentTime: number): number {

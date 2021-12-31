@@ -66,8 +66,8 @@ export const PreviewCanvas: React.FC<{
   const width = layout.totalWidth + 1
   const height = 480
 
-  const notes = useMemo(() => {
-    return props.notechartPreview.getVisibleNotes(
+  const viewport = useMemo(() => {
+    return props.notechartPreview.getViewport(
       props.previewState.currentTime,
       props.previewState.hiSpeed
     )
@@ -94,28 +94,74 @@ export const PreviewCanvas: React.FC<{
         ctx.fillRect(column.x + 1, 0, column.width, height)
       }
     }
+    ctx.fillStyle = '#555'
     ctx.fillRect(layout.totalWidth, 0, 1, height)
 
+    for (const barLineY of viewport.visibleBarLines) {
+      const y = Math.round(height - barLineY * height)
+      ctx.fillRect(0, y - 1, layout.totalWidth, 1)
+    }
+
     if (notesImage) {
-      for (const note of notes) {
+      for (const note of viewport.visibleNotes) {
         const column = layout.columnMapping[note.gameNote.column]
         if (column?.sprite) {
-          const y = Math.round(height - note.y * height) - 12
-          ctx.drawImage(
-            notesImage,
-            column.sprite.x,
-            0,
-            column.width,
-            12,
-            column.x + 1,
-            y,
-            column.width,
-            12
-          )
+          const y = Math.round(height - note.y * height)
+          if (note.long) {
+            const endY = Math.round(height - note.long.endY * height)
+            ctx.drawImage(
+              notesImage,
+              column.sprite.x,
+              104,
+              column.width,
+              8,
+              column.x + 1,
+              y - 8,
+              column.width,
+              8
+            )
+            ctx.drawImage(
+              notesImage,
+              column.sprite.x,
+              12,
+              column.width,
+              8,
+              column.x + 1,
+              endY,
+              column.width,
+              8
+            )
+            const noteHeight = y - endY - 16
+            if (noteHeight > 0) {
+              ctx.drawImage(
+                notesImage,
+                column.sprite.x,
+                22,
+                column.width,
+                64,
+                column.x + 1,
+                endY + 8,
+                column.width,
+                noteHeight
+              )
+            }
+          } else {
+            ctx.drawImage(
+              notesImage,
+              column.sprite.x,
+              0,
+              column.width,
+              12,
+              column.x + 1,
+              y - 12,
+              column.width,
+              12
+            )
+          }
         }
       }
     }
-  }, [width, height, layout, notes, notesImage])
+  }, [width, height, layout, viewport, notesImage])
 
   return (
     <canvas
