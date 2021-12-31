@@ -172,6 +172,15 @@ export class Notechart {
   }
 
   /**
+   * Converts measure number to beat.
+   */
+  measureToBeat(measure: number) {
+    return (
+      this._barLines[measure] || this._barLines[this._barLines.length - 1]
+    ).beat
+  }
+
+  /**
    * Converts the in-song position to beat number.
    */
   secondsToBeat(seconds: number) {
