@@ -1,12 +1,15 @@
 import './Button.scss'
-import React from 'react'
+import React, { forwardRef } from 'react'
 
-const Button: React.FC<{
-  onClick?: React.DOMAttributes<HTMLButtonElement>['onClick']
-}> = ({ children, onClick }) => (
-  <button className='Button' onClick={onClick}>
+const Button = forwardRef<
+  HTMLButtonElement,
+  {
+    onClick?: React.DOMAttributes<HTMLButtonElement>['onClick']
+  }
+>(({ children, onClick }, ref) => (
+  <button className='Button' onClick={onClick} ref={ref}>
     {children}
   </button>
-)
+))
 
 export default Button

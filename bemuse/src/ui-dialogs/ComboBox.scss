@@ -1,0 +1,30 @@
+@import '~bemuse/ui/common';
+
+.ComboBox {
+  width: 24em;
+  max-width: 80vw;
+  &のinput {
+    @include input;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  &のmenu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    height: 8em;
+    margin-top: 0.5em;
+    background: #252423;
+    border: 1px solid #555453;
+    border-radius: 4px;
+  }
+  &のmenu > li[data-highlighted='true'] {
+    background-color: #8b8685;
+    color: #fff;
+  }
+  &のmenu > li {
+    padding: 0.5ex 1.3ex;
+  }
+}
