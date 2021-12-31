@@ -50,7 +50,7 @@ export const PreviewKeyHandler: React.FC<{
         }
         e.preventDefault()
       }
-      if (e.key === 'r') {
+      if (e.key === 'r' && !e.ctrlKey && !e.metaKey) {
         props.onReload()
         e.preventDefault()
       }
