@@ -42,7 +42,7 @@ export const BemusePreviewer = () => {
     <div className='BemusePreviewer'>
       <div className='BemusePreviewerのheader'>
         <h1>
-          <strong>Bemuse</strong> BMS/bmson previewer
+          <strong>Bemuse</strong>’s BMS/bmson previewer
         </h1>
       </div>
       <div className='BemusePreviewerのmain'>

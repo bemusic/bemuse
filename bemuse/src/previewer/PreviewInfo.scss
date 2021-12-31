@@ -18,4 +18,13 @@
     box-shadow: 0 3px 0 #333;
     display: inline-block;
   }
+
+  & td {
+    text-align: right;
+    font-family: Menlo, Consolas, monospace;
+  }
+
+  & th {
+    text-align: left;
+  }
 }

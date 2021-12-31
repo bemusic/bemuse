@@ -13,6 +13,8 @@ export interface NotechartPreview {
 
   getViewport(currentTime: number, hiSpeed: number): PreviewViewport
   getCurrentBpm(currentTime: number): number
+  getCurrentScroll(currentTime: number): number
+  getCurrentSpeed(currentTime: number): number
   play(delegate: NotechartPreviewPlayerDelegate): NotechartPreviewPlayer
 }
 
@@ -49,6 +51,8 @@ export function createNullNotechartPreview(): NotechartPreview {
       visibleNotes: [],
     }),
     getCurrentBpm: () => 0,
+    getCurrentScroll: () => 0,
+    getCurrentSpeed: () => 0,
     play: (delegate) => {
       setTimeout(() => {
         delegate.onFinish()
@@ -80,6 +84,7 @@ export function createNotechartPreview(
 class BemuseNotechartPreview implements NotechartPreview {
   private _sortedGameNotes: GameNote[]
   private _sortedSoundEvents: SoundedEvent[]
+  private _secondsToBeatCache?: { seconds: number; beat: number }
 
   constructor(
     private _notechart: Notechart,
@@ -107,7 +112,7 @@ class BemuseNotechartPreview implements NotechartPreview {
   }
 
   getViewport(currentTime: number, hiSpeed: number): PreviewViewport {
-    const beat = this._notechart.secondsToBeat(currentTime)
+    const beat = this._secondsToBeat(currentTime)
     const position = this._notechart.beatToPosition(beat)
     const speed = this._notechart.spacingAtBeat(beat)
     const windowSize = 4 / speed / hiSpeed
@@ -151,7 +156,28 @@ class BemuseNotechartPreview implements NotechartPreview {
   }
 
   getCurrentBpm(currentTime: number): number {
-    return this._notechart.bpmAtBeat(this._notechart.secondsToBeat(currentTime))
+    return this._notechart.bpmAtBeat(this._secondsToBeat(currentTime))
+  }
+
+  getCurrentScroll(currentTime: number): number {
+    return this._notechart.scrollSpeedAtBeat(this._secondsToBeat(currentTime))
+  }
+
+  getCurrentSpeed(currentTime: number): number {
+    return this._notechart.spacingAtBeat(this._secondsToBeat(currentTime))
+  }
+
+  private _secondsToBeat(currentTime: number) {
+    if (
+      !this._secondsToBeatCache ||
+      this._secondsToBeatCache.seconds !== currentTime
+    ) {
+      this._secondsToBeatCache = {
+        seconds: currentTime,
+        beat: this._notechart.secondsToBeat(currentTime),
+      }
+    }
+    return this._secondsToBeatCache.beat
   }
 
   play(delegate: NotechartPreviewPlayerDelegate) {

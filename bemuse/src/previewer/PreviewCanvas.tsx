@@ -117,7 +117,7 @@ export const PreviewCanvas: React.FC<{
               column.width,
               8,
               column.x + 1,
-              y - 8,
+              y - 4,
               column.width,
               8
             )
@@ -128,11 +128,11 @@ export const PreviewCanvas: React.FC<{
               column.width,
               8,
               column.x + 1,
-              endY,
+              endY - 12,
               column.width,
               8
             )
-            const noteHeight = y - endY - 16
+            const noteHeight = y - endY
             if (noteHeight > 0) {
               ctx.drawImage(
                 notesImage,
@@ -141,7 +141,7 @@ export const PreviewCanvas: React.FC<{
                 column.width,
                 64,
                 column.x + 1,
-                endY + 8,
+                endY - 4,
                 column.width,
                 noteHeight
               )
