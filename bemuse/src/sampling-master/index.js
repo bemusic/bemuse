@@ -186,7 +186,7 @@ export class Sample {
 // you have to invoke `Sample#play` again.
 //
 // You don't invoke this constructor directly; it is invoked by `Sample#play`.
-class PlayInstance {
+export class PlayInstance {
   constructor(samplingMaster, buffer, delay, options = {}) {
     delay = delay || 0
     this._master = samplingMaster

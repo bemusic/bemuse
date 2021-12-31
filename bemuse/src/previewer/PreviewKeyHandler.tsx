@@ -16,7 +16,7 @@ export const PreviewKeyHandler: React.FC<{
         e.preventDefault()
       }
       if (e.key === ' ') {
-        props.dispatch({ play: true })
+        props.dispatch({ playPause: true })
         e.preventDefault()
       }
     }

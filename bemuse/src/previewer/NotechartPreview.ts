@@ -1,5 +1,5 @@
 import Notechart, { GameNote, SoundedEvent } from 'bemuse-notechart'
-import SamplingMaster, { Sample } from 'bemuse/sampling-master'
+import SamplingMaster, { PlayInstance, Sample } from 'bemuse/sampling-master'
 import _ from 'lodash'
 
 export interface NotechartPreview {
@@ -34,7 +34,7 @@ export interface NotechartPreviewPlayerDelegate {
 
 export type VisibleNote = {
   y: number
-  long?: { endY: number }
+  long?: { endY: number; active: boolean }
   gameNote: GameNote
 }
 
@@ -134,7 +134,9 @@ class BemuseNotechartPreview implements NotechartPreview {
       if (gameNote.end) {
         const endDelta = gameNote.end.position - position
         const endY = endDelta / windowSize
-        visibleNote.long = { endY }
+        const active =
+          currentTime >= gameNote.time && currentTime < gameNote.end.time
+        visibleNote.long = { endY, active }
       }
       visibleNotes.push(visibleNote)
     }
@@ -174,6 +176,7 @@ class BemuseNotechartPreviewPlayer implements NotechartPreviewPlayer {
   private _startAudioTime = 0
   private _startSongTime = 0
   private _stopped = false
+  private _playingSamples = new Map<string, PlayInstance>()
 
   constructor(
     private _samplingMaster: SamplingMaster,
@@ -238,12 +241,29 @@ class BemuseNotechartPreviewPlayer implements NotechartPreviewPlayer {
       if (offset >= sample.duration) {
         continue
       }
-      sample.play(delay, { start: offset })
+      this._choke(keysound, delay)
+      const instance = sample.play(delay, { start: offset })
+      this._playingSamples.set(keysound, instance)
     }
     this._delegate.onTimeUpdate(currentTime)
   }
 
+  private _choke(keysound: string, delay: number) {
+    const playing = this._playingSamples.get(keysound)
+    if (!playing) {
+      return
+    }
+    // TODO: Use Web Audio API instead
+    setTimeout(() => {
+      playing.stop()
+    }, delay * 1000)
+  }
+
   stop() {
     this._stopped = true
+    for (const playing of this._playingSamples.values()) {
+      playing.destroy()
+    }
+    this._playingSamples.clear()
   }
 }

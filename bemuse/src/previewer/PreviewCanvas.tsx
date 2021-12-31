@@ -109,10 +109,11 @@ export const PreviewCanvas: React.FC<{
           const y = Math.round(height - note.y * height)
           if (note.long) {
             const endY = Math.round(height - note.long.endY * height)
+            const spriteYOffset = note.long.active ? 100 : 0
             ctx.drawImage(
               notesImage,
               column.sprite.x,
-              104,
+              104 + spriteYOffset,
               column.width,
               8,
               column.x + 1,
@@ -123,7 +124,7 @@ export const PreviewCanvas: React.FC<{
             ctx.drawImage(
               notesImage,
               column.sprite.x,
-              12,
+              12 + spriteYOffset,
               column.width,
               8,
               column.x + 1,
@@ -136,7 +137,7 @@ export const PreviewCanvas: React.FC<{
               ctx.drawImage(
                 notesImage,
                 column.sprite.x,
-                22,
+                22 + spriteYOffset,
                 column.width,
                 64,
                 column.x + 1,

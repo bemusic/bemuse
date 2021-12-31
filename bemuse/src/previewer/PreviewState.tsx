@@ -8,6 +8,7 @@ export type PreviewAction = {
   speedUp?: boolean
   speedDown?: boolean
   play?: boolean
+  playPause?: boolean
   playFinish?: boolean
   updateTime?: { time: number }
 }
@@ -33,6 +34,12 @@ export function previewStateReducer(
     nextState = {
       ...state,
       playing: true,
+    }
+  }
+  if (action.playPause) {
+    nextState = {
+      ...state,
+      playing: !state.playing,
     }
   }
   if (action.playFinish) {
