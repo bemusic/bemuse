@@ -16,11 +16,11 @@ export const PreviewKeyHandler: React.FC<{
     const onKeyDown = (e: KeyboardEvent) => {
       if (isModalActive()) return
       console.log(e.key)
-      if (e.key === 'ArrowUp') {
+      if (e.key === '2') {
         props.dispatch({ speedUp: true })
         e.preventDefault()
       }
-      if (e.key === 'ArrowDown') {
+      if (e.key === '1') {
         props.dispatch({ speedDown: true })
         e.preventDefault()
       }
@@ -54,7 +54,7 @@ export const PreviewKeyHandler: React.FC<{
         props.onReload()
         e.preventDefault()
       }
-      if (e.key === 'ArrowLeft') {
+      if (e.key === 'ArrowDown') {
         props.dispatch({
           jumpByMeasure: {
             direction: -1,
@@ -63,12 +63,36 @@ export const PreviewKeyHandler: React.FC<{
         })
         e.preventDefault()
       }
-      if (e.key === 'ArrowRight') {
+      if (e.key === 'ArrowUp') {
         props.dispatch({
           jumpByMeasure: {
             direction: 1,
             preview: getLatestNotechartPreview(),
           },
+        })
+        e.preventDefault()
+      }
+      if (e.key === 'ArrowLeft') {
+        props.dispatch({
+          jumpBySeconds: { direction: -5 },
+        })
+        e.preventDefault()
+      }
+      if (e.key === 'ArrowRight') {
+        props.dispatch({
+          jumpBySeconds: { direction: 5 },
+        })
+        e.preventDefault()
+      }
+      if (e.key === ',') {
+        props.dispatch({
+          jumpBySeconds: { direction: -1 / 10 },
+        })
+        e.preventDefault()
+      }
+      if (e.key === '.') {
+        props.dispatch({
+          jumpBySeconds: { direction: 1 / 10 },
         })
         e.preventDefault()
       }

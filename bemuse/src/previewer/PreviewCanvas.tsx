@@ -64,7 +64,7 @@ export const PreviewCanvas: React.FC<{
 
   const layout = useMemo(() => new PreviewLayout(keymap), [keymap])
   const width = layout.totalWidth + 1
-  const height = 480
+  const height = 468
 
   const viewport = useMemo(() => {
     return props.notechartPreview.getViewport(

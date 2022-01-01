@@ -18,6 +18,7 @@ export type PreviewAction = {
   updateTime?: { time: number }
   jumpToTime?: { time: number }
   jumpByMeasure?: { preview: NotechartPreview; direction: number }
+  jumpBySeconds?: { direction: number }
 }
 
 export function previewStateReducer(
@@ -34,13 +35,13 @@ export function previewStateReducer(
   if (action.speedUp) {
     nextState = {
       ...state,
-      hiSpeed: +Math.min(state.hiSpeed + 0.1, 99).toFixed(1),
+      hiSpeed: +Math.min(state.hiSpeed + 0.25, 99).toFixed(2),
     }
   }
   if (action.speedDown) {
     nextState = {
       ...state,
-      hiSpeed: +Math.max(state.hiSpeed - 0.1, 0.1).toFixed(1),
+      hiSpeed: +Math.max(state.hiSpeed - 0.25, 0.25).toFixed(2),
     }
   }
   if (action.play) {
@@ -93,6 +94,16 @@ export function previewStateReducer(
       currentTime: action.jumpByMeasure.preview.getMeasureJumpTarget(
         state.currentTime,
         action.jumpByMeasure.direction
+      ),
+      playing: false,
+    }
+  }
+  if (action.jumpBySeconds) {
+    nextState = {
+      ...state,
+      currentTime: Math.max(
+        0,
+        state.currentTime + action.jumpBySeconds.direction
       ),
       playing: false,
     }

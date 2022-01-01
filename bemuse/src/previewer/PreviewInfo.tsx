@@ -32,6 +32,23 @@ export const PreviewInfo: React.FC<{
     return `${~~(s / 60)}:${(~~s % 60).toString().padStart(2, '0')}`
   }
 
+  const keyHints = useMemo(
+    () => (
+      <p className='PreviewInfoのkeyHints'>
+        <kbd>Space</kbd> Play/Pause
+        <br />
+        <kbd>Up/Down/Left/Right/,/.</kbd> Seek
+        <br />
+        <kbd>G</kbd> Go To Measure
+        <br />
+        <kbd>1/2</kbd> Hi-Speed
+        <br />
+        <kbd>R</kbd> Reload Chart
+      </p>
+    ),
+    []
+  )
+
   return (
     <div className='PreviewInfo'>
       <h2>{preview.name}</h2>
@@ -76,10 +93,7 @@ export const PreviewInfo: React.FC<{
           </tr>
         </tbody>
       </table>
-      <p className='PreviewInfoのkeyHints'>
-        <kbd>Space</kbd> Play/Pause &middot; <kbd>Left/Right</kbd> Seek &middot;{' '}
-        <kbd>Up/Down</kbd> Hi-Speed &middot; <kbd>R</kbd> Reload
-      </p>
+      {keyHints}
     </div>
   )
 }
