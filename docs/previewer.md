@@ -11,7 +11,8 @@ Bemuse comes with a rudimentary previewer app to preview BMS/bmson notecharts.
 - Preview SP and DP charts.
 - Can play, pause and seek.
 - Shows combo counter.
-- Reload chart files from disk.
+- Shows decoration notes (landmines).
+- Can hot-reload chart files from disk.
 
 You can access the previewer by going to this URL:
 
