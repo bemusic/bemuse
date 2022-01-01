@@ -2,6 +2,18 @@
   "name": "bms",
   "entries": [
     {
+      "version": "50.1.0",
+      "tag": "bms_v50.1.0",
+      "date": "Sat, 01 Jan 2022 13:08:37 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Added channel mappings for DP charts and landmines. This only applies to this library, the game itself still does not have support for DP charts and landmines."
+          }
+        ]
+      }
+    },
+    {
       "version": "50.0.1",
       "tag": "bms_v50.0.1",
       "date": "Fri, 29 Oct 2021 19:57:09 GMT",

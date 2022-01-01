@@ -2,6 +2,26 @@
   "name": "bemuse-indexer",
   "entries": [
     {
+      "version": "51.0.0",
+      "tag": "bemuse-indexer_v51.0.0",
+      "date": "Sat, 01 Jan 2022 13:08:37 GMT",
+      "comments": {
+        "major": [
+          {
+            "comment": "Added initial support for indexing BGA file metadata for BMS files"
+          }
+        ],
+        "dependency": [
+          {
+            "comment": "Updating dependency \"bms\" from `^50.0.1` to `^50.1.0`"
+          },
+          {
+            "comment": "Updating dependency \"bmson\" from `^50.0.1` to `^50.1.0`"
+          }
+        ]
+      }
+    },
+    {
       "version": "50.0.1",
       "tag": "bemuse-indexer_v50.0.1",
       "date": "Fri, 29 Oct 2021 19:57:09 GMT",
