@@ -137,7 +137,7 @@ export class SamplingMaster {
 }
 
 // Sound group
-class SoundGroup {
+export class SoundGroup {
   constructor(samplingMaster, { volume } = {}) {
     this._master = samplingMaster
     this._gain = this._master.audioContext.createGain()

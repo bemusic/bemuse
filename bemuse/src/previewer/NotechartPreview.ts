@@ -1,5 +1,9 @@
 import Notechart, { GameNote, SoundedEvent } from 'bemuse-notechart'
-import SamplingMaster, { PlayInstance, Sample } from 'bemuse/sampling-master'
+import SamplingMaster, {
+  PlayInstance,
+  Sample,
+  SoundGroup,
+} from 'bemuse/sampling-master'
 import _ from 'lodash'
 
 export interface NotechartPreview {
@@ -107,12 +111,14 @@ export function createNotechartPreview(
   notechart: Notechart,
   filename: string,
   samplingMaster: SamplingMaster,
+  soundGroup: SoundGroup,
   samples: PreviewSoundSample[]
 ): NotechartPreview {
   return new BemuseNotechartPreview(
     notechart,
     filename,
     samplingMaster,
+    soundGroup,
     samples
   )
 }
@@ -127,6 +133,7 @@ class BemuseNotechartPreview implements NotechartPreview {
     private _notechart: Notechart,
     private _filename: string,
     private _samplingMaster: SamplingMaster,
+    private _soundGroup: SoundGroup,
     private _samples: PreviewSoundSample[]
   ) {
     this._sortedGameNotes = _.sortBy(this._notechart.notes, (e) => e.position)
@@ -272,6 +279,7 @@ class BemuseNotechartPreview implements NotechartPreview {
     console.log(this._notechart.keysounds)
     const player = new BemuseNotechartPreviewPlayer(
       this._samplingMaster,
+      this._soundGroup,
       this._sortedSoundEvents,
       this._notechart.keysounds,
       this._samples,
@@ -292,6 +300,7 @@ class BemuseNotechartPreviewPlayer implements NotechartPreviewPlayer {
 
   constructor(
     private _samplingMaster: SamplingMaster,
+    private _soundGroup: SoundGroup,
     private _sortedSoundEvents: SoundedEvent[],
     private _keysounds: Record<string, string>,
     _samples: PreviewSoundSample[],
@@ -354,7 +363,10 @@ class BemuseNotechartPreviewPlayer implements NotechartPreviewPlayer {
         continue
       }
       this._choke(keysound, delay)
-      const instance = sample.play(delay, { start: offset })
+      const instance = sample.play(delay, {
+        start: offset,
+        group: this._soundGroup,
+      })
       this._playingSamples.set(keysound, instance)
     }
     this._delegate.onTimeUpdate(currentTime)

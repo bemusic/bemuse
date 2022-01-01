@@ -6,7 +6,18 @@ import { createNotechartPreview } from './NotechartPreview'
 import _ from 'lodash'
 
 const PREVIEWER_FS_HANDLE_KEYVAL_KEY = 'previewer-fs-handle'
-let getSamplingMaster = _.once(() => new SamplingMaster())
+let getSamplingMaster = _.once(() => {
+  const samplingMaster = new SamplingMaster()
+  // http://qiita.com/dtinth/items/1200681c517a3fb26357
+  const DEFAULT_REPLAYGAIN = -12.2 // dB
+
+  const volume = Math.pow(10, (DEFAULT_REPLAYGAIN + 4) / 20)
+  const group = samplingMaster.group({ volume })
+  return {
+    samplingMaster,
+    group,
+  }
+})
 const keysoundCache = new Map<string, Sample>()
 
 export async function getSavedPreviewInfo() {
@@ -56,7 +67,7 @@ export async function loadPreview(loadOptions: LoadPreviewOptions) {
   )
 
   log('Loading samples')
-  const master = getSamplingMaster()
+  const { samplingMaster, group } = getSamplingMaster()
   let numLoadedSamples = 0
   const samples = await Promise.map(
     notechart.samples,
@@ -74,7 +85,7 @@ export async function loadPreview(loadOptions: LoadPreviewOptions) {
         const arrayBuffer = await Promise.try(() =>
           load(filename.replace(/\.\w+$/, '.ogg'))
         ).catch(() => load(filename))
-        const sample = await master.sample(arrayBuffer)
+        const sample = await samplingMaster.sample(arrayBuffer)
         const progress = `${++numLoadedSamples}/${notechart.samples.length}`
         log(`Loaded ${filename} [${progress}]: ${sample.duration}s`)
         keysoundCache.set(filename, sample)
@@ -93,7 +104,8 @@ export async function loadPreview(loadOptions: LoadPreviewOptions) {
   const preview = createNotechartPreview(
     notechart,
     chartHandle.name,
-    master,
+    samplingMaster,
+    group,
     samples
   )
   console.log(preview)
