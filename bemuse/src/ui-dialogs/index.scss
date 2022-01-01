@@ -1,0 +1,23 @@
+@import '~bemuse/ui/common';
+
+.AlertDialog {
+  &のoverlay {
+    @include full-screen-fixed;
+    background: rgba(#111, 0.5);
+    overflow: hidden;
+    z-index: 10000;
+  }
+  &のcontent {
+    @include full-screen-fixed;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    z-index: 10001;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  &のcontent > * {
+    flex: none;
+  }
+}

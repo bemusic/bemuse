@@ -8,7 +8,7 @@ import { Bmson } from 'bmson/lib/types'
 export function load(source: string, playerOptions: PlayerOptions) {
   let data = JSON.parse(source)
   let songInfo = bmson.songInfoForBmson(data)
-  let score = bmson.musicalScoreForBmson(data)
+  let score = bmson.musicalScoreForBmson(data, { double: playerOptions.double })
   let barLines = bmson.barLinesForBmson(data)
 
   let stuff: NotechartInput = {

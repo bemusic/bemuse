@@ -3,6 +3,7 @@
     "Users": ["user-guide", "scoring-and-judgment", "faq"],
     "Creators": [
       "song-workshop",
+      "previewer",
       "music-server",
       "bms-support",
       "bms-extensions",

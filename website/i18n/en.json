@@ -41,6 +41,10 @@
         "title": "Game Options and Configuration",
         "sidebar_label": "Options"
       },
+      "previewer": {
+        "title": "Bemuse’s BMS/bmson Previewer",
+        "sidebar_label": "Previewer [NEW]"
+      },
       "scoring-and-judgment": {
         "title": "Scoring and Judgment"
       },

@@ -47,6 +47,12 @@ export class SamplingMaster {
     return this._destination
   }
 
+  // The current time
+  // See: https://webaudio.github.io/web-audio-api/#dom-baseaudiocontext-currenttime
+  get currentTime() {
+    return this._audioContext.currentTime
+  }
+
   // Destroys this SamplingMaster, make it unusable.
   destroy() {
     if (this._destroyed) return
@@ -131,7 +137,7 @@ export class SamplingMaster {
 }
 
 // Sound group
-class SoundGroup {
+export class SoundGroup {
   constructor(samplingMaster, { volume } = {}) {
     this._master = samplingMaster
     this._gain = this._master.audioContext.createGain()
@@ -153,8 +159,8 @@ class SoundGroup {
 //
 // You don't invoke this constructor directly; it is invoked by
 // `SamplingMaster#create`.
-class Sample {
-  constructor(samplingMaster, audioBuffer) {
+export class Sample {
+  constructor(samplingMaster, /** @type {AudioBuffer} */ audioBuffer) {
     this._master = samplingMaster
     this._buffer = audioBuffer
   }
@@ -169,6 +175,10 @@ class Sample {
     this._master = null
     this._buffer = null
   }
+
+  get duration() {
+    return this._buffer.duration
+  }
 }
 
 // When a `Sample` is played, a PlayInstance is created.
@@ -176,7 +186,7 @@ class Sample {
 // you have to invoke `Sample#play` again.
 //
 // You don't invoke this constructor directly; it is invoked by `Sample#play`.
-class PlayInstance {
+export class PlayInstance {
   constructor(samplingMaster, buffer, delay, options = {}) {
     delay = delay || 0
     this._master = samplingMaster

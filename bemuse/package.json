@@ -165,7 +165,10 @@
     "timesynchro": "^1.0.1",
     "updeep": "^0.16.0",
     "variance": "0.0.1",
-    "whatwg-fetch": "^1.1.1"
+    "whatwg-fetch": "^1.1.1",
+    "downshift": "~6.1.7",
+    "@radix-ui/react-alert-dialog": "~0.1.5",
+    "fuzzysort": "~1.1.4"
   },
   "resolutions": {
     "natives": "1.1.6"

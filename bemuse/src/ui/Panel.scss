@@ -20,4 +20,9 @@
     color: #8b8685;
     padding: 0.5ex 1em;
   }
+
+  &のtitle > h2 {
+    margin: 0;
+    font: inherit;
+  }
 }

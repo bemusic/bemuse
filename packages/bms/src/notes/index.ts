@@ -106,9 +106,11 @@ class BMSNoteBuilder {
     if (object.channel === '01') {
       this._handleNormalNote(object)
     } else {
-      switch (object.channel.charAt(0)) {
+      switch (object.channel.charAt(0).toUpperCase()) {
         case '1':
         case '2':
+        case 'D':
+        case 'E':
           this._handleNormalNote(object)
           break
         case '5':
