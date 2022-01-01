@@ -1,3 +1,4 @@
+import ObjectID from 'bson-objectid'
 import { get, set } from 'idb-keyval'
 import NotechartLoader from 'bemuse-notechart/lib/loader'
 import { showAlert } from 'bemuse/ui-dialogs'
@@ -18,7 +19,9 @@ let getSamplingMaster = _.once(() => {
     group,
   }
 })
+
 const keysoundCache = new Map<string, Sample>()
+let keysoundCacheHandleId = ''
 
 export async function getSavedPreviewInfo() {
   const data = await get(PREVIEWER_FS_HANDLE_KEYVAL_KEY)
@@ -38,6 +41,7 @@ export async function loadPreview(loadOptions: LoadPreviewOptions) {
   log('Loading directory handle from IndexedDB')
   const data = await get(PREVIEWER_FS_HANDLE_KEYVAL_KEY)
   const directoryHandle: FileSystemDirectoryHandle = data.directory
+  const handleId = data.handleId
 
   log('Obtaining permission to read directory')
   await ensureReadable(directoryHandle)
@@ -69,6 +73,10 @@ export async function loadPreview(loadOptions: LoadPreviewOptions) {
   log('Loading samples')
   const { samplingMaster, group } = getSamplingMaster()
   let numLoadedSamples = 0
+  if (keysoundCacheHandleId !== handleId) {
+    keysoundCache.clear()
+    keysoundCacheHandleId = handleId
+  }
   const samples = await Promise.map(
     notechart.samples,
     async (filename) => {
@@ -138,5 +146,6 @@ export async function setPreview(
   await set(PREVIEWER_FS_HANDLE_KEYVAL_KEY, {
     directory: handle,
     chartFilename: selectedChartFilename,
+    handleId: ObjectID.generate(),
   })
 }
