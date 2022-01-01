@@ -43,7 +43,9 @@ export const BemusePreviewer = () => {
       .then((preview) => {
         setNotechartPreview(preview)
         dispatch({ loaded: true })
-        div.current?.focus()
+        if (div.current) {
+          div.current.focus()
+        }
       })
       .catch((error) => {
         console.error(error)
