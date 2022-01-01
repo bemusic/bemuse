@@ -15,10 +15,11 @@ import {
   previewStateReducer,
 } from './PreviewState'
 import { PreviewKeyHandler } from './PreviewKeyHandler'
-import { showQuickPick } from 'bemuse/ui-dialogs'
+import { showAlert, showQuickPick } from 'bemuse/ui-dialogs'
 import _ from 'lodash'
 
 export const BemusePreviewer = () => {
+  const div = useRef<HTMLDivElement>(null)
   const [previewState, dispatch] = useReducer(previewStateReducer, {
     currentTime: 0,
     hiSpeed: 1,
@@ -42,6 +43,11 @@ export const BemusePreviewer = () => {
       .then((preview) => {
         setNotechartPreview(preview)
         dispatch({ loaded: true })
+        div.current?.focus()
+      })
+      .catch((error) => {
+        console.error(error)
+        showAlert('Error loading preview', String(error))
       })
       .finally(() => setLoadingDebounced(null))
   }
@@ -85,7 +91,7 @@ export const BemusePreviewer = () => {
   }
 
   return (
-    <div className='BemusePreviewer'>
+    <div className='BemusePreviewer' tabIndex={0} ref={div}>
       <div className='BemusePreviewerのheader'>
         <h1>
           <strong>Bemuse</strong>’s BMS/bmson previewer
