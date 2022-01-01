@@ -27,8 +27,13 @@
     font-weight: normal;
   }
 
-  &のheader > h1 > strong {
+  &のheader > h1 strong {
     font-weight: 600;
+  }
+
+  &のheader > h1 a {
+    color: inherit;
+    text-decoration: none;
   }
 
   &のmain {

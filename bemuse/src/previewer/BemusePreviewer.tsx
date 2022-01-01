@@ -96,7 +96,12 @@ export const BemusePreviewer = () => {
     <div className='BemusePreviewer' tabIndex={0} ref={div}>
       <div className='BemusePreviewerのheader'>
         <h1>
-          <strong>Bemuse</strong>’s BMS/bmson previewer
+          <a
+            href='https://bemuse.ninja/project/docs/previewer.html'
+            target='_blank'
+          >
+            <strong>Bemuse</strong>’s BMS/bmson previewer
+          </a>
         </h1>
       </div>
       <div className='BemusePreviewerのmain'>
