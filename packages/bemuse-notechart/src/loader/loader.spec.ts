@@ -21,6 +21,13 @@ describe('NotechartLoader', function () {
       expect(notechart.expertJudgmentWindow[0]).to.equal(15)
       expect(notechart.expertJudgmentWindow[1]).to.equal(30)
     })
+    it('loads landmine objects', async function () {
+      let loader = new NotechartLoader()
+      let buffer = Buffer.from(`#001D2:010203`)
+
+      const notechart = await loader.load(buffer, { name: 'wow.bms' }, options)
+      expect(notechart.landmines.length).to.equal(3)
+    })
   })
 
   describe('with bmson file', function () {

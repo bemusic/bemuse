@@ -28,3 +28,34 @@ export const IIDX_DP = {
   '29': '14',
   '26': 'SC2',
 }
+
+export const IIDX_P1_LANDMINE = {
+  D1: '1',
+  D2: '2',
+  D3: '3',
+  D4: '4',
+  D5: '5',
+  D8: '6',
+  D9: '7',
+  D6: 'SC',
+}
+
+export const IIDX_DP_LANDMINE = {
+  D1: '1',
+  D2: '2',
+  D3: '3',
+  D4: '4',
+  D5: '5',
+  D8: '6',
+  D9: '7',
+  D6: 'SC',
+
+  E1: '8',
+  E2: '9',
+  E3: '10',
+  E4: '11',
+  E5: '12',
+  E8: '13',
+  E9: '14',
+  E6: 'SC2',
+}

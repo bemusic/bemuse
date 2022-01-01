@@ -2,6 +2,7 @@ import * as BMS from 'bms'
 
 export interface NotechartInput {
   notes: BMS.BMSNote[]
+  landmineNotes?: BMS.BMSNote[]
   timing: BMS.Timing
   keysounds: BMS.Keysounds
   songInfo: BMS.SongInfo
@@ -51,6 +52,11 @@ export interface SoundedEvent extends GameEvent {
 export interface GameNote extends SoundedEvent {
   id: number
   end?: GameEvent
+  column: string
+}
+
+export interface GameLandmine extends GameEvent {
+  id: number
   column: string
 }
 

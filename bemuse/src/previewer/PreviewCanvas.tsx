@@ -60,6 +60,7 @@ export const PreviewCanvas: React.FC<{
 }> = (props) => {
   const keymap = 'SCs 1 2b 3 4g 5 6b 7 - 8 9b 10 11g 12 13b 14 SC2s'
   const notesImage = useImage('/skins/default/Note/DX/Note.png')
+  const landmineImage = useImage('/skins/default/Note/DX/Landmine.png')
   const canvasRef = React.useRef<HTMLCanvasElement>(null)
 
   const layout = useMemo(() => new PreviewLayout(keymap), [keymap])
@@ -111,9 +112,9 @@ export const PreviewCanvas: React.FC<{
       ctx.fillText('#' + barLine.measureNumber, layout.totalWidth / 2, y - 4)
     }
 
-    if (notesImage) {
+    if (notesImage && landmineImage) {
       for (const note of viewport.visibleNotes) {
-        const column = layout.columnMapping[note.gameNote.column]
+        const column = layout.columnMapping[note.gameEvent.column]
         if (column?.sprite) {
           const y = Math.round(height - note.y * height)
           if (note.long) {
@@ -156,8 +157,9 @@ export const PreviewCanvas: React.FC<{
               )
             }
           } else {
+            const image = note.type === 'landmine' ? landmineImage : notesImage
             ctx.drawImage(
-              notesImage,
+              image,
               column.sprite.x,
               0,
               column.width,

@@ -65,6 +65,7 @@ specifiers:
   fastclick: ^1.0.6
   file-loader: ^2.0.0
   format-json: ^1.0.3
+  fuzzysort: ~1.1.4
   gauge: ^2.7.4
   gh-pages: ^2.2.0
   gulp: ^4.0.2
@@ -242,6 +243,7 @@ dependencies:
   fastclick: 1.0.6
   file-loader: 2.0.0_webpack@4.46.0
   format-json: 1.0.3
+  fuzzysort: 1.1.4
   gauge: 2.7.4
   gh-pages: 2.2.0
   gulp: 4.0.2
@@ -18244,7 +18246,7 @@ packages:
     dev: false
 
   file:projects/bemuse-notechart.tgz:
-    resolution: {integrity: sha512-f1oOj5Izl0ZC5bwx5iEj97dNMOLOxs9DBO3ZLenjJ/SN0JzV6TtzhJITpqW9bYdMoMkUF8A2QobgL0HRPx2rQg==, tarball: file:projects/bemuse-notechart.tgz}
+    resolution: {integrity: sha512-xEGn8xc7f2xEDRyDdFitrkrw/3YK8k8FHD473WknTfiJGc805ArqfyLhnjbLcT8BOhTHqAdTRbFRxU9dx7dNLw==, tarball: file:projects/bemuse-notechart.tgz}
     name: '@rush-temp/bemuse-notechart'
     version: 0.0.0
     dependencies:
@@ -18258,6 +18260,7 @@ packages:
       invariant: 2.2.4
       lodash: 4.17.21
       mocha: 5.2.0
+      nyc: 11.9.0
       typescript: 4.4.4
     dev: false
 

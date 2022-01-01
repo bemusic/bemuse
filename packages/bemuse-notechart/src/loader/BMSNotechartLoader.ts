@@ -5,10 +5,18 @@ import { PlayerOptions, NotechartInput, ExpertJudgmentWindow } from '../types'
 
 // Returns a new Notechart from a BMSChart.
 export function fromBMSChart(bms: BMS.BMSChart, playerOptions: PlayerOptions) {
-  const mapping = playerOptions.double
-    ? BMS.Notes.CHANNEL_MAPPING.IIDX_DP
-    : BMS.Notes.CHANNEL_MAPPING.IIDX_P1
-  let notes = BMS.Notes.fromBMSChart(bms, { mapping }).all()
+  let notes = BMS.Notes.fromBMSChart(bms, {
+    mapping: playerOptions.double
+      ? BMS.Notes.CHANNEL_MAPPING.IIDX_DP
+      : BMS.Notes.CHANNEL_MAPPING.IIDX_P1,
+  }).all()
+
+  let landmineNotes = BMS.Notes.fromBMSChart(bms, {
+    mapping: playerOptions.double
+      ? BMS.Notes.CHANNEL_MAPPING.IIDX_DP_LANDMINE
+      : BMS.Notes.CHANNEL_MAPPING.IIDX_P1_LANDMINE,
+  }).all()
+
   let timing = BMS.Timing.fromBMSChart(bms)
   let keysounds = BMS.Keysounds.fromBMSChart(bms)
   let songInfo = BMS.SongInfo.fromBMSChart(bms)
@@ -17,6 +25,7 @@ export function fromBMSChart(bms: BMS.BMSChart, playerOptions: PlayerOptions) {
 
   let data: NotechartInput = {
     notes,
+    landmineNotes,
     timing,
     keysounds,
     songInfo,

@@ -1,4 +1,8 @@
-import Notechart, { GameNote, SoundedEvent } from 'bemuse-notechart'
+import Notechart, {
+  GameLandmine,
+  GameNote,
+  SoundedEvent,
+} from 'bemuse-notechart'
 import SamplingMaster, {
   PlayInstance,
   Sample,
@@ -58,7 +62,8 @@ export interface NotechartPreviewPlayerDelegate {
 export type VisibleNote = {
   y: number
   long?: { endY: number; active: boolean }
-  gameNote: GameNote
+  gameEvent: GameNote | GameLandmine
+  type: 'note' | 'landmine'
 }
 
 export type VisibleBarLine = {
@@ -128,6 +133,7 @@ class BemuseNotechartPreview implements NotechartPreview {
   private _sortedSoundEvents: SoundedEvent[]
   private _secondsToBeatCache?: { seconds: number; beat: number }
   private _comboPreviewer: ComboPreviewer
+  private _sortedGameLandmines: GameNote[]
 
   constructor(
     private _notechart: Notechart,
@@ -137,6 +143,10 @@ class BemuseNotechartPreview implements NotechartPreview {
     private _samples: PreviewSoundSample[]
   ) {
     this._sortedGameNotes = _.sortBy(this._notechart.notes, (e) => e.position)
+    this._sortedGameLandmines = _.sortBy(
+      this._notechart.landmines,
+      (e) => e.position
+    )
     this._sortedSoundEvents = _.sortBy(
       [...this._notechart.notes, ...this._notechart.autos],
       (e) => e.time
@@ -178,8 +188,9 @@ class BemuseNotechartPreview implements NotechartPreview {
       const delta = gameNote.position - position
       const y = delta / windowSize
       const visibleNote: VisibleNote = {
-        gameNote,
+        gameEvent: gameNote,
         y,
+        type: 'note',
       }
       if (gameNote.end) {
         const endDelta = gameNote.end.position - position
@@ -187,6 +198,17 @@ class BemuseNotechartPreview implements NotechartPreview {
         const active =
           currentTime >= gameNote.time && currentTime < gameNote.end.time
         visibleNote.long = { endY, active }
+      }
+      visibleNotes.push(visibleNote)
+    }
+    for (const gameLandmine of this._sortedGameLandmines) {
+      if (!insideView(gameLandmine)) continue
+      const delta = gameLandmine.position - position
+      const y = delta / windowSize
+      const visibleNote: VisibleNote = {
+        gameEvent: gameLandmine,
+        y,
+        type: 'landmine',
       }
       visibleNotes.push(visibleNote)
     }
