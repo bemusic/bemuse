@@ -23,6 +23,19 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## v52.1.0-pre.202201011130
+
+### New stuff
+
+- Added 1 new song.
+
+### Others
+
+- **Added a [BMS previewer](https://bemuse.ninja/project/docs/previewer.html) for charters.**
+  You can access by going to <https://bemuse.ninja/?mode=previewer>. [#747], by [@dtinth]
+
+[#747]: https://github.com/bemusic/bemuse/pull/747
+
 ## v52 (2021-12-20)
 
 ### New stuff

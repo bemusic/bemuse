@@ -1,0 +1,60 @@
+@import '~bemuse/ui/common';
+
+.BemusePreviewer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  font-size: 18px;
+
+  &のheader {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 50px;
+    left: 0;
+    background-color: #e34e7a;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 1em;
+  }
+
+  &のheader > h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: normal;
+  }
+
+  &のheader > h1 strong {
+    font-weight: 600;
+  }
+
+  &のheader > h1 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  &のmain {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  &のloading {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #0008;
+    color: #fff;
+    text-align: left;
+    padding: 2em;
+  }
+}

@@ -9,7 +9,10 @@ import {
   SoundedEvent,
   NoteInfo,
   NotechartImages,
+  GameLandmine,
 } from './types'
+
+export * from './types'
 
 /**
  * A notechart holds every info about a single player's note chart that the
@@ -24,6 +27,7 @@ export class Notechart {
   private _duration: number
   private _notes: GameNote[]
   private _autos: SoundedEvent[]
+  private _landmines: GameNote[]
   private _barLines: GameEvent[]
   private _samples: string[]
   private _infos: Map<GameNote, NoteInfo>
@@ -46,6 +50,7 @@ export class Notechart {
       barLines,
       images,
       expertJudgmentWindow,
+      landmineNotes = [],
     } = data
 
     invariant(bmsNotes, 'Expected "data.notes"')
@@ -66,6 +71,7 @@ export class Notechart {
     this._keysounds = keysounds
     this._duration = 0
     this._notes = this._generatePlayableNotesFromBMS(bmsNotes)
+    this._landmines = this._generatePlayableNotesFromBMS(landmineNotes)
     this._autos = this._generateAutoKeysoundEventsFromBMS(bmsNotes)
     this._barLines = this._generateBarLineEvents(barLines)
     this._samples = this._generateKeysoundFiles(keysounds)
@@ -83,6 +89,13 @@ export class Notechart {
    */
   get notes() {
     return this._notes
+  }
+
+  /**
+   * An Array of landmines events.
+   */
+  get landmines() {
+    return this._landmines
   }
 
   /**
@@ -167,6 +180,15 @@ export class Notechart {
    */
   beatToPosition(beat: number) {
     return this._positioning.position(beat)
+  }
+
+  /**
+   * Converts measure number to beat.
+   */
+  measureToBeat(measure: number) {
+    return (
+      this._barLines[measure] || this._barLines[this._barLines.length - 1]
+    ).beat
   }
 
   /**
@@ -281,6 +303,19 @@ export class Notechart {
         } else {
           spec.end = undefined
         }
+        return spec
+      })
+  }
+
+  _generateLandminesFromBMS(bmsNotes: BMS.BMSNote[]) {
+    let nextId = 1
+    return bmsNotes
+      .filter((note) => note.column)
+      .map((note) => {
+        let spec = this._generateEvent(note.beat) as GameLandmine
+        spec.id = nextId++
+        spec.column = note.column!
+        this._updateDuration(spec)
         return spec
       })
   }

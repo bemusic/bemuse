@@ -39,6 +39,12 @@ const modules = {
   //   Various playgrounds...
   playground: () =>
     import(/* webpackChunkName: 'playground' */ 'bemuse/devtools/playground'),
+
+  // >>
+  // previewer
+  //   Runs BMS previewer.
+  previewer: () =>
+    import(/* webpackChunkName: 'previewer' */ 'bemuse/previewer'),
 }
 
 export default modules

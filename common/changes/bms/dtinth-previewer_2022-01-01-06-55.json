@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "bms",
+      "comment": "Added channel mappings for DP charts and landmines. This only applies to this library, the game itself still does not have support for DP charts and landmines.",
+      "type": "minor"
+    }
+  ],
+  "packageName": "bms"
+}
