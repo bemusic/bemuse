@@ -174,10 +174,12 @@ class BemuseNotechartPreview implements NotechartPreview {
     const visibleNotes: VisibleNote[] = []
     const insideView = (gameNote: GameNote) => {
       if (gameNote.end) {
+        if (currentTime > gameNote.end.time) return false
         if (gameNote.position > position + windowSize * 1.5) return false
         if (gameNote.end.position < position - windowSize * 0.5) return false
         return true
       } else {
+        if (currentTime > gameNote.time) return false
         if (gameNote.position > position + windowSize * 1.5) return false
         if (gameNote.position < position - windowSize * 0.5) return false
         return true
