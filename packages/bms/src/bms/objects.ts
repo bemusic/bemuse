@@ -1,5 +1,7 @@
 /**
  * BMSObjects holds a collection of objects inside a BMS notechart.
+ *
+ * @public
  */
 export class BMSObjects {
   private _objects: BMSObject[]
@@ -12,7 +14,8 @@ export class BMSObjects {
    * Adds a new object to this collection.
    * If an object already exists on the same channel and position,
    * the object is replaced (except for autokeysound tracks).
-   * @param object the object to add
+   *
+   * @param object - the object to add
    */
   add(object: BMSObject) {
     if (object.channel !== '01') {
@@ -50,22 +53,26 @@ export class BMSObjects {
   }
 }
 
-/** An object inside a {BMSChart}. */
+/**
+ * @public
+ */
 export interface BMSObject {
-  /** the raw two-character BMS channel of this object */
+  /** The raw two-character BMS channel of this object */
   channel: string
 
-  /** the measure number, starting at 0 (corresponds to `#000`) */
+  /** The measure number, starting at 0 (corresponds to `#000`) */
   measure: number
 
   /**
-   * the fractional position inside the measure,
+   * The fractional position inside the measure,
    * ranging from 0 (inclusive) to 1 (exclusive).
+   *
+   * @remarks
    * 0 means that the object is at the start of the measure,
    * whereas 1 means that the object is at the end of the measure.
    */
   fraction: number
 
-  /** the raw value of the BMS object. */
+  /** The raw value of the BMS object. */
   value: string
 }

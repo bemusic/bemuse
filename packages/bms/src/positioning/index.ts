@@ -4,16 +4,18 @@ import { SpeedSegment } from '../speedcore/segment'
 
 /**
  * A Positioning represents the relation between song beats and
- * display position, and provides a way to convert between them.
+ * displayed in-game position. Some rhythm games lets chart author
+ * control the amount of scrolling per beat. In StepMania 5,
+ * this is called the “scroll segments”.
+ * This class lets you convert between song beats and in-game position.
  *
- * In some rhythm games, the amount of scrolling per beat may be different.
- * StepMania’s `#SCROLL` segments is an example.
+ * @public
  */
 export class Positioning {
-  _speedcore: Speedcore
+  private _speedcore: Speedcore
+
   /**
-   * Constructs a Positioning from the given `segments`.
-   * @param segments
+   * Constructs a {@link Positioning} object from the given `segments`.
    */
   constructor(segments: PositioningSegment[]) {
     this._speedcore = new Speedcore(segments)
@@ -21,7 +23,7 @@ export class Positioning {
 
   /**
    * Returns the scrolling speed at specified beat.
-   * @param beat the beat number
+   * @param beat - The beat number
    */
   speed(beat: number) {
     return this._speedcore.dx(beat)
@@ -29,15 +31,15 @@ export class Positioning {
 
   /**
    * Returns the total elapsed scrolling amount at specified beat.
-   * @param beat the beat number
+   * @param beat - The beat number
    */
   position(beat: number) {
     return this._speedcore.x(beat)
   }
 
   /**
-   * Creates a {Positioning} object from the {BMSChart}.
-   * @param {BMSChart} chart A {BMSChart} to construct a {Positioning} from
+   * Creates a {@link Positioning} object from a {@link BMSChart}.
+   * @param chart - A BMSChart to construct a Positioning from
    */
   static fromBMSChart(chart: BMSChart) {
     void BMSChart
@@ -72,14 +74,16 @@ export class Positioning {
   }
 }
 
+/**
+ * @public
+ */
 export interface PositioningSegment extends SpeedSegment {
-  /** the beat number */
+  /** The beat number */
   t: number
-  /** the total elapsed amount of scrolling at beat `t` */
+  /** The total elapsed amount of scrolling at beat `t` */
   x: number
-  /** the amount of scrolling per beat */
+  /** The amount of scrolling per beat */
   dx: number
-  /** whether or not to include the
-   starting beat `t` as part of the segment */
+  /** Whether or not to include the starting beat `t` as part of the segment */
   inclusive: boolean
 }

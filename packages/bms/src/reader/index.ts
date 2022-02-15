@@ -1,9 +1,3 @@
-// Public: A module that takes a buffer, detects the character set, and
-// returns the decoded string.
-//
-// The Reader follows [ruv-it!’s algorithm](http://hitkey.nekokan.dyndns.info/cmds.htm#CHARSET)
-// for detecting the character set.
-//
 import { ReaderOptions, ReadCallback } from './types'
 import chardet = require('bemuse-chardet/bemuse-chardet')
 import iconv = require('iconv-lite')
@@ -11,7 +5,8 @@ import iconv = require('iconv-lite')
 /**
  * Reads the buffer, detect the character set, and returns the decoded
  * string synchronously.
- * @returns the decoded text
+ * @returns The decoded text
+ * @public
  */
 export function read(
   buffer: Buffer,
@@ -29,14 +24,17 @@ export function read(
 
 /**
  * Like `read(buffer)`, but this is the asynchronous version.
+ * @public
  */
 export function readAsync(
   buffer: Buffer,
   options: ReaderOptions | null,
   callback?: ReadCallback
 ): void
+
 /**
  * Like `read(buffer)`, but this is the asynchronous version.
+ * @public
  */
 export function readAsync(buffer: Buffer, callback?: ReadCallback): void
 
@@ -67,3 +65,5 @@ export function readAsync(...args: any[]) {
 }
 
 export { getReaderOptionsFromFilename } from './getReaderOptionsFromFilename'
+
+export * from './types'

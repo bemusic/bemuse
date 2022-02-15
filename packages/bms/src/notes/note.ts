@@ -1,6 +1,8 @@
 import DataStructure from 'data-structure'
 
-/** A single note in a notechart. */
+/**
+ * @public
+ */
 export interface BMSNote {
   beat: number
   endBeat?: number
@@ -13,8 +15,10 @@ export interface BMSNote {
   keysoundStart?: number
 
   /**
-   * [bmson] The {Number} of seconds into the sound file to stop playing.
-   * This may be `undefined` to indicate that the sound file should play until the end.
+   * [bmson] The number of seconds into the sound file to stop playing.
+   *
+   * @remarks
+   * This may be `undefined`, indicating that the sound file should play until the end.
    */
   keysoundEnd?: number
 }

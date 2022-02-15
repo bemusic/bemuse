@@ -1,3 +1,6 @@
+/**
+ * @public
+ */
 export const IIDX_P1 = {
   '11': '1',
   '12': '2',
@@ -9,6 +12,9 @@ export const IIDX_P1 = {
   '16': 'SC',
 }
 
+/**
+ * @public
+ */
 export const IIDX_DP = {
   '11': '1',
   '12': '2',
@@ -29,6 +35,9 @@ export const IIDX_DP = {
   '26': 'SC2',
 }
 
+/**
+ * @public
+ */
 export const IIDX_P1_LANDMINE = {
   D1: '1',
   D2: '2',
@@ -40,6 +49,9 @@ export const IIDX_P1_LANDMINE = {
   D6: 'SC',
 }
 
+/**
+ * @public
+ */
 export const IIDX_DP_LANDMINE = {
   D1: '1',
   D2: '2',

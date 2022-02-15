@@ -1,6 +1,3 @@
-// Public: A module that takes a string representing the BMS notechart,
-// parses it, and compiles into a {BMSChart}.
-/* module */
 import { match } from '../util/match'
 import { BMSChart } from '../bms/chart'
 import { BMSObject } from '../bms/objects'
@@ -26,11 +23,16 @@ var matchers = {
 
 /**
  * Reads the string representing the BMS notechart, parses it,
- * and compiles into a {BMSChart}.
- * @param text the BMS notechart
- * @param options additional parser options
+ * and compiles into a {@link BMSChart}.
+ *
+ * @param text - The BMS notechart
+ * @param options - Additional parser options
+ * @public
  */
-export function compile(text: string, options?: Partial<BMSCompileOptions>) {
+export function compile(
+  text: string,
+  options?: Partial<BMSCompileOptions>
+): BMSCompileResult {
   options = options || {}
 
   var chart = new BMSChart()
@@ -46,21 +48,13 @@ export function compile(text: string, options?: Partial<BMSCompileOptions>) {
   var randomStack: number[] = []
   var skipStack = [false]
 
-  var result = {
+  var result: BMSCompileResult = {
     headerSentences: 0,
     channelSentences: 0,
     controlSentences: 0,
     skippedSentences: 0,
     malformedSentences: 0,
-
-    /**
-     * The resulting chart
-     */
     chart: chart,
-
-    /**
-     * Warnings found during compilation
-     */
     warnings: [] as { lineNumber: number; message: string }[],
   }
 
@@ -149,6 +143,9 @@ function eachLine(
     })
 }
 
+/**
+ * @public
+ */
 export interface BMSCompileOptions {
   /** File format */
   format: 'bms' | 'dtx'
@@ -158,4 +155,33 @@ export interface BMSCompileOptions {
    *  This function should return an integer number between 1 and `n`.
    */
   rng: (max: number) => number
+}
+
+/**
+ * @public
+ */
+export interface BMSCompileResult {
+  /** Number of header sentences (like `#TITLE`) */
+  headerSentences: number
+
+  /** Number of channel sentences (like `#00101:`) */
+  channelSentences: number
+
+  /** Number of channel sentences (like `#IF`) */
+  controlSentences: number
+
+  /** Number of sentences skipped due to `#IF` */
+  skippedSentences: number
+
+  /** Number of malformed sentences */
+  malformedSentences: number
+
+  /** The resulting chart */
+  chart: BMSChart
+
+  /** Warnings found during compilation */
+  warnings: {
+    lineNumber: number
+    message: string
+  }[]
 }

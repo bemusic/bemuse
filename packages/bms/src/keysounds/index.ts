@@ -1,12 +1,10 @@
-// Public: A module that exposes {Keysounds}
-/* module */
-
 import { uniq, values } from '../util/lodash'
 import { BMSChart } from '../bms/chart'
 
 /**
- * A simple mapping between keysounds ID and the file name.
- * ## Example
+ * A simple mapping between keysound ID and the corresponding file name.
+ *
+ * @example
  *
  * If you have a BMS like this:
  *
@@ -14,8 +12,8 @@ import { BMSChart } from '../bms/chart'
  * #WAVAA cat.wav
  * ```
  *
- * Having parsed it using a {Compiler} into a {BMSChart},
- * you can create a {Keysounds} using `fromBMSChart()`:
+ * Having parsed it using `Compiler.compile` into a {@link BMSChart},
+ * you can create a {@link Keysounds} using `fromBMSChart()`:
  *
  * ```js
  * var keysounds = Keysounds.fromBMSChart(bmsChart)
@@ -26,6 +24,8 @@ import { BMSChart } from '../bms/chart'
  * ```js
  * keysounds.get('aa') // => 'cat.wav'
  * ```
+ *
+ * @public
  */
 export class Keysounds {
   _map: { [id: string]: string }
@@ -35,7 +35,7 @@ export class Keysounds {
 
   /**
    * Returns the keysound file at the specified ID.
-   * @param id the two-character keysound ID
+   * @param id - The two-character keysound ID
    * @returns the sound filename
    */
   get(id: string): string | undefined {
@@ -51,18 +51,18 @@ export class Keysounds {
   }
 
   /**
-   * Returns a mapping from keysound ID to keysound filename.
+   * Returns a mapping from keysound ID to keysound filename (DO NOT MUTATE).
    *
-   * **Warning:** This method returns the internal data structure used
-   * in this Keysounds object. Do not mutate!
+   * @remarks
+   * This method returns the internal data structure used in this Keysounds object.
+   * Do not mutate it!
    */
   all() {
     return this._map
   }
 
   /**
-   * Constructs a new {Keysounds} object from a {BMSChart}.
-   * @param chart
+   * Constructs a new {@link Keysounds} object from a {@link BMSChart}.
    */
   static fromBMSChart(chart: BMSChart) {
     void BMSChart

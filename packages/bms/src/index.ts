@@ -1,62 +1,43 @@
 /**
- * Public: The `bms` package is a library for working with rhythm game data.
+ * The `bms` package is a library for working with rhythm game data.
  *
  * Although this library’s name suggests that it is for BMS file format,
- * almost every part can be used standalone.
+ * almost every part can be used independently.
  *
+ * @remarks
  * This package contains:
  *
- * - __Modules that reads and parses BMS files:__
+ * Modules that reads and parses BMS files:
+ * {@link Reader} reads the BMS file from a `Buffer`, detects the character set
+ * and decodes the buffer using that character set into a string,
+ * {@link Compiler} reads the BMS source from a string, and converts into
+ * {@link BMSChart}, an internal representation of a BMS notechart.
  *
- *   - {Reader} reads the BMS file from a {Buffer}, detects the character set
- *     and decodes the buffer using that character set into a {String}.
- *   - {Compiler} reads the BMS source from a {String}, and converts into
- *     {BMSChart}, an internal representation of a BMS notechart.
+ * Classes for representing a BMS notechart:
+ * {@link BMSChart} is composed of {@link BMSHeaders} and {@link BMSObjects}.
+ * It the data as close to the BMS file format as possible.
+ * Almost no musical interpretation is made (except for {@link TimeSignatures}).
+ * For example, a BPM change is simply represented using a {@link BMSObject} with `channel` = `03` or `08`.
  *
- * - __Classes for representing a BMS notechart.__
- *   These module stores the data as close to the BMS file format as possible.
+ * Classes that represent different musical aspects of a notechart:
+ * {@link TimeSignatures}, {@link Timing}, {@link SongInfo}, {@link Notes},
+ * {@link Keysounds}, {@link Positioning} and {@link Spacing}.
+ * Instance of these classes are usually created from a {@link BMSChart},
+ * but they can be used in a standalone manner as well.
  *
- *   Almost no musical interpretation is made.
- *   For example, a BPM change is simply represented using a
- *   BMSObject with `channel` = `03` or `08`.
+ * Low-level utility classes: {@link Speedcore}.
+ * These classes are used for lower-level operations such as keyframing
+ * and linear interpolation.
  *
- *   - {BMSChart} is composed of {BMSHeaders}, {BMSObjects}, and {TimeSignatures}.
- *   - {BMSHeaders} represents the header sentences in a BMS file.
- *   - {BMSObjects} represents the objects in a BMS file.
- *   - {BMSObject} represents a single object.
+ * This makes this library very flexible, and able to accommodate different formats of notechart.
+ * For example, the {@link https://github.com/bemusic/bmson | bmson} package provides
+ * support for the BMSON format.
  *
- * - __Classes that represent different aspects of a notechart.__
- *   Instance of these classes may be created from a {BMSChart},
- *   but they can be used in a standalone manner as well.
+ * It’s also possible to use these classes in context other than music gaming,
+ * for example, you can use these classes to help building a music player
+ * that requires precise synchronization between beats.
  *
- *   This makes this library very flexible,
- *   and able to accommodate different formats of notechart.
- *   For example, see the [bmson](https: *github.com/bemusic/bmson) package.
- *
- *   It’s also possible to use these classes in context other than music gaming,
- *   for example, you can use these classes to help building a music player
- *   that requires precise synchronization between beats.
- *
- *   - {TimeSignatures} represents a collection of time signatures
- *     in a musical score, and lets you convert the measure number and fraction
- *     into beat number.
- *   - {Timing} represents the timing information in a musical score,
- *     and provides methods to convert between musical time (beats) and
- *     metric time (seconds).
- *   - {SongInfo} represents the basic song information,
- *     such as title, artist, and genre.
- *   - {Notes} represents the sound objects inside your notechart.
- *   - {Keysounds} represents a mapping between keysound ID and filename.
- *   - {Positioning} represents a mapping between beat and in-game position.
- *     Some rhythm game lets chart author control the amount of scrolling
- *     per beat. In StepMania 5, this is called the scroll segments.
- *   - {Spacing} represents a mapping between beat and note spacing.
- *     Some rhythm game lets chart author change the note spacing (HI-SPEED)
- *     dynamically. In StepMania 5, this is called the speed segments.
- *
- * - __Low-level utility classes:__
- *
- *   - {Speedcore} represents a linear animation.
+ * @packageDocumentation
  */
 
 import * as Reader from './reader'

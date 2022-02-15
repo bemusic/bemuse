@@ -11,6 +11,7 @@
   "scripts": {
     "clean": "rimraf lib tsconfig.tsbuildinfo",
     "build": "tsc -b .",
+    "api": "api-extractor run",
     "test": "gulp bmspec:update && nyc -r text -r lcov gulp test",
     "dev": "tsc --watch"
   },
@@ -48,7 +49,8 @@
     "lazy-property": "^1.0.0",
     "nyc": "^11.9.0",
     "stack-chain": "^1.3.0",
-    "typescript": "^4.4.3"
+    "typescript": "^4.4.3",
+    "@microsoft/api-extractor": "~7.19.4"
   },
   "dependencies": {
     "bemuse-chardet": "0.0.8",

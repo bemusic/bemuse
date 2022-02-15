@@ -3,17 +3,17 @@ import { BMSChart } from '../bms/chart'
 import { SpeedSegment } from '../speedcore/segment'
 
 /**
- * Public: A Spacing represents the relation between song beats and
- * notes spacing.
+ * A Spacing represents the relation between song beats and notes spacing factor (a.k.a HI-SPEED).
+ * Some rhythm game (such as Pump It Up!) lets chart author change the note spacing factor dynamically.
+ * In StepMania 5, this is called the speed segments.
  *
- * In some rhythm games, such as Pump It Up!,
- * the speed (note spacing factor) may be adjusted by the notechart.
- * StepMania’s `#SPEED` segments is an example.
+ * @public
  */
 export class Spacing {
   private _speedcore?: Speedcore
+
   /**
-   * Constructs a Spacing from the given `segments`.
+   * Constructs a {@link Spacing} from the given {@link SpacingSegment}.
    */
   constructor(segments: SpacingSegment[]) {
     if (segments.length > 0) {
@@ -23,7 +23,7 @@ export class Spacing {
 
   /**
    * Returns the note spacing factor at the specified beat.
-   * @param beat the beat
+   * @param beat - The beat
    */
   factor(beat: number) {
     if (this._speedcore) {
@@ -34,9 +34,11 @@ export class Spacing {
   }
 
   /**
-   * Creates a {Spacing} object from the {BMSChart}.
+   * Creates a {@link Spacing} object from the {@link BMSChart}.
    *
-   * ## `#SPEED` and `#xxxSP`
+   * @remarks
+   *
+   * In BMS format note spacing is defined using `#SPEED` and `#xxxSP` channels.
    *
    * Speed is defined as keyframes. These keyframes will be linearly interpolated.
    *
@@ -50,9 +52,7 @@ export class Spacing {
    * In this example, the note spacing factor will gradually change
    * from 1.0x at beat 1 to 2.0x at beat 2.
    *
-   * Returns a {Spacing} object
-   *
-   * @param {BMSChart} chart the chart
+   * @param chart - The BMSChart to create the Spacing from
    */
   static fromBMSChart(chart: BMSChart) {
     void BMSChart
@@ -86,18 +86,21 @@ export class Spacing {
   }
 }
 
+/**
+ * @public
+ */
 export interface SpacingSegment extends SpeedSegment {
-  /** the beat number */
+  /** The beat number */
   t: number
-  /** the spacing at beat `t` */
+  /** The spacing at beat `t` */
   x: number
   /**
-   * the amount spacing factor change per beat,
+   * The amount spacing factor change per beat,
    * in order to create a continuous speed change
    */
   dx: number
   /**
-   * whether or not to include the
+   * Whether or not to include the
    * starting beat `t` as part of the segment
    */
   inclusive: boolean

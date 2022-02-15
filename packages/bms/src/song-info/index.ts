@@ -2,20 +2,60 @@ import { match } from '../util/match'
 import { assign } from '../util/lodash'
 import { BMSChart } from '../bms/chart'
 
+/**
+ * @public
+ */
 export interface ISongInfoData {
+  /** The song title */
   title: string
+
+  /** The song artist */
   artist: string
+
+  /** The song genre */
   genre: string
+
+  /**
+   * The song's subtitles, one line per element.
+   *
+   * @remarks
+   * The subtitle may be used to represent the difficulty name,
+   * such as NORMAL, HYPER, ANOTHER.
+   */
   subtitles: string[]
+
+  /**
+   * The song's supporting artists, one artist per element.
+   */
   subartists: string[]
+
+  /**
+   * The difficulty.
+   *
+   * @remarks
+   * Meaning of the number is same as BMS's {@link http://hitkey.nekokan.dyndns.info/cmds.htm#DIFFICULTY | #DIFFICULTY} header.
+   *
+   * - 1: BEGINNER
+   * - 2: NORMAL
+   * - 3: HYPER
+   * - 4: ANOTHER
+   * - 5: INSANE
+   */
   difficulty: number
+
+  /**
+   * The level of the song.
+   *
+   * @remarks
+   * When converted from a BMS chart, this is the value of `#PLAYLEVEL` header.
+   */
   level: number
 }
 
 /**
  * A SongInfo represents the song info, such as title, artist, genre.
  *
- * ## Example
+ * @example
  *
  * If you have a BMS like this:
  *
@@ -23,8 +63,8 @@ export interface ISongInfoData {
  * #TITLE Exargon [HYPER]
  * ```
  *
- * Having parsed it using a {Compiler} into a {BMSChart},
- * you can create a {SongInfo} using `fromBMSChart()`:
+ * Having parsed it using `Compiler.compile` into a {@link BMSChart},
+ * you can create a {@link SongInfo} using `fromBMSChart()`:
  *
  * ```js
  * var info = SongInfo.fromBMSChart(bmsChart)
@@ -36,62 +76,73 @@ export interface ISongInfoData {
  * info.title     // => 'Exargon'
  * info.subtitles // => ['HYPER']
  * ```
+ *
+ * @public
  */
 export class SongInfo implements ISongInfoData {
+  /** The song title */
   title: string
+
+  /** The song artist */
   artist: string
+
+  /** The song genre */
   genre: string
-  subtitles: string[]
-  subartists: string[]
-  difficulty: number
-  level: number
+
   /**
-   * Constructs a SongInfo with given data
-   * @param info the properties to set on this new instance
+   * The song's subtitles, one line per element.
+   *
+   * @remarks
+   * The subtitle may be used to represent the difficulty name,
+   * such as NORMAL, HYPER, ANOTHER.
+   */
+  subtitles: string[]
+
+  /**
+   * The song's supporting artists, one artist per element.
+   */
+  subartists: string[]
+
+  /**
+   * The difficulty.
+   *
+   * @remarks
+   * Meaning of the number is same as BMS's {@link http://hitkey.nekokan.dyndns.info/cmds.htm#DIFFICULTY | #DIFFICULTY} header.
+   *
+   * - 1: BEGINNER
+   * - 2: NORMAL
+   * - 3: HYPER
+   * - 4: ANOTHER
+   * - 5: INSANE
+   */
+  difficulty: number
+
+  /**
+   * The level of the song.
+   *
+   * @remarks
+   * When converted from a BMS chart, this is the value of `#PLAYLEVEL` header.
+   */
+  level: number
+
+  /**
+   * Constructs a {@link SongInfo} with given data
+   * @param info - The properties to set on this new instance
    */
   constructor(info: { [propertyName: string]: any }) {
-    /** the song title */
     this.title = 'NO TITLE'
-    /** the song artist */
     this.artist = 'NO ARTIST'
-    /** the song genre */
     this.genre = 'NO GENRE'
-    /**
-     * the song's subtitles, one line per element.
-     * The subtitle may be used to represent the difficulty name,
-     * such as NORMAL, HYPER, ANOTHER.
-     * @type {string[]}
-     */
     this.subtitles = []
-    /**
-     * the song's other artists, one artist per element.
-     * @type {string[]}
-     */
     this.subartists = []
-    /**
-     * the difficulty.
-     * Meaning of the number is same as BMS's [`#DIFFICULTY`](http:*hitkey.nekokan.dyndns.info/cmds.htm#DIFFICULTY) header.
-     *
-     * | difficulty | meaning  |
-     * | ----------:|:--------:|
-     * |          1 | BEGINNER |
-     * |          2 | NORMAL   |
-     * |          3 | HYPER    |
-     * |          4 | ANOTHER  |
-     * |          5 | INSANE   |
-     */
     this.difficulty = 0
-    /**
-     * the level of the song.
-     * When converted from a BMS chart, this is the value of `#PLAYLEVEL` header.
-     */
     this.level = 0
     if (info) assign(this, info)
   }
 
   /**
-   * Constructs a new {SongInfo} object from a {BMSChart}.
-   * @param chart A {BMSChart} to construct a {SongInfo} from
+   * Constructs a new {@link SongInfo} object from a {@link BMSChart}.
+   * @param chart - A BMSChart to construct a SongInfo from
    */
   static fromBMSChart(chart: BMSChart) {
     void BMSChart

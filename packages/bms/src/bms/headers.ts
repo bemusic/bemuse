@@ -14,6 +14,8 @@
  * ```js
  * chart.headers.getAll()
  * ```
+ *
+ * @public
  */
 export class BMSHeaders {
   private _data: { [field: string]: string }
@@ -26,8 +28,9 @@ export class BMSHeaders {
 
   /**
    * Iterates through each header field using a callback function.
-   * @param callback will be called for each header field
+   * @param callback - will be called for each header field
    */
+
   each(callback: (key: string, value: string) => any) {
     for (var i in this._data) {
       callback(i, this._data[i])
@@ -36,8 +39,8 @@ export class BMSHeaders {
 
   /**
    * Retrieves the header field’s latest value.
-   * @param name field’s name
-   * @return the field’s latest value
+   * @param name - field’s name
+   * @returns the field’s latest value
    */
   get(name: string): string | undefined {
     return this._data[name.toLowerCase()]
@@ -46,7 +49,7 @@ export class BMSHeaders {
   /**
    * Retrieves the header field’s values.
    * This is useful when a header field is specified multiple times.
-   * @param name field’s name
+   * @param name - field’s name
    */
   getAll(name: string): string[] | undefined {
     return this._dataAll[name.toLowerCase()]
@@ -54,8 +57,8 @@ export class BMSHeaders {
 
   /**
    * Sets the header field’s value.
-   * @param name field’s name
-   * @param value field’s value
+   * @param name - field’s name
+   * @param value - field’s value
    */
   set(name: string, value: string) {
     var key = name.toLowerCase()
