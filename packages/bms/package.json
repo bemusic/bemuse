@@ -6,7 +6,8 @@
   "typings": "./lib/index.d.ts",
   "files": [
     "src",
-    "lib"
+    "lib",
+    "dist"
   ],
   "scripts": {
     "clean": "rimraf lib tsconfig.tsbuildinfo",
@@ -64,5 +65,6 @@
   },
   "volta": {
     "extends": "../../volta.json"
-  }
+  },
+  "docModel": "./dist/bms.api.json"
 }
