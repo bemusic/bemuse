@@ -1,6 +1,6 @@
 import './MusicInfoTabStats.scss'
 
-import Icon from 'react-fa'
+import Icon from 'react-fontawesome'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { formattedAccuracyForRecord } from 'bemuse/rules/accuracy'
