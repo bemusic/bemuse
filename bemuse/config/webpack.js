@@ -186,7 +186,7 @@ function generateLoadersConfig() {
     },
     {
       test: /\.jade$/,
-      loader: 'jade-loader',
+      loader: 'pug-loader',
     },
     {
       test: /\.png$/,

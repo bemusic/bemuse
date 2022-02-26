@@ -1,7 +1,7 @@
 import Promise from 'bluebird'
 import fs from 'fs'
 import gulp from 'gulp'
-import gutil from 'gulp-util'
+import log from 'fancy-log'
 import webpack from 'webpack'
 
 import buildConfig from '../config/buildConfig'
@@ -15,7 +15,7 @@ gulp.task(
   'build',
   gulp.series('dist', async function () {
     const stats = await Promise.promisify(webpack)(config)
-    gutil.log('[webpack]', stats.toString({ colors: true }))
+    log('[webpack]', stats.toString({ colors: true }))
     if (stats.hasErrors()) {
       throw new Error(
         'Failed to build Bemuse, please check the logs above.... T_T'
