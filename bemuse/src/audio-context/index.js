@@ -1,3 +1,3 @@
-import { StreamAudioContext } from '@descript/web-audio-js'
-
-export default new StreamAudioContext()
+export default new AudioContext({
+  latencyHint: 'interactive',
+})
