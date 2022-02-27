@@ -167,7 +167,8 @@
     "@radix-ui/react-alert-dialog": "~0.1.5",
     "fuzzysort": "~1.1.4",
     "fancy-log": "~2.0.0",
-    "@descript/web-audio-js": "~0.15.3-patched.5"
+    "@descript/web-audio-js": "~0.15.3-patched.5",
+    "plugin-error": "~1.0.1"
   },
   "resolutions": {
     "natives": "1.1.6"
