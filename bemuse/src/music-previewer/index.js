@@ -25,12 +25,8 @@ export function preview(url) {
 }
 
 function playAudio(element) {
-  return new Promise((resolve, reject) => {
-    try {
-      resolve(element.play())
-    } catch (e) {
-      reject(e)
-    }
+  return new Promise((resolve) => {
+    resolve(element.play())
   })
 }
 
