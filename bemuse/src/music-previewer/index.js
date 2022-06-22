@@ -131,11 +131,9 @@ function createMusicPreviewer() {
       backgroundFader.fadeTo(0.4, 0.5)
       if (backgroundLoaded && !backgroundPlayed) {
         backgroundPlayed = true
-        try {
-          background.play()
-        } catch (e) {
-          console.warn('Cannot play background music')
-        }
+        background
+          .play()
+          .catch(() => console.warn('Cannot play background music'))
       }
     }
   }
@@ -154,11 +152,7 @@ function createMusicPreviewer() {
     go() {
       if (!enabled) return
       goSound.currentTime = 0
-      try {
-        goSound.play()
-      } catch (e) {
-        console.warn('Cannot play go sound.')
-      }
+      goSound.play().catch(() => console.warn('Cannot play go sound.'))
     },
     preview(songUrl) {
       if (currentUrl === songUrl) return
@@ -187,12 +181,8 @@ function createMusicPreviewer() {
       loaded: false,
       play() {
         if (!played) {
-          try {
-            audio.play()
-            played = true
-          } catch (e) {
-            console.warn('Cannot play', audio.src)
-          }
+          audio.play().catch(() => console.warn('Cannot play', audio.src))
+          played = true
         }
         fader.fadeTo(1, 2)
       },

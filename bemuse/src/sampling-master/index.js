@@ -284,9 +284,7 @@ export function unmuteAudio(ctx = defaultAudioContext) {
   gain.connect(ctx.destination)
   gain.disconnect()
 
-  try {
-    ctx.resume()
-  } catch (e) {
+  ctx.resume().catch((e) => {
     console.error('[sampling-master] Cannot resume AudioContext', e)
-  }
+  })
 }
