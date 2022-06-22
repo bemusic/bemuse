@@ -24,6 +24,16 @@ export function preview(url) {
   return getInstance().preview(url)
 }
 
+function playAudio(element) {
+  return new Promise((resolve, reject) => {
+    try {
+      resolve(element.play())
+    } catch (e) {
+      reject(e)
+    }
+  })
+}
+
 function createFader(audio, initialVolume, onTargetReached) {
   let targetVolume = 0
   let currentSpeed = 0
@@ -131,9 +141,9 @@ function createMusicPreviewer() {
       backgroundFader.fadeTo(0.4, 0.5)
       if (backgroundLoaded && !backgroundPlayed) {
         backgroundPlayed = true
-        background
-          .play()
-          .catch(() => console.warn('Cannot play background music'))
+        playAudio(background).catch(() =>
+          console.warn('Cannot play background music')
+        )
       }
     }
   }
@@ -152,7 +162,7 @@ function createMusicPreviewer() {
     go() {
       if (!enabled) return
       goSound.currentTime = 0
-      goSound.play().catch(() => console.warn('Cannot play go sound.'))
+      playAudio(goSound).catch(() => console.warn('Cannot play go sound.'))
     },
     preview(songUrl) {
       if (currentUrl === songUrl) return
@@ -181,8 +191,11 @@ function createMusicPreviewer() {
       loaded: false,
       play() {
         if (!played) {
-          audio.play().catch(() => console.warn('Cannot play', audio.src))
-          played = true
+          playAudio(audio)
+            .then(() => {
+              played = true
+            })
+            .catch(() => console.warn('Cannot play', audio.src))
         }
         fader.fadeTo(1, 2)
       },
