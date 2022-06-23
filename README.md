@@ -10,7 +10,7 @@
   <a href="https://sonarcloud.io/summary/new_code?id=bemusic_bemuse"><img src="https://sonarcloud.io/api/project_badges/measure?project=bemusic_bemuse&metric=alert_status" alt="Quality Gate Status" /></a>
   <a href="https://sonarcloud.io/summary/new_code?id=bemusic_bemuse"><img src="https://sonarcloud.io/api/project_badges/measure?project=bemusic_bemuse&metric=sqale_rating" alt="Maintainability Rating" /></a>
   <br>
-  <a href="https://bemuse.ninja/project/"><img src="https://img.shields.io/badge/read%20the-docs-brightgreen.svg?style=flat" alt="Docs"></a>
+  <a href="https://bemuse.ninja/project/docs/user-guide.html"><img src="https://img.shields.io/badge/read%20the-docs-brightgreen.svg?style=flat" alt="Docs"></a>
   <a href="https://gitpod.io/#https://github.com/bemusic/bemuse" title="Develop in GitPod"><img src="https://img.shields.io/badge/develop%20in-gitpod-blue.svg?style=flat"></a>
 </p>
 
