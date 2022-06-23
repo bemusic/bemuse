@@ -18,7 +18,7 @@ jobs:
           name: build
           command: |
             rm -rf dist
-            node build-scripts build
+            # node build-scripts build
       - run:
           name: checks
           command: |
