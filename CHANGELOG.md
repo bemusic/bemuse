@@ -27,11 +27,9 @@
 
 ## v52.1.1-pre.202210151518
 
-### Others
+### Internals
 
 - Improved error handling code in audio handling code. [#751], by [@MikuroXina]
-
-### Internals
 
 - Fixed a link in the README file. [#754], by [@sikgyu]
 
