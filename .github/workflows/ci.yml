@@ -18,8 +18,21 @@ jobs:
         
       - name: Setup Node
         uses: actions/setup-node@v3
+        
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+        
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
         with:
-          cache: pnpm
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
         
       - name: Install dependencies
         run: node common/scripts/install-run-rush.js install
@@ -35,5 +48,6 @@ jobs:
       - name: Upload build
         uses: actions/upload-artifact@v3
         with:
+          name: bemuse-build-${{ github.sha }}
           path: dist
       
