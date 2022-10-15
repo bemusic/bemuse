@@ -18,11 +18,6 @@ jobs:
         
       - name: Setup Node
         uses: actions/setup-node@v3
-
-      - name: Rush Install
-        uses: advancedcsg-open/actions-rush@v1
-        with:
-          build: true
         
       - name: Install dependencies
         run: node common/scripts/install-run-rush.js install
