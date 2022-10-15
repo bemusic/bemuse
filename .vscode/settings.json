@@ -36,6 +36,7 @@
     "gmail",
     "hardcoded",
     "IIDX",
+    "immer",
     "interop",
     "IPFS",
     "JKOC",
@@ -78,7 +79,6 @@
     "timesynchro",
     "tocstop",
     "transpiler",
-    "updeep",
     "workspaces"
   ],
   "eslint.enable": true,

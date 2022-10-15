@@ -1,4 +1,4 @@
-import u from 'updeep'
+import produce from 'immer'
 import _ from 'lodash'
 
 export const initialState = {
@@ -24,14 +24,14 @@ export const selectedChartGivenCharts = (charts) => (state) => {
 
 // Updater
 export const selectSong = (songId) =>
-  u({
-    selectedSongId: songId,
+  produce(songId, draft => {
+    draft.selectedSongId = songId
   })
 export const selectChart = (songId, chartId, chartLevel) =>
-  u({
-    selectedSongId: songId,
-    selectedChartId: chartId,
-    selectedChartLevel: chartLevel,
+  produce(draft => {
+    draft.selectedSongId = songId
+    draft.selectedChartId = chartId
+    draft.selectedChartLevel = chartLevel
   })
 
 // Utilities
