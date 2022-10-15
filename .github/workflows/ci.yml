@@ -18,21 +18,11 @@ jobs:
         
       - name: Setup Node
         uses: actions/setup-node@v3
-        
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-        
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
+
+      - name: Rush Install
+        uses: advancedcsg-open/actions-rush@v1
         with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          build: true
         
       - name: Install dependencies
         run: node common/scripts/install-run-rush.js install
