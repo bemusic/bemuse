@@ -19,9 +19,24 @@
 [@vishal5251]: https://github.com/vishal5251
 [@vtno]: https://github.com/vtno
 [@fresult]: https://github.com/fResult
+[@mikuroxina]: https://github.com/MikuroXina
+[@sikgyu]: https://github.com/sikgyu
 [@aj-ya]: https://github.com/aj-ya
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
+
+## v52.1.1-pre.202210151518
+
+### Others
+
+- Improved error handling code in audio handling code. [#751], by [@MikuroXina]
+
+### Internals
+
+- Fixed a link in the README file. [#754], by [@sikgyu]
+
+[#751]: https://github.com/bemusic/bemuse/pull/751
+[#754]: https://github.com/bemusic/bemuse/pull/754
 
 ## v52.1 (2022-01-01)
 
@@ -31,8 +46,9 @@
 
 ### Others
 
-- **Added a [BMS previewer](https://bemuse.ninja/project/docs/previewer.html) for charters.**
-  You can access by going to <https://bemuse.ninja/?mode=previewer>. [#747], by [@dtinth]
+- **Added a [BMS previewer](https://bemuse.ninja/project/docs/previewer.html)
+  for charters.** You can access by going to
+  <https://bemuse.ninja/?mode=previewer>. [#747], by [@dtinth]
 
 [#747]: https://github.com/bemusic/bemuse/pull/747
 
