@@ -27,14 +27,15 @@ export const PreviewFileDropHandler: React.FC<{
         alert('Unsupported browser (sorry).')
         return
       }
-      const handle = await item.getAsFileSystemHandle()!
-      if (!handle || handle.kind !== 'directory') {
+      const handleNullable = await item.getAsFileSystemHandle()
+      if (!handleNullable || handleNullable.kind !== 'directory') {
         alert('Please drop folder, not a file here.')
         return
       }
+      const handle = handleNullable as FileSystemDirectoryHandle
       await handle.requestPermission({ mode: 'read' })
       const chartFiles: { filename: string; label: string }[] = []
-      for await (let [name] of handle) {
+      for await (let [name] of handle.entries()) {
         if (/\.(bms|bme|bml|bmson)$/i.test(name)) {
           chartFiles.push({ filename: name, label: name })
         }
