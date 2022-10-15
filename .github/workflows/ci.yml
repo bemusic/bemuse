@@ -15,14 +15,23 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+        
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          cache: pnpm
+        
       - name: Install dependencies
         run: node common/scripts/install-run-rush.js install
+        
       - name: Build
         run: |
           rm -rf dist
           node build-scripts build
+          
       - name: Checks
         run: node build-scripts pre-deploy
+        
       - name: Upload build
         uses: actions/upload-artifact@v3
         with:
