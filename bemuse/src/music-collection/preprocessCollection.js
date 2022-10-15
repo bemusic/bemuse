@@ -1,7 +1,9 @@
 import produce from 'immer'
 
 export const preprocessCollection = produce((draft, songs) => {
-  draft.songs = songs.map(song => preprocessSong(song))
+  if (songs) {
+    draft.songs = songs.map(song => preprocessSong(song))
+  }
 })
 
 function preprocessSong(song) {
