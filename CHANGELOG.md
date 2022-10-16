@@ -21,9 +21,25 @@
 [@fresult]: https://github.com/fResult
 [@mikuroxina]: https://github.com/MikuroXina
 [@sikgyu]: https://github.com/sikgyu
+[@darkrider0007]: https://github.com/Darkrider0007
+[@doublevcodes]: https://github.com/doublevcodes
 [@aj-ya]: https://github.com/aj-ya
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
+
+## v52.1.1-pre.202210161119
+
+### Internals
+
+- Fixed high CPU usage when developing the project inside VS Code. [#758], by
+  [@dtinth]
+- Added links to contributors list to README file. [#759], by [@Darkrider0007]
+- Started migrating the delivery pipeline to be automated with GitHub Actions.
+  [#762], by [@doublevcodes]
+
+[#758]: https://github.com/bemusic/bemuse/pull/758
+[#759]: https://github.com/bemusic/bemuse/pull/759
+[#762]: https://github.com/bemusic/bemuse/pull/762
 
 ## v52.1.1-pre.202210151518
 
