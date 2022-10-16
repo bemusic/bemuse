@@ -156,6 +156,7 @@ use on npm.
 project, not the [sub-projects](#sub-projects), which has its own license terms
 (mostly MIT).
 
+## Our Amazing Contributors🌟
 <a align="center" href="https://github.com/bemusic/bemuse/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=bemusic/bemuse&&max=817" />
 </a>
