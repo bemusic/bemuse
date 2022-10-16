@@ -1,0 +1,41 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_COLOR: '1'
+      TOOL_NODE_FLAGS: --max_old_space_size=4096
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        
+      - name: Install dependencies
+        run: node common/scripts/install-run-rush.js install
+        
+      - name: Build
+        run: |
+          rm -rf dist
+          node build-scripts build
+          
+      - name: Checks
+        run: node build-scripts pre-deploy
+        
+      - name: Upload build
+        uses: actions/upload-artifact@v3
+        with:
+          name: bemuse-build-${{ github.sha }}
+          path: dist
+      
