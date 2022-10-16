@@ -84,5 +84,9 @@
   "eslint.enable": true,
   "search.exclude": {
     "**/.yarn": true
+  },
+  "files.watcherExclude": {
+    "**/pnpm-store/**": true,
+    "**/common/temp/**": true
   }
 }
