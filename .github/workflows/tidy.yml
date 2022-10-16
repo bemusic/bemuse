@@ -8,13 +8,10 @@ jobs:
     name: Ensure codebase is tidy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16'
       - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install Deps
-        run: node common/scripts/install-run-rush.js install
+        uses: actions/checkout@v3
+      - name: Set up project
+        uses: ./.github/actions/setup-project
       - name: Lint and fix all auto-fixable problems
         run: node common/scripts/install-run-rush.js lint-fix || true
       - name: Make sure all source files are formatted using Prettier
