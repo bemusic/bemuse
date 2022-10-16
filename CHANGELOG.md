@@ -27,6 +27,14 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## v52.1.1-pre.202210161256
+
+### Internals
+
+- Improved build performance in GitHub Actions. [#764], by [@dtinth]
+
+[#764]: https://github.com/bemusic/bemuse/pull/764
+
 ## v52.1.1-pre.202210161119
 
 ### Internals
