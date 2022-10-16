@@ -42,7 +42,7 @@
     "chai": "^4.2.0",
     "codeclimate-test-reporter": "0.0.4",
     "gulp": "^4.0.2",
-    "gulp-cucumber": "git://github.com/dtinth/gulp-cucumber",
+    "gulp-cucumber": "https://github.com/dtinth/gulp-cucumber/archive/687f16096f61729d8b11f65e266b95dcd8b8ef00.tar.gz",
     "gulp-mocha": "^6.0.0",
     "hide-stack-frames-from": "^1.0.0",
     "lazy-property": "^1.0.0",

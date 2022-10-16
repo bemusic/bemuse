@@ -1,7 +1,7 @@
 import { CLIEngine } from 'eslint'
 import { readFileSync } from 'fs'
 import { insert } from 'markdown-toc'
-import { getFileInfo, resolveConfig, check, format } from 'prettier'
+import { format } from 'prettier'
 import minimatch = require('minimatch')
 
 declare global {
@@ -45,33 +45,6 @@ report.results.forEach((result) => {
     }
   })
 })
-
-// Prettier
-let prettierFailed = false
-const prettierPattern = '*.{js,jsx,ts,tsx,json,scss,css,yml}'
-filesToCheck.forEach((filePath) => {
-  const matchesPattern = minimatch(filePath, prettierPattern, {
-    matchBase: true,
-  })
-  if (!matchesPattern) return
-  const fileInfo = getFileInfo.sync(filePath, {
-    ignorePath: '.prettierignore',
-  } as any)
-  if (fileInfo.ignored) return
-  if (!fileInfo.inferredParser) return
-  const source = readFileSync(filePath, 'utf8')
-  const config = resolveConfig.sync(filePath)
-  const options = { ...config, parser: fileInfo.inferredParser }
-  if (!check(source, options)) {
-    fail(`${filePath} is not formatted using Prettier.`)
-    prettierFailed = true
-  }
-})
-if (prettierFailed) {
-  message(
-    'You can run `rush format` to automatically format all files using Prettier.'
-  )
-}
 
 // Readme
 const readme = readFileSync('README.md', 'utf8')
