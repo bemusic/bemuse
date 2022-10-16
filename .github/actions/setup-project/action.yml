@@ -1,0 +1,14 @@
+name: 'Set up project'
+description: 'Sets up Node.js, Rush, and project dependencies.'
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16
+    - name: Setup Rush cache
+      uses: ./.github/actions/rush-cache
+    - name: Install Deps
+      run: node common/scripts/install-run-rush.js install
+      shell: bash

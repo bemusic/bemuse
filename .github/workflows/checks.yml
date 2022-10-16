@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - master
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -16,13 +17,10 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16'
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install Deps
-        run: node common/scripts/install-run-rush.js install
+      - name: Set up project
+        uses: ./.github/actions/setup-project
       - name: Lint
         run: node common/scripts/install-run-rush.js danger-ci
         env:
@@ -35,13 +33,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16'
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install Deps
-        run: node common/scripts/install-run-rush.js install
+      - name: Set up project
+        uses: ./.github/actions/setup-project
       - name: Build
         run: node common/scripts/install-run-rush.js build --to-except bemuse
       - name: Test
@@ -53,13 +48,10 @@ jobs:
   test_packages:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16'
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install Deps
-        run: node common/scripts/install-run-rush.js install
+      - name: Set up project
+        uses: ./.github/actions/setup-project
       - name: Build
         run: node common/scripts/install-run-rush.js build --to-except bemuse
       - name: Test Packages
