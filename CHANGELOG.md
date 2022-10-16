@@ -27,7 +27,7 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
-## v52.1.1-pre.202210161256
+## v52.1.1 (2022-10-16)
 
 This is a maintenance release, mostly consists of internal tooling updates and code clean-up.
 
