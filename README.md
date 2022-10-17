@@ -155,3 +155,7 @@ use on npm.
 [AGPLv3](LICENSE). Note that this license only applies to the main Bemuse
 project, not the [sub-projects](#sub-projects), which has its own license terms
 (mostly MIT).
+
+<a align="center" href="https://github.com/bemusic/bemuse/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=bemusic/bemuse&&max=817" />
+</a>

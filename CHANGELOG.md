@@ -21,20 +21,33 @@
 [@fresult]: https://github.com/fResult
 [@mikuroxina]: https://github.com/MikuroXina
 [@sikgyu]: https://github.com/sikgyu
+[@darkrider0007]: https://github.com/Darkrider0007
+[@doublevcodes]: https://github.com/doublevcodes
 [@aj-ya]: https://github.com/aj-ya
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
-## v52.1.1-pre.202210151518
+## v52.1.1 (2022-10-16)
+
+This is a maintenance release, mostly consists of internal tooling updates and code clean-up.
 
 ### Internals
 
 - Improved error handling code in audio handling code. [#751], by [@MikuroXina]
-
 - Fixed a link in the README file. [#754], by [@sikgyu]
+- Fixed high CPU usage when developing the project inside VS Code. [#758], by
+  [@dtinth]
+- Added links to contributors list to README file. [#759], by [@Darkrider0007]
+- Started migrating the delivery pipeline to be automated with GitHub Actions.
+  [#762], by [@doublevcodes]
+- Improved build performance in GitHub Actions. [#764], by [@dtinth]
 
 [#751]: https://github.com/bemusic/bemuse/pull/751
 [#754]: https://github.com/bemusic/bemuse/pull/754
+[#758]: https://github.com/bemusic/bemuse/pull/758
+[#759]: https://github.com/bemusic/bemuse/pull/759
+[#762]: https://github.com/bemusic/bemuse/pull/762
+[#764]: https://github.com/bemusic/bemuse/pull/764
 
 ## v52.1 (2022-01-01)
 

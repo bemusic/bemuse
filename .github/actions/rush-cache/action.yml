@@ -1,0 +1,19 @@
+name: 'Set up Rush caching'
+description: 'Sets up caching for a Rush project.'
+runs:
+  using: 'composite'
+  steps:
+    # https://github.com/microsoft/rushstack/issues/1847
+    - name: Cache Rush
+      uses: actions/cache@v2
+      with:
+        path: |
+          common/temp/install-run
+          ~/.rush
+        key: ${{ runner.os }}-${{ hashFiles('rush.json') }}
+    - name: Cache pnpm store
+      uses: actions/cache@v2
+      with:
+        path: |
+          common/temp/pnpm-store
+        key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
