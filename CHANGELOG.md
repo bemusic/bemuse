@@ -30,6 +30,9 @@
 
 ## v52.1.2-pre.202210171634
 
+This is a maintenance release, mostly consists of internal tooling updates and
+code clean-up.
+
 ### Internals
 
 - Fixed some bugs about HTML/CSS as
