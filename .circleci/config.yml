@@ -58,7 +58,7 @@ jobs:
           name: Install browsers
           command: |
             cd e2e
-            npx playwright install --with-deps
+            npx playwright install
       - run:
           name: E2E
           command: |
