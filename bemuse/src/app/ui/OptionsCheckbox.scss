@@ -22,7 +22,7 @@
       content: '✓';
       color: #b9edff;
       opacity: 0;
-      transform: 0.138s opacity ease-out;
+      transition: 0.138s opacity ease-out;
     }
     &:checked {
       border-color: #b9edff;
