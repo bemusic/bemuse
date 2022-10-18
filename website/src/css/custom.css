@@ -1,14 +1,14 @@
 /* Font resets */
 html,
 body {
-  font-family: $baseFont;
+  font-family: 'Source Sans Pro', 'Segoe UI', 'Helvetica Neue', sans-serif;
 }
 
 h1,
 h2,
 h3,
 h4 {
-  font-family: $baseFont;
+  font-family: 'Source Sans Pro', 'Segoe UI', 'Helvetica Neue', sans-serif;
 }
 
 dl {
@@ -47,7 +47,7 @@ dl dd {
 }
 
 .showcaseSection .prose h1 {
-  font-family: $baseFont;
+  font-family: 'Source Sans Pro', 'Segoe UI', 'Helvetica Neue', sans-serif;
 }
 
 /**
@@ -136,11 +136,6 @@ dl dd {
   .button {
     font-size: 18px;
     padding: 12px 24px;
-  }
-
-  /* Feature block */
-  .FeatureBlockのcontent h2 {
-    font-size: 32px;
   }
 
   /* Product showcase */

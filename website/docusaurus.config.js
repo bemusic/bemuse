@@ -49,6 +49,7 @@ module.exports = {
   themeConfig: {
     navbar: {
       title: 'Bemuse',
+      style: 'primary',
       logo: {
         src: 'img/white-logo.png',
       },

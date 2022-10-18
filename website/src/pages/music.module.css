@@ -1,0 +1,32 @@
+@media (min-width: 720px) {
+  .artists-list {
+    column-count: 2;
+  }
+}
+@media (min-width: 1024px) {
+  .artists-list {
+    column-count: 3;
+  }
+}
+
+.content {
+  margin: 1.5em 0 3em;
+}
+.content ul.artists-list {
+  display: block;
+  padding: 0;
+}
+.content ul.artists-list > li {
+  break-inside: avoid-column;
+  list-style: none;
+  -webkit-column-break-inside: avoid;
+}
+.content ul.artists-list > li > ul {
+  list-style: outside circle;
+}
+
+.message {
+  padding: 1em;
+  border: 1px solid #E9A8BB;
+  background: #FFF;
+}

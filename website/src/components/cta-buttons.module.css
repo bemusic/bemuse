@@ -1,0 +1,42 @@
+.promoSection {
+  display: flex;
+  flex-flow: column wrap;
+  font-size: 125%;
+  line-height: 1.6em;
+  position: relative;
+  z-index: 99;
+}
+.promoRow {
+  padding: 10px 0;
+}
+.pluginRowBlock {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+}
+
+.button {
+  border: 1px solid #e34e7a;
+  border-radius: 3px;
+  color: #e34e7a;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2em;
+  padding: 10px;
+  text-decoration: none !important;
+  text-transform: uppercase;
+  transition: background .3s,color .3s;
+}
+.button:hover {
+  background: #e34e7a;
+  color: #fff;
+  outline-width: 0;
+}
+
+.button[data-highlight="true"] {
+  color: #fff;
+  border-color: #fff;
+  font-weight: 800;
+}
