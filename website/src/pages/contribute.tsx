@@ -11,17 +11,22 @@ import Layout from '@theme/Layout'
 import Link from '@docusaurus/Link'
 import React from 'react'
 import { docUrl } from '../lib/url'
+import styles from './contribute.module.css'
 
 const pageContent = (
-  <>
-    Bemuse is a free and open-source game, licensed under AGPLv3. It is
-    developed by{' '}
-    <Link to='https://github.com/bemusic/bemuse/graphs/contributors'>
-      many contributors
-    </Link>{' '}
-    in their spare time, and your contribution helps us deliver new features and
-    bug fixes quickly. Thank you for helping us make this game better!
-  </>
+  <div>
+    <p>
+      Bemuse is a free and open-source game, licensed under AGPLv3. It is
+      developed by{' '}
+      <Link to='https://github.com/bemusic/bemuse/graphs/contributors'>
+        many contributors
+      </Link>{' '}
+      in their spare time, and your contribution helps us deliver new features
+      and bug fixes quickly.
+    </p>
+
+    <p>Thank you for helping us make this game better!</p>
+  </div>
 )
 
 export const Help = () => {
@@ -61,11 +66,11 @@ export const Help = () => {
   ]
 
   return (
-    <div className='docMainWrapper wrapper'>
-      <Container className='mainContainer documentContainer postContainer'>
-        <div className='post'>
-          <header className='postHeader'>
-            <h1 className='postHeaderTitle'>Contribute</h1>
+    <div className={styles.wrapper}>
+      <Container className={styles.main}>
+        <div className={styles.post}>
+          <header className={styles.postHeader}>
+            <h1 className={styles.postHeaderTitle}>Contribute</h1>
           </header>
           {pageContent}
           <GridBlock contents={supportLinks} layout='threeColumn' />
