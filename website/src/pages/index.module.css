@@ -28,7 +28,7 @@
   font-size: 1.75em;
   line-height: 1em;
   font-weight: 300;
-  color: rgba(233,232,231,.6);
+  color: rgba(233, 232, 231, 0.6);
   font-style: italic;
   margin: 0 0 10px;
 }
@@ -60,7 +60,7 @@
   font-weight: 400;
   font-size: 50%;
   line-height: 1;
-  margin: .7em 0 1.3em;
+  margin: 0.7em 0 1.3em;
 }
 
 @media only screen and (min-width: 480px) {

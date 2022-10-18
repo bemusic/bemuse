@@ -13,13 +13,14 @@
 }
 
 .colorCode {
-  background-color: rgba(27,31,35,.05);
+  background-color: rgba(27, 31, 35, 0.05);
   margin: 0;
   padding: 3.2px 6.4px;
   border: 0;
   border-radius: 3px;
   color: inherit;
-  font-family: SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono,
+    Courier New, monospace;
   font-size: 85%;
   vertical-align: baseline;
 }

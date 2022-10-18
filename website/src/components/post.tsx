@@ -1,5 +1,5 @@
-import React from 'react'
-import { ReactNode } from 'react'
+import React, { ReactNode } from 'react'
+
 import styles from './post.module.css'
 
 export const Post = ({

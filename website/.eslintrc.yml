@@ -1,1 +1,1 @@
-extends: "../.eslintrc.yml"
+extends: '../.eslintrc.yml'

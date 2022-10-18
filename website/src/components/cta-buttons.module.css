@@ -27,7 +27,7 @@
   padding: 10px;
   text-decoration: none !important;
   text-transform: uppercase;
-  transition: background .3s,color .3s;
+  transition: background 0.3s, color 0.3s;
 }
 @media only screen and (min-width: 1200px) {
   .button {
@@ -41,7 +41,7 @@
   outline-width: 0;
 }
 
-.button[data-highlight="true"] {
+.button[data-highlight='true'] {
   color: #fff;
   border-color: #fff;
   font-weight: 800;

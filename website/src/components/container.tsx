@@ -20,5 +20,5 @@ export const Container = (
     className={`${styles.container} ${props.className} ${props.padding
       ?.map((key) => paddingClasses[key])
       .join(' ')}`}
-  ></div>
+  />
 )

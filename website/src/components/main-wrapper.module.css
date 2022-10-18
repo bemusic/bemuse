@@ -1,10 +1,10 @@
 .wrapper {
-    margin: 0 auto;
-    max-width: 1100px;
-    padding: 0 20px;
+  margin: 0 auto;
+  max-width: 1100px;
+  padding: 0 20px;
 }
 
 .main {
-    max-width: 100%;
-    padding: 50px 0 40px;
+  max-width: 100%;
+  padding: 50px 0 40px;
 }
