@@ -36,7 +36,7 @@
     "@types/lodash.map": "^4.6.13",
     "@types/lodash.uniq": "^4.5.4",
     "@types/lodash.values": "^4.3.4",
-    "@types/node": "^10.12.12",
+    "@types/node": "16",
     "artstep": "^5555.0.0",
     "chai": "^4.2.0",
     "gulp": "^4.0.2",
