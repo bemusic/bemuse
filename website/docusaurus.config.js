@@ -26,7 +26,7 @@ module.exports = {
         docs: {
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
-          path: '../docs',
+          path: 'docs',
           sidebarPath: 'sidebars.json',
         },
         theme: {
