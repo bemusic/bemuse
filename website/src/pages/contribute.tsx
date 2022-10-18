@@ -9,9 +9,9 @@ import { GridBlock } from '../components/grid-block'
 import Layout from '@theme/Layout'
 import Link from '@docusaurus/Link'
 import { MainWrapper } from '../components/main-wrapper'
+import { Post } from '../components/post'
 import React from 'react'
 import { docUrl } from '../lib/url'
-import styles from './contribute.module.css'
 
 const pageContent = (
   <div>
@@ -67,13 +67,10 @@ export const Help = () => {
 
   return (
     <MainWrapper>
-      <div className={styles.post}>
-        <header className={styles.postHeader}>
-          <h1 className={styles.postHeaderTitle}>Contribute</h1>
-        </header>
+      <Post title='Contribute'>
         {pageContent}
         <GridBlock contents={supportLinks} layout='threeColumn' />
-      </div>
+      </Post>
     </MainWrapper>
   )
 }
