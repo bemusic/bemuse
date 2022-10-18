@@ -6,5 +6,6 @@
 //    import query from 'bemuse/utils/query'
 //    alert(query.mode)
 
-import querystring from 'querystring'
-export default querystring.parse(location.search.replace(/^\?/, ''))
+export default Object.fromEntries(
+  new URLSearchParams(location.search).entries()
+)
