@@ -5,7 +5,7 @@ import { BrowserScreenshot } from '../components/browser-screenshot'
 import { CTAButtons } from '../components/cta-buttons'
 import { FeatureBlock } from '../components/feature-block'
 import Layout from '@theme/Layout'
-import { MarkdownBlock } from '../components/markdown-block'
+import Link from '@docusaurus/Link'
 import siteConfig from '../../docusaurus.config'
 import styles from './index.module.css'
 
@@ -96,7 +96,17 @@ const FeatureTour = ({ language }: { language?: string }) => (
       }
       imageAlign='left'
     >
-      <MarkdownBlock>{`More challenge with an extra turntable lane! \\\nYou can also play using an [IIDX controller](https://www.youtube.com/watch?v=EOgI37Myqvk) or [MIDI controller](https://www.facebook.com/bemusegame/videos/985712734835136/). \\\nThis mode is similar to beatmaniaIIDX and LR2.`}</MarkdownBlock>
+      More challenge with an extra turntable lane! <br />
+      You can also play using an{' '}
+      <Link to='https://www.youtube.com/watch?v=EOgI37Myqvk'>
+        IIDX controller
+      </Link>{' '}
+      or{' '}
+      <Link to='https://www.facebook.com/bemusegame/videos/985712734835136/'>
+        MIDI controller
+      </Link>
+      . <br />
+      This mode is similar to beatmaniaIIDX and LR2.
     </FeatureBlock>
 
     <FeatureBlock
@@ -110,7 +120,8 @@ const FeatureTour = ({ language }: { language?: string }) => (
       }
       imageAlign='right'
     >
-      <MarkdownBlock>{`More than [50 songs](/project/music.html) to choose, handpicked from various genres.`}</MarkdownBlock>
+      More than <Link to='/project/music.html'>50 songs</Link> to choose,
+      handpicked from various genres.
     </FeatureBlock>
 
     <FeatureBlock
@@ -124,10 +135,9 @@ const FeatureTour = ({ language }: { language?: string }) => (
       }
       imageAlign='left'
     >
-      <MarkdownBlock>{`If you would like to host your own music server with custom song sets, you can! [Click here](${docUrl(
-        'music-server.html',
-        language
-      )}) to learn how.`}</MarkdownBlock>
+      If you would like to host your own music server with custom song sets, you
+      can! <Link to={docUrl('music-server.html', language)}>Click here</Link> to
+      learn how.
     </FeatureBlock>
 
     <FeatureBlock
@@ -136,10 +146,18 @@ const FeatureTour = ({ language }: { language?: string }) => (
       image={<img alt='Screenshot' src={imgUrl('screenshots/oss.png')} />}
       imageAlign='right'
     >
-      <MarkdownBlock>{`Bemuse is free and open source (licensed under [AGPLv3](https://github.com/bemusic/bemuse/blob/master/LICENSE)), made awesome by [our contributors](https://github.com/bemusic/bemuse/graphs/contributors).\n\nContributions are welcome! [Click here](${pageUrl(
-        'contribute.html',
-        language
-      )}) to get started, and have a look at our [issues page](https://github.com/bemusic/bemuse/issues).`}</MarkdownBlock>
+      Bemuse is free and open source (licensed under{' '}
+      <Link to='https://github.com/bemusic/bemuse/blob/master/LICENSE'>
+        AGPLv3
+      </Link>
+      ), made awesome by{' '}
+      <Link to='https://github.com/bemusic/bemuse/graphs/contributors'>
+        our contributors
+      </Link>
+      . Contributions are welcome!{' '}
+      <Link to={pageUrl('contribute.html', language)}>Click here</Link> to get
+      started, and have a look at our{' '}
+      <Link to='https://github.com/bemusic/bemuse/issues'>issues page</Link>.
     </FeatureBlock>
   </div>
 )

@@ -1,8 +1,14 @@
-import React, { HTMLProps } from 'react'
+import React, { HTMLProps, ReactNode } from 'react'
 
 export const GridBlock = (
   props: HTMLProps<HTMLDivElement> & {
-    contents: { title: string; content: string }[]
+    contents: { title: string; content: ReactNode }[]
     layout: string
   }
-) => <div {...props}></div>
+) => (
+  <div {...props}>
+    {props.contents.map(({ content }) => (
+      <div>{content}</div>
+    ))}
+  </div>
+)
