@@ -140,9 +140,10 @@ module.exports = {
       },
       style: 'dark',
     },
-    // algolia: {
-    //   apiKey: 'a113c79cadd1ce125abb6011106af056',
-    //   indexName: 'bemuse',
-    // },
+    algolia: {
+      appId: '1I7X31Q06Y',
+      apiKey: 'a113c79cadd1ce125abb6011106af056',
+      indexName: 'bemuse',
+    },
   },
 }
