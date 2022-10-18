@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Container } from '../components/container'
 import { GridBlock } from '../components/grid-block'
 import Layout from '@theme/Layout'
 import Link from '@docusaurus/Link'
+import { MainWrapper } from '../components/main-wrapper'
 import React from 'react'
 import { docUrl } from '../lib/url'
 import styles from './contribute.module.css'
@@ -66,17 +66,15 @@ export const Help = () => {
   ]
 
   return (
-    <div className={styles.wrapper}>
-      <Container className={styles.main}>
-        <div className={styles.post}>
-          <header className={styles.postHeader}>
-            <h1 className={styles.postHeaderTitle}>Contribute</h1>
-          </header>
-          {pageContent}
-          <GridBlock contents={supportLinks} layout='threeColumn' />
-        </div>
-      </Container>
-    </div>
+    <MainWrapper>
+      <div className={styles.post}>
+        <header className={styles.postHeader}>
+          <h1 className={styles.postHeaderTitle}>Contribute</h1>
+        </header>
+        {pageContent}
+        <GridBlock contents={supportLinks} layout='threeColumn' />
+      </div>
+    </MainWrapper>
   )
 }
 
