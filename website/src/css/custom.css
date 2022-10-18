@@ -9,6 +9,7 @@ h2,
 h3,
 h4 {
   font-family: 'Source Sans Pro', 'Segoe UI', 'Helvetica Neue', sans-serif;
+  font-weight: 600;
 }
 
 dl {
@@ -21,23 +22,6 @@ dl dt {
 dl dd {
   padding-left: 24px;
   margin-bottom: 10px;
-}
-
-.homepageMainContainer {
-  padding: 0;
-}
-
-.projectTitle {
-  margin-top: 0;
-}
-
-.container .wrapper .imageAlignSide p {
-  text-align: left;
-}
-
-.container .wrapper .imageAlignSide h2,
-.container .wrapper .imageAlignSide h3 {
-  margin-top: 0;
 }
 
 /* Overridden Docusaurus styles */
