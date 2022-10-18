@@ -29,6 +29,12 @@
   text-transform: uppercase;
   transition: background .3s,color .3s;
 }
+@media only screen and (min-width: 1200px) {
+  .button {
+    font-size: 18px;
+    padding: 12px 24px;
+  }
+}
 .button:hover {
   background: #e34e7a;
   color: #fff;

@@ -30,62 +30,6 @@ dl dd {
   background: rgba(0, 0, 0, 0.1);
 }
 
-.showcaseSection .prose h1 {
-  font-family: 'Source Sans Pro', 'Segoe UI', 'Helvetica Neue', sans-serif;
-}
-
-/**
- * 1. Create a background-opacity effect.
- */
-.homeContainer {
-  background-size: cover;
-  background-position: bottom;
-}
-.homeContainer .homeSplashFade {
-  background-color: rgba(0, 0, 0, 0.4); /* 1 */
-}
-
-.productShowcaseSection {
-  padding: 20px;
-}
-.productShowcaseSection h2 {
-  font-size: 30px;
-  line-height: 1em;
-  margin-top: 20px;
-  text-align: center;
-  padding: 10px 0;
-}
-.productShowcaseSection.highlightBackground h2 {
-  color: #fff;
-}
-
-@media only screen and (min-device-width: 360px) and (max-device-width: 735px) {
-}
-
-@media only screen and (max-width: 735px) {
-  footer .sitemap div {
-    padding-top: 10px;
-  }
-
-  .gridBlock .twoByGridBlock,
-  .gridBlock .threeByGridBlock,
-  .gridBlock .fourByGridBlock {
-    padding: 20px 0 !important;
-  }
-}
-
-/* Center-ish the feature block text when image is visible */
-@media only screen and (min-width: 736px) {
-  .container .wrapper .imageAlignSide .blockContent {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-}
-
-@media only screen and (min-width: 1024px) {
-}
-
 @media only screen and (max-width: 1023px) {
   /* Prevent MathJax wrapper from overlapping */
   .math {
@@ -93,45 +37,6 @@ dl dd {
     overflow-x: auto;
     overflow-y: hidden;
   }
-}
-
-@media only screen and (min-width: 1200px) {
-  .homeContainer .homeWrapper .projectLogo {
-    flex-direction: column;
-    position: initial;
-    justify-content: center;
-  }
-
-  .homeContainer .homeWrapper .projectLogo .tagline {
-    display: block;
-    font-size: 1.75em;
-    line-height: 1em;
-    font-weight: 300;
-    color: rgba(233, 232, 231, 0.6);
-    font-style: italic;
-    margin: 0;
-    margin-bottom: 10px;
-  }
-
-  .projectTitle {
-    display: none;
-  }
-
-  .button {
-    font-size: 18px;
-    padding: 12px 24px;
-  }
-
-  /* Product showcase */
-  .productShowcaseSection h2 {
-    font-size: 38px;
-  }
-}
-
-@media only screen and (min-width: 1400px) {
-}
-
-@media only screen and (min-width: 1500px) {
 }
 
 /* Admonition styles copied over from Sphinx's base CSS */
