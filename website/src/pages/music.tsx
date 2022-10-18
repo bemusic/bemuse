@@ -7,9 +7,10 @@
 
 import React, { useEffect, useState } from 'react'
 
-import { Container } from '../components/container'
 import Layout from '@theme/Layout'
+import { MainWrapper } from '../components/main-wrapper'
 import { MusicServerData } from '../lib/music'
+import { Post } from '../components/post'
 import styles from './music.module.css'
 
 interface SongInfo {
@@ -40,7 +41,7 @@ const Song = ({ song }: { song: SongInfo }) => {
 const Artist = ({ artist: { name, songs, url } }: { artist: ArtistInfo }) => (
   <>
     <a href={url}>
-      <strong>{name}</strong>
+      <strong className={styles.artistName}>{name}</strong>
     </a>
     <ul>
       {songs.map((song) => (
@@ -53,7 +54,7 @@ const Artist = ({ artist: { name, songs, url } }: { artist: ArtistInfo }) => (
 )
 
 const Artists = ({ artists }: { artists: ArtistInfo[] }) => (
-  <ul className={styles.artists_list}>
+  <ul className={styles.artistsList}>
     {artists.map((artist) => (
       <li key={artist.name}>
         <Artist artist={artist} />
@@ -140,20 +141,15 @@ const Content = () => {
 }
 
 const Music = () => (
-  <div className='docMainWrapper wrapper'>
-    <Container className='mainContainer documentContainer postContainer'>
-      <div className='post'>
-        <header className='postHeader'>
-          <h1 className='postHeaderTitle'>Artists Showcase</h1>
-          <p>
-            We'd like to thank the following artists for letting us use their
-            songs in the game.
-          </p>
-        </header>
-      </div>
+  <MainWrapper>
+    <Post title='Artists Showcase'>
+      <p>
+        We'd like to thank the following artists for letting us use their songs
+        in the game.
+      </p>
       <Content />
-    </Container>
-  </div>
+    </Post>
+  </MainWrapper>
 )
 
 export default () => (
