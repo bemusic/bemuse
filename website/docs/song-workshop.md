@@ -69,8 +69,7 @@ application at this URL:
 
 We will use this application throughout the rest of this guide.
 
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
+:::caution Warning
 
 Please note that this application can be **very buggy** and the developer
 currently does not have the resources to provide support, although Bemuse’s
@@ -79,7 +78,7 @@ developer, you can
 [find the source code on GitHub](https://github.com/bemusic/song-workshop). If
 you managed to fix some issues, pull requests are welcome.
 
-</div>
+:::
 
 ## Preparing a song
 
