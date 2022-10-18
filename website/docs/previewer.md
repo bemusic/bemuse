@@ -16,7 +16,7 @@ Bemuse comes with a rudimentary previewer app to preview BMS/bmson notecharts.
 
 You can access the previewer by going to this URL:
 
-<div style="text-align: center; font-size: 2em">
+<div style={{textAlign: 'center', fontSize: '2em'}}>
 
 **<https://bemuse.ninja/?mode=previewer>**
 
