@@ -1,6 +1,6 @@
 .browserScreenshot {
   max-width: 640px;
-  margin: 0 auto 0;
+  margin: 1.6em auto;
 }
 .browserScreenshot > p {
   height: 0;
