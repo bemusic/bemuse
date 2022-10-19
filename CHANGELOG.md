@@ -28,6 +28,16 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## v52.2.0-pre.202210191934
+
+### Internals
+
+- Fixed a problem where the project contains multiple versions of dependencies,
+  upgraded CircleCI build image, upgraded and migrated from deprecated
+  dependencies. [#749], by [@MikuroXina]
+
+[#749]: https://github.com/bemusic/bemuse/pull/749
+
 ## v52.1.2 (2022-10-17)
 
 This is a maintenance release, mostly consists of internal tooling updates and
