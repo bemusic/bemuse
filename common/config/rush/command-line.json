@@ -4,7 +4,6 @@
  */
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/command-line.schema.json",
-
   /**
    * Custom "commands" introduce new verbs for the command-line.  To see the help for these
    * example commands, try "rush --help", "rush my-bulk-command --help", or
@@ -37,6 +36,20 @@
       "commandKind": "global",
       "summary": "Lint source code.",
       "shellCommand": "eslint --ext .js,.jsx,.ts,.tsx .",
+      "autoinstallerName": "bemuse-linter"
+    },
+    {
+      "name": "format-all",
+      "commandKind": "global",
+      "summary": "Formats all code.",
+      "shellCommand": "prettier --write .",
+      "autoinstallerName": "bemuse-linter"
+    },
+    {
+      "name": "lint-fix",
+      "commandKind": "global",
+      "summary": "Lint source code with auto-fixing.",
+      "shellCommand": "eslint --ext .js,.jsx,.ts,.tsx . --fix",
       "autoinstallerName": "bemuse-linter"
     },
     {
@@ -222,7 +235,6 @@
     //   // "autoinstallerName": "my-task"
     // }
   ],
-
   /**
    * Custom "parameters" introduce new parameters for specified Rush command-line commands.
    * For example, you might define a "--production" parameter for the "rush build" command.

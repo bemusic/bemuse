@@ -10,7 +10,7 @@
   <a href="https://sonarcloud.io/summary/new_code?id=bemusic_bemuse"><img src="https://sonarcloud.io/api/project_badges/measure?project=bemusic_bemuse&metric=alert_status" alt="Quality Gate Status" /></a>
   <a href="https://sonarcloud.io/summary/new_code?id=bemusic_bemuse"><img src="https://sonarcloud.io/api/project_badges/measure?project=bemusic_bemuse&metric=sqale_rating" alt="Maintainability Rating" /></a>
   <br>
-  <a href="https://bemuse.ninja/project"><img src="https://img.shields.io/badge/read%20the-docs-brightgreen.svg?style=flat" alt="Docs"></a>
+  <a href="https://bemuse.ninja/project/"><img src="https://img.shields.io/badge/read%20the-docs-brightgreen.svg?style=flat" alt="Docs"></a>
   <a href="https://gitpod.io/#https://github.com/bemusic/bemuse" title="Develop in GitPod"><img src="https://img.shields.io/badge/develop%20in-gitpod-blue.svg?style=flat"></a>
 </p>
 
@@ -155,3 +155,7 @@ use on npm.
 [AGPLv3](LICENSE). Note that this license only applies to the main Bemuse
 project, not the [sub-projects](#sub-projects), which has its own license terms
 (mostly MIT).
+
+<a align="center" href="https://github.com/bemusic/bemuse/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=bemusic/bemuse&&max=817" />
+</a>
