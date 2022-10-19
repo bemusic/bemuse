@@ -1,0 +1,49 @@
+/* Font resets */
+html,
+body {
+  font-family: 'Source Sans Pro', 'Segoe UI', 'Helvetica Neue', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Source Sans Pro', 'Segoe UI', 'Helvetica Neue', sans-serif;
+  font-weight: 600;
+}
+
+dl {
+  margin-bottom: 1em;
+  margin-top: 0;
+}
+dl dt {
+  font-weight: bold;
+}
+dl dd {
+  padding-left: 24px;
+  margin-bottom: 10px;
+}
+
+/* Overridden Docusaurus styles */
+
+.highlightBackground a:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+@media only screen and (max-width: 1023px) {
+  /* Prevent MathJax wrapper from overlapping */
+  .math {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+}
+
+figure img {
+  border: 2px solid #de809a;
+  box-shadow: 0 4px 12px #e9a8bb;
+}
+
+code > em {
+  color: #b61a44;
+}

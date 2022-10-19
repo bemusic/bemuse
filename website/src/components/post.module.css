@@ -1,0 +1,10 @@
+.post {
+  position: relative;
+}
+.postHeader {
+  margin-bottom: 16px;
+}
+.postHeaderTitle {
+  margin-top: 0;
+  padding: 0;
+}

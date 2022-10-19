@@ -61,7 +61,7 @@ This guide will cover:
 Using Google Chrome or Microsoft Edge, go to the Bemuse Song Workshop
 application at this URL:
 
-<div style="text-align: center; font-size: 2em">
+<div style={{textAlign: 'center', fontSize: '2em'}}>
 
 **<https://song-workshop.bemuse.ninja/>**
 
@@ -69,8 +69,7 @@ application at this URL:
 
 We will use this application throughout the rest of this guide.
 
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
+:::caution Warning
 
 Please note that this application can be **very buggy** and the developer
 currently does not have the resources to provide support, although Bemuse’s
@@ -79,7 +78,7 @@ developer, you can
 [find the source code on GitHub](https://github.com/bemusic/song-workshop). If
 you managed to fix some issues, pull requests are welcome.
 
-</div>
+:::
 
 ## Preparing a song
 
@@ -289,7 +288,7 @@ Now that your song is prepared and tested, it’s time to put it online!
 Now that your song is online, you can test it!
 
 - Go to
-  <code>https:/<i></i>/bemuse.ninja/?server=<em>&lt;url/to/bemuse-song.json&gt;</em></code><br>
+  <code>https:/<i></i>/bemuse.ninja/?server=<em>&lt;url/to/bemuse-song.json&gt;</em></code><br />
 
   - For example:
     <https://bemuse.ninja/?server=https://music4.bemuse.ninja/songs/[frums]credits/bemuse-song.json>
@@ -339,6 +338,6 @@ Now that your music server is online, you can try it in Bemuse and share it with
 your friends!
 
 - Go to <code>https:/<i></i>/bemuse.ninja/?server=<em>&lt;Server
-  URL&gt;</em></code><br>
+  URL&gt;</em></code><br />
 
   - For example, <https://bemuse.ninja/?server=https://flicknote.bemuse.ninja>
