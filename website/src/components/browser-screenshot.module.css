@@ -1,12 +1,8 @@
-.mainContainer .wrapper .BrowserScreenshot {
+.browserScreenshot {
   max-width: 640px;
-  margin: 0 auto 0;
+  margin: 1.6em auto;
 }
-.mainContainer .wrapper .post .BrowserScreenshot {
-  margin-top: 1.6em;
-  margin-bottom: 1.6em;
-}
-.mainContainer .wrapper .BrowserScreenshot > p {
+.browserScreenshot > p {
   height: 0;
   box-shadow: 0 1px 7px rgba(0, 0, 0, 0.25);
   box-sizing: content-box;
@@ -18,7 +14,7 @@
   position: relative;
   border-radius: 4px;
 }
-.mainContainer .wrapper .BrowserScreenshot > p::before {
+.browserScreenshot > p::before {
   content: '';
   display: block;
   width: 12px;
@@ -30,7 +26,7 @@
   left: 6px;
   box-shadow: inset 0 0 0.5px rgba(0, 0, 0, 0.4);
 }
-.mainContainer .wrapper .BrowserScreenshot > p > img {
+.browserScreenshot > p > img {
   position: absolute;
   left: 0;
   bottom: 0;

@@ -7,3 +7,5 @@ build/
 
 i18n/*
 !i18n/en.json
+
+.docusaurus/

@@ -1,0 +1,92 @@
+.homeContainer {
+  background-size: cover;
+  background-position: bottom;
+  text-align: center;
+}
+
+.homeContainer .homeSplashFade {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.homeContainer .homeWrapper {
+  padding: 2em 10px;
+}
+@media only screen and (min-width: 736px) {
+  .homeContainer .homeWrapper {
+    position: relative;
+  }
+}
+@media only screen and (min-width: 480px) {
+  .homeContainer .homeWrapper {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+.tagline {
+  display: block;
+  font-size: 1.75em;
+  line-height: 1em;
+  font-weight: 300;
+  color: rgba(233, 232, 231, 0.6);
+  font-style: italic;
+  margin: 0 0 10px;
+}
+.projectLogo {
+  display: none;
+}
+.projectLogo img {
+  height: 100%;
+  max-height: 250px;
+}
+@media only screen and (min-width: 1200px) {
+  .projectLogo {
+    display: flex;
+    position: static;
+    padding: 2em 100px 4em;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.projectTitle {
+  margin-top: 0;
+  color: #e34e7a;
+  line-height: 1;
+}
+.projectTitle > small {
+  display: block;
+  font-weight: 400;
+  font-size: 50%;
+  line-height: 1;
+  margin: 0.7em 0 1.3em;
+}
+
+@media only screen and (min-width: 480px) {
+  .projectTitle {
+    font-size: 300%;
+    margin: 0.3em 0;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .projectTitle {
+    display: none;
+  }
+}
+
+.footerButtons {
+  padding: 20px;
+  background: rgba(153, 66, 79, 0.7);
+}
+.footerButtons a:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #fff;
+}
+
+.tour:nth-child(even) {
+  background: #f7f7f7;
+}
+[data-theme='dark'] .tour:nth-child(even) {
+  background: #202020;
+}
