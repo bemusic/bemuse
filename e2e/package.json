@@ -2,12 +2,14 @@
   "name": "bemuse-e2e",
   "version": "50.0.0",
   "private": true,
-  "dependencies": {
-    "expect": "^23.6.0",
-    "prescript": "^0.5555.55",
-    "puppeteer": "^10.4.0"
+  "devDependencies": {
+    "@playwright/test": "^1.27.1",
+    "@types/node": "16"
   },
   "volta": {
     "extends": "../volta.json"
+  },
+  "dependencies": {
+    "http-server": "~14.1.1"
   }
 }

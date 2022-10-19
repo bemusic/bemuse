@@ -23,13 +23,38 @@
 [@sikgyu]: https://github.com/sikgyu
 [@darkrider0007]: https://github.com/Darkrider0007
 [@doublevcodes]: https://github.com/doublevcodes
+[@sb-decoder]: https://github.com/sb-decoder
 [@aj-ya]: https://github.com/aj-ya
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## v52.1.2 (2022-10-17)
+
+This is a maintenance release, mostly consists of internal tooling updates and
+code clean-up.
+
+### Internals
+
+- Fixed some bugs about HTML/CSS as
+  [reported](https://sonarcloud.io/project/issues?issues=AW0WEOc5aLThNPGzLxnI&open=AW0WEOc5aLThNPGzLxnI&id=bemusic_bemuse)
+  [by](https://sonarcloud.io/project/issues?issues=AW0WEOdcaLThNPGzLxnM&open=AW0WEOdcaLThNPGzLxnM&id=bemusic_bemuse)
+  [sonarcloud](https://sonarcloud.io/project/issues?issues=AW0WEOg6aLThNPGzLxn1&open=AW0WEOg6aLThNPGzLxn1&id=bemusic_bemuse).
+  [#752], by [@MikuroXina]
+- Upgraded the automated test tooling. Bemuse now uses
+  [Playwright](https://playwright.dev/) to run
+  [its smoke test](https://user-images.githubusercontent.com/193136/196232170-94a02926-f44f-4cff-9d16-1c3df696e9bd.webm).
+  [#766], by [@dtinth]
+- Updated community health files on the GitHub repository. [#767], by
+  [@sb-decoder]
+
+[#752]: https://github.com/bemusic/bemuse/pull/752
+[#766]: https://github.com/bemusic/bemuse/pull/766
+[#767]: https://github.com/bemusic/bemuse/pull/767
+
 ## v52.1.1 (2022-10-16)
 
-This is a maintenance release, mostly consists of internal tooling updates and code clean-up.
+This is a maintenance release, mostly consists of internal tooling updates and
+code clean-up.
 
 ### Internals
 
