@@ -24,11 +24,11 @@ export const selectedChartGivenCharts = (charts) => (state) => {
 
 // Updater
 export const selectSong = (songId) =>
-  produce(draft => {
+  produce((draft) => {
     draft.selectedSongId = songId
   })
 export const selectChart = (songId, chartId, chartLevel) =>
-  produce(draft => {
+  produce((draft) => {
     draft.selectedSongId = songId
     draft.selectedChartId = chartId
     draft.selectedChartLevel = chartLevel

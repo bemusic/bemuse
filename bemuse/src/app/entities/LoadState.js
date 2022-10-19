@@ -19,13 +19,13 @@ export const error = (state) => isError(state) && state.error
 export const beginLoading = (state) => initLoading()
 
 export const completeWithValue = (value) =>
-  produce(draft => {
+  produce((draft) => {
     draft.status = 'completed'
     draft.value = value
   })
 
 export const errorWithReason = (error) =>
-  produce(draft => {
+  produce((draft) => {
     draft.status = 'error'
     draft.error = error
   })
