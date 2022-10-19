@@ -22,7 +22,7 @@ You can launch a workspace by going to the below link:
 ### Windows, macOS and Linux
 
 - [Git](http://git-scm.com/)
-- [Node.js](http://nodejs.org/) (v16.13.0+)
+- [Node.js](http://nodejs.org/) (v16.18.0+)
 - Text Editor with [EditorConfig](http://editorconfig.org/) &
   [Prettier](https://prettier.io/) support. (We recommend
   [Visual Studio Code](https://code.visualstudio.com/))
@@ -43,7 +43,7 @@ git version 2.17.0
 
 ```sh-session
 $ node -v
-v16.13.0
+v16.18.0
 ```
 
 ### Install Rush
