@@ -1,27 +1,31 @@
-import u from 'updeep'
+import produce from 'immer'
 
-export const preprocessCollection = u({
-  songs: u.map(preprocessSong),
+export const preprocessCollection = produce((draft, songs) => {
+  if (songs) {
+    draft.songs = songs.map(song => preprocessSong(song))
+  }
 })
 
 function preprocessSong(song) {
   if (song.chart_names) {
-    song = u(
-      {
-        charts: u.map((chart) => {
-          const name = song.chart_names[chart.file]
-          if (!name) return chart
-          return u(
-            {
-              info: {
-                subtitles: (subtitles) => [...subtitles, name],
-              },
-            },
-            chart
-          )
-        }),
-      },
-      song
+    song = produce(
+      song,
+      draft => {
+        if (draft.charts) {
+          draft.charts = draft.charts.map((chart) => {
+            const name = song.chart_names[chart.file]
+            if (!name) return chart
+            return produce(
+              chart,
+              draft => {
+                draft.info = {
+                  subtitles: (subtitles) => [...subtitles, name],
+                }
+              }
+            )
+          })
+        }
+      }
     )
   }
   return song
