@@ -18,7 +18,6 @@
     "import-sort-style-renke": "^2.4.0",
     "@typescript-eslint/parser": "^4.33.0",
     "typescript": "^4.4.3",
-    "danger": "^10.7.0",
     "markdown-toc": "^1.2.0",
     "minimatch": "^3.0.4"
   }
