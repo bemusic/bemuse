@@ -74,8 +74,10 @@ specifiers:
   gulp-rename: ^2.0.0
   gulp-util: ^3.0.8
   hide-stack-frames-from: ^1.0.0
+  http-server: ~14.1.1
   iconv-lite: ^0.4.24
   idb-keyval: ^6.0.2
+  immer: ~9.0.15
   immutable: ^3.8.2
   impure: ^1.0.0
   invariant: ^2.2.4
@@ -162,7 +164,6 @@ specifiers:
   ts-node: ^10.2.1
   typescript: ^4.4.3
   undertaker-forward-reference: ^1.0.2
-  updeep: ^0.16.0
   url-loader: ^1.1.2
   val-loader: ^1.1.1
   variance: 0.0.1
@@ -250,8 +251,10 @@ dependencies:
   gulp-rename: 2.0.0
   gulp-util: 3.0.8
   hide-stack-frames-from: 1.0.0
+  http-server: 14.1.1_debug@3.2.7
   iconv-lite: 0.4.24
   idb-keyval: 6.0.3
+  immer: 9.0.15
   immutable: 3.8.2
   impure: 1.0.0
   invariant: 2.2.4
@@ -338,7 +341,6 @@ dependencies:
   ts-node: 10.4.0_typescript@4.4.4
   typescript: 4.4.4
   undertaker-forward-reference: 1.0.2
-  updeep: 0.16.1
   url-loader: 1.1.2_webpack@4.46.0
   val-loader: 1.1.1_webpack@4.46.0
   variance: 0.0.1
@@ -8981,6 +8983,10 @@ packages:
 
   /immer/8.0.1:
     resolution: {integrity: sha512-aqXhGP7//Gui2+UrEtvxZxSquQVXTpZ7KDxfCcKAF3Vysvw0CViVaW9RZ1j1xlIYqaaaipBoqdqeibkc18PNvA==}
+    dev: false
+
+  /immer/9.0.15:
+    resolution: {integrity: sha512-2eB/sswms9AEUSkOm4SbV5Y7Vmt/bKRwByd52jfLkW4OLYeaTP3EEiJ9agqU0O/tq6Dk62Zfj+TJSqfm1rLVGQ==}
     dev: false
 
   /immutable/3.8.2:
@@ -18175,7 +18181,7 @@ packages:
     dev: false
 
   file:projects/bemuse.tgz:
-    resolution: {integrity: sha512-SQjBKtrwOVymjiSSvw5+jHVrRliWTpfQY/ZhaJURdJGQR0dow9KU3UCNuMrz5FF3qGqMZ9S2IG/gpgvhc9BY6g==, tarball: file:projects/bemuse.tgz}
+    resolution: {integrity: sha512-s0rY69OpwMsG6UVO2Tyerv77DPNmz44lCN8Z1y0R9Qpxw77H4aZ7iWAgtskI3hE99Hh/k/AdNc6cXUeeYUxvrw==, tarball: file:projects/bemuse.tgz}
     name: '@rush-temp/bemuse'
     version: 0.0.0
     dependencies:
@@ -18228,6 +18234,7 @@ packages:
       gulp-mocha: 6.0.0
       gulp-util: 3.0.8
       idb-keyval: 6.0.3
+      immer: 9.0.15
       immutable: 3.8.2
       impure: 1.0.0
       invariant: 2.2.4
