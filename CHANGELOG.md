@@ -23,6 +23,7 @@
 [@sikgyu]: https://github.com/sikgyu
 [@darkrider0007]: https://github.com/Darkrider0007
 [@doublevcodes]: https://github.com/doublevcodes
+[@cxong]: https://github.com/cxong
 [@sb-decoder]: https://github.com/sb-decoder
 [@aj-ya]: https://github.com/aj-ya
 [@dimitrov-d]: https://github.com/dimitrov-d
@@ -35,8 +36,13 @@
 - Fixed a problem where the project contains multiple versions of dependencies,
   upgraded CircleCI build image, upgraded and migrated from deprecated
   dependencies. [#749], by [@MikuroXina]
+- Migrated the data update library from updeep to immer. [#755], by [@cxong]
+- Upgraded the [project website](https://bemuse.ninja/project/) to Docusaurus
+  v2. [#769], by [@MikuroXina]
 
 [#749]: https://github.com/bemusic/bemuse/pull/749
+[#755]: https://github.com/bemusic/bemuse/pull/755
+[#769]: https://github.com/bemusic/bemuse/pull/769
 
 ## v52.1.2 (2022-10-17)
 
