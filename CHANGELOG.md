@@ -62,10 +62,12 @@ code clean-up.
   [#766], by [@dtinth]
 - Updated community health files on the GitHub repository. [#767], by
   [@sb-decoder]
+- Consolidated build system on GitHub Actions. [#770], by [@dtinth]
 
 [#752]: https://github.com/bemusic/bemuse/pull/752
 [#766]: https://github.com/bemusic/bemuse/pull/766
 [#767]: https://github.com/bemusic/bemuse/pull/767
+[#770]: https://github.com/bemusic/bemuse/pull/770
 
 ## v52.1.1 (2022-10-16)
 
