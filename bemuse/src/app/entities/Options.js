@@ -27,8 +27,7 @@ export const playMode = (state) => state['player.P1.mode']
 export const changePlayMode = (mode) =>
   produce(draft => {
     draft['player.P1.mode'] = mode
-    draft['player.P1.panel'] = (panel) =>
-      panel === '3d' && mode !== 'KB' ? 'center' : panel
+    draft['player.P1.panel'] = draft['player.P1.panel'] === '3d' && mode !== 'KB' ? 'center' : draft['player.P1.panel']
   })
 
 // Speed
@@ -66,8 +65,7 @@ export const panelPlacement = (state) => state['player.P1.panel']
 export const changePanelPlacement = (placement) =>
   produce(draft => {
     draft['player.P1.panel'] = placement
-    draft['player.P1.mode'] = (mode) =>
-      placement === '3d' && mode !== 'KB' ? 'KB' : mode
+    draft['player.P1.mode'] = placement === '3d' && draft['player.P1.mode'] !== 'KB' ? 'KB' : draft['player.P1.mode']
   })
 
 // Lane cover
@@ -86,28 +84,28 @@ export const changeLaneCover = (laneCover) =>
 export const isBackgroundAnimationsEnabled = (state) =>
   toggleOptionEnabled(state['system.bga.enabled'])
 export const toggleBackgroundAnimations = produce(draft => {
-  draft['system.bga.enabled'] = toggleOption
+  draft['system.bga.enabled'] = toggleOption(draft['system.bga.enabled'])
 })
 
 // Auto-velocity
 export const isAutoVelocityEnabled = (state) =>
   toggleOptionEnabled(state['player.P1.auto-velocity'])
 export const toggleAutoVelocity = produce(draft => {
-  draft['player.P1.auto-velocity'] = toggleOption
+  draft['player.P1.auto-velocity'] = toggleOption(draft['player.P1.auto-velocity'])
 })
 
 // Song preview enabled
 export const isPreviewEnabled = (state) =>
   toggleOptionEnabled(state['system.preview.enabled'])
 export const togglePreview = produce(draft => {
-  draft['system.preview.enabled'] = toggleOption
+  draft['system.preview.enabled'] = toggleOption(draft['system.preview.enabled'])
 })
 
 // Gauge
 export const isGaugeEnabled = (state) => getGauge(state) !== 'off'
 export const getGauge = (state) => state['player.P1.gauge']
 export const toggleGauge = produce(draft => {
-  draft['player.P1.gauge'] = (gauge) => (gauge === 'off' ? 'hope' : 'off')
+  draft['player.P1.gauge'] = draft['player.P1.gauge'] === 'off' ? 'hope' : 'off'
 })
 
 // Queries
@@ -139,7 +137,7 @@ produce(draft => {
 export const isContinuousAxisEnabled = (state) =>
   toggleOptionEnabled(state['gamepad.continuous'])
 export const toggleContinuousAxis = produce(draft => {
-  draft['gamepad.continuous'] = toggleOption
+  draft['gamepad.continuous'] = toggleOption(draft['gamepad.continuous'])
 })
 
 // Gamepad Sensitivity
