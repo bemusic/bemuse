@@ -13,6 +13,7 @@ import { MusicServerData } from '../lib/music'
 import { Post } from '../components/post'
 import styles from './music.module.css'
 
+/* eslint-disable camelcase */
 interface SongInfo {
   title: string
   song_url?: string
@@ -101,7 +102,8 @@ const computeArtistInfos = (songs?: MusicServerData['songs']): ArtistInfo[] => {
       map.set(artistName, info)
       result.push(info)
     }
-    map.get(artistName)?.songs.push(song)
+    const { songs } = map.get(artistName)!
+    songs.push(song)
   }
   return result.sort((a, b) => {
     return a.sortKey < b.sortKey ? -1 : 1
