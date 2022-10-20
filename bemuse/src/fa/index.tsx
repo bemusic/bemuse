@@ -4,6 +4,7 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons/faPlay'
 import { faGear } from '@fortawesome/free-solid-svg-icons/faGear'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons/faSpinner'
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars'
+import { faTwitter } from '@fortawesome/free-brands-svg-icons/faTwitter'
 import React, { FC } from 'react'
 
 const icons = {
@@ -11,6 +12,7 @@ const icons = {
   gear: faGear,
   spinner: faSpinner,
   bars: faBars,
+  twitter: faTwitter,
 }
 
 export interface Icon {

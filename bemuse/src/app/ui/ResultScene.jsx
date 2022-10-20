@@ -16,6 +16,7 @@ import RankingContainer from './RankingContainer'
 import ResultExpertInfo from './ResultExpertInfo'
 import ResultGrade from './ResultGrade'
 import ResultTable from './ResultTable'
+import { Icon } from 'bemuse/fa'
 
 export default class ResultScene extends React.Component {
   static propTypes = {
@@ -73,7 +74,7 @@ export default class ResultScene extends React.Component {
               className='ResultSceneのtweet'
               onClick={this.onTweet}
             >
-              <i className='fa fa-twitter' />
+              <Icon name='twitter' />
             </a>
             <Flex grow={1} />
             <FirstTimeTip tip='Back to music selection' featureKey='finishGame'>
