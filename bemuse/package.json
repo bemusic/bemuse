@@ -146,7 +146,6 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-emotion": "^9.2.12",
-    "react-fontawesome": "^1.7.1",
     "react-fns": "^1.4.0",
     "react-hot-loader": "^4.12.14",
     "react-query": "^3.25.1",
@@ -167,7 +166,11 @@
     "fuzzysort": "~1.1.4",
     "fancy-log": "~2.0.0",
     "plugin-error": "~1.0.1",
-    "immer": "~9.0.15"
+    "immer": "~9.0.15",
+    "@fortawesome/react-fontawesome": "~0.2.0",
+    "@fortawesome/fontawesome-svg-core": "~6.2.0",
+    "@fortawesome/free-regular-svg-icons": "~6.2.0",
+    "@fortawesome/free-solid-svg-icons": "~6.2.0"
   },
   "resolutions": {
     "natives": "1.1.6"

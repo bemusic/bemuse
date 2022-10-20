@@ -1,9 +1,9 @@
 import './MusicChartSelectorItem.scss'
 
-import Icon from 'react-fontawesome'
 import React from 'react'
 import PropTypes from 'prop-types'
 import c from 'classnames'
+import { Icon } from 'bemuse/fa'
 
 class MusicChartSelectorItem extends React.Component {
   static propTypes = {

@@ -5,6 +5,9 @@ specifiers:
   '@docusaurus/module-type-aliases': ^2.1.0
   '@docusaurus/plugin-client-redirects': 2.1.0
   '@docusaurus/preset-classic': 2.1.0
+  '@fortawesome/fontawesome-svg-core': ~6.2.0
+  '@fortawesome/free-regular-svg-icons': ~6.2.0
+  '@fortawesome/react-fontawesome': ~0.2.0
   '@mdx-js/react': ^1
   '@playwright/test': ^1.27.1
   '@radix-ui/react-alert-dialog': ~0.1.5
@@ -140,7 +143,6 @@ specifiers:
   raw-loader: ^0.5.1
   react-emotion: ^9.2.12
   react-fns: ^1.4.0
-  react-fontawesome: ^1.7.1
   react-hot-loader: ^4.12.14
   react-query: ^3.25.1
   react-redux: ^5.0.7
@@ -189,6 +191,9 @@ dependencies:
   '@docusaurus/module-type-aliases': 2.1.0
   '@docusaurus/plugin-client-redirects': 2.1.0_debug@3.2.7
   '@docusaurus/preset-classic': 2.1.0_debug@3.2.7
+  '@fortawesome/fontawesome-svg-core': 6.2.0
+  '@fortawesome/free-regular-svg-icons': 6.2.0
+  '@fortawesome/react-fontawesome': 0.2.0_d25df2f93e7b74cfad3c1910cc548117
   '@mdx-js/react': 1.6.22
   '@playwright/test': 1.27.1
   '@radix-ui/react-alert-dialog': 0.1.7
@@ -324,7 +329,6 @@ dependencies:
   raw-loader: 0.5.1
   react-emotion: 9.2.12_emotion@9.2.12+prop-types@15.8.1
   react-fns: 1.4.0
-  react-fontawesome: 1.7.1
   react-hot-loader: 4.13.0
   react-query: 3.39.2
   react-redux: 5.1.2_redux@3.7.2
@@ -3683,6 +3687,57 @@ packages:
 
   /@emotion/utils/0.8.2:
     resolution: {integrity: sha512-rLu3wcBWH4P5q1CGoSSH/i9hrXs7SlbRLkoq9IGuoPYNGQvDJ3pt/wmOM+XgYjIDRMVIdkUWt0RsfzF50JfnCw==}
+    dev: false
+
+  /@fortawesome/fontawesome-common-types/6.2.0:
+    resolution: {integrity: sha512-rBevIsj2nclStJ7AxTdfsa3ovHb1H+qApwrxcTVo+NNdeJiB9V75hsKfrkG5AwNcRUNxrPPiScGYCNmLMoh8pg==}
+    engines: {node: '>=6'}
+    requiresBuild: true
+    dev: false
+
+  /@fortawesome/fontawesome-svg-core/6.2.0:
+    resolution: {integrity: sha512-Cf2mAAeMWFMzpLC7Y9H1I4o3wEU+XovVJhTiNG8ZNgSQj53yl7OCJaS80K4YjrABWZzbAHVaoHE1dVJ27AAYXw==}
+    engines: {node: '>=6'}
+    requiresBuild: true
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 6.2.0
+    dev: false
+
+  /@fortawesome/free-regular-svg-icons/6.2.0:
+    resolution: {integrity: sha512-M1dG+PAmkYMTL9BSUHFXY5oaHwBYfHCPhbJ8qj8JELsc9XCrUJ6eEHWip4q0tE+h9C0DVyFkwIM9t7QYyCpprQ==}
+    engines: {node: '>=6'}
+    requiresBuild: true
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 6.2.0
+    dev: false
+
+  /@fortawesome/free-solid-svg-icons/6.2.0:
+    resolution: {integrity: sha512-UjCILHIQ4I8cN46EiQn0CZL/h8AwCGgR//1c4R96Q5viSRwuKVo0NdQEc4bm+69ZwC0dUvjbDqAHF1RR5FA3XA==}
+    engines: {node: '>=6'}
+    requiresBuild: true
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 6.2.0
+    dev: false
+
+  /@fortawesome/react-fontawesome/0.2.0_5d14ea5e9f5aec1d04e88dc3c856b747:
+    resolution: {integrity: sha512-uHg75Rb/XORTtVt7OS9WoK8uM276Ufi7gCzshVWkUJbHhh3svsUUeqXerrM96Wm7fRiDzfKRwSoahhMIkGAYHw==}
+    peerDependencies:
+      '@fortawesome/fontawesome-svg-core': ~1 || ~6
+      react: '>=16.3'
+    dependencies:
+      '@fortawesome/fontawesome-svg-core': 6.2.0
+      prop-types: 15.8.1
+      react: 16.14.0
+    dev: false
+
+  /@fortawesome/react-fontawesome/0.2.0_d25df2f93e7b74cfad3c1910cc548117:
+    resolution: {integrity: sha512-uHg75Rb/XORTtVt7OS9WoK8uM276Ufi7gCzshVWkUJbHhh3svsUUeqXerrM96Wm7fRiDzfKRwSoahhMIkGAYHw==}
+    peerDependencies:
+      '@fortawesome/fontawesome-svg-core': ~1 || ~6
+      react: '>=16.3'
+    dependencies:
+      '@fortawesome/fontawesome-svg-core': 6.2.0
+      prop-types: 15.8.1
     dev: false
 
   /@gar/promisify/1.1.3:
@@ -16335,15 +16390,6 @@ packages:
       - react
     dev: false
 
-  /react-fontawesome/1.7.1:
-    resolution: {integrity: sha512-kottReWW1I9Uupub6A5YX4VK7qfpFnEjAcm5zB4Aepst7iofONT27GJYdTcRsj7q5uQu9PXBL7GsxAFKANNUVg==}
-    engines: {node: '>=0.10.0'}
-    peerDependencies:
-      react: '>=0.12.0'
-    dependencies:
-      prop-types: 15.8.1
-    dev: false
-
   /react-fontawesome/1.7.1_react@16.14.0:
     resolution: {integrity: sha512-kottReWW1I9Uupub6A5YX4VK7qfpFnEjAcm5zB4Aepst7iofONT27GJYdTcRsj7q5uQu9PXBL7GsxAFKANNUVg==}
     engines: {node: '>=0.10.0'}
@@ -21141,10 +21187,14 @@ packages:
     dev: false
 
   file:projects/bemuse.tgz:
-    resolution: {integrity: sha512-e7uYK8aVz5QceSERvuQgLR8WtGKwzsxJV9YNykp+eZTXdu/h4K/1veIHiC/et3YSeVwrJKU7AmWVQtVUwNZsIA==, tarball: file:projects/bemuse.tgz}
+    resolution: {integrity: sha512-LdkGka+quPJPfjPxO1d1WlhZW4ZNuTs7qakEpu0VCHE2tts3xLBzkXX9Mb2TdqpS/Rp2MTyGQEtT1p95PN63eA==, tarball: file:projects/bemuse.tgz}
     name: '@rush-temp/bemuse'
     version: 0.0.0
     dependencies:
+      '@fortawesome/fontawesome-svg-core': 6.2.0
+      '@fortawesome/free-regular-svg-icons': 6.2.0
+      '@fortawesome/free-solid-svg-icons': 6.2.0
+      '@fortawesome/react-fontawesome': 0.2.0_5d14ea5e9f5aec1d04e88dc3c856b747
       '@radix-ui/react-alert-dialog': 0.1.7_f8a66923b4fd53e5ec16ce4d72d338f4
       '@types/bluebird': 3.5.37
       '@types/chai': 4.3.3

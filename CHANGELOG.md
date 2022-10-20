@@ -39,10 +39,12 @@
 - Migrated the data update library from updeep to immer. [#755], by [@cxong]
 - Upgraded the [project website](https://bemuse.ninja/project/) to Docusaurus
   v2. [#769], by [@MikuroXina]
+- Consolidated build system on GitHub Actions. [#770], by [@dtinth]
 
 [#749]: https://github.com/bemusic/bemuse/pull/749
 [#755]: https://github.com/bemusic/bemuse/pull/755
 [#769]: https://github.com/bemusic/bemuse/pull/769
+[#770]: https://github.com/bemusic/bemuse/pull/770
 
 ## v52.1.2 (2022-10-17)
 
@@ -62,12 +64,10 @@ code clean-up.
   [#766], by [@dtinth]
 - Updated community health files on the GitHub repository. [#767], by
   [@sb-decoder]
-- Consolidated build system on GitHub Actions. [#770], by [@dtinth]
 
 [#752]: https://github.com/bemusic/bemuse/pull/752
 [#766]: https://github.com/bemusic/bemuse/pull/766
 [#767]: https://github.com/bemusic/bemuse/pull/767
-[#770]: https://github.com/bemusic/bemuse/pull/770
 
 ## v52.1.1 (2022-10-16)
 
