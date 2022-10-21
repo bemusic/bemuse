@@ -26,6 +26,7 @@
   },
   "scripts": {
     "build": "true",
+    "test": "true",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ."
   }
 }
