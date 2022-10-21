@@ -25,7 +25,7 @@ window.onerror = function (message, url, line, col, e) {
 // After the ``boot`` script has been loaded, the main script is scanned
 // from the ``mode`` query parameter.
 
-let mode = query.mode || 'app'
+const mode = query.mode || 'app'
 
 import(/* webpackChunkName: 'environment' */ './environment')
   .then((_) => {

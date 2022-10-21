@@ -4,13 +4,13 @@ import { packIntoBemuse } from './packer'
 import { index } from './indexer'
 import * as Server from './server'
 
-let commands = [
+const commands = [
   {
     name: 'index',
     hints: '[-r]',
     description: 'Index BMS files in current directory',
     handle(args) {
-      let recursive = args.flags['r']
+      const recursive = args.flags['r']
       return index('.', { recursive })
     },
   },
@@ -19,7 +19,7 @@ let commands = [
     hints: '<path>',
     description: 'Packs sounds and BGAs into assets folder',
     handle(args) {
-      let dir = args.input[0]
+      const dir = args.input[0]
       if (!dir) throw new Error('Please specify the directory!')
       return packIntoBemuse(dir)
     },
@@ -29,7 +29,7 @@ let commands = [
     hints: '<path>',
     description: 'Serves a Bemuse server (no indexing or conversion)',
     handle(args) {
-      let dir = args.input[0]
+      const dir = args.input[0]
       if (!dir) throw new Error('Please specify the directory!')
       return Server.start(dir, args.flags.port || args.flags.p)
     },
@@ -37,8 +37,8 @@ let commands = [
 ]
 
 function main(args) {
-  let targetCommand = args.input.shift()
-  for (let command of commands) {
+  const targetCommand = args.input.shift()
+  for (const command of commands) {
     if (command.name === targetCommand) {
       return command.handle(args)
     }

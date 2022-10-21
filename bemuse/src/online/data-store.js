@@ -18,7 +18,7 @@ export function item川(state川, id) {
 export function reduce(state = INITIAL_STATE, action) {
   switch (action.type) {
     case PUT: {
-      let stateChanges = new Immutable.Map(action.data).map(
+      const stateChanges = new Immutable.Map(action.data).map(
         performTransition(state)
       )
       return state.merge(stateChanges)

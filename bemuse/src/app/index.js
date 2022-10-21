@@ -77,7 +77,7 @@ export function main() {
   runIO(bootUp())
 
   // setup service worker
-  let promise = setupServiceWorker()
+  const promise = setupServiceWorker()
   if (promise && promise.then) {
     Promise.resolve(promise).finally(displayFirstScene).done()
   } else {
@@ -85,7 +85,7 @@ export function main() {
   }
 
   // synchronize time
-  let timeSynchroServer =
+  const timeSynchroServer =
     getTimeSynchroServer() || 'wss://timesynchro.herokuapp.com/'
   if (timeSynchroServer) now.synchronize(timeSynchroServer)
 

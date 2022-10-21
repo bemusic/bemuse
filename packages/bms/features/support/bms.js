@@ -1,15 +1,15 @@
-var bms = require('../../lib')
+const bms = require('../../lib')
 
-var Compiler = bms.Compiler
-var Timing = bms.Timing
-var Notes = bms.Notes
-var SongInfo = bms.SongInfo
-var Keysounds = bms.Keysounds
-var Positioning = bms.Positioning
-var Spacing = bms.Spacing
+const Compiler = bms.Compiler
+const Timing = bms.Timing
+const Notes = bms.Notes
+const SongInfo = bms.SongInfo
+const Keysounds = bms.Keysounds
+const Positioning = bms.Positioning
+const Spacing = bms.Spacing
 
 module.exports = function () {
-  var World = this.World
+  const World = this.World
 
   World.plug(function () {
     this.parseOptions = {}
@@ -22,7 +22,7 @@ module.exports = function () {
   }
 
   World.prototype.getObject = function (value) {
-    var matching = this.chart.objects.all().filter(function (object) {
+    const matching = this.chart.objects.all().filter(function (object) {
       return object.value === value
     })
     expect(matching).to.have.length(1, 'getObject(' + value + ')')
@@ -30,7 +30,7 @@ module.exports = function () {
   }
 
   World.prototype.getNote = function (value) {
-    var matching = this.notes.all().filter(function (object) {
+    const matching = this.notes.all().filter(function (object) {
       return object.keysound === value
     })
     expect(matching).to.have.length(1, 'getNote(' + value + ')')

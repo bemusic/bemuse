@@ -3,12 +3,12 @@ import Progress from 'bemuse/progress'
 import { throttle } from 'lodash'
 
 export function start(callback) {
-  let tasks = {}
-  let running = {}
-  let taskList = []
+  const tasks = {}
+  const running = {}
+  const taskList = []
 
   function task(name, text, dependencies, f) {
-    let progress = new Progress()
+    const progress = new Progress()
     if (text) taskList.push({ text, progress })
     tasks[name] = function () {
       return Promise.all(dependencies.map(run)).then((deps) =>
@@ -37,13 +37,13 @@ export function start(callback) {
     })
   }
 
-  let promise = callback(task, run)
-  let status = new Observable(getTaskStatuses())
-  let update = throttle(function updateTaskStatuses() {
+  const promise = callback(task, run)
+  const status = new Observable(getTaskStatuses())
+  const update = throttle(function updateTaskStatuses() {
     status.value = getTaskStatuses()
   }, 16)
 
-  for (let taskToWatch of taskList) {
+  for (const taskToWatch of taskList) {
     taskToWatch.progress.watch(update)
   }
 

@@ -7,13 +7,13 @@ describe('Online DataStore', function () {
   describe('initial state', function () {
     describe('get', function () {
       it('should return initial operation state when not exist', function () {
-        let item = DataStore.get(DataStore.INITIAL_STATE, 'meow')
+        const item = DataStore.get(DataStore.INITIAL_STATE, 'meow')
         expect(item).to.deep.equal(Operations.INITIAL_OPERATION_STATE)
       })
     })
     describe('has', function () {
       it('has should return false', function () {
-        let has = DataStore.has(DataStore.INITIAL_STATE, 'meow')
+        const has = DataStore.has(DataStore.INITIAL_STATE, 'meow')
         void expect(has).to.be.false
       })
     })
@@ -22,9 +22,9 @@ describe('Online DataStore', function () {
   describe('reducer', function () {
     describe('put', function () {
       it('should transition state of a record', function () {
-        let action1 = DataStore.put('a', Operations.completedStateTransition(1))
-        let action2 = DataStore.put('b', Operations.completedStateTransition(2))
-        let state = _()
+        const action1 = DataStore.put('a', Operations.completedStateTransition(1))
+        const action2 = DataStore.put('b', Operations.completedStateTransition(2))
+        const state = _()
           .thru((state) => DataStore.reduce(state, action1))
           .thru((state) => DataStore.reduce(state, action2))
           .value()
@@ -34,11 +34,11 @@ describe('Online DataStore', function () {
     })
     describe('putMultiple', function () {
       it('should transition state of multiple records', function () {
-        let action = DataStore.putMultiple({
+        const action = DataStore.putMultiple({
           a: Operations.completedStateTransition(1),
           b: Operations.completedStateTransition(2),
         })
-        let state = DataStore.reduce(undefined, action)
+        const state = DataStore.reduce(undefined, action)
         expect(DataStore.get(state, 'a').value).to.equal(1)
         expect(DataStore.get(state, 'b').value).to.equal(2)
       })
@@ -47,7 +47,7 @@ describe('Online DataStore', function () {
 
   describe('with records', function () {
     beforeEach(function () {
-      let action = DataStore.putMultiple({
+      const action = DataStore.putMultiple({
         a: Operations.completedStateTransition(1),
         b: Operations.completedStateTransition(2),
         c: Operations.INITIAL_OPERATION_STATE,

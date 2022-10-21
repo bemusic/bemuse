@@ -1,12 +1,12 @@
 export function match(text: string) {
-  var matched = false
+  let matched = false
   return {
     when: function (
       pattern: RegExp,
       callback: (match: RegExpMatchArray) => void
     ) {
       if (matched) return this
-      var match = text.match(pattern)
+      const match = text.match(pattern)
       if (match) {
         matched = true
         callback(match)

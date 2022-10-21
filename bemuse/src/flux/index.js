@@ -6,15 +6,15 @@ export { Bacon }
 let lock = false
 
 export function Action(transform = (x) => x) {
-  var bus = new Bacon.Bus()
-  var action = function () {
+  const bus = new Bacon.Bus()
+  const action = function () {
     if (lock) {
       throw new Error(
         'An action should not fire another action! (' + lock.stack + ')'
       )
     }
     try {
-      let payload = transform.apply(null, arguments)
+      const payload = transform.apply(null, arguments)
       lock = new Error('Previous lock:')
       bus.push(payload)
     } finally {
@@ -30,11 +30,11 @@ export function Action(transform = (x) => x) {
 }
 
 export function Store(store, options = {}) {
-  let lazy = !!options.lazy
+  const lazy = !!options.lazy
   store = toProperty(store)
   store.get = () => {
     let data
-    let unsubscribe = store.onValue((_data) => (data = _data))
+    const unsubscribe = store.onValue((_data) => (data = _data))
     setTimeout(unsubscribe)
     return data
   }
@@ -57,7 +57,7 @@ function toProperty(store) {
 }
 
 export const connect = (props川) => (Component) => {
-  let propsProperty = toProperty(props川)
+  const propsProperty = toProperty(props川)
   return class extends React.Component {
     constructor(props) {
       super(props)

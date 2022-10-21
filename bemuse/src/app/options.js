@@ -96,8 +96,8 @@ export function getStorage() {
 
 // Returns all the options.
 export function getAllCurrentOptions() {
-  let options = {}
-  for (let key of keys()) options[key] = get(key)
+  const options = {}
+  for (const key of keys()) options[key] = get(key)
   return options
 }
 

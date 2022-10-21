@@ -33,7 +33,7 @@ now.synchronize = function (server) {
 }
 
 now.synchronized = function () {
-  let o = offset
+  const o = offset
   return () => now() + o
 }
 

@@ -100,33 +100,38 @@ export class PlayerState {
   }
 
   getNoteStatus(note: GameNote): NoteStatus {
-    let result = this._noteResult.get(note)
+    const result = this._noteResult.get(note)
     if (!result) return NoteStatus.Unjudged
     return result.status
   }
+
   getNoteJudgment(note: GameNote) {
-    let result = this._noteResult.get(note)
+    const result = this._noteResult.get(note)
     if (!result) return Judgment.Unjudged
     return result.judgment
   }
+
   getPlayerInput(control: string) {
     return this._rawInput!.get(`p${this.player.number}_${control}`)!
   }
+
   _updateInputColumnMap() {
     this.input = new Map(
       this._columns.map((column) => [column, this.getPlayerInput(column)])
     )
   }
+
   _judgeNotes() {
-    for (let column of this._columns) {
-      let buffer = this._noteBufferByColumn[column]
+    for (const column of this._columns) {
+      const buffer = this._noteBufferByColumn[column]
       if (buffer) {
-        let control = this.input.get(column)!
+        const control = this.input.get(column)!
         this._judgeColumn(buffer, control, column)
         buffer.update()
       }
     }
   }
+
   _updateSpeed() {
     if (this.getPlayerInput('speedup').justPressed) {
       this._modifySpeed(+1)
@@ -134,20 +139,21 @@ export class PlayerState {
     if (this.getPlayerInput('speeddown').justPressed) {
       this._modifySpeed(-1)
     }
-    let pinch = this.getPlayerInput('pinch').value
+    const pinch = this.getPlayerInput('pinch').value
     if (pinch && !this._pinching) {
       this._pinching = { start: pinch, speed: this.speed }
     } else if (!pinch) {
       this._pinching = null
     }
     if (pinch && this._pinching) {
-      let pinching = this._pinching
-      let speed = (pinching.speed * pinch) / pinching.start
+      const pinching = this._pinching
+      const speed = (pinching.speed * pinch) / pinching.start
       this.speed = Math.max(0.2, Math.round(speed * 10) / 10)
     }
   }
+
   _modifySpeed(direction: 1 | -1) {
-    let amount = this._rawInput!.get('select').value
+    const amount = this._rawInput!.get('select').value
       ? 0.1
       : this.speed < 0.5
       ? 0.3
@@ -155,18 +161,20 @@ export class PlayerState {
     this.speed += direction * amount
     if (this.speed < 0.2) this.speed = 0.2
   }
+
   _shouldAutoplay() {
     return this.player.options.autoplayEnabled || isAutoplayEnabled()
   }
+
   _judgeColumn(buffer: NoteBuffer, control: Control, column: string) {
     let judgedNote
     let judgment
-    let notes = buffer.notes
+    const notes = buffer.notes
     let autoPlayed = false
     for (let i = buffer.startIndex; i < notes.length; i++) {
-      let note = notes[i]
+      const note = notes[i]
       if (this._shouldJudge(note, control, buffer)) {
-        let shouldBreak = this.getNoteStatus(note) !== 'active'
+        const shouldBreak = this.getNoteStatus(note) !== 'active'
         judgedNote = note
         judgment = this._judgeNote(note)
         if (this._shouldAutoplay()) {
@@ -183,7 +191,7 @@ export class PlayerState {
           judgment: judgment,
         })
       } else {
-        let freestyleNote = this._getFreestyleNote(notes)
+        const freestyleNote = this._getFreestyleNote(notes)
         if (freestyleNote) {
           const shouldPlayFreestyleNote =
             this.player.options.placement !== '3d' ||
@@ -198,16 +206,19 @@ export class PlayerState {
       }
     }
   }
+
   _getClosestNote(notes: GameNote[]) {
     return _.minBy(notes, (note) => Math.abs(this._gameTime - note.time))
   }
+
   _getFreestyleNote(notes: GameNote[]) {
     return _.minBy(notes, (note) => {
-      let distance = Math.abs(this._gameTime - note.time)
-      let penalty = this._gameTime < note.time - 1 ? 1000000 : 0
+      const distance = Math.abs(this._gameTime - note.time)
+      const penalty = this._gameTime < note.time - 1 ? 1000000 : 0
       return distance + penalty
     })
   }
+
   _isSandwiched(column: string) {
     const mapping: { [col: string]: string[] } = {
       '2': ['1', '3'],
@@ -225,15 +236,16 @@ export class PlayerState {
       )
     })
   }
+
   _shouldJudge(note: GameNote, control: Control, buffer: NoteBuffer) {
-    let status = this.getNoteStatus(note)
+    const status = this.getNoteStatus(note)
     if (status === 'unjudged') {
       if (this._shouldAutoplay() && this._gameTime >= note.time) {
         this.tainted = true
         return true
       }
-      let judgment = judgeTime(this._gameTime, note.time, this._judge)
-      let missed = judgment === MISSED
+      const judgment = judgeTime(this._gameTime, note.time, this._judge)
+      const missed = judgment === MISSED
       let hit = judgment > 0 && control.changed && control.value
       if (isBad(judgment) && this._getClosestNote(buffer.notes) !== note) {
         hit = false
@@ -245,35 +257,36 @@ export class PlayerState {
         this.tainted = true
         return true
       }
-      let judgment = judgeEndTime(this._gameTime, noteEnd.time, this._judge)
-      let missed = judgment === MISSED
-      let lifted = control.changed
-      let scratch = note.column === 'SC'
-      let passed = this._gameTime >= noteEnd.time
+      const judgment = judgeEndTime(this._gameTime, noteEnd.time, this._judge)
+      const missed = judgment === MISSED
+      const lifted = control.changed
+      const scratch = note.column === 'SC'
+      const passed = this._gameTime >= noteEnd.time
       return missed || lifted || (scratch && passed)
     } else {
       return false
     }
   }
+
   _judgeNote(note: GameNote) {
     let delta = this._gameTime - note.time
     let judgment = judgeTime(this._gameTime, note.time, this._judge)
     let result = this._noteResult.get(note)
-    let isDown = !result || result.status === 'unjudged'
-    let isUp = result && result.status === 'active'
+    const isDown = !result || result.status === 'unjudged'
+    const isUp = result && result.status === 'active'
     if (this._shouldAutoplay() && judgment >= 1) {
       judgment = 1
     }
     if (note.end) {
       if (isDown) {
-        let status = judgment === MISSED ? NoteStatus.Judged : NoteStatus.Active
+        const status = judgment === MISSED ? NoteStatus.Judged : NoteStatus.Active
         if (judgment === MISSED) {
           // judge missed long note twice
           this._setJudgment(judgment, delta, note.column)
         }
         result = { status, judgment, delta }
       } else if (isUp) {
-        let scratch = note.column === 'SC'
+        const scratch = note.column === 'SC'
         delta = this._gameTime - note.end.time
         judgment =
           judgeEndTime(this._gameTime, note.end.time, this._judge) || MISSED
@@ -301,9 +314,10 @@ export class PlayerState {
     this._setJudgment(judgment, delta, note.column)
     return judgment
   }
+
   _setJudgment(judgment: JudgedJudgment, delta: number, column: string) {
     this.stats.handleJudgment(judgment)
-    let info = { judgment, combo: this.stats.combo, delta, column }
+    const info = { judgment, combo: this.stats.combo, delta, column }
     this.notifications.judgments.push(info)
   }
 }

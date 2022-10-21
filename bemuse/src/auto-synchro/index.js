@@ -46,11 +46,11 @@ export function main(bootContext) {
   }
 
   function getLatency(samples) {
-    let data = samples.map((d) => d[1])
+    const data = samples.map((d) => d[1])
     data.sort((a, b) => a - b)
     let count = 0
     let sum = 0
-    let start = Math.floor((data.length * 1) / 7)
+    const start = Math.floor((data.length * 1) / 7)
     for (let i = start; i < (data.length * 6) / 7; i++) {
       count += 1
       sum += data[i]
@@ -59,19 +59,19 @@ export function main(bootContext) {
   }
 
   return Music.load().then((music) => {
-    let bound = 56
-    let samples = []
+    const bound = 56
+    const samples = []
     state口.push({ loading: false })
     play = () => {
       state口.push({ started: true })
-      let remote = music({
+      const remote = music({
         a() {
-          let latency = Math.max(0, getLatency(samples))
+          const latency = Math.max(0, getLatency(samples))
           state口.push({ finished: true, latency })
           postMessage({ latency: latency })
         },
       })
-      let tap = () => {
+      const tap = () => {
         samples.push(remote.getSample())
         remote.progress(Math.min(1, samples.length / bound))
         if (samples.length >= bound) remote.ok()

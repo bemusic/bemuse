@@ -7,7 +7,7 @@ export function loadSongFromResources(
   resources: ICustomSongResources,
   options: LoadSongOptions = {}
 ) {
-  var onMessage = options.onMessage || (() => {})
+  const onMessage = options.onMessage || (() => {})
   if (resources.setLoggingFunction) {
     resources.setLoggingFunction(onMessage)
   }
@@ -54,7 +54,7 @@ export function loadSongFromResources(
       }
     })
     const song = await new Promise<Song>((resolve, reject) => {
-      let worker = new Worker()
+      const worker = new Worker()
       worker.onmessage = function ({ data }) {
         if (data.type === 'result') {
           resolve(data.song)

@@ -56,13 +56,13 @@ class MusicInfoTabInformation extends React.Component {
   }
 
   renderButtons() {
-    let buttons = []
-    let song = this.props.song
+    const buttons = []
+    const song = this.props.song
     if (song.bms_url) {
       buttons.push(link('Download BMS', song.bms_url))
     }
     if (song.song_url) {
-      let text = /soundcloud\.com/.test(song.song_url)
+      const text = /soundcloud\.com/.test(song.song_url)
         ? 'SoundCloud'
         : 'Song URL'
       buttons.push(link(text, song.song_url))
@@ -93,7 +93,7 @@ export default enhance(MusicInfoTabInformation)
 
 function link(text, url) {
   return url ? (
-    <a key={text} href={url} target='_blank'>
+    <a key={text} href={url} target='_blank' rel="noreferrer">
       {text}
     </a>
   ) : (

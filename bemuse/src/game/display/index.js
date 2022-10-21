@@ -29,12 +29,15 @@ export class GameDisplay {
     this._createFullScreenButton()
     this._escapeHintShown = false
   }
+
   setEscapeHandler(escapeHandler) {
     this._onEscape = escapeHandler
   }
+
   setReplayHandler(replayHandler) {
     this._onReplay = replayHandler
   }
+
   start() {
     this._started = new Date().getTime()
     const player = this._game.players[0]
@@ -44,17 +47,20 @@ export class GameDisplay {
     this._stateful['song_artist'] = songInfo.artist
     this._duration = player.notechart.duration
   }
+
   destroy() {
     this._context.destroy()
   }
+
   update(gameTime, gameState) {
-    let time = (new Date().getTime() - this._started) / 1000
-    let data = this._getData(time, gameTime, gameState)
+    const time = (new Date().getTime() - this._started) / 1000
+    const data = this._getData(time, gameTime, gameState)
     this._updateStatefulData(time, gameTime, gameState)
     this._context.render(Object.assign({}, this._stateful, data))
     this._synchronizeVideo(gameTime)
     this._synchronizeTutorialEscapeHint(gameTime)
   }
+
   _synchronizeVideo(gameTime) {
     if (this._video && !this._videoStarted && gameTime >= this._videoOffset) {
       this._video.volume = 0
@@ -63,6 +69,7 @@ export class GameDisplay {
       this._videoStarted = true
     }
   }
+
   _synchronizeTutorialEscapeHint(gameTime) {
     if (this._game.options.tutorial) {
       const TUTORIAL_ESCAPE_HINT_SHOW_TIME = 101.123595506
@@ -75,24 +82,26 @@ export class GameDisplay {
       }
     }
   }
+
   _getData(time, gameTime, gameState) {
-    let data = {}
+    const data = {}
     data['tutorial'] = this._game.options.tutorial ? 'yes' : 'no'
     data['t'] = time
     data['gameTime'] = gameTime
     data['ready'] = this._getReady(gameState)
     data['song_time'] = this._getSongTime(gameTime)
-    for (let [player, playerDisplay] of this._players) {
-      let playerState = gameState.player(player)
-      let playerData = playerDisplay.update(time, gameTime, playerState)
-      for (let key in playerData) {
+    for (const [player, playerDisplay] of this._players) {
+      const playerState = gameState.player(player)
+      const playerData = playerDisplay.update(time, gameTime, playerState)
+      for (const key in playerData) {
         data[`p${player.number}_${key}`] = playerData[key]
       }
     }
     return data
   }
+
   _updateStatefulData(time, gameTime, gameState) {
-    let data = this._stateful
+    const data = this._stateful
     if (data['started'] === undefined && gameState.started) {
       data['started'] = time
     }
@@ -100,6 +109,7 @@ export class GameDisplay {
       data['gettingStarted'] = time
     }
   }
+
   _getSongTime(gameTime) {
     return (
       formatTime(Math.min(this._duration, Math.max(0, gameTime))) +
@@ -107,17 +117,19 @@ export class GameDisplay {
       formatTime(this._duration)
     )
   }
+
   _getReady(gameState) {
-    let f = gameState.readyFraction
+    const f = gameState.readyFraction
     return f > 0.5 ? Math.pow(1 - (f - 0.5) / 0.5, 2) : 0
   }
+
   _createWrapper({
     backgroundImagePromise,
     video,
     panelPlacement,
     infoPanelPosition,
   }) {
-    var $wrapper = $('<div class="game-display"></div>')
+    const $wrapper = $('<div class="game-display"></div>')
       .attr('data-panel-placement', panelPlacement)
       .attr('data-info-panel-position', infoPanelPosition)
       .append('<div class="game-display--bg js-back-image"></div>')
@@ -134,13 +146,14 @@ export class GameDisplay {
     }
     return $wrapper[0]
   }
+
   _createTouchEscapeButton() {
     const touchButtons = document.createElement('div')
     touchButtons.className = 'game-display--touch-buttons is-left'
     this.wrapper.appendChild(touchButtons)
     touchButtons.classList.add('is-visible')
     const addTouchButton = (className, onClick) => {
-      let button = createTouchButton(onClick, className)
+      const button = createTouchButton(onClick, className)
       touchButtons.appendChild(button)
     }
     addTouchButton('game-display--touch-escape-button', () => this._onEscape())
@@ -152,6 +165,7 @@ export class GameDisplay {
     this._escapeHint = escapeHint
     touchButtons.appendChild(escapeHint)
   }
+
   _createFullScreenButton() {
     if (shouldDisableFullScreen() || !screenfull.enabled) {
       return
@@ -168,19 +182,22 @@ export class GameDisplay {
     )
     touchButtons.appendChild(button)
   }
+
   get context() {
     return this._context
   }
+
   get view() {
     return this._context.view
   }
+
   get wrapper() {
     return this._wrapper
   }
 }
 
 function createTouchButton(onClick, className) {
-  let button = document.createElement('button')
+  const button = document.createElement('button')
   button.addEventListener(
     'touchstart',
     (e) => {

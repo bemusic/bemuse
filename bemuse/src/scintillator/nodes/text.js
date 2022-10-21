@@ -16,6 +16,7 @@ export class TextNode extends SkinNode {
     this.align =
       $el.attr('align') === 'left' ? 0 : $el.attr('align') === 'right' ? 1 : 0.5
   }
+
   instantiate(context, container) {
     let text
     if (this.ttf) {
@@ -26,7 +27,7 @@ export class TextNode extends SkinNode {
     } else {
       text = new PIXI.extras.BitmapText(this.text, { font: this.font })
     }
-    let object = new PIXI.Container()
+    const object = new PIXI.Container()
     object.addChild(text)
     return new Instance({
       context: context,

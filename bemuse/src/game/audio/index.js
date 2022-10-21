@@ -12,17 +12,21 @@ export class GameAudio {
       ])
     )
   }
+
   destroy() {
     this._master.destroy()
   }
+
   unmute() {
     this._master.unmute()
   }
+
   get context() {
     return this._context
   }
+
   update(t, state) {
-    for (let [player, playerAudio] of this._players) {
+    for (const [player, playerAudio] of this._players) {
       playerAudio.update(t, state.player(player))
     }
   }

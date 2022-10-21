@@ -86,7 +86,7 @@ async function launchGame(
 
   // initialize the loading specification
   // TODO [#625]: Create the LoadSpec object at the end instead of building object from blank.
-  let loadSpec: LoadSpec = {} as any
+  const loadSpec: LoadSpec = {} as any
   loadSpec.songId = song.id
 
   const { baseResources, assetResources } = getSongResources(song, server.url)
@@ -154,11 +154,11 @@ async function launchGame(
     setCurrentWork('loading the game')
     Log.info(`Loading game: ${describeChart(chart)}`)
     const GameLoader: typeof import('bemuse/game/loaders/game-loader') = require('bemuse/game/loaders/game-loader')
-    let loader = GameLoader.load(loadSpec)
-    let { tasks, promise } = loader
+    const loader = GameLoader.load(loadSpec)
+    const { tasks, promise } = loader
 
     // display loading scene
-    let loadingScene = React.createElement(LoadingScene, {
+    const loadingScene = React.createElement(LoadingScene, {
       tasks: tasks,
       song: chart.info,
       eyecatchImagePromise: loader.get('EyecatchImage'),
@@ -174,7 +174,7 @@ async function launchGame(
     Analytics.gameStart(song, chart, gameMode, options)
 
     // wait for game to load and display the game
-    let controller = await promise
+    const controller = await promise
     setCurrentWork('running the game')
     await sceneDisplayContext.showScene(GameScene(controller.display))
     controller.start()
@@ -270,9 +270,9 @@ function showResult(
   sceneDisplayContext: SceneDisplayContext
 ) {
   return new Promise<{ replay: boolean }>((resolve, reject) => {
-    let stats = playerState.stats
-    let playMode = playerState.player.options.scratch === 'off' ? 'KB' : 'BM'
-    let props = {
+    const stats = playerState.stats
+    const playMode = playerState.player.options.scratch === 'off' ? 'KB' : 'BM'
+    const props = {
       result: {
         '1': stats.counts['1'],
         '2': stats.counts['2'],
@@ -335,6 +335,7 @@ class SceneDisplayContext {
       await SCENE_MANAGER.display(scene)
     }
   }
+
   async end() {
     if (this.shown) {
       await SCENE_MANAGER.pop()

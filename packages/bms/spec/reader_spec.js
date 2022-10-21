@@ -1,6 +1,6 @@
-var { Reader } = require('../lib')
-var fs = require('fs')
-var path = require('path')
+const { Reader } = require('../lib')
+const fs = require('fs')
+const path = require('path')
 const { expect } = require('chai')
 
 function fixture(name) {
@@ -56,7 +56,7 @@ describe('bms.Reader', function () {
 
   describe('asynchronous detection', function () {
     it('should work', function (done) {
-      var x = false
+      let x = false
       Reader.readAsync(fixture('en'), function (err, result) {
         void expect(err).to.be.null
         expect(result).to.match(/Hello/)

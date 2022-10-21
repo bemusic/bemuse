@@ -16,7 +16,7 @@ describe('PlayerDisplay', function () {
   }
 
   it('reacts to input', function () {
-    let inputState = (inputs) => makeState({ input: new Map(inputs) })
+    const inputState = (inputs) => makeState({ input: new Map(inputs) })
 
     setup({
       notechart: notechart(),
@@ -48,7 +48,7 @@ describe('PlayerDisplay', function () {
       assert(data['note_1'].length === 1)
     })
     it('hides judged notes', function () {
-      let state = tap(blankState(), (s) => s.getNoteStatus.returns('judged'))
+      const state = tap(blankState(), (s) => s.getNoteStatus.returns('judged'))
       update(3.95, 3.95, state)
       assert(!(data['note_1'] || []).length)
     })
@@ -65,17 +65,17 @@ describe('PlayerDisplay', function () {
       assert(!data['longnote_1'][0].missed)
     })
     it('displays holding long notes', function () {
-      let state = tap(blankState(), (s) => s.getNoteJudgment.returns(1))
+      const state = tap(blankState(), (s) => s.getNoteJudgment.returns(1))
       update(3.95, 3.95, state)
       assert(data['longnote_1'][0].active)
     })
     it('displays holding long notes event it is bad', function () {
-      let state = tap(blankState(), (s) => s.getNoteJudgment.returns(4))
+      const state = tap(blankState(), (s) => s.getNoteJudgment.returns(4))
       update(3.95, 3.95, state)
       assert(data['longnote_1'][0].active)
     })
     it('displays missed long notes', function () {
-      let state = blankState()
+      const state = blankState()
       state.getNoteJudgment.returns(-1)
       state.getNoteStatus.returns('judged')
       update(3.95, 3.95, state)
@@ -88,40 +88,40 @@ describe('PlayerDisplay', function () {
       setup(playerWithBMS())
     })
     it('sets judgment time', function () {
-      let info = { judgment: 1, delta: 0, combo: 123, column: 'SC' }
+      const info = { judgment: 1, delta: 0, combo: 123, column: 'SC' }
       update(12, 34, makeState({ notifications: { judgments: [info] } }))
       assert(data['judge_1'] === 12)
       assert(data['judge_deviation_none'] === 12)
     })
     it('sets judgment deviation (early)', function () {
-      let info = { judgment: 2, delta: -0.03, combo: 123, column: 'SC' }
+      const info = { judgment: 2, delta: -0.03, combo: 123, column: 'SC' }
       update(12, 34, makeState({ notifications: { judgments: [info] } }))
       assert(data['judge_2'] === 12)
       assert(data['judge_deviation_early'] === 12)
     })
     it('sets judgment deviation (late)', function () {
-      let info = { judgment: 2, delta: 0.03, combo: 123, column: 'SC' }
+      const info = { judgment: 2, delta: 0.03, combo: 123, column: 'SC' }
       update(12, 34, makeState({ notifications: { judgments: [info] } }))
       assert(data['judge_2'] === 12)
       assert(data['judge_deviation_late'] === 12)
     })
     it('sets judgment missed time', function () {
-      let info = { judgment: -1, delta: 0, combo: 0, column: 'SC' }
+      const info = { judgment: -1, delta: 0, combo: 0, column: 'SC' }
       update(12, 34, makeState({ notifications: { judgments: [info] } }))
       assert(data['judge_missed'] === 12)
     })
     it('sets combo', function () {
-      let info = { judgment: 1, delta: 0, combo: 123, column: 'SC' }
+      const info = { judgment: 1, delta: 0, combo: 123, column: 'SC' }
       update(12, 34, makeState({ notifications: { judgments: [info] } }))
       assert(data['combo'] === 123)
     })
     it('sets note explode time', function () {
-      let info = { judgment: 1, delta: 0, combo: 123, column: 'SC' }
+      const info = { judgment: 1, delta: 0, combo: 123, column: 'SC' }
       update(12, 34, makeState({ notifications: { judgments: [info] } }))
       assert(data['SC_explode'] === 12)
     })
     it('does not set note explode time if missed', function () {
-      let info = { judgment: -1, delta: 0, combo: 123, column: 'SC' }
+      const info = { judgment: -1, delta: 0, combo: 123, column: 'SC' }
       update(12, 34, makeState({ notifications: { judgments: [info] } }))
       assert(!(data['SC_explode'] || []).length)
     })

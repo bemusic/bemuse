@@ -41,8 +41,8 @@ export class Positioning {
    */
   static fromBMSChart(chart: BMSChart) {
     void BMSChart
-    var segments: SpeedSegment[] = []
-    var x = 0
+    const segments: SpeedSegment[] = []
+    let x = 0
     segments.push({
       t: 0,
       x: x,
@@ -51,10 +51,10 @@ export class Positioning {
     })
     chart.objects.allSorted().forEach(function (object) {
       if (object.channel === 'SC') {
-        var beat = chart.measureToBeat(object.measure, object.fraction)
-        var dx = +chart.headers.get('scroll' + object.value)!
+        const beat = chart.measureToBeat(object.measure, object.fraction)
+        const dx = +chart.headers.get('scroll' + object.value)!
         if (isNaN(dx)) return
-        var previous = segments[segments.length - 1]
+        const previous = segments[segments.length - 1]
         x += (beat - previous.t) * previous.dx
         if (beat === 0 && segments.length === 1) {
           segments[0].dx = dx

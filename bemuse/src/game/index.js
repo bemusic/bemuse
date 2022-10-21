@@ -19,9 +19,9 @@ export async function main() {
     window.removeEventListener('touchstart', unmute)
   })
 
-  let displayShell = function (options) {
+  const displayShell = function (options) {
     return new Promise(function (resolve) {
-      let scene = React.createElement(GameShellScene, {
+      const scene = React.createElement(GameShellScene, {
         options: options,
         play: function (data) {
           resolve(data)
@@ -31,8 +31,8 @@ export async function main() {
     })
   }
 
-  let getSong = async function () {
-    let kbm = (query.keyboard || '').split(',').map((x) => +x)
+  const getSong = async function () {
+    const kbm = (query.keyboard || '').split(',').map((x) => +x)
     let options = {
       url: query.bms || '/music/[snack]dddd/dddd_sph.bme',
       game: {
@@ -61,9 +61,9 @@ export async function main() {
       ],
     }
     options = await displayShell(options)
-    let url = options.url
-    let assetsUrl = resolveUrl(url, 'assets/')
-    let metadata = {
+    const url = options.url
+    const assetsUrl = resolveUrl(url, 'assets/')
+    const metadata = {
       title: 'Loading',
       subtitles: [],
       artist: '',
@@ -78,15 +78,15 @@ export async function main() {
     }
   }
 
-  let loadSpec = await getSong()
-  let { tasks, promise } = GameLoader.load(loadSpec)
+  const loadSpec = await getSong()
+  const { tasks, promise } = GameLoader.load(loadSpec)
   await SCENE_MANAGER.display(
     React.createElement(LoadingScene, {
       tasks: tasks,
       song: loadSpec.metadata,
     })
   )
-  let controller = await promise
+  const controller = await promise
   await SCENE_MANAGER.display(new GameScene(controller.display))
   controller.start()
 }

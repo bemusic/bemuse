@@ -10,8 +10,9 @@ export class Mask {
   constructor(frame) {
     this._frame = frame
   }
+
   instantiate(context, subject) {
-    let mask = new PIXI.Graphics()
+    const mask = new PIXI.Graphics()
     mask.beginFill()
     mask.drawShape(this._frame)
     mask.endFill()
@@ -28,12 +29,13 @@ export class GroupNode extends SkinNode {
   compile(compiler, $el) {
     this.children = compiler.compileChildren($el)
     this.display = DisplayObject.compile(compiler, $el)
-    let maskFrame = parseFrame($el.attr('mask') || '')
+    const maskFrame = parseFrame($el.attr('mask') || '')
     if (maskFrame) this.mask = new Mask(maskFrame)
   }
+
   instantiate(context, container) {
-    let object = new PIXI.Container()
-    let concerns = [this.display]
+    const object = new PIXI.Container()
+    const concerns = [this.display]
     if (this.mask) {
       concerns.push(this.mask)
     }

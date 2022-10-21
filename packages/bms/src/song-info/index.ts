@@ -95,16 +95,16 @@ export class SongInfo implements ISongInfoData {
    */
   static fromBMSChart(chart: BMSChart) {
     void BMSChart
-    var info: Partial<ISongInfoData> = {}
-    var title = chart.headers.get('title')
-    var artist = chart.headers.get('artist')
-    var genre = chart.headers.get('genre')
-    var difficulty = +chart.headers.get('difficulty')! || 0
-    var level = +chart.headers.get('playlevel')! || 0
-    var subtitles = chart.headers.getAll('subtitle')
-    var subartists = chart.headers.getAll('subartist')
+    const info: Partial<ISongInfoData> = {}
+    let title = chart.headers.get('title')
+    const artist = chart.headers.get('artist')
+    const genre = chart.headers.get('genre')
+    const difficulty = +chart.headers.get('difficulty')! || 0
+    const level = +chart.headers.get('playlevel')! || 0
+    let subtitles = chart.headers.getAll('subtitle')
+    const subartists = chart.headers.getAll('subartist')
     if (typeof title === 'string' && !subtitles) {
-      var extractSubtitle = function (m: string[]) {
+      const extractSubtitle = function (m: string[]) {
         title = m[1]
         subtitles = [m[2]]
       }

@@ -44,7 +44,7 @@ function updateTitle(html) {
 
 function inlineBootScript(html) {
   const re = /(<!--\sBEGIN BOOT SCRIPT\s-->)[\s\S]*(<!--\sEND BOOT SCRIPT\s-->)/
-  let boot = fs.readFileSync(path('dist', 'build', 'boot.js'), 'utf-8')
+  const boot = fs.readFileSync(path('dist', 'build', 'boot.js'), 'utf-8')
   return html.replace(re, (x, a, b) => `${a}${scriptTag(boot)}${b}`)
 }
 

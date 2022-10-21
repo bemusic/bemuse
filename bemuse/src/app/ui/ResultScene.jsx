@@ -33,6 +33,7 @@ export default class ResultScene extends React.Component {
     onReplay: PropTypes.func,
     onExit: PropTypes.func,
   }
+
   render() {
     void this.props.lr2Timegate // XXX: unused for now
 
@@ -96,27 +97,28 @@ export default class ResultScene extends React.Component {
       </Scene>
     )
   }
+
   getTweetLink() {
-    let title = this.props.chart.info.title
+    const title = this.props.chart.info.title
     let subtitle = this.props.chart.info.subtitles[0] || ''
-    let score = this.props.result.score
-    let grade = this.props.result.grade
+    const score = this.props.result.score
+    const grade = this.props.result.grade
     if (subtitle === '') {
-      let match = this.props.chart.info.genre.match(/\[([^\]]+)\]$/)
+      const match = this.props.chart.info.genre.match(/\[([^\]]+)\]$/)
       if (match) subtitle = match[1]
     }
     subtitle = subtitle.trim()
     if (subtitle !== '' && !/^[[(]/.test(subtitle)) subtitle = `[${subtitle}]`
     if (subtitle !== '') subtitle = ` ${subtitle}`
     let url = 'https://bemuse.ninja/'
-    let server = QueryFlags.getMusicServer()
+    const server = QueryFlags.getMusicServer()
     if (server) {
       url =
         (/^http:/.test(server) ? 'http' : 'https') +
         '://bemuse.ninja/?server=' +
         encodeURIComponent(server)
     }
-    let text =
+    const text =
       `Played:「 ${title}${subtitle} 」on #Bemuse (Score:${score} [${grade}])` +
       '\n' +
       `→ ${url}`
@@ -125,12 +127,14 @@ export default class ResultScene extends React.Component {
       encodeURIComponent(text)
     )
   }
+
   onTweet = (e) => {
     e.preventDefault()
     e.stopPropagation()
     Analytics.send('ResultScene', 'tweet')
     window.open(this.getTweetLink(), 'intent', 'width=550,height=420')
   }
+
   handleExit = (e) => {
     this.props.onExit(e)
     Analytics.send('ResultScene', 'exit')

@@ -147,10 +147,12 @@ class CustomBMS extends React.Component {
       if (this.props.onSongLoaded) this.props.onSongLoaded(song)
     })
   }
+
   handleFileSelect = (file) => {
     Analytics.send('CustomBMS', 'select')
     this.props.onFileSelect(file)
   }
+
   handlePaste = async (e) => {
     const song = await this.props.onPaste(e)
     if (song) {

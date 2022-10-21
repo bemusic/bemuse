@@ -1,4 +1,4 @@
-var steps = require('artstep')
+const steps = require('artstep')
 
 module.exports = steps()
   .Then(/^sound (\S+) references file "(.*?)"$/, function (id, file) {

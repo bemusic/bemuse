@@ -2,7 +2,7 @@ import './Boot.scss'
 import template from './Boot.jade'
 import version from 'bemuse/utils/version'
 
-let boot = document.createElement('div')
+const boot = document.createElement('div')
 boot.id = 'boot'
 boot.className = 'Boot'
 boot.innerHTML = template()

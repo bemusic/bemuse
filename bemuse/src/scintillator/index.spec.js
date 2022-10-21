@@ -1,11 +1,11 @@
 import * as Scintillator from './'
 
-let fixture = (file) => `/src/scintillator/test-fixtures/${file}`
+const fixture = (file) => `/src/scintillator/test-fixtures/${file}`
 
 describe('Scintillator', function () {
   describe('#load', function () {
     it('should load skin and return skin node', async function () {
-      let skin = await Scintillator.load(fixture('bare.xml'))
+      const skin = await Scintillator.load(fixture('bare.xml'))
       expect(skin.width).to.equal(123)
       expect(skin.height).to.equal(456)
     })
@@ -17,8 +17,8 @@ describe('Scintillator', function () {
 
   describe('Context', function () {
     it('should instantiate and able to destroy', async function () {
-      let skin = await Scintillator.load(fixture('bare.xml'))
-      let context = new Scintillator.Context(skin)
+      const skin = await Scintillator.load(fixture('bare.xml'))
+      const context = new Scintillator.Context(skin)
       context.render({})
       context.destroy()
     })
@@ -49,7 +49,7 @@ describe('Scintillator', function () {
       function touch(type, touches, changedTouches) {
         // since TouchEvent is damn complicated, we resort to using a custom
         // event that imitates a touch event.
-        let event = new Event(`touch${type}`)
+        const event = new Event(`touch${type}`)
         event.touches = touches
         event.changedTouches = changedTouches
         context.view.dispatchEvent(event)
@@ -58,7 +58,7 @@ describe('Scintillator', function () {
         mouse('move', 10, 10)
         mouse('down', 10, 10)
         expect(context.input).to.deep.equal([{ x: 10, y: 10, id: 'mouse' }])
-        let t = { identifier: 1, clientX: 80, clientY: 80 }
+        const t = { identifier: 1, clientX: 80, clientY: 80 }
         touch('start', [t], [t])
         expect(context.input).to.deep.equal([
           { x: 10, y: 10, id: 'mouse' },
@@ -77,8 +77,8 @@ describe('Scintillator', function () {
     })
     describe('#refs', function () {
       it('should be a set of refs to the display object', async function () {
-        let skin = await Scintillator.load(fixture('refs.xml'))
-        let context = new Scintillator.Context(skin)
+        const skin = await Scintillator.load(fixture('refs.xml'))
+        const context = new Scintillator.Context(skin)
         context.render({})
         expect(Array.from(context.refs['a'])[0]).to.equal(
           context.stage.children[0]
@@ -90,18 +90,18 @@ describe('Scintillator', function () {
 
   describe('Expressions', function () {
     it('should be parsed and processed', async function () {
-      let skin = await Scintillator.load(fixture('expr_basic.xml'))
-      let context = new Scintillator.Context(skin)
+      const skin = await Scintillator.load(fixture('expr_basic.xml'))
+      const context = new Scintillator.Context(skin)
       context.render({})
-      let stage = context.stage
+      const stage = context.stage
       expect(stage.children[0].x).to.equal(6)
       expect(stage.children[0].y).to.equal(7)
       context.destroy()
     })
     it('should support variables', async function () {
-      let skin = await Scintillator.load(fixture('expr_variables.xml'))
-      let context = new Scintillator.Context(skin)
-      let stage = context.stage
+      const skin = await Scintillator.load(fixture('expr_variables.xml'))
+      const context = new Scintillator.Context(skin)
+      const stage = context.stage
       context.render({ a: 4, b: 3 })
       expect(stage.children[0].x).to.equal(7)
       expect(stage.children[0].y).to.equal(12)
@@ -114,11 +114,11 @@ describe('Scintillator', function () {
 
   describe('SpriteNode', function () {
     it('should allow setting sprite frame', async function () {
-      let skin = await Scintillator.load(fixture('sprite_attrs.xml'))
-      let context = new Scintillator.Context(skin)
-      let stage = context.stage
+      const skin = await Scintillator.load(fixture('sprite_attrs.xml'))
+      const context = new Scintillator.Context(skin)
+      const stage = context.stage
       context.render({})
-      let frame = stage.children[0].texture.frame
+      const frame = stage.children[0].texture.frame
       expect(frame.width).to.equal(10)
       expect(frame.height).to.equal(11)
       expect(frame.x).to.equal(12)
@@ -126,11 +126,11 @@ describe('Scintillator', function () {
       context.destroy()
     })
     it('should allow setting visibility, width, height', async function () {
-      let skin = await Scintillator.load(fixture('sprite_attrs.xml'))
-      let context = new Scintillator.Context(skin)
-      let stage = context.stage
+      const skin = await Scintillator.load(fixture('sprite_attrs.xml'))
+      const context = new Scintillator.Context(skin)
+      const stage = context.stage
       context.render({})
-      let sprite = stage.children[0]
+      const sprite = stage.children[0]
       expect(sprite.width).to.equal(3)
       expect(sprite.height).to.equal(1)
       expect(sprite.visible).to.equal(false)
@@ -144,29 +144,29 @@ describe('Scintillator', function () {
 
   describe('TextNode', function () {
     it('should display text', async function () {
-      let skin = await Scintillator.load(fixture('text.xml'))
-      let context = new Scintillator.Context(skin)
-      let stage = context.stage
+      const skin = await Scintillator.load(fixture('text.xml'))
+      const context = new Scintillator.Context(skin)
+      const stage = context.stage
       context.render({})
-      let text = stage.children[0].children[0]
+      const text = stage.children[0].children[0]
       expect(text.text).to.equal('Hello world')
       context.destroy()
     })
     it('should center text', async function () {
-      let skin = await Scintillator.load(fixture('text_center.xml'))
-      let context = new Scintillator.Context(skin)
-      let stage = context.stage
+      const skin = await Scintillator.load(fixture('text_center.xml'))
+      const context = new Scintillator.Context(skin)
+      const stage = context.stage
       context.render({})
-      let text = stage.children[0].children[0]
+      const text = stage.children[0].children[0]
       expect(text.x).to.be.lessThan(0)
       context.destroy()
     })
     it('should support data interpolation', async function () {
-      let skin = await Scintillator.load(fixture('text_interpolation.xml'))
-      let context = new Scintillator.Context(skin)
-      let stage = context.stage
+      const skin = await Scintillator.load(fixture('text_interpolation.xml'))
+      const context = new Scintillator.Context(skin)
+      const stage = context.stage
       context.render({ lol: 'wow' })
-      let text = stage.children[0].children[0]
+      const text = stage.children[0].children[0]
       expect(text.text).to.equal('Hello world wow')
       context.destroy()
     })
@@ -194,9 +194,9 @@ describe('Scintillator', function () {
 
   describe('ObjectNode', function () {
     it('should display children', async function () {
-      let skin = await Scintillator.load(fixture('expr_object.xml'))
-      let context = new Scintillator.Context(skin)
-      let stage = context.stage
+      const skin = await Scintillator.load(fixture('expr_object.xml'))
+      const context = new Scintillator.Context(skin)
+      const stage = context.stage
       context.render({ notes: [] })
       expect(stage.children[0].children).to.have.length(0)
       context.render({ notes: [{ key: 'a', y: 20 }] })
@@ -213,10 +213,10 @@ describe('Scintillator', function () {
       context.destroy()
     })
     it('should update same array with content changed', async function () {
-      let skin = await Scintillator.load(fixture('expr_object.xml'))
-      let context = new Scintillator.Context(skin)
-      let stage = context.stage
-      let notes = []
+      const skin = await Scintillator.load(fixture('expr_object.xml'))
+      const context = new Scintillator.Context(skin)
+      const stage = context.stage
+      const notes = []
       context.render({ notes })
       expect(stage.children[0].children).to.have.length(0)
       notes.push({ key: 'a', y: 20 })
@@ -225,9 +225,9 @@ describe('Scintillator', function () {
       context.destroy()
     })
     it('should let children get value from item', async function () {
-      let skin = await Scintillator.load(fixture('expr_object_var.xml'))
-      let context = new Scintillator.Context(skin)
-      let stage = context.stage
+      const skin = await Scintillator.load(fixture('expr_object_var.xml'))
+      const context = new Scintillator.Context(skin)
+      const stage = context.stage
       context.render({ notes: [] })
       context.render({ notes: [{ key: 'a', y: 20 }] })
       expect(stage.children[0].children[0].y).to.equal(20)
@@ -246,10 +246,10 @@ describe('Scintillator', function () {
 
   describe('GroupNode', function () {
     it('should allow masking', async function () {
-      let skin = await Scintillator.load(fixture('group_mask.xml'))
-      let context = new Scintillator.Context(skin)
-      let stage = context.stage
-      let mask = stage.children[0].mask
+      const skin = await Scintillator.load(fixture('group_mask.xml'))
+      const context = new Scintillator.Context(skin)
+      const stage = context.stage
+      const mask = stage.children[0].mask
       expect(mask).not.to.equal(null)
       context.destroy()
     })
@@ -257,9 +257,9 @@ describe('Scintillator', function () {
 
   describe('AnimationNode', function () {
     it('should allow animations', async function () {
-      let skin = await Scintillator.load(fixture('animation.xml'))
-      let context = new Scintillator.Context(skin)
-      let group = context.stage.children[0]
+      const skin = await Scintillator.load(fixture('animation.xml'))
+      const context = new Scintillator.Context(skin)
+      const group = context.stage.children[0]
       context.render({ t: 0 })
       expect(group.x).to.equal(10)
       expect(group.y).to.equal(0)
@@ -272,9 +272,9 @@ describe('Scintillator', function () {
       context.destroy()
     })
     it('should allow animations on different events', async function () {
-      let skin = await Scintillator.load(fixture('animation.xml'))
-      let context = new Scintillator.Context(skin)
-      let group = context.stage.children[0]
+      const skin = await Scintillator.load(fixture('animation.xml'))
+      const context = new Scintillator.Context(skin)
+      const group = context.stage.children[0]
       context.render({ t: 0.5, exitEvent: 0.5 })
       expect(group.x).to.equal(50)
       expect(group.y).to.equal(0)
@@ -287,9 +287,9 @@ describe('Scintillator', function () {
       context.destroy()
     })
     it('should allow animations on different value', async function () {
-      let skin = await Scintillator.load(fixture('animation_timekey.xml'))
-      let context = new Scintillator.Context(skin)
-      let group = context.stage.children[0]
+      const skin = await Scintillator.load(fixture('animation_timekey.xml'))
+      const context = new Scintillator.Context(skin)
+      const group = context.stage.children[0]
       context.render({ t: 0, x: 0.5 })
       expect(group.x).to.equal(15)
     })
@@ -297,10 +297,10 @@ describe('Scintillator', function () {
 
   describe('defs', function () {
     it('should allow reuse of skin nodes', async function () {
-      let skin = await Scintillator.load(fixture('defs.xml'))
-      let context = new Scintillator.Context(skin)
+      const skin = await Scintillator.load(fixture('defs.xml'))
+      const context = new Scintillator.Context(skin)
       context.render({})
-      let stage = context.stage
+      const stage = context.stage
       expect(stage.children[0].x).to.equal(6)
       expect(stage.children[0].y).to.equal(7)
       expect(stage.children[1].x).to.equal(6)

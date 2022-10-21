@@ -10,7 +10,7 @@ if (
 ) {
   // Need to shim FileReader so that bemuse-chardet works.
   global.FileReader = function FileReaderShim() {
-    let reader = new FileReaderSync()
+    const reader = new FileReaderSync()
     return {
       readAsText(blob, enc) {
         try {
@@ -25,7 +25,7 @@ if (
 }
 
 addEventListener('message', function ({ data }) {
-  let files = data.files.map(convertBuffer)
+  const files = data.files.map(convertBuffer)
   postMessage({ type: 'started' })
   function onProgress(current, total, file) {
     postMessage({ type: 'progress', current, total, file })

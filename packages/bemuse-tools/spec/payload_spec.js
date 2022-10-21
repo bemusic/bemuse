@@ -2,7 +2,7 @@ import Payload from '../src/payload'
 import { expect } from 'chai'
 
 describe('Payload', function () {
-  var payload
+  let payload
 
   beforeEach(() => {
     payload = new Payload()

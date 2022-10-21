@@ -99,7 +99,7 @@ class ChannelDataWriter {
   write(audioSamples: Float32Array) {
     // iOS Safari does not support `buf.copyToChannel(a, ch, track[ch])`, so we had to copy audio data sample-by-sample.
     const { offset, data } = this
-    for (var i = 0; i < audioSamples.length; i++) {
+    for (let i = 0; i < audioSamples.length; i++) {
       data[i + offset] = audioSamples[i]
     }
     this.offset += audioSamples.length

@@ -6,7 +6,7 @@ import Expression from '../expression'
 
 export class IfNode extends SkinNode {
   compile(compiler, $el) {
-    let children = compiler.compileChildren($el)
+    const children = compiler.compileChildren($el)
     if (children.length !== 1) {
       throw new Error(
         'Expected exactly 1 children, ' + children.length + ' found'
@@ -16,11 +16,12 @@ export class IfNode extends SkinNode {
     this.key = new Expression($el.attr('key'))
     this.value = String($el.attr('value'))
   }
+
   instantiate(context, container) {
-    let object = new PIXI.Container()
-    let expr = this.key
-    let value = this.value
-    let childNode = this.child
+    const object = new PIXI.Container()
+    const expr = this.key
+    const value = this.value
+    const childNode = this.child
     let child = null
     return new Instance({
       context: context,

@@ -30,11 +30,13 @@ class OptionsInputScratch extends React.PureComponent {
       </div>
     )
   }
+
   renderKeyClass(index) {
     return c('OptionsInputScratchのkey', {
       'is-editing': this.props.editIndex === index,
     })
   }
+
   handleClick = () => {
     this.props.onEdit('SC')
   }
@@ -45,10 +47,10 @@ export default OptionsInputScratch
 function star() {
   let out = ''
   for (let i = 0; i < 10; i++) {
-    let r = i % 2 === 0 ? 40 : 90
-    let θ = (i * Math.PI) / 5
-    let x = Math.sin(θ) * r
-    let y = Math.cos(θ) * r
+    const r = i % 2 === 0 ? 40 : 90
+    const θ = (i * Math.PI) / 5
+    const x = Math.sin(θ) * r
+    const y = Math.cos(θ) * r
     out += (i === 0 ? 'M' : ' L') + x + ',' + y
   }
   return out

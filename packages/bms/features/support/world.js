@@ -1,4 +1,4 @@
-var lazy = require('lazy-property')
+const lazy = require('lazy-property')
 
 module.exports = function () {
   if (this.World.plugins) return

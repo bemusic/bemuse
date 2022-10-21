@@ -86,8 +86,8 @@ export class TimeSignatures {
    * @returns the number of beats since measure 0.
    */
   measureToBeat(measure: number, fraction: number): number {
-    var sum = 0
-    for (var i = 0; i < measure; i++) sum += this.getBeats(i)
+    let sum = 0
+    for (let i = 0; i < measure; i++) sum += this.getBeats(i)
     return sum + this.getBeats(measure) * fraction
   }
 }

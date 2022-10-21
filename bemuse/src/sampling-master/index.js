@@ -4,7 +4,7 @@ import { decodeOGG } from './ogg'
 
 export const FADE_LENGTH = 0.001
 
-let dummyAudioTag = document.createElement('audio')
+const dummyAudioTag = document.createElement('audio')
 // Checks whether an audio format is supported.
 export function canPlay(type) {
   // We have a Vorbis audio decoder!
@@ -57,8 +57,8 @@ export class SamplingMaster {
   destroy() {
     if (this._destroyed) return
     this._destroyed = true
-    for (let sample of this._samples) sample.destroy()
-    for (let instance of this._instances) instance.destroy()
+    for (const sample of this._samples) sample.destroy()
+    for (const instance of this._instances) instance.destroy()
     this._samples = null
     this._instances = null
   }
@@ -82,7 +82,7 @@ export class SamplingMaster {
     })()
     return audioBufferPromise.then((audioBuffer) => {
       if (this._destroyed) throw new Error('SamplingMaster already destroyed!')
-      var sample = new Sample(this, audioBuffer)
+      const sample = new Sample(this, audioBuffer)
       this._samples.push(sample)
       return sample
     })
@@ -192,13 +192,13 @@ export class PlayInstance {
     this._master = samplingMaster
 
     // Connect all the stuff...
-    let context = samplingMaster.audioContext
-    let source = context.createBufferSource()
+    const context = samplingMaster.audioContext
+    const source = context.createBufferSource()
     source.buffer = buffer
     source.onended = () => this.stop()
-    let gain = context.createGain()
+    const gain = context.createGain()
     source.connect(gain)
-    let destination =
+    const destination =
       options.node ||
       (options.group && options.group.destination) ||
       samplingMaster.destination
@@ -207,15 +207,15 @@ export class PlayInstance {
     this._gain = this.TEST_node = gain
 
     // Start the sound.
-    let startTime = !delay ? 0 : Math.max(0, context.currentTime + delay)
-    let startOffset = options.start || 0
-    let fadeIn = startOffset > 0
+    const startTime = !delay ? 0 : Math.max(0, context.currentTime + delay)
+    const startOffset = options.start || 0
+    const fadeIn = startOffset > 0
     let fadeOutAt = false
     if (fadeIn) {
       gain.gain.setValueAtTime(0, 0)
     }
     if (options.end !== undefined) {
-      let duration = Math.max(options.end - startOffset, 0)
+      const duration = Math.max(options.end - startOffset, 0)
       source.start(startTime, startOffset, duration + FADE_LENGTH)
       fadeOutAt = context.currentTime + delay + duration
     } else {
@@ -276,8 +276,8 @@ export default SamplingMaster
 export function unmuteAudio(ctx = defaultAudioContext) {
   // Perform some strange magic to unmute the audio on iOS devices.
   // This code doesn’t make sense at all, you know.
-  let gain = ctx.createGain()
-  let osc = ctx.createOscillator()
+  const gain = ctx.createGain()
+  const osc = ctx.createOscillator()
   osc.frequency.value = 440
   osc.start(ctx.currentTime + 0.1)
   osc.stop(ctx.currentTime + 0.1)

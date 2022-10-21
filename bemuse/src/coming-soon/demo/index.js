@@ -19,11 +19,11 @@ export function main(element) {
   }
 
   function ui() {
-    var el = $(template()).appendTo('body')
+    const el = $(template()).appendTo('body')
     el.find('.js-play').hide()
     el.on('dragover', () => false).on('drop', (e) => {
       e.preventDefault()
-      let dndLoader = new DndResources(e.originalEvent)
+      const dndLoader = new DndResources(e.originalEvent)
       go(dndLoader, el)
       return false
     })
@@ -31,42 +31,42 @@ export function main(element) {
 }
 
 async function go(loader, element) {
-  let master = new SamplingMaster(ctx)
-  let $log = element.find('.js-log')
-  let $play = element.find('.js-play').hide()
-  let $sampler = element.find('.js-sampler')
+  const master = new SamplingMaster(ctx)
+  const $log = element.find('.js-log')
+  const $play = element.find('.js-play').hide()
+  const $sampler = element.find('.js-sampler')
 
   log('Loading file list')
-  let list = await loader.fileList
-  let bmsFile = list.filter((f) => f.match(/\.(?:bms|bme|bml|pms)$/i))[0]
+  const list = await loader.fileList
+  const bmsFile = list.filter((f) => f.match(/\.(?:bms|bme|bml|pms)$/i))[0]
   log('Loading ' + bmsFile)
 
-  let loadedFile = await loader.file(bmsFile)
-  let arraybuffer = await loadedFile.read()
-  let buffer = Buffer.from(new Uint8Array(arraybuffer))
-  let text = await Promise.promisify(Reader.readAsync)(buffer)
-  let chart = Compiler.compile(text).chart
-  var timing = Timing.fromBMSChart(chart)
-  var notes = Notes.fromBMSChart(chart)
-  var info = SongInfo.fromBMSChart(chart)
+  const loadedFile = await loader.file(bmsFile)
+  const arraybuffer = await loadedFile.read()
+  const buffer = Buffer.from(new Uint8Array(arraybuffer))
+  const text = await Promise.promisify(Reader.readAsync)(buffer)
+  const chart = Compiler.compile(text).chart
+  const timing = Timing.fromBMSChart(chart)
+  const notes = Notes.fromBMSChart(chart)
+  const info = SongInfo.fromBMSChart(chart)
   $('<pre wrap></pre>').text(JSON.stringify(info, null, 2)).appendTo($sampler)
   log('Loading samples')
-  var loadedSamples = await loadSamples(notes, chart)
+  const loadedSamples = await loadSamples(notes, chart)
   log('Click the button to play!')
   await waitForPlay()
   void (function () {
     master.unmute()
-    for (let note of notes.all()) {
+    for (const note of notes.all()) {
       setTimeout(() => {
-        let sample = loadedSamples[note.keysound]
+        const sample = loadedSamples[note.keysound]
         if (!sample) {
           console.log('warn: unknown sample ' + note.keysound)
           return
         }
-        let span = $('<span></span>')
+        const span = $('<span></span>')
           .text('[' + note.keysound + '] ')
           .appendTo($sampler)
-        let instance = sample.play()
+        const instance = sample.play()
         $sampler[0].scrollTop = $sampler[0].scrollHeight
         instance.onstop = function () {
           span.addClass('is-off')
@@ -91,12 +91,12 @@ async function go(loader, element) {
   }
 
   function loadSamples(_notes, _chart) {
-    var samples = {}
-    var promises = []
+    const samples = {}
+    const promises = []
     let completed = 0
 
-    for (let note of _notes.all()) {
-      let keysound = note.keysound
+    for (const note of _notes.all()) {
+      const keysound = note.keysound
       if (!(keysound in samples)) {
         samples[keysound] = null
         promises.push(

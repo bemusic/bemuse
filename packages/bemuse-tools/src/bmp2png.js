@@ -5,16 +5,16 @@ import endpoint from 'endpoint'
 import { realpathSync } from 'fs'
 import { extname, basename } from 'path'
 
-let throat = new Throat(cpus().length || 1)
+const throat = new Throat(cpus().length || 1)
 
 export function bmp2png(file) {
   return throat(
     () =>
       new Promise((resolve, reject) => {
-        let convert = spawn('convert', [realpathSync(file.path), 'png:-'])
+        const convert = spawn('convert', [realpathSync(file.path), 'png:-'])
         convert.stdin.end()
         convert.stderr.on('data', (x) => process.stderr.write(x))
-        let data = new Promise((resolve, reject) => {
+        const data = new Promise((resolve, reject) => {
           convert.stdout.pipe(
             endpoint((err, buffer) => {
               if (err) {

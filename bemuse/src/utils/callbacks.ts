@@ -12,7 +12,7 @@ export class Callbacks<T extends any[]> {
     if (typeof init === 'function') {
       this.add(init)
     } else if (typeof init === 'object' && init && init.length) {
-      for (var i = 0; i < init.length; i++) this.add(init[i])
+      for (let i = 0; i < init.length; i++) this.add(init[i])
     }
   }
 
@@ -20,8 +20,8 @@ export class Callbacks<T extends any[]> {
    * Calls all the callbacks.
    */
   call(...args: T) {
-    var callbacks = this._callbacks
-    for (var id in callbacks) {
+    const callbacks = this._callbacks
+    for (const id in callbacks) {
       callbacks[id](...args)
     }
   }
@@ -31,7 +31,7 @@ export class Callbacks<T extends any[]> {
    * Returns a function that, when invoked, removes the inserted `callback` from the collection.
    */
   add(callback: CallbackEffect<T>) {
-    var id = this._nextId++
+    const id = this._nextId++
     this._callbacks[id] = callback
     return () => delete this._callbacks[id]
   }

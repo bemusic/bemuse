@@ -10,7 +10,7 @@ export * from './types'
  */
 export function songInfoForBmson(bmson: Bmson) {
   const bmsonInfo = bmson.info
-  let info: Partial<BMS.ISongInfoData> = {}
+  const info: Partial<BMS.ISongInfoData> = {}
   if (bmsonInfo.title) info.title = bmsonInfo.title
   if (bmsonInfo.artist) info.artist = bmsonInfo.artist
   if (bmsonInfo.genre) info.genre = bmsonInfo.genre
@@ -21,7 +21,7 @@ export function songInfoForBmson(bmson: Bmson) {
 
   function getSubtitles() {
     if (!bmson.version) return ['Warning: legacy bmson']
-    let subtitles = []
+    const subtitles = []
     if (bmsonInfo.chart_name && typeof bmsonInfo.chart_name === 'string') {
       subtitles.push(bmsonInfo.chart_name)
     }
@@ -38,8 +38,8 @@ export function songInfoForBmson(bmson: Bmson) {
 export function barLinesForBmson(bmson: Bmson) {
   if (!bmson.version)
     return legacy.barLinesForBmson(bmson as any as legacy.LegacyBmson)
-  let beatForPulse = beatForPulseForBmson(bmson)
-  let lines = bmson.lines
+  const beatForPulse = beatForPulseForBmson(bmson)
+  const lines = bmson.lines
   return _(lines)
     .map(({ y }) => beatForPulse(y))
     .sortBy()
@@ -54,7 +54,7 @@ export function barLinesForBmson(bmson: Bmson) {
 export function timingInfoForBmson(bmson: Bmson): utils.TimingInfo {
   if (!bmson.version)
     return legacy.timingInfoForBmson(bmson as any as legacy.LegacyBmson)
-  let beatForPulse = beatForPulseForBmson(bmson)
+  const beatForPulse = beatForPulseForBmson(bmson)
   return {
     initialBPM: bmson.info.init_bpm,
     actions: [
@@ -83,7 +83,7 @@ export function timingInfoForBmson(bmson: Bmson): utils.TimingInfo {
  * @param {Bmson} bmson
  */
 function timingForBmson(bmson: Bmson) {
-  let { initialBPM, actions } = timingInfoForBmson(bmson)
+  const { initialBPM, actions } = timingInfoForBmson(bmson)
   return new BMS.Timing(initialBPM, actions)
 }
 
@@ -105,8 +105,8 @@ export function musicalScoreForBmson(
   bmson: Bmson,
   options: MusicalScoreOptions = {}
 ) {
-  let timing = timingForBmson(bmson)
-  let { notes, keysounds } = notesDataAndKeysoundsDataForBmsonAndTiming(
+  const timing = timingForBmson(bmson)
+  const { notes, keysounds } = notesDataAndKeysoundsDataForBmsonAndTiming(
     bmson,
     timing,
     options
@@ -140,23 +140,23 @@ function notesDataAndKeysoundsDataForBmsonAndTiming(
   options: MusicalScoreOptions
 ) {
   let nextKeysoundNumber = 1
-  let beatForPulse = beatForPulseForBmson(bmson)
-  let notes = []
-  let keysounds: { [keysoundId: string]: string } = {}
-  let soundChannels = soundChannelsForBmson(bmson)
+  const beatForPulse = beatForPulseForBmson(bmson)
+  const notes = []
+  const keysounds: { [keysoundId: string]: string } = {}
+  const soundChannels = soundChannelsForBmson(bmson)
   if (soundChannels) {
-    for (let { name, notes: soundChannelNotes } of soundChannels) {
-      let sortedNotes = _.sortBy(soundChannelNotes, 'y')
-      let keysoundNumber = nextKeysoundNumber++
-      let keysoundId = _.padStart('' + keysoundNumber, 4, '0')
-      let slices = utils.slicesForNotesAndTiming(soundChannelNotes, timing, {
+    for (const { name, notes: soundChannelNotes } of soundChannels) {
+      const sortedNotes = _.sortBy(soundChannelNotes, 'y')
+      const keysoundNumber = nextKeysoundNumber++
+      const keysoundId = _.padStart('' + keysoundNumber, 4, '0')
+      const slices = utils.slicesForNotesAndTiming(soundChannelNotes, timing, {
         beatForPulse: beatForPulse,
       })
 
       keysounds[keysoundId] = name
 
-      for (let { x, y, l } of sortedNotes) {
-        let note: BMS.BMSNote = {
+      for (const { x, y, l } of sortedNotes) {
+        const note: BMS.BMSNote = {
           column: getColumn(x, options),
           beat: beatForPulse(y),
           keysound: keysoundId,
@@ -165,7 +165,7 @@ function notesDataAndKeysoundsDataForBmsonAndTiming(
         if (l > 0) {
           note.endBeat = beatForPulse(y + l)
         }
-        let slice = slices.get(y)
+        const slice = slices.get(y)
         if (slice) {
           Object.assign(note, slice)
           notes.push(note)
@@ -233,8 +233,8 @@ function getColumn(x: any, options: MusicalScoreOptions) {
 export function hasScratch(bmson: Bmson) {
   const soundChannels = soundChannelsForBmson(bmson)
   if (soundChannels) {
-    for (let { notes } of soundChannels) {
-      for (let { x } of notes) {
+    for (const { notes } of soundChannels) {
+      for (const { x } of notes) {
         if (x === 8 || x === 18) return true
       }
     }
@@ -251,8 +251,8 @@ export function keysForBmson(bmson: Bmson) {
   let hasSecondPlayer = false
   let hasDeluxeKeys = false
   if (soundChannels) {
-    for (let { notes } of soundChannels) {
-      for (let { x } of notes) {
+    for (const { notes } of soundChannels) {
+      for (const { x } of notes) {
         hasKeys = true
         if (x >= 11 && x <= 20) hasSecondPlayer = true
         if (x === 6 || x === 7 || x === 16 || x === 17) hasDeluxeKeys = true

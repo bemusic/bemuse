@@ -27,7 +27,7 @@ export function* loginByUsernamePassword(
   }
 
   function* obtainIdToken() {
-    let triedEmail = false
+    const triedEmail = false
     if (/@/.test(username)) {
       log('Authenticating using email...')
       const email = username

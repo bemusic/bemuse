@@ -21,7 +21,7 @@ describe('download', function () {
   })
 
   it('rejects for XHR error', function () {
-    let stub = sinon
+    const stub = sinon
       .stub(XMLHttpRequest.prototype, 'send')
       .callsFake(function () {
         this.onerror(new Error('...'))

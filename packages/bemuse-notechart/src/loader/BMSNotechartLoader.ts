@@ -5,25 +5,25 @@ import { PlayerOptions, NotechartInput, ExpertJudgmentWindow } from '../types'
 
 // Returns a new Notechart from a BMSChart.
 export function fromBMSChart(bms: BMS.BMSChart, playerOptions: PlayerOptions) {
-  let notes = BMS.Notes.fromBMSChart(bms, {
+  const notes = BMS.Notes.fromBMSChart(bms, {
     mapping: playerOptions.double
       ? BMS.Notes.CHANNEL_MAPPING.IIDX_DP
       : BMS.Notes.CHANNEL_MAPPING.IIDX_P1,
   }).all()
 
-  let landmineNotes = BMS.Notes.fromBMSChart(bms, {
+  const landmineNotes = BMS.Notes.fromBMSChart(bms, {
     mapping: playerOptions.double
       ? BMS.Notes.CHANNEL_MAPPING.IIDX_DP_LANDMINE
       : BMS.Notes.CHANNEL_MAPPING.IIDX_P1_LANDMINE,
   }).all()
 
-  let timing = BMS.Timing.fromBMSChart(bms)
-  let keysounds = BMS.Keysounds.fromBMSChart(bms)
-  let songInfo = BMS.SongInfo.fromBMSChart(bms)
-  let positioning = BMS.Positioning.fromBMSChart(bms)
-  let spacing = BMS.Spacing.fromBMSChart(bms)
+  const timing = BMS.Timing.fromBMSChart(bms)
+  const keysounds = BMS.Keysounds.fromBMSChart(bms)
+  const songInfo = BMS.SongInfo.fromBMSChart(bms)
+  const positioning = BMS.Positioning.fromBMSChart(bms)
+  const spacing = BMS.Spacing.fromBMSChart(bms)
 
-  let data: NotechartInput = {
+  const data: NotechartInput = {
     notes,
     landmineNotes,
     timing,
@@ -47,8 +47,8 @@ function getJudgmentWindowFromBMS(bms: BMS.BMSChart): ExpertJudgmentWindow {
 }
 
 function generateBarLinesFromBMS(bmsNotes: BMS.BMSNote[], bms: BMS.BMSChart) {
-  let max = _.max(bmsNotes.map((note) => note.endBeat || note.beat)) || 0
-  let barLines = [0]
+  const max = _.max(bmsNotes.map((note) => note.endBeat || note.beat)) || 0
+  const barLines = [0]
   let currentBeat = 0
   let currentMeasure = 0
   do {

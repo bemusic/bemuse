@@ -78,6 +78,7 @@ class OptionsInput extends React.Component {
     sensitivity: PropTypes.number,
     onUpdateOptions: PropTypes.func,
   }
+
   render() {
     const className = c('OptionsInputのbinding', {
       'is-reverse': this.props.scratch === 'right',
@@ -157,9 +158,11 @@ class OptionsInput extends React.Component {
       </div>
     )
   }
+
   handleEdit = (key) => {
     this.props.onEdit(key)
   }
+
   componentDidMount() {
     // XXX: debounce is needed because some gamepad inputs trigger multiple
     // buttons
@@ -172,27 +175,32 @@ class OptionsInput extends React.Component {
       .onValue(this.handleKey)
     window.addEventListener('keydown', this.handleKeyboardEvent, true)
   }
+
   componentWillUnmount() {
     if (this._dispose) this._dispose()
     if (this._input) this._input.dispose()
     window.removeEventListener('keydown', this.handleKeyboardEvent, true)
   }
+
   handleKey = (key) => {
     if (this.props.editing) {
       this.props.onKey(key)
     }
   }
+
   handleKeyboardEvent = (e) => {
     if (this.props.editing) {
       e.preventDefault()
     }
   }
+
   handleSensitivityChange = (sensitivity) => {
     if (sensitivity < 0) sensitivity = 0
     else if (sensitivity >= 10) sensitivity = 9
     this._input.setGamepadSensitivity(sensitivity)
     this.props.onUpdateOptions(Options.changeSensitivity(sensitivity))
   }
+
   handleMinusButtonClick = () => {
     this.handleSensitivityChange(parseInt(this.props.sensitivity, 10) - 1)
   }

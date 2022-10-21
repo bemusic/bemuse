@@ -9,10 +9,11 @@ export class SamplesLoader {
     this._master = master
     this._keysoundCache = keysoundCache
   }
+
   loadFiles(files, loadProgress, decodeProgress) {
-    let onload = ProgressUtils.fixed(files.length, loadProgress)
-    let ondecode = ProgressUtils.fixed(files.length, decodeProgress)
-    let load = (name) =>
+    const onload = ProgressUtils.fixed(files.length, loadProgress)
+    const ondecode = ProgressUtils.fixed(files.length, decodeProgress)
+    const load = (name) =>
       new Promise((resolve) => {
         requestAnimationFrame(() => {
           resolve(this._loadSample(name, onload, ondecode))
@@ -23,6 +24,7 @@ export class SamplesLoader {
       _(arr).filter().fromPairs().value()
     )
   }
+
   _loadSample(name, onload, ondecode) {
     const audioBufferPromise = (() => {
       if (this._keysoundCache.isCached(name)) {
@@ -53,9 +55,11 @@ export class SamplesLoader {
         return null
       })
   }
+
   _decode(buffer) {
     return this._master.decode(buffer)
   }
+
   _getFile(name) {
     name = name.replace(/\\/g, '/')
     return Promise.try(() => this._assets.file(name.replace(/\.\w+$/, '.ogg')))

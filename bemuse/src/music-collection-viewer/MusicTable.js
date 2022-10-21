@@ -92,6 +92,7 @@ export class MusicTable extends React.Component {
     url: PropTypes.string,
     initialSort: PropTypes.string,
   }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -100,6 +101,7 @@ export class MusicTable extends React.Component {
       previewEnabled: false,
     }
   }
+
   renderTable() {
     return (
       <table style={{ borderSpacing: 4 }}>
@@ -121,6 +123,7 @@ export class MusicTable extends React.Component {
       </table>
     )
   }
+
   renderSorter() {
     const out = []
     for (const key of Object.keys(sorters)) {
@@ -141,6 +144,7 @@ export class MusicTable extends React.Component {
       </span>
     )
   }
+
   renderPreview() {
     const button = (
       <button
@@ -160,6 +164,7 @@ export class MusicTable extends React.Component {
       </span>
     )
   }
+
   renderRows() {
     const categories = sorters[this.state.sort](this.props.data.songs)
     const out = []
@@ -215,9 +220,11 @@ export class MusicTable extends React.Component {
     }
     return out
   }
+
   renderMessage(text) {
     return <div style={{ textAlign: 'center' }}>{text}</div>
   }
+
   render() {
     if (!this.props.data) return this.renderMessage('No data')
     try {

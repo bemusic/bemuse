@@ -3,7 +3,7 @@ import { fromBMSChart } from 'bemuse-notechart/lib/loader/BMSNotechartLoader'
 import Player from '../player'
 import _ from 'lodash'
 
-export let tap = _.tap
+export const tap = _.tap
 
 export function chart(code = '') {
   return BMS.Compiler.compile(code).chart

@@ -19,16 +19,16 @@ export function start() {
     chalk.cyan(buildConfig.version)
   )
 
-  let port = Env.serverPort()
-  var compiler = webpack(config)
-  var server = new WebpackDevServer(compiler, config.devServer)
+  const port = Env.serverPort()
+  const compiler = webpack(config)
+  const server = new WebpackDevServer(compiler, config.devServer)
 
   server.use('/', express.static(path('..', 'public')))
-  for (let route of routes) {
+  for (const route of routes) {
     server.use('/' + route.dest.join('/'), express.static(route.src))
   }
 
-  let cacheSettings = {
+  const cacheSettings = {
     etag: true,
     setHeaders(res) {
       res.setHeader('Cache-Control', 'public, max-age=31536000, no-cache')

@@ -110,7 +110,7 @@ class MusicSelectScene extends React.PureComponent {
   }
 
   render() {
-    let musicSelect = this.props.musicSelect
+    const musicSelect = this.props.musicSelect
     return (
       <Scene
         className='MusicSelectScene'
@@ -241,6 +241,7 @@ class MusicSelectScene extends React.PureComponent {
       }),
     ]
   }
+
   getOnlineToolbarButtons() {
     if (!online) return []
     if (this.props.user) {
@@ -257,9 +258,11 @@ class MusicSelectScene extends React.PureComponent {
       ]
     }
   }
+
   componentDidMount() {
     this.ensureSelectedSongInView()
   }
+
   ensureSelectedSongInView() {
     const $this = $(ReactDOM.findDOMNode(this))
     const active = $this.find('.js-active-song')[0]
@@ -278,6 +281,7 @@ class MusicSelectScene extends React.PureComponent {
         (scrollerRect.top + scrollerRect.height / 2)
     }
   }
+
   handleSongSelect = (song, chart) => {
     if (chart) {
       this.props.onSelectChart(song, chart)
@@ -288,9 +292,11 @@ class MusicSelectScene extends React.PureComponent {
     }
     this.setState({ inSong: true })
   }
+
   handleMusicListTouch = () => {
     this.setState({ inSong: false })
   }
+
   handleChartClick = (chart, e) => {
     if (this.props.musicSelect.chart.md5 === chart.md5) {
       Analytics.send('MusicSelectScene', 'launch game')
@@ -303,49 +309,62 @@ class MusicSelectScene extends React.PureComponent {
       this.props.onSelectChart(this.props.musicSelect.song, chart)
     }
   }
+
   handleFilter = (e) => {
     this.props.onFilterTextChange(e.target.value)
   }
+
   handleOptionsOpen = () => {
     Analytics.send('MusicSelectScene', 'open options')
     this.setState({ optionsVisible: true })
   }
+
   handleOptionsClose = () => {
     this.setState({ optionsVisible: false })
   }
+
   handleCustomBMSOpen = () => {
     this.setState({ customBMSVisible: true })
     Analytics.send('MusicSelectScene', 'open custom BMS')
   }
+
   handleCustomBMSClose = () => {
     this.setState({ customBMSVisible: false })
   }
+
   handleCustomSong = (song) => {
     this.setState({ customBMSVisible: false })
   }
+
   handleUnofficialClick = () => {
     this.setState({ unofficialDisclaimerVisible: true })
     Analytics.send('MusicSelectScene', 'view unofficial disclaimer')
   }
+
   handleUnofficialClose = () => {
     this.setState({ unofficialDisclaimerVisible: false })
   }
+
   handleLogout = () => {
     if (confirm('Do you really want to log out?')) {
       Promise.resolve(online.logOut()).done()
       Analytics.send('MusicSelectScene', 'logout')
     }
   }
+
   handleAuthenticate = () => {
     this.setState({ authenticationPopupVisible: true })
     Analytics.send('MusicSelectScene', 'authenticate')
   }
+
   handleAuthenticationClose = () => {
     this.setState({ authenticationPopupVisible: false })
   }
+
   handleAuthenticationFinish = () => {
     this.setState({ authenticationPopupVisible: false })
   }
+
   popScene() {
     SCENE_MANAGER.pop().done()
   }

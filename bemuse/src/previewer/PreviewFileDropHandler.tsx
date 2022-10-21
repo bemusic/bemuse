@@ -35,7 +35,7 @@ export const PreviewFileDropHandler: React.FC<{
       const handle = handleNullable as FileSystemDirectoryHandle
       await handle.requestPermission({ mode: 'read' })
       const chartFiles: { filename: string; label: string }[] = []
-      for await (let [name] of handle.entries()) {
+      for await (const [name] of handle.entries()) {
         if (/\.(bms|bme|bml|bmson)$/i.test(name)) {
           chartFiles.push({ filename: name, label: name })
         }

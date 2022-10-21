@@ -57,9 +57,11 @@ export function withPersonalRecord(Component) {
     componentDidMount() {
       online.seen(this.getLevel())
     }
+
     componentDidUpdate() {
       online.seen(this.getLevel())
     }
+
     render() {
       const recordState = this.getRecordState()
       return (
@@ -70,9 +72,11 @@ export function withPersonalRecord(Component) {
         />
       )
     }
+
     getRecordState(data) {
       return DataStore.get(this.props.onlineRecords, id(this.getLevel()))
     }
+
     getLevel() {
       return { md5: this.props.chart.md5, playMode: this.props.playMode }
     }

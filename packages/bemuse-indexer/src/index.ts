@@ -37,7 +37,7 @@ import {
 } from './types'
 import { getBmsBga } from './bms-bga'
 
-var readBMS = Bluebird.promisify<string, Buffer, ReaderOptions | null>(
+const readBMS = Bluebird.promisify<string, Buffer, ReaderOptions | null>(
   Reader.readAsync
 )
 
@@ -67,10 +67,10 @@ export { _extensions as extensions }
 _extensions['.bms'] = async function (source, meta) {
   const options = Reader.getReaderOptionsFromFilename(meta.name)
   const str = await readBMS(source, options)
-  var chart = Compiler.compile(str).chart
-  var info = SongInfo.fromBMSChart(chart)
-  var notes = Notes.fromBMSChart(chart)
-  var timing = Timing.fromBMSChart(chart)
+  const chart = Compiler.compile(str).chart
+  const info = SongInfo.fromBMSChart(chart)
+  const notes = Notes.fromBMSChart(chart)
+  const timing = Timing.fromBMSChart(chart)
   return {
     info: info,
     notes: notes,
@@ -84,11 +84,11 @@ _extensions['.bms'] = async function (source, meta) {
 _extensions['.bmson'] = async function (source) {
   const string = Buffer.from(source).toString('utf8')
   const object = JSON.parse(string)
-  var info = songInfoForBmson(object)
-  var ms = musicalScoreForBmson(object)
-  var notes = ms.notes
-  var timing = ms.timing
-  var bga = getBmsonBga(object, { timing: timing })
+  const info = songInfoForBmson(object)
+  const ms = musicalScoreForBmson(object)
+  const notes = ms.notes
+  const timing = ms.timing
+  const bga = getBmsonBga(object, { timing: timing })
   return {
     info: info,
     notes: notes,
@@ -107,14 +107,14 @@ async function getFileInfo(
   options = options || {}
   invariant(typeof meta.name === 'string', 'meta.name must be a string')
 
-  var extensions = options.extensions || _extensions
-  var extension =
+  const extensions = options.extensions || _extensions
+  const extension =
     extensions[extname(meta.name).toLowerCase()] || extensions['.bms']
 
-  var md5 =
+  const md5 =
     meta.md5 ||
     (function () {
-      var hash = createHash('md5')
+      const hash = createHash('md5')
       hash.update(data)
       return hash.digest('hex')
     })()
@@ -128,10 +128,10 @@ async function getFileInfo(
     'basis.scratch must be a boolean'
   )
   invariant(typeof basis.keys === 'string', 'basis.keys must be a string')
-  var info = basis.info
-  var notes = basis.notes
-  var timing = basis.timing
-  var count = notes.all().filter(noteIsPlayable).length
+  const info = basis.info
+  const notes = basis.notes
+  const timing = basis.timing
+  const count = notes.all().filter(noteIsPlayable).length
   return {
     md5: md5,
     info: info,
@@ -161,33 +161,33 @@ async function getSongInfo(
   }
 ): Promise<OutputSongInfo> {
   options = options || {}
-  var warnings: string[] = []
-  var cache = options.cache || undefined
-  var extra = options.extra || {}
-  var report = options.onProgress || function () {}
-  var onError =
+  const warnings: string[] = []
+  const cache = options.cache || undefined
+  const extra = options.extra || {}
+  const report = options.onProgress || function () {}
+  const onError =
     options.onError ||
     function (e, name) {
       if (global.console && console.error) {
         console.error('Error while parsing ' + name, e)
       }
     }
-  var processed = 0
-  var doGetFileInfo = options.getFileInfo || getFileInfo
+  let processed = 0
+  const doGetFileInfo = options.getFileInfo || getFileInfo
   const results: OutputChart[][] = await Bluebird.map(
     files,
     async function (file): Promise<OutputChart[]> {
-      var name = file.name
-      var fileData = file.data
-      var hash = createHash('md5')
+      const name = file.name
+      const fileData = file.data
+      const hash = createHash('md5')
       hash.update(fileData)
-      var md5Hash = hash.digest('hex')
+      const md5Hash = hash.digest('hex')
       try {
         const cached = await Promise.resolve(cache && cache.get(md5Hash))
         if (cached) {
           return [{ ...cached, file: name }]
         } else {
-          var meta = { name: name, md5: md5Hash }
+          const meta = { name: name, md5: md5Hash }
           const info = await Promise.resolve(doGetFileInfo(fileData, meta))
           if (cache) cache.put(md5Hash, info)
           return [{ ...info, file: name }]
@@ -207,7 +207,7 @@ async function getSongInfo(
   if (charts.length === 0) {
     warnings.push('No usable charts found!')
   }
-  var song: Partial<OutputSongInfo> = {
+  const song: Partial<OutputSongInfo> = {
     title: common(charts, _.property('info.title')),
     artist: common(charts, _.property('info.artist')),
     genre: common(charts, _.property('info.genre')),
@@ -224,8 +224,8 @@ const _getSongInfo = getSongInfo
 export { _getSongInfo as getSongInfo }
 
 function getSongVideoFromCharts(charts: OutputFileInfo[]): OutputSongInfoVideo {
-  var result: OutputSongInfoVideo = {}
-  var chart = _.find(charts, 'bga')
+  const result: OutputSongInfoVideo = {}
+  const chart = _.find(charts, 'bga')
   if (chart) {
     result.video_file = chart.bga!.file
     result.video_offset = chart.bga!.offset
@@ -240,10 +240,10 @@ function noteIsPlayable(note: BMSNote) {
 }
 
 function hasScratch(chart: BMSChart) {
-  var objects = chart.objects.all()
-  for (var i = 0; i < objects.length; i++) {
-    var object = objects[i]
-    var channel = +object.channel
+  const objects = chart.objects.all()
+  for (let i = 0; i < objects.length; i++) {
+    const object = objects[i]
+    let channel = +object.channel
     if (channel >= 50 && channel <= 69) channel -= 20
     if (channel === 16 || channel === 26) return true
   }
@@ -251,11 +251,11 @@ function hasScratch(chart: BMSChart) {
 }
 
 function common<T>(array: T[], f: (item: T) => string) {
-  var longest = array.map(f).reduce(lcs, '')
+  const longest = array.map(f).reduce(lcs, '')
   return String(longest || f(array[0])).trim()
 }
 
 function median<T>(array: T[], f: (item: T) => number) {
-  var arr = _(array).map(f).sortBy().value()
+  const arr = _(array).map(f).sortBy().value()
   return arr[Math.floor(arr.length / 2)]
 }
