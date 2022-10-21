@@ -10,6 +10,10 @@
     "vinyl-fs": "^3.0.3",
     "yargs": "^15.3.1"
   },
+  "devDependencies": {
+    "typescript": "^4.8.4",
+    "eslint": "^8.25.0"
+  },
   "volta": {
     "extends": "../volta.json"
   },

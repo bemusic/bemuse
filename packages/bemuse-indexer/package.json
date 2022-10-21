@@ -42,7 +42,8 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "mocha": "^5.2.0",
-    "typescript": "^4.4.3",
+    "eslint": "^8.25.0",
+    "typescript": "^4.8.4",
     "nyc": "^11.9.0"
   },
   "volta": {
