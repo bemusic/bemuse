@@ -33,8 +33,8 @@ plugins:
 rules:
   react/prop-types: warn
   react/jsx-no-bind: off
+  react/jsx-handler-names: off
   no-mixed-operators: off
-  n/no-deprecated-api: warn
   no-sequences: off
   import/no-unresolved: off
   import/export: off
@@ -44,6 +44,15 @@ rules:
   no-void: off
   dot-notation: off
   object-shorthand: off
+
+  # These should be errors, but we just added them and there are too many
+  # violations to fix right now.
+  n/no-deprecated-api: warn
+  react/jsx-key: warn
+  react/no-deprecated: warn
+  react/no-find-dom-node: warn
+  react/no-string-refs: warn
+  no-prototype-builtins: warn
 overrides:
   - files:
       - '**/*.ts'
@@ -54,3 +63,7 @@ overrides:
       no-redeclare: off
       no-useless-constructor: off
       react/prop-types: off
+  - files:
+      - '**/*.d.ts'
+    rules:
+      no-var: off
