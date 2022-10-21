@@ -2,7 +2,8 @@ import _ from 'lodash'
 import $ from 'jquery'
 import keytime from 'keytime'
 
-const createKeytime = (def) => Object.assign({}, def, { data: keytime(def.data) })
+const createKeytime = (def) =>
+  Object.assign({}, def, { data: keytime(def.data) })
 
 export class Animation {
   constructor(animations, timeKey) {

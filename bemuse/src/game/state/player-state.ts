@@ -279,7 +279,8 @@ export class PlayerState {
     }
     if (note.end) {
       if (isDown) {
-        const status = judgment === MISSED ? NoteStatus.Judged : NoteStatus.Active
+        const status =
+          judgment === MISSED ? NoteStatus.Judged : NoteStatus.Active
         if (judgment === MISSED) {
           // judge missed long note twice
           this._setJudgment(judgment, delta, note.column)

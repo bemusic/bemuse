@@ -93,7 +93,7 @@ export default enhance(MusicInfoTabInformation)
 
 function link(text, url) {
   return url ? (
-    <a key={text} href={url} target='_blank' rel="noreferrer">
+    <a key={text} href={url} target='_blank' rel='noreferrer'>
       {text}
     </a>
   ) : (

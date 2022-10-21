@@ -2,7 +2,16 @@ import bench from 'bemuse/devtools/benchmark'
 
 import * as touch3d from '../display/touch3d'
 
-const BUTTONS = ['p1_1', 'p1_2', 'p1_3', 'p1_4', 'p1_5', 'p1_6', 'p1_7', 'start']
+const BUTTONS = [
+  'p1_1',
+  'p1_2',
+  'p1_3',
+  'p1_4',
+  'p1_5',
+  'p1_6',
+  'p1_7',
+  'start',
+]
 
 window.BEMUSE_TOUCH_STATS = []
 

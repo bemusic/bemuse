@@ -96,7 +96,10 @@ function showCanvas(view) {
   $(window).on('resize', resize)
 
   function resize() {
-    const scale = Math.min(window.innerWidth / width, window.innerHeight / height)
+    const scale = Math.min(
+      window.innerWidth / width,
+      window.innerHeight / height
+    )
     view.style.width = Math.round(width * scale) + 'px'
     view.style.height = Math.round(height * scale) + 'px'
   }

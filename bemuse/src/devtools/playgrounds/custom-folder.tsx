@@ -137,7 +137,8 @@ export function main() {
           <a
             style={{ color: '#abc' }}
             href='https://github.com/bemusic/bemuse/discussions/696'
-            target='_blank' rel="noreferrer"
+            target='_blank'
+            rel='noreferrer'
           >
             <strong>custom songs folder</strong>
           </a>
@@ -149,7 +150,8 @@ export function main() {
           <a
             style={{ color: '#abc' }}
             href='https://github.com/bemusic/bemuse/discussions/696'
-            target='_blank' rel="noreferrer"
+            target='_blank'
+            rel='noreferrer'
           >
             Check out the announcement post for troubleshooting and known
             issues.

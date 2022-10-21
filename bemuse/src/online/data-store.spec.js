@@ -22,8 +22,14 @@ describe('Online DataStore', function () {
   describe('reducer', function () {
     describe('put', function () {
       it('should transition state of a record', function () {
-        const action1 = DataStore.put('a', Operations.completedStateTransition(1))
-        const action2 = DataStore.put('b', Operations.completedStateTransition(2))
+        const action1 = DataStore.put(
+          'a',
+          Operations.completedStateTransition(1)
+        )
+        const action2 = DataStore.put(
+          'b',
+          Operations.completedStateTransition(2)
+        )
         const state = _()
           .thru((state) => DataStore.reduce(state, action1))
           .thru((state) => DataStore.reduce(state, action2))

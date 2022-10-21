@@ -165,7 +165,8 @@ async function getPayload(blob: Blob) {
   }
   const buffer = await readBlob(blob.slice(10, 14)).as('arraybuffer')
   const array = new Uint8Array(buffer)
-  const length = array[0] + (array[1] << 8) + (array[2] << 16) + (array[3] << 24)
+  const length =
+    array[0] + (array[1] << 8) + (array[2] << 16) + (array[3] << 24)
   const metadataLength = length
   return blob.slice(14 + metadataLength)
 }

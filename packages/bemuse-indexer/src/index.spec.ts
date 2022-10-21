@@ -71,9 +71,12 @@ describe('getFileInfo (bms)', function () {
     it(
       'should be 10K when 2 players and ' + '6th and 7th keys not detected',
       async function () {
-        const source = ['#00111:01', '#00114:01', '#00121:01', '#00124:01'].join(
-          '\n'
-        )
+        const source = [
+          '#00111:01',
+          '#00114:01',
+          '#00121:01',
+          '#00124:01',
+        ].join('\n')
         return expect((await info(source)).keys).to.equal('10K')
       }
     )
