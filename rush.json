@@ -436,7 +436,7 @@
     {
       "packageName": "eslint-config-bemuse",
       "projectFolder": "packages/eslint-config-bemuse",
-      "shouldPublish": false
+      "shouldPublish": true
     }
     // {
     //   /**
