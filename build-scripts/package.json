@@ -12,12 +12,15 @@
   },
   "devDependencies": {
     "typescript": "^4.8.4",
-    "eslint": "^8.25.0"
+    "eslint": "^8.25.0",
+    "eslint-config-bemuse": "^0.0.1"
   },
   "volta": {
     "extends": "../volta.json"
   },
   "scripts": {
-    "build": "true"
+    "build": "true",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
+    "eslint-config-bemuse": "^0.0.1"
   }
 }

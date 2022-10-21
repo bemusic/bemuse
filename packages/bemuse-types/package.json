@@ -10,10 +10,12 @@
   "types": "./index.d.ts",
   "scripts": {
     "build": "true",
-    "test": "tsc --noEmit index.d.ts"
+    "test": "tsc --noEmit index.d.ts",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ."
   },
   "devDependencies": {
     "eslint": "^8.25.0",
-    "typescript": "^4.8.4"
+    "typescript": "^4.8.4",
+    "eslint-config-bemuse": "^0.0.1"
   }
 }
