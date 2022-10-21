@@ -2,6 +2,6 @@
 require('eslint-config-bemuse/patch/modern-module-resolution')
 
 module.exports = {
-  extends: ['bemuse', './.eslintrc.config.import.js'],
+  extends: ['bemuse'],
   parserOptions: { tsconfigRootDir: __dirname },
 }

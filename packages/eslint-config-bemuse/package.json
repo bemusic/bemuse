@@ -1,7 +1,6 @@
 {
   "name": "eslint-config-bemuse",
   "version": "0.0.1",
-  "private": true,
   "dependencies": {
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-standard": "^17.0.0",

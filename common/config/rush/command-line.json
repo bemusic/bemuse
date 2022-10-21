@@ -33,10 +33,10 @@
     },
     {
       "name": "lint",
-      "commandKind": "global",
+      "commandKind": "bulk",
       "summary": "Lint source code.",
-      "shellCommand": "eslint --ext .js,.jsx,.ts,.tsx .",
-      "autoinstallerName": "bemuse-linter"
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": true
     },
     {
       "name": "format-all",
@@ -263,6 +263,12 @@
     //    */
     //   "associatedCommands": ["build", "rebuild"]
     // },
+    {
+      "parameterKind": "flag",
+      "longName": "--fix",
+      "description": "Fixes linting errors",
+      "associatedCommands": ["lint"]
+    }
     // 
     // {
     //   /**

@@ -17,9 +17,21 @@ const eslintrcJs = `// This is a workaround for https://github.com/eslint/eslint
 require('eslint-config-bemuse/patch/modern-module-resolution')
 
 module.exports = {
-  extends: ['bemuse', './.eslintrc.config.import.js'],
+  extends: ['bemuse'],
   parserOptions: { tsconfigRootDir: __dirname },
 }
+`
+
+const eslintignore = `**/node_modules/**/*
+**/vendor/**/*
+**/lib/**/*
+**/dist/**/*
+**/build/**/*
+**/coverage/**/*
+**/common/scripts/**/*
+**/temp/**/*
+**/tmp/**/*
+**/.yarn/**/*
 `
 
 const warnings = []
@@ -48,11 +60,15 @@ for (const project of rushJson.projects) {
     )
   }
 
-  // Example
+  // .eslintrc
   const eslintrcJsPath = `${project.projectFolder}/.eslintrc.js`
   if (!fs.existsSync(eslintrcJsPath)) {
     fs.writeFileSync(eslintrcJsPath, eslintrcJs)
   }
+
+  // .eslintignore
+  const eslintignorePath = `${project.projectFolder}/.eslintignore`
+  fs.writeFileSync(eslintignorePath, eslintignore)
 }
 
 for (const warning of warnings) {
