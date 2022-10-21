@@ -1,7 +1,8 @@
 import WebpackDevServer from 'webpack-dev-server'
 import chalk from 'chalk'
 import express from 'express'
-import gutil from 'gulp-util'
+import log from 'fancy-log'
+import PluginError from 'plugin-error'
 import webpack from 'webpack'
 
 import * as Env from '../../../config/env'
@@ -37,7 +38,7 @@ export function start() {
   server.use('/coverage', express.static(path('coverage', 'lcov-report')))
 
   server.listen(port, '0.0.0.0', function (err) {
-    if (err) throw new gutil.PluginError('webpack-dev-server', err)
-    gutil.log('[webpack-dev-server]', 'http://localhost:' + port + '/')
+    if (err) throw new PluginError('webpack-dev-server', err)
+    log('[webpack-dev-server]', 'http://localhost:' + port + '/')
   })
 }

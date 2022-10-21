@@ -1,4 +1,4 @@
-name: Build
+name: CI
 
 on:
   push:
@@ -11,6 +11,10 @@ on:
 
 env:
   NODE_FLAGS: --max_old_space_size=4096
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -58,3 +62,64 @@ jobs:
         with:
           name: playwright-report
           path: e2e/playwright-report
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up project
+        uses: ./.github/actions/setup-project
+      - name: Build dependencies
+        run: node common/scripts/install-run-rush.js build --to-except bemuse
+      - name: Typecheck
+        run: node ../common/scripts/install-run-rushx.js typecheck
+        working-directory: bemuse
+  tidy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up project
+        uses: ./.github/actions/setup-project
+      - name: Lint and fix all auto-fixable problems
+        run: node common/scripts/install-run-rush.js lint-fix
+        if: always()
+      - name: Make sure all source files are formatted using Prettier
+        run: node common/scripts/install-run-rush.js format-all
+        if: always()
+      - name: Format README file
+        run: node common/scripts/install-run-rush.js format-readme
+        if: always()
+      - run: git add --update
+        if: always()
+      - uses: dtinth/patch-generator-action@main
+        if: always()
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up project
+        uses: ./.github/actions/setup-project
+      - name: Build
+        run: node common/scripts/install-run-rush.js build --to-except bemuse
+      - name: Test
+        run: node ../common/scripts/install-run-rushx.js test
+        working-directory: bemuse
+      - uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+  test_packages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up project
+        uses: ./.github/actions/setup-project
+      - name: Build
+        run: node common/scripts/install-run-rush.js build --to-except bemuse
+      - name: Test Packages
+        run: node common/scripts/install-run-rush.js test --to-except bemuse
+      - uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

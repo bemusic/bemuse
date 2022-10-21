@@ -1,3 +1,1 @@
 extends: '../.eslintrc.yml'
-rules:
-  react/prop-types: 'off'

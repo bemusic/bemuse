@@ -1,5 +1,5 @@
 // An entity that represents something that can have a loading state.
-import u from 'updeep'
+import produce from 'immer'
 
 // Initializers
 export const initLoading = () => ({ status: 'loading' })
@@ -19,13 +19,13 @@ export const error = (state) => isError(state) && state.error
 export const beginLoading = (state) => initLoading()
 
 export const completeWithValue = (value) =>
-  u({
-    status: 'completed',
-    value: () => value,
+  produce((draft) => {
+    draft.status = 'completed'
+    draft.value = value
   })
 
 export const errorWithReason = (error) =>
-  u({
-    status: 'error',
-    error: () => error,
+  produce((draft) => {
+    draft.status = 'error'
+    draft.error = error
   })

@@ -3,7 +3,7 @@ import './MusicInfoTabs.scss'
 import React from 'react'
 import PropTypes from 'prop-types'
 import c from 'classnames'
-import Icon from 'react-fa'
+import { Icon } from 'bemuse/fa'
 
 import MusicInfoTabStats from './MusicInfoTabStats.jsx'
 import MusicInfoTabInformation from './MusicInfoTabInformation.jsx'

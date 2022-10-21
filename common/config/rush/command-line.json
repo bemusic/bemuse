@@ -53,20 +53,6 @@
       "autoinstallerName": "bemuse-linter"
     },
     {
-      "name": "danger-ci",
-      "commandKind": "global",
-      "summary": "Run Danger on CI.",
-      "shellCommand": "danger ci",
-      "autoinstallerName": "bemuse-linter"
-    },
-    {
-      "name": "danger-local",
-      "commandKind": "global",
-      "summary": "Run Danger locally.",
-      "shellCommand": "danger local",
-      "autoinstallerName": "bemuse-linter"
-    },
-    {
       "name": "test",
       "commandKind": "bulk",
       "summary": "Run test.",

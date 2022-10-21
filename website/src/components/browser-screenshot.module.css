@@ -1,0 +1,34 @@
+.browserScreenshot {
+  max-width: 640px;
+  margin: 1.6em auto;
+}
+.browserScreenshot > p {
+  height: 0;
+  box-shadow: 0 1px 7px rgba(0, 0, 0, 0.25);
+  box-sizing: content-box;
+  overflow: hidden;
+  background: #c6c6c6;
+  margin: 0;
+  padding-top: 24px;
+  padding-bottom: 56.25%;
+  position: relative;
+  border-radius: 4px;
+}
+.browserScreenshot > p::before {
+  content: '';
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  background: #999;
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  box-shadow: inset 0 0 0.5px rgba(0, 0, 0, 0.4);
+}
+.browserScreenshot > p > img {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin: 0;
+}

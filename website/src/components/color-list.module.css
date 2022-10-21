@@ -1,0 +1,26 @@
+.container {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.item {
+  margin-bottom: 1em;
+}
+
+.name {
+  padding: 5px 8px;
+  vertical-align: baseline;
+}
+
+.colorCode {
+  background-color: rgba(27, 31, 35, 0.05);
+  margin: 0;
+  padding: 3.2px 6.4px;
+  border: 0;
+  border-radius: 3px;
+  color: inherit;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono,
+    Courier New, monospace;
+  font-size: 85%;
+  vertical-align: baseline;
+}
