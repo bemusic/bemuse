@@ -3,10 +3,14 @@
 module.exports = {
   extends: ['plugin:import/errors'],
   plugins: ['import'],
+  rules: {
+    'import/no-unresolved': ['error', { ignore: ['!'] }],
+  },
   settings: {
     'import/resolver': {
-      webpack: {
-        config: require.resolve('./webpack.config.resolver.js'),
+      typescript: {
+        alwaysTryTypes: true,
+        project: require.resolve('./tsconfig.json'),
       },
     },
     'import/ignore': [
