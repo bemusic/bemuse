@@ -1,10 +1,9 @@
 extends:
   - standard
+  - standard-jsx
   - standard-react
   - ./.eslintrc.config.import.js
   - prettier
-  - prettier/react
-  - prettier/standard
 parserOptions:
   ecmaVersion: 6
   sourceType: module
@@ -35,13 +34,16 @@ rules:
   react/prop-types: warn
   react/jsx-no-bind: off
   no-mixed-operators: off
-  node/no-deprecated-api: warn
+  n/no-deprecated-api: warn
   no-sequences: off
   import/no-unresolved: off
   import/export: off
   import/named: off
   no-use-before-define: off
   import/no-webpack-loader-syntax: off
+  no-void: off
+  dot-notation: off
+  object-shorthand: off
 overrides:
   - files:
       - '**/*.ts'
