@@ -31,6 +31,10 @@
 
 ## v52.2.0-pre.202210191934
 
+This is a maintenance release, mostly consists of internal tooling updates and
+code clean-up. If you encounter any issues, please report them to our
+[issue tracker](https://github.com/bemusic/bemuse/issues).
+
 ### Internals
 
 - Fixed a problem where the project contains multiple versions of dependencies,
