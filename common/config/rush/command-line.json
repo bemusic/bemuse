@@ -46,13 +46,6 @@
       "autoinstallerName": "bemuse-linter"
     },
     {
-      "name": "lint-fix",
-      "commandKind": "global",
-      "summary": "Lint source code with auto-fixing.",
-      "shellCommand": "eslint --ext .js,.jsx,.ts,.tsx . --fix",
-      "autoinstallerName": "bemuse-linter"
-    },
-    {
       "name": "test",
       "commandKind": "bulk",
       "summary": "Run test.",
