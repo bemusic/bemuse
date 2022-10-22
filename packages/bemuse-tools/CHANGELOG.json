@@ -2,6 +2,21 @@
   "name": "bemuse-tools",
   "entries": [
     {
+      "version": "50.0.3",
+      "tag": "bemuse-tools_v50.0.3",
+      "date": "Sat, 22 Oct 2022 05:32:28 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"bemuse-indexer\" from `^51.0.0` to `^51.0.1`"
+          },
+          {
+            "comment": "Updating dependency \"eslint-config-bemuse\" from `^4.0.2` to `^5.0.0`"
+          }
+        ]
+      }
+    },
+    {
       "version": "50.0.2",
       "tag": "bemuse-tools_v50.0.2",
       "date": "Sat, 01 Jan 2022 13:08:37 GMT",

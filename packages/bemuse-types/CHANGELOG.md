@@ -1,6 +1,11 @@
 # Change Log - bemuse-types
 
-This log was last generated on Fri, 29 Oct 2021 19:57:09 GMT and should not be manually modified.
+This log was last generated on Sat, 22 Oct 2022 05:32:28 GMT and should not be manually modified.
+
+## 50.0.2
+Sat, 22 Oct 2022 05:32:28 GMT
+
+_Version update only_
 
 ## 50.0.1
 Fri, 29 Oct 2021 19:57:09 GMT
