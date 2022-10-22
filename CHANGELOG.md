@@ -29,6 +29,14 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## v52.2.1-pre.202210220516
+
+### Internals
+
+- Upgraded ESLint and plugins to latest version. [#771], by [@dtinth]
+
+[#771]: https://github.com/bemusic/bemuse/pull/771
+
 ## v52.2 (2022-10-21)
 
 This is a maintenance release, mostly consists of internal tooling updates and
