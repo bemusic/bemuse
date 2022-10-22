@@ -2,6 +2,24 @@
   "name": "bemuse-notechart",
   "entries": [
     {
+      "version": "50.1.1",
+      "tag": "bemuse-notechart_v50.1.1",
+      "date": "Sat, 22 Oct 2022 05:24:01 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"bms\" from `^50.1.0` to `^50.1.1`"
+          },
+          {
+            "comment": "Updating dependency \"bmson\" from `^50.1.0` to `^50.1.1`"
+          },
+          {
+            "comment": "Updating dependency \"eslint-config-bemuse\" from `^0.0.1` to `^0.0.2`"
+          }
+        ]
+      }
+    },
+    {
       "version": "50.1.0",
       "tag": "bemuse-notechart_v50.1.0",
       "date": "Sat, 01 Jan 2022 13:08:37 GMT",
