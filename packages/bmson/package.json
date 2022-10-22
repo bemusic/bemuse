@@ -39,7 +39,7 @@
     "power-assert": "^1.6.1",
     "eslint": "^8.25.0",
     "typescript": "^4.8.4",
-    "eslint-config-bemuse": "^0.0.1"
+    "eslint-config-bemuse": "^4.0.2"
   },
   "dependencies": {
     "lodash": "^4.17.11"

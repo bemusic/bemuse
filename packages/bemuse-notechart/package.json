@@ -27,7 +27,7 @@
     "nyc": "^11.9.0",
     "eslint": "^8.25.0",
     "typescript": "^4.8.4",
-    "eslint-config-bemuse": "^0.0.1"
+    "eslint-config-bemuse": "^4.0.2"
   },
   "dependencies": {
     "bms": "^50.1.0",

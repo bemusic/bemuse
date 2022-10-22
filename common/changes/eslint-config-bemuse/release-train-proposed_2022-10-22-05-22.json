@@ -3,7 +3,7 @@
     {
       "packageName": "eslint-config-bemuse",
       "comment": "Initial version published",
-      "type": "patch"
+      "type": "major"
     }
   ],
   "packageName": "eslint-config-bemuse"
