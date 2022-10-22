@@ -1,0 +1,17 @@
+{
+  "name": "eslint-config-bemuse",
+  "entries": [
+    {
+      "version": "5.0.0",
+      "tag": "eslint-config-bemuse_v5.0.0",
+      "date": "Sat, 22 Oct 2022 05:29:21 GMT",
+      "comments": {
+        "major": [
+          {
+            "comment": "Initial version published"
+          }
+        ]
+      }
+    }
+  ]
+}

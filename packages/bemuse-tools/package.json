@@ -1,6 +1,6 @@
 {
   "name": "bemuse-tools",
-  "version": "50.0.2",
+  "version": "50.0.3",
   "description": "bemuse-tools: Tools for Bemuse",
   "files": [
     "src",
@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/bemusic/bemuse-tools",
   "dependencies": {
-    "bemuse-indexer": "^51.0.0",
+    "bemuse-indexer": "^51.0.1",
     "bluebird": "^3.5.24",
     "bytes": "^3.0.0",
     "chalk": "^2.4.1",
@@ -51,7 +51,7 @@
     "mocha": "^5.2.0",
     "eslint": "^8.25.0",
     "typescript": "^4.8.4",
-    "eslint-config-bemuse": "^4.0.2"
+    "eslint-config-bemuse": "^5.0.0"
   },
   "volta": {
     "extends": "../../volta.json"
