@@ -31,24 +31,22 @@
 
 ## v52.2.1-pre.202210220536
 
-### Internals
-
-- Removed dependency on the `co` library. [#772], by [@MikuroXina]
-
-[#772]: https://github.com/bemusic/bemuse/pull/772
-
-## v52.2.1-pre.202210220516
+This is a maintenance release, mostly consists of internal tooling updates and
+code clean-up. If you encounter any gameplay issues, please report them to our
+[issue tracker](https://github.com/bemusic/bemuse/issues).
 
 ### Internals
 
 - Upgraded ESLint and plugins to latest version. [#771], by [@dtinth]
+- Removed dependency on the `co` library. [#772], by [@MikuroXina]
 
 [#771]: https://github.com/bemusic/bemuse/pull/771
+[#772]: https://github.com/bemusic/bemuse/pull/772
 
 ## v52.2 (2022-10-21)
 
 This is a maintenance release, mostly consists of internal tooling updates and
-code clean-up. If you encounter any issues, please report them to our
+code clean-up. If you encounter any gameplay issues, please report them to our
 [issue tracker](https://github.com/bemusic/bemuse/issues).
 
 ### Internals
