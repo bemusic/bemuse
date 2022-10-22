@@ -28,10 +28,14 @@ jobs:
         run: |
           rm -rf dist
           node build-scripts build
+        env:
+          SCOREBOARD_SERVER: ${{ secrets.SCOREBOARD_SERVER }}
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
       - name: Checks
         run: node build-scripts pre-deploy
       - name: Deploy
-        if: secrets.GH_APP_CREDENTIALS_TOKEN != ''
+        if: ${{ secrets.GH_APP_CREDENTIALS_TOKEN != '' }}
         run: |
           if git log --format=%B -n 1 | egrep '^:bookmark: v[0-9]+\.[0-9]+\.[0-9]+'
           then
