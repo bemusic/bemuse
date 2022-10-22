@@ -283,13 +283,13 @@
      * your PR branch, and in this situation "rush change" will also automatically invoke "git fetch"
      * to retrieve the latest activity for the remote master branch.
      */
-    "url": "https://github.com/bemusic/bemuse"
+    "url": "https://github.com/bemusic/bemuse",
 
     /**
      * The default branch name. This tells "rush change" which remote branch to compare against.
-     * The default value is "master"
+     * The default value is "main"
      */
-    // "defaultBranch": "master",
+    "defaultBranch": "master"
 
     /**
      * The default remote. This tells "rush change" which remote to compare against if the remote URL is
