@@ -1,78 +1,15 @@
-version: 2
+# dummy no-op config file
+version: 2.1
 jobs:
   build:
-    working_directory: ~/bemuse
-    environment:
-      FORCE_COLOR: '1'
-      TOOL_NODE_FLAGS: --max_old_space_size=4096
     docker:
-      - image: cimg/node:16.18.0-browsers
+      - image: busybox
     steps:
-      - checkout
-      - add_ssh_keys
-      - run:
-          name: install deps
-          command: |
-            node common/scripts/install-run-rush.js install
-      - run:
-          name: build
-          command: |
-            rm -rf dist
-            node build-scripts build
-      - run:
-          name: checks
-          command: |
-            node build-scripts pre-deploy
-      - run:
-          name: deploy
-          command: |
-            if git log --format=%B -n 1 | egrep '^:bookmark: v[0-9]+\.[0-9]+\.[0-9]+'
-            then
-              git remote add www https://akibot:$GH_TOKEN@github.com/bemusic/bemusic.github.io.git
-              git config --global user.email "aki@spacet.me"
-              git config --global user.name "Aki running on CircleCI"
-              node build-scripts deploy
-            else
-              echo 'Not a release commit, skipped!'
-            fi
-      - persist_to_workspace:
-          root: .
-          paths:
-            - dist
-  e2e:
-    working_directory: ~/bemuse
-    environment:
-      FORCE_COLOR: '1'
-      SCREENSHOT_DIR: /tmp/bemuse-e2e-screenshot
-    docker:
-      - image: cimg/node:16.18.0-browsers
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - run:
-          name: install deps
-          command: |
-            node common/scripts/install-run-rush.js install
-      - run:
-          name: Install browsers
-          command: |
-            cd e2e
-            npx playwright install
-      - run:
-          name: E2E
-          command: |
-            cd e2e
-            npx playwright test
-          no_output_timeout: 1m
-      - store_artifacts:
-          path: e2e/playwright-report
-          destination: test-report
+      - run: echo dummy
 workflows:
-  version: 2
-  tests:
+  dummy:
     jobs:
-      - build
-      - e2e:
-          requires:
-            - build
+      - build:
+          filters:
+            branches:
+              only: /^$/

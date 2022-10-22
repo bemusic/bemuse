@@ -30,6 +30,20 @@ jobs:
           node build-scripts build
       - name: Checks
         run: node build-scripts pre-deploy
+      - name: Deploy
+        if: secrets.GH_APP_CREDENTIALS_TOKEN != ''
+        run: |
+          if git log --format=%B -n 1 | egrep '^:bookmark: v[0-9]+\.[0-9]+\.[0-9]+'
+          then
+            GH_TOKEN="$(npx obtain-github-app-installation-access-token ci ${{ secrets.GH_APP_CREDENTIALS_TOKEN }})"
+            echo "::add-mask::$GH_TOKEN"
+            git remote add www https://akibot:$GH_TOKEN@github.com/bemusic/bemusic.github.io.git
+            git config --global user.email "aki@spacet.me"
+            git config --global user.name "Aki running on GitHub Actions"
+            node build-scripts deploy
+          else
+            echo 'Not a release commit, skipped!'
+          fi
       - name: Upload build
         uses: actions/upload-artifact@v3
         with:
