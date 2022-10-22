@@ -99,7 +99,7 @@ describe('PlayerAudio', function () {
 
   it('badly hit note should sound off-pitch', function () {
     setup(playerWithBMS())
-    let instance = {
+    const instance = {
       bad: sinon.stub(),
     }
     waveFactory.playNote.returns(instance)
@@ -125,8 +125,8 @@ describe('PlayerAudio', function () {
 
   it('should stop sound when broken', function () {
     setup(playerWithBMS())
-    let note = { keysound: '0x' }
-    let instance = { stop: sinon.spy() }
+    const note = { keysound: '0x' }
+    const instance = { stop: sinon.spy() }
     waveFactory.playNote.returns(instance)
     audio.update(0.999, {
       notifications: {
@@ -158,7 +158,7 @@ describe('PlayerAudio', function () {
 
   it('should play hit note once', function () {
     setup(playerWithBMS())
-    let note = { keysound: '0x' }
+    const note = { keysound: '0x' }
     audio.update(0.999, {
       notifications: {
         sounds: [{ note: note, type: 'hit' }],

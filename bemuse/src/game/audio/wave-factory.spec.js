@@ -29,7 +29,7 @@ describe('WaveFactory', function () {
       expect(sample.play).to.have.been.calledWith(0.1)
     })
     it('should stop old sound', function () {
-      let instance = { stop: sinon.spy() }
+      const instance = { stop: sinon.spy() }
       sample.play.returns(instance)
       waveFactory.playNote(k('0z'), 0)
       waveFactory.playNote(k('0z'), 0)

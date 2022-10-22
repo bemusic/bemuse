@@ -11,7 +11,8 @@
   "scripts": {
     "clean": "rimraf lib tsconfig.tsbuildinfo",
     "build": "tsc -b .",
-    "test": "nyc -r text -r lcov mocha -r ts-node/register './src/**/*.spec.ts'"
+    "test": "nyc -r text -r lcov mocha -r ts-node/register './src/**/*.spec.ts'",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ."
   },
   "keywords": [
     "BMS",
@@ -36,7 +37,9 @@
     "gulp": "^4.0.2",
     "mocha": "^5.2.0",
     "power-assert": "^1.6.1",
-    "typescript": "^4.4.3"
+    "eslint": "^8.25.0",
+    "typescript": "^4.8.4",
+    "eslint-config-bemuse": "^0.0.1"
   },
   "dependencies": {
     "lodash": "^4.17.11"

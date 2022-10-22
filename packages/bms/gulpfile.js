@@ -1,10 +1,10 @@
-var gulp = require('gulp')
-var mocha = require('gulp-mocha')
-var cucumber = require('gulp-cucumber')
-var fs = require('fs')
-var childProcess = require('child_process')
+const gulp = require('gulp')
+const mocha = require('gulp-mocha')
+const cucumber = require('gulp-cucumber')
+const fs = require('fs')
+const childProcess = require('child_process')
 
-var files = {
+const files = {
   specs: ['spec/**/*_spec.js'],
   sources: [
     '*.js',
@@ -20,7 +20,7 @@ var files = {
     'util/*.js',
   ],
   get features() {
-    var home = process.env.BMSPEC_HOME || './bmspec'
+    const home = process.env.BMSPEC_HOME || './bmspec'
     if (home === undefined) {
       console.error(
         'WARNING! BMSPEC_HOME is not set. BMSpec test suites will not be run!'
@@ -28,7 +28,7 @@ var files = {
       return []
     }
     return require('./features').map(function (file) {
-      var filePath = home + '/features/' + file
+      const filePath = home + '/features/' + file
       if (!fs.existsSync(filePath)) {
         console.error('WARNING! ' + filePath + ' does not exist.')
       }

@@ -4,7 +4,7 @@ import BemusePackageResources from './bemuse-package'
 
 describe('BemusePackageResources', function () {
   describe('#file', function () {
-    var resources
+    let resources
 
     beforeEach(function () {
       resources = new BemusePackageResources('/src/resources/test-fixtures/a/')

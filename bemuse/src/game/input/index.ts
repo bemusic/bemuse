@@ -17,45 +17,48 @@ export class GameInput {
   private _controls = new Map<string, Control>()
   private _plugins: GameInputPluginInternalInstance[] = []
   update() {
-    let changes = new Map()
-    for (let [name, control] of this._controls) {
+    const changes = new Map()
+    for (const [name, control] of this._controls) {
       void name
       control.changed = false
     }
-    for (let plugin of this._plugins) {
-      for (let [name, value] of plugin.get()) {
+    for (const plugin of this._plugins) {
+      for (const [name, value] of plugin.get()) {
         changes.set(name, value)
       }
     }
-    for (let [name, value] of changes) {
-      let control = this.get(name)!
+    for (const [name, value] of changes) {
+      const control = this.get(name)!
       if (control.value !== value) {
         control.changed = true
         control.value = value
       }
     }
   }
+
   destroy() {
-    for (let plugin of this._plugins) {
+    for (const plugin of this._plugins) {
       plugin.destroy()
     }
   }
+
   get(controlName: string) {
     if (!this._controls.has(controlName)) {
       this._controls.set(controlName, new Control())
     }
     return this._controls.get(controlName)!
   }
+
   use(plugin: IGameInputPlugin) {
-    let state: { [key: string]: number } = {}
-    let name = 'input:' + plugin.name
+    const state: { [key: string]: number } = {}
+    const name = 'input:' + plugin.name
     this._plugins.push({
       get: bench.wrap(name, function () {
-        let out = plugin.get()
-        let diff = []
-        for (let key of _.union(_.keys(out), _.keys(state))) {
-          let last = +state[key] || 0
-          let current = +out[key] || 0
+        const out = plugin.get()
+        const diff = []
+        for (const key of _.union(_.keys(out), _.keys(state))) {
+          const last = +state[key] || 0
+          const current = +out[key] || 0
           if (last !== current) diff.push([key, current])
           state[key] = current
         }

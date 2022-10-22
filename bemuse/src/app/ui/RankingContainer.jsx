@@ -21,12 +21,12 @@ export default class RankingContainer extends React.Component {
   }
 
   getParams(props) {
-    let params = {}
+    const params = {}
     Object.assign(params, {
       md5: props.chart.md5,
       playMode: props.playMode,
     })
-    let result = props.result
+    const result = props.result
     if (result) {
       Object.assign(params, {
         score: result.score,

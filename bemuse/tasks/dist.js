@@ -5,7 +5,7 @@ import routes from '../config/routes'
 import path from '../config/path'
 
 gulp.task('dist', function () {
-  let streams = routes.map((route) => {
+  const streams = routes.map((route) => {
     return gulp
       .src(route.src + '/**/*')
       .pipe(gulp.dest(path('dist', ...route.dest)))

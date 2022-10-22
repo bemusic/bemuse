@@ -32,9 +32,9 @@ export class Game {
 
   /** A list of all sound samples used in game. Used for loading sounds. */
   get samples() {
-    let set = new Set()
-    for (let player of this.players) {
-      for (let sample of player.notechart.samples) {
+    const set = new Set()
+    for (const player of this.players) {
+      for (const sample of player.notechart.samples) {
         set.add(sample)
       }
     }

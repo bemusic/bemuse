@@ -5,7 +5,7 @@ import parser from './parser.pegjs'
 const log = debug('scintillator:expression')
 
 function createFunction(code) {
-  let fn = eval('(function(get) { return ' + code + ' })') // eslint-disable-line no-eval
+  const fn = eval('(function(get) { return ' + code + ' })') // eslint-disable-line no-eval
   fn.displayName = '(' + code + ')'
   fn.constant = !!/^[-0-9.]+$/.test(code)
   return fn
@@ -13,9 +13,9 @@ function createFunction(code) {
 
 export function Expression(text) {
   log('parsing %s', text)
-  let code = parser.parse(text)
+  const code = parser.parse(text)
   log('parsed %s => %s', text, code)
-  let f = createFunction(code)
+  const f = createFunction(code)
   let evaluate
   if (f.constant) {
     evaluate = f

@@ -92,16 +92,16 @@ class MusicListItem extends React.PureComponent {
 
   renderHighlight(text) {
     if (!this.props.highlight) return text
-    let highlight = this.props.highlight
-    let segments = text.toLowerCase().split(highlight.toLowerCase())
+    const highlight = this.props.highlight
+    const segments = text.toLowerCase().split(highlight.toLowerCase())
     if (segments.length === 1) return text
-    let output = []
+    const output = []
     let start = 0
     for (let i = 0; i < segments.length; i++) {
       output.push(text.substr(start, segments[i].length))
       start += segments[i].length
       if (i !== segments.length - 1) {
-        let highlightedText = text.substr(start, highlight.length)
+        const highlightedText = text.substr(start, highlight.length)
         output.push(
           <span className='MusicListItemのhighlight'>{highlightedText}</span>
         )

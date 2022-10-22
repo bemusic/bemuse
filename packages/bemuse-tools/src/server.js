@@ -6,8 +6,8 @@ import * as path from 'path'
 import Rx from 'rx'
 import bytes from 'bytes'
 
-let glob = Promise.promisify(require('glob'))
-let stat = Promise.promisify(fs.stat)
+const glob = Promise.promisify(require('glob'))
+const stat = Promise.promisify(fs.stat)
 
 export function start(dir, port) {
   port = +port || 3456
@@ -23,21 +23,21 @@ export function start(dir, port) {
 }
 
 function bemuseAssets(dir) {
-  let serveSongAssets = createAssetServer()
+  const serveSongAssets = createAssetServer()
   dir = path.normalize(fs.realpathSync(dir))
   return function (req, res, next) {
-    let match = req.path.match(/^\/+(.+)\/assets\/([^/]+)$/)
+    const match = req.path.match(/^\/+(.+)\/assets\/([^/]+)$/)
     if (!match) return next()
-    let song = decodeURIComponent(match[1])
-    let file = match[2]
-    let target = path.normalize(path.join(dir, song))
+    const song = decodeURIComponent(match[1])
+    const file = match[2]
+    const target = path.normalize(path.join(dir, song))
     if (target.substr(0, dir.length) !== dir) return next()
     serveSongAssets(target, file, res, next)
   }
 }
 
 function createAssetServer() {
-  var songCache = {}
+  const songCache = {}
   return function (target, file, res, next) {
     void (songCache[target] || (songCache[target] = createSongServer(target)))(
       file,
@@ -48,7 +48,7 @@ function createAssetServer() {
 }
 
 function createSongServer(dir) {
-  let promise = glob('**/*.{wav,ogg,mp3,m4a}', { cwd: dir })
+  const promise = glob('**/*.{wav,ogg,mp3,m4a}', { cwd: dir })
     .map((name) =>
       stat(path.join(dir, name)).then((stats) => ({
         name: name,
@@ -56,13 +56,13 @@ function createSongServer(dir) {
       }))
     )
     .then((files) => {
-      let ref = { path: 'data.bemuse' }
-      let metadata = { files: [], refs: [ref] }
+      const ref = { path: 'data.bemuse' }
+      const metadata = { files: [], refs: [ref] }
       let current = 0
-      for (let file of files) {
-        let left = current
-        let right = left + file.size
-        let entry = { name: file.name, ref: [0, left, right] }
+      for (const file of files) {
+        const left = current
+        const right = left + file.size
+        const entry = { name: file.name, ref: [0, left, right] }
         metadata.files.push(entry)
         current = right
       }
@@ -93,7 +93,7 @@ function createSongServer(dir) {
 }
 
 function streamFiles(dir, files, res) {
-  let stream = Rx.Observable.concat([
+  const stream = Rx.Observable.concat([
     Rx.Observable.just(Buffer.from('BEMUSEPACK')),
     Rx.Observable.just(Buffer.from([0, 0, 0, 0])),
     Rx.Observable.concat(files.map((file) => streamFile(dir, file))),
@@ -107,7 +107,7 @@ function streamFiles(dir, files, res) {
 
 function streamFile(dir, file) {
   return Rx.Observable.create(function (observer) {
-    let stream = fs.createReadStream(path.join(dir, file.name))
+    const stream = fs.createReadStream(path.join(dir, file.name))
     stream.on('data', (b) => observer.onNext(b))
     stream.on('end', () => observer.onCompleted())
     stream.on('error', (e) => observer.onError(e))

@@ -16,20 +16,29 @@ export const HomePage = () => {
       <p>
         Compete for the highest score with our online ranking system. Play with
         your friends with our{' '}
-        <a href='https://www.youtube.com/watch?v=hiJzFRIhiiA' target='_blank'>
+        <a
+          href='https://www.youtube.com/watch?v=hiJzFRIhiiA'
+          target='_blank'
+          rel='noreferrer'
+        >
           party mode
         </a>
         .
       </p>
       <p>
         Plug in your headphone, connect your{' '}
-        <a href='https://www.youtube.com/watch?v=EOgI37Myqvk' target='_blank'>
+        <a
+          href='https://www.youtube.com/watch?v=EOgI37Myqvk'
+          target='_blank'
+          rel='noreferrer'
+        >
           game controller
         </a>{' '}
         or{' '}
         <a
           href='https://twitter.com/bemusegame/status/673094391905435648'
           target='_blank'
+          rel='noreferrer'
         >
           MIDI keyboard
         </a>{' '}

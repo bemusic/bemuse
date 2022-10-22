@@ -31,14 +31,14 @@ export class NotechartLoader {
     resource: NotechartLoaderResource,
     options: PlayerOptions
   ) {
-    let buffer = coerceToBuffer(arraybuffer)
-    let readerOptions = BMS.Reader.getReaderOptionsFromFilename(resource.name)
-    let source = await Bluebird.promisify<string, Buffer, BMS.ReaderOptions>(
+    const buffer = coerceToBuffer(arraybuffer)
+    const readerOptions = BMS.Reader.getReaderOptionsFromFilename(resource.name)
+    const source = await Bluebird.promisify<string, Buffer, BMS.ReaderOptions>(
       BMS.Reader.readAsync
     )(buffer, readerOptions)
-    let compileResult = BMS.Compiler.compile(source)
-    let chart = compileResult.chart
-    let notechart = BMSNotechartLoader.fromBMSChart(chart, options)
+    const compileResult = BMS.Compiler.compile(source)
+    const chart = compileResult.chart
+    const notechart = BMSNotechartLoader.fromBMSChart(chart, options)
     return notechart
   }
 
@@ -47,8 +47,8 @@ export class NotechartLoader {
     resource: NotechartLoaderResource,
     options: PlayerOptions
   ) {
-    let buffer = coerceToBuffer(arraybuffer)
-    let source = buffer.toString('utf-8')
+    const buffer = coerceToBuffer(arraybuffer)
+    const source = buffer.toString('utf-8')
     return BmsonNotechartLoader.load(source, options)
   }
 }

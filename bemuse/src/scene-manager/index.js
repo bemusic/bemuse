@@ -45,7 +45,7 @@ export class SceneManager {
 
   // Displays the scene, while remembering the previous scene.
   push(scene) {
-    let previousScene = this.currentScene
+    const previousScene = this.currentScene
     return this._transitionTo(() => {
       this._stack.push(previousScene)
       return scene
@@ -79,7 +79,7 @@ export class SceneManager {
       }
 
       // set up the next scene
-      var element = document.createElement('div')
+      const element = document.createElement('div')
       element.className = 'scene-manager--scene'
       MAIN.appendChild(element)
       this.currentElement = element
@@ -98,7 +98,7 @@ function detach(element) {
 }
 
 // The shared SceneManager instance.
-export let instance = new SceneManager()
+export const instance = new SceneManager()
 
 export default instance
 

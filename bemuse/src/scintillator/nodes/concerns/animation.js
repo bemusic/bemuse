@@ -2,7 +2,8 @@ import _ from 'lodash'
 import $ from 'jquery'
 import keytime from 'keytime'
 
-let createKeytime = (def) => Object.assign({}, def, { data: keytime(def.data) })
+const createKeytime = (def) =>
+  Object.assign({}, def, { data: keytime(def.data) })
 
 export class Animation {
   constructor(animations, timeKey) {
@@ -15,12 +16,13 @@ export class Animation {
     this._animations = _.map(animations, createKeytime)
     this._events = _.uniq(_.map(animations, 'on'))
   }
+
   prop(name, fallback) {
     if (!this._properties.has(name)) {
       return fallback
     }
     return (data) => {
-      let values = this._getAnimation(data)
+      const values = this._getAnimation(data)
       if (values.hasOwnProperty(name)) {
         return values[name]
       } else {
@@ -28,34 +30,36 @@ export class Animation {
       }
     }
   }
+
   _getAnimation(data) {
-    let event = _(this._events)
+    const event = _(this._events)
       .filter((e) => e === '' || e in data)
       .maxBy((e) => data[e] || 0)
-    let t = data[this._timeKey] - (data[event] || 0)
-    let animations = this._animations.filter((a) => a.on === event)
-    let values = animations.map((a) => a.data.values(t))
+    const t = data[this._timeKey] - (data[event] || 0)
+    const animations = this._animations.filter((a) => a.on === event)
+    const values = animations.map((a) => a.data.values(t))
     return Object.assign({}, ...values)
   }
+
   static compile(compiler, $el) {
-    let animationElements = Array.from($el.children('animation'))
-    let animations = _.map(animationElements, (el) => _compile($(el)))
-    let timeKey = $el.attr('t') || 't'
+    const animationElements = Array.from($el.children('animation'))
+    const animations = _.map(animationElements, (el) => _compile($(el)))
+    const timeKey = $el.attr('t') || 't'
     return new Animation(animations, timeKey)
   }
 }
 
 export function _compile($el) {
-  let keyframes = _.map(Array.from($el.children('keyframe')), _attrs)
-  let attrs = {}
-  for (let keyframe of keyframes) {
-    let time = +keyframe.t
-    let ease = keyframe.ease || 'linear'
+  const keyframes = _.map(Array.from($el.children('keyframe')), _attrs)
+  const attrs = {}
+  for (const keyframe of keyframes) {
+    const time = +keyframe.t
+    const ease = keyframe.ease || 'linear'
     if (isNaN(time)) throw new Error('Expected keyframe to have "t" attribute')
-    for (let key in keyframe) {
+    for (const key in keyframe) {
       if (key === 't' || key === 'ease') continue
-      let value = +keyframe[key]
-      let attr = attrs[key] || (attrs[key] = _createKeyframes(key))
+      const value = +keyframe[key]
+      const attr = attrs[key] || (attrs[key] = _createKeyframes(key))
       attr.keyframes.push({ time, value, ease })
     }
   }

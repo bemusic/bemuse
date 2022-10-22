@@ -11,7 +11,8 @@
   "scripts": {
     "clean": "rimraf lib tsconfig.tsbuildinfo",
     "test": "nyc -r text -r lcov mocha -r ts-node/register 'src/**/*.spec.ts'",
-    "build": "tsc -b ."
+    "build": "tsc -b .",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ."
   },
   "repository": {
     "type": "git",
@@ -42,8 +43,10 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "mocha": "^5.2.0",
-    "typescript": "^4.4.3",
-    "nyc": "^11.9.0"
+    "eslint": "^8.25.0",
+    "typescript": "^4.8.4",
+    "nyc": "^11.9.0",
+    "eslint-config-bemuse": "^0.0.1"
   },
   "volta": {
     "extends": "../../volta.json"

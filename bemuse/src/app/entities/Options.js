@@ -132,9 +132,9 @@ export const toggleGauge = produce((draft) => {
 
 // Queries
 export const keyboardMapping = (state) => {
-  let mapping = {}
-  for (let control of ['1', '2', '3', '4', '5', '6', '7', 'SC', 'SC2']) {
-    let key = 'input.P1.keyboard.' + playMode(state) + '.' + control
+  const mapping = {}
+  for (const control of ['1', '2', '3', '4', '5', '6', '7', 'SC', 'SC2']) {
+    const key = 'input.P1.keyboard.' + playMode(state) + '.' + control
     mapping[control] = state[key] || ''
   }
   return mapping

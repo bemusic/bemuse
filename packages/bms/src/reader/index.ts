@@ -17,8 +17,8 @@ export function read(
   buffer: Buffer,
   options: ReaderOptions | null = null
 ): string {
-  var charset = (options && options.forceEncoding) || chardet.detect(buffer)
-  var text = iconv.decode(buffer, charset)
+  const charset = (options && options.forceEncoding) || chardet.detect(buffer)
+  const text = iconv.decode(buffer, charset)
   if (text.charCodeAt(0) === 0xfeff) {
     // BOM?!
     return text.substr(1)
@@ -41,7 +41,7 @@ export function readAsync(
 export function readAsync(buffer: Buffer, callback?: ReadCallback): void
 
 export function readAsync(...args: any[]) {
-  let buffer: Buffer = args[0]
+  const buffer: Buffer = args[0]
   let options: ReaderOptions | null = args[1]
   let callback: ReadCallback = args[2]
   if (callback) {
@@ -52,7 +52,7 @@ export function readAsync(...args: any[]) {
     callback = args[1]
   }
   setTimeout(function () {
-    var result
+    let result
     try {
       result = { value: exports.read(buffer, options) }
     } catch (e) {

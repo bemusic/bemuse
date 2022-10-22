@@ -70,7 +70,7 @@ export function Online(service) {
   }
 
   function records川ForUser(user) {
-    let seen = {}
+    const seen = {}
 
     {
       const action川 = Bacon.mergeAll(
@@ -86,7 +86,7 @@ export function Online(service) {
 
     function fetch(levels) {
       const levelsToFetch = levels.filter((level) => !seen[id(level)])
-      for (let level of levelsToFetch) {
+      for (const level of levelsToFetch) {
         seen[id(level)] = true
       }
       const promise =
@@ -96,15 +96,15 @@ export function Online(service) {
       return Bacon.fromPromise(
         promise
           .then(function (results) {
-            let loadedRecords = _.zipObject(
+            const loadedRecords = _.zipObject(
               results.map(id),
               results.map(completedStateTransition)
             )
-            let nullResults = _.zipObject(
+            const nullResults = _.zipObject(
               levelsToFetch.map(id),
               levelsToFetch.map(() => completedStateTransition(null))
             )
-            let transitions = _.defaults(loadedRecords, nullResults)
+            const transitions = _.defaults(loadedRecords, nullResults)
             return DataStore.putMultiple(transitions)
           })
           .catch(function (e) {

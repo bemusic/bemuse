@@ -18,7 +18,7 @@ class CustomChartSelector extends React.Component {
   }
 
   render() {
-    let files = this.state.files
+    const files = this.state.files
     return (
       <div className='drop-zone'>
         {files.length ? (
@@ -57,8 +57,8 @@ class CustomChartSelector extends React.Component {
 
   handleDrop = (e) => {
     e.preventDefault()
-    let event = e.nativeEvent
-    let resources = new DndResources(event)
+    const event = e.nativeEvent
+    const resources = new DndResources(event)
     resources.fileList
       .then((list) => {
         return list.filter((filename) => /\.(bms|bme|bml)$/i.test(filename))
@@ -104,7 +104,7 @@ export default class GameShellScene extends React.Component {
   }
 
   render() {
-    let options = this.state.options
+    const options = this.state.options
     return (
       <div
         className='GameShellScene'

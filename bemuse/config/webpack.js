@@ -9,7 +9,7 @@ import ServiceWorkerWebpackPlugin from 'serviceworker-webpack-plugin'
 import TerserPlugin from 'terser-webpack-plugin'
 
 function generateBaseConfig() {
-  let config = {
+  const config = {
     mode: Env.production() ? 'production' : 'development',
     context: path('src'),
     resolve: webpackResolve,

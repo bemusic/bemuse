@@ -66,8 +66,8 @@ export class Notes {
   static fromBMSChart(chart: BMSChart, options?: BMSChartOptions) {
     void BMSChart
     options = options || {}
-    var mapping = options.mapping || Notes.CHANNEL_MAPPING.IIDX_P1
-    var builder = new BMSNoteBuilder(chart, { mapping: mapping })
+    const mapping = options.mapping || Notes.CHANNEL_MAPPING.IIDX_P1
+    const builder = new BMSNoteBuilder(chart, { mapping: mapping })
     return builder.build()
   }
 }
@@ -96,12 +96,14 @@ class BMSNoteBuilder {
     this._channelMapping = this._mapping
     this._objects = this._chart.objects.allSorted()
   }
+
   build() {
     this._objects.forEach((object) => {
       this._handle(object)
     })
     return new Notes(this._notes)
   }
+
   _handle(object: BMSObject) {
     if (object.channel === '01') {
       this._handleNormalNote(object)
@@ -120,15 +122,16 @@ class BMSNoteBuilder {
       }
     }
   }
+
   _handleNormalNote(object: BMSObject) {
-    var channel = this._normalizeChannel(object.channel)
-    var beat = this._getBeat(object)
+    const channel = this._normalizeChannel(object.channel)
+    const beat = this._getBeat(object)
     if (object.value.toLowerCase() === this._lnObj) {
       if (this._lastNote[channel]) {
         this._lastNote[channel].endBeat = beat
       }
     } else {
-      var note = {
+      const note = {
         beat: beat,
         endBeat: undefined,
         keysound: object.value,
@@ -138,11 +141,12 @@ class BMSNoteBuilder {
       this._notes.push(note)
     }
   }
+
   _handleLongNote(object: BMSObject) {
-    var channel = this._normalizeChannel(object.channel)
-    var beat = this._getBeat(object)
+    const channel = this._normalizeChannel(object.channel)
+    const beat = this._getBeat(object)
     if (this._activeLN[channel]) {
-      var note = this._activeLN[channel]
+      const note = this._activeLN[channel]
       note.endBeat = beat
       this._notes.push(note)
       delete this._activeLN[channel]
@@ -154,12 +158,15 @@ class BMSNoteBuilder {
       }
     }
   }
+
   _getBeat(object: BMSObject) {
     return this._chart.measureToBeat(object.measure, object.fraction)
   }
+
   _getColumn(channel: string) {
     return this._channelMapping[channel]
   }
+
   _normalizeChannel(channel: string) {
     return channel.replace(/^5/, '1').replace(/^6/, '2')
   }

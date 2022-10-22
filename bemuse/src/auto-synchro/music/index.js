@@ -6,7 +6,7 @@ import SamplingMaster from 'bemuse/sampling-master'
 /**
  * The asset URL of these files...
  */
-let ASSET_URLS = {
+const ASSET_URLS = {
   'bgm.ogg': require('./data/bgm.ogg'),
   'intro.ogg': require('./data/intro.ogg'),
   'kick.ogg': require('./data/kick.ogg'),
@@ -17,13 +17,13 @@ let ASSET_URLS = {
  * Loads the files and create a music instance.
  */
 export async function load() {
-  let master = new SamplingMaster(context)
+  const master = new SamplingMaster(context)
 
-  let sample = (name) =>
+  const sample = (name) =>
     download(ASSET_URLS[`${name}.ogg`])
       .as('arraybuffer')
       .then((buf) => master.sample(buf))
-  let samples = _.fromPairs(
+  const samples = _.fromPairs(
     await Promise.all(
       ['bgm', 'intro', 'kick', 'snare'].map((name) =>
         sample(name).then((sampleObj) => [name, sampleObj])
@@ -40,18 +40,18 @@ function music(master, samples) {
   return function play(callbacks) {
     master.unmute()
 
-    let BPM = 148
-    let time = new AudioTime(context, -1)
+    const BPM = 148
+    const time = new AudioTime(context, -1)
 
-    let filter = context.createBiquadFilter()
+    const filter = context.createBiquadFilter()
     filter.type = 'lowpass'
     filter.frequency.value = 0
     filter.Q.value = 10
     filter.connect(context.destination)
 
-    let state = { part2: null }
+    const state = { part2: null }
 
-    let sequence = beatSequencer(BPM, (beat, delay) => {
+    const sequence = beatSequencer(BPM, (beat, delay) => {
       if (beat % 8 !== 7) {
         samples.kick.play(delay)
       }
@@ -84,8 +84,8 @@ function music(master, samples) {
         filter.frequency.value = 20000 * p * p * p
       },
       getSample() {
-        let nearestBeat = Math.round((time.t * BPM) / 60)
-        let nearestBeatTime = (nearestBeat * 60) / BPM
+        const nearestBeat = Math.round((time.t * BPM) / 60)
+        const nearestBeatTime = (nearestBeat * 60) / BPM
         return [nearestBeat, time.t - nearestBeatTime]
       },
     }
@@ -95,10 +95,10 @@ function music(master, samples) {
 function beatSequencer(bpm, f) {
   let beat = -1
   return (time) => {
-    let nowBeat = Math.floor(((time + 0.1) * bpm) / 60)
+    const nowBeat = Math.floor(((time + 0.1) * bpm) / 60)
     while (beat < nowBeat) {
       beat += 1
-      let beatTime = (beat * 60) / bpm
+      const beatTime = (beat * 60) / bpm
       f(beat, beatTime - time)
     }
   }
@@ -110,6 +110,7 @@ class AudioTime {
     this._start = audioContext.currentTime
     this._startTime = leadTime
   }
+
   get t() {
     return this._context.currentTime - this._start + this._startTime
   }

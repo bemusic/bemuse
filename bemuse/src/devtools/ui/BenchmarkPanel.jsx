@@ -40,12 +40,12 @@ export default class BenchmarkPanel extends React.Component {
   }
 
   renderTable = () => {
-    let stats = this.props.bench.stats
+    const stats = this.props.bench.stats
     return (
       <table>
         <tbody>
           {Object.keys(stats).map((key) => {
-            let stat = stats[key]
+            const stat = stats[key]
             return (
               <tr>
                 <td>

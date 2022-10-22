@@ -31,13 +31,13 @@ async function getFilesFromEvent(
   event: DragEvent,
   log: LoggingFunction
 ): Promise<FileEntry[]> {
-  let out: FileEntry[] = []
+  const out: FileEntry[] = []
   const dataTransfer = event.dataTransfer
   if (!dataTransfer) {
     throw new Error('Expect event.dataTransfer to be present')
   }
   if (dataTransfer.types.indexOf('text/uri-list') > -1) {
-    let url = dataTransfer
+    const url = dataTransfer
       .getData('text/uri-list')
       .split(/\r\n|\r|\n/)
       .filter((t) => t && !t.startsWith('#'))[0]
@@ -46,22 +46,22 @@ async function getFilesFromEvent(
       return [await downloadFileEntryFromURL(url, log)]
     }
   } else if (dataTransfer.items) {
-    for (let item of Array.from(dataTransfer.items)) {
+    for (const item of Array.from(dataTransfer.items)) {
       await readItem(item)
     }
   } else if (dataTransfer.files) {
-    for (let file of Array.from(dataTransfer.files)) {
+    for (const file of Array.from(dataTransfer.files)) {
       addFile(file)
     }
   }
   return out
 
   async function readItem(item: DataTransferItem) {
-    let entry = item.webkitGetAsEntry && item.webkitGetAsEntry()
+    const entry = item.webkitGetAsEntry && item.webkitGetAsEntry()
     if (entry) {
       await readEntry(entry)
     } else {
-      let file = item.getAsFile && item.getAsFile()
+      const file = item.getAsFile && item.getAsFile()
       if (file) addFile(file)
     }
   }
@@ -83,18 +83,18 @@ async function getFilesFromEvent(
   }
 
   async function readDirectory(dir: any, prefix = '') {
-    let entries: any[] = []
-    let reader = dir.createReader()
-    let readMore = () =>
+    const entries: any[] = []
+    const reader = dir.createReader()
+    const readMore = () =>
       new Promise<any>((resolve, reject) => {
         reader.readEntries(resolve, reject)
       })
     for (;;) {
-      let results = await readMore()
+      const results = await readMore()
       if (!results || results.length === 0) break
       entries.push(...Array.from(results))
     }
-    for (let entry of entries) {
+    for (const entry of entries) {
       await readEntry(entry, prefix + dir.name + '/')
     }
   }

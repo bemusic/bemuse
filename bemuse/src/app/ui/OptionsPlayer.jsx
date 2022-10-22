@@ -36,6 +36,7 @@ class OptionsPlayer extends React.Component {
   static propTypes = {
     onClose: PropTypes.func,
   }
+
   render() {
     return (
       <div className='OptionsPlayer'>
@@ -203,6 +204,7 @@ class OptionsPlayerRow extends React.Component {
     label: PropTypes.node,
     children: PropTypes.node,
   }
+
   render() {
     return (
       <div

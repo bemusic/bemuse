@@ -40,20 +40,25 @@ export class PlayerStats {
     this._log = []
     this.deltas = []
   }
+
   get score() {
     // #region score
     return this.accuracyScore + this.comboScore
     // #endregion
   }
+
   get accuracyScore() {
     return getAccuracyScore(this.accuracy)
   }
+
   get comboScore() {
     return getComboScore(this.rawSumComboScore, this.rawTotalComboScore)
   }
+
   get maxPossibleScore() {
     return this.maxPossibleAccuracyScore + this.maxPossibleComboScore
   }
+
   get maxPossibleAccuracyScore() {
     const remainingJudgments = this.totalCombo - this.numJudgments
     const maxPossibleRawWeight =
@@ -62,24 +67,29 @@ export class PlayerStats {
       maxPossibleRawWeight / (Judgments.weight(1) * this.totalCombo)
     return getAccuracyScore(maxPossibleAccuracy)
   }
+
   get maxPossibleComboScore() {
     const maxPossibleRawComboScore =
       this.rawSumComboScore + this._remainingMaxPossibleRawComboScore
     return getComboScore(maxPossibleRawComboScore, this.rawTotalComboScore)
   }
+
   get accuracy() {
     return this.rawSumJudgmentWeight / (Judgments.weight(1) * this.totalCombo)
   }
+
   get currentAccuracy() {
     return (
       this.rawSumJudgmentWeight / (Judgments.weight(1) * this.numJudgments || 1)
     )
   }
+
   get log() {
     return this._log
       .map(({ character, count }) => `${count > 1 ? count : ''}${character}`)
       .join('')
   }
+
   handleJudgment(judgment: Judgments.JudgedJudgment) {
     this.counts[judgment] += 1
     this.numJudgments += 1
@@ -102,9 +112,11 @@ export class PlayerStats {
     }
     this._recordLog(judgment)
   }
+
   handleDelta(delta: number) {
     this.deltas.push(delta)
   }
+
   private _calculateRawTotalComboScore(total: number) {
     let sum = 0
     for (let i = 1; i <= total; i++) {
@@ -112,6 +124,7 @@ export class PlayerStats {
     }
     return sum
   }
+
   private _calculateRawComboScore(i: number) {
     // #region combo
     if (i === 0) return 0
@@ -122,8 +135,9 @@ export class PlayerStats {
     return 5
     // #endregion
   }
+
   private _recordLog(judgment: Judgments.JudgedJudgment) {
-    let character = this._getLogCharacter(judgment)
+    const character = this._getLogCharacter(judgment)
     if (character) {
       if (
         this._log.length === 0 ||
@@ -135,6 +149,7 @@ export class PlayerStats {
       }
     }
   }
+
   private _getLogCharacter(judgment: Judgments.JudgedJudgment) {
     switch (judgment) {
       case 1:

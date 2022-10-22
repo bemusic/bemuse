@@ -8,12 +8,12 @@ function Stat() {
   let sum = 0
   let count = 0
   let average = 0
-  let hist = []
+  const hist = []
   let lastSec = 0
   let secAvg = 0
   return {
     push: function (delta) {
-      let t = now()
+      const t = now()
       sum += delta
       count += 1
       average = sum / count
@@ -35,18 +35,18 @@ function format(x) {
 }
 
 function Benchmarker() {
-  var stats = {}
-  let bench = {
+  const stats = {}
+  const bench = {
     enabled: true,
     stats,
     wrap(title, f) {
       return function () {
+        const start = now()
         try {
-          var start = now()
           return f.apply(this, arguments)
         } finally {
-          var finish = now()
-          var stat = stats[title] || (stats[title] = new Stat(title))
+          const finish = now()
+          const stat = stats[title] || (stats[title] = new Stat(title))
           stat.push(finish - start)
         }
       }
@@ -55,14 +55,14 @@ function Benchmarker() {
       obj[name] = this.wrap(title, obj[name])
     },
     toString() {
-      var lines = []
+      const lines = []
       Object.keys(stats).forEach(function (key) {
         lines.push('- ' + key + ': ' + stats[key])
       })
       return lines.join('\n')
     },
   }
-  let div = document.createElement('div')
+  const div = document.createElement('div')
   div.setAttribute('style', 'position:fixed;top:10px;right:10px;z-index:99999')
   document.body.appendChild(div)
   ReactDOM.render(<BenchmarkPanel bench={bench} />, div)

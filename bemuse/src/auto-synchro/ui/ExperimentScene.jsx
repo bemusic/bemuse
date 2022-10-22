@@ -58,11 +58,11 @@ export default class ExperimentScene extends React.Component {
   }
 
   renderCollection = () => {
-    let scale = this.props.finished
+    const scale = this.props.finished
       ? 1
       : easeOut(Math.min(1, this.props.numSamples / 84))
-    let transform = 'scaleX(' + scale + ')'
-    let style = {
+    const transform = 'scaleX(' + scale + ')'
+    const style = {
       transform: transform,
       WebkitTransform: transform,
     }

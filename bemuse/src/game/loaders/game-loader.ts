@@ -96,8 +96,8 @@ export function load(spec: LoadSpec) {
     }
 
     task('Notechart', 'Loading ' + spec.bms.name, [], async (progress) => {
-      let loader = new NotechartLoader()
-      let arraybuffer = await bms.read(progress)
+      const loader = new NotechartLoader()
+      const arraybuffer = await bms.read(progress)
       return loader.load(arraybuffer, spec.bms, spec.options.players[0])
     })
 
@@ -123,8 +123,8 @@ export function load(spec: LoadSpec) {
       return loadImage(assets, notechart.backgroundImage)
     })
 
-    let audioLoadProgress = new Progress()
-    let audioDecodeProgress = new Progress()
+    const audioLoadProgress = new Progress()
+    const audioDecodeProgress = new Progress()
 
     task.bar('Loading audio', audioLoadProgress)
     task.bar('Decoding audio', audioDecodeProgress)

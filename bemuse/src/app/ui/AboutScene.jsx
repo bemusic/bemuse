@@ -80,10 +80,10 @@ class AboutScene extends React.Component {
             </p>
 
             <p>
-              We{"'"}d like to thank{' '}
+              We'd like to thank{' '}
               <a href='http://hitkey.nekokan.dyndns.info/'>hitkey</a> for
               providing us with a comprehensive reference on the BMS file format
-              and for giving us suggestions. We{"'"}d also like to thank the
+              and for giving us suggestions. We'd also like to thank the
               following artists for letting us use their songs in the game:{' '}
               {this.renderArtists()}.
             </p>

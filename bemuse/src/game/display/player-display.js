@@ -22,20 +22,21 @@ export class PlayerDisplay {
     this._gauge = getGauge(player.options.gauge)
     this._touch3dMode = skinData.displayMode === 'touch3d'
   }
+
   update(time, gameTime, playerState) {
     const touch3dMode = this._touch3dMode
-    let player = this._player
-    let noteArea = this._noteArea
-    let stateful = this._stateful
-    let beat = player.notechart.secondsToBeat(gameTime)
-    let position = player.notechart.beatToPosition(beat)
-    let spacing = player.notechart.spacingAtBeat(beat)
-    let data = Object.assign({}, this._defaultData)
-    let push = (key, value) => (data[key] || (data[key] = [])).push(value)
-    let gauge = this._gauge
+    const player = this._player
+    const noteArea = this._noteArea
+    const stateful = this._stateful
+    const beat = player.notechart.secondsToBeat(gameTime)
+    const position = player.notechart.beatToPosition(beat)
+    const spacing = player.notechart.spacingAtBeat(beat)
+    const data = Object.assign({}, this._defaultData)
+    const push = (key, value) => (data[key] || (data[key] = [])).push(value)
+    const gauge = this._gauge
 
     this._currentSpeed += (playerState.speed - this._currentSpeed) / 3
-    let speed = this._currentSpeed * spacing
+    const speed = this._currentSpeed * spacing
 
     updateBeat()
     updateVisibleNotes()
@@ -71,7 +72,7 @@ export class PlayerDisplay {
     }
 
     function updateVisibleNotes() {
-      let entities = noteArea.getVisibleNotes(position, getUpperBound(), 1)
+      const entities = noteArea.getVisibleNotes(position, getUpperBound(), 1)
       if (touch3dMode) {
         const putNote = (id, noteY, column, scale = 1) => {
           const row = touch3d.getRow(noteY - 0.01)
@@ -87,13 +88,13 @@ export class PlayerDisplay {
             width: desiredWidth,
           })
         }
-        let longNoteStep = 3 / 128
-        for (let entity of entities) {
-          let note = entity.note
-          let column = note.column
+        const longNoteStep = 3 / 128
+        for (const entity of entities) {
+          const note = entity.note
+          const column = note.column
           if (entity.height) {
             let c = 0
-            let start = entity.y + entity.height
+            const start = entity.y + entity.height
             for (
               let i =
                 start -
@@ -114,12 +115,12 @@ export class PlayerDisplay {
           }
         }
       } else {
-        for (let entity of entities) {
-          let note = entity.note
-          let column = note.column
+        for (const entity of entities) {
+          const note = entity.note
+          const column = note.column
           if (entity.height) {
-            let judgment = playerState.getNoteJudgment(note)
-            let status = playerState.getNoteStatus(note)
+            const judgment = playerState.getNoteJudgment(note)
+            const status = playerState.getNoteStatus(note)
             push(`longnote_${column}`, {
               key: note.id,
               y: entity.y,
@@ -140,8 +141,8 @@ export class PlayerDisplay {
     }
 
     function updateBarLines() {
-      let entities = noteArea.getVisibleBarLines(position, getUpperBound(), 1)
-      for (let entity of entities) {
+      const entities = noteArea.getVisibleBarLines(position, getUpperBound(), 1)
+      for (const entity of entities) {
         if (touch3dMode) {
           const row = touch3d.getRow(entity.y - 0.01)
           push('barlines3d', {
@@ -157,9 +158,9 @@ export class PlayerDisplay {
     }
 
     function updateInput() {
-      let input = playerState.input
-      for (let column of player.columns) {
-        let control = input.get(column)
+      const input = playerState.input
+      for (const column of player.columns) {
+        const control = input.get(column)
         data[`${column}_active`] = control.value !== 0 ? 1 : 0
         if (control.changed) {
           if (control.value !== 0) {
@@ -172,13 +173,13 @@ export class PlayerDisplay {
     }
 
     function updateJudgment() {
-      let notifications = playerState.notifications.judgments
-      let notification = notifications[notifications.length - 1]
+      const notifications = playerState.notifications.judgments
+      const notification = notifications[notifications.length - 1]
       if (notification) {
-        let name =
+        const name =
           notification.judgment === -1 ? 'missed' : `${notification.judgment}`
         stateful[`judge_${name}`] = time
-        let deviationMode =
+        const deviationMode =
           notification.judgment === -1 || notification.judgment === 1
             ? 'none'
             : notification.delta > 0
@@ -207,9 +208,9 @@ export class PlayerDisplay {
     }
 
     function updateExplode() {
-      let notifications = playerState.notifications.judgments
+      const notifications = playerState.notifications.judgments
       for (let i = 0; i < notifications.length; i++) {
-        let notification = notifications[i]
+        const notification = notifications[i]
         if (!breaksCombo(notification.judgment)) {
           stateful[`${notification.column}_explode`] = time
         }

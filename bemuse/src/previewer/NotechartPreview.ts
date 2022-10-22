@@ -431,6 +431,7 @@ class ComboPreviewer {
       _.identity
     )
   }
+
   getComboInfo(time: number): ComboInfo | null {
     const index = _.sortedLastIndex(this._events, time)
     if (index === 0) {
@@ -442,6 +443,7 @@ class ComboPreviewer {
       comboTime: prev,
     }
   }
+
   getMaxCombo(): number {
     return this._events.length
   }

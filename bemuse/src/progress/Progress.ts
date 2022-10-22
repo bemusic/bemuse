@@ -32,6 +32,7 @@ export class Progress {
     this.extra = extra
     this._observable.notify()
   }
+
   /**
    * Attaches a progress listener function to this progress.
    * The function `f` will be called immediately and synchronously upon watching,
@@ -43,6 +44,7 @@ export class Progress {
     f(this)
     return this._observable.watch(() => f(this))
   }
+
   /**
    * The current progress as a fraction (out of 1).
    */
@@ -53,6 +55,7 @@ export class Progress {
       return null
     }
   }
+
   /**
    * Returns a string representation of this progress instance.
    * This method is used for displaying the progress as a text.

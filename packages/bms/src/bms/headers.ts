@@ -29,7 +29,7 @@ export class BMSHeaders {
    * @param callback will be called for each header field
    */
   each(callback: (key: string, value: string) => any) {
-    for (var i in this._data) {
+    for (const i in this._data) {
       callback(i, this._data[i])
     }
   }
@@ -58,7 +58,7 @@ export class BMSHeaders {
    * @param value field’s value
    */
   set(name: string, value: string) {
-    var key = name.toLowerCase()
+    const key = name.toLowerCase()
     this._data[key] = value
     ;(this._dataAll[key] || (this._dataAll[key] = [])).push(value)
   }

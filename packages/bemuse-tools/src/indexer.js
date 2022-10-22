@@ -9,17 +9,17 @@ import yaml from 'js-yaml'
 import { getSongInfo } from 'bemuse-indexer'
 import { join, dirname, basename } from 'path'
 
-let fileStat = Promise.promisify(fs.stat, fs)
-let readFile = Promise.promisify(fs.readFile, fs)
-let writeFile = Promise.promisify(fs.writeFile, fs)
-let glob = Promise.promisify(require('glob'))
+const fileStat = Promise.promisify(fs.stat, fs)
+const readFile = Promise.promisify(fs.readFile, fs)
+const writeFile = Promise.promisify(fs.writeFile, fs)
+const glob = Promise.promisify(require('glob'))
 
 function Cache(path) {
-  let data = load()
-  let stream = fs.createWriteStream(path, { encoding: 'utf-8', flags: 'a' })
+  const data = load()
+  const stream = fs.createWriteStream(path, { encoding: 'utf-8', flags: 'a' })
 
   function load() {
-    let out = {}
+    const out = {}
     let text
     try {
       text = fs.readFileSync(path, 'utf-8')
@@ -28,8 +28,8 @@ function Cache(path) {
     }
     text.split(/\n/).forEach(function (line) {
       if (line.length < 34) return
-      let md5 = line.substr(0, 32)
-      let payload = JSON.parse(line.substr(33))
+      const md5 = line.substr(0, 32)
+      const payload = JSON.parse(line.substr(33))
       out[md5] = payload
     })
     return out
@@ -52,26 +52,26 @@ function Cache(path) {
 // See issue #575 for more details.
 export function index(path, { recursive }) {
   return co(function* () {
-    let stat = yield fileStat(path)
+    const stat = yield fileStat(path)
     if (!stat.isDirectory()) throw new Error('Not a directory: ' + path)
 
-    let cache = new Cache(join(path, 'index.cache'))
+    const cache = new Cache(join(path, 'index.cache'))
 
     console.log('-> Scanning files...')
-    let dirs = new Map()
-    let pattern = (recursive ? '**/' : '') + '*/*.{bms,bme,bml,bmson}'
-    for (var name of yield glob(pattern, { cwd: path })) {
-      let bmsPath = join(path, name)
+    const dirs = new Map()
+    const pattern = (recursive ? '**/' : '') + '*/*.{bms,bme,bml,bmson}'
+    for (const name of yield glob(pattern, { cwd: path })) {
+      const bmsPath = join(path, name)
       put(dirs, dirname(bmsPath), () => []).push(basename(bmsPath))
     }
 
-    let songs = []
-    let maxDirLength = _(Array.from(dirs.keys())).map('length').max()
-    for (let [dir, files] of dirs) {
-      let filesToParse = []
+    const songs = []
+    const maxDirLength = _(Array.from(dirs.keys())).map('length').max()
+    for (const [dir, files] of dirs) {
+      const filesToParse = []
 
-      for (let file of files) {
-        let buf = yield readFile(join(dir, file))
+      for (const file of files) {
+        const buf = yield readFile(join(dir, file))
         if (buf.length > 1048576) {
           console.error(chalk.red('BMS file is too long:'), join(dir, file))
           continue
@@ -79,15 +79,15 @@ export function index(path, { recursive }) {
         filesToParse.push({ name: file, data: buf })
       }
 
-      let extra = yield getExtra(dir)
-      let song = yield getSongInfo(filesToParse, { cache, extra })
+      const extra = yield getExtra(dir)
+      const song = yield getSongInfo(filesToParse, { cache, extra })
       song.id = dir
       song.path = dir
 
-      let levels = _(song.charts)
+      const levels = _(song.charts)
         .sortBy((chart) => chart.info.level)
         .map((chart) => {
-          let ch =
+          const ch =
             chart.keys === '5K'
               ? chalk.gray
               : chart.keys === '7K'
@@ -110,7 +110,7 @@ export function index(path, { recursive }) {
       songs.push(song)
     }
 
-    let collection = {
+    const collection = {
       songs: songs,
     }
 
@@ -130,7 +130,7 @@ function getExtra(dir) {
     }
     if (readme !== null) {
       try {
-        let meta = yaml.safeLoad(readme.substr(0, readme.indexOf('---', 3)))
+        const meta = yaml.safeLoad(readme.substr(0, readme.indexOf('---', 3)))
         extra = Object.assign({}, meta, extra)
       } catch (e) {
         console.error(chalk.red('Unable to read metadata:'), '' + e)
@@ -144,7 +144,7 @@ function put(map, key, f) {
   if (map.has(key)) {
     return map.get(key)
   } else {
-    var object = f(key)
+    const object = f(key)
     map.set(key, object)
     return object
   }

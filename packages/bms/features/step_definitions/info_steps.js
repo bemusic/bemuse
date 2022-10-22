@@ -1,4 +1,4 @@
-var steps = require('artstep')
+const steps = require('artstep')
 
 module.exports = steps()
   .Then(/^song title should be "([^"]*)"$/, function (text) {

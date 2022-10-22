@@ -60,7 +60,7 @@ export function bind(from: Progress, to: Progress) {
  * Updates the `target` with progress data from multiple sources.
  */
 export function simultaneous(target: Progress) {
-  let queue: Progress[] = []
+  const queue: Progress[] = []
   let current: Progress | undefined
   let unsubscribe: (() => void) | null = null
   function update() {

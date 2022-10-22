@@ -62,6 +62,7 @@ class OptionsPlayerSelectorItem extends React.PureComponent {
       </div>
     )
   }
+
   handleClick = () => {
     this.props.onSelect(this.props.value)
   }

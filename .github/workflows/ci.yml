@@ -81,8 +81,10 @@ jobs:
         uses: actions/checkout@v3
       - name: Set up project
         uses: ./.github/actions/setup-project
+      - name: Build
+        run: node common/scripts/install-run-rush.js build --to-except bemuse
       - name: Lint and fix all auto-fixable problems
-        run: node common/scripts/install-run-rush.js lint-fix
+        run: node common/scripts/install-run-rush.js lint --fix --verbose
         if: always()
       - name: Make sure all source files are formatted using Prettier
         run: node common/scripts/install-run-rush.js format-all

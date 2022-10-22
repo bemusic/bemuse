@@ -42,13 +42,16 @@ export class OmniInput {
     this._status = {}
     this._axis = {}
   }
+
   _handleKeyDown(e) {
     this._status[`${e.which}`] = true
     if (this._exclusive) e.preventDefault()
   }
+
   _handleKeyUp(e) {
     this._status[`${e.which}`] = false
   }
+
   _handleMIDIMessage(e) {
     if (!e || !e.data) return
     const data = e.data
@@ -84,6 +87,7 @@ export class OmniInput {
       this._status[`${prefix}.pitch.down`] = bend < 0x1f00
     }
   }
+
   _updateGamepads() {
     const nav = this._window.navigator
     const gamepads = nav.getGamepads
@@ -99,6 +103,7 @@ export class OmniInput {
       }
     }
   }
+
   _updateGamepad(gamepad) {
     const prefix = `gamepad.${gamepad.index}`
     for (let i = 0; i < gamepad.buttons.length; i++) {
@@ -120,6 +125,7 @@ export class OmniInput {
       this._status[`${axisName}.negative`] = axis <= -this._deadzone
     }
   }
+
   update() {
     this._updateGamepads()
     return this._status
@@ -137,7 +143,7 @@ export class OmniInput {
   }
 
   dispose() {
-    for (let dispose of this._disposables) {
+    for (const dispose of this._disposables) {
       dispose()
     }
   }

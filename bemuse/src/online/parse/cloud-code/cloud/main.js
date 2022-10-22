@@ -1,17 +1,17 @@
 /* global Parse */
-var GameScore = Parse.Object.extend('GameScore')
+const GameScore = Parse.Object.extend('GameScore')
 
 Parse.Cloud.define('submitScore', function (request, response) {
   Parse.Cloud.useMasterKey()
 
-  var params = request.params
-  var user = request.user
+  const params = request.params
+  const user = request.user
 
   if (!user) {
     return response.error('Unauthenticated!')
   }
 
-  var query = new Parse.Query(GameScore)
+  const query = new Parse.Query(GameScore)
   query.equalTo('user', user)
   query.equalTo('md5', params.md5)
   query.equalTo('playMode', params.playMode)
@@ -60,7 +60,7 @@ Parse.Cloud.define('submitScore', function (request, response) {
     })
     .then(
       function (gameScore) {
-        var countQuery = new Parse.Query(GameScore)
+        const countQuery = new Parse.Query(GameScore)
         countQuery.equalTo('md5', params.md5)
         countQuery.equalTo('playMode', params.playMode)
         countQuery.greaterThan('score', gameScore.get('score'))
@@ -98,10 +98,10 @@ Parse.Cloud.define('submitScore', function (request, response) {
 Parse.Cloud.afterSave(Parse.User, function (request) {
   Parse.Cloud.useMasterKey()
 
-  var user = request.user
+  const user = request.user
 
   if (!user.existed()) {
-    var userACL = new Parse.ACL(user)
+    const userACL = new Parse.ACL(user)
     userACL.setPublicReadAccess(false)
     user.setACL(userACL)
     user.save()

@@ -2,10 +2,10 @@ import Bacon from 'baconjs'
 
 function observeMidiAccess(access) {
   return Bacon.fromBinder((sink) => {
-    for (let port of access.inputs.values()) {
+    for (const port of access.inputs.values()) {
       sink(new Bacon.Next(port))
     }
-    for (let port of access.outputs.values()) {
+    for (const port of access.outputs.values()) {
       sink(new Bacon.Next(port))
     }
     access.onstatechange = (e) => {

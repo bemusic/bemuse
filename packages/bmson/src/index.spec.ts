@@ -77,7 +77,7 @@ describe('bmson v1.0.0', function () {
 
   describe('timingInfoForBmson', function () {
     it('should return timing of initial bpm', function () {
-      let { initialBPM } = bmson.timingInfoForBmson({
+      const { initialBPM } = bmson.timingInfoForBmson({
         version: '1.0.0',
         info: {
           init_bpm: 180,
@@ -87,7 +87,7 @@ describe('bmson v1.0.0', function () {
     })
 
     it('supports BPM changes', function () {
-      let { initialBPM, actions } = bmson.timingInfoForBmson({
+      const { initialBPM, actions } = bmson.timingInfoForBmson({
         version: '1.0.0',
         info: { init_bpm: 120 },
         bpm_events: [{ y: 2880, bpm: 196 }],
@@ -97,7 +97,7 @@ describe('bmson v1.0.0', function () {
     })
 
     it('supports stops', function () {
-      let { initialBPM, actions } = bmson.timingInfoForBmson({
+      const { initialBPM, actions } = bmson.timingInfoForBmson({
         version: '1.0.0',
         info: { init_bpm: 120, resolution: 8 },
         stop_events: [{ y: 96, duration: 42 }],
@@ -109,7 +109,7 @@ describe('bmson v1.0.0', function () {
 
   describe('musicalScoreForBmson', function () {
     function setup(notes: Note[]) {
-      let data = {
+      const data = {
         version: '1.0.0',
         info: {
           init_bpm: 100,
@@ -132,7 +132,7 @@ describe('bmson v1.0.0', function () {
     })
 
     it('generates keysounds and notes', function () {
-      let score = setup([{ x: 1, y: 24, l: 0, c: false }])
+      const score = setup([{ x: 1, y: 24, l: 0, c: false }])
       assert.deepEqual(score.notes.all(), [
         {
           column: '1',
@@ -147,7 +147,7 @@ describe('bmson v1.0.0', function () {
     })
 
     it('handles long notes', function () {
-      let score = setup([{ x: 1, y: 24, l: 48, c: false }])
+      const score = setup([{ x: 1, y: 24, l: 48, c: false }])
       assert.deepEqual(score.notes.all(), [
         {
           column: '1',
@@ -161,11 +161,11 @@ describe('bmson v1.0.0', function () {
     })
 
     it('handles keysound slices', function () {
-      let score = setup([
+      const score = setup([
         { x: 1, y: 24, l: 0, c: false },
         { x: 1, y: 48, l: 0, c: true },
       ])
-      let notes = score.notes.all()
+      const notes = score.notes.all()
       assert(notes[0].keysoundStart === 0)
       assert(notes[0].keysoundEnd === 0.6)
       assert(notes[1].keysoundStart === 0.6)

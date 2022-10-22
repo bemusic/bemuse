@@ -3,7 +3,7 @@ import TouchPlugin from './touch-plugin'
 
 describe('TouchPlugin', function () {
   it('should get value when touching', function () {
-    let instance = new TouchPlugin({
+    const instance = new TouchPlugin({
       skinData: {},
       refs: {
         p1_1: new Set([
@@ -18,7 +18,7 @@ describe('TouchPlugin', function () {
         { x: 32, y: 32, id: 'touch2' },
       ],
     })
-    let data = instance.get()
+    const data = instance.get()
     expect(data['p1_1']).to.equal(1)
     expect(data['p1_2']).to.equal(0)
   })

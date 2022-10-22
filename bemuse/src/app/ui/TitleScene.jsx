@@ -130,9 +130,9 @@ class TitleScene extends React.Component {
 
   renderVersion() {
     return (
-      <React.Fragment>
+      <>
         <strong>Bemuse</strong> v{version}
-      </React.Fragment>
+      </>
     )
   }
 

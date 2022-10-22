@@ -36,7 +36,7 @@ export default class YouTube extends React.Component {
   }
 
   handleResize = () => {
-    let el = ReactDOM.findDOMNode(this)
+    const el = ReactDOM.findDOMNode(this)
     el.style.height = (el.offsetWidth * 9) / 16 + 'px'
   }
 }

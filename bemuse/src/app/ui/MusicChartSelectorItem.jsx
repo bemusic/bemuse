@@ -15,7 +15,7 @@ class MusicChartSelectorItem extends React.Component {
   }
 
   render() {
-    let classes = c('MusicChartSelectorItem', {
+    const classes = c('MusicChartSelectorItem', {
       'is-active': this.props.isSelected,
       'is-replayable': this.props.isReplayable,
       'is-tutorial': this.props.isTutorial,
@@ -35,6 +35,7 @@ class MusicChartSelectorItem extends React.Component {
       </li>
     )
   }
+
   renderText() {
     if (this.props.isTutorial) {
       const gameMode = this.props.chart.keys === '5K' ? '5 keys' : '7 keys'
@@ -46,6 +47,7 @@ class MusicChartSelectorItem extends React.Component {
       </span>
     )
   }
+
   handleClick = (e) => {
     this.props.onChartClick(this.props.chart, e)
   }

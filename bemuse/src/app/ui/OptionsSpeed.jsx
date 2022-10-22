@@ -13,22 +13,27 @@ class OptionsSpeed extends React.PureComponent {
   parseSpeed(speedString) {
     return +(+speedString || 1.0).toFixed(1)
   }
+
   stringifySpeed(speed) {
     return speed.toFixed(1)
   }
+
   handleMinusButtonClick = () => {
-    let speed = this.parseSpeed(this.props.value)
-    let nextSpeed = speed - (speed > 0.5 ? 0.5 : speed > 0.2 ? 0.3 : 0)
+    const speed = this.parseSpeed(this.props.value)
+    const nextSpeed = speed - (speed > 0.5 ? 0.5 : speed > 0.2 ? 0.3 : 0)
     this.props.onChange(this.stringifySpeed(nextSpeed))
   }
+
   handlePlusButtonClick = () => {
-    let speed = this.parseSpeed(this.props.value)
-    let nextSpeed = speed + (speed < 0.5 ? 0.3 : 0.5)
+    const speed = this.parseSpeed(this.props.value)
+    const nextSpeed = speed + (speed < 0.5 ? 0.3 : 0.5)
     this.props.onChange(this.stringifySpeed(nextSpeed))
   }
+
   handleSpeedInputChange = (nextSpeed) => {
     this.props.onChange(this.stringifySpeed(nextSpeed))
   }
+
   render() {
     return (
       <div className='OptionsSpeed'>

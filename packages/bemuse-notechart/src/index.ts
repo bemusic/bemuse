@@ -249,7 +249,7 @@ export class Notechart {
     playerOptions: Partial<PlayerOptions>
   ) {
     let chain = _.chain(bmsNotes)
-    let keys = getKeys(bmsNotes)
+    const keys = getKeys(bmsNotes)
     if (playerOptions.scratch === 'off') {
       chain = chain.map((note: BMS.BMSNote) => {
         if (note.column && note.column === 'SC') {
@@ -263,14 +263,14 @@ export class Notechart {
       const columnsToShift = ['1', '2', '3', '4', '5', '6', '7']
       const shiftNote = (amount: number) => (note: BMS.BMSNote) => {
         if (note.column) {
-          let index = columnsToShift.indexOf(note.column)
+          const index = columnsToShift.indexOf(note.column)
           if (index > -1) {
-            let newIndex = index + amount
+            const newIndex = index + amount
             invariant(
               newIndex < columnsToShift.length,
               'Weird. Columns must not shift beyond available column'
             )
-            let newColumn = columnsToShift[newIndex]
+            const newColumn = columnsToShift[newIndex]
             return Object.assign({}, note, { column: newColumn })
           }
         }
@@ -290,7 +290,7 @@ export class Notechart {
     return bmsNotes
       .filter((note) => note.column)
       .map((note) => {
-        let spec = this._generateEvent(note.beat) as GameNote
+        const spec = this._generateEvent(note.beat) as GameNote
         spec.id = nextId++
         spec.column = note.column!
         spec.keysound = note.keysound
@@ -312,7 +312,7 @@ export class Notechart {
     return bmsNotes
       .filter((note) => note.column)
       .map((note) => {
-        let spec = this._generateEvent(note.beat) as GameLandmine
+        const spec = this._generateEvent(note.beat) as GameLandmine
         spec.id = nextId++
         spec.column = note.column!
         this._updateDuration(spec)
@@ -328,7 +328,7 @@ export class Notechart {
     return bmsNotes
       .filter((note) => !note.column)
       .map((note) => {
-        let spec = this._generateEvent(note.beat) as SoundedEvent
+        const spec = this._generateEvent(note.beat) as SoundedEvent
         spec.keysound = note.keysound
         spec.keysoundStart = note.keysoundStart
         spec.keysoundEnd = note.keysoundEnd
@@ -337,10 +337,10 @@ export class Notechart {
   }
 
   _generateKeysoundFiles(keysounds: BMS.Keysounds): string[] {
-    let set = new Set<string>()
-    for (let array of [this.notes, this.autos]) {
-      for (let event_ of array) {
-        let file = keysounds.get(event_.keysound)
+    const set = new Set<string>()
+    for (const array of [this.notes, this.autos]) {
+      for (const event_ of array) {
+        const file = keysounds.get(event_.keysound)
         if (file) set.add(file)
       }
     }
@@ -367,7 +367,7 @@ export class Notechart {
 export default Notechart
 
 function getKeys(bmsNotes: BMS.BMSNote[]) {
-  for (let note of bmsNotes) {
+  for (const note of bmsNotes) {
     if (note.column === '6' || note.column === '7') {
       return '7K'
     }

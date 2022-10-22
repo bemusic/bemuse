@@ -24,9 +24,11 @@ class CustomFolderContextMock implements CustomFolderContext {
   async get(key: string) {
     return this.map.get(key)
   }
+
   async set(key: string, value: CustomFolderState) {
     this.map.set(key, value)
   }
+
   async del(key: string) {
     this.map.delete(key)
   }

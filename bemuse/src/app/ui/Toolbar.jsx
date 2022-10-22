@@ -48,6 +48,7 @@ class DesktopToolbar extends React.PureComponent {
   static propTypes = {
     items: PropTypes.array.isRequired,
   }
+
   render() {
     return (
       <SceneToolbar>
@@ -67,6 +68,7 @@ class DesktopToolbar extends React.PureComponent {
       </SceneToolbar>
     )
   }
+
   renderItem(item) {
     let content = item.text
     if (item.tip) {
@@ -90,6 +92,7 @@ class DesktopToolbar extends React.PureComponent {
       </a>
     )
   }
+
   renderSpacer() {
     return <SceneToolbar.Spacer />
   }
@@ -99,11 +102,12 @@ class MobileToolbar extends React.PureComponent {
   static propTypes = {
     items: PropTypes.array.isRequired,
   }
+
   render() {
     return (
       <Toggle>
         {({ on, getTogglerProps }) => (
-          <React.Fragment>
+          <>
             <FloatingMobileMenu visible={on}>
               {this.props.items.map((element, index) => {
                 if (element.type === 'item') {
@@ -124,11 +128,12 @@ class MobileToolbar extends React.PureComponent {
             <FloatingMobileButton buttonProps={getTogglerProps()}>
               <Icon name='bars' />
             </FloatingMobileButton>
-          </React.Fragment>
+          </>
         )}
       </Toggle>
     )
   }
+
   renderItem(item) {
     return (
       <a onClick={item.onClick} href={item.href}>
@@ -136,6 +141,7 @@ class MobileToolbar extends React.PureComponent {
       </a>
     )
   }
+
   renderSeparator() {
     return <FloatingMobileMenu.Separator />
   }

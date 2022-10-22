@@ -2,7 +2,16 @@ import bench from 'bemuse/devtools/benchmark'
 
 import * as touch3d from '../display/touch3d'
 
-let BUTTONS = ['p1_1', 'p1_2', 'p1_3', 'p1_4', 'p1_5', 'p1_6', 'p1_7', 'start']
+const BUTTONS = [
+  'p1_1',
+  'p1_2',
+  'p1_3',
+  'p1_4',
+  'p1_5',
+  'p1_6',
+  'p1_7',
+  'start',
+]
 
 window.BEMUSE_TOUCH_STATS = []
 
@@ -11,7 +20,7 @@ function StatsRecorder() {
   window.BEMUSE_TOUCH_STATS.push(stats)
   return {
     record(input) {
-      for (let { x, y } of input) {
+      for (const { x, y } of input) {
         stats.push({ x: Math.round(x), y: Math.round(y) })
       }
     },
@@ -26,26 +35,26 @@ function StatsRecorder() {
 export function TouchPlugin(context) {
   let scratchStartY = null
   let scratchY = null
-  let getInput = bench.wrap('input:touch:I', _getInput)
-  let getScratch = bench.wrap('input:touch:SC', _getScratch)
-  let getButton = bench.wrap('input:touch:B', _getButton)
-  let getPinch = bench.wrap('input:touch:P', _getPinch)
-  let statsRecorder = new StatsRecorder()
+  const getInput = bench.wrap('input:touch:I', _getInput)
+  const getScratch = bench.wrap('input:touch:SC', _getScratch)
+  const getButton = bench.wrap('input:touch:B', _getButton)
+  const getPinch = bench.wrap('input:touch:P', _getPinch)
+  const statsRecorder = new StatsRecorder()
   const touch3dMode = context.skinData.displayMode === 'touch3d'
   const pinchThreshold = touch3dMode ? touch3d.getRow(0.8).y : 550
   return {
     name: 'TouchPlugin',
     get() {
-      let input = getInput()
-      let output = {}
+      const input = getInput()
+      const output = {}
       if (bench.enabled) bench.stats['input:touch:n'] = '' + input.length
       statsRecorder.record(input)
       output['p1_SC'] = getScratch(input)
-      for (let button of BUTTONS) {
+      for (const button of BUTTONS) {
         output[button] = getButton(input, button)
       }
       if (touch3dMode) {
-        for (let p of input) {
+        for (const p of input) {
           const lane = touch3d.getTouchedColumn(p.x, p.y)
           if (lane) output['p1_' + lane] = 1
         }
@@ -69,11 +78,11 @@ export function TouchPlugin(context) {
     return context.input
   }
   function _getButton(input, button) {
-    let objects = context.refs[button]
+    const objects = context.refs[button]
     if (objects) {
-      for (let object of objects) {
-        let bounds = _expand(object.getBounds())
-        for (let p of input) {
+      for (const object of objects) {
+        const bounds = _expand(object.getBounds())
+        for (const p of input) {
           if (bounds.contains(p.x, p.y)) return 1
         }
       }
@@ -81,11 +90,11 @@ export function TouchPlugin(context) {
     return 0
   }
   function _getScratch(input) {
-    let objects = context.refs['p1_SC']
+    const objects = context.refs['p1_SC']
     if (!objects) return 0
     scratchY = null
-    for (let p of input) {
-      for (let object of objects) {
+    for (const p of input) {
+      for (const object of objects) {
         if (_expand(object.getBounds(), 32).contains(p.x, p.y)) {
           scratchY = p.y
           break
@@ -116,7 +125,7 @@ export function TouchPlugin(context) {
   function _getPinch(input) {
     let a = null
     let b = null
-    for (let p of input) {
+    for (const p of input) {
       if (p.y < pinchThreshold) {
         if (a === null) {
           a = p.y

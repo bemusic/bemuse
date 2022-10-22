@@ -26,21 +26,27 @@ export class GameController {
     this.initializeBenchmark()
     this.initializeTestModeHooks()
   }
+
   get game() {
     return this._game
   }
+
   get display() {
     return this._display
   }
+
   get audio() {
     return this._audio
   }
+
   get promise() {
     return this._promise
   }
+
   get state() {
     return this._state
   }
+
   get latestGameTime() {
     return this._latestGameTime
   }
@@ -52,7 +58,7 @@ export class GameController {
     this._input.use(new OmniInputPlugin(this._game))
     this._input.use(new TouchPlugin(this._display.context))
     let stopped = false
-    let frame = () => {
+    const frame = () => {
       if (stopped) return
       this._update()
       requestAnimationFrame(frame)
@@ -63,7 +69,7 @@ export class GameController {
 
   // Exits the game when escape is pressed.
   _handleEscape() {
-    let onKeyDown = (e) => {
+    const onKeyDown = (e) => {
       const ESCAPE_KEY = 27
       const F1_KEY = 112
       if (e.keyCode === ESCAPE_KEY) {
@@ -87,6 +93,7 @@ export class GameController {
   _quitGame() {
     this._resolvePromise({ finished: false, replay: false })
   }
+
   _replayGame() {
     this._resolvePromise({ finished: false, replay: true })
   }
@@ -129,8 +136,8 @@ export class GameController {
     this._clock.update()
     this._input.update()
     this._timer.update()
-    let t = this._timer.time
-    let A = this._audioInputLatency
+    const t = this._timer.time
+    const A = this._audioInputLatency
     this._latestGameTime = t
     this._state.update(t - A, this._input, this._timer)
     this._audio.update(t, this._state)
@@ -156,6 +163,7 @@ export class GameController {
       'render'
     )
   }
+
   initializeTestModeHooks() {
     if (!BemuseTestMode.isTestModeEnabled()) return
     BemuseTestMode.setGameLifecycleHandler({

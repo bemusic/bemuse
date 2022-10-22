@@ -17,13 +17,13 @@ export function main() {
 }
 
 function setupMocha() {
-  let mochaElement = document.createElement('div')
+  const mochaElement = document.createElement('div')
   mochaElement.id = 'mocha'
   document.body.appendChild(mochaElement)
 }
 
 function runMocha() {
-  let specs = []
+  const specs = []
   mocha
     .run()
     .on('test end', function reportFailedSpec(test) {

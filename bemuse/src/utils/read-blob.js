@@ -11,7 +11,7 @@ export function readBlob(blob) {
   return {
     as(type) {
       return new Promise(function (resolve, reject) {
-        let reader = new FileReader()
+        const reader = new FileReader()
         reader.onload = function () {
           resolve(reader.result)
         }

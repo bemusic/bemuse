@@ -8,9 +8,11 @@ export class URLResource implements IResource {
   read(progress: Progress) {
     return download(this.url).as('arraybuffer', progress)
   }
+
   async resolveUrl() {
     return Promise.resolve(this.url)
   }
+
   get name() {
     return basename(this.url)
   }

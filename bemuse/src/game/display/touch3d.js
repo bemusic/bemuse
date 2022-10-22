@@ -37,14 +37,14 @@ const config = {
  *     it will appear bigger. This value represents that scale.
  */
 export function getRow(position) {
-  let excess = Math.max(0, position - 1)
+  const excess = Math.max(0, position - 1)
   if (position < 0) position = 0
   if (position > 1) position = 1
-  let theta = config.t0 + (config.t1 - config.t0) * position
-  let pointX = config.cx + Math.cos(theta) * config.r
-  let pointY = config.cy - Math.sin(theta) * config.r
-  let projection = config.p / (config.p - pointX)
-  let screenY = pointY * projection + 720 / 2
+  const theta = config.t0 + (config.t1 - config.t0) * position
+  const pointX = config.cx + Math.cos(theta) * config.r
+  const pointY = config.cy - Math.sin(theta) * config.r
+  const projection = config.p / (config.p - pointX)
+  const screenY = pointY * projection + 720 / 2
   return { y: screenY + excess * 2048, projection }
 }
 
@@ -76,8 +76,8 @@ export function getTouchedColumn(x, y) {
     }
   }
   if (mid < 0.8) return null
-  let x0 = 1280 / 2 + row.projection * -config.w
-  let x1 = 1280 / 2 + row.projection * config.w
+  const x0 = 1280 / 2 + row.projection * -config.w
+  const x1 = 1280 / 2 + row.projection * config.w
   let pos = Math.floor(((x - x0) / (x1 - x0)) * 7)
   if (pos >= -1 && pos <= 7) {
     if (pos < 0) pos = 0

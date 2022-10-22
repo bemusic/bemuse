@@ -15,7 +15,7 @@ describe('SongLoader', function () {
   }
 
   describe('with BMS files', function () {
-    let resources = createResources({
+    const resources = createResources({
       '01.bme': {
         read() {
           return buffer('#TITLE meow [NORMAL]\n#BPM 90\n#00111:01')
@@ -34,7 +34,7 @@ describe('SongLoader', function () {
     })
     let song
     before(function () {
-      let options = { onMessage: (msg) => console.log(msg) }
+      const options = { onMessage: (msg) => console.log(msg) }
       return Promise.resolve(loadSongFromResources(resources, options)).tap(
         (x) => (song = x)
       )
@@ -51,7 +51,7 @@ describe('SongLoader', function () {
   })
 
   describe('with bmson files', function () {
-    let resources = createResources({
+    const resources = createResources({
       '01.bmson': {
         read() {
           return buffer('{"info":{"title":"meow","initBPM":90}}')

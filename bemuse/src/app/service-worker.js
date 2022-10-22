@@ -13,11 +13,11 @@ function log(...args) {
 
 log('I am a service worker! ' + version)
 
-var APP_CACHE_KEY = 'app'
-var SITE_CACHE_KEY = 'site-v' + version
-var RES_CACHE_KEY = 'site-v' + version
-var SKIN_CACHE_KEY = 'skin-v' + version
-var SONG_CACHE_KEY = 'songs'
+const APP_CACHE_KEY = 'app'
+const SITE_CACHE_KEY = 'site-v' + version
+const RES_CACHE_KEY = 'site-v' + version
+const SKIN_CACHE_KEY = 'skin-v' + version
+const SONG_CACHE_KEY = 'songs'
 
 self.addEventListener('install', function (event) {
   event.waitUntil(
@@ -39,11 +39,11 @@ self.addEventListener('fetch', function (event) {
     log('Bailing out for ranged request.', event.request.url)
     return
   }
-  var build = location.origin + '/build/'
-  var skin = location.origin + '/skins/'
-  var res = location.origin + '/res/'
-  var site = location.origin
-  var request = event.request
+  const build = location.origin + '/build/'
+  const skin = location.origin + '/skins/'
+  const res = location.origin + '/res/'
+  const site = location.origin
+  const request = event.request
   if (request.url.startsWith(build)) {
     if (request.url !== build + 'boot.js') {
       return cacheForever(event, APP_CACHE_KEY)
@@ -116,7 +116,7 @@ function staleWhileRevalidate(event, cacheName) {
   event.respondWith(
     caches.open(cacheName).then(function (cache) {
       return cache.match(event.request).then(function (cached) {
-        var promise = fetch(event.request).then(function (response) {
+        const promise = fetch(event.request).then(function (response) {
           if (response && response.ok) {
             log('Updated:', event.request.url)
             cache.put(event.request, response.clone())

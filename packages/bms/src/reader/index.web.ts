@@ -13,7 +13,7 @@ export function readAsync(
 ): void
 export function readAsync(buffer: Buffer, callback?: ReadCallback): void
 export function readAsync(...args: any[]) {
-  let buffer: Buffer = args[0]
+  const buffer: Buffer = args[0]
   let options: ReaderOptions | null = args[1]
   let callback: ReadCallback = args[2]
   if (callback) {
@@ -23,8 +23,8 @@ export function readAsync(...args: any[]) {
     options = null
     callback = args[1]
   }
-  var charset = (options && options.forceEncoding) || chardet.detect(buffer)
-  var reader = new FileReader()
+  const charset = (options && options.forceEncoding) || chardet.detect(buffer)
+  const reader = new FileReader()
   reader.onload = function () {
     callback(null, reader.result as string)
   }
