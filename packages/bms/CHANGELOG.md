@@ -1,6 +1,11 @@
 # Change Log - bms
 
-This log was last generated on Sat, 01 Jan 2022 13:08:37 GMT and should not be manually modified.
+This log was last generated on Sat, 22 Oct 2022 05:26:37 GMT and should not be manually modified.
+
+## 50.1.1
+Sat, 22 Oct 2022 05:26:37 GMT
+
+_Version update only_
 
 ## 50.1.0
 Sat, 01 Jan 2022 13:08:37 GMT

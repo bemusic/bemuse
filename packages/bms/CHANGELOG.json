@@ -2,6 +2,18 @@
   "name": "bms",
   "entries": [
     {
+      "version": "50.1.1",
+      "tag": "bms_v50.1.1",
+      "date": "Sat, 22 Oct 2022 05:26:37 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"eslint-config-bemuse\" from `^4.0.2` to `^5.0.0`"
+          }
+        ]
+      }
+    },
+    {
       "version": "50.1.0",
       "tag": "bms_v50.1.0",
       "date": "Sat, 01 Jan 2022 13:08:37 GMT",
