@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "eslint-config-bemuse",
+      "comment": "Initial version published",
+      "type": "patch"
+    }
+  ],
+  "packageName": "eslint-config-bemuse"
+}
