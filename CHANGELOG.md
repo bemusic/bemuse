@@ -29,7 +29,7 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
-## v52.2.1-pre.202210220536
+## v52.2.1 (2022-10-22)
 
 This is a maintenance release, mostly consists of internal tooling updates and
 code clean-up. If you encounter any gameplay issues, please report them to our
