@@ -1,5 +1,4 @@
 import axios from 'axios'
-import co from 'co'
 import invariant from 'invariant'
 
 import * as authenticationFlow from './authenticationFlow'
@@ -214,10 +213,8 @@ export default function createScoreboardClient({
       invariant(typeof username === 'string', 'username must be a string')
       invariant(typeof password === 'string', 'password must be a string')
       invariant(typeof email === 'string', 'email must be a string')
-      // TODO [#632]: Convert the `signUp` method to async function (instead of using `co`) in src/online/scoreboard-system/createScoreboardClient.js
-      // See issue #575 for more details.
-      return co(function* () {
-        const { idToken } = yield* authenticationFlow.signUp(
+      return async () => {
+        const { idToken } = await authenticationFlow.signUp(
           username,
           email,
           password,
@@ -229,15 +226,14 @@ export default function createScoreboardClient({
             ensureLink,
           }
         )
-        return { playerToken: yield resolvePlayerTokenFromIdToken(idToken) }
-      })
+        return { playerToken: await resolvePlayerTokenFromIdToken(idToken) }
+      }
     },
     loginByUsernamePassword({ username, password }) {
       invariant(typeof username === 'string', 'username must be a string')
       invariant(typeof password === 'string', 'password must be a string')
-      // TODO [#633]: Convert the `loginByUsernamePassword` method to async function (instead of using `co`) in src/online/scoreboard-system/createScoreboardClient.js
-      return co(function* () {
-        const { idToken } = yield* authenticationFlow.loginByUsernamePassword(
+      return async () => {
+        const { idToken } = await authenticationFlow.loginByUsernamePassword(
           username,
           password,
           {
@@ -247,8 +243,8 @@ export default function createScoreboardClient({
             ensureLink,
           }
         )
-        return { playerToken: yield resolvePlayerTokenFromIdToken(idToken) }
-      })
+        return { playerToken: await resolvePlayerTokenFromIdToken(idToken) }
+      }
     },
     changePassword({ email }) {
       return new Promise((resolve, reject) => {
