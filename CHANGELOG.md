@@ -29,6 +29,14 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## v52.2.1-pre.202210220536
+
+### Internals
+
+- Removed dependency on the `co` library. [#772], by [@MikuroXina]
+
+[#772]: https://github.com/bemusic/bemuse/pull/772
+
 ## v52.2.1-pre.202210220516
 
 ### Internals
