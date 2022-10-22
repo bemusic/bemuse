@@ -1,4 +1,4 @@
-export function* loginByUsernamePassword(
+export async function loginByUsernamePassword(
   username,
   password,
   {
@@ -20,18 +20,18 @@ export function* loginByUsernamePassword(
   }
 ) {
   {
-    const { idToken } = yield* obtainIdToken()
+    const { idToken } = await obtainIdToken()
     log('Loading profile...')
-    yield ensureLink(idToken)
+    await ensureLink(idToken)
     return { idToken }
   }
 
-  function* obtainIdToken() {
+  async function obtainIdToken() {
     const triedEmail = false
     if (/@/.test(username)) {
       log('Authenticating using email...')
       const email = username
-      const { idToken } = yield usernamePasswordLogin(email, password)
+      const { idToken } = await usernamePasswordLogin(email, password)
       if (idToken) {
         log('Authenticated using email.')
         return { idToken }
@@ -39,7 +39,7 @@ export function* loginByUsernamePassword(
     }
 
     log('Resolving player...')
-    const { playerId } = yield resolvePlayerId(username)
+    const { playerId } = await resolvePlayerId(username)
     if (!playerId) {
       throw new Error(
         triedEmail ? 'Invalid email or password' : 'Player not registered'
@@ -47,7 +47,7 @@ export function* loginByUsernamePassword(
     }
 
     log('Authenticating player...')
-    const { idToken } = yield usernamePasswordLogin(playerId, password)
+    const { idToken } = await usernamePasswordLogin(playerId, password)
     if (!idToken) {
       throw new Error('Invalid password')
     }
@@ -55,7 +55,7 @@ export function* loginByUsernamePassword(
   }
 }
 
-export function* signUp(
+export async function signUp(
   username,
   email,
   password,
@@ -81,22 +81,22 @@ export function* signUp(
   }
 ) {
   log('Checking player name availability...')
-  const available = yield checkPlayerNameAvailability(username)
+  const available = await checkPlayerNameAvailability(username)
 
   if (!available) {
     throw new Error('Player name already taken')
   }
 
   log('Registering player name...')
-  const playerId = yield reservePlayerId(username)
+  const playerId = await reservePlayerId(username)
 
   log('Creating account...')
-  const { idToken } = yield userSignUp(playerId, email, password, username)
+  const { idToken } = await userSignUp(playerId, email, password, username)
   if (!idToken) {
     throw new Error('Cannot sign up (unknown error)')
   }
 
   log('Linking account...')
-  yield ensureLink(idToken)
+  await ensureLink(idToken)
   return { idToken }
 }
