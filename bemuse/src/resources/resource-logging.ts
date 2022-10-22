@@ -5,9 +5,11 @@ export default class ResourceLogging {
   private loggingFunction: LoggingFunction = (text) => {
     if (this.buffer) this.buffer.push(text)
   }
+
   public log: LoggingFunction = (text) => {
     this.loggingFunction(text)
   }
+
   setLoggingFunction = (fn: LoggingFunction) => {
     this.loggingFunction = fn
     if (this.buffer) {

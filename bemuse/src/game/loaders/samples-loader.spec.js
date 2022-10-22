@@ -3,10 +3,10 @@ import assert from 'power-assert'
 import SamplesLoader from './samples-loader'
 
 describe('SamplesLoader', function () {
-  var assets
-  var master
-  var loader
-  var keysoundCache
+  let assets
+  let master
+  let loader
+  let keysoundCache
 
   beforeEach(function () {
     assets = { file: sinon.stub() }

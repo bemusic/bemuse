@@ -3,10 +3,10 @@ import Observable from './observable'
 describe('Observable', function () {
   describe('stateless mode', function () {
     it('should call watchers', function () {
-      let s1 = sinon.spy()
-      let s2 = sinon.spy()
-      let o = new Observable()
-      let u = o.watch(s1)
+      const s1 = sinon.spy()
+      const s2 = sinon.spy()
+      const o = new Observable()
+      const u = o.watch(s1)
       void expect(s1).not.to.have.been.called
       o.notify('1')
       expect(s1).to.have.been.calledWith('1')
@@ -24,15 +24,15 @@ describe('Observable', function () {
 
   describe('stateful mode', function () {
     it('should have value', function () {
-      let o = new Observable('0')
+      const o = new Observable('0')
       expect(o.value).to.equal('0')
     })
 
     it('should call watchers', function () {
-      let s1 = sinon.spy()
-      let s2 = sinon.spy()
-      let o = new Observable('0')
-      let u = o.watch(s1)
+      const s1 = sinon.spy()
+      const s2 = sinon.spy()
+      const o = new Observable('0')
+      const u = o.watch(s1)
       expect(s1).to.have.been.calledWith('0')
       o.value = '1'
       expect(s1).to.have.been.calledWith('1')

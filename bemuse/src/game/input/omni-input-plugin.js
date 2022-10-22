@@ -7,7 +7,7 @@ function OmniInputPlugin(game) {
     continuous: game.players[0].options.input.continuous,
     sensitivity: game.players[0].options.input.sensitivity,
   })
-  let kbm = game.players[0].options.input.keyboard
+  const kbm = game.players[0].options.input.keyboard
   const scratch = new DualInput()
 
   // Don't use Btn8 or Btn9 if they are binded

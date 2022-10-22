@@ -177,7 +177,7 @@ export default class AuthenticationPanel extends React.Component {
   }
 
   renderMessage = () => {
-    let state = this.state.authentication
+    const state = this.state.authentication
     if (state.status === 'idle' || !state.message) return null
     return (
       <div className={c('AuthenticationPanelのmessage', 'is-' + state.status)}>

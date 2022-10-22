@@ -2,6 +2,18 @@
   "name": "bemuse-types",
   "entries": [
     {
+      "version": "50.0.2",
+      "tag": "bemuse-types_v50.0.2",
+      "date": "Sat, 22 Oct 2022 05:32:28 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"eslint-config-bemuse\" from `^4.0.2` to `^5.0.0`"
+          }
+        ]
+      }
+    },
+    {
       "version": "50.0.1",
       "tag": "bemuse-types_v50.0.1",
       "date": "Fri, 29 Oct 2021 19:57:09 GMT",

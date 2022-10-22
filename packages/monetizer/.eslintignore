@@ -1,0 +1,10 @@
+**/node_modules/**/*
+**/vendor/**/*
+**/lib/**/*
+**/dist/**/*
+**/build/**/*
+**/coverage/**/*
+**/common/scripts/**/*
+**/temp/**/*
+**/tmp/**/*
+**/.yarn/**/*

@@ -19,7 +19,7 @@ export class AxisLogic {
         delta += 2 + 0.005
       }
 
-      let immediateOutput = delta > 0
+      const immediateOutput = delta > 0
 
       if (this.active && this.positive !== immediateOutput) {
         this.positive = immediateOutput

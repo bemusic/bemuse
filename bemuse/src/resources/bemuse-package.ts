@@ -50,9 +50,9 @@ export class BemusePackageResources implements IResources {
     this._fallbackPattern = options.fallbackPattern
     this._metadataFilename = options.metadataFilename || 'metadata.json'
 
-    let simultaneous = ProgressUtils.simultaneous(this.progress.current)
-    let nextProgress = () => {
-      let progress = new Progress()
+    const simultaneous = ProgressUtils.simultaneous(this.progress.current)
+    const nextProgress = () => {
+      const progress = new Progress()
       simultaneous.add(progress)
       return progress
     }
@@ -73,14 +73,16 @@ export class BemusePackageResources implements IResources {
     const text = await new Blob([data]).text()
     return JSON.parse(text) as MetadataFileJSON
   })
+
   private _getRefs = _.once(async () => {
     const metadata = await this._getMetadata()
     return metadata.refs.map((spec) => new Ref(this, spec))
   })
+
   private _getFileMap = _.once(async () => {
     const metadata = await this._getMetadata()
-    let files = new Map<string, BemusePackFileEntry>()
-    for (let file of metadata.files) {
+    const files = new Map<string, BemusePackFileEntry>()
+    for (const file of metadata.files) {
       files.set(file.name.toLowerCase(), file)
     }
     return files
@@ -89,9 +91,10 @@ export class BemusePackageResources implements IResources {
   get base() {
     return this._base
   }
+
   async file(name: string): Promise<IResource> {
     const fileMap = await this._getFileMap()
-    let file = fileMap.get(name.toLowerCase())
+    const file = fileMap.get(name.toLowerCase())
     if (file) {
       return new BemusePackageFileResource(this, file.ref, file.name)
     } else if (
@@ -104,6 +107,7 @@ export class BemusePackageResources implements IResources {
       throw new Error('Unable to find: ' + name)
     }
   }
+
   async getBlob([index, start, end]: [number, number, number]) {
     const refs = await this._getRefs()
     const ref = refs[index]
@@ -118,6 +122,7 @@ class BemusePackageFileResource implements IResource {
     private ref: BemusePackContentRef,
     public readonly name: string
   ) {}
+
   read(progress: Progress): PromiseLike<ArrayBuffer> {
     return ProgressUtils.atomic(
       progress,
@@ -126,6 +131,7 @@ class BemusePackageFileResource implements IResource {
         .then((blob) => readBlob(blob).as('arraybuffer'))
     )
   }
+
   async resolveUrl() {
     const blob = await this.resources.getBlob(this.ref)
     return URL.createObjectURL(blob)
@@ -141,6 +147,7 @@ class Ref {
   ) {
     this._basePromise = resources.base.file(spec.path)
   }
+
   load() {
     return (
       this._promise ||
@@ -157,8 +164,9 @@ async function getPayload(blob: Blob) {
     throw new Error('Invalid magic number')
   }
   const buffer = await readBlob(blob.slice(10, 14)).as('arraybuffer')
-  let array = new Uint8Array(buffer)
-  let length = array[0] + (array[1] << 8) + (array[2] << 16) + (array[3] << 24)
+  const array = new Uint8Array(buffer)
+  const length =
+    array[0] + (array[1] << 8) + (array[2] << 16) + (array[3] << 24)
   const metadataLength = length
   return blob.slice(14 + metadataLength)
 }

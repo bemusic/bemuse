@@ -1,4 +1,4 @@
-var { Keysounds } = require('../lib')
+const { Keysounds } = require('../lib')
 const { expect } = require('chai')
 
 describe('Keysounds', function () {

@@ -7,7 +7,7 @@ import { createNotechartPreview } from './NotechartPreview'
 import _ from 'lodash'
 
 const PREVIEWER_FS_HANDLE_KEYVAL_KEY = 'previewer-fs-handle'
-let getSamplingMaster = _.once(() => {
+const getSamplingMaster = _.once(() => {
   const samplingMaster = new SamplingMaster()
   // http://qiita.com/dtinth/items/1200681c517a3fb26357
   const DEFAULT_REPLAYGAIN = -12.2 // dB
@@ -48,7 +48,7 @@ export async function loadPreview(loadOptions: LoadPreviewOptions) {
 
   log('Scanning charts')
   const chartHandles: { name: string; handle: FileSystemFileHandle }[] = []
-  for await (let [name, fileHandle] of directoryHandle) {
+  for await (const [name, fileHandle] of directoryHandle) {
     if (fileHandle.kind === 'file' && /\.(bms|bme|bml|bmson)$/i.test(name)) {
       chartHandles.push({ name, handle: fileHandle })
     }

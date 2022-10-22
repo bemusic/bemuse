@@ -5,7 +5,7 @@ import SCENE_MANAGER from 'bemuse/scene-manager'
 import { Provider } from 'react-redux'
 
 export function main() {
-  let props = {
+  const props = {
     result: {
       1: 9999,
       2: 999,

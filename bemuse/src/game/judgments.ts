@@ -122,7 +122,7 @@ export function judgeTimeWith(f: (timegate: Timegate) => number) {
     judge: IJudge = NORMAL_JUDGE
   ): Judgment {
     const timegates = judge.getTimegates(gameTime, noteTime)
-    let delta = Math.abs(gameTime - noteTime)
+    const delta = Math.abs(gameTime - noteTime)
     for (let i = 0; i < timegates.length; i++) {
       if (delta < f(timegates[i])) return timegates[i].value
     }

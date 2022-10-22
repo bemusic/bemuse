@@ -3,7 +3,7 @@
 
 import path from './path'
 
-export let javascripts = [
+export const javascripts = [
   path('src', '**', '*.js'),
   path('src', '**', '*.jsx'),
   path('spec', '**', '*.js'),

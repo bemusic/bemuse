@@ -42,6 +42,7 @@ export class Monetizer {
       this.update()
     }
   }
+
   update() {
     const active = Array.from(this._active)
     const maxPriority = Math.max(
@@ -59,9 +60,11 @@ export class Monetizer {
     }
     this._setPointer(targetPointer)
   }
+
   dispose() {
     this._setPointer('')
   }
+
   _setPointer(targetPointer: string) {
     if (!targetPointer && this._element) {
       this._element.remove()

@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom'
 import query from 'bemuse/utils/query'
 
 const availablePlaygrounds = (function (context) {
-  let playgrounds = {}
-  for (let key of context.keys()) {
-    let name = key.match(/\w[^.]+/)[0]
+  const playgrounds = {}
+  for (const key of context.keys()) {
+    const name = key.match(/\w[^.]+/)[0]
     playgrounds[name] = context(key)
   }
   return playgrounds

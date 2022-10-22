@@ -11,7 +11,7 @@ import { fromBMSChart } from 'bemuse-notechart/lib/loader/BMSNotechartLoader'
 // TODO [#628]: Convert the `main` method to async function (instead of using `co`) in src/devtools/playgrounds/skin.js
 // See issue #575 for more details.
 export async function main() {
-  let chart = BMS.Compiler.compile(`
+  const chart = BMS.Compiler.compile(`
     #TITLE ทดสอบ Bemuse
     #ARTIST ฟหกด
     #00111:01
@@ -38,24 +38,24 @@ export async function main() {
     #00218:010000000010010001000100
     #00219:010000000001000100000100`).chart
 
-  let notecharts = [fromBMSChart(chart)]
+  const notecharts = [fromBMSChart(chart)]
 
-  let game = new Game(notecharts, {
+  const game = new Game(notecharts, {
     players: [{ speed: 2 }],
   })
 
-  let skin = await Scintillator.load(
+  const skin = await Scintillator.load(
     Scintillator.getSkinUrl({
       displayMode: 'touch3d',
     })
   )
 
-  let context = new Scintillator.Context(skin)
-  let display = new GameDisplay({ game, skin, context })
-  let state = new GameState(game)
-  let input = new GameInput()
-  let started = new Date().getTime()
-  let timer = {
+  const context = new Scintillator.Context(skin)
+  const display = new GameDisplay({ game, skin, context })
+  const state = new GameState(game)
+  const input = new GameInput()
+  const started = new Date().getTime()
+  const timer = {
     started: true,
     startTime: started,
     readyFraction: 0,
@@ -64,14 +64,14 @@ export async function main() {
   display.start()
   display._getData = ((getData) =>
     function () {
-      let result = getData.apply(display, arguments)
+      const result = getData.apply(display, arguments)
       result['p1_score'] = (new Date().getTime() - started) % 555556
       window.LATEST_DATA = result
       return result
     })(display._getData)
 
-  let draw = () => {
-    let t = (new Date().getTime() - started) / 1000
+  const draw = () => {
+    const t = (new Date().getTime() - started) / 1000
     timer.time = t
     state.update(t, input, timer)
     display.update(t, state)
@@ -86,7 +86,7 @@ export async function main() {
 }
 
 function showCanvas(view) {
-  var { width, height } = view
+  const { width, height } = view
 
   view.style.display = 'block'
   view.style.margin = '0 auto'
@@ -96,7 +96,10 @@ function showCanvas(view) {
   $(window).on('resize', resize)
 
   function resize() {
-    var scale = Math.min(window.innerWidth / width, window.innerHeight / height)
+    const scale = Math.min(
+      window.innerWidth / width,
+      window.innerHeight / height
+    )
     view.style.width = Math.round(width * scale) + 'px'
     view.style.height = Math.round(height * scale) + 'px'
   }

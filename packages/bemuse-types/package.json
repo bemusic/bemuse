@@ -1,6 +1,6 @@
 {
   "name": "bemuse-types",
-  "version": "50.0.1",
+  "version": "50.0.2",
   "description": "Type definition for Bemuse Music Collection",
   "author": "dtinth <dtinth@spacet.me>",
   "license": "MIT",
@@ -10,9 +10,12 @@
   "types": "./index.d.ts",
   "scripts": {
     "build": "true",
-    "test": "tsc --noEmit index.d.ts"
+    "test": "tsc --noEmit index.d.ts",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ."
   },
   "devDependencies": {
-    "typescript": "^4.4.3"
+    "eslint": "^8.25.0",
+    "typescript": "^4.8.4",
+    "eslint-config-bemuse": "^5.0.0"
   }
 }

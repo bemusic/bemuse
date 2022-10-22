@@ -30,45 +30,51 @@ export class Context {
     this.skinData = skin.data
     this._setupInteractivity()
   }
+
   render(data) {
     this._instance.push(data)
     this._renderer.render(this.stage)
   }
+
   destroy() {
     this._instance.destroy()
     this._instance = null
     this._teardownInteractivity()
   }
+
   get input() {
     return this._input.get()
   }
+
   ref(key, object) {
-    let set = this.refs[key] || (this.refs[key] = new Set())
+    const set = this.refs[key] || (this.refs[key] = new Set())
     set.add(object)
   }
+
   unref(key, object) {
-    let set = this.refs[key]
+    const set = this.refs[key]
     if (!set) return
     set.delete(object)
   }
+
   _setupInteractivity() {
     let mouse = null
     let touches = []
-    let onMouse = (e) => {
+    const onMouse = (e) => {
       mouse = e
     }
-    let onUpdateMouse = (e) => {
+    const onUpdateMouse = (e) => {
       mouse = mouse && e
     }
-    let onNoMouse = () => {
+    const onNoMouse = () => {
       mouse = null
     }
-    let onTouch = (e) => {
+    const onTouch = (e) => {
       touches = [].slice.call(e.touches)
     }
     const touchTarget = this._touchEventTarget || this.view
-    let width = this._skin.width
-    let height = this._skin.height
+    const width = this._skin.width
+    const height = this._skin.height
     touchTarget.addEventListener('mousedown', onMouse, false)
     touchTarget.addEventListener('mousemove', onUpdateMouse, false)
     touchTarget.addEventListener('mouseup', onNoMouse, false)
@@ -85,13 +91,13 @@ export class Context {
     }
     this._input = {
       get: () => {
-        let output = []
-        let rect = this.view.getBoundingClientRect()
+        const output = []
+        const rect = this.view.getBoundingClientRect()
         if (mouse) {
           output.push(point('mouse', mouse, rect))
         }
         for (let i = 0; i < touches.length; i++) {
-          let touch = touches[i]
+          const touch = touches[i]
           output.push(point('touch' + touch.identifier, touch, rect))
         }
         return output

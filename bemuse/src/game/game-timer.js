@@ -47,8 +47,9 @@ export class GameTimer {
       this.readyFraction = 1 - this._getWait()
     }
   }
+
   _getWait() {
-    let t = this._now() / 1000
+    const t = this._now() / 1000
     return Math.ceil(t) - t
   }
 
@@ -58,7 +59,7 @@ export class GameTimer {
     // after 1 second, the timer approaches 0 seconds at normal speed.
     // This is accomplished using some magic formula ;).
     //
-    var delta = this.startTime === null ? 0 : this._clock.time - this.startTime
+    let delta = this.startTime === null ? 0 : this._clock.time - this.startTime
     if (delta < 0) delta = 0
     if (delta < 1) {
       return (Math.pow(delta, 6) - 1) / 6 - 1 / 30
@@ -71,6 +72,7 @@ export class GameTimer {
       return Math.min(projectedTimerValue, this._pauseAtTimerValue)
     }
   }
+
   pauseAt(timerValueToPause) {
     if (
       this._unpausedTimerValue +

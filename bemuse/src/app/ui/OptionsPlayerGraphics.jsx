@@ -43,7 +43,7 @@ export default class OptionsPlayerGraphics extends React.Component {
   }
 
   render() {
-    let svg =
+    const svg =
       this.props.type === 'scratch' ? this.renderScratch() : this.renderPanel()
     return (
       <div
@@ -55,12 +55,13 @@ export default class OptionsPlayerGraphics extends React.Component {
       </div>
     )
   }
+
   renderScratch() {
-    let p = this.props.value
-    let bx = p === 'left' ? 24 : p === 'right' ? 4 : 14
-    let gx = p === 'left' ? 21 : p === 'right' ? 75 : null
-    let sx = p === 'left' ? 11 : p === 'right' ? 85 : null
-    let off = this.props.value === 'off'
+    const p = this.props.value
+    const bx = p === 'left' ? 24 : p === 'right' ? 4 : 14
+    const gx = p === 'left' ? 21 : p === 'right' ? 75 : null
+    const sx = p === 'left' ? 11 : p === 'right' ? 85 : null
+    const off = this.props.value === 'off'
     return (
       <svg width='96' height='54'>
         <g transform={'translate(' + bx + ' 32)'}>
@@ -105,9 +106,10 @@ export default class OptionsPlayerGraphics extends React.Component {
       </svg>
     )
   }
+
   renderPanel() {
-    let p = this.props.value
-    let tx = p === 'left' ? -35 : p === 'right' ? 35 : 0
+    const p = this.props.value
+    const tx = p === 'left' ? -35 : p === 'right' ? 35 : 0
     return (
       <svg width='96' height='54'>
         {p === '3d' ? (

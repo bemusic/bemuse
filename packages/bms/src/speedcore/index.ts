@@ -74,23 +74,27 @@ export class Speedcore<S extends SpeedSegment = SpeedSegment> {
     segments.forEach(Segment)
     this._segments = segments
   }
+
   _reached(index: number, targetFn: (segment: S) => number, position: number) {
     if (index >= this._segments.length) return false
-    var segment = this._segments[index]
-    var target = targetFn(segment)
+    const segment = this._segments[index]
+    const target = targetFn(segment)
     return segment.inclusive ? position >= target : position > target
   }
+
   _segmentAt(targetFn: (segment: S) => number, position: number): S {
-    for (var i = 0; i < this._segments.length; i++) {
+    for (let i = 0; i < this._segments.length; i++) {
       if (!this._reached(i + 1, targetFn, position)) return this._segments[i]
     }
     throw new Error(
       'Unable to find a segment matching a criteria (this should never happen)!'
     )
   }
+
   segmentAtX(x: number) {
     return this._segmentAt(X, x)
   }
+
   segmentAtT(t: number) {
     return this._segmentAt(T, t)
   }
@@ -99,7 +103,7 @@ export class Speedcore<S extends SpeedSegment = SpeedSegment> {
    * Calculates the _t_, given _x_.
    */
   t(x: number) {
-    var segment = this.segmentAtX(x)
+    const segment = this.segmentAtX(x)
     return segment.t + (x - segment.x) / (segment.dx || 1)
   }
 
@@ -108,7 +112,7 @@ export class Speedcore<S extends SpeedSegment = SpeedSegment> {
    * @param {number} t
    */
   x(t: number) {
-    var segment = this.segmentAtT(t)
+    const segment = this.segmentAtT(t)
     return segment.x + (t - segment.t) * segment.dx
   }
 
@@ -117,10 +121,10 @@ export class Speedcore<S extends SpeedSegment = SpeedSegment> {
    * @param {number} t
    */
   dx(t: number) {
-    var segment = this.segmentAtT(t)
+    const segment = this.segmentAtT(t)
     return segment.dx
   }
 }
 
-var T = (segment: SpeedSegment) => segment.t
-var X = (segment: SpeedSegment) => segment.x
+const T = (segment: SpeedSegment) => segment.t
+const X = (segment: SpeedSegment) => segment.x

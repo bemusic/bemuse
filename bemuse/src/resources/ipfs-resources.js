@@ -17,9 +17,11 @@ class NativeIPFSResources {
   constructor(ipfsPath) {
     this._path = ipfsPath
   }
+
   get gatewayName() {
     return `IPFS Companion extension`
   }
+
   _throat = throat(8)
   async _loadLinks() {
     const m = this._path.match(/^\/ipfs\/([^/]+)\/?$/)
@@ -32,9 +34,11 @@ class NativeIPFSResources {
     }
     return data.links
   }
+
   _getLinks() {
     return this._linksPromise || (this._linksPromise = this._loadLinks())
   }
+
   async file(name) {
     const links = await this._getLinks()
     for (const l of links) {
@@ -47,6 +51,7 @@ class NativeIPFSResources {
     }
     throw new Error('unable to find ' + name)
   }
+
   get fileList() {
     return this._getLinks().then((links) => links.map((l) => l.name))
   }
@@ -57,12 +62,14 @@ class NativeIPFSFileResource {
     this._multihash = multihash
     this._name = name
   }
+
   read(progress) {
     return ProgressUtils.atomic(
       progress,
       window.ipfs.files.cat(this._multihash).then((a) => a.buffer)
     )
   }
+
   get name() {
     return this._name
   }
@@ -73,9 +80,11 @@ class GatewayIPFSResources {
     this._path = ipfsPath
     this._gateway = gateway
   }
+
   get gatewayName() {
     return `IPFS gateway "${this._gateway}"`
   }
+
   _throat = throat(7)
   async _loadLinks() {
     const url = `${this._gateway}${this._path}`
@@ -95,9 +104,11 @@ class GatewayIPFSResources {
     }
     return out
   }
+
   _getLinks() {
     return this._linksPromise || (this._linksPromise = this._loadLinks())
   }
+
   async file(name) {
     const links = await this._getLinks()
     const base = this._path.replace(/^\/|\/$/g, '').split('/')
@@ -120,6 +131,7 @@ class GatewayIPFSResources {
       )
     }
   }
+
   get fileList() {
     return this._getLinks().then((links) => links.map((l) => l.Name))
   }
@@ -130,12 +142,15 @@ class LimitedConcurrencyResource {
     this._throat = _throat
     this._resource = resource
   }
+
   read(progress) {
     return this._throat(() => this._resource.read(progress))
   }
+
   resolveUrl() {
     return this._resource.resolveUrl()
   }
+
   get name() {
     return this._resource.name
   }

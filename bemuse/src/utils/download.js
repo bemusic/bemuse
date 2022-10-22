@@ -27,7 +27,7 @@ export function download(
       }
       function attempt() {
         return new Promise((resolve, reject) => {
-          var xh = new XMLHttpRequest()
+          const xh = new XMLHttpRequest()
           xh.open('GET', url, true)
           xh.responseType = type
           xh.onload = () => {

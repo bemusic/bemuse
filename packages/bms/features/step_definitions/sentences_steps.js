@@ -1,4 +1,4 @@
-var steps = require('artstep')
+const steps = require('artstep')
 
 module.exports = steps()
   .Then(/^there should be (\d+) header sentences?$/, function (n) {

@@ -99,6 +99,7 @@ export const BemusePreviewer = () => {
           <a
             href='https://bemuse.ninja/project/docs/previewer.html'
             target='_blank'
+            rel='noreferrer'
           >
             <strong>Bemuse</strong>’s BMS/bmson previewer
           </a>

@@ -33,23 +33,16 @@
     },
     {
       "name": "lint",
-      "commandKind": "global",
+      "commandKind": "bulk",
       "summary": "Lint source code.",
-      "shellCommand": "eslint --ext .js,.jsx,.ts,.tsx .",
-      "autoinstallerName": "bemuse-linter"
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": true
     },
     {
       "name": "format-all",
       "commandKind": "global",
       "summary": "Formats all code.",
       "shellCommand": "prettier --write .",
-      "autoinstallerName": "bemuse-linter"
-    },
-    {
-      "name": "lint-fix",
-      "commandKind": "global",
-      "summary": "Lint source code with auto-fixing.",
-      "shellCommand": "eslint --ext .js,.jsx,.ts,.tsx . --fix",
       "autoinstallerName": "bemuse-linter"
     },
     {
@@ -63,7 +56,8 @@
       "name": "dev",
       "commandKind": "global",
       "summary": "Run development server.",
-      "shellCommand": "cd bemuse && npm start"
+      "shellCommand": "cd bemuse && npm start",
+      "safeForSimultaneousRushProcesses": true
     }
     // {
     //   /**
@@ -263,6 +257,12 @@
     //    */
     //   "associatedCommands": ["build", "rebuild"]
     // },
+    {
+      "parameterKind": "flag",
+      "longName": "--fix",
+      "description": "Fixes linting errors",
+      "associatedCommands": ["lint"]
+    }
     // 
     // {
     //   /**

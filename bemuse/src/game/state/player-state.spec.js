@@ -7,13 +7,13 @@ import { notechart } from '../test-helpers'
 
 describe('PlayerState', function () {
   it('updates the input', function () {
-    let state = new PlayerState({
+    const state = new PlayerState({
       number: 1,
       columns: ['wow'],
       notechart: notechart(''),
       options: { speed: 1 },
     })
-    let input = {
+    const input = {
       get: (name) => ({ name }),
     }
     state.update(0, input)
@@ -49,7 +49,7 @@ describe('PlayerState', function () {
           #00111:0101
         `)
 
-        let column = chart.notes[0].column
+        const column = chart.notes[0].column
 
         assert.equal(state.getNoteStatus(chart.notes[0]), 'unjudged')
         assert.equal(state.stats.combo, 0)

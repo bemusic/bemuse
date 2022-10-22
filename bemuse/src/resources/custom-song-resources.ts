@@ -38,9 +38,10 @@ export class CustomSongResources implements ICustomSongResources {
       (files) => unarchiveIfNeeded(files, this._logging.log)
     )
   }
+
   file(name: string) {
     return this._files.then(function (files) {
-      for (let file of files) {
+      for (const file of files) {
         if (file.name.toLowerCase() === name.toLowerCase()) {
           return new FileResource(file.file)
         }
@@ -48,6 +49,7 @@ export class CustomSongResources implements ICustomSongResources {
       throw new Error('unable to find ' + name)
     })
   }
+
   get fileList(): Promise<string[]> {
     return Promise.resolve(this._files).then((a) => a.map((f) => f.name))
   }
@@ -61,9 +63,11 @@ export class FileResource implements IResource {
       readBlob(this._file).as('arraybuffer')
     )
   }
+
   resolveUrl() {
     return Promise.resolve(URL.createObjectURL(this._file))
   }
+
   get name() {
     return this._file.name
   }

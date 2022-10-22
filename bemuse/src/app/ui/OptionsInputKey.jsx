@@ -25,6 +25,7 @@ class OptionsInputKey extends React.PureComponent {
       </div>
     )
   }
+
   handleClick = () => {
     this.props.onEdit('' + this.props.n)
   }

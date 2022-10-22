@@ -92,7 +92,7 @@ class MusicList extends React.PureComponent {
     // If the song being rendered does not contain the selected chart, don’t
     // bother sending it in (just keep it as undefined).
     //
-    let selectedChart = this.props.selectedChart
+    const selectedChart = this.props.selectedChart
     return _.find(song.charts, (chart) => chart === selectedChart)
   }
 }

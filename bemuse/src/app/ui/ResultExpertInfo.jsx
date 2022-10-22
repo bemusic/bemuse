@@ -13,6 +13,7 @@ export default class ResultExpertInfo extends React.Component {
   static propTypes = {
     deltas: PropTypes.array,
   }
+
   getStats = (() => {
     const selectNonMissedDeltas = createSelector(
       (props) => props.deltas,
@@ -31,6 +32,7 @@ export default class ResultExpertInfo extends React.Component {
     })
     return () => selectStats(this.props)
   })()
+
   render() {
     const stats = this.getStats()
     return (

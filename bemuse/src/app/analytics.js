@@ -9,7 +9,7 @@ import * as Options from './entities/Options'
 import getLR2Score from './interactors/getLR2Score'
 import getNonMissedDeltas from './interactors/getNonMissedDeltas'
 
-let ga = window.ga || function () {}
+const ga = window.ga || function () {}
 const startTime = Date.now()
 const sid = ObjectID.generate()
 
@@ -108,13 +108,13 @@ export function getDeltaStats(deltas) {
 }
 
 export function gameEscape(song, chart, gameState) {
-  let state = gameState.player(gameState.game.players[0])
+  const state = gameState.player(gameState.game.players[0])
   send('song', 'escape', getSongTitle(song))
   send('game', 'escape', getLabel(chart), state.stats.score)
 }
 
 export function gameQuit(song, chart, gameState) {
-  let state = gameState.player(gameState.game.players[0])
+  const state = gameState.player(gameState.game.players[0])
   send('song', 'quit', getSongTitle(song))
   send('game', 'quit', getLabel(chart), state.stats.score)
 }

@@ -56,14 +56,14 @@ export class Spacing {
    */
   static fromBMSChart(chart: BMSChart) {
     void BMSChart
-    var segments: SpacingSegment[] = []
+    const segments: SpacingSegment[] = []
     chart.objects.allSorted().forEach(function (object) {
       if (object.channel === 'SP') {
-        var beat = chart.measureToBeat(object.measure, object.fraction)
-        var factor = +chart.headers.get('speed' + object.value)!
+        const beat = chart.measureToBeat(object.measure, object.fraction)
+        const factor = +chart.headers.get('speed' + object.value)!
         if (isNaN(factor)) return
         if (segments.length > 0) {
-          var previous = segments[segments.length - 1]
+          const previous = segments[segments.length - 1]
           previous.dx = (factor - previous.x) / (beat - previous.t)
         }
         segments.push({

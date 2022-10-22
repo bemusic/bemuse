@@ -8,17 +8,17 @@ import yaml from 'js-yaml'
 import { getSongInfo } from 'bemuse-indexer'
 import { join, dirname, basename } from 'path'
 
-let fileStat = Promise.promisify(fs.stat, fs)
-let readFile = Promise.promisify(fs.readFile, fs)
-let writeFile = Promise.promisify(fs.writeFile, fs)
-let glob = Promise.promisify(require('glob'))
+const fileStat = Promise.promisify(fs.stat, fs)
+const readFile = Promise.promisify(fs.readFile, fs)
+const writeFile = Promise.promisify(fs.writeFile, fs)
+const glob = Promise.promisify(require('glob'))
 
 function Cache(path) {
-  let data = load()
-  let stream = fs.createWriteStream(path, { encoding: 'utf-8', flags: 'a' })
+  const data = load()
+  const stream = fs.createWriteStream(path, { encoding: 'utf-8', flags: 'a' })
 
   function load() {
-    let out = {}
+    const out = {}
     let text
     try {
       text = fs.readFileSync(path, 'utf-8')
@@ -27,8 +27,8 @@ function Cache(path) {
     }
     text.split(/\n/).forEach(function (line) {
       if (line.length < 34) return
-      let md5 = line.substr(0, 32)
-      let payload = JSON.parse(line.substr(33))
+      const md5 = line.substr(0, 32)
+      const payload = JSON.parse(line.substr(33))
       out[md5] = payload
     })
     return out
@@ -83,7 +83,7 @@ export async function index(path, { recursive }) {
     const levels = _(song.charts)
       .sortBy((chart) => chart.info.level)
       .map((chart) => {
-        let ch =
+        const ch =
           chart.keys === '5K'
             ? chalk.gray
             : chart.keys === '7K'
@@ -137,7 +137,7 @@ function put(map, key, f) {
   if (map.has(key)) {
     return map.get(key)
   } else {
-    var object = f(key)
+    const object = f(key)
     map.set(key, object)
     return object
   }

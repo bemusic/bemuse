@@ -13,6 +13,7 @@ export class CollectionViewer extends React.Component {
       status: 'Loading',
     }
   }
+
   componentDidMount() {
     load(this.state.url)
       .then((result) => {
@@ -22,6 +23,7 @@ export class CollectionViewer extends React.Component {
         this.setState({ status: 'Load error: ' + e })
       })
   }
+
   render() {
     return (
       <div>

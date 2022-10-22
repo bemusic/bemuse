@@ -1,4 +1,4 @@
-var steps = require('artstep')
+const steps = require('artstep')
 
 module.exports = steps().Then(
   /^note spacing at beat ([-\d.]+) is ([-\d.]+)$/,

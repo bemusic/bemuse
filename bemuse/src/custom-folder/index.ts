@@ -191,7 +191,7 @@ async function searchForChartFiles(
 ): Promise<void> {
   let entriesRead = 0
   const { log, setStatus } = io
-  for await (let [name, handle] of directoryHandle) {
+  for await (const [name, handle] of directoryHandle) {
     const childPath = [...parentPath, name]
     try {
       if (handle.kind === 'directory') {
@@ -487,6 +487,7 @@ class CustomFolderResourceFactory {
     }
     return permission
   })
+
   getResources(path: string[]): IResources {
     const getFolderHandle = pMemoize(async () => {
       await this.getGrant()

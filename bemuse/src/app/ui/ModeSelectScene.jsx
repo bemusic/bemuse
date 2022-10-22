@@ -77,7 +77,7 @@ class ModeSelectScene extends React.Component {
   }
 
   renderKBGraphics() {
-    let children = []
+    const children = []
     for (let i = 0; i < 7; i++) {
       if (i === 3) {
         children.push(
@@ -118,7 +118,7 @@ class ModeSelectScene extends React.Component {
   }
 
   renderBMGraphics() {
-    let children = []
+    const children = []
     for (let i = 0; i < 7; i++) {
       children.push(
         <rect

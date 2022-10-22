@@ -23,8 +23,8 @@ export class Clock {
 
   // Updates the clock. This method should be called every frame.
   update() {
-    let realTime = now() / 1000
-    let delta = realTime - this._context.currentTime
+    const realTime = now() / 1000
+    const delta = realTime - this._context.currentTime
     this._offset.push(delta)
     this._sum += delta
     while (this._offset.length > 60) {

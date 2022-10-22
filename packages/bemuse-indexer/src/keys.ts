@@ -2,17 +2,17 @@ import * as BMS from 'bms'
 import { Keys } from './types'
 
 export function getKeys(chart: BMS.BMSChart): Keys {
-  var objects = chart.objects.all()
-  var stat: { [channel: number]: number } = {}
-  for (var i = 0; i < objects.length; i++) {
-    var object = objects[i]
-    var channel = +object.channel
+  const objects = chart.objects.all()
+  const stat: { [channel: number]: number } = {}
+  for (let i = 0; i < objects.length; i++) {
+    const object = objects[i]
+    let channel = +object.channel
     if (channel >= 50 && channel <= 69) channel -= 40
     if (channel < 10) continue
     if (channel > 29) continue
     stat[channel] = (stat[channel] || 0) + 1
   }
-  var channels = Object.keys(stat).map(function (ch) {
+  const channels = Object.keys(stat).map(function (ch) {
     return +ch
   })
   if (channels.length === 0) return 'empty'

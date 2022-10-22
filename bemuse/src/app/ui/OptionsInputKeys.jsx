@@ -13,7 +13,7 @@ class OptionsInputKeys extends React.PureComponent {
   }
 
   render() {
-    let keys = []
+    const keys = []
     for (let i = 1; i <= 7; i++) {
       keys.push(
         <OptionsInputKey

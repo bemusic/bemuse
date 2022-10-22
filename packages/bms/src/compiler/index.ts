@@ -5,7 +5,7 @@ import { match } from '../util/match'
 import { BMSChart } from '../bms/chart'
 import { BMSObject } from '../bms/objects'
 
-var matchers = {
+const matchers = {
   bms: {
     random: /^#RANDOM\s+(\d+)$/i,
     if: /^#IF\s+(\d+)$/i,
@@ -33,20 +33,20 @@ var matchers = {
 export function compile(text: string, options?: Partial<BMSCompileOptions>) {
   options = options || {}
 
-  var chart = new BMSChart()
+  const chart = new BMSChart()
 
-  var rng =
+  const rng =
     options.rng ||
     function (max) {
       return 1 + Math.floor(Math.random() * max)
     }
 
-  var matcher = (options.format && matchers[options.format]) || matchers.bms
+  const matcher = (options.format && matchers[options.format]) || matchers.bms
 
-  var randomStack: number[] = []
-  var skipStack = [false]
+  const randomStack: number[] = []
+  const skipStack = [false]
 
-  var result = {
+  const result = {
     headerSentences: 0,
     channelSentences: 0,
     controlSentences: 0,
@@ -65,7 +65,7 @@ export function compile(text: string, options?: Partial<BMSCompileOptions>) {
   }
 
   eachLine(text, function (text, lineNumber) {
-    var flow = true
+    let flow = true
     if (text.charAt(0) !== '#') return
     match(text)
       .when(matcher.random, function (m) {
@@ -84,7 +84,7 @@ export function compile(text: string, options?: Partial<BMSCompileOptions>) {
         flow = false
       })
     if (flow) return
-    var skipped = skipStack[skipStack.length - 1]
+    const skipped = skipStack[skipStack.length - 1]
     match(text)
       .when(matcher.timeSignature, function (m) {
         result.channelSentences += 1
@@ -111,11 +111,11 @@ export function compile(text: string, options?: Partial<BMSCompileOptions>) {
     string: string,
     lineNumber: number
   ) {
-    var items = Math.floor(string.length / 2)
+    const items = Math.floor(string.length / 2)
     if (items === 0) return
-    for (var i = 0; i < items; i++) {
-      var value = string.substr(i * 2, 2)
-      var fraction = i / items
+    for (let i = 0; i < items; i++) {
+      const value = string.substr(i * 2, 2)
+      const fraction = i / items
       if (value === '00') continue
       chart.objects.add({
         measure: measure,

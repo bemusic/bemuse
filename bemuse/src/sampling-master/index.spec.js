@@ -19,7 +19,7 @@ describe('SamplingMaster', function () {
 
   describe('#unmute', function () {
     it('unmutes the audio', function () {
-      let gain = context.createGain()
+      const gain = context.createGain()
       sinon.stub(context, 'createGain').returns(gain)
       sinon.spy(gain, 'connect')
       sinon.spy(gain, 'disconnect')
@@ -128,7 +128,7 @@ describe('SamplingMaster', function () {
           return it.skip
         }
       })()('should call #stop when playing finished', function () {
-        let instance = sample.play()
+        const instance = sample.play()
         sinon.spy(instance, 'stop')
         context.$processTo(1.5)
         void expect(instance.stop).to.have.been.called
@@ -136,13 +136,13 @@ describe('SamplingMaster', function () {
 
       describe('#stop', function () {
         it('should stop the buffer source', function () {
-          let instance = sample.play()
+          const instance = sample.play()
           sinon.spy(bufferSource, 'stop')
           instance.stop()
           void expect(bufferSource.stop).to.have.been.called
         })
         it('can be called multiple times', function () {
-          let instance = sample.play()
+          const instance = sample.play()
           sinon.spy(bufferSource, 'stop')
           instance.stop()
           instance.stop()
@@ -150,7 +150,7 @@ describe('SamplingMaster', function () {
           void expect(bufferSource.stop).to.have.been.calledOnce
         })
         it('should call #onstop', function () {
-          let instance = sample.play()
+          const instance = sample.play()
           instance.onstop = sinon.spy()
           instance.stop()
           void expect(instance.onstop).to.have.been.called
@@ -159,7 +159,7 @@ describe('SamplingMaster', function () {
 
       describe('#bad', function () {
         it('should change pitch of sound', function () {
-          let instance = sample.play()
+          const instance = sample.play()
           instance.bad()
           expect(bufferSource.playbackRate.value).not.to.equal(1)
         })
@@ -173,9 +173,9 @@ describe('SamplingMaster', function () {
       return master.sample(new Blob([])).then((s) => (sample = s))
     })
     it('should stop all samples', function () {
-      let a = sample.play()
-      let b = sample.play()
-      let c = sample.play()
+      const a = sample.play()
+      const b = sample.play()
+      const c = sample.play()
       sinon.spy(a, 'stop')
       sinon.spy(b, 'stop')
       sinon.spy(c, 'stop')
@@ -189,7 +189,7 @@ describe('SamplingMaster', function () {
       return expect(master.sample(new Blob([]))).to.be.rejected
     })
     it('only destroys once', function () {
-      let a = sample.play()
+      const a = sample.play()
       sinon.spy(a, 'destroy')
       master.destroy()
       master.destroy()

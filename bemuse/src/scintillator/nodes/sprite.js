@@ -13,8 +13,9 @@ export class SpriteNode extends SkinNode {
     this.anchorX = +$el.attr('anchor-x') || 0
     this.anchorY = +$el.attr('anchor-y') || 0
   }
+
   instantiate(context, container) {
-    let sprite = new PIXI.Sprite(this.getTexture())
+    const sprite = new PIXI.Sprite(this.getTexture())
     sprite.anchor.x = this.anchorX
     sprite.anchor.y = this.anchorY
     return new Instance({
@@ -24,11 +25,12 @@ export class SpriteNode extends SkinNode {
       concerns: [this.display],
     })
   }
+
   getTexture() {
     if (this._texture) return this._texture
-    let scaleMode = PIXI.SCALE_MODES.NEAREST
-    let base = PIXI.BaseTexture.fromImage(this.url, undefined, scaleMode)
-    let texture = new PIXI.Texture(base, this.frame)
+    const scaleMode = PIXI.SCALE_MODES.NEAREST
+    const base = PIXI.BaseTexture.fromImage(this.url, undefined, scaleMode)
+    const texture = new PIXI.Texture(base, this.frame)
     this._texture = texture
     return texture
   }

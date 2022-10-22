@@ -13,12 +13,14 @@ export default class ResultTable extends React.Component {
   static propTypes = {
     result: PropTypes.object,
   }
+
   constructor(props) {
     super(props)
     this.state = { deltasModalVisible: false }
   }
+
   render() {
-    let { result } = this.props
+    const { result } = this.props
     return (
       <div className='ResultTable'>
         <table className='ResultTableのtable'>
@@ -98,12 +100,15 @@ export default class ResultTable extends React.Component {
       </div>
     )
   }
+
   formatAccuracy(value) {
     return (value * 100).toFixed(2) + '%'
   }
+
   handleToggleDeltasModal = () => {
     this.setState({ deltasModalVisible: !this.state.deltasModalVisible })
   }
+
   handleViewDeltas = () => {
     this.handleToggleDeltasModal()
     Analytics.send('ResultTable', 'view deltas')

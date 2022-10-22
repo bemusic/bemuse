@@ -26,6 +26,7 @@ export class SongOfTheDay {
     )
     this.ids = new Set(sorted.slice(0, 3).map((s) => s.id))
   }
+
   isSongOfTheDay(id: string) {
     return this.ids.has(id)
   }

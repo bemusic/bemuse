@@ -18,13 +18,13 @@ export const SUPPORTED = [
 ]
 
 function checkUserAgent(pattern, num) {
-  let match = navigator.userAgent.match(pattern)
+  const match = navigator.userAgent.match(pattern)
   if (!match) return false
   if (+match[1] >= num) return true
   return false
 }
 
 export function isBrowserSupported() {
-  for (let browser of SUPPORTED) if (browser.test()) return true
+  for (const browser of SUPPORTED) if (browser.test()) return true
   return false
 }

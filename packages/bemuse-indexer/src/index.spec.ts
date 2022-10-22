@@ -17,48 +17,48 @@ describe('getFileInfo (bms)', function () {
 
   describe('.info', function () {
     it('should return song info', async function () {
-      var source = '#TITLE meow'
+      const source = '#TITLE meow'
       return expect((await info(source)).info.title).to.equal('meow')
     })
   })
 
   describe('.noteCount', function () {
     it('should not count BGM', async function () {
-      var source = '#00101:01'
+      const source = '#00101:01'
       return expect((await info(source)).noteCount).to.equal(0)
     })
     it('should count playable notes', async function () {
-      var source = '#00111:01'
+      const source = '#00111:01'
       return expect((await info(source)).noteCount).to.equal(1)
     })
   })
 
   describe('.scratch', function () {
     it('is false when no scratch track', async function () {
-      var source = '#00101:01'
+      const source = '#00101:01'
       return expect((await info(source)).scratch).to.be.false
     })
     it('should count playable notes', async function () {
-      var source = '#00116:01'
+      const source = '#00116:01'
       return expect((await info(source)).scratch).to.be.true
     })
   })
 
   describe('.keys', function () {
     it('should be empty when no notes', async function () {
-      var source = '#00101:01'
+      const source = '#00101:01'
       return expect((await info(source)).keys).to.equal('empty')
     })
     it('should be 7K on normal chart', async function () {
-      var source = ['#00111:01', '#00114:01', '#00159:0101'].join('\n')
+      const source = ['#00111:01', '#00114:01', '#00159:0101'].join('\n')
       return expect((await info(source)).keys).to.equal('7K')
     })
     it('should be 5K when 6th and 7th keys not detected', async function () {
-      var source = ['#00111:01', '#00114:01'].join('\n')
+      const source = ['#00111:01', '#00114:01'].join('\n')
       return expect((await info(source)).keys).to.equal('5K')
     })
     it('should be 14K on doubles chart', async function () {
-      var source = [
+      const source = [
         '#00111:01',
         '#00114:01',
         '#00159:0101',
@@ -71,9 +71,12 @@ describe('getFileInfo (bms)', function () {
     it(
       'should be 10K when 2 players and ' + '6th and 7th keys not detected',
       async function () {
-        var source = ['#00111:01', '#00114:01', '#00121:01', '#00124:01'].join(
-          '\n'
-        )
+        const source = [
+          '#00111:01',
+          '#00114:01',
+          '#00121:01',
+          '#00124:01',
+        ].join('\n')
         return expect((await info(source)).keys).to.equal('10K')
       }
     )
@@ -81,13 +84,13 @@ describe('getFileInfo (bms)', function () {
 
   describe('.duration', function () {
     it('should be correct', async function () {
-      var source = ['#BPM 120', '#00111:0101'].join('\n')
+      const source = ['#BPM 120', '#00111:0101'].join('\n')
       return expect((await info(source)).duration).to.equal(3)
     })
   })
 
   describe('.bpm', function () {
-    var source = [
+    const source = [
       '#BPM 120',
       '#BPM01 240',
       '#00111:01',
@@ -97,7 +100,7 @@ describe('getFileInfo (bms)', function () {
       '#00311:01',
     ].join('\n')
 
-    var bpm: BPMInfo
+    let bpm: BPMInfo
 
     beforeEach(async function () {
       const fileInfo = await info(source)
@@ -120,11 +123,11 @@ describe('getFileInfo (bms)', function () {
 
   describe('.bga', function () {
     it('should be undefined for songs without bga', async function () {
-      var source = ['#BPM 120', '#00111:0101'].join('\n')
+      const source = ['#BPM 120', '#00111:0101'].join('\n')
       return expect((await info(source)).bga).to.equal(undefined)
     })
     it('should exist for songs with bga', async function () {
-      var source = [
+      const source = [
         '#BPM 120',
         '#BMPBG meow.mpg',
         '#00111:0101',
@@ -140,7 +143,7 @@ describe('getFileInfo (bms)', function () {
 
 describe('getFileInfo (bmson)', function () {
   function info(bmson: any) {
-    var source = JSON.stringify(bmson)
+    const source = JSON.stringify(bmson)
     return indexer.getFileInfo(Buffer.from(source), { name: 'meow.bmson' })
   }
 
@@ -157,7 +160,7 @@ describe('getFileInfo (bmson)', function () {
       return expect(out.bga).to.equal(undefined)
     })
     it('has timing ', async function () {
-      var bmsonData = {
+      const bmsonData = {
         version: '1.0.0',
         info: {
           title: 'Meow',
@@ -179,7 +182,7 @@ describe('getFileInfo (bmson)', function () {
 
 describe('getSongInfo', function () {
   describe('with multiple files', function () {
-    var files = [
+    const files = [
       {
         name: '01.bms',
         data: Buffer.from(
@@ -212,7 +215,7 @@ describe('getSongInfo', function () {
       },
     ]
 
-    var song: OutputSongInfo
+    let song: OutputSongInfo
 
     beforeEach(async function () {
       const songInfo = await indexer.getSongInfo(files)
@@ -229,7 +232,7 @@ describe('getSongInfo', function () {
         expect(song.artist).to.equal('lol')
       })
       it('should be overridable', async function () {
-        var options = { extra: { artist: 'meowmeow' } }
+        const options = { extra: { artist: 'meowmeow' } }
         const out = await indexer.getSongInfo(files, options)
         return expect(out.artist).to.equal('meowmeow')
       })
@@ -244,8 +247,8 @@ describe('getSongInfo', function () {
     })
     describe('progress report', function () {
       it('should report progress', function () {
-        var options = { onProgress: onProgress }
-        var callCount = 0
+        const options = { onProgress: onProgress }
+        let callCount = 0
         function onProgress() {
           callCount += 1
         }
@@ -258,7 +261,7 @@ describe('getSongInfo', function () {
 
   describe('a song’s video', function () {
     it('is taken from an available bga in a chart', function () {
-      var charts = [{}, { bga: { file: 'a.mp4', offset: 2 } }, {}] as any
+      const charts = [{}, { bga: { file: 'a.mp4', offset: 2 } }, {}] as any
       expect(indexer._getSongVideoFromCharts(charts).video_file).to.equal(
         'a.mp4'
       )

@@ -26,19 +26,19 @@ export function groupSongsIntoCategories(
   const context = {
     songOfTheDay: new SongOfTheDay(songs, { enabled: songOfTheDayEnabled }),
   }
-  let groups = grouping.map((group) => ({
+  const groups = grouping.map((group) => ({
     input: group,
     output: { title: group.title, songs: [] },
   }))
-  for (let song of songs) {
-    for (let { input, output } of groups) {
+  for (const song of songs) {
+    for (const { input, output } of groups) {
       if (input.criteria(song, context)) {
         output.songs.push(song)
         break
       }
     }
   }
-  for (let { input, output } of groups) {
+  for (const { input, output } of groups) {
     if (input.sort) {
       output.songs = _.orderBy(
         output.songs,

@@ -36,11 +36,11 @@ export function slicesForNotesAndTiming(
 ) {
   const { beatForPulse } = options
 
-  let all = new Set<number>()
-  let play = new Set<number>()
-  let restart = new Set<number>()
+  const all = new Set<number>()
+  const play = new Set<number>()
+  const restart = new Set<number>()
 
-  for (let { x, y, c } of notes) {
+  for (const { x, y, c } of notes) {
     all.add(y)
     if (x) {
       play.add(y)
@@ -50,25 +50,25 @@ export function slicesForNotesAndTiming(
     }
   }
 
-  let result = new Map<number, SoundSlice>()
+  const result = new Map<number, SoundSlice>()
   let soundTime = null
   let mustAdd = true
   let tʹ: number
   let lastAdded: SoundSlice | undefined
 
-  for (let y of _.sortBy([...all])) {
-    let t = timing.beatToSeconds(beatForPulse(y))
+  for (const y of _.sortBy([...all])) {
+    const t = timing.beatToSeconds(beatForPulse(y))
     if (soundTime === null || restart.has(y)) {
       soundTime = 0
     } else {
       soundTime += t - tʹ!
     }
-    let shouldAdd = mustAdd || play.has(y) || restart.has(y)
+    const shouldAdd = mustAdd || play.has(y) || restart.has(y)
     if (shouldAdd) {
       if (lastAdded && !restart.has(y)) {
         lastAdded.keysoundEnd = soundTime
       }
-      let obj = { keysoundStart: soundTime, keysoundEnd: undefined }
+      const obj = { keysoundStart: soundTime, keysoundEnd: undefined }
       result.set(y, obj)
       lastAdded = obj
     }

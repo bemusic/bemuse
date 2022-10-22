@@ -11,19 +11,19 @@ const log = debug('scintillator:loader')
 
 export async function load(xmlPath, progress) {
   log('load XML from %s', xmlPath)
-  let $xml = await loadXml(xmlPath)
+  const $xml = await loadXml(xmlPath)
 
   // scan all images
-  let resources = new Resources()
-  let paths = new Set()
-  for (let element of Array.from($xml.find('[image]'))) {
+  const resources = new Resources()
+  const paths = new Set()
+  for (const element of Array.from($xml.find('[image]'))) {
     paths.add($(element).attr('image'))
   }
-  for (let element of Array.from($xml.find('[font-src]'))) {
+  for (const element of Array.from($xml.find('[font-src]'))) {
     paths.add($(element).attr('font-src'))
   }
-  for (let path of paths) {
-    let assetUrl = url.resolve(xmlPath, path)
+  for (const path of paths) {
+    const assetUrl = url.resolve(xmlPath, path)
     resources.add(path, assetUrl)
   }
 
@@ -45,8 +45,8 @@ function loadResources(resources, progress) {
   log('loading resources')
   return new Promise(function (resolve) {
     if (resources.urls.length === 0) return resolve()
-    let loader = new PIXI.loaders.Loader()
-    for (let url of resources.urls) {
+    const loader = new PIXI.loaders.Loader()
+    for (const url of resources.urls) {
       loader.add(url, url)
     }
     loader.once('complete', function () {

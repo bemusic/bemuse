@@ -24,15 +24,19 @@ export default class Ranking extends React.Component {
       authenticationPopupVisible: false,
     }
   }
+
   handleAuthenticate = () => {
     this.setState({ authenticationPopupVisible: true })
   }
+
   handleAuthenticationClose = () => {
     this.setState({ authenticationPopupVisible: false })
   }
+
   handleAuthenticationFinish = () => {
     this.setState({ authenticationPopupVisible: false })
   }
+
   render() {
     return (
       <div className='Ranking'>
@@ -46,6 +50,7 @@ export default class Ranking extends React.Component {
       </div>
     )
   }
+
   renderYours() {
     const state = this.props.state
     const submission = state.meta.submission
@@ -83,6 +88,7 @@ export default class Ranking extends React.Component {
       </div>
     )
   }
+
   renderLeaderboard() {
     const state = this.props.state
     return (
@@ -110,6 +116,7 @@ export default class Ranking extends React.Component {
       </div>
     )
   }
+
   renderError(text, error, retry) {
     return (
       <span className='Rankingのerror'>

@@ -3,12 +3,12 @@ import query from 'bemuse/utils/query'
 import Online from './'
 import OnlineService from './scoreboard-system/OnlineService'
 
-var uid = (function () {
-  var session = Math.floor(Math.random() * 65536).toString(16)
-  var index = 0
+const uid = (function () {
+  const session = Math.floor(Math.random() * 65536).toString(16)
+  let index = 0
   return function () {
-    var random = Math.floor(Math.random() * 65536).toString(16)
-    var time = Date.now().toString(16)
+    const random = Math.floor(Math.random() * 65536).toString(16)
+    const time = Date.now().toString(16)
     return (
       'bemuse.' +
       time +
@@ -96,8 +96,8 @@ function tests(onlineServiceOptions) {
       })
       describe('user川', function () {
         it('should change to signed-up user, and also start with it', function () {
-          let info = createAccountInfo()
-          let promise = online.user川
+          const info = createAccountInfo()
+          const promise = online.user川
             .take(2)
             .toPromise()
             .then((user) => {
@@ -119,7 +119,7 @@ function tests(onlineServiceOptions) {
 
     describe('with an active user', function () {
       let online
-      let info = createAccountInfo()
+      const info = createAccountInfo()
       before(function () {
         online = createOnline()
       })
@@ -131,7 +131,7 @@ function tests(onlineServiceOptions) {
       })
       describe('when log out', function () {
         it('should change user川 back to null', function () {
-          let promise = online.user川
+          const promise = online.user川
             .take(2)
             .toPromise()
             .then((user) => {
@@ -149,9 +149,9 @@ function tests(onlineServiceOptions) {
         online = createOnline()
       })
 
-      var prefix = uid() + '_'
-      var user1 = createAccountInfo()
-      var user2 = createAccountInfo()
+      const prefix = uid() + '_'
+      const user1 = createAccountInfo()
+      const user2 = createAccountInfo()
 
       steps((step) => {
         let lastRecordedAt
@@ -268,10 +268,10 @@ function tests(onlineServiceOptions) {
         return online.logOut()
       })
 
-      var prefix = uid() + '_'
-      var user1 = createAccountInfo()
-      var user2 = createAccountInfo()
-      var user3 = createAccountInfo()
+      const prefix = uid() + '_'
+      const user1 = createAccountInfo()
+      const user2 = createAccountInfo()
+      const user3 = createAccountInfo()
 
       steps((step) => {
         step('sign up user1...', function () {
@@ -318,9 +318,9 @@ function tests(onlineServiceOptions) {
           return online.logOut()
         })
 
-        var ranking
-        var ranking川
-        var dispose
+        let ranking
+        let ranking川
+        let dispose
         step('subscribe to scoreboard...', function () {
           ranking = online.Ranking({
             md5: prefix + 'song1',
@@ -405,15 +405,15 @@ function tests(onlineServiceOptions) {
 }
 
 function steps(f) {
-  var _resolve
-  var promise = new Promise((resolve) => (_resolve = resolve))
-  var i = 0
+  let _resolve
+  let promise = new Promise((resolve) => (_resolve = resolve))
+  let i = 0
   before(() => void _resolve())
   return f((name, fn) => {
     promise = promise.then(fn, () => {
       throw new Error('Previous steps errored')
     })
-    let current = promise
+    const current = promise
     it(`${++i}. ${name}`, () => current)
   })
 }

@@ -16,8 +16,8 @@ export class BMSObjects {
    */
   add(object: BMSObject) {
     if (object.channel !== '01') {
-      for (var i = 0; i < this._objects.length; i++) {
-        var test = this._objects[i]
+      for (let i = 0; i < this._objects.length; i++) {
+        const test = this._objects[i]
         if (
           test.channel === object.channel &&
           test.measure === object.measure &&
@@ -42,7 +42,7 @@ export class BMSObjects {
    * Returns a sorted array of all objects.
    */
   allSorted() {
-    var list = this.all()
+    const list = this.all()
     list.sort(function (a, b) {
       return a.measure + a.fraction - (b.measure + b.fraction)
     })

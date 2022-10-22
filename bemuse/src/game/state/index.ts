@@ -22,9 +22,10 @@ export class GameState {
       game.players.map((player) => [player, new PlayerState(player)])
     )
   }
+
   update(gameTime: number, input: GameInput, timer: GameTimer) {
     let finished = true
-    for (let [player, playerState] of this._players) {
+    for (const [player, playerState] of this._players) {
       playerState.update(gameTime, input)
       if (!playerState.finished) finished = false
       void player
@@ -34,6 +35,7 @@ export class GameState {
     this.started = timer.started
     this.finished = finished
   }
+
   player(p: Player) {
     const playerState = this._players.get(p)
     return (

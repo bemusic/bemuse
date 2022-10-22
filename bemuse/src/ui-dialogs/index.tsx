@@ -24,7 +24,7 @@ export async function showAlert(title: string, message: ReactNode) {
           <AlertDialog.Overlay className='AlertDialogのoverlay' />
           <AlertDialog.Content className='AlertDialogのcontent'>
             <Panel title={<AlertDialog.Title>{title}</AlertDialog.Title>}>
-              <VBox padding={'1em'} gap={'0.75em'}>
+              <VBox padding='1em' gap='0.75em'>
                 <AlertDialog.Description>{message}</AlertDialog.Description>
                 <div style={{ textAlign: 'right' }}>
                   <AlertDialog.Action asChild>
@@ -63,7 +63,7 @@ export async function showQuickPick<T extends QuickPickItem>(
             <Panel
               title={<AlertDialog.Title>{options.title}</AlertDialog.Title>}
             >
-              <VBox padding={'1em'} gap={'0.75em'}>
+              <VBox padding='1em' gap='0.75em'>
                 <ComboBox items={items} onSelect={onSelect} />
               </VBox>
             </Panel>

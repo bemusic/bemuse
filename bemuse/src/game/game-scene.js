@@ -2,7 +2,7 @@ import $ from 'jquery'
 
 export default function GameScene(display) {
   return function (container) {
-    let handler = () => false
+    const handler = () => false
     $(window).on('touchstart', handler)
     showCanvas(display, container)
     return {
@@ -14,8 +14,8 @@ export default function GameScene(display) {
 }
 
 function showCanvas(display, container) {
-  var { view, wrapper } = display
-  var { width, height } = view
+  const { view, wrapper } = display
+  const { width, height } = view
   container.appendChild(wrapper)
   container.addEventListener('touchstart', disableContextMenu)
   function disableContextMenu() {
@@ -29,12 +29,15 @@ function showCanvas(display, container) {
   $(window).on('resize', resize)
 
   function resize() {
-    var scale = Math.min(window.innerWidth / width, window.innerHeight / height)
+    const scale = Math.min(
+      window.innerWidth / width,
+      window.innerHeight / height
+    )
     view.style.width = Math.round(width * scale) + 'px'
     view.style.height = Math.round(height * scale) + 'px'
     wrapper.style.width = Math.round(width * scale) + 'px'
     wrapper.style.height = Math.round(height * scale) + 'px'
-    var yOffset = (window.innerHeight - height * scale) / 2
+    const yOffset = (window.innerHeight - height * scale) / 2
     wrapper.style.marginTop = Math.round(yOffset) + 'px'
   }
 

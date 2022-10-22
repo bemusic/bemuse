@@ -1,1 +1,1 @@
-var BemuseLogger: typeof import('./index')
+let BemuseLogger: typeof import('./index')

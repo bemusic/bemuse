@@ -38,14 +38,14 @@ describe('legacy bmson', function () {
 
   describe('timingInfoForBmson', function () {
     it('should return timing of initial bpm', function () {
-      let { initialBPM } = bmson.timingInfoForBmson({
+      const { initialBPM } = bmson.timingInfoForBmson({
         info: { initBPM: 180 },
       } as LegacyBmson as any)
       assert(initialBPM === 180)
     })
 
     it('supports BPM changes', function () {
-      let { initialBPM, actions } = bmson.timingInfoForBmson({
+      const { initialBPM, actions } = bmson.timingInfoForBmson({
         info: { initBPM: 120 },
         bpmNotes: [{ y: 2880, v: 196 }],
       } as LegacyBmson as any)
@@ -54,7 +54,7 @@ describe('legacy bmson', function () {
     })
 
     it('supports stops', function () {
-      let { initialBPM, actions } = bmson.timingInfoForBmson({
+      const { initialBPM, actions } = bmson.timingInfoForBmson({
         info: { initBPM: 120 },
         stopNotes: [{ y: 2880, v: 196 }],
       } as LegacyBmson as any)
@@ -67,7 +67,7 @@ describe('legacy bmson', function () {
 
   describe('musicalScoreForBmson', function () {
     function setup(notes: Note[]) {
-      let data = {
+      const data = {
         info: {
           initBPM: 100,
         },
@@ -87,7 +87,7 @@ describe('legacy bmson', function () {
     })
 
     it('generates keysounds and notes', function () {
-      let score = setup([{ x: 1, y: 240, l: 0, c: false }])
+      const score = setup([{ x: 1, y: 240, l: 0, c: false }])
       assert.deepEqual(score.notes.all(), [
         {
           column: '1',
@@ -102,7 +102,7 @@ describe('legacy bmson', function () {
     })
 
     it('handles long notes', function () {
-      let score = setup([{ x: 1, y: 240, l: 480, c: false }])
+      const score = setup([{ x: 1, y: 240, l: 480, c: false }])
       assert.deepEqual(score.notes.all(), [
         {
           column: '1',
@@ -116,11 +116,11 @@ describe('legacy bmson', function () {
     })
 
     it('handles keysound slices', function () {
-      let score = setup([
+      const score = setup([
         { x: 1, y: 240, l: 0, c: false },
         { x: 1, y: 480, l: 0, c: true },
       ])
-      let notes = score.notes.all()
+      const notes = score.notes.all()
       assert(notes[0].keysoundStart === 0)
       assert(notes[0].keysoundEnd === 0.6)
       assert(notes[1].keysoundStart === 0.6)
@@ -130,9 +130,9 @@ describe('legacy bmson', function () {
 
   describe('_slicesForNotesAndTiming (private)', function () {
     it('returns sound slices by y', function () {
-      let timing = new BMS.Timing(100, [])
+      const timing = new BMS.Timing(100, [])
 
-      let slices = bmson._slicesForNotesAndTiming(
+      const slices = bmson._slicesForNotesAndTiming(
         [
           { x: 1, y: 240, l: 0, c: false },
           { x: 1, y: 480, l: 0, c: true },
@@ -146,7 +146,7 @@ describe('legacy bmson', function () {
       )
 
       function check(y: number, start: number, end?: number) {
-        let slice = slices.get(y)!
+        const slice = slices.get(y)!
         assert(Math.abs(slice.keysoundStart - start) < 1e-6)
         if (end === undefined) {
           assert(slice.keysoundEnd === undefined)
