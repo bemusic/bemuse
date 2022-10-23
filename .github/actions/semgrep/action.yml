@@ -1,0 +1,15 @@
+name: 'Semgrep'
+description: 'Installs and runs Semgrep.'
+runs:
+  using: 'composite'
+  steps:
+    - name: Install Semgrep
+      run: pip install semgrep==0.115.0
+      shell: bash
+    - name: Install problem matcher
+      run: |
+        echo "::add-matcher::.github/actions/semgrep/semgrep-problem-matcher.json"
+      shell: bash
+    - name: Semgrep
+      run: semgrep --error --vim
+      shell: bash

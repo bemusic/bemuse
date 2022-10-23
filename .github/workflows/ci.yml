@@ -113,11 +113,8 @@ jobs:
       - name: Make sure all source files are formatted using Prettier
         run: node common/scripts/install-run-rush.js format-all
         if: always()
-      - name: Install Semgrep
-        run: pip install semgrep==0.115.0
-        if: always()
       - name: Semgrep
-        run: semgrep --error
+        uses: ./.github/actions/semgrep
         if: always()
       - name: Format README file
         run: node common/scripts/install-run-rush.js format-readme
