@@ -54,10 +54,12 @@ class PreviewLayout {
   }
 }
 
-export const PreviewCanvas: React.FC<{
+export interface PreviewCanvas {
   previewState: PreviewState
   notechartPreview: NotechartPreview
-}> = (props) => {
+}
+
+export const PreviewCanvas: FC<PreviewCanvas> = (props) => {
   const keymap = 'SCs 1 2b 3 4g 5 6b 7 - 8 9b 10 11g 12 13b 14 SC2s'
   const notesImage = useImage('/skins/default/Note/DX/Note.png')
   const landmineImage = useImage('/skins/default/Note/DX/Landmine.png')

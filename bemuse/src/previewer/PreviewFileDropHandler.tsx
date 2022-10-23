@@ -1,12 +1,14 @@
 import { showQuickPick } from 'bemuse/ui-dialogs'
 import { useEffect } from 'react'
 
-export const PreviewFileDropHandler: React.FC<{
+export interface PreviewFileDropHandler {
   onDrop: (
     handle: FileSystemDirectoryHandle,
     selectedChartFilename: string
   ) => void
-}> = (props) => {
+}
+
+export const PreviewFileDropHandler: FC<PreviewFileDropHandler> = (props) => {
   useEffect(() => {
     const onDragOver = (e: DragEvent) => {
       e.preventDefault()
