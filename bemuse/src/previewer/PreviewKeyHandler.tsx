@@ -6,11 +6,13 @@ import { PreviewAction } from './PreviewState'
 
 let rememberedMeasureNumber: number | null = null
 
-export const PreviewKeyHandler: React.FC<{
+export interface PreviewKeyHandler {
   notechartPreview: NotechartPreview
   dispatch: React.Dispatch<PreviewAction>
   onReload: () => void
-}> = (props) => {
+}
+
+export const PreviewKeyHandler: FC<PreviewKeyHandler> = (props) => {
   const getLatestNotechartPreview = useLatest(props.notechartPreview)
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {

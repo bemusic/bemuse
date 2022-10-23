@@ -4,10 +4,12 @@ import { MeasureInfo, NotechartPreview } from './NotechartPreview'
 import { PreviewState } from './PreviewState'
 import { BarDot } from './BarDot'
 
-export const PreviewInfo: React.FC<{
+export interface PreviewInfo {
   notechartPreview: NotechartPreview
   previewState: PreviewState
-}> = (props) => {
+}
+
+export const PreviewInfo: FC<PreviewInfo> = (props) => {
   const preview = props.notechartPreview
 
   const measureInfo = useMemo(() => {
@@ -98,7 +100,11 @@ export const PreviewInfo: React.FC<{
   )
 }
 
-const BarDots: React.FC<{ measureInfo: MeasureInfo }> = (props) => {
+interface BarDots {
+  measureInfo: MeasureInfo
+}
+
+const BarDots: FC<BarDots> = (props) => {
   const { measureInfo } = props
   if (!measureInfo.measureEndBeat) return null
   const measureSize = measureInfo.measureEndBeat - measureInfo.measureStartBeat
@@ -113,7 +119,7 @@ const BarDots: React.FC<{ measureInfo: MeasureInfo }> = (props) => {
     dotSize /= 2
     dotCount *= 2
   }
-  const dots: React.ReactNode[] = []
+  const dots: ReactNode[] = []
   let filledDots = Math.ceil(
     (measureInfo.currentBeat - measureInfo.measureStartBeat) / dotSize
   )
