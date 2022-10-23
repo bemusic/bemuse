@@ -29,7 +29,7 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
-## v52.2.2-pre.202210231358
+## v52.2.2 (2022-10-23)
 
 ### Internals
 
