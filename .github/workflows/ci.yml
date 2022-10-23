@@ -113,6 +113,9 @@ jobs:
       - name: Make sure all source files are formatted using Prettier
         run: node common/scripts/install-run-rush.js format-all
         if: always()
+      - name: Semgrep
+        uses: ./.github/actions/semgrep
+        if: always()
       - name: Format README file
         run: node common/scripts/install-run-rush.js format-readme
         if: always()

@@ -29,6 +29,21 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## v52.2.2-pre.202210231358
+
+### Internals
+
+- Added [Semgrep](https://semgrep.dev/) to our toolchain to further help us
+  maintain consistent thoughout codebase. [#775], by [@dtinth]
+
+### Improvements
+
+- Fixed a regression where the sign in and sign up function doesn’t work.
+  [#776], by [@dtinth]
+
+[#775]: https://github.com/bemusic/bemuse/pull/775
+[#776]: https://github.com/bemusic/bemuse/pull/776
+
 ## v52.2.1 (2022-10-22)
 
 This is a maintenance release, mostly consists of internal tooling updates and
