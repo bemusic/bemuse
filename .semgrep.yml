@@ -1,0 +1,36 @@
+rules:
+  - id: consistent_react_prop_type_naming
+    pattern-either:
+      - pattern-regex: 'const (\w+): FC<\s*(?:\1)?Props\s*>'
+      - pattern-regex: 'function (\w+)\(\s*props:\s*(?:\1)?Props\s*'
+    message:
+      Make the prop type/interface have the same name as the React component.
+    languages: [ts]
+    severity: ERROR
+
+  - id: consistent_react_fc
+    pattern-regex: 'React\.FC'
+    message: Use FC instead of React.FC
+    languages: [ts]
+    severity: ERROR
+    paths:
+      exclude:
+        - '**/types/react.d.ts'
+
+  - id: consistent_react_node
+    pattern-regex: 'React\.ReactNode'
+    message: Use ReactNode instead of React.FC
+    languages: [ts]
+    severity: ERROR
+    paths:
+      exclude:
+        - '**/types/react.d.ts'
+
+  - id: named_prop_types
+    pattern-either:
+      - pattern-regex: ': FC<[{]'
+    message:
+      Extract the component prop types into its own interface with the same name
+      as the prop
+    languages: [ts]
+    severity: ERROR
