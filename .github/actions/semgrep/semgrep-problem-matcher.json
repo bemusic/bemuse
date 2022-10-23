@@ -2,7 +2,6 @@
   "problemMatcher": [
     {
       "owner": "semgrep",
-      "fileLocation": ["relative", "${workspaceFolder}"],
       "pattern": [
         {
           "regexp": "^([^:]+):(\\d+):(\\d+):([^:]+):([^:]+):(.*)$",
