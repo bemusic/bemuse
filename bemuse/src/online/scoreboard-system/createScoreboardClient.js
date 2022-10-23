@@ -213,7 +213,7 @@ export default function createScoreboardClient({
       invariant(typeof username === 'string', 'username must be a string')
       invariant(typeof password === 'string', 'password must be a string')
       invariant(typeof email === 'string', 'email must be a string')
-      return async () => {
+      return (async () => {
         const { idToken } = await authenticationFlow.signUp(
           username,
           email,
@@ -227,12 +227,12 @@ export default function createScoreboardClient({
           }
         )
         return { playerToken: await resolvePlayerTokenFromIdToken(idToken) }
-      }
+      })()
     },
     loginByUsernamePassword({ username, password }) {
       invariant(typeof username === 'string', 'username must be a string')
       invariant(typeof password === 'string', 'password must be a string')
-      return async () => {
+      return (async () => {
         const { idToken } = await authenticationFlow.loginByUsernamePassword(
           username,
           password,
@@ -244,7 +244,7 @@ export default function createScoreboardClient({
           }
         )
         return { playerToken: await resolvePlayerTokenFromIdToken(idToken) }
-      }
+      })()
     },
     changePassword({ email }) {
       return new Promise((resolve, reject) => {
