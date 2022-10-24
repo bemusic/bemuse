@@ -34,16 +34,21 @@ self.addEventListener('activate', function () {
 })
 
 self.addEventListener('fetch', function (event) {
-  if (event.request.headers.get('range')) {
+  const request = event.request
+  if (request.headers.get('range')) {
     // https://bugs.chromium.org/p/chromium/issues/detail?id=575357
     log('Bailing out for ranged request.', event.request.url)
+    return
+  }
+  const project = location.origin + '/project'
+  if (request.url.startsWith(project) || request.url === project) {
+    log('Bailing out for project website.')
     return
   }
   const build = location.origin + '/build/'
   const skin = location.origin + '/skins/'
   const res = location.origin + '/res/'
   const site = location.origin
-  const request = event.request
   if (request.url.startsWith(build)) {
     if (request.url !== build + 'boot.js') {
       return cacheForever(event, APP_CACHE_KEY)
