@@ -1,6 +1,5 @@
 import { ICustomSongResources } from 'bemuse/resources/types'
 import { Song } from 'bemuse/collection-model/types'
-import Worker from './song-loader.worker'
 
 /* eslint import/no-webpack-loader-syntax: off */
 export function loadSongFromResources(
@@ -56,7 +55,9 @@ export function loadSongFromResources(
       })
     )
     const song = await new Promise<Song>((resolve, reject) => {
-      const worker = new Worker()
+      const worker = new Worker(
+        new URL('./song-loader.worker.js', import.meta.url)
+      )
       worker.onmessage = function ({ data }) {
         if (data.type === 'result') {
           resolve(data.song)
