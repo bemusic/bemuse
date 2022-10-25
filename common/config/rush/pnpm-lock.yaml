@@ -46,6 +46,7 @@ specifiers:
   '@types/wicg-file-system-access': ^2020.9.4
   '@typescript-eslint/parser': ^5.40.1
   artstep: ^5555.0.0
+  assert: ^2.0.0
   auth0-js: ^9.8.0
   autoprefixer: ^10.4.12
   axios: ^0.21.1
@@ -117,8 +118,10 @@ specifiers:
   karma: ^6.4.1
   karma-chrome-launcher: ^3.1.1
   karma-coverage: ^2.2.0
+  karma-espower-preprocessor: ^1.2.0
   karma-firefox-launcher: ^2.1.2
   karma-mocha: ^2.0.1
+  karma-power-assert: ^1.0.0
   karma-sourcemap-loader: ^0.3.8
   karma-webpack: ^5.0.0
   keycode: ^2.2.0
@@ -203,6 +206,7 @@ specifiers:
   webpack: '5'
   webpack-dev-middleware: ^5.3.3
   webpack-dev-server: ^4.11.1
+  webpack-espower-loader: ^2.0.0
   whatwg-fetch: ^1.1.1
   yargs: ^15.3.1
   yn: ^1.3.0
@@ -253,6 +257,7 @@ dependencies:
   '@types/wicg-file-system-access': 2020.9.5
   '@typescript-eslint/parser': 5.42.0_eslint@8.27.0+typescript@4.8.4
   artstep: 5555.0.0
+  assert: 2.0.0
   auth0-js: 9.19.2
   autoprefixer: 10.4.13
   axios: 0.21.4_debug@3.2.7
@@ -324,8 +329,10 @@ dependencies:
   karma: 6.4.1_debug@3.2.7
   karma-chrome-launcher: 3.1.1
   karma-coverage: 2.2.0
+  karma-espower-preprocessor: 1.2.0
   karma-firefox-launcher: 2.1.2
   karma-mocha: 2.0.1
+  karma-power-assert: 1.0.0_power-assert@1.6.1
   karma-sourcemap-loader: 0.3.8
   karma-webpack: 5.0.0_webpack@5.74.0
   keycode: 2.2.1
@@ -410,6 +417,7 @@ dependencies:
   webpack: 5.74.0
   webpack-dev-middleware: 5.3.3_webpack@5.74.0
   webpack-dev-server: 4.11.1_debug@3.2.7+webpack@5.74.0
+  webpack-espower-loader: 2.0.0
   whatwg-fetch: 1.1.1
   yargs: 15.4.1
   yn: 1.3.0
@@ -6135,6 +6143,15 @@ packages:
       util: 0.10.3
     dev: false
 
+  /assert/2.0.0:
+    resolution: {integrity: sha512-se5Cd+js9dXJnu6Ag2JFc00t+HmHOen+8Q+L7O9zI0PqQXr20uk2J0XQqMxZEeo5U50o8Nvmmx7dZrl+Ufr35A==}
+    dependencies:
+      es6-object-assign: 1.1.0
+      is-nan: 1.3.2
+      object-is: 1.1.5
+      util: 0.12.5
+    dev: false
+
   /assertion-error/1.1.0:
     resolution: {integrity: sha512-jgsaNduz+ndvGyFt3uSuWqvy4lCnIJiovtouQN5JZHOKCS2QuhEdbcQHFhVksz2N2U9hXJo8odG7ETyWlEeuDw==}
     dev: false
@@ -6974,6 +6991,15 @@ packages:
     dependencies:
       function-bind: 1.1.1
       get-intrinsic: 1.1.3
+    dev: false
+
+  /call-matcher/1.1.0:
+    resolution: {integrity: sha512-IoQLeNwwf9KTNbtSA7aEBb1yfDbdnzwjCetjkC8io5oGeOmK2CBNdg0xr+tadRYKO0p7uQyZzvon0kXlZbvGrw==}
+    dependencies:
+      core-js: 2.6.12
+      deep-equal: 1.1.1
+      espurify: 1.8.1
+      estraverse: 4.3.0
     dev: false
 
   /call-signature/0.0.2:
@@ -8207,6 +8233,17 @@ packages:
     resolution: {integrity: sha512-FXgye2Jr6oEk01S7gmSrHrPEQ1ontR7wwl+nYiZ8h4SXlHVm0DYda74BIPcHz2s2qPz4+375IcAz1vsWLwddgQ==}
     dev: false
 
+  /deep-equal/1.1.1:
+    resolution: {integrity: sha512-yd9c5AdiqVcR+JjcwUQb9DkhJc8ngNr0MahEBGvDiJw8puWab2yZlh+nkasOnZP+EGTAP6rRp2JzJhJZzvNF8g==}
+    dependencies:
+      is-arguments: 1.1.1
+      is-date-object: 1.0.5
+      is-regex: 1.1.4
+      object-is: 1.1.5
+      object-keys: 1.1.1
+      regexp.prototype.flags: 1.4.3
+    dev: false
+
   /deep-extend/0.6.0:
     resolution: {integrity: sha512-LOHxIOaPYdHlJRtCQfDIVZtfw/ufM8+rVj649RIHzcm/vGwQRXFt6OPqIFWsm2XEMrNIEtWR64sY1LEKD2vAOA==}
     engines: {node: '>=4.0.0'}
@@ -8699,6 +8736,12 @@ packages:
       create-emotion: 9.2.12
     dev: false
 
+  /empower-assert/1.1.0:
+    resolution: {integrity: sha512-Ylck0Q6p8y/LpNzYeBccaxAPm2ZyuqBgErgZpO9KT0HuQWF0sJckBKCLmgS1/DEXEiyBi9XtYh3clZm5cAdARw==}
+    dependencies:
+      estraverse: 4.3.0
+    dev: false
+
   /empower-core/1.2.0:
     resolution: {integrity: sha512-g6+K6Geyc1o6FdXs9HwrXleCFan7d66G5xSCfSF7x1mJDCes6t0om9lFQG3zOrzh3Bkb/45N0cZ5Gqsf7YrzGQ==}
     dependencies:
@@ -8868,12 +8911,39 @@ packages:
       es6-symbol: 3.1.3
     dev: false
 
+  /es6-map/0.1.5:
+    resolution: {integrity: sha512-mz3UqCh0uPCIqsw1SSAkB/p0rOzF/M0V++vyN7JqlPtSW/VsYgQBvVvqMLmfBuyMzTpLnNqi6JmcSizs4jy19A==}
+    dependencies:
+      d: 1.0.1
+      es5-ext: 0.10.62
+      es6-iterator: 2.0.3
+      es6-set: 0.1.6
+      es6-symbol: 3.1.3
+      event-emitter: 0.3.5
+    dev: false
+
+  /es6-object-assign/1.1.0:
+    resolution: {integrity: sha512-MEl9uirslVwqQU369iHNWZXsI8yaZYGg/D65aOgZkeyFJwHYSxilf7rQzXKI7DdDuBPrBXbfk3sl9hJhmd5AUw==}
+    dev: false
+
   /es6-promise/2.3.0:
     resolution: {integrity: sha512-oyOjMhyKMLEjOOtvkwg0G4pAzLQ9WdbbeX7WdqKzvYXu+UFgD0Zo/Brq5Q49zNmnGPPzV5rmYvrr0jz1zWx8Iw==}
     dev: false
 
   /es6-promise/4.2.8:
     resolution: {integrity: sha512-HJDGx5daxeIvxdBxvG2cb9g4tEvwIk3i8+nhX0yGrYmZUzbkdg8QbDevheDB8gd0//uPj4c1EQua8Q+MViT0/w==}
+    dev: false
+
+  /es6-set/0.1.6:
+    resolution: {integrity: sha512-TE3LgGLDIBX332jq3ypv6bcOpkLO0AslAQo7p2VqX/1N46YNsvIWgvjojjSEnWEGWMhr1qUbYeTSir5J6mFHOw==}
+    engines: {node: '>=0.12'}
+    dependencies:
+      d: 1.0.1
+      es5-ext: 0.10.62
+      es6-iterator: 2.0.3
+      es6-symbol: 3.1.3
+      event-emitter: 0.3.5
+      type: 2.7.2
     dev: false
 
   /es6-symbol/3.1.3:
@@ -8895,6 +8965,13 @@ packages:
   /escalade/3.1.1:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
     engines: {node: '>=6'}
+    dev: false
+
+  /escallmatch/1.5.0:
+    resolution: {integrity: sha512-iMF4I4I2E16DPusKDgTtQeIBNX0oOS53Ih6sr/2fh+1SDRsXvG8Y3ZOXGWlDkNNo066XBIkfaDRLfZpqcD+vGA==}
+    dependencies:
+      call-matcher: 1.1.0
+      esprima: 2.7.3
     dev: false
 
   /escape-goat/2.1.1:
@@ -8958,6 +9035,16 @@ packages:
       optionator: 0.8.3
     optionalDependencies:
       source-map: 0.6.1
+    dev: false
+
+  /escope/3.6.0:
+    resolution: {integrity: sha512-75IUQsusDdalQEW/G/2esa87J7raqdJF+Ca0/Xm5C3Q58Nr4yVYjZGp/P1+2xiEVgXRrA39dpRb8LcshajbqDQ==}
+    engines: {node: '>=0.4.0'}
+    dependencies:
+      es6-map: 0.1.5
+      es6-weak-map: 2.0.3
+      esrecurse: 4.3.0
+      estraverse: 4.3.0
     dev: false
 
   /eslint-config-prettier/8.5.0_eslint@8.27.0:
@@ -9303,6 +9390,46 @@ packages:
       - supports-color
     dev: false
 
+  /espower-location-detector/1.0.0:
+    resolution: {integrity: sha512-Y/3H6ytYwqC3YcOc0gOU22Lp3eI5GAFGOymTdzFyfaiglKgtsw2dePOgXY3yrV+QcLPMPiVYwBU9RKaDoh2bbQ==}
+    dependencies:
+      is-url: 1.2.4
+      path-is-absolute: 1.0.1
+      source-map: 0.5.7
+      xtend: 4.0.2
+    dev: false
+
+  /espower-source/2.3.0:
+    resolution: {integrity: sha512-Wc4kC4zUAEV7Qt31JRPoBUc5jjowHRylml2L2VaDQ1XEbnqQofGWx+gPR03TZAPokAMl5dqyL36h3ITyMXy3iA==}
+    engines: {node: '>=0.8.0', npm: '>=1.2.10'}
+    dependencies:
+      acorn: 5.7.4
+      acorn-es7-plugin: 1.1.7
+      convert-source-map: 1.9.0
+      empower-assert: 1.1.0
+      escodegen: 1.14.3
+      espower: 2.1.2
+      estraverse: 4.3.0
+      merge-estraverse-visitors: 1.0.0
+      multi-stage-sourcemap: 0.2.1
+      path-is-absolute: 1.0.1
+      xtend: 4.0.2
+    dev: false
+
+  /espower/2.1.2:
+    resolution: {integrity: sha512-2qa3aEFtcgPB782jTKDPu82hOdw8+zJsWdOn12Tey8XlexHTqsYUIdLC2B7cUECENXly0vZblH1CEZcqttPNjw==}
+    dependencies:
+      array-find: 1.0.0
+      escallmatch: 1.5.0
+      escodegen: 1.14.3
+      escope: 3.6.0
+      espower-location-detector: 1.0.0
+      espurify: 1.8.1
+      estraverse: 4.3.0
+      source-map: 0.5.7
+      type-name: 2.0.2
+    dev: false
+
   /espree/5.0.1:
     resolution: {integrity: sha512-qWAZcWh4XE/RwzLJejfcofscgMc9CamR6Tn1+XRXNzrvUSSbiAjGOI/fggztjIi7y9VLPqnICMIPiGyr8JaZ0A==}
     engines: {node: '>=6.0.0'}
@@ -9319,6 +9446,12 @@ packages:
       acorn: 8.8.1
       acorn-jsx: 5.3.2_acorn@8.8.1
       eslint-visitor-keys: 3.3.0
+    dev: false
+
+  /esprima/2.7.3:
+    resolution: {integrity: sha512-OarPfz0lFCiW4/AV2Oy1Rp9qu0iusTKqykwTspGCZtPxmF81JR4MmIebvF1F9+UOKth2ZubLQ4XGGaU+hSn99A==}
+    engines: {node: '>=0.10.0'}
+    hasBin: true
     dev: false
 
   /esprima/3.1.3:
@@ -9384,6 +9517,13 @@ packages:
     dependencies:
       '@types/node': 18.11.9
       require-like: 0.1.2
+    dev: false
+
+  /event-emitter/0.3.5:
+    resolution: {integrity: sha512-D9rRn9y7kLPnJ+hMq7S/nhvoKwwvVJahBi2BPmx3bvbsEdK3W9ii8cBSGjP+72/LnM4n6fo3+dkCX5FeTQruXA==}
+    dependencies:
+      d: 1.0.1
+      es5-ext: 0.10.62
     dev: false
 
   /eventemitter3/2.0.3:
@@ -11571,6 +11711,14 @@ packages:
       is-path-inside: 3.0.3
     dev: false
 
+  /is-nan/1.3.2:
+    resolution: {integrity: sha512-E+zBKpQ2t6MEo1VsonYmluk9NxGrbzpeeLC2xIViuO2EjU2xsXsBPwTr3Ykv9l08UYEVEdWeRZNouaZqF6RN0w==}
+    engines: {node: '>= 0.4'}
+    dependencies:
+      call-bind: 1.0.2
+      define-properties: 1.1.4
+    dev: false
+
   /is-negated-glob/1.0.0:
     resolution: {integrity: sha512-czXVVn/QEmgvej1f50BZ648vUI+em0xqMq2Sn+QncCLN4zj1UAxlT+kw/6ggQTOaZPd1HqKQGEqbpQVtJucWug==}
     engines: {node: '>=0.10.0'}
@@ -11740,6 +11888,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       unc-path-regex: 0.1.2
+    dev: false
+
+  /is-url/1.2.4:
+    resolution: {integrity: sha512-ITvGim8FhRiYe4IQ5uHSkj7pVaPDrCTkNd3yq3cV7iZAcJdHTUMPMEHcqSOy9xZ9qFenQCvi+2wjH9a1nXqHww==}
     dev: false
 
   /is-utf8/0.2.1:
@@ -12604,6 +12756,13 @@ packages:
       - supports-color
     dev: false
 
+  /karma-espower-preprocessor/1.2.0:
+    resolution: {integrity: sha512-YttqnrjVUkYeXAvSCFYAcqzV9oteDbypSC8d5hAUT+pmSG1Xd7WaUitU2ZJyHJeGUrAr7qF66U9oBEVCeTzkug==}
+    dependencies:
+      convert-source-map: 1.9.0
+      espower-source: 2.3.0
+    dev: false
+
   /karma-firefox-launcher/2.1.2:
     resolution: {integrity: sha512-VV9xDQU1QIboTrjtGVD4NCfzIH7n01ZXqy/qpBhnOeGVOkG5JYPEm8kuSd7psHE6WouZaQ9Ool92g8LFweSNMA==}
     dependencies:
@@ -12615,6 +12774,14 @@ packages:
     resolution: {integrity: sha512-Tzd5HBjm8his2OA4bouAsATYEpZrp9vC7z5E5j4C5Of5Rrs1jY67RAwXNcVmd/Bnk1wgvQRou0zGVLey44G4tQ==}
     dependencies:
       minimist: 1.2.7
+    dev: false
+
+  /karma-power-assert/1.0.0_power-assert@1.6.1:
+    resolution: {integrity: sha512-KCKov8+W+KmDY49S2pcvpMB1/jil+13iPBcQwmpmTkltmJfEh01xA5qHv/tmqNJqHPa/qcEYJQ9HI1/TX+KRdA==}
+    peerDependencies:
+      power-assert: ^1.4.2
+    dependencies:
+      power-assert: 1.6.1
     dev: false
 
   /karma-sourcemap-loader/0.3.8:
@@ -13235,6 +13402,12 @@ packages:
     resolution: {integrity: sha512-cCi6g3/Zr1iqQi6ySbseM1Xvooa98N0w31jzUYrXPX2xqObmFGHJ0tQ5u74H3mVh7wLouTseZyYIq39g8cNp1w==}
     dev: false
 
+  /merge-estraverse-visitors/1.0.0:
+    resolution: {integrity: sha512-YcT59TImpdL2qe+I7OWI+ESjBVov9CWTQjK9Issk58BNQzyputg2s8wOE+DDvxtgmPHG4L6xAl0yAwbNCyXszg==}
+    dependencies:
+      estraverse: 4.3.0
+    dev: false
+
   /merge-source-map/1.0.4:
     resolution: {integrity: sha512-PGSmS0kfnTnMJCzJ16BLLCEe6oeYCamKFFdQKshi4BmM6FUwipjVOcBFGxqtQtirtAG4iZvHlqST9CpZKqlRjA==}
     dependencies:
@@ -13525,7 +13698,7 @@ packages:
       JSONStream: 1.3.5
       parents: 1.0.1
       readable-stream: 1.1.14
-      resolve: 1.22.1
+      resolve: 1.1.7
       stream-combiner2: 1.0.2
       subarg: 1.0.0
       through2: 1.1.1
@@ -13547,6 +13720,12 @@ packages:
 
   /ms/2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
+    dev: false
+
+  /multi-stage-sourcemap/0.2.1:
+    resolution: {integrity: sha512-umaOM+8BZByZIB/ciD3dQLzTv50rEkkGJV78ta/tIVc/J/rfGZY5y1R+fBD3oTaolx41mK8rRcyGtYbDXlzx8Q==}
+    dependencies:
+      source-map: 0.1.43
     dev: false
 
   /multicast-dns/7.2.5:
@@ -13833,6 +14012,14 @@ packages:
 
   /object-inspect/1.4.1:
     resolution: {integrity: sha512-wqdhLpfCUbEsoEwl3FXwGyv8ief1k/1aUdIPCqVnupM6e8l63BEJdiF/0swtn04/8p05tG/T0FrpTlfwvljOdw==}
+    dev: false
+
+  /object-is/1.1.5:
+    resolution: {integrity: sha512-3cyDsyHgtmi7I7DfSSI2LDp6SK2lwvtbg0p0R1e0RvTqF5ceGx+K2dfSjm1bKDMVCFEDAQvy+o8c6a7VujOddw==}
+    engines: {node: '>= 0.4'}
+    dependencies:
+      call-bind: 1.0.2
+      define-properties: 1.1.4
     dev: false
 
   /object-keys/1.1.1:
@@ -19194,6 +19381,15 @@ packages:
       - utf-8-validate
     dev: false
 
+  /webpack-espower-loader/2.0.0:
+    resolution: {integrity: sha512-sZvXQP2Rni7ViRhsceDnd5fwZ7P0wxjnzVdL95suq1+if5Zff7QO65OE/dtIxVWvuMa9tIFhoY4gTuJlBCY5BA==}
+    dependencies:
+      convert-source-map: 1.9.0
+      espower-source: 2.3.0
+      loader-utils: 1.4.0
+      xtend: 4.0.2
+    dev: false
+
   /webpack-merge/4.2.2:
     resolution: {integrity: sha512-TUE1UGoTX2Cd42j3krGYqObZbOD+xF7u28WB7tfUordytSjbWTIjK/8V0amkBfTYN4/pB/GIDlJZZ657BGG19g==}
     dependencies:
@@ -19841,7 +20037,7 @@ packages:
     dev: false
 
   file:projects/bemuse.tgz:
-    resolution: {integrity: sha512-K6a7FCQKDmGPFKvSbzIuh5Uy98+D+Czkfszj+XbjUzNPcUikxuj0YSv5j61ALghva2uWv5nM6DJJ12ijzFIj8Q==, tarball: file:projects/bemuse.tgz}
+    resolution: {integrity: sha512-FDjB1N2wG7kgzAvtoaaFxLzCGrgAvtVr4TpwrvsIglpKpSGMLnwDoaRxAqVMpgoqAYxDttsfVzb4qn7Sktxd+A==, tarball: file:projects/bemuse.tgz}
     name: '@rush-temp/bemuse'
     version: 0.0.0
     dependencies:
@@ -19862,6 +20058,7 @@ packages:
       '@types/react-dom': 16.9.17
       '@types/webpack-env': 1.18.0
       '@types/wicg-file-system-access': 2020.9.5
+      assert: 2.0.0
       auth0-js: 9.19.2
       autoprefixer: 10.4.13
       axios: 0.21.4_debug@3.2.7
@@ -19911,8 +20108,10 @@ packages:
       karma: 6.4.1_debug@3.2.7
       karma-chrome-launcher: 3.1.1
       karma-coverage: 2.2.0
+      karma-espower-preprocessor: 1.2.0
       karma-firefox-launcher: 2.1.2
       karma-mocha: 2.0.1
+      karma-power-assert: 1.0.0_power-assert@1.6.1
       karma-sourcemap-loader: 0.3.8
       karma-webpack: 5.0.0_webpack@5.74.0
       keycode: 2.2.1
@@ -19984,6 +20183,7 @@ packages:
       webpack: 5.74.0
       webpack-dev-middleware: 5.3.3_webpack@5.74.0
       webpack-dev-server: 4.11.1_debug@3.2.7+webpack@5.74.0
+      webpack-espower-loader: 2.0.0
       whatwg-fetch: 1.1.1
       yn: 1.3.0
     transitivePeerDependencies:

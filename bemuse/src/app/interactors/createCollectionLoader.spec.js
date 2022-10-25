@@ -1,4 +1,4 @@
-import assert from 'power-assert'
+import assert from 'assert'
 import waitUntil from 'bemuse/wait-until'
 
 import { createCollectionLoader } from './createCollectionLoader'

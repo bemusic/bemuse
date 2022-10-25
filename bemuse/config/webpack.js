@@ -53,6 +53,7 @@ function generateBaseConfig() {
     },
     module: {
       strictExportPresence: true,
+      exprContextCritical: false,
       rules: generateLoadersConfig(),
       noParse: [/sinon\.js/],
     },

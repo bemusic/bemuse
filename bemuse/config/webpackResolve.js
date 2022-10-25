@@ -8,6 +8,7 @@ module.exports = {
   },
   extensions: ['.webpack.js', '.web.js', '.js', '.jsx', '.ts', '.tsx'],
   fallback: {
+    assert: require.resolve('assert/'),
     crypto: require.resolve('crypto-browserify'),
     buffer: require.resolve('buffer/'),
     events: require.resolve('events/'),

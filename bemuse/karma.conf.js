@@ -33,6 +33,7 @@ module.exports = function (config) {
     exclude: [],
     preprocessors: {
       'src/test/karma.js': ['webpack', 'sourcemap'],
+      'src/test/**/*.spec.js': ['espower'],
     },
     webpack: require('./config/webpack').generateKarmaConfig(),
     webpackMiddleware: {

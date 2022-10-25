@@ -1,4 +1,4 @@
-import assert from 'power-assert'
+import assert from 'assert'
 
 import getLR2Score from './getLR2Score'
 
