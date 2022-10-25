@@ -1,10 +1,17 @@
 import gulp from 'gulp'
+import { Server, config } from 'karma'
 import { join } from 'path'
-import { Server } from 'karma'
 
-gulp.task('test', function (done) {
-  new Server(
-    { configFile: join(__dirname, '..', 'karma.conf.js'), singleRun: true },
-    done
-  ).start()
+gulp.task('test', async function (done) {
+  const parsedConfig = await config.parseConfig(
+    join(__dirname, '..', 'karma.conf.js'),
+    {
+      singleRun: true,
+    },
+    {
+      promiseConfig: true,
+      throwErrors: true,
+    }
+  )
+  await new Server(parsedConfig, done).start()
 })

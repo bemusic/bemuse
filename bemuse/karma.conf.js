@@ -15,7 +15,7 @@ module.exports = function (config) {
     ),
 
     basePath: '',
-    frameworks: ['mocha'],
+    frameworks: ['mocha', 'webpack', 'power-assert'],
     files: [
       'src/test/karma.js',
       {
