@@ -7,7 +7,7 @@ describe('download', function () {
 
   it('resolves with correct type', function () {
     return expect(
-      download('/src/utils/test-fixtures/download/hello.txt').as('text')
+      download('/base/src/utils/test-fixtures/download/hello.txt').as('text')
     ).to.eventually.match(/hello world/)
   })
 
@@ -27,7 +27,7 @@ describe('download', function () {
         this.onerror(new Error('...'))
       })
     return expect(
-      download('/spec/download/fixtures/hello.txt', options)
+      download('/base/spec/download/fixtures/hello.txt', options)
         .as('blob')
         .finally(() => stub.restore())
     ).to.be.rejected

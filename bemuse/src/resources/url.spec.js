@@ -4,7 +4,9 @@ import URLResource from './url'
 
 describe('URLResource', function () {
   it('can download a resource from an arbitrary URL', function () {
-    const resource = new URLResource('/src/resources/test-fixtures/f/meow.txt')
+    const resource = new URLResource(
+      '/base/src/resources/test-fixtures/f/meow.txt'
+    )
     return resource
       .read()
       .then((buffer) => new Uint8Array(buffer))
@@ -13,13 +15,17 @@ describe('URLResource', function () {
       })
   })
   it('can retrieve back the URL', function () {
-    const resource = new URLResource('/src/resources/test-fixtures/f/meow.txt')
+    const resource = new URLResource(
+      '/base/src/resources/test-fixtures/f/meow.txt'
+    )
     return resource.resolveUrl().then((url) => {
       assert(/\/meow\.txt$/.test(url))
     })
   })
   it('has a name, which is only the file name without the path', function () {
-    const resource = new URLResource('/src/resources/test-fixtures/f/meow.txt')
+    const resource = new URLResource(
+      '/base/src/resources/test-fixtures/f/meow.txt'
+    )
     assert(resource.name === 'meow.txt')
   })
 })

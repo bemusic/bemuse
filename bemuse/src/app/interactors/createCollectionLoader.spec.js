@@ -22,7 +22,8 @@ describe('createCollectionLoader', () => {
       const { collectionLoader, onBeginLoading, onLoad } = setup({
         fetch: (url) => {
           assert(
-            url === '/src/app/test-fixtures/example-music-server/index.json'
+            url ===
+              '/base/src/app/test-fixtures/example-music-server/index.json'
           )
           return Promise.resolve({
             json: () =>
@@ -30,7 +31,7 @@ describe('createCollectionLoader', () => {
           })
         },
       })
-      collectionLoader.load('/src/app/test-fixtures/example-music-server')
+      collectionLoader.load('/base/src/app/test-fixtures/example-music-server')
       await waitUntil(() => assert(onLoad.called))
       assert(onBeginLoading.called)
     })
@@ -39,7 +40,7 @@ describe('createCollectionLoader', () => {
       const { collectionLoader, onErrorLoading } = setup({
         fetch: (url) => Promise.reject(new Error('???')),
       })
-      collectionLoader.load('/src/app/test-fixtures/example-music-server')
+      collectionLoader.load('/base/src/app/test-fixtures/example-music-server')
       await waitUntil(() => assert(onErrorLoading.called))
     })
   })
