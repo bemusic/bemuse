@@ -1,7 +1,6 @@
 import * as PIXI from 'pixi.js'
 import $ from 'jquery'
 import debug from 'debug'
-import url from 'url'
 import { PERCENTAGE_FORMATTER } from 'bemuse/progress/formatters'
 
 import Compiler from './compiler'
@@ -22,9 +21,15 @@ export async function load(xmlPath, progress) {
   for (const element of Array.from($xml.find('[font-src]'))) {
     paths.add($(element).attr('font-src'))
   }
+  const base = new URL(xmlPath, 'file://')
   for (const path of paths) {
-    const assetUrl = url.resolve(xmlPath, path)
-    resources.add(path, assetUrl)
+    const assetUrl = new URL(path, base)
+    if (assetUrl.protocol === 'file:') {
+      const { pathname, search, hash } = assetUrl
+      resources.add(path, pathname + search + hash)
+    } else {
+      resources.add(path, assetUrl.toString())
+    }
   }
 
   // load all images + progress reporting

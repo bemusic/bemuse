@@ -19,7 +19,7 @@ function getDecoder() {
   if (!decoderPromise) {
     decoderPromise = import(
       // @ts-ignore
-      /* webpackChunkName: 'stbvorbis' */ 'raw-loader!./vendor/stbvorbis/stbvorbis-e6da5fe-NDEBUG.js'
+      /* webpackChunkName: 'stbvorbis' */ './vendor/stbvorbis/stbvorbis-e6da5fe-NDEBUG.js'
     )
       .then((ns) => ns.default)
       .then((src) => {
