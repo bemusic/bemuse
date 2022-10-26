@@ -19,12 +19,12 @@ function getDecoder() {
   if (!decoderPromise) {
     decoderPromise = import(
       // @ts-ignore
-      /* webpackChunkName: 'stbvorbis' */ './vendor/stbvorbis/stbvorbis-e6da5fe-NDEBUG.js'
+      /* webpackChunkName: 'stbvorbis' */ './vendor/stbvorbis/stbvorbis-e6da5fe-NDEBUG.js?raw'
     )
       .then((ns) => ns.default)
       .then((src) => {
         // eslint-disable-next-line no-eval
-        return (0, eval)(src + ';stbvorbis')
+        return (0, eval)(src + 'stbvorbis')
       })
   }
   return decoderPromise

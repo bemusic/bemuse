@@ -97,6 +97,7 @@ function generateLoadersConfig() {
       ? [
           {
             test: /\.[jt]sx?$/,
+            resourceQuery: { not: [/raw/] },
             include: [path('src')],
             use: {
               loader: '@ephesoft/webpack.istanbul.loader',
@@ -226,6 +227,10 @@ function generateLoadersConfig() {
     },
     {
       test: /\.(?:md)$/,
+      type: 'asset/source',
+    },
+    {
+      resourceQuery: /raw/,
       type: 'asset/source',
     },
   ]
