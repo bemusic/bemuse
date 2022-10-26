@@ -41,9 +41,11 @@ export async function load(xmlPath, progress) {
 }
 
 function loadXml(xmlUrl) {
-  return Promise.resolve($.ajax({ url: xmlUrl, dataType: 'xml' })).then((xml) =>
-    $(xml.documentElement)
-  )
+  return fetch(xmlUrl)
+    .then((res) => res.text())
+    .then((text) =>
+      $(new DOMParser().parseFromString(text, 'text/xml').documentElement)
+    )
 }
 
 function loadResources(resources, progress) {
