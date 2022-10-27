@@ -28,7 +28,6 @@
   "author": "Thai Pangsakulyanont <dtinth@spacet.me> (http://dt.in.th/)",
   "license": "AGPL-1.0",
   "devDependencies": {
-    "@types/bluebird": "^3.5.24",
     "@types/chai": "^4.2.0",
     "@types/eslint": "^4.16.4",
     "@types/invariant": "^2.2.30",
@@ -110,13 +109,13 @@
     "eslint-import-resolver-typescript": "~3.5.2"
   },
   "dependencies": {
+    "@supercharge/promise-pool": "^2.3.2",
     "auth0-js": "^9.8.0",
     "axios": "^0.21.1",
     "baconjs": "^0.7.95",
     "bemuse-indexer": "^51.0.1",
     "bemuse-notechart": "^50.1.1",
     "bemuse-types": "^50.0.2",
-    "bluebird": "^3.5.24",
     "bms": "^50.1.1",
     "bmson": "^50.1.1",
     "bson-objectid": "^1.2.4",
