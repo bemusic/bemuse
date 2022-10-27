@@ -1,13 +1,12 @@
-import _ from 'lodash'
+import SamplingMaster, { Sample } from 'bemuse/sampling-master'
+import { get, set } from 'idb-keyval'
+
 import NotechartLoader from 'bemuse-notechart/lib/loader'
 import ObjectID from 'bson-objectid'
-import SamplingMaster, { Sample } from 'bemuse/sampling-master'
 import { PromisePool } from '@supercharge/promise-pool'
-import { get, set } from 'idb-keyval'
-import { load } from 'bemuse/scintillator'
-import { showAlert } from 'bemuse/ui-dialogs'
-
+import _ from 'lodash'
 import { createNotechartPreview } from './NotechartPreview'
+import { showAlert } from 'bemuse/ui-dialogs'
 
 const PREVIEWER_FS_HANDLE_KEYVAL_KEY = 'previewer-fs-handle'
 const getSamplingMaster = _.once(() => {
