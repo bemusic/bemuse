@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "bms",
+      "comment": "Change readAsync to return Promise and Remove ReadCallback",
+      "type": "major"
+    }
+  ],
+  "packageName": "bms"
+}

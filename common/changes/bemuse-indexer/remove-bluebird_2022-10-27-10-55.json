@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "bemuse-indexer",
+      "comment": "Remove Bluebird and Add promise-pool",
+      "type": "patch"
+    }
+  ],
+  "packageName": "bemuse-indexer"
+}

@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "bemuse-tools",
+      "comment": "Remove Bluebird and Add glob-promise",
+      "type": "patch"
+    }
+  ],
+  "packageName": "bemuse-tools"
+}

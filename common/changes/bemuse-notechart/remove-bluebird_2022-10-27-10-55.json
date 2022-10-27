@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "bemuse-notechart",
+      "comment": "Remove Bluebird",
+      "type": "patch"
+    }
+  ],
+  "packageName": "bemuse-notechart"
+}
