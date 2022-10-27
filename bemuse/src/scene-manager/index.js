@@ -120,9 +120,7 @@ function ReactScene(element, ReactSceneContainer) {
     return {
       async teardown() {
         try {
-          return await new Promise((resolve) => {
-            resolve(teardown())
-          })
+          return teardown()
         } finally {
           ReactDOM.unmountComponentAtNode(container)
         }
