@@ -56,6 +56,7 @@ export function loadSongFromResources(
     )
     const song = await new Promise<Song>((resolve, reject) => {
       const worker = new Worker(
+        // @ts-ignore
         new URL('./song-loader.worker.js', import.meta.url)
       )
       worker.onmessage = function ({ data }) {
