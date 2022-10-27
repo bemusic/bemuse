@@ -1,7 +1,7 @@
 import * as BMS from 'bms'
 import * as BMSNotechartLoader from './BMSNotechartLoader'
 import * as BmsonNotechartLoader from './BmsonNotechartLoader'
-import Bluebird from 'bluebird'
+
 import { PlayerOptions } from '../types'
 
 const coerceToBuffer = (bufferOrArrayBuffer: Buffer | ArrayBuffer) =>
@@ -33,9 +33,7 @@ export class NotechartLoader {
   ) {
     const buffer = coerceToBuffer(arraybuffer)
     const readerOptions = BMS.Reader.getReaderOptionsFromFilename(resource.name)
-    const source = await Bluebird.promisify<string, Buffer, BMS.ReaderOptions>(
-      BMS.Reader.readAsync
-    )(buffer, readerOptions)
+    const source = await BMS.Reader.readAsync(buffer, readerOptions)
     const compileResult = BMS.Compiler.compile(source)
     const chart = compileResult.chart
     const notechart = BMSNotechartLoader.fromBMSChart(chart, options)

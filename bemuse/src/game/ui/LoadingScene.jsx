@@ -1,12 +1,12 @@
 import './LoadingScene.scss'
 
+import PropTypes from 'prop-types'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
 import Scene from 'bemuse/ui/Scene.jsx'
 
-import LoadingSceneSongInfo from './LoadingSceneSongInfo.jsx'
 import LoadingSceneProgress from './LoadingSceneProgress.jsx'
+import LoadingSceneSongInfo from './LoadingSceneSongInfo.jsx'
 
 export default class LoadingScene extends React.Component {
   static propTypes = {
@@ -46,7 +46,7 @@ export default class LoadingScene extends React.Component {
     }
     this.props.registerTeardownCallback(() => {
       ReactDOM.findDOMNode(this.refs.scene).classList.add('is-exiting')
-      return Promise.delay(500)
+      return new Promise((resolve) => setTimeout(resolve, 500))
     })
   }
 }

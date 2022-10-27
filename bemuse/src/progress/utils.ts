@@ -16,19 +16,19 @@ export function fixed(total: number, progress: Progress) {
 /**
  * Updates the progress with the result of an atomic operation.
  */
-export function atomic<T>(
+export async function atomic<T>(
   progress: Progress,
   promise: PromiseLike<T>
-): PromiseLike<T> {
+): Promise<T> {
   if (!progress) return promise
-  return Promise.resolve(promise).tap((data) => {
-    if (hasByteLength(data)) {
-      progress.formatter = BYTES_FORMATTER
-      progress.report(data.byteLength, data.byteLength)
-    } else {
-      progress.report(1, 1)
-    }
-  })
+  const data = await Promise.resolve(promise)
+  if (hasByteLength(data)) {
+    progress.formatter = BYTES_FORMATTER
+    progress.report(data.byteLength, data.byteLength)
+  } else {
+    progress.report(1, 1)
+  }
+  return data
 }
 function hasByteLength(data: any): data is { byteLength: number } {
   return data && data.byteLength
@@ -44,11 +44,11 @@ export function wrapPromise<A extends any[], R>(
 ): (...args: A) => PromiseLike<R> {
   let current = 0
   let total = 0
-  return function (this: any, ...args: A) {
+  return async function (this: any, ...args: A) {
     progress.report(current, ++total)
-    return Promise.resolve(f.apply(this, args)).tap(() =>
-      progress.report(++current, total)
-    )
+    const ret = await f.apply(this, args)
+    progress.report(++current, total)
+    return ret
   }
 }
 

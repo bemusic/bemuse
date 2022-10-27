@@ -1,15 +1,12 @@
-import Promise from 'bluebird'
 import fs from 'fs'
-import _ from 'lodash'
-
+import mkdirp from 'mkdirp'
 import { join } from 'path'
 
 import AudioConvertor from './audio'
-import Directory from './directory'
 import BemusePacker from './bemuse-packer'
+import Directory from './directory'
 
-const mkdirp = Promise.promisify(require('mkdirp'))
-const fileStat = Promise.promisify(fs.stat, fs)
+const fileStat = fs.promises.stat
 
 export async function packIntoBemuse(path) {
   const stat = await fileStat(path)
@@ -33,17 +30,20 @@ export async function packIntoBemuse(path) {
   await packer.write(out)
 }
 
-function dotMap(array, map) {
-  return Promise.map(array, (item) =>
-    Promise.resolve(map(item))
-      .tap(() => process.stdout.write('.'))
-      .then((result) => [result])
-      .catch((e) => {
+async function dotMap(array, map) {
+  const results = await Promise.all(
+    array.map(async (item) => {
+      try {
+        const result = await map(item)
+        process.stdout.write('.')
+        return [result]
+      } catch (e) {
         process.stdout.write('x')
         process.stderr.write('[ERR] ' + e.stack)
         return []
-      })
+      }
+    })
   )
-    .then((results) => _.flatten(results))
-    .tap(() => process.stdout.write('\n'))
+  process.stdout.write('\n')
+  return results.flat()
 }

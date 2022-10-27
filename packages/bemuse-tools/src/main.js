@@ -1,8 +1,8 @@
-import Promise from 'bluebird'
+import * as Server from './server'
+
+import { index } from './indexer'
 import meow from 'meow'
 import { packIntoBemuse } from './packer'
-import { index } from './indexer'
-import * as Server from './server'
 
 const commands = [
   {
@@ -55,11 +55,9 @@ function getHelpText(command) {
   return command.name + ' ' + command.hints + ' — ' + command.description
 }
 
-Promise.resolve(
-  main(
-    meow({
-      help: commands.map(getHelpText).join('\n'),
-      pkg: require('../package.json'),
-    })
-  )
-).done()
+main(
+  meow({
+    help: commands.map(getHelpText).join('\n'),
+    pkg: require('../package.json'),
+  })
+)

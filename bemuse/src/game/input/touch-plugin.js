@@ -1,6 +1,6 @@
-import bench from 'bemuse/devtools/benchmark'
-
 import * as touch3d from '../display/touch3d'
+
+import bench from 'bemuse/devtools/benchmark'
 
 const BUTTONS = [
   'p1_1',
@@ -62,9 +62,7 @@ export function TouchPlugin(context) {
       output['p1_pinch'] = getPinch(input)
       return output
     },
-    destroy() {
-      statsRecorder.done()
-    },
+    destroy() {},
   }
   function _expand(rectangle, amount = 4) {
     const newRect = rectangle.clone()

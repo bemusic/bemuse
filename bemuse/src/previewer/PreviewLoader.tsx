@@ -1,10 +1,13 @@
-import ObjectID from 'bson-objectid'
-import { get, set } from 'idb-keyval'
-import NotechartLoader from 'bemuse-notechart/lib/loader'
-import { showAlert } from 'bemuse/ui-dialogs'
-import SamplingMaster, { Sample } from 'bemuse/sampling-master'
-import { createNotechartPreview } from './NotechartPreview'
 import _ from 'lodash'
+import NotechartLoader from 'bemuse-notechart/lib/loader'
+import ObjectID from 'bson-objectid'
+import SamplingMaster, { Sample } from 'bemuse/sampling-master'
+import { PromisePool } from '@supercharge/promise-pool'
+import { get, set } from 'idb-keyval'
+import { load } from 'bemuse/scintillator'
+import { showAlert } from 'bemuse/ui-dialogs'
+
+import { createNotechartPreview } from './NotechartPreview'
 
 const PREVIEWER_FS_HANDLE_KEYVAL_KEY = 'previewer-fs-handle'
 const getSamplingMaster = _.once(() => {
@@ -77,9 +80,9 @@ export async function loadPreview(loadOptions: LoadPreviewOptions) {
     keysoundCache.clear()
     keysoundCacheHandleId = handleId
   }
-  const samples = await Promise.map(
-    notechart.samples,
-    async (filename) => {
+  const { results: samples } = await PromisePool.withConcurrency(64)
+    .for(notechart.samples)
+    .process(async (filename) => {
       if (keysoundCache.has(filename)) {
         const sample = keysoundCache.get(filename) || null
         return { filename, sample }
@@ -90,8 +93,8 @@ export async function loadPreview(loadOptions: LoadPreviewOptions) {
         return file.arrayBuffer()
       }
       try {
-        const arrayBuffer = await Promise.try(() =>
-          load(filename.replace(/\.\w+$/, '.ogg'))
+        const arrayBuffer = await load(
+          filename.replace(/\.\w+$/, '.ogg')
         ).catch(() => load(filename))
         const sample = await samplingMaster.sample(arrayBuffer)
         const progress = `${++numLoadedSamples}/${notechart.samples.length}`
@@ -103,9 +106,7 @@ export async function loadPreview(loadOptions: LoadPreviewOptions) {
         log(`Failed to load ${filename}: ${error}`)
         return { filename, sample: null }
       }
-    },
-    { concurrency: 64 }
-  )
+    })
   console.log(samples)
 
   log('Loading preview')

@@ -1,45 +1,40 @@
-import { createHash } from 'crypto'
-import {
-  Reader,
-  Compiler,
-  SongInfo,
-  Notes,
-  Timing,
-  ReaderOptions,
-  BMSChart,
-  BMSNote,
-} from 'bms'
-import {
-  songInfoForBmson,
-  musicalScoreForBmson,
-  hasScratch as bmsonHasScratch,
-  keysForBmson,
-} from 'bmson'
-import Bluebird from 'bluebird'
-import _ from 'lodash'
-import assign from 'object-assign'
-import { extname } from 'path'
-import invariant from 'invariant'
-
-import { lcs } from './lcs'
-import { getKeys } from './keys'
-import { getBpmInfo } from './bpm-info'
-import { getDuration } from './duration'
-import { getBmsonBga } from './bmson-bga'
 import {
   BGAInfo,
-  Keys,
   IndexingInputFile,
-  OutputFileInfo,
-  OutputSongInfoVideo,
-  OutputSongInfo,
+  Keys,
   OutputChart,
+  OutputFileInfo,
+  OutputSongInfo,
+  OutputSongInfoVideo,
 } from './types'
-import { getBmsBga } from './bms-bga'
+import {
+  BMSChart,
+  BMSNote,
+  Compiler,
+  Notes,
+  Reader,
+  SongInfo,
+  Timing,
+} from 'bms'
+import {
+  hasScratch as bmsonHasScratch,
+  keysForBmson,
+  musicalScoreForBmson,
+  songInfoForBmson,
+} from 'bmson'
 
-const readBMS = Bluebird.promisify<string, Buffer, ReaderOptions | null>(
-  Reader.readAsync
-)
+import { PromisePool } from '@supercharge/promise-pool'
+import _ from 'lodash'
+import assign from 'object-assign'
+import { createHash } from 'crypto'
+import { extname } from 'path'
+import { getBmsBga } from './bms-bga'
+import { getBmsonBga } from './bmson-bga'
+import { getBpmInfo } from './bpm-info'
+import { getDuration } from './duration'
+import { getKeys } from './keys'
+import invariant from 'invariant'
+import { lcs } from './lcs'
 
 interface InputMeta {
   name: string
@@ -66,7 +61,7 @@ export { _extensions as extensions }
 
 _extensions['.bms'] = async function (source, meta) {
   const options = Reader.getReaderOptionsFromFilename(meta.name)
-  const str = await readBMS(source, options)
+  const str = await Reader.readAsync(source, options)
   const chart = Compiler.compile(str).chart
   const info = SongInfo.fromBMSChart(chart)
   const notes = Notes.fromBMSChart(chart)
@@ -174,9 +169,9 @@ async function getSongInfo(
     }
   let processed = 0
   const doGetFileInfo = options.getFileInfo || getFileInfo
-  const results: OutputChart[][] = await Bluebird.map(
-    files,
-    async function (file): Promise<OutputChart[]> {
+  const { results } = await PromisePool.withConcurrency(2)
+    .for(files)
+    .process(async function (file): Promise<OutputChart[]> {
       const name = file.name
       const fileData = file.data
       const hash = createHash('md5')
@@ -200,9 +195,7 @@ async function getSongInfo(
         processed += 1
         report(processed, files.length, name)
       }
-    },
-    { concurrency: 2 }
-  )
+    })
   const charts = _.flatten(results)
   if (charts.length === 0) {
     warnings.push('No usable charts found!')

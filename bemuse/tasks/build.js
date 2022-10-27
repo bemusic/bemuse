@@ -1,20 +1,21 @@
-import Promise from 'bluebird'
+import buildConfig from '../config/buildConfig'
+import config from '../config/webpack'
 import fs from 'fs'
 import gulp from 'gulp'
 import log from 'fancy-log'
+import path from '../config/path'
 import webpack from 'webpack'
 
-import buildConfig from '../config/buildConfig'
-import config from '../config/webpack'
-import path from '../config/path'
-
-const readFile = Promise.promisify(fs.readFile, fs)
-const writeFile = Promise.promisify(fs.writeFile, fs)
+const { readFile, writeFile } = fs.promises
 
 gulp.task(
   'build',
   gulp.series('dist', async function () {
-    const stats = await Promise.promisify(webpack)(config)
+    const stats = await new Promise((resolve, reject) =>
+      webpack(config, (err, stats) =>
+        err === null ? resolve(stats) : reject(err)
+      )
+    )
     log('[webpack]', stats.toString({ colors: true }))
     if (stats.hasErrors()) {
       throw new Error(

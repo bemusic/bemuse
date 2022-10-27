@@ -1,10 +1,6 @@
-import _ from 'lodash'
-import Bacon from 'baconjs'
-import Immutable from 'immutable'
-
 import * as DataStore from './data-store'
 import * as Level from './level'
-import id from './id'
+
 import {
   INITIAL_OPERATION_STATE,
   completedStateTransition,
@@ -12,6 +8,11 @@ import {
   operationState川,
   transition川FromPromise,
 } from './operations'
+
+import Bacon from 'baconjs'
+import Immutable from 'immutable'
+import _ from 'lodash'
+import id from './id'
 
 export function Online(service) {
   const user口 = new Bacon.Bus()
@@ -23,16 +24,16 @@ export function Online(service) {
     .toProperty(null)
     .map((user) => user || service.getCurrentUser())
 
-  function signUp(options) {
-    return Promise.resolve(service.signUp(options)).tap((user) =>
-      user口.push(user)
-    )
+  async function signUp(options) {
+    const user = await service.signUp(options)
+    user口.push(user)
+    return user
   }
 
-  function logIn(options) {
-    return Promise.resolve(service.logIn(options)).tap((user) =>
-      user口.push(user)
-    )
+  async function logIn(options) {
+    const user = await service.logIn(options)
+    user口.push(user)
+    return user
   }
 
   function changePassword(options) {
@@ -40,11 +41,13 @@ export function Online(service) {
   }
 
   function logOut() {
-    return service.logOut().tap(() => user口.push(null))
+    return service.logOut().then(() => user口.push(null))
   }
 
-  function submitScore(info) {
-    return service.submitScore(info).tap((record) => submitted口.push(record))
+  async function submitScore(info) {
+    const record = await service.submitScore(info)
+    submitted口.push(record)
+    return record
   }
 
   function getScoreboard(level) {

@@ -33,7 +33,7 @@ describe('WaveFactory', function () {
       sample.play.returns(instance)
       waveFactory.playNote(k('0z'), 0)
       waveFactory.playNote(k('0z'), 0)
-      return Promise.delay(0).then(() =>
+      return new Promise((resolve) => setTimeout(resolve, 0)).then(() =>
         expect(instance.stop).to.have.callCount(1)
       )
     })

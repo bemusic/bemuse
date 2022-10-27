@@ -1,9 +1,10 @@
-import { FileEntry, LoggingFunction, ICustomSongResources } from './types'
 import {
-  CustomSongResources,
   ARCHIVE_REGEXP,
+  CustomSongResources,
   downloadFileEntryFromURL,
 } from './custom-song-resources'
+import { FileEntry, ICustomSongResources, LoggingFunction } from './types'
+
 import { addUnprefixed } from './addUnprefixed'
 
 // TODO [#634]: Remove the `DndResources` class and have users of this class create a `CustomSongResources` directly.
@@ -74,12 +75,12 @@ async function getFilesFromEvent(
     }
   }
 
-  function readFile(entry: any, prefix = '') {
-    return new Promise<File>((resolve, reject) => {
+  async function readFile(entry: any, prefix = '') {
+    const file = await new Promise<File>((resolve, reject) => {
       entry.file(resolve, reject)
-    }).tap((file) => {
-      addFile(file, prefix)
     })
+    addFile(file, prefix)
+    return file
   }
 
   async function readDirectory(dir: any, prefix = '') {

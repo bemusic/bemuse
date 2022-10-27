@@ -1,4 +1,9 @@
+import * as GameLoader from './loaders/game-loader'
+
 import BemusePackageResources from 'bemuse/resources/bemuse-package'
+import GameScene from './game-scene'
+import GameShellScene from './ui/GameShellScene.jsx'
+import LoadingScene from './ui/LoadingScene.jsx'
 import React from 'react'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 import URLResource from 'bemuse/resources/url'
@@ -6,11 +11,6 @@ import audioContext from 'bemuse/audio-context'
 import query from 'bemuse/utils/query'
 import { resolveUrl } from 'url'
 import { unmuteAudio } from 'bemuse/sampling-master'
-
-import * as GameLoader from './loaders/game-loader'
-import GameScene from './game-scene'
-import GameShellScene from './ui/GameShellScene.jsx'
-import LoadingScene from './ui/LoadingScene.jsx'
 
 export async function main() {
   // iOS
@@ -27,7 +27,7 @@ export async function main() {
           resolve(data)
         },
       })
-      SCENE_MANAGER.display(scene).done()
+      SCENE_MANAGER.display(scene)
     })
   }
 

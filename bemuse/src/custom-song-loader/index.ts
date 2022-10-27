@@ -1,5 +1,5 @@
-import { Song } from 'bemuse/collection-model/types'
 import { ICustomSongResources } from 'bemuse/resources/types'
+import { Song } from 'bemuse/collection-model/types'
 import Worker from './song-loader.worker'
 
 /* eslint import/no-webpack-loader-syntax: off */
@@ -42,17 +42,19 @@ export function loadSongFromResources(
 
   async function loadFromBmsFileList(bmsFileList: string[]) {
     onMessage(bmsFileList.length + ' file(s) found. Reading them...')
-    const files = await Promise.map(bmsFileList, async (filename) => {
-      const start = Date.now()
-      const file = await resources.file(filename)
-      const data = await file.read()
-      const elapsed = Date.now() - start
-      if (elapsed > 1000) onMessage('Read: ' + filename)
-      return {
-        name: filename,
-        data: data,
-      }
-    })
+    const files = await Promise.all(
+      bmsFileList.map(async (filename) => {
+        const start = Date.now()
+        const file = await resources.file(filename)
+        const data = await file.read()
+        const elapsed = Date.now() - start
+        if (elapsed > 1000) onMessage('Read: ' + filename)
+        return {
+          name: filename,
+          data: data,
+        }
+      })
+    )
     const song = await new Promise<Song>((resolve, reject) => {
       const worker = new Worker()
       worker.onmessage = function ({ data }) {
