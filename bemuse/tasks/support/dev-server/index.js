@@ -18,11 +18,14 @@ export function start() {
 
   const port = Env.serverPort()
   const compiler = webpack(config)
-  const server = new WebpackDevServer({
-    ...config.devServer,
-    host: '0.0.0.0',
-    port,
-  }, compiler)
+  const server = new WebpackDevServer(
+    {
+      ...config.devServer,
+      host: '0.0.0.0',
+      port,
+    },
+    compiler
+  )
 
   server.startCallback(function (err) {
     if (err) throw new PluginError('webpack-dev-server', err)
