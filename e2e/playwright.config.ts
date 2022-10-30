@@ -6,6 +6,7 @@ import { devices } from '@playwright/test'
  * https://github.com/motdotla/dotenv
  */
 // require('dotenv').config();
+const bemusePort = +process.env.BEMUSE_PORT || 8080
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -101,8 +102,8 @@ const config: PlaywrightTestConfig = {
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npx http-server -p 8080 ../dist',
-    port: 8080,
+    command: `npx http-server -p ${bemusePort} ../dist`,
+    port: bemusePort,
     reuseExistingServer: !process.env.CI,
   },
 }
