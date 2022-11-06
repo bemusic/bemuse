@@ -47,7 +47,7 @@ export interface ScoreboardClient {
     data: {
       chart: {
         level: {
-          myRecord: ScoreboardRow
+          myRecord: ScoreboardRow | null
         }
       }
     }
@@ -74,7 +74,7 @@ export interface ScoreboardClient {
 export interface SubmitScoreInput {
   score: number
   combo: number
-  count: number
+  count: [number, number, number, number, number]
   log: string
   total: number
 }
@@ -89,7 +89,7 @@ export interface ScoreboardEntry {
   score: number
   total: number
   combo: number
-  count: number
+  count: [number, number, number, number, number]
   playNumber: number
   playCount: number
   recordedAt: string
