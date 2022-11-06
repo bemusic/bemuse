@@ -2,7 +2,6 @@ import Auth0 from 'auth0-js'
 
 import createScoreboardClient from './createScoreboardClient'
 import { isTestModeEnabled } from 'bemuse/devtools/BemuseTestMode'
-import { isQueryFlagEnabled } from 'bemuse/flags'
 import { createFakeScoreboardClient } from './createFakeScoreboardClient'
 
 export class OnlineService {

@@ -22,27 +22,10 @@ const uid = (function () {
   }
 })()
 
-if (query.TEST_SCOREBOARD || isQueryFlagEnabled('fake-scoreboard')) {
-  tests({
-    fake: true,
-    storagePrefix: 'scoreboard.test-auth',
-
-    // These options are now bogus (they do not actually work anymore),
-    // but the fake scoreboard client does not use them anyway.
-    server: 'https://immense-ravine-52031.herokuapp.com/',
-    authOptions: {
-      domain: 'bemuse-scoreboard-staging-001.auth0.com',
-      clientID: 'WssUDVmiXYfSRrXXAPpztJ8qW41Dmoeb',
-    },
-  })
-} else {
-  describe('Online', function () {
-    xit('Add TEST_SCOREBOARD env to test it!')
-  })
-}
+tests({ fake: true })
 
 function tests(onlineServiceOptions) {
-  let storage = {}
+  const storage = {}
 
   function createOnline() {
     return new Online(new OnlineService({ ...onlineServiceOptions, storage }))
@@ -145,6 +128,7 @@ function tests(onlineServiceOptions) {
             void expect(user).to.be.null
           })()
           await Promise.resolve(online.logOut())
+          await assertions
         })
       })
     })
