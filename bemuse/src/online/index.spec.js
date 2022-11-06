@@ -1,7 +1,5 @@
 import Online from './'
 import OnlineService from './scoreboard-system/OnlineService'
-import query from 'bemuse/utils/query'
-import { isQueryFlagEnabled } from 'bemuse/flags'
 
 const uid = (function () {
   const session = Math.floor(Math.random() * 65536).toString(16)
