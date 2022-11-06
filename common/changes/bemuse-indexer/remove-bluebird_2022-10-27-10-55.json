@@ -2,7 +2,7 @@
   "changes": [
     {
       "packageName": "bemuse-indexer",
-      "comment": "Remove Bluebird and Add promise-pool",
+      "comment": "Remove Bluebird and Add p-map",
       "type": "patch"
     }
   ],

@@ -1,8 +1,8 @@
 import * as ProgressUtils from 'bemuse/progress/utils'
 import _ from 'lodash'
 import defaultKeysoundCache from 'bemuse/keysound-cache'
+import pMap from 'p-map'
 import { EXTRA_FORMATTER } from 'bemuse/progress/formatters'
-import { PromisePool } from '@supercharge/promise-pool'
 
 export class SamplesLoader {
   constructor(assets, master, { keysoundCache = defaultKeysoundCache } = {}) {
@@ -21,10 +21,9 @@ export class SamplesLoader {
         })
       })
     if (decodeProgress) decodeProgress.formatter = EXTRA_FORMATTER
-    return PromisePool.withConcurrency(64)
-      .for(files)
-      .process(load)
-      .then(({ results: arr }) => _(arr).filter().fromPairs().value())
+    return pMap(files, load, { concurrency: 64 }).then((arr) =>
+      _(arr).filter().fromPairs().value()
+    )
   }
 
   async _loadSample(name, onload, ondecode) {

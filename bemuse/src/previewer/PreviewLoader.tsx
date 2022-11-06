@@ -1,12 +1,12 @@
-import SamplingMaster, { Sample } from 'bemuse/sampling-master'
-import { get, set } from 'idb-keyval'
-
+import _ from 'lodash'
 import NotechartLoader from 'bemuse-notechart/lib/loader'
 import ObjectID from 'bson-objectid'
-import { PromisePool } from '@supercharge/promise-pool'
-import _ from 'lodash'
-import { createNotechartPreview } from './NotechartPreview'
+import pMap from 'p-map'
+import SamplingMaster, { Sample } from 'bemuse/sampling-master'
+import { get, set } from 'idb-keyval'
 import { showAlert } from 'bemuse/ui-dialogs'
+
+import { createNotechartPreview } from './NotechartPreview'
 
 const PREVIEWER_FS_HANDLE_KEYVAL_KEY = 'previewer-fs-handle'
 const getSamplingMaster = _.once(() => {
@@ -79,9 +79,9 @@ export async function loadPreview(loadOptions: LoadPreviewOptions) {
     keysoundCache.clear()
     keysoundCacheHandleId = handleId
   }
-  const { results: samples } = await PromisePool.withConcurrency(64)
-    .for(notechart.samples)
-    .process(async (filename) => {
+  const samples = await pMap(
+    notechart.samples,
+    async (filename) => {
       if (keysoundCache.has(filename)) {
         const sample = keysoundCache.get(filename) || null
         return { filename, sample }
@@ -105,7 +105,9 @@ export async function loadPreview(loadOptions: LoadPreviewOptions) {
         log(`Failed to load ${filename}: ${error}`)
         return { filename, sample: null }
       }
-    })
+    },
+    { concurrency: 64 }
+  )
   console.log(samples)
 
   log('Loading preview')

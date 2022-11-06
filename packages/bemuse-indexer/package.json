@@ -25,13 +25,13 @@
   },
   "homepage": "https://github.com/bemusic/indexer",
   "dependencies": {
-    "@supercharge/promise-pool": "^2.3.2",
     "bemuse-types": "^50.0.2",
     "bms": "^50.1.1",
     "bmson": "^50.1.1",
     "invariant": "^2.2.4",
     "lodash": "^4.17.11",
-    "object-assign": "^4.1.1"
+    "object-assign": "^4.1.1",
+    "p-map": "^5.5.0"
   },
   "devDependencies": {
     "@types/object-assign": "^4.0.30",

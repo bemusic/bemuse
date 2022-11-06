@@ -1,12 +1,7 @@
-import {
-  BGAInfo,
-  IndexingInputFile,
-  Keys,
-  OutputChart,
-  OutputFileInfo,
-  OutputSongInfo,
-  OutputSongInfoVideo,
-} from './types'
+import _ from 'lodash'
+import assign from 'object-assign'
+import invariant from 'invariant'
+import pMap from 'p-map'
 import {
   BMSChart,
   BMSNote,
@@ -22,18 +17,23 @@ import {
   musicalScoreForBmson,
   songInfoForBmson,
 } from 'bmson'
-
-import { PromisePool } from '@supercharge/promise-pool'
-import _ from 'lodash'
-import assign from 'object-assign'
 import { createHash } from 'crypto'
 import { extname } from 'path'
+
+import {
+  BGAInfo,
+  IndexingInputFile,
+  Keys,
+  OutputChart,
+  OutputFileInfo,
+  OutputSongInfo,
+  OutputSongInfoVideo,
+} from './types'
 import { getBmsBga } from './bms-bga'
 import { getBmsonBga } from './bmson-bga'
 import { getBpmInfo } from './bpm-info'
 import { getDuration } from './duration'
 import { getKeys } from './keys'
-import invariant from 'invariant'
 import { lcs } from './lcs'
 
 interface InputMeta {
@@ -169,9 +169,9 @@ async function getSongInfo(
     }
   let processed = 0
   const doGetFileInfo = options.getFileInfo || getFileInfo
-  const { results } = await PromisePool.withConcurrency(2)
-    .for(files)
-    .process(async function (file): Promise<OutputChart[]> {
+  const results = await pMap(
+    files,
+    async function (file): Promise<OutputChart[]> {
       const name = file.name
       const fileData = file.data
       const hash = createHash('md5')
@@ -195,7 +195,9 @@ async function getSongInfo(
         processed += 1
         report(processed, files.length, name)
       }
-    })
+    },
+    { concurrency: 2 }
+  )
   const charts = _.flatten(results)
   if (charts.length === 0) {
     warnings.push('No usable charts found!')
