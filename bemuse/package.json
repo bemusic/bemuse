@@ -122,6 +122,7 @@
     "classnames": "^2.2.6",
     "data-structure": "^1.2.0",
     "debug": "^3.2.5",
+    "delay": "^5.0.0",
     "emotion": "^9.2.12",
     "fastclick": "^1.0.6",
     "idb-keyval": "^6.0.2",
