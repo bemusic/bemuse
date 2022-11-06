@@ -1,17 +1,14 @@
-import Promise from 'bluebird'
-import fs from 'fs'
+import { basename, dirname, join } from 'path'
+
 import _ from 'lodash'
 import chalk from 'chalk'
+import fs from 'fs'
+import { getSongInfo } from 'bemuse-indexer'
+import glob from 'glob-promise'
 import json from 'format-json'
 import yaml from 'js-yaml'
 
-import { getSongInfo } from 'bemuse-indexer'
-import { join, dirname, basename } from 'path'
-
-const fileStat = Promise.promisify(fs.stat, fs)
-const readFile = Promise.promisify(fs.readFile, fs)
-const writeFile = Promise.promisify(fs.writeFile, fs)
-const glob = Promise.promisify(require('glob'))
+const { readFile, writeFile, stat: fileStat } = fs.promises
 
 function Cache(path) {
   const data = load()

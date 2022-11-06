@@ -1,37 +1,38 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import SCENE_MANAGER from 'bemuse/scene-manager'
-import now from 'bemuse/utils/now'
-import serviceWorkerRuntime from 'serviceworker-webpack-plugin/lib/runtime'
-import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
-import { createIO, createRun } from 'impure'
-import { monetize } from 'monetizer'
-import {
-  shouldShowAbout,
-  shouldShowModeSelect,
-} from 'bemuse/devtools/query-flags'
-import { withContext } from 'recompose'
-
 import * as Analytics from './analytics'
+import * as BemuseTestMode from '../devtools/BemuseTestMode'
 import * as OptionsIO from './io/OptionsIO'
 import * as ReduxState from './redux/ReduxState'
-import * as BemuseTestMode from '../devtools/BemuseTestMode'
-import AboutScene from './ui/AboutScene'
-import BrowserSupportWarningScene from './ui/BrowserSupportWarningScene'
-import ModeSelectScene from './ui/ModeSelectScene'
-import TitleScene from './ui/TitleScene'
-import ioContext from './io/ioContext'
-import store from './redux/instance'
+
+import { createIO, createRun } from 'impure'
+import {
+  getDefaultCustomFolderContext,
+  getSongsFromCustomFolders,
+} from 'bemuse/custom-folder'
 import {
   getInitialGrepString,
   getMusicServer,
   getTimeSynchroServer,
 } from './query-flags'
-import { isBrowserSupported } from './browser-support'
 import {
-  getSongsFromCustomFolders,
-  getDefaultCustomFolderContext,
-} from 'bemuse/custom-folder'
+  shouldShowAbout,
+  shouldShowModeSelect,
+} from 'bemuse/devtools/query-flags'
+
+import AboutScene from './ui/AboutScene'
+import BrowserSupportWarningScene from './ui/BrowserSupportWarningScene'
+import ModeSelectScene from './ui/ModeSelectScene'
+import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
+import PropTypes from 'prop-types'
+import React from 'react'
+import SCENE_MANAGER from 'bemuse/scene-manager'
+import TitleScene from './ui/TitleScene'
+import ioContext from './io/ioContext'
+import { isBrowserSupported } from './browser-support'
+import { monetize } from 'monetizer'
+import now from 'bemuse/utils/now'
+import serviceWorkerRuntime from 'serviceworker-webpack-plugin/lib/runtime'
+import store from './redux/instance'
+import { withContext } from 'recompose'
 
 /* eslint import/no-webpack-loader-syntax: off */
 export const runIO = createRun({
@@ -79,7 +80,7 @@ export function main() {
   // setup service worker
   const promise = setupServiceWorker()
   if (promise && promise.then) {
-    Promise.resolve(promise).finally(displayFirstScene).done()
+    Promise.resolve(promise).finally(displayFirstScene)
   } else {
     displayFirstScene()
   }
@@ -96,7 +97,7 @@ export function main() {
 }
 
 function displayFirstScene() {
-  SCENE_MANAGER.display(getFirstScene()).done()
+  SCENE_MANAGER.display(getFirstScene())
 }
 
 function getFirstScene() {

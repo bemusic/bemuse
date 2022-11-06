@@ -1,6 +1,5 @@
 import 'bemuse/bootstrap'
 
-import Promise from 'bluebird'
 import * as indexer from 'bemuse-indexer'
 
 /* global FileReaderSync */
@@ -30,9 +29,8 @@ addEventListener('message', function ({ data }) {
   function onProgress(current, total, file) {
     postMessage({ type: 'progress', current, total, file })
   }
-  Promise.try(function () {
-    return indexer.getSongInfo(files, { onProgress })
-  })
+  indexer
+    .getSongInfo(files, { onProgress })
     .then(function (song) {
       song.warnings.forEach(function (warning) {
         if (global.console && console.warn) {
@@ -44,7 +42,6 @@ addEventListener('message', function ({ data }) {
     .catch(function (e) {
       console.error('CAUGHT', e)
     })
-    .done()
 })
 
 function convertBuffer(file) {

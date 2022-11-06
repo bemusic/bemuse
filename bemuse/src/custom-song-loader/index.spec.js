@@ -33,11 +33,10 @@ describe('SongLoader', function () {
       },
     })
     let song
-    before(function () {
+    before(async function () {
       const options = { onMessage: (msg) => console.log(msg) }
-      return Promise.resolve(loadSongFromResources(resources, options)).tap(
-        (x) => (song = x)
-      )
+      const x = await loadSongFromResources(resources, options)
+      song = x
     })
     it('should have correct title', function () {
       expect(song.title).to.equal('meow')
@@ -59,10 +58,9 @@ describe('SongLoader', function () {
       },
     })
     let song
-    before(function () {
-      return Promise.resolve(loadSongFromResources(resources)).tap(
-        (x) => (song = x)
-      )
+    before(async function () {
+      const x = await loadSongFromResources(resources)
+      song = x
     })
     it('should have correct title', function () {
       expect(song.title).to.equal('meow')

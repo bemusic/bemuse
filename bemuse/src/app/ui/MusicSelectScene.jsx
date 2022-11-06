@@ -1,38 +1,41 @@
-import { shouldShowOptions } from 'bemuse/devtools/query-flags'
-import { connect as connectToLegacyStore } from 'bemuse/flux'
-import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
-import * as MusicPreviewer from 'bemuse/music-previewer'
-import online from 'bemuse/online/instance'
-import AuthenticationPopup from 'bemuse/online/ui/AuthenticationPopup'
-import SCENE_MANAGER from 'bemuse/scene-manager'
-import ModalPopup from 'bemuse/ui/ModalPopup'
-import Scene from 'bemuse/ui/Scene'
-import SceneHeading from 'bemuse/ui/SceneHeading'
-import c from 'classnames'
-import $ from 'jquery'
-import PropTypes from 'prop-types'
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { hot } from 'react-hot-loader'
-import { connect } from 'react-redux'
-import compose from 'recompose/compose'
-import { createSelector, createStructuredSelector } from 'reselect'
-import { connectIO } from '../../impure-react/connectIO'
+import './MusicSelectScene.scss'
+
 import * as Analytics from '../analytics'
-import * as Options from '../entities/Options'
+import * as MusicPreviewer from 'bemuse/music-previewer'
 import * as MusicSearchIO from '../io/MusicSearchIO'
 import * as MusicSelectionIO from '../io/MusicSelectionIO'
-import { hasPendingArchiveToLoad } from '../PreloadedCustomBMS'
+import * as Options from '../entities/Options'
 import * as ReduxState from '../redux/ReduxState'
+
+import { createSelector, createStructuredSelector } from 'reselect'
+
+import $ from 'jquery'
+import AuthenticationPopup from 'bemuse/online/ui/AuthenticationPopup'
 import CustomBMS from './CustomBMS'
+import ModalPopup from 'bemuse/ui/ModalPopup'
 import MusicInfo from './MusicInfo'
 import MusicList from './MusicList'
-import './MusicSelectScene.scss'
+import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
 import OptionsView from './Options'
+import PropTypes from 'prop-types'
 import RageQuitPopup from './RageQuitPopup'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import SCENE_MANAGER from 'bemuse/scene-manager'
+import Scene from 'bemuse/ui/Scene'
+import SceneHeading from 'bemuse/ui/SceneHeading'
 import SongPreviewer from './SongPreviewer'
 import Toolbar from './Toolbar'
 import UnofficialPanel from './UnofficialPanel'
+import c from 'classnames'
+import compose from 'recompose/compose'
+import { connect } from 'react-redux'
+import { connectIO } from '../../impure-react/connectIO'
+import { connect as connectToLegacyStore } from 'bemuse/flux'
+import { hasPendingArchiveToLoad } from '../PreloadedCustomBMS'
+import { hot } from 'react-hot-loader'
+import online from 'bemuse/online/instance'
+import { shouldShowOptions } from 'bemuse/devtools/query-flags'
 
 const selectMusicSelectState = (() => {
   const selectLegacyServerObjectForCurrentCollection = createSelector(
@@ -347,7 +350,7 @@ class MusicSelectScene extends React.PureComponent {
 
   handleLogout = () => {
     if (confirm('Do you really want to log out?')) {
-      Promise.resolve(online.logOut()).done()
+      online.logOut()
       Analytics.send('MusicSelectScene', 'logout')
     }
   }
@@ -366,7 +369,7 @@ class MusicSelectScene extends React.PureComponent {
   }
 
   popScene() {
-    SCENE_MANAGER.pop().done()
+    SCENE_MANAGER.pop()
   }
 }
 

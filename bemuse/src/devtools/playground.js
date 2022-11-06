@@ -38,5 +38,5 @@ class DefaultPlayground extends React.Component {
 }
 
 export function main() {
-  void (availablePlaygrounds[query.playground] || DefaultPlayground).main()
+  ;(availablePlaygrounds[query.playground] || DefaultPlayground).main()
 }

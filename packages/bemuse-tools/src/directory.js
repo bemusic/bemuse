@@ -1,20 +1,21 @@
-import Promise from 'bluebird'
-import path from 'path'
 import fs from 'fs'
+import glob from 'glob-promise'
+import path from 'path'
 
-const glob = Promise.promisify(require('glob'))
-const readFile = Promise.promisify(fs.readFile, fs)
+const { readFile } = fs.promises
 
 export class Directory {
   constructor(path) {
     this._path = path
   }
 
-  files(pattern) {
-    return glob(pattern, { cwd: this._path }).map((name) =>
-      readFile(path.join(this._path, name)).then(
-        (buffer) => new FileEntry(this, name, buffer)
-      )
+  async files(pattern) {
+    const names = await glob(pattern, { cwd: this._path })
+    return await Promise.all(
+      names.map(async (name) => {
+        const buffer = await readFile(path.join(this._path, name))
+        return new FileEntry(this, name, buffer)
+      })
     )
   }
 

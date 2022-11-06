@@ -1,6 +1,7 @@
 import * as ProgressUtils from 'bemuse/progress/utils'
 import _ from 'lodash'
 import defaultKeysoundCache from 'bemuse/keysound-cache'
+import pMap from 'p-map'
 import { EXTRA_FORMATTER } from 'bemuse/progress/formatters'
 
 export class SamplesLoader {
@@ -20,40 +21,36 @@ export class SamplesLoader {
         })
       })
     if (decodeProgress) decodeProgress.formatter = EXTRA_FORMATTER
-    return Promise.map(files, load, { concurrency: 64 }).then((arr) =>
+    return pMap(files, load, { concurrency: 64 }).then((arr) =>
       _(arr).filter().fromPairs().value()
     )
   }
 
-  _loadSample(name, onload, ondecode) {
-    const audioBufferPromise = (() => {
+  async _loadSample(name, onload, ondecode) {
+    const audioBufferPromise = (async () => {
       if (this._keysoundCache.isCached(name)) {
-        return Promise.resolve(this._keysoundCache.get(name)).tap(() => {
-          onload(name)
-          ondecode(name)
-        })
-      } else {
-        return this._getFile(name).then((file) =>
-          file
-            .read()
-            .tap(() => {
-              onload(name)
-            })
-            .then((buffer) => this._decode(buffer))
-            .tap((audioBuffer) => {
-              this._keysoundCache.cache(name, audioBuffer)
-              ondecode(name)
-            })
-        )
+        const cache = await this._keysoundCache.get(name)
+        onload(name)
+        ondecode(name)
+        return cache
       }
+      const file = await this._getFile(name)
+      const buffer = await file.read()
+      onload(name)
+      const audioBuffer = await this._decode(buffer)
+      this._keysoundCache.cache(name, audioBuffer)
+      ondecode(name)
+      return audioBuffer
     })()
-    return audioBufferPromise
-      .then((audioBuffer) => this._master.sample(audioBuffer))
-      .then((sample) => [name, sample])
-      .catch((e) => {
-        console.error('Unable to load keysound: ' + name, e)
-        return null
-      })
+    try {
+      const audioBuffer = await audioBufferPromise
+
+      const sample = await this._master.sample(audioBuffer)
+      return [name, sample]
+    } catch (e) {
+      console.error('Unable to load keysound: ' + name, e)
+      return null
+    }
   }
 
   _decode(buffer) {
@@ -62,7 +59,8 @@ export class SamplesLoader {
 
   _getFile(name) {
     name = name.replace(/\\/g, '/')
-    return Promise.try(() => this._assets.file(name.replace(/\.\w+$/, '.ogg')))
+    return this._assets
+      .file(name.replace(/\.\w+$/, '.ogg'))
       .catch(() => this._assets.file(name.replace(/\.\w+$/, '.m4a')))
       .catch(() => this._assets.file(name.replace(/\.\w+$/, '.mp3')))
       .catch(() => this._assets.file(name))

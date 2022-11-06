@@ -1,3 +1,4 @@
+import delay from 'delay'
 import { BYTES_FORMATTER } from 'bemuse/progress/formatters'
 
 // Downloads the file from the URL.
@@ -22,7 +23,7 @@ export function download(
           console.error(`Unable to download ${url} [attempt ${i}]`, error)
           if (i >= 3 || shouldGiveUp) throw error
           const waitMs = getRetryDelay()
-          await new Promise((resolve) => setTimeout(resolve, waitMs))
+          await delay(waitMs)
         }
       }
       function attempt() {

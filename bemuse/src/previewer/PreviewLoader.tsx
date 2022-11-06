@@ -1,10 +1,12 @@
-import ObjectID from 'bson-objectid'
-import { get, set } from 'idb-keyval'
-import NotechartLoader from 'bemuse-notechart/lib/loader'
-import { showAlert } from 'bemuse/ui-dialogs'
-import SamplingMaster, { Sample } from 'bemuse/sampling-master'
-import { createNotechartPreview } from './NotechartPreview'
 import _ from 'lodash'
+import NotechartLoader from 'bemuse-notechart/lib/loader'
+import ObjectID from 'bson-objectid'
+import pMap from 'p-map'
+import SamplingMaster, { Sample } from 'bemuse/sampling-master'
+import { get, set } from 'idb-keyval'
+import { showAlert } from 'bemuse/ui-dialogs'
+
+import { createNotechartPreview } from './NotechartPreview'
 
 const PREVIEWER_FS_HANDLE_KEYVAL_KEY = 'previewer-fs-handle'
 const getSamplingMaster = _.once(() => {
@@ -77,7 +79,7 @@ export async function loadPreview(loadOptions: LoadPreviewOptions) {
     keysoundCache.clear()
     keysoundCacheHandleId = handleId
   }
-  const samples = await Promise.map(
+  const samples = await pMap(
     notechart.samples,
     async (filename) => {
       if (keysoundCache.has(filename)) {
@@ -90,8 +92,8 @@ export async function loadPreview(loadOptions: LoadPreviewOptions) {
         return file.arrayBuffer()
       }
       try {
-        const arrayBuffer = await Promise.try(() =>
-          load(filename.replace(/\.\w+$/, '.ogg'))
+        const arrayBuffer = await load(
+          filename.replace(/\.\w+$/, '.ogg')
         ).catch(() => load(filename))
         const sample = await samplingMaster.sample(arrayBuffer)
         const progress = `${++numLoadedSamples}/${notechart.samples.length}`

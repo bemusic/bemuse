@@ -1,9 +1,8 @@
-import Promise from 'bluebird'
-import path from 'path'
-import fs from 'fs'
 import Payload from './payload'
+import fs from 'fs'
+import path from 'path'
 
-const writeFile = Promise.promisify(fs.writeFile, fs)
+const { writeFile } = fs.promises
 
 export class BemusePacker {
   constructor() {
@@ -56,16 +55,20 @@ export class BemusePacker {
   }
 
   _writeBin(path, metadataBuffer, payload) {
-    const file = fs.createWriteStream(path)
-    const size = Buffer.alloc(4)
-    size.writeUInt32LE(metadataBuffer.length, 0)
-    file.write(Buffer.from('BEMUSEPACK'))
-    file.write(size)
-    file.write(metadataBuffer)
-    for (const buffer of payload.buffers) {
-      file.write(buffer)
-    }
-    return Promise.promisify(file.end.bind(file))()
+    return new Promise((resolve, reject) => {
+      const file = fs.createWriteStream(path)
+      const size = Buffer.alloc(4)
+      size.writeUInt32LE(metadataBuffer.length, 0)
+      file.write(Buffer.from('BEMUSEPACK'))
+      file.write(size)
+      file.write(metadataBuffer)
+      for (const buffer of payload.buffers) {
+        file.write(buffer)
+      }
+      file.once('finish', () => resolve())
+      file.once('error', reject)
+      file.end()
+    })
   }
 }
 

@@ -26,17 +26,16 @@
   "homepage": "https://github.com/bemusic/indexer",
   "dependencies": {
     "bemuse-types": "^50.0.2",
-    "bluebird": "^3.5.24",
     "bms": "^50.1.1",
     "bmson": "^50.1.1",
     "invariant": "^2.2.4",
     "lodash": "^4.17.11",
-    "object-assign": "^4.1.1"
+    "object-assign": "^4.1.1",
+    "p-map": "^4.0.0"
   },
   "devDependencies": {
     "@types/object-assign": "^4.0.30",
     "@types/lodash": "^4.14.176",
-    "@types/bluebird": "^3.5.24",
     "@types/invariant": "^2.2.30",
     "@types/chai": "^4.2.0",
     "@types/mocha": "^5.2.5",

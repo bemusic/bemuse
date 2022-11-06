@@ -1,11 +1,10 @@
 import './AuthenticationPanel.scss'
 
-import React from 'react'
-import PropTypes from 'prop-types'
-import c from 'classnames'
-
-import Panel from 'bemuse/ui/Panel'
 import Flex from 'bemuse/ui/Flex'
+import Panel from 'bemuse/ui/Panel'
+import PropTypes from 'prop-types'
+import React from 'react'
+import c from 'classnames'
 import online from 'bemuse/online/instance'
 
 import AuthenticationForm from './AuthenticationForm'
@@ -41,59 +40,54 @@ export default class AuthenticationPanel extends React.Component {
         message: 'Omachi kudasai...',
       },
     })
-    promise
-      .then(
-        (message) => {
-          this.setState({
-            authentication: {
-              status: 'completed',
-              message: message,
-            },
-          })
-        },
-        (error) => {
-          this.setState({
-            authentication: {
-              status: 'error',
-              message: error.message,
-            },
-          })
-        }
-      )
-      .done()
+    promise.then(
+      (message) => {
+        this.setState({
+          authentication: {
+            status: 'completed',
+            message: message,
+          },
+        })
+      },
+      (error) => {
+        this.setState({
+          authentication: {
+            status: 'error',
+            message: error.message,
+          },
+        })
+      }
+    )
   }
 
-  doSignUp = (formData) => {
-    return Promise.try(() => {
-      if (!formData.username.trim()) {
-        throw new Error('Please enter a username.')
-      }
-      if (!formData.username.match(/^\S+$/)) {
-        throw new Error('Username may not contain spaces.')
-      }
-      if (formData.username.length < 2) {
-        throw new Error('Username must be at least 2 characters long.')
-      }
-      if (formData.username.length > 24) {
-        throw new Error('Username must be at most 24 characters long.')
-      }
-      if (!formData.password) {
-        throw new Error('Please enter a password.')
-      }
-      if (formData.password.length < 6) {
-        throw new Error('Password must be at least 6 characters long.')
-      }
-      if (!formData.passwordConfirmation) {
-        throw new Error('Please confirm your password.')
-      }
-      if (formData.password !== formData.passwordConfirmation) {
-        throw new Error('Passwords do not match.')
-      }
-      return online.signUp(formData).then(() => {
-        if (this.props.onFinish) this.props.onFinish()
-        return 'Welcome to Bemuse!'
-      })
-    })
+  doSignUp = async (formData) => {
+    if (!formData.username.trim()) {
+      throw new Error('Please enter a username.')
+    }
+    if (!formData.username.match(/^\S+$/)) {
+      throw new Error('Username may not contain spaces.')
+    }
+    if (formData.username.length < 2) {
+      throw new Error('Username must be at least 2 characters long.')
+    }
+    if (formData.username.length > 24) {
+      throw new Error('Username must be at most 24 characters long.')
+    }
+    if (!formData.password) {
+      throw new Error('Please enter a password.')
+    }
+    if (formData.password.length < 6) {
+      throw new Error('Password must be at least 6 characters long.')
+    }
+    if (!formData.passwordConfirmation) {
+      throw new Error('Please confirm your password.')
+    }
+    if (formData.password !== formData.passwordConfirmation) {
+      throw new Error('Passwords do not match.')
+    }
+    await online.signUp(formData)
+    if (this.props.onFinish) this.props.onFinish()
+    return 'Welcome to Bemuse!'
   }
 
   doLogIn = async (formData) => {

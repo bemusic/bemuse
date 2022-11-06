@@ -1,13 +1,12 @@
-import Promise from 'bluebird'
-import express from 'express'
-import cors from 'cors'
-import fs from 'fs'
-import * as path from 'path'
 import Rx from 'rx'
 import bytes from 'bytes'
+import cors from 'cors'
+import express from 'express'
+import fs from 'fs'
+import glob from 'glob-promise'
+import path from 'path'
 
-const glob = Promise.promisify(require('glob'))
-const stat = Promise.promisify(fs.stat)
+const { stat } = fs.promises
 
 export function start(dir, port) {
   port = +port || 3456
