@@ -66,6 +66,26 @@ test('Gameplay smoke test', async ({ page }, testInfo) => {
     BemuseTestMode.unpause()
   })
   await expect(page.locator('.ResultScene')).toBeVisible()
+  await expect(page.locator('.Rankingのyours')).toHaveText(/create an account/)
+  await expect(page.locator('.Rankingのleaderboard')).toHaveText(/No Data/)
+
+  await page.locator('.Rankingのyours').getByText('log in').click()
+  await page
+    .locator('.AuthenticationPanel')
+    .getByRole('textbox', { name: 'Username' })
+    .fill('Playwright')
+  await page
+    .locator('.AuthenticationPanel')
+    .getByRole('textbox', { name: 'Password' })
+    .fill('hunter2')
+  await page
+    .locator('.AuthenticationPanel')
+    .getByRole('button', { name: 'Log In' })
+    .click()
+
+  await expect(page.locator('.Rankingのyours')).toHaveText(/Playwright/)
+  await expect(page.locator('.Rankingのleaderboard')).toHaveText(/Playwright/)
+
   await takeScreenshot(page, testInfo, 'Result')
 })
 
@@ -79,7 +99,7 @@ async function takeScreenshot(page: Page, testInfo: TestInfo, name: string) {
 async function startBemuse(page: Page) {
   const testMusicServer =
     'https://raw.githubusercontent.com/bemusic/bemuse-test-server/master'
-  const url = `/?server=${testMusicServer}`
+  const url = `/?server=${testMusicServer}&flags=fake-scoreboard`
   await page.goto(url)
 
   // Enter the test mode

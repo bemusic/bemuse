@@ -7,14 +7,14 @@ import { createFakeScoreboardClient } from './createFakeScoreboardClient'
 
 export class OnlineService {
   constructor({
+    fake = false,
     server,
-    storagePrefix = isQueryFlagEnabled('fake-scoreboard')
-      ? 'fake-scoreboard.auth'
-      : 'scoreboard.auth',
+    storagePrefix = fake ? 'fake-scoreboard.auth' : 'scoreboard.auth',
     authOptions,
     storage = localStorage,
   }) {
-    this._scoreboardClient = isQueryFlagEnabled('fake-scoreboard')
+    this._isFake = fake
+    this._scoreboardClient = fake
       ? createFakeScoreboardClient()
       : createScoreboardClient({
           server,
@@ -112,7 +112,7 @@ export class OnlineService {
   }
 
   async submitScore(info) {
-    if (isTestModeEnabled()) {
+    if (isTestModeEnabled() && !this._isFake) {
       throw new Error('Cannot submit score in test mode')
     }
     if (!this._currentUser) {

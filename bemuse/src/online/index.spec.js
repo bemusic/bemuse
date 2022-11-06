@@ -24,12 +24,16 @@ const uid = (function () {
 
 if (query.TEST_SCOREBOARD || isQueryFlagEnabled('fake-scoreboard')) {
   tests({
+    fake: true,
+    storagePrefix: 'scoreboard.test-auth',
+
+    // These options are now bogus (they do not actually work anymore),
+    // but the fake scoreboard client does not use them anyway.
     server: 'https://immense-ravine-52031.herokuapp.com/',
     authOptions: {
       domain: 'bemuse-scoreboard-staging-001.auth0.com',
       clientID: 'WssUDVmiXYfSRrXXAPpztJ8qW41Dmoeb',
     },
-    storagePrefix: 'scoreboard.test-auth',
   })
 } else {
   describe('Online', function () {
