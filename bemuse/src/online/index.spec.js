@@ -1,6 +1,7 @@
 import Online from './'
 import OnlineService from './scoreboard-system/OnlineService'
 import query from 'bemuse/utils/query'
+import { isQueryFlagEnabled } from 'bemuse/flags'
 
 const uid = (function () {
   const session = Math.floor(Math.random() * 65536).toString(16)
@@ -21,7 +22,7 @@ const uid = (function () {
   }
 })()
 
-if (query.TEST_SCOREBOARD) {
+if (query.TEST_SCOREBOARD || isQueryFlagEnabled('fake-scoreboard')) {
   tests({
     server: 'https://immense-ravine-52031.herokuapp.com/',
     authOptions: {
@@ -37,8 +38,10 @@ if (query.TEST_SCOREBOARD) {
 }
 
 function tests(onlineServiceOptions) {
+  let storage = {}
+
   function createOnline() {
-    return new Online(new OnlineService(onlineServiceOptions))
+    return new Online(new OnlineService({ ...onlineServiceOptions, storage }))
   }
 
   describe('Online', function () {
@@ -74,11 +77,10 @@ function tests(onlineServiceOptions) {
 
     describe('initially', function () {
       let online
-      beforeEach(function () {
-        online = createOnline()
-        return online.logOut()
+      before(async () => {
+        await createOnline().logOut()
       })
-      beforeEach(function () {
+      beforeEach(async () => {
         online = createOnline()
       })
       describe('user川', function () {
@@ -96,13 +98,23 @@ function tests(onlineServiceOptions) {
       describe('user川', function () {
         it('should change to signed-up user, and also start with it', async function () {
           const info = createAccountInfo()
-          const user = await online.user川.take(2).toPromise()
-          expect(user.username).to.equal(info.username)
+          online.user川.onValue(console.log.bind(console, 'user川'))
+          const assertions = (async () => {
+            const user = await online.user川
+              .filter((u) => !!u)
+              .first()
+              .toPromise()
+            expect(user.username).to.equal(info.username)
 
-          const firstUser = await createOnline().user川.first().toPromise()
-          expect(firstUser.username).to.equal(info.username)
+            const firstUser = await createOnline()
+              .user川.filter((u) => !!u)
+              .first()
+              .toPromise()
+            expect(firstUser.username).to.equal(info.username)
+          })()
 
           await online.signUp(info)
+          await assertions
         })
       })
     })
@@ -121,8 +133,13 @@ function tests(onlineServiceOptions) {
       })
       describe('when log out', function () {
         it('should change user川 back to null', async function () {
-          const user = await online.user川.take(2).toPromise()
-          void expect(user).to.be.null
+          const assertions = (async () => {
+            const user = await online.user川
+              .filter((u) => !u)
+              .first()
+              .toPromise()
+            void expect(user).to.be.null
+          })()
           await Promise.resolve(online.logOut())
         })
       })
@@ -299,7 +316,9 @@ function tests(onlineServiceOptions) {
             log: '',
           })
           ranking川 = ranking.state川
-          dispose = ranking川.onValue(() => {})
+          dispose = ranking川.onValue((state) => {
+            // console.log('ranking川', state)
+          })
         })
 
         function when(predicate) {

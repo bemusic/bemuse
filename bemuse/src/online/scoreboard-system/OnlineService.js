@@ -2,19 +2,26 @@ import Auth0 from 'auth0-js'
 
 import createScoreboardClient from './createScoreboardClient'
 import { isTestModeEnabled } from 'bemuse/devtools/BemuseTestMode'
+import { isQueryFlagEnabled } from 'bemuse/flags'
+import { createFakeScoreboardClient } from './createFakeScoreboardClient'
 
 export class OnlineService {
-  constructor({ server, storagePrefix = 'scoreboard.auth', authOptions }) {
-    const auth = new Auth0.WebAuth({
-      ...authOptions,
-      redirectUri: window.location.href,
-      responseType: 'token id_token',
-    })
-    this._scoreboardClient = createScoreboardClient({
-      server,
-      auth,
-      log: () => {},
-    })
+  constructor({
+    server,
+    storagePrefix = isQueryFlagEnabled('fake-scoreboard')
+      ? 'fake-scoreboard.auth'
+      : 'scoreboard.auth',
+    authOptions,
+    storage = localStorage,
+  }) {
+    this._scoreboardClient = isQueryFlagEnabled('fake-scoreboard')
+      ? createFakeScoreboardClient()
+      : createScoreboardClient({
+          server,
+          auth: createAuth(authOptions),
+          log: () => {},
+        })
+    this._storage = storage
     this._storagePrefix = storagePrefix
     this._updateUserFromStorage()
     this._renewPlayerToken()
@@ -26,8 +33,9 @@ export class OnlineService {
       try {
         const data = JSON.parse(text)
         const playerToken = data.playerToken
-        const playerTokenExpires =
-          JSON.parse(atob(playerToken.split('.')[1])).exp * 1000
+        const playerTokenExpires = playerToken.startsWith('FAKE!')
+          ? Date.now() + 86400e3 * 7
+          : JSON.parse(atob(playerToken.split('.')[1])).exp * 1000
         if (Date.now() > playerTokenExpires - 86400e3) {
           console.warn('Authentication token is about to expire, skipping!')
           return null
@@ -37,7 +45,7 @@ export class OnlineService {
         return null
       }
     }
-    this._currentUser = loadUser(localStorage[`${this._storagePrefix}.id`])
+    this._currentUser = loadUser(this._storage[`${this._storagePrefix}.id`])
   }
 
   _renewPlayerToken() {
@@ -47,10 +55,12 @@ export class OnlineService {
     return this._scoreboardClient
       .renewPlayerToken({ playerToken })
       .then((newToken) => {
-        localStorage[`${this._storagePrefix}.id`] = JSON.stringify({
-          username: username,
-          playerToken: newToken,
-        })
+        if (this._storage[`${this._storagePrefix}.id`]) {
+          this._storage[`${this._storagePrefix}.id`] = JSON.stringify({
+            username: username,
+            playerToken: newToken,
+          })
+        }
       })
   }
 
@@ -70,11 +80,12 @@ export class OnlineService {
     return this._scoreboardClient
       .signUp({ username, password, email })
       .then((signUpResult) => {
-        localStorage[`${this._storagePrefix}.id`] = JSON.stringify({
+        this._storage[`${this._storagePrefix}.id`] = JSON.stringify({
           username: username,
           playerToken: signUpResult.playerToken,
         })
         this._updateUserFromStorage()
+        return this.getCurrentUser()
       })
   }
 
@@ -82,7 +93,7 @@ export class OnlineService {
     return this._scoreboardClient
       .loginByUsernamePassword({ username, password })
       .then((loginResult) => {
-        localStorage[`${this._storagePrefix}.id`] = JSON.stringify({
+        this._storage[`${this._storagePrefix}.id`] = JSON.stringify({
           username: username,
           playerToken: loginResult.playerToken,
         })
@@ -96,7 +107,7 @@ export class OnlineService {
   }
 
   async logOut() {
-    delete localStorage[`${this._storagePrefix}.id`]
+    delete this._storage[`${this._storagePrefix}.id`]
     this._updateUserFromStorage()
   }
 
@@ -173,6 +184,14 @@ export class OnlineService {
 }
 
 export default OnlineService
+
+function createAuth(authOptions) {
+  return new Auth0.WebAuth({
+    ...authOptions,
+    redirectUri: window.location.href,
+    responseType: 'token id_token',
+  })
+}
 
 function toEntry(row) {
   return {

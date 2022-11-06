@@ -13,12 +13,19 @@ interface Submission {
 
 export function createFakeScoreboardClient(): ScoreboardClient {
   let submissions: Submission[] = []
+  const signedUpUsernames = new Set<string>()
 
   const client: ScoreboardClient = {
     signUp: async (options) => {
+      await new Promise((r) => setTimeout(r, 100))
+      if (signedUpUsernames.has(options.username)) {
+        throw new Error('Username already taken')
+      }
+      signedUpUsernames.add(options.username)
       return { playerToken: 'FAKE!' + options.username }
     },
     loginByUsernamePassword: async (options) => {
+      await new Promise((r) => setTimeout(r, 100))
       return { playerToken: 'FAKE!' + options.username }
     },
     changePassword: async (options) => {
@@ -28,6 +35,7 @@ export function createFakeScoreboardClient(): ScoreboardClient {
       return options.playerToken
     },
     submitScore: async (options) => {
+      await new Promise((r) => setTimeout(r, 100))
       const { username } = decodeFakePlayerToken(options.playerToken)
       const matching = (s: Submission): boolean =>
         s.md5 === options.md5 &&
@@ -54,6 +62,7 @@ export function createFakeScoreboardClient(): ScoreboardClient {
       }
     },
     retrieveRankingEntries: async (options) => {
+      await new Promise((r) => setTimeout(r, 100))
       const { username } = decodeFakePlayerToken(options.playerToken)
       const set = new Set<string>(options.md5s)
       return {
@@ -67,6 +76,7 @@ export function createFakeScoreboardClient(): ScoreboardClient {
       }
     },
     retrieveRecord: async (options) => {
+      await new Promise((r) => setTimeout(r, 100))
       const { username } = decodeFakePlayerToken(options.playerToken)
       return {
         data: {
@@ -79,6 +89,7 @@ export function createFakeScoreboardClient(): ScoreboardClient {
       }
     },
     retrieveScoreboard: async (options) => {
+      await new Promise((r) => setTimeout(r, 100))
       return {
         data: {
           chart: {
