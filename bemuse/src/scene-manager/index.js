@@ -104,7 +104,7 @@ export default instance
 
 function ReactScene(element, ReactSceneContainer) {
   return function instantiate(container) {
-    let teardown = () => {}
+    let teardown = async () => {}
     const clonedElement = React.cloneElement(element, {
       scene: element,
       registerTeardownCallback: (callback) => {
@@ -120,7 +120,7 @@ function ReactScene(element, ReactSceneContainer) {
     return {
       async teardown() {
         try {
-          return teardown()
+          return await teardown()
         } finally {
           ReactDOM.unmountComponentAtNode(container)
         }
