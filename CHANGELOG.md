@@ -29,6 +29,19 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## v52.2.4-pre.202211061102
+
+### Internals
+
+- Improved the code that handles asynchronous processing to more closely follow
+  latest coding practices and removed a 3rd party dependency.
+
+  For developers using Bemuse’s published npm libraries — there is a breaking
+  change in the `bms` library where the `readAsync` function no longer accepts a
+  callback and now returns a Promise instead. [#782], by [@MikuroXina]
+
+[#782]: https://github.com/bemusic/bemuse/pull/782
+
 ## v52.2.3 (2022-11-05)
 
 ### Improvements
