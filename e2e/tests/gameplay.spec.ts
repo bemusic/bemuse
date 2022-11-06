@@ -79,8 +79,7 @@ async function takeScreenshot(page: Page, testInfo: TestInfo, name: string) {
 async function startBemuse(page: Page) {
   const testMusicServer =
     'https://raw.githubusercontent.com/bemusic/bemuse-test-server/master'
-  const bemusePort = process.env.BEMUSE_PORT || '8080'
-  const url = `http://localhost:${bemusePort}/?server=${testMusicServer}`
+  const url = `/?server=${testMusicServer}`
   await page.goto(url)
 
   // Enter the test mode

@@ -29,6 +29,15 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## v52.2.3 (2022-11-05)
+
+### Improvements
+
+- Fixed a problem where the project documentation website cannot be accessed
+  when a Service Worker is installed. [#778], by [@dtinth]
+
+[#778]: https://github.com/bemusic/bemuse/pull/778
+
 ## v52.2.2 (2022-10-23)
 
 ### Internals
