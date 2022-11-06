@@ -31,7 +31,7 @@
     "invariant": "^2.2.4",
     "lodash": "^4.17.11",
     "object-assign": "^4.1.1",
-    "p-map": "^5.5.0"
+    "p-map": "^4.0.0"
   },
   "devDependencies": {
     "@types/object-assign": "^4.0.30",
