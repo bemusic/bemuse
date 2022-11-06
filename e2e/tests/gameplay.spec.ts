@@ -4,8 +4,11 @@ test('Gameplay smoke test', async ({ page }, testInfo) => {
   await startBemuse(page)
 
   await test.step('Enter game', async () => {
+    await takeScreenshot(page, testInfo, 'Title')
     await page.getByTestId('enter-game').click()
+    await takeScreenshot(page, testInfo, 'Mode selection')
     await page.getByTestId('keyboard-mode').click()
+    await takeScreenshot(page, testInfo, 'Song selection')
     await page.getByTestId('play-selected-chart').click()
     await expect(page.locator('.game-display canvas')).toBeVisible()
   })
@@ -78,6 +81,7 @@ test('Gameplay smoke test', async ({ page }, testInfo) => {
     .locator('.AuthenticationPanel')
     .getByRole('textbox', { name: 'Password' })
     .fill('hunter2')
+  await takeScreenshot(page, testInfo, 'Authentication')
   await page
     .locator('.AuthenticationPanel')
     .getByRole('button', { name: 'Log In' })
