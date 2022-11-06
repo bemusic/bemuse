@@ -2,18 +2,41 @@ import axios from 'axios'
 import invariant from 'invariant'
 
 import * as authenticationFlow from './authenticationFlow'
+import { ScoreboardClient } from './ScoreboardClient'
+
+export interface CreateScoreboardClientOptions {
+  /**
+   * The URL of the scoreboard server.
+   */
+  server: string
+
+  /**
+   * An Auth0.WebAuth instance.
+   */
+  auth: any
+
+  /**
+   * A function used for logging.
+   */
+  log: (format: string, ...args: any[]) => void
+}
 
 export default function createScoreboardClient({
   server,
   auth,
   log = (format, ...args) =>
     console.log('[ScoreboardClient] ' + format, ...args),
-}) {
+}: CreateScoreboardClientOptions): ScoreboardClient {
   const client = axios.create({
     baseURL: server,
   })
 
-  function userSignUp(username, email, password, playerName) {
+  function userSignUp(
+    username: string,
+    email: string,
+    password: string,
+    playerName: string
+  ) {
     return new Promise((resolve, reject) => {
       log('Signing up with Auth0')
       auth.signup(
@@ -26,7 +49,7 @@ export default function createScoreboardClient({
             playerName: playerName,
           },
         },
-        function (err) {
+        function (err: unknown) {
           if (err) {
             log('Auth0 signup error', err)
             return reject(coerceAuth0ErrorToErrorObject(err))
@@ -39,7 +62,7 @@ export default function createScoreboardClient({
               password: password,
               scope: 'openid email profile',
             },
-            function (err, authResult) {
+            function (err: unknown, authResult: { idToken: string }) {
               if (err) {
                 log('Auth0 login error', err)
                 return reject(coerceAuth0ErrorToErrorObject(err))
@@ -53,13 +76,18 @@ export default function createScoreboardClient({
     })
   }
 
-  function graphql({ query, variables }) {
-    return client
-      .post('graphql', { query, variables })
-      .then((response) => response.data)
+  async function graphql({
+    query,
+    variables,
+  }: {
+    query: string
+    variables: any
+  }): Promise<any> {
+    const response = await client.post('graphql', { query, variables })
+    return response.data
   }
 
-  function usernamePasswordLogin(playerId, password) {
+  function usernamePasswordLogin(playerId: any, password: any) {
     return new Promise((resolve, reject) => {
       log('Auth0 log in')
       auth.client.login(
@@ -69,7 +97,7 @@ export default function createScoreboardClient({
           password: password,
           scope: 'openid email profile',
         },
-        function (err, authResult) {
+        function (err: unknown, authResult: { idToken: string }) {
           if (err) {
             log('Auth0 login error', err)
             return reject(coerceAuth0ErrorToErrorObject(err))
@@ -81,7 +109,7 @@ export default function createScoreboardClient({
     })
   }
 
-  function checkPlayerNameAvailability(playerName) {
+  function checkPlayerNameAvailability(playerName: string) {
     return Promise.resolve(
       graphql({
         query: `
@@ -107,7 +135,7 @@ export default function createScoreboardClient({
     )
   }
 
-  function resolvePlayerId(playerName) {
+  function resolvePlayerId(playerName: string) {
     return Promise.resolve(
       graphql({
         query: `
@@ -130,7 +158,7 @@ export default function createScoreboardClient({
     )
   }
 
-  function reservePlayerId(playerName) {
+  function reservePlayerId(playerName: string) {
     return Promise.resolve(
       graphql({
         query: `
@@ -151,7 +179,7 @@ export default function createScoreboardClient({
     )
   }
 
-  function ensureLink(idToken) {
+  function ensureLink(idToken: string) {
     return Promise.resolve(
       graphql({
         query: `
@@ -174,7 +202,7 @@ export default function createScoreboardClient({
     )
   }
 
-  function resolvePlayerTokenFromIdToken(idToken) {
+  function resolvePlayerTokenFromIdToken(idToken: string) {
     return Promise.resolve(
       graphql({
         query: `
@@ -208,7 +236,7 @@ export default function createScoreboardClient({
     entry ${ENTRY}
   }`
 
-  const scoreboardClient = {
+  const scoreboardClient: ScoreboardClient = {
     signUp({ username, password, email }) {
       invariant(typeof username === 'string', 'username must be a string')
       invariant(typeof password === 'string', 'password must be a string')
@@ -254,7 +282,7 @@ export default function createScoreboardClient({
             connection: 'Username-Password-Authentication',
             email,
           },
-          function (err, response) {
+          function (err: unknown, response: unknown) {
             if (err) {
               log('Auth0 password reset error', err)
               return reject(coerceAuth0ErrorToErrorObject(err))
@@ -353,7 +381,7 @@ export default function createScoreboardClient({
   return scoreboardClient
 }
 
-function coerceAuth0ErrorToErrorObject(err) {
+function coerceAuth0ErrorToErrorObject(err: any) {
   return new Error(
     `Auth0 Error: ${err.statusCode} ${err.description} [${err.code}]`
   )
