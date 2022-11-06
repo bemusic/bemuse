@@ -62,7 +62,9 @@ export function TouchPlugin(context) {
       output['p1_pinch'] = getPinch(input)
       return output
     },
-    destroy() {},
+    destroy() {
+      statsRecorder.done()
+    },
   }
   function _expand(rectangle, amount = 4) {
     const newRect = rectangle.clone()
