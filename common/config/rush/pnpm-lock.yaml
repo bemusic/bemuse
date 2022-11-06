@@ -62,7 +62,6 @@ specifiers:
   circumstance: ^1.1.1
   classnames: ^2.2.6
   clsx: ^1.1.1
-  co: ^4.6.0
   connect: ^3.6.6
   cors: ^2.8.4
   cross-env: ^5.2.0
@@ -268,7 +267,6 @@ dependencies:
   circumstance: 1.1.1
   classnames: 2.3.2
   clsx: 1.2.1
-  co: 4.6.0
   connect: 3.7.0
   cors: 2.8.5
   cross-env: 5.2.1
@@ -4847,6 +4845,50 @@ packages:
       defer-to-connect: 1.1.3
     dev: false
 
+  /@tanstack/match-sorter-utils/8.5.14:
+    resolution: {integrity: sha512-lVNhzTcOJ2bZ4IU+PeCPQ36vowBHvviJb2ZfdRFX5uhy7G0jM8N34zAMbmS5ZmVH8D2B7oU82OWo0e/5ZFzQrw==}
+    engines: {node: '>=12'}
+    dependencies:
+      remove-accents: 0.4.2
+    dev: false
+
+  /@tanstack/query-core/4.14.3:
+    resolution: {integrity: sha512-1OrxZk5jSKAjTIDgH/OHa6GfVpgGDVbCVf3KHQjXLFdutK4PSSXQIyX7I1HvBR3mYKyvFPo6yXKNG7QrkwUj9g==}
+    dev: false
+
+  /@tanstack/react-query-devtools/4.14.3_bf68e0deebe8c3db4dd684e160e85995:
+    resolution: {integrity: sha512-yE3GOu7/+0LkeRoklKYrGaw1GRnJZUd5PHvVLbnPj5bDmaw56ric70qT7HKRP6P1ukuTeV2Fb09CuMEI5MN2Jw==}
+    peerDependencies:
+      '@tanstack/react-query': 4.14.3
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@tanstack/match-sorter-utils': 8.5.14
+      '@tanstack/react-query': 4.14.3_react-dom@16.14.0+react@16.14.0
+      react: 16.14.0
+      react-dom: 16.14.0_react@16.14.0
+      superjson: 1.11.0
+      use-sync-external-store: 1.2.0_react@16.14.0
+    dev: false
+
+  /@tanstack/react-query/4.14.3_react-dom@16.14.0+react@16.14.0:
+    resolution: {integrity: sha512-PP7DEFsOMl/JaGQr1B4IeGN3lqHrC5EpG+AgG03OlVIOQMtXNhb0N66Nt1pdrladvzYsKD20L3O3550rBzgLtg==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@tanstack/query-core': 4.14.3
+      react: 16.14.0
+      react-dom: 16.14.0_react@16.14.0
+      use-sync-external-store: 1.2.0_react@16.14.0
+    dev: false
+
   /@tootallnate/once/1.1.2:
     resolution: {integrity: sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==}
     engines: {node: '>= 6'}
@@ -8028,6 +8070,13 @@ packages:
 
   /cookiejar/2.1.3:
     resolution: {integrity: sha512-JxbCBUdrfr6AQjOXrxoTvAMJO4HBTUIlBzslcJPAz+/KT8yk53fXun51u+RenNYvad/+Vc2DIz5o9UxlCDymFQ==}
+    dev: false
+
+  /copy-anything/3.0.2:
+    resolution: {integrity: sha512-CzATjGXzUQ0EvuvgOCI6A4BGOo2bcVx8B+eC2nF862iv9fopnPQwlrbACakNCHRIJbCSBj+J/9JeDf60k64MkA==}
+    engines: {node: '>=12.13'}
+    dependencies:
+      is-what: 4.1.7
     dev: false
 
   /copy-concurrently/1.0.5:
@@ -12701,6 +12750,11 @@ packages:
     resolution: {integrity: sha512-qctsuLZmIQ0+vSSMfoVvyFe2+GSEvnmZ2ezTup1SBse9+twCCeial6EEi3Nc2KFcf6+qz2FBPnjXsk8xhKSaPQ==}
     dependencies:
       call-bind: 1.0.2
+    dev: false
+
+  /is-what/4.1.7:
+    resolution: {integrity: sha512-DBVOQNiPKnGMxRMLIYSwERAS5MVY1B7xYiGnpgctsOFvVDz9f9PFXXxMcTOHuoqYp4NK9qFYQaIC1NRRxLMpBQ==}
+    engines: {node: '>=12.13'}
     dev: false
 
   /is-whitespace-character/1.0.4:
@@ -19459,6 +19513,13 @@ packages:
       - supports-color
     dev: false
 
+  /superjson/1.11.0:
+    resolution: {integrity: sha512-6PfAg1FKhqkwWvPb2uXhH4MkMttdc17eJ91+Aoz4s1XUEDZFmLfFx/xVA3wgkPxAGy5dpozgGdK6V/n20Wj9yg==}
+    engines: {node: '>=10'}
+    dependencies:
+      copy-anything: 3.0.2
+    dev: false
+
   /supports-color/2.0.0:
     resolution: {integrity: sha512-KKNVtd6pCYgPIKU4cp2733HWYCpplQhddZLBUryaAHou723x+FRzQ5Df824Fj+IyyuiQTRoub4SnIFfIcrp70g==}
     engines: {node: '>=0.8.0'}
@@ -20738,6 +20799,14 @@ packages:
       tslib: 2.4.0
     dev: false
 
+  /use-sync-external-store/1.2.0_react@16.14.0:
+    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 16.14.0
+    dev: false
+
   /use/3.1.1:
     resolution: {integrity: sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==}
     engines: {node: '>=0.10.0'}
@@ -21815,7 +21884,7 @@ packages:
     dev: false
 
   file:projects/bemuse-docs.tgz_debug@3.2.7:
-    resolution: {integrity: sha512-op+Ynkc6HS8/d7v2r3SZWiHP12nuuODCcYJOvfXfoQKG0seSu0OofygDH5VeJ+MNJhe2Tlx5srOniHs8MxDoTQ==, tarball: file:projects/bemuse-docs.tgz}
+    resolution: {integrity: sha512-vqbxD/1cESZRr6uww8xpQAv9yVtx+U2Pkpe/hJIJq608afFD5tA5IEdL7g1oEawN+Ki0ZGpWcg0GIqcDBJWyog==, tarball: file:projects/bemuse-docs.tgz}
     id: file:projects/bemuse-docs.tgz
     name: '@rush-temp/bemuse-docs'
     version: 0.0.0
@@ -21853,7 +21922,7 @@ packages:
     dev: false
 
   file:projects/bemuse-e2e.tgz_debug@3.2.7:
-    resolution: {integrity: sha512-k89kiFxKzX30PHDOEdtFPvEPlK7jxNqyG15GKRZ8/WbhIx+nTQ8j4wM0UnkyWAlfI0XsO7icAzsPapn+mHqlyQ==, tarball: file:projects/bemuse-e2e.tgz}
+    resolution: {integrity: sha512-rwgM2mHIZAddr84ztxKxmrkgKTvaR1bSUU8Hhcz/B3hcpLcEB4hf2B/jNn/j3V/uueST06e+HADPT8R/k3jXSw==, tarball: file:projects/bemuse-e2e.tgz}
     id: file:projects/bemuse-e2e.tgz
     name: '@rush-temp/bemuse-e2e'
     version: 0.0.0
@@ -21869,7 +21938,7 @@ packages:
     dev: false
 
   file:projects/bemuse-indexer.tgz:
-    resolution: {integrity: sha512-vwnLxlvfaWH11a1ceke4XyaCXiyYWxsMZAP6FXo8rLcWMQbxwectvEP/Qa+cwlvM4v8yGOmrYagwhMOKgOjYYQ==, tarball: file:projects/bemuse-indexer.tgz}
+    resolution: {integrity: sha512-jSEUsMl7mDaG4XW9nUG5hmhkKaIOzPwcEbu4Fx/QO4/8TioTworCLLbDwoTxeDlUvOYUpuOJl06JJX9haVH+/Q==, tarball: file:projects/bemuse-indexer.tgz}
     name: '@rush-temp/bemuse-indexer'
     version: 0.0.0
     dependencies:
@@ -21894,7 +21963,7 @@ packages:
     dev: false
 
   file:projects/bemuse-notechart.tgz:
-    resolution: {integrity: sha512-BM+n1/3D4l6Vt97zpkAGBD31cyel75R8DPHQFTgU3iQGNIhzXL4+C7W3cTRjqpzPvxkCaB1mhQ8Y8BYIFG9KWQ==, tarball: file:projects/bemuse-notechart.tgz}
+    resolution: {integrity: sha512-204BgP2Dxquyf9vXc3qgMhKDh2tZnMKo2DrmH/6r565nmOhpOE/ALXCj+3KH+EXEW9k31ERphq5bPuSYFgAy8w==, tarball: file:projects/bemuse-notechart.tgz}
     name: '@rush-temp/bemuse-notechart'
     version: 0.0.0
     dependencies:
@@ -21916,7 +21985,7 @@ packages:
     dev: false
 
   file:projects/bemuse-tools.tgz:
-    resolution: {integrity: sha512-mQzdNnS+oAVqQ2RhkGq9cSRM9t+dwhGxUk7ciKWEyJ8GV1TBq5lTibgQ/s7gl80SAZvAVvZFh23TCfuBxJXeIQ==, tarball: file:projects/bemuse-tools.tgz}
+    resolution: {integrity: sha512-8Si/f3cfBV3GalDSl++p8MXbjlNnawCU/c2Z09ccCYw/DSmPEsXUdE0c8HNNvD2r6VAMAlOYJKTnXIHCIuM/Tw==, tarball: file:projects/bemuse-tools.tgz}
     name: '@rush-temp/bemuse-tools'
     version: 0.0.0
     dependencies:
@@ -21946,7 +22015,7 @@ packages:
     dev: false
 
   file:projects/bemuse-types.tgz:
-    resolution: {integrity: sha512-mK4w9nE3d8Xqj3JA4/CPdkznCH4nQzmQVA7GtQVuIrqWrQU9OMr1TNoHesZ3RhnYli7VrrtBqE396Aid/pTUHg==, tarball: file:projects/bemuse-types.tgz}
+    resolution: {integrity: sha512-70bVJ2QhawqUWdppmkHcTrz/vsb5hBFHZNcCMOwX8h2JET+rn42rwpInv5q6VYkC1eM549AHH2XlQmErfDgakw==, tarball: file:projects/bemuse-types.tgz}
     name: '@rush-temp/bemuse-types'
     version: 0.0.0
     dependencies:
@@ -21957,7 +22026,7 @@ packages:
     dev: false
 
   file:projects/bemuse.tgz:
-    resolution: {integrity: sha512-62SeK1WruyrpmTI8f1ymv6Yc+1l2e6JqZ6dwN9D8nrI0WWk6tbHdSBVCHNFgoRzwsaPdgl2ft8Vq0dWNjq/opg==, tarball: file:projects/bemuse.tgz}
+    resolution: {integrity: sha512-82yHdhXdpdoaqf4F8sh4a3AvEnsoJm4xptnPunvgP9GhYQ7hPD/Uly3Z9jQQdmQ52VrFwqvJA0Qr15SM7XCitQ==, tarball: file:projects/bemuse.tgz}
     name: '@rush-temp/bemuse'
     version: 0.0.0
     dependencies:
@@ -21967,6 +22036,8 @@ packages:
       '@fortawesome/free-solid-svg-icons': 6.2.0
       '@fortawesome/react-fontawesome': 0.2.0_5d14ea5e9f5aec1d04e88dc3c856b747
       '@radix-ui/react-alert-dialog': 0.1.7_f8a66923b4fd53e5ec16ce4d72d338f4
+      '@tanstack/react-query': 4.14.3_react-dom@16.14.0+react@16.14.0
+      '@tanstack/react-query-devtools': 4.14.3_bf68e0deebe8c3db4dd684e160e85995
       '@types/bluebird': 3.5.37
       '@types/chai': 4.3.3
       '@types/eslint': 4.16.8
@@ -22118,7 +22189,7 @@ packages:
     dev: false
 
   file:projects/bms.tgz_bluebird@3.7.2:
-    resolution: {integrity: sha512-YUqaP8LEB7JS3Ip1Z1GTFzcZOJqGWCwdiBw/a2NmvXP0erijuCs5rfp3L7ONOEzq0+TEuliNUNldHkawjqicRw==, tarball: file:projects/bms.tgz}
+    resolution: {integrity: sha512-8D9Wo7pb7n1suXgfioLGnbDi4qyMcl/ilzg1lYD/5msLh5iXQOKjyR+ABSK9vzcvDGajrSMzgbVKesXidqrkNA==, tarball: file:projects/bms.tgz}
     id: file:projects/bms.tgz
     name: '@rush-temp/bms'
     version: 0.0.0
@@ -22155,7 +22226,7 @@ packages:
     dev: false
 
   file:projects/bmson.tgz:
-    resolution: {integrity: sha512-3zYU8sfwSW3P1ZRkpaXWutYJCRsNm75bAD0Aq/nfCYv4uYiJZEU4bH5JQb2w4BvrLDsbf/4xCo0Cr010tPRpWg==, tarball: file:projects/bmson.tgz}
+    resolution: {integrity: sha512-Xfk7QisSAqrQVUALq0gNV7TWF5Ddfn6H/lWPh0qORrxpztvlmiyuKc+OgP5Z/heefo8NQ9IpHSnoRr3rRE/biQ==, tarball: file:projects/bmson.tgz}
     name: '@rush-temp/bmson'
     version: 0.0.0
     dependencies:
@@ -22173,7 +22244,7 @@ packages:
     dev: false
 
   file:projects/build-scripts.tgz:
-    resolution: {integrity: sha512-wUHNbpJD1Oa+4kbIsY6k3LN/MHnx0dlvIDeB0La0Dp/BI31li1H9b0MJJxmBjW8flH1h9gmDYFw1uHQpIMLa/w==, tarball: file:projects/build-scripts.tgz}
+    resolution: {integrity: sha512-d256CoHDMIBuxRGjLvetk7ol8+KP6DTmAcBlinL62ul2MQiDiFlAgd2lk5ck54+p9ennDV3yk8I6/VOdLwPxaQ==, tarball: file:projects/build-scripts.tgz}
     name: '@rush-temp/build-scripts'
     version: 0.0.0
     dependencies:
@@ -22216,7 +22287,7 @@ packages:
     dev: false
 
   file:projects/monetizer.tgz_ts-node@10.9.1:
-    resolution: {integrity: sha512-I0ZFfY5VUWxUR1e6v2OxxAQXmb8V0RMl8SibpmHXtCLEX8W99ZdRyG3QsOS5hHpOlHwosSnLEdTR19YgC9u3qA==, tarball: file:projects/monetizer.tgz}
+    resolution: {integrity: sha512-BFJ+JMSwki6aw6fWYbAXcgxySyEbeVkTYqTS2sHXcMBqDPBoUGf94DrkERQ497Dv2XDaQLHbt5eTijv9CAQcqQ==, tarball: file:projects/monetizer.tgz}
     id: file:projects/monetizer.tgz
     name: '@rush-temp/monetizer'
     version: 0.0.0

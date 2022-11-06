@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash'
 import MAIN from 'bemuse/utils/main-element'
 import ReactDOM from 'react-dom'
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+import { QueryClientProvider, useQuery } from '@tanstack/react-query'
 import {
   clearCustomFolder,
   getCustomFolderState,
@@ -10,12 +10,11 @@ import {
   scanFolder,
   setCustomFolder,
 } from 'bemuse/custom-folder'
-
-const queryClient = new QueryClient()
+import { queryClient } from 'bemuse/react-query'
 
 const CustomFolderTester = () => {
   const context = getDefaultCustomFolderContext()
-  const { isLoading, error, data } = useQuery('customFolder', async () => {
+  const { isLoading, error, data } = useQuery(['customFolder'], async () => {
     const result = await getCustomFolderState(context)
     return result
   })
@@ -33,7 +32,7 @@ const CustomFolderTester = () => {
       console.error(e)
       alert(`An error has occurred: ${e}`)
     } finally {
-      queryClient.invalidateQueries('customFolder')
+      queryClient.invalidateQueries(['customFolder'])
     }
   }
 
@@ -43,14 +42,14 @@ const CustomFolderTester = () => {
         log: console.log,
         setStatus: _.throttle((text) => setStatus(text), 100),
         updateState: (newState) => {
-          queryClient.setQueryData('customFolder', newState)
+          queryClient.setQueryData(['customFolder'], newState)
         },
       })
     } catch (e) {
       console.error(e)
       alert(`An error has occurred: ${e}`)
     } finally {
-      queryClient.invalidateQueries('customFolder')
+      queryClient.invalidateQueries(['customFolder'])
     }
   }
 
@@ -61,7 +60,7 @@ const CustomFolderTester = () => {
       console.error(e)
       alert(`An error has occurred: ${e}`)
     } finally {
-      queryClient.invalidateQueries('customFolder')
+      queryClient.invalidateQueries(['customFolder'])
     }
   }
 

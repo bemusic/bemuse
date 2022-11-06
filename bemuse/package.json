@@ -152,7 +152,6 @@
     "react-emotion": "^9.2.12",
     "react-fns": "^1.4.0",
     "react-hot-loader": "^4.12.14",
-    "react-query": "^3.25.1",
     "react-redux": "^5.0.7",
     "react-toggled": "^1.2.7",
     "recompose": "^0.26.0",
@@ -175,7 +174,9 @@
     "@fortawesome/fontawesome-svg-core": "~6.2.0",
     "@fortawesome/free-regular-svg-icons": "~6.2.0",
     "@fortawesome/free-solid-svg-icons": "~6.2.0",
-    "@fortawesome/free-brands-svg-icons": "~6.2.0"
+    "@fortawesome/free-brands-svg-icons": "~6.2.0",
+    "@tanstack/react-query": "~4.14.3",
+    "@tanstack/react-query-devtools": "~4.14.3"
   },
   "resolutions": {
     "natives": "1.1.6"

@@ -32,6 +32,8 @@ import {
   getSongsFromCustomFolders,
   getDefaultCustomFolderContext,
 } from 'bemuse/custom-folder'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from 'bemuse/react-query'
 
 /* eslint import/no-webpack-loader-syntax: off */
 export const runIO = createRun({
@@ -43,7 +45,11 @@ SCENE_MANAGER.ReactSceneContainer = withContext(
   { store: PropTypes.object, runIO: PropTypes.func },
   () => ({ store, runIO })
 )(({ children }) => {
-  return <div className='bemuse-scene'>{React.Children.only(children)}</div>
+  return (
+    <QueryClientProvider client={queryClient}>
+      <div className='bemuse-scene'>{React.Children.only(children)}</div>
+    </QueryClientProvider>
+  )
 })
 
 // Allow hot reloading of some modules.
