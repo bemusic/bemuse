@@ -1,8 +1,8 @@
-import configureStore from 'bemuse/app/redux/configureStore'
+import { Provider } from 'react-redux'
 import React from 'react'
 import ResultScene from 'bemuse/app/ui/ResultScene'
 import SCENE_MANAGER from 'bemuse/scene-manager'
-import { Provider } from 'react-redux'
+import configureStore from 'bemuse/app/redux/configureStore'
 
 export function main() {
   const props = {
@@ -39,5 +39,5 @@ export function main() {
     <Provider store={configureStore()}>
       <ResultScene {...props} />
     </Provider>
-  ).done()
+  )
 }

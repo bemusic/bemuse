@@ -1,10 +1,10 @@
 import './AboutScene.scss'
 
 import React from 'react'
+import SCENE_MANAGER from 'bemuse/scene-manager'
 import Scene from 'bemuse/ui/Scene'
 import SceneHeading from 'bemuse/ui/SceneHeading'
 import SceneToolbar from 'bemuse/ui/SceneToolbar'
-import SCENE_MANAGER from 'bemuse/scene-manager'
 
 class AboutScene extends React.Component {
   constructor(props) {
@@ -169,7 +169,7 @@ class AboutScene extends React.Component {
   }
 
   handleBack = () => {
-    SCENE_MANAGER.pop().done()
+    SCENE_MANAGER.pop()
   }
 }
 

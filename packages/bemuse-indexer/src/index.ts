@@ -1,45 +1,40 @@
-import { createHash } from 'crypto'
-import {
-  Reader,
-  Compiler,
-  SongInfo,
-  Notes,
-  Timing,
-  ReaderOptions,
-  BMSChart,
-  BMSNote,
-} from 'bms'
-import {
-  songInfoForBmson,
-  musicalScoreForBmson,
-  hasScratch as bmsonHasScratch,
-  keysForBmson,
-} from 'bmson'
-import Bluebird from 'bluebird'
 import _ from 'lodash'
 import assign from 'object-assign'
-import { extname } from 'path'
 import invariant from 'invariant'
+import pMap from 'p-map'
+import {
+  BMSChart,
+  BMSNote,
+  Compiler,
+  Notes,
+  Reader,
+  SongInfo,
+  Timing,
+} from 'bms'
+import {
+  hasScratch as bmsonHasScratch,
+  keysForBmson,
+  musicalScoreForBmson,
+  songInfoForBmson,
+} from 'bmson'
+import { createHash } from 'crypto'
+import { extname } from 'path'
 
-import { lcs } from './lcs'
-import { getKeys } from './keys'
-import { getBpmInfo } from './bpm-info'
-import { getDuration } from './duration'
-import { getBmsonBga } from './bmson-bga'
 import {
   BGAInfo,
-  Keys,
   IndexingInputFile,
-  OutputFileInfo,
-  OutputSongInfoVideo,
-  OutputSongInfo,
+  Keys,
   OutputChart,
+  OutputFileInfo,
+  OutputSongInfo,
+  OutputSongInfoVideo,
 } from './types'
 import { getBmsBga } from './bms-bga'
-
-const readBMS = Bluebird.promisify<string, Buffer, ReaderOptions | null>(
-  Reader.readAsync
-)
+import { getBmsonBga } from './bmson-bga'
+import { getBpmInfo } from './bpm-info'
+import { getDuration } from './duration'
+import { getKeys } from './keys'
+import { lcs } from './lcs'
 
 interface InputMeta {
   name: string
@@ -66,7 +61,7 @@ export { _extensions as extensions }
 
 _extensions['.bms'] = async function (source, meta) {
   const options = Reader.getReaderOptionsFromFilename(meta.name)
-  const str = await readBMS(source, options)
+  const str = await Reader.readAsync(source, options)
   const chart = Compiler.compile(str).chart
   const info = SongInfo.fromBMSChart(chart)
   const notes = Notes.fromBMSChart(chart)
@@ -174,7 +169,7 @@ async function getSongInfo(
     }
   let processed = 0
   const doGetFileInfo = options.getFileInfo || getFileInfo
-  const results: OutputChart[][] = await Bluebird.map(
+  const results = await pMap(
     files,
     async function (file): Promise<OutputChart[]> {
       const name = file.name

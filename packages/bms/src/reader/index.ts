@@ -4,7 +4,7 @@
 // The Reader follows [ruv-it!’s algorithm](http://hitkey.nekokan.dyndns.info/cmds.htm#CHARSET)
 // for detecting the character set.
 //
-import { ReaderOptions, ReadCallback } from './types'
+import { ReaderOptions } from './types'
 import chardet = require('bemuse-chardet/bemuse-chardet')
 import iconv = require('iconv-lite')
 
@@ -32,36 +32,21 @@ export function read(
  */
 export function readAsync(
   buffer: Buffer,
-  options: ReaderOptions | null,
-  callback?: ReadCallback
-): void
+  options: ReaderOptions | null
+): Promise<string>
 /**
  * Like `read(buffer)`, but this is the asynchronous version.
  */
-export function readAsync(buffer: Buffer, callback?: ReadCallback): void
+export function readAsync(buffer: Buffer): Promise<string>
 
 export function readAsync(...args: any[]) {
   const buffer: Buffer = args[0]
-  let options: ReaderOptions | null = args[1]
-  let callback: ReadCallback = args[2]
-  if (callback) {
-    options = args[1]
-    callback = args[2]
-  } else {
-    options = null
-    callback = args[1]
-  }
-  setTimeout(function () {
-    let result
+  const options: ReaderOptions | null = args[1]
+  return new Promise(function (resolve, reject) {
     try {
-      result = { value: exports.read(buffer, options) }
+      resolve(read(buffer, options))
     } catch (e) {
-      result = { error: e }
-    }
-    if (result.error) {
-      callback!(result.error as Error)
-    } else {
-      callback!(null, result.value)
+      reject(e)
     }
   })
 }

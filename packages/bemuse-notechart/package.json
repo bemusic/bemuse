@@ -16,12 +16,10 @@
   "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
   "license": "MIT",
   "devDependencies": {
-    "@types/bluebird": "^3.5.24",
     "@types/chai": "^4.2.0",
     "@types/invariant": "^2.2.30",
     "@types/lodash": "^4.14.176",
     "@types/mocha": "^5.2.5",
-    "bluebird": "^3.5.24",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
     "nyc": "^11.9.0",
@@ -34,9 +32,6 @@
     "bmson": "^50.1.1",
     "lodash": "^4.17.11",
     "invariant": "^2.2.4"
-  },
-  "peerDependencies": {
-    "bluebird": "^3.5.1"
   },
   "volta": {
     "extends": "../../volta.json"

@@ -1,10 +1,10 @@
 import './style.scss'
 
 import $ from 'jquery'
-import { Compiler, Notes, Reader, SongInfo, Timing } from 'bms'
 import DndResources from 'bemuse/resources/dnd-resources'
 import SamplingMaster from 'bemuse/sampling-master'
 import ctx from 'bemuse/audio-context'
+import { Compiler, Notes, Reader, SongInfo, Timing } from 'bms'
 
 import template from './template.jade'
 
@@ -44,7 +44,7 @@ async function go(loader, element) {
   const loadedFile = await loader.file(bmsFile)
   const arraybuffer = await loadedFile.read()
   const buffer = Buffer.from(new Uint8Array(arraybuffer))
-  const text = await Promise.promisify(Reader.readAsync)(buffer)
+  const text = await Reader.readAsync(buffer)
   const chart = Compiler.compile(text).chart
   const timing = Timing.fromBMSChart(chart)
   const notes = Notes.fromBMSChart(chart)
@@ -99,19 +99,18 @@ async function go(loader, element) {
       const keysound = note.keysound
       if (!(keysound in samples)) {
         samples[keysound] = null
-        promises.push(
-          loadKeysound(_chart.headers.get('wav' + keysound))
-            .then((blob) => master.sample(blob))
-            .then((sample) => (samples[keysound] = sample))
-            .catch((e) =>
-              console.error('Unable to load ' + keysound + ': ' + e)
+        promises.push(async () => {
+          try {
+            const blob = await loadKeysound(
+              _chart.headers.get('wav' + keysound)
             )
-            .tap(() =>
-              log(
-                '[loaded ' + ++completed + '/' + promises.length + ' samples]'
-              )
-            )
-        )
+            const sample = await master.sample(blob)
+            samples[keysound] = sample
+            log('[loaded ' + ++completed + '/' + promises.length + ' samples]')
+          } catch (e) {
+            console.error('Unable to load ' + keysound + ': ' + e)
+          }
+        })
       }
     }
 

@@ -1,25 +1,25 @@
 import './TitleScene.scss'
 
+import * as Analytics from '../analytics'
+import * as Options from '../entities/Options'
+import * as OptionsIO from '../io/OptionsIO'
+
 import $ from 'jquery'
+import AboutScene from './AboutScene'
+import ChangelogPanel from './ChangelogPanel'
 import HomePage from 'bemuse/site/HomePage'
 import ModalPopup from 'bemuse/ui/ModalPopup'
+import ModeSelectScene from './ModeSelectScene'
 import PropTypes from 'prop-types'
 import React from 'react'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 import Scene from 'bemuse/ui/Scene'
-import version from 'bemuse/utils/version'
-import { hot } from 'react-hot-loader'
+import Toolbar from './Toolbar'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import connectIO from 'bemuse/impure-react/connectIO'
-
-import * as Analytics from '../analytics'
-import * as Options from '../entities/Options'
-import * as OptionsIO from '../io/OptionsIO'
-import AboutScene from './AboutScene'
-import ChangelogPanel from './ChangelogPanel'
-import ModeSelectScene from './ModeSelectScene'
-import Toolbar from './Toolbar'
+import { hot } from 'react-hot-loader'
+import version from 'bemuse/utils/version'
 
 const HAS_PARENT = (() => {
   try {
@@ -147,12 +147,12 @@ class TitleScene extends React.Component {
   }
 
   enterGame() {
-    SCENE_MANAGER.push(<ModeSelectScene />).done()
+    SCENE_MANAGER.push(<ModeSelectScene />)
     Analytics.send('TitleScene', 'enter game')
   }
 
   showAbout() {
-    SCENE_MANAGER.push(<AboutScene />).done()
+    SCENE_MANAGER.push(<AboutScene />)
     Analytics.send('TitleScene', 'show about')
   }
 

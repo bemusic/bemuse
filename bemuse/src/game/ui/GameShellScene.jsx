@@ -1,7 +1,8 @@
 import './GameShellScene.scss'
-import React from 'react'
-import PropTypes from 'prop-types'
+
 import DndResources from 'bemuse/resources/dnd-resources'
+import PropTypes from 'prop-types'
+import React from 'react'
 import c from 'classnames'
 
 class CustomChartSelector extends React.Component {
@@ -76,7 +77,6 @@ class CustomChartSelector extends React.Component {
           throw err
         }
       })
-      .done()
   }
 
   handleItemClick = (file) => {

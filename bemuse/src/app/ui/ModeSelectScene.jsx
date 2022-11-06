@@ -1,16 +1,16 @@
 import './ModeSelectScene.scss'
 
+import * as Analytics from '../analytics'
+import * as Options from '../entities/Options'
+import * as OptionsIO from '../io/OptionsIO'
+
+import MusicSelectScene from './MusicSelectScene'
 import PropTypes from 'prop-types'
 import React from 'react'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 import Scene from 'bemuse/ui/Scene'
 import SceneHeading from 'bemuse/ui/SceneHeading'
 import SceneToolbar from 'bemuse/ui/SceneToolbar'
-
-import * as Analytics from '../analytics'
-import * as Options from '../entities/Options'
-import * as OptionsIO from '../io/OptionsIO'
-import MusicSelectScene from './MusicSelectScene'
 import connectIO from '../../impure-react/connectIO'
 
 const enhance = connectIO({
@@ -154,18 +154,18 @@ class ModeSelectScene extends React.Component {
 
   handleKB = () => {
     this.props.onSetMode('KB', this._playDevice)
-    SCENE_MANAGER.display(<MusicSelectScene />).done()
+    SCENE_MANAGER.display(<MusicSelectScene />)
     Analytics.send('ModeSelectScene', 'select mode', 'KB')
   }
 
   handleBM = () => {
     this.props.onSetMode('BM')
-    SCENE_MANAGER.display(<MusicSelectScene />).done()
+    SCENE_MANAGER.display(<MusicSelectScene />)
     Analytics.send('ModeSelectScene', 'select mode', 'BM')
   }
 
   handleBack = () => {
-    SCENE_MANAGER.pop().done()
+    SCENE_MANAGER.pop()
   }
 }
 

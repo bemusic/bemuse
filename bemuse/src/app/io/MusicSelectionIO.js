@@ -1,9 +1,9 @@
-import { createIO } from 'impure'
-
 import * as GameLauncher from '../game-launcher'
 import * as Options from '../entities/Options'
 import * as OptionsIO from './OptionsIO'
 import * as ReduxState from '../redux/ReduxState'
+
+import { createIO } from 'impure'
 import { getChartLevel } from '../entities/MusicSelection'
 
 export function selectSong(song) {
@@ -28,23 +28,21 @@ export function selectChart(song, chart) {
 
 export function launchGame(server, song, chart, { autoplayEnabled }) {
   return createIO(({ store }, run) => {
-    Promise.resolve(
-      GameLauncher.launch({
-        server,
-        song,
-        chart,
-        options: store.getState().options,
-        saveSpeed: (speed) => {
-          run(OptionsIO.updateOptions(Options.changeSpeed(speed)))
-        },
-        saveLeadTime: (leadTime) => {
-          run(OptionsIO.updateOptions(Options.changeLeadTime(leadTime)))
-        },
-        onRagequitted: () => {
-          store.dispatch({ type: ReduxState.RAGEQUITTED })
-        },
-        autoplayEnabled,
-      })
-    ).done()
+    GameLauncher.launch({
+      server,
+      song,
+      chart,
+      options: store.getState().options,
+      saveSpeed: (speed) => {
+        run(OptionsIO.updateOptions(Options.changeSpeed(speed)))
+      },
+      saveLeadTime: (leadTime) => {
+        run(OptionsIO.updateOptions(Options.changeLeadTime(leadTime)))
+      },
+      onRagequitted: () => {
+        store.dispatch({ type: ReduxState.RAGEQUITTED })
+      },
+      autoplayEnabled,
+    })
   })
 }

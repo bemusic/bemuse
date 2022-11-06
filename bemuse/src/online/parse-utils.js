@@ -1,4 +1,4 @@
-// Wraps a Parse promise with a Bluebird promise,
+// Wraps a Parse promise with a promise,
 // and throws a proper Error object, instead of a custom one.
 export function wrapPromise(promise) {
   return Promise.resolve(promise).catch(function (error) {

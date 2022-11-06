@@ -1,10 +1,10 @@
-import Promise from 'bluebird'
-import fs from 'fs'
+import { basename, extname } from 'path'
+
 import Throat from 'throat'
 import { cpus } from 'os'
 import endpoint from 'endpoint'
+import fs from 'fs'
 import { spawn } from 'child_process'
-import { extname, basename } from 'path'
 
 const throat = new Throat(cpus().length || 1)
 
@@ -33,10 +33,16 @@ export class AudioConvertor {
   async _SoX(path, type) {
     let typeArgs = []
     try {
-      const fd = await Promise.promisify(fs.open)(path, 'r')
+      const fd = await fs.promises.open(path, 'r')
       const buffer = Buffer.alloc(4)
-      const read = await Promise.promisify(fs.read)(fd, buffer, 0, 4, null)
-      await Promise.promisify(fs.close)(fd)
+      const read = (
+        await fd.read({
+          buffer,
+          byteOffset: 0,
+          byteLength: 4,
+        })
+      ).bytesRead
+      await fd.close()
       if (read === 0) {
         console.error('[WARN] Empty keysound file.')
       } else if (

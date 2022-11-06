@@ -1,6 +1,6 @@
+import MAIN from 'bemuse/utils/main-element'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import MAIN from 'bemuse/utils/main-element'
 
 // The SceneManager takes care of managing the scenes in this game.
 // Only a single scene may be displayed at any given time, but a scene may
@@ -118,12 +118,12 @@ function ReactScene(element, ReactSceneContainer) {
     )
     ReactDOM.render(elementToDisplay, container)
     return {
-      teardown() {
-        return Promise.try(() => {
+      async teardown() {
+        try {
           return teardown()
-        }).finally(() => {
+        } finally {
           ReactDOM.unmountComponentAtNode(container)
-        })
+        }
       },
     }
   }

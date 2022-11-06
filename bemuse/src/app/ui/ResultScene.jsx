@@ -1,22 +1,22 @@
 import './ResultScene.scss'
 
-import Flex from 'bemuse/ui/Flex'
-import PropTypes from 'prop-types'
-import React from 'react'
-import Scene from 'bemuse/ui/Scene'
-import SceneHeading from 'bemuse/ui/SceneHeading'
-import SceneToolbar from 'bemuse/ui/SceneToolbar'
-
 import * as Analytics from '../analytics'
 import * as QueryFlags from '../query-flags'
+
 import FirstTimeTip from './FirstTimeTip'
+import Flex from 'bemuse/ui/Flex'
+import { Icon } from 'bemuse/fa'
 import MusicChartInfo from './MusicChartInfo'
 import MusicChartSelectorItem from './MusicChartSelectorItem'
+import PropTypes from 'prop-types'
 import RankingContainer from './RankingContainer'
+import React from 'react'
 import ResultExpertInfo from './ResultExpertInfo'
 import ResultGrade from './ResultGrade'
 import ResultTable from './ResultTable'
-import { Icon } from 'bemuse/fa'
+import Scene from 'bemuse/ui/Scene'
+import SceneHeading from 'bemuse/ui/SceneHeading'
+import SceneToolbar from 'bemuse/ui/SceneToolbar'
 
 export default class ResultScene extends React.Component {
   static propTypes = {
