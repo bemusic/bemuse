@@ -1,6 +1,11 @@
 # Change Log - bmson
 
-This log was last generated on Sat, 22 Oct 2022 05:32:28 GMT and should not be manually modified.
+This log was last generated on Sun, 06 Nov 2022 16:09:03 GMT and should not be manually modified.
+
+## 50.1.2
+Sun, 06 Nov 2022 16:09:03 GMT
+
+_Version update only_
 
 ## 50.1.1
 Sat, 22 Oct 2022 05:32:28 GMT

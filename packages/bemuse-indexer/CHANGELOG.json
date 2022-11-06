@@ -2,6 +2,26 @@
   "name": "bemuse-indexer",
   "entries": [
     {
+      "version": "51.0.2",
+      "tag": "bemuse-indexer_v51.0.2",
+      "date": "Sun, 06 Nov 2022 16:09:03 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Remove Bluebird and Add p-map"
+          }
+        ],
+        "dependency": [
+          {
+            "comment": "Updating dependency \"bms\" from `^50.1.1` to `^51.0.0`"
+          },
+          {
+            "comment": "Updating dependency \"bmson\" from `^50.1.1` to `^50.1.2`"
+          }
+        ]
+      }
+    },
+    {
       "version": "51.0.1",
       "tag": "bemuse-indexer_v51.0.1",
       "date": "Sat, 22 Oct 2022 05:32:28 GMT",

@@ -2,6 +2,18 @@
   "name": "bmson",
   "entries": [
     {
+      "version": "50.1.2",
+      "tag": "bmson_v50.1.2",
+      "date": "Sun, 06 Nov 2022 16:09:03 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"bms\" from `^50.1.1` to `^51.0.0`"
+          }
+        ]
+      }
+    },
+    {
       "version": "50.1.1",
       "tag": "bmson_v50.1.1",
       "date": "Sat, 22 Oct 2022 05:32:28 GMT",

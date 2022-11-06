@@ -2,6 +2,23 @@
   "name": "bemuse-tools",
   "entries": [
     {
+      "version": "50.0.4",
+      "tag": "bemuse-tools_v50.0.4",
+      "date": "Sun, 06 Nov 2022 16:09:03 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Remove Bluebird and Add glob-promise"
+          }
+        ],
+        "dependency": [
+          {
+            "comment": "Updating dependency \"bemuse-indexer\" from `^51.0.1` to `^51.0.2`"
+          }
+        ]
+      }
+    },
+    {
       "version": "50.0.3",
       "tag": "bemuse-tools_v50.0.3",
       "date": "Sat, 22 Oct 2022 05:32:28 GMT",

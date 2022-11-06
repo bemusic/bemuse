@@ -1,6 +1,6 @@
 {
   "name": "bemuse-notechart",
-  "version": "50.1.1",
+  "version": "50.1.2",
   "description": "Bemuse notechart data structure, supports BMS and bmsons.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -28,8 +28,8 @@
     "eslint-config-bemuse": "^5.0.0"
   },
   "dependencies": {
-    "bms": "^50.1.1",
-    "bmson": "^50.1.1",
+    "bms": "^51.0.0",
+    "bmson": "^50.1.2",
     "lodash": "^4.17.11",
     "invariant": "^2.2.4"
   },

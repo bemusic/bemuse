@@ -2,6 +2,18 @@
   "name": "bms",
   "entries": [
     {
+      "version": "51.0.0",
+      "tag": "bms_v51.0.0",
+      "date": "Sun, 06 Nov 2022 16:09:03 GMT",
+      "comments": {
+        "major": [
+          {
+            "comment": "Change readAsync to return Promise and Remove ReadCallback"
+          }
+        ]
+      }
+    },
+    {
       "version": "50.1.1",
       "tag": "bms_v50.1.1",
       "date": "Sat, 22 Oct 2022 05:32:28 GMT",
