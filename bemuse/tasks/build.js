@@ -12,9 +12,7 @@ gulp.task(
   'build',
   gulp.series('dist', async function () {
     const stats = await new Promise((resolve, reject) =>
-      webpack(config, (err, stats) =>
-        err === null ? resolve(stats) : reject(err)
-      )
+      webpack(config, (err, stats) => (!err ? resolve(stats) : reject(err)))
     )
     log('[webpack]', stats.toString({ colors: true }))
     if (stats.hasErrors()) {
