@@ -1,6 +1,6 @@
 import Auth0 from 'auth0-js'
 
-import createScoreboardClient from './createLegacyScoreboardClient'
+import { createNextScoreboardClient } from './createNextScoreboardClient'
 import { isTestModeEnabled } from 'bemuse/devtools/BemuseTestMode'
 import { createFakeScoreboardClient } from './createFakeScoreboardClient'
 
@@ -9,17 +9,12 @@ export class OnlineService {
     fake = false,
     server,
     storagePrefix = fake ? 'fake-scoreboard.auth' : 'scoreboard.auth',
-    authOptions,
     storage = localStorage,
   }) {
     this._isFake = fake
     this._scoreboardClient = fake
       ? createFakeScoreboardClient()
-      : createScoreboardClient({
-          server,
-          auth: createAuth(authOptions),
-          log: () => {},
-        })
+      : createNextScoreboardClient({ server, log: () => {} })
     this._storage = storage
     this._storagePrefix = storagePrefix
     this._updateUserFromStorage()

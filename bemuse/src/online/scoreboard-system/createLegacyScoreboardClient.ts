@@ -25,7 +25,7 @@ export default function createScoreboardClient({
   server,
   auth,
   log = (format, ...args) =>
-    console.log('[ScoreboardClient] ' + format, ...args),
+    console.log('[LegacyScoreboardClient] ' + format, ...args),
 }: CreateScoreboardClientOptions): ScoreboardClient {
   const client = axios.create({
     baseURL: server,

@@ -12,23 +12,11 @@ if (isQueryFlagEnabled('fake-scoreboard')) {
   instance = new Online(new OnlineService({ fake: true }))
 } else if (isQueryFlagEnabled('offline')) {
   instance = new Online(new OfflineService())
-} else if (
-  config.AUTH0_CLIENT_ID &&
-  config.AUTH0_DOMAIN &&
-  config.SCOREBOARD_SERVER
-) {
-  instance = new Online(
-    new OnlineService({
-      server: config.SCOREBOARD_SERVER,
-      authOptions: {
-        domain: config.AUTH0_DOMAIN,
-        clientID: config.AUTH0_CLIENT_ID,
-      },
-    })
-  )
+} else if (config.SCOREBOARD_SERVER) {
+  instance = new Online(new OnlineService({ server: config.SCOREBOARD_SERVER }))
 } else {
   console.warn(
-    'Warning: No Auth0 API keys specified. Using a fake scoreboard that resets when you refresh the page.'
+    'Warning: No server specified. Using a fake scoreboard that resets when you refresh the page.'
   )
   instance = new Online(new OnlineService({ fake: true }))
 }
