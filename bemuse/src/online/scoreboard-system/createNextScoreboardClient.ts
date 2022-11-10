@@ -87,7 +87,18 @@ export function createNextScoreboardClient({
       }
     },
     async retrieveRankingEntries({ playerToken, md5s }) {
-      throw new Error('Not implemented')
+      const response = await client.post(
+        `/api/scoreboard/records`,
+        { md5s },
+        { headers: { Authorization: `Bearer ${playerToken}` } }
+      )
+      return {
+        data: {
+          me: {
+            records: response.data.data,
+          },
+        },
+      }
     },
     async renewPlayerToken({ playerToken }) {
       throw new Error('Not implemented')
