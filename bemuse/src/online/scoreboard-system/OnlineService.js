@@ -1,6 +1,6 @@
 import Auth0 from 'auth0-js'
 
-import createScoreboardClient from './createScoreboardClient'
+import createScoreboardClient from './createLegacyScoreboardClient'
 import { isTestModeEnabled } from 'bemuse/devtools/BemuseTestMode'
 import { createFakeScoreboardClient } from './createFakeScoreboardClient'
 
