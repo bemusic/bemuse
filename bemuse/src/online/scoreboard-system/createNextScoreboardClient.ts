@@ -55,7 +55,10 @@ export function createNextScoreboardClient({
       return { playerToken: response.data.playerToken }
     },
     async changePassword({ email }) {
-      throw new Error('Not implemented')
+      await client
+        .post('/api/auth/reset', { email })
+        .catch(handleAxiosError('Unable to request password reset'))
+      return {}
     },
     async submitScore({ playerToken, md5, playMode, input }) {
       await client
@@ -115,7 +118,16 @@ export function createNextScoreboardClient({
       }
     },
     async renewPlayerToken({ playerToken }) {
-      throw new Error('Not implemented')
+      const response = await client
+        .post(
+          '/api/auth/renew',
+          {},
+          {
+            headers: { Authorization: `Bearer ${playerToken}` },
+          }
+        )
+        .catch(handleAxiosError('Unable to renew token'))
+      return response.data.playerToken
     },
   }
 
