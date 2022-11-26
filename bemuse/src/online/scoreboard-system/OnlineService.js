@@ -1,5 +1,3 @@
-import Auth0 from 'auth0-js'
-
 import { createNextScoreboardClient } from './createNextScoreboardClient'
 import { isTestModeEnabled } from 'bemuse/devtools/BemuseTestMode'
 import { createFakeScoreboardClient } from './createFakeScoreboardClient'
@@ -178,14 +176,6 @@ export class OnlineService {
 }
 
 export default OnlineService
-
-function createAuth(authOptions) {
-  return new Auth0.WebAuth({
-    ...authOptions,
-    redirectUri: window.location.href,
-    responseType: 'token id_token',
-  })
-}
 
 function toEntry(row) {
   return {

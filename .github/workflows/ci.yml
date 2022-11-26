@@ -30,8 +30,6 @@ jobs:
           node build-scripts build
         env:
           SCOREBOARD_SERVER: ${{ secrets.SCOREBOARD_SERVER }}
-          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-          AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
       - name: Checks
         run: node build-scripts pre-deploy
       - name: Deploy
