@@ -33,7 +33,12 @@ export function createNextScoreboardClient({
       invariant(typeof username === 'string', 'username must be a string')
       invariant(typeof password === 'string', 'password must be a string')
       invariant(typeof email === 'string', 'email must be a string')
-      throw new Error('Not implemented')
+      const response = await client.post('/api/auth/signup', {
+        username,
+        password,
+        email,
+      })
+      return { playerToken: response.data.playerToken }
     },
     async loginByUsernamePassword({ username, password }) {
       invariant(typeof username === 'string', 'username must be a string')
