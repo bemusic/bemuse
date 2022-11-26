@@ -21,10 +21,11 @@ export function createNextScoreboardClient({
     md5: string,
     playMode: string
   ) {
-    const response = await client.get(
-      `/api/scoreboard/${md5}/${playMode}/mine`,
-      { headers: { Authorization: `Bearer ${playerToken}` } }
-    )
+    const response = await client
+      .get(`/api/scoreboard/${md5}/${playMode}/mine`, {
+        headers: { Authorization: `Bearer ${playerToken}` },
+      })
+      .catch(handleAxiosError('Unable to retrieve personal records'))
     return response.data.data as ScoreboardRow
   }
 
@@ -33,31 +34,37 @@ export function createNextScoreboardClient({
       invariant(typeof username === 'string', 'username must be a string')
       invariant(typeof password === 'string', 'password must be a string')
       invariant(typeof email === 'string', 'email must be a string')
-      const response = await client.post('/api/auth/signup', {
-        username,
-        password,
-        email,
-      })
+      const response = await client
+        .post('/api/auth/signup', {
+          username,
+          password,
+          email,
+        })
+        .catch(handleAxiosError('Unable to sign up'))
       return { playerToken: response.data.playerToken }
     },
     async loginByUsernamePassword({ username, password }) {
       invariant(typeof username === 'string', 'username must be a string')
       invariant(typeof password === 'string', 'password must be a string')
-      const response = await client.post('/api/auth/login', {
-        username,
-        password,
-      })
+      const response = await client
+        .post('/api/auth/login', {
+          username,
+          password,
+        })
+        .catch(handleAxiosError('Unable to log in'))
       return { playerToken: response.data.playerToken }
     },
     async changePassword({ email }) {
       throw new Error('Not implemented')
     },
     async submitScore({ playerToken, md5, playMode, input }) {
-      await client.post(
-        `/api/scoreboard/${md5}/${playMode}/submit`,
-        { scoreData: input },
-        { headers: { Authorization: `Bearer ${playerToken}` } }
-      )
+      await client
+        .post(
+          `/api/scoreboard/${md5}/${playMode}/submit`,
+          { scoreData: input },
+          { headers: { Authorization: `Bearer ${playerToken}` } }
+        )
+        .catch(handleAxiosError('Unable to submit score'))
       return {
         data: {
           registerScore: {
@@ -67,9 +74,9 @@ export function createNextScoreboardClient({
       }
     },
     async retrieveScoreboard({ md5, playMode }) {
-      const response = await client.get(
-        `/api/scoreboard/${md5}/${playMode}/leaderboard`
-      )
+      const response = await client
+        .get(`/api/scoreboard/${md5}/${playMode}/leaderboard`)
+        .catch(handleAxiosError('Unable to retrieve leaderboard'))
       return {
         data: {
           chart: {
@@ -92,11 +99,13 @@ export function createNextScoreboardClient({
       }
     },
     async retrieveRankingEntries({ playerToken, md5s }) {
-      const response = await client.post(
-        `/api/scoreboard/records`,
-        { md5s },
-        { headers: { Authorization: `Bearer ${playerToken}` } }
-      )
+      const response = await client
+        .post(
+          `/api/scoreboard/records`,
+          { md5s },
+          { headers: { Authorization: `Bearer ${playerToken}` } }
+        )
+        .catch(handleAxiosError('Unable to retrieve ranking entries'))
       return {
         data: {
           me: {
@@ -111,4 +120,17 @@ export function createNextScoreboardClient({
   }
 
   return scoreboardClient
+}
+function handleAxiosError(prefix: string) {
+  return (error: any): never => {
+    if (axios.isAxiosError(error)) {
+      const data = error.response?.data
+      const message = data?.message
+      const suffix = message ? `: ${message}` : ''
+      if (data) {
+        throw new Error(`${prefix}: ${error}${suffix}`)
+      }
+    }
+    throw error
+  }
 }
