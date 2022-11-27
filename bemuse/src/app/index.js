@@ -122,7 +122,18 @@ function shouldActivateServiceWorker() {
 function setupServiceWorker() {
   if (!('serviceWorker' in navigator)) return false
   if (!shouldActivateServiceWorker()) return false
+  registerServiceWorker()
   return true
+}
+
+function registerServiceWorker() {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('./service-worker.js')
+      .catch((registrationError) => {
+        console.log('SW registration failed: ', registrationError)
+      })
+  })
 }
 
 function trackFullscreenEvents() {

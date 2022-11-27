@@ -2,6 +2,7 @@ import Gauge from 'gauge'
 import TerserPlugin from 'terser-webpack-plugin'
 import express from 'express'
 import webpack from 'webpack'
+import { ServiceWorkerPlugin } from 'service-worker-webpack'
 import { flowRight } from 'lodash'
 
 import * as Env from './env'
@@ -63,6 +64,12 @@ function generateBaseConfig() {
         BemuseLogger: 'bemuse/logger',
         process: 'process/browser',
         Buffer: ['buffer', 'Buffer'],
+      }),
+      new ServiceWorkerPlugin({
+        registration: {
+          entry: path('src/app/service-worker.js'),
+          autoRegister: false,
+        },
       }),
     ],
   }
