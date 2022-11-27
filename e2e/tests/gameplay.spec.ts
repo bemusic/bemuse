@@ -1,4 +1,4 @@
-import { test, expect, Page, TestInfo } from '@playwright/test'
+import { Page, TestInfo, expect, test } from '@playwright/test'
 
 test('Gameplay smoke test', async ({ page }, testInfo) => {
   await startBemuse(page)
@@ -67,6 +67,19 @@ test('Gameplay smoke test', async ({ page }, testInfo) => {
   })
   await expect(page.locator('.ResultScene')).toBeVisible()
   await takeScreenshot(page, testInfo, 'Result')
+})
+
+test('works offline', async ({ page }) => {
+  await startBemuse(page)
+  await page.context().setOffline(true)
+  const failures: string[] = []
+  page.context().on('requestfailed', (r) => {
+    if (r.url().startsWith('http://localhost')) {
+      failures.push(r.url() + ' ' + r.failure()!.errorText)
+    }
+  })
+  await page.reload()
+  expect(failures).toHaveLength(0)
 })
 
 async function takeScreenshot(page: Page, testInfo: TestInfo, name: string) {
