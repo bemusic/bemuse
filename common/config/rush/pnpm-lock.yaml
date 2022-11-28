@@ -205,6 +205,7 @@ specifiers:
   vinyl-fs: ^3.0.3
   web-audio-test-api: ^0.5.2
   webpack: '5'
+  webpack-bundle-analyzer: ^4.7.0
   webpack-dev-middleware: ^5.3.3
   webpack-dev-server: ^4.11.1
   webpack-espower-loader: ^2.0.0
@@ -417,6 +418,7 @@ dependencies:
   vinyl-fs: 3.0.3
   web-audio-test-api: 0.5.2
   webpack: 5.74.0
+  webpack-bundle-analyzer: 4.7.0
   webpack-dev-middleware: 5.3.3_webpack@5.74.0
   webpack-dev-server: 4.11.1_debug@3.2.7+webpack@5.74.0
   webpack-espower-loader: 2.0.0
@@ -21297,7 +21299,7 @@ packages:
     dev: false
 
   file:projects/bemuse.tgz:
-    resolution: {integrity: sha512-GivpYhqKqh4EKy8VNi9gjlxfBsWVZYXv1jshL1bq/HgOR+WuLr2ucUWIDrirFDNxuREO27uzgEK2VKHbJ6Nvsw==, tarball: file:projects/bemuse.tgz}
+    resolution: {integrity: sha512-ihaxg/WmRt6CaeHszzuYUbQqLKDVJZkQyO0XRqjJe9JvDbKarpEt/F9HoyntOBd4b6KU3V7WMP4vy0gZupPwoQ==, tarball: file:projects/bemuse.tgz}
     name: '@rush-temp/bemuse'
     version: 0.0.0
     dependencies:
@@ -21442,6 +21444,7 @@ packages:
       variance: 0.0.1
       web-audio-test-api: 0.5.2
       webpack: 5.74.0
+      webpack-bundle-analyzer: 4.7.0
       webpack-dev-middleware: 5.3.3_webpack@5.74.0
       webpack-dev-server: 4.11.1_debug@3.2.7+webpack@5.74.0
       webpack-espower-loader: 2.0.0

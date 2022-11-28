@@ -111,6 +111,7 @@
     "util": "^0.12.5",
     "val-loader": "^5.0.0",
     "web-audio-test-api": "^0.5.2",
+    "webpack-bundle-analyzer": "^4.7.0",
     "webpack-dev-middleware": "^5.3.3",
     "webpack-dev-server": "^4.11.1",
     "webpack-espower-loader": "^2.0.0",

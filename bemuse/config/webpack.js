@@ -2,6 +2,7 @@ import Gauge from 'gauge'
 import TerserPlugin from 'terser-webpack-plugin'
 import express from 'express'
 import webpack from 'webpack'
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import { ServiceWorkerPlugin } from 'service-worker-webpack'
 import { flowRight } from 'lodash'
 
@@ -71,6 +72,7 @@ function generateBaseConfig() {
           autoRegister: false,
         },
       }),
+      new BundleAnalyzerPlugin(),
     ],
   }
 
