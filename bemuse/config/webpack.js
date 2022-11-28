@@ -141,17 +141,6 @@ function generateBaseConfig() {
                 cacheableResponse: { statuses: [200] },
               },
             },
-            // Cache video files.
-            // These files may be updated, so we use the NetworkFirst strategy.
-            {
-              urlPattern: /^.*\.(mp4|webm)$/,
-              handler: 'NetworkFirst',
-              options: {
-                cacheName: 'bemuse-videos',
-                cacheableResponse: { statuses: [200] },
-                rangeRequests: true,
-              },
-            },
           ],
           skipWaiting: true,
           clientsClaim: true,
