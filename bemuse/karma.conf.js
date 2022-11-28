@@ -1,7 +1,14 @@
 require('./node-environment')
 
+const { join } = require('path')
+const { tmpdir } = require('os')
+
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'test'
 process.env.CHROME_BIN = require('puppeteer').executablePath()
+
+const output = {
+  path: join(tmpdir(), '_karma_webpack') + Math.floor(Math.random() * 1000000),
+}
 
 module.exports = function (config) {
   config.set({
@@ -15,9 +22,14 @@ module.exports = function (config) {
     ),
 
     basePath: '',
-    frameworks: ['mocha'],
+    frameworks: ['mocha', 'webpack', 'power-assert'],
     files: [
       'src/test/karma.js',
+      {
+        pattern: `${output.path}/**/*`,
+        watched: false,
+        included: false,
+      },
       {
         pattern: 'src/**/*',
         watched: false,
@@ -33,8 +45,12 @@ module.exports = function (config) {
     exclude: [],
     preprocessors: {
       'src/test/karma.js': ['webpack', 'sourcemap'],
+      'src/test/**/*.spec.js': ['espower'],
     },
-    webpack: require('./config/webpack').generateKarmaConfig(),
+    webpack: {
+      ...require('./config/webpack').generateKarmaConfig(),
+      output,
+    },
     webpackMiddleware: {
       noInfo: true,
     },

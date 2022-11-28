@@ -1,7 +1,7 @@
-import * as Options from './Options'
-
-import assert from 'power-assert'
+import assert from 'assert'
 import { given, shouldEqual } from 'circumstance'
+
+import * as Options from './Options'
 
 describe('Options', () => {
   describe('Lane cover', () => {

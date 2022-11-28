@@ -1,5 +1,5 @@
 import Bacon from 'baconjs'
-import assert from 'power-assert'
+import assert from 'assert'
 import { EventEmitter } from 'events'
 
 import { OmniInput, _key川ForUpdate川, getName, key川 } from './'

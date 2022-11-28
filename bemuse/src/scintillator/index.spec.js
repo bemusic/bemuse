@@ -1,6 +1,6 @@
 import * as Scintillator from './'
 
-const fixture = (file) => `/src/scintillator/test-fixtures/${file}`
+const fixture = (file) => `/base/src/scintillator/test-fixtures/${file}`
 
 describe('Scintillator', function () {
   describe('#load', function () {
