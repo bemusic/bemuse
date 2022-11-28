@@ -61,7 +61,7 @@ yargs
   .command('pre-deploy', 'Performs a pre-deploy check', {}, async () => {
     const data = fs.readFileSync('dist/index.html', 'utf-8')
     check('New Relic inlined', () => /NREUM/.test(data))
-    check('Boot script inlined', () => data.includes('__webpack_modules__'))
+    check('Boot script inlined', () => data.includes('Bootのcontent'))
     check('Google Analytics inlined', () => /GoogleAnalyticsObject/.test(data))
     check('Index file size is less than 200 KB', () => data.length < 200e3)
 
