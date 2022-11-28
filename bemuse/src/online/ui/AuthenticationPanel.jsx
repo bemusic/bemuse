@@ -91,7 +91,7 @@ export default class AuthenticationPanel extends React.Component {
   }
 
   doLogIn = async (formData) => {
-    if (!formData.username.trim() && !formData.password.trim()) {
+    if (!formData.password.trim()) {
       if (window.confirm('Did you forget your password?')) {
         const email = window.prompt('Please enter your email address.')
         if (email) {

@@ -272,7 +272,7 @@ function showResult(
   return new Promise<{ replay: boolean }>((resolve, reject) => {
     const stats = playerState.stats
     const playMode = playerState.player.options.scratch === 'off' ? 'KB' : 'BM'
-    const props = {
+    const props: ResultSceneProps = {
       result: {
         '1': stats.counts['1'],
         '2': stats.counts['2'],
@@ -299,6 +299,32 @@ function showResult(
       .showScene(React.createElement(ResultScene, props))
       .catch(reject)
   })
+}
+
+interface ResultSceneProps {
+  result: Result
+  chart: Chart
+  playMode: 'KB' | 'BM'
+  lr2Timegate: [number, number]
+  onExit: () => void
+  onReplay: () => void
+}
+
+interface Result {
+  '1': number
+  '2': number
+  '3': number
+  '4': number
+  missed: number
+  score: number
+  maxCombo: number
+  accuracy: number
+  totalCombo: number
+  totalNotes: number
+  log: string
+  deltas: number[]
+  tainted: boolean
+  grade: 'F' | 'D' | 'C' | 'B' | 'A' | 'S' | 'AUTOPLAY'
 }
 
 // http://qiita.com/dtinth/items/1200681c517a3fb26357
