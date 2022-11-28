@@ -77,6 +77,7 @@ function generateBaseConfig() {
         reportFilename: 'webpack-report.html',
         generateStatsFile: true,
         statsFilename: 'webpack-stats.json',
+        openAnalyzer: false,
       }),
     ],
   }
