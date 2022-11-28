@@ -131,6 +131,10 @@ function generateLoadersConfig() {
         loader: 'ts-loader',
         options: {
           transpileOnly: true,
+          compilerOptions: {
+            module: 'esnext',
+            moduleResolution: 'node',
+          },
         },
       },
     },
