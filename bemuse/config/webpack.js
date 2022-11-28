@@ -72,7 +72,12 @@ function generateBaseConfig() {
           autoRegister: false,
         },
       }),
-      new BundleAnalyzerPlugin(),
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'static',
+        reportFilename: 'webpack-report.html',
+        generateStatsFile: true,
+        statsFilename: 'webpack-stats.json',
+      }),
     ],
   }
 
