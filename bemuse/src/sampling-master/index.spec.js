@@ -2,7 +2,7 @@
 
 import 'web-audio-test-api'
 
-import assert from 'power-assert'
+import assert from 'assert'
 
 import SamplingMaster, { FADE_LENGTH } from './'
 
