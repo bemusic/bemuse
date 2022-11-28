@@ -71,15 +71,25 @@ test('Gameplay smoke test', async ({ page }, testInfo) => {
 
 test('works offline', async ({ page }) => {
   await startBemuse(page)
+  await expect
+    .poll(() => page.evaluate(() => navigator.serviceWorker.controller?.state))
+    .toBe('activated')
   await page.context().setOffline(true)
   const failures: string[] = []
   page.context().on('requestfailed', (r) => {
-    if (r.url().startsWith('http://localhost')) {
-      failures.push(r.url() + ' ' + r.failure()!.errorText)
+    const errorText = r.failure()!.errorText
+    if (
+      r.url().startsWith('http://localhost') &&
+      errorText !== 'net::ERR_ABORTED'
+    ) {
+      failures.push(r.url() + ' ' + errorText)
     }
   })
   await page.reload()
+  await page.getByTestId('enter-game').click()
+  await expect(page.getByTestId('keyboard-mode')).toBeVisible()
   expect(failures).toHaveLength(0)
+  await page.context().setOffline(false)
 })
 
 async function takeScreenshot(page: Page, testInfo: TestInfo, name: string) {

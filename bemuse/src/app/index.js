@@ -74,14 +74,7 @@ function bootUp() {
 
 export function main() {
   runIO(bootUp())
-
-  // setup service worker
-  const promise = setupServiceWorker()
-  if (promise && promise.then) {
-    Promise.resolve(promise).finally(displayFirstScene)
-  } else {
-    displayFirstScene()
-  }
+  displayFirstScene()
 
   // synchronize time
   const timeSynchroServer =
@@ -110,30 +103,6 @@ function getFirstScene() {
     }
     return scene
   }
-}
-
-function shouldActivateServiceWorker() {
-  return (
-    (location.protocol === 'https:' && location.host === 'bemuse.ninja') ||
-    location.hostname === 'localhost'
-  )
-}
-
-function setupServiceWorker() {
-  if (!('serviceWorker' in navigator)) return false
-  if (!shouldActivateServiceWorker()) return false
-  registerServiceWorker()
-  return true
-}
-
-function registerServiceWorker() {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('./service-worker.js')
-      .catch((registrationError) => {
-        console.log('SW registration failed: ', registrationError)
-      })
-  })
 }
 
 function trackFullscreenEvents() {
