@@ -339,15 +339,20 @@ function applyWebConfig(config) {
         skipWaiting: true,
         clientsClaim: true,
       },
-    }),
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      reportFilename: 'build/report/index.html',
-      generateStatsFile: true,
-      statsFilename: 'build/report/stats.json',
-      openAnalyzer: false,
     })
   )
+
+  if (!Env.hotModeEnabled()) {
+    config.plugins.push(
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'static',
+        reportFilename: 'build/report/index.html',
+        generateStatsFile: true,
+        statsFilename: 'build/report/stats.json',
+        openAnalyzer: false,
+      })
+    )
+  }
 
   if (Env.hotModeEnabled()) {
     config.entry.boot.unshift(

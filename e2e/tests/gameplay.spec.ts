@@ -4,8 +4,11 @@ test('Gameplay smoke test', async ({ page }, testInfo) => {
   await startBemuse(page)
 
   await test.step('Enter game', async () => {
+    await takeScreenshot(page, testInfo, 'Title')
     await page.getByTestId('enter-game').click()
+    await takeScreenshot(page, testInfo, 'Mode selection')
     await page.getByTestId('keyboard-mode').click()
+    await takeScreenshot(page, testInfo, 'Song selection')
     await page.getByTestId('play-selected-chart').click()
     await expect(page.locator('.game-display canvas')).toBeVisible()
   })
@@ -66,6 +69,27 @@ test('Gameplay smoke test', async ({ page }, testInfo) => {
     BemuseTestMode.unpause()
   })
   await expect(page.locator('.ResultScene')).toBeVisible()
+  await expect(page.locator('.Rankingのyours')).toHaveText(/create an account/)
+  await expect(page.locator('.Rankingのleaderboard')).toHaveText(/No Data/)
+
+  await page.locator('.Rankingのyours').getByText('log in').click()
+  await page
+    .locator('.AuthenticationPanel')
+    .getByRole('textbox', { name: 'Username' })
+    .fill('Playwright')
+  await page
+    .locator('.AuthenticationPanel')
+    .getByRole('textbox', { name: 'Password' })
+    .fill('hunter2')
+  await takeScreenshot(page, testInfo, 'Authentication')
+  await page
+    .locator('.AuthenticationPanel')
+    .getByRole('button', { name: 'Log In' })
+    .click()
+
+  await expect(page.locator('.Rankingのyours')).toHaveText(/Playwright/)
+  await expect(page.locator('.Rankingのleaderboard')).toHaveText(/Playwright/)
+
   await takeScreenshot(page, testInfo, 'Result')
 })
 
@@ -102,7 +126,7 @@ async function takeScreenshot(page: Page, testInfo: TestInfo, name: string) {
 async function startBemuse(page: Page) {
   const testMusicServer =
     'https://raw.githubusercontent.com/bemusic/bemuse-test-server/master'
-  const url = `/?server=${testMusicServer}`
+  const url = `/?server=${testMusicServer}&flags=fake-scoreboard`
   await page.goto(url)
 
   // Enter the test mode

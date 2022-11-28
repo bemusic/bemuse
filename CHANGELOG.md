@@ -29,6 +29,18 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## v53.0.0-pre.202211281849
+
+### Improvements
+
+- **Bemuse Online Ranking is back.** The online ranking backend has been
+  revamped with a more modern tech stack. We also migrated to another
+  authentication provider (Firebase). Unfortunately, **all passwords has been
+  reset.** Please reset your password by specifying a blank password when
+  logging in. [#785], by [@dtinth]
+
+[#785]: https://github.com/bemusic/bemuse/pull/785
+
 ## v53.0.0-pre.202211281820
 
 ### Internals
