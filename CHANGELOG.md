@@ -39,9 +39,8 @@
   reset.** Please reset your password by specifying a blank password when
   logging in. [#785], by [@dtinth]
 
-[#785]: https://github.com/bemusic/bemuse/pull/785
-
-## v53.0.0-pre.202211281820
+- Added support for `.flac` keysounds in custom songs. Note that this only works
+  on browsers that natively support FLAC files. [#786], by [@dtinth]
 
 ### Internals
 
@@ -49,13 +48,10 @@
   thanks to [MikuroXina](https://github.com/MikuroXina) for making this happen!
   [#780], by [@MikuroXina]
 
-### Improvements
-
-- Added support for `.flac` keysounds in custom songs. Note that this only works
-  on browsers that natively support FLAC files. [#786], by [@dtinth]
 
 [#780]: https://github.com/bemusic/bemuse/pull/780
 [#786]: https://github.com/bemusic/bemuse/pull/786
+[#785]: https://github.com/bemusic/bemuse/pull/785
 
 ## v52.2.4 (2022-11-06)
 
