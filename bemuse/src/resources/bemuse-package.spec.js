@@ -1,4 +1,4 @@
-import assert from 'power-assert'
+import assert from 'assert'
 
 import BemusePackageResources from './bemuse-package'
 
@@ -7,7 +7,9 @@ describe('BemusePackageResources', function () {
     let resources
 
     beforeEach(function () {
-      resources = new BemusePackageResources('/src/resources/test-fixtures/a/')
+      resources = new BemusePackageResources(
+        '/base/src/resources/test-fixtures/a/'
+      )
     })
 
     it('returns a file', function () {
@@ -37,7 +39,9 @@ describe('BemusePackageResources', function () {
     })
 
     it('cannot read if not bemuse file', function () {
-      resources = new BemusePackageResources('/src/resources/test-fixtures/b/')
+      resources = new BemusePackageResources(
+        '/base/src/resources/test-fixtures/b/'
+      )
       return expect(resources.file('do.mp3').then((file) => file.read())).to.be
         .rejected
     })
@@ -56,9 +60,9 @@ describe('BemusePackageResources', function () {
 
     it('supports fallback', function () {
       resources = new BemusePackageResources(
-        '/src/resources/test-fixtures/a/',
+        '/base/src/resources/test-fixtures/a/',
         {
-          fallback: '/src/resources/test-fixtures/f/',
+          fallback: '/base/src/resources/test-fixtures/f/',
           fallbackPattern: /\.txt$/,
         }
       )
@@ -71,10 +75,13 @@ describe('BemusePackageResources', function () {
         })
     })
     it('supports fallback only with the pattern', function () {
-      resources = new BemusePackageResources('/spec/resources/fixtures/a/', {
-        fallback: '/src/resources/test-fixtures/f/',
-        fallbackPattern: /\.txt$/,
-      })
+      resources = new BemusePackageResources(
+        '/base/spec/resources/fixtures/a/',
+        {
+          fallback: '/base/src/resources/test-fixtures/f/',
+          fallbackPattern: /\.txt$/,
+        }
+      )
       return expect(resources.file('meow.dat')).to.be.rejected
     })
   })

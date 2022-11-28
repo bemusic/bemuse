@@ -52,11 +52,15 @@ jobs:
           fi
         env:
           GH_APP_CREDENTIALS_TOKEN: ${{ secrets.GH_APP_CREDENTIALS_TOKEN }}
-      - name: Upload build
+      - name: Compress build output
+        if: always()
+        run: tar -cvzf dist.tar.gz dist
+      - name: Upload artifact
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: bemuse-build-${{ github.sha }}
-          path: dist
+          path: dist.tar.gz
   e2e:
     runs-on: ubuntu-latest
     needs: build
@@ -69,7 +73,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: bemuse-build-${{ github.sha }}
-          path: dist
+          path: '.'
+      - name: Extract build
+        run: tar -xvzf dist.tar.gz
       - name: Install browsers
         run: |
           cd e2e

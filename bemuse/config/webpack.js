@@ -1,12 +1,15 @@
-import * as Env from './env'
-
 import Gauge from 'gauge'
-import { flowRight } from 'lodash'
-import path from './path'
-import webpack from 'webpack'
-import webpackResolve from './webpackResolve'
-import ServiceWorkerWebpackPlugin from 'serviceworker-webpack-plugin'
 import TerserPlugin from 'terser-webpack-plugin'
+import express from 'express'
+import webpack from 'webpack'
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+import { ServiceWorkerPlugin } from 'service-worker-webpack'
+import { flowRight } from 'lodash'
+
+import * as Env from './env'
+import path from './path'
+import routes from './routes'
+import webpackResolve from './webpackResolve'
 
 function generateBaseConfig() {
   const config = {
@@ -19,13 +22,40 @@ function generateBaseConfig() {
       },
     },
     devServer: {
-      contentBase: false,
-      publicPath: '/',
-      stats: { colors: true, chunkModules: false },
-      disableHostCheck: true,
+      allowedHosts: 'all',
+      static: false,
+      devMiddleware: {
+        publicPath: '/',
+        stats: { colors: true, chunkModules: false },
+      },
+      setupMiddlewares: (middlewares, devServer) => {
+        devServer.app.use('/', express.static(path('..', 'public')))
+        for (const route of routes) {
+          devServer.app.use(
+            '/' + route.dest.join('/'),
+            express.static(route.src)
+          )
+        }
+        const cacheSettings = {
+          etag: true,
+          setHeaders(res) {
+            res.setHeader('Cache-Control', 'public, max-age=31536000, no-cache')
+          },
+        }
+        devServer.app.use(
+          '/music',
+          express.static(path('..', 'music'), cacheSettings)
+        )
+        devServer.app.use(
+          '/coverage',
+          express.static(path('coverage', 'lcov-report'))
+        )
+        return middlewares
+      },
     },
     module: {
       strictExportPresence: true,
+      exprContextCritical: false,
       rules: generateLoadersConfig(),
       noParse: [/sinon\.js/],
     },
@@ -33,16 +63,8 @@ function generateBaseConfig() {
       new CompileProgressPlugin(),
       new webpack.ProvidePlugin({
         BemuseLogger: 'bemuse/logger',
-      }),
-      // Workaround A for `file-loader` (TODO: remove this when possible):
-      // https://github.com/webpack/webpack/issues/6064
-      new webpack.LoaderOptionsPlugin({
-        options: {
-          context: process.cwd(),
-        },
-      }),
-      new ServiceWorkerWebpackPlugin({
-        entry: path('src/app/service-worker.js'),
+        process: 'process/browser',
+        Buffer: ['buffer', 'Buffer'],
       }),
     ],
   }
@@ -73,6 +95,28 @@ function generateBaseConfig() {
 
 function generateLoadersConfig() {
   return [
+    ...(Env.coverageEnabled()
+      ? [
+          {
+            test: /\.[jt]sx?$/,
+            resourceQuery: { not: [/raw/] },
+            include: [path('src')],
+            use: {
+              loader: '@ephesoft/webpack.istanbul.loader',
+              options: { esModules: true },
+            },
+            enforce: 'post',
+          },
+        ]
+      : []),
+    {
+      test: /\.spec\.js$/,
+      use: [
+        {
+          loader: 'webpack-espower-loader',
+        },
+      ],
+    },
     {
       test: /\.[jt]sx?$/,
       include: [path('src'), path('spec')],
@@ -81,24 +125,12 @@ function generateLoadersConfig() {
         options: {
           transpileOnly: true,
           compilerOptions: {
-            module: 'es6',
+            module: 'esnext',
+            moduleResolution: 'node',
           },
         },
       },
     },
-    ...(Env.coverageEnabled()
-      ? [
-          {
-            test: /\.[jt]sx?$/,
-            include: [path('src')],
-            use: {
-              loader: 'istanbul-instrumenter-loader',
-              options: { esModules: true },
-            },
-            enforce: 'post',
-          },
-        ]
-      : []),
     {
       test: /\.js$/,
       type: 'javascript/auto',
@@ -107,15 +139,6 @@ function generateLoadersConfig() {
         loader: 'transform-loader/cacheable',
         options: {
           brfs: true,
-        },
-      },
-    },
-    {
-      test: /\.worker\.js$/,
-      use: {
-        loader: 'worker-loader',
-        options: {
-          name: 'build/[hash].worker.js',
         },
       },
     },
@@ -141,13 +164,15 @@ function generateLoadersConfig() {
         {
           loader: 'postcss-loader',
           options: {
-            ident: 'postcss',
-            plugins: () => [
-              require('postcss-flexbugs-fixes'),
-              require('autoprefixer')({
-                flexbox: 'no-2009',
-              }),
-            ],
+            postcssOptions: {
+              ident: 'postcss',
+              plugins: () => [
+                require('postcss-flexbugs-fixes'),
+                require('autoprefixer')({
+                  flexbox: 'no-2009',
+                }),
+              ],
+            },
           },
         },
         {
@@ -173,13 +198,15 @@ function generateLoadersConfig() {
         {
           loader: 'postcss-loader',
           options: {
-            ident: 'postcss',
-            plugins: () => [
-              require('postcss-flexbugs-fixes'),
-              require('autoprefixer')({
-                flexbox: 'no-2009',
-              }),
-            ],
+            postcssOptions: {
+              ident: 'postcss',
+              plugins: () => [
+                require('postcss-flexbugs-fixes'),
+                require('autoprefixer')({
+                  flexbox: 'no-2009',
+                }),
+              ],
+            },
           },
         },
       ],
@@ -190,34 +217,27 @@ function generateLoadersConfig() {
     },
     {
       test: /\.png$/,
-      loader: 'url-loader',
-      options: {
-        limit: 100000,
-        mimetype: 'image/png',
-        name: 'build/[hash].[ext]',
-      },
+      type: 'asset',
     },
     {
       test: /\.jpg$/,
-      loader: 'file-loader',
-      options: {
-        name: 'build/[hash].[ext]',
-      },
+      type: 'asset/resource',
     },
     {
       test: /\.(?:mp3|mp4|ogg|m4a)$/,
-      loader: 'file-loader',
-      options: {
-        name: 'build/[hash].[ext]',
-      },
+      type: 'asset/resource',
     },
     {
       test: /\.(otf|eot|svg|ttf|woff|woff2)(?:$|\?)/,
-      loader: 'url-loader',
-      options: {
-        limit: 8192,
-        name: 'build/[hash].[ext]',
-      },
+      type: 'asset',
+    },
+    {
+      test: /\.(?:md)$/,
+      type: 'asset/source',
+    },
+    {
+      resourceQuery: /raw/,
+      type: 'asset/source',
     },
   ]
 }
@@ -228,20 +248,108 @@ function applyWebConfig(config) {
       boot: ['./boot'],
     },
     output: {
-      path: path('dist'),
       publicPath: '/',
       globalObject: 'this',
       filename: 'build/[name].js',
+      assetModuleFilename: 'build/assets/[name]-[hash][ext][query]',
       chunkFilename: 'build/[name]-[chunkhash].js',
       devtoolModuleFilenameTemplate: 'file://[absolute-resource-path]',
       devtoolFallbackModuleFilenameTemplate:
-        'file://[absolute-resource-path]?[hash]',
+        'file://[absolute-resource-path]?[contenthash]',
     },
   })
 
+  config.plugins.push(
+    new ServiceWorkerPlugin({
+      enableWorkboxLogging: true,
+      registration: {
+        entry: 'boot',
+      },
+      workbox: {
+        manifestTransforms: [
+          (manifest) => {
+            manifest.push({ url: '/', revision: null })
+            return { manifest }
+          },
+        ],
+        navigateFallback: '/',
+        navigateFallbackAllowlist: [/^\/(?:\?.*)?$/],
+        runtimeCaching: [
+          // Cache all .bemuse files.
+          // These files are hashed, so the CacheFirst strategy is safe.
+          {
+            urlPattern: /^.*\.bemuse$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'bemuse-song-assets',
+              cacheableResponse: { statuses: [200] },
+            },
+          },
+          // Cache chart files.
+          // These files may be updated, so we use the NetworkFirst strategy.
+          {
+            urlPattern: /^.*\.(bms|bme|bml|bmson)$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'bemuse-song-charts',
+              cacheableResponse: { statuses: [200] },
+            },
+          },
+          // Cache music server files.
+          // These files may be updated, so we use the NetworkFirst strategy.
+          {
+            urlPattern: /^.*\/index\.json$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'bemuse-servers',
+              cacheableResponse: { statuses: [200] },
+            },
+          },
+          // Cache asset metadata files.
+          // These files may be updated, so we use the NetworkFirst strategy.
+          {
+            urlPattern: /^.*\/metadata\.json$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'bemuse-song-assets',
+              cacheableResponse: { statuses: [200] },
+            },
+          },
+          // Cache skin files.
+          // These files do not change frequently, so we use the StaleWhileRevalidate strategy.
+          {
+            urlPattern: /^\/skins\//,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'bemuse-skin',
+              cacheableResponse: { statuses: [200] },
+            },
+          },
+          // Cache resource files.
+          // These files do not change frequently, so we use the StaleWhileRevalidate strategy.
+          {
+            urlPattern: /^\/res\//,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'bemuse-res',
+              cacheableResponse: { statuses: [200] },
+            },
+          },
+        ],
+        skipWaiting: true,
+        clientsClaim: true,
+      },
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      reportFilename: 'build/report/index.html',
+      generateStatsFile: true,
+      statsFilename: 'build/report/stats.json',
+      openAnalyzer: false,
+    })
+  )
+
   if (Env.hotModeEnabled()) {
-    config.devServer.hot = true
-    config.plugins.push(new webpack.HotModuleReplacementPlugin())
     config.entry.boot.unshift(
       'webpack-dev-server/client?http://' +
         Env.serverHost() +
@@ -255,7 +363,7 @@ function applyWebConfig(config) {
 }
 
 function applyKarmaConfig(config) {
-  config.devtool = 'cheap-inline-source-map'
+  config.devtool = 'inline-cheap-source-map'
   return config
 }
 

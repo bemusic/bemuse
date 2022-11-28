@@ -47,7 +47,7 @@ function createAssetServer() {
 }
 
 function createSongServer(dir) {
-  const promise = glob('**/*.{wav,ogg,mp3,m4a}', { cwd: dir })
+  const promise = glob('**/*.{wav,ogg,mp3,m4a,flac}', { cwd: dir })
     .map((name) =>
       stat(path.join(dir, name)).then((stats) => ({
         name: name,

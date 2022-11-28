@@ -1,4 +1,4 @@
-import assert from 'power-assert'
+import assert from 'assert'
 
 import PlayerDisplay from './player-display'
 import { notechart, playerWithBMS, tap } from '../test-helpers'

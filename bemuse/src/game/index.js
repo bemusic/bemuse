@@ -9,7 +9,6 @@ import SCENE_MANAGER from 'bemuse/scene-manager'
 import URLResource from 'bemuse/resources/url'
 import audioContext from 'bemuse/audio-context'
 import query from 'bemuse/utils/query'
-import { resolveUrl } from 'url'
 import { unmuteAudio } from 'bemuse/sampling-master'
 
 export async function main() {
@@ -62,7 +61,7 @@ export async function main() {
     }
     options = await displayShell(options)
     const url = options.url
-    const assetsUrl = resolveUrl(url, 'assets/')
+    const assetsUrl = new URL('assets/', url)
     const metadata = {
       title: 'Loading',
       subtitles: [],

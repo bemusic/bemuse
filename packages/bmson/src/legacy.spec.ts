@@ -1,5 +1,6 @@
-import assert from 'power-assert'
 import * as BMS from 'bms'
+import assert from 'assert'
+
 import * as bmson from '.'
 import { LegacyBmson } from './legacy'
 import { Note } from './types'

@@ -122,6 +122,8 @@ async function go(loader, element) {
     return loader
       .file(name)
       .catch(() => loader.file(name.replace(/\.\w+$/, '.ogg')))
+      .catch(() => loader.file(name.replace(/\.\w+$/, '.m4a')))
+      .catch(() => loader.file(name.replace(/\.\w+$/, '.flac')))
       .catch(() => loader.file(name.replace(/\.\w+$/, '.mp3')))
       .catch(() => loader.file(name.replace(/\.\w+$/, '.wav')))
       .then((file) => file.read())
