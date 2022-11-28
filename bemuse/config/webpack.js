@@ -124,7 +124,7 @@ function generateBaseConfig() {
             // Cache skin files.
             // These files do not change frequently, so we use the StaleWhileRevalidate strategy.
             {
-              urlPattern: /^\/skins\/$/,
+              urlPattern: /^\/skins\//,
               handler: 'StaleWhileRevalidate',
               options: {
                 cacheName: 'bemuse-skin',
@@ -134,7 +134,7 @@ function generateBaseConfig() {
             // Cache resource files.
             // These files do not change frequently, so we use the StaleWhileRevalidate strategy.
             {
-              urlPattern: /^\/res\/$/,
+              urlPattern: /^\/res\//,
               handler: 'StaleWhileRevalidate',
               options: {
                 cacheName: 'bemuse-res',
