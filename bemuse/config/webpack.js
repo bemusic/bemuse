@@ -74,9 +74,9 @@ function generateBaseConfig() {
       }),
       new BundleAnalyzerPlugin({
         analyzerMode: 'static',
-        reportFilename: 'webpack-report.html',
+        reportFilename: 'build/report/index.html',
         generateStatsFile: true,
-        statsFilename: 'webpack-stats.json',
+        statsFilename: 'build/report/stats.json',
         openAnalyzer: false,
       }),
     ],
@@ -264,6 +264,7 @@ function applyWebConfig(config) {
       publicPath: '/',
       globalObject: 'this',
       filename: 'build/[name].js',
+      assetModuleFilename: 'build/assets/[name]-[hash][ext][query]',
       chunkFilename: 'build/[name]-[chunkhash].js',
       devtoolModuleFilenameTemplate: 'file://[absolute-resource-path]',
       devtoolFallbackModuleFilenameTemplate:
