@@ -63,6 +63,7 @@ yargs
     check('New Relic inlined', () => /NREUM/.test(data))
     check('Boot script inlined', () => data.includes('__webpack_modules__'))
     check('Google Analytics inlined', () => /GoogleAnalyticsObject/.test(data))
+    check('Index file size is less than 200 KB', () => data.length < 200e3)
 
     function check(title, condition) {
       if (condition()) {
