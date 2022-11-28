@@ -66,93 +66,6 @@ function generateBaseConfig() {
         process: 'process/browser',
         Buffer: ['buffer', 'Buffer'],
       }),
-      new ServiceWorkerPlugin({
-        enableWorkboxLogging: true,
-        registration: {
-          entry: 'boot',
-        },
-        workbox: {
-          manifestTransforms: [
-            (manifest) => {
-              manifest.push({ url: '/', revision: null })
-              return { manifest }
-            },
-          ],
-          navigateFallback: '/',
-          navigateFallbackAllowlist: [/^\/(?:\?.*)?$/],
-          runtimeCaching: [
-            // Cache all .bemuse files.
-            // These files are hashed, so the CacheFirst strategy is safe.
-            {
-              urlPattern: /^.*\.bemuse$/,
-              handler: 'CacheFirst',
-              options: {
-                cacheName: 'bemuse-song-assets',
-                cacheableResponse: { statuses: [200] },
-              },
-            },
-            // Cache chart files.
-            // These files may be updated, so we use the NetworkFirst strategy.
-            {
-              urlPattern: /^.*\.(bms|bme|bml|bmson)$/,
-              handler: 'NetworkFirst',
-              options: {
-                cacheName: 'bemuse-song-charts',
-                cacheableResponse: { statuses: [200] },
-              },
-            },
-            // Cache music server files.
-            // These files may be updated, so we use the NetworkFirst strategy.
-            {
-              urlPattern: /^.*\/index\.json$/,
-              handler: 'NetworkFirst',
-              options: {
-                cacheName: 'bemuse-servers',
-                cacheableResponse: { statuses: [200] },
-              },
-            },
-            // Cache asset metadata files.
-            // These files may be updated, so we use the NetworkFirst strategy.
-            {
-              urlPattern: /^.*\/metadata\.json$/,
-              handler: 'NetworkFirst',
-              options: {
-                cacheName: 'bemuse-song-assets',
-                cacheableResponse: { statuses: [200] },
-              },
-            },
-            // Cache skin files.
-            // These files do not change frequently, so we use the StaleWhileRevalidate strategy.
-            {
-              urlPattern: /^\/skins\//,
-              handler: 'StaleWhileRevalidate',
-              options: {
-                cacheName: 'bemuse-skin',
-                cacheableResponse: { statuses: [200] },
-              },
-            },
-            // Cache resource files.
-            // These files do not change frequently, so we use the StaleWhileRevalidate strategy.
-            {
-              urlPattern: /^\/res\//,
-              handler: 'StaleWhileRevalidate',
-              options: {
-                cacheName: 'bemuse-res',
-                cacheableResponse: { statuses: [200] },
-              },
-            },
-          ],
-          skipWaiting: true,
-          clientsClaim: true,
-        },
-      }),
-      new BundleAnalyzerPlugin({
-        analyzerMode: 'static',
-        reportFilename: 'build/report/index.html',
-        generateStatsFile: true,
-        statsFilename: 'build/report/stats.json',
-        openAnalyzer: false,
-      }),
     ],
   }
 
@@ -345,6 +258,96 @@ function applyWebConfig(config) {
         'file://[absolute-resource-path]?[contenthash]',
     },
   })
+
+  config.plugins.push(
+    new ServiceWorkerPlugin({
+      enableWorkboxLogging: true,
+      registration: {
+        entry: 'boot',
+      },
+      workbox: {
+        manifestTransforms: [
+          (manifest) => {
+            manifest.push({ url: '/', revision: null })
+            return { manifest }
+          },
+        ],
+        navigateFallback: '/',
+        navigateFallbackAllowlist: [/^\/(?:\?.*)?$/],
+        runtimeCaching: [
+          // Cache all .bemuse files.
+          // These files are hashed, so the CacheFirst strategy is safe.
+          {
+            urlPattern: /^.*\.bemuse$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'bemuse-song-assets',
+              cacheableResponse: { statuses: [200] },
+            },
+          },
+          // Cache chart files.
+          // These files may be updated, so we use the NetworkFirst strategy.
+          {
+            urlPattern: /^.*\.(bms|bme|bml|bmson)$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'bemuse-song-charts',
+              cacheableResponse: { statuses: [200] },
+            },
+          },
+          // Cache music server files.
+          // These files may be updated, so we use the NetworkFirst strategy.
+          {
+            urlPattern: /^.*\/index\.json$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'bemuse-servers',
+              cacheableResponse: { statuses: [200] },
+            },
+          },
+          // Cache asset metadata files.
+          // These files may be updated, so we use the NetworkFirst strategy.
+          {
+            urlPattern: /^.*\/metadata\.json$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'bemuse-song-assets',
+              cacheableResponse: { statuses: [200] },
+            },
+          },
+          // Cache skin files.
+          // These files do not change frequently, so we use the StaleWhileRevalidate strategy.
+          {
+            urlPattern: /^\/skins\//,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'bemuse-skin',
+              cacheableResponse: { statuses: [200] },
+            },
+          },
+          // Cache resource files.
+          // These files do not change frequently, so we use the StaleWhileRevalidate strategy.
+          {
+            urlPattern: /^\/res\//,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'bemuse-res',
+              cacheableResponse: { statuses: [200] },
+            },
+          },
+        ],
+        skipWaiting: true,
+        clientsClaim: true,
+      },
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      reportFilename: 'build/report/index.html',
+      generateStatsFile: true,
+      statsFilename: 'build/report/stats.json',
+      openAnalyzer: false,
+    })
+  )
 
   if (Env.hotModeEnabled()) {
     config.entry.boot.unshift(
