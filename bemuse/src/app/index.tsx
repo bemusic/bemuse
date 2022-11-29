@@ -1,9 +1,11 @@
 import * as Analytics from './analytics'
 import * as BemuseTestMode from '../devtools/BemuseTestMode'
 
-import React, { Context, createContext, useContext } from 'react'
-import { ReactScene, SceneManager } from 'bemuse/scene-manager'
-import { collectionsSlice, customSongsSlice } from './redux/ReduxState'
+import {
+  AppState,
+  collectionsSlice,
+  customSongsSlice,
+} from './redux/ReduxState'
 import {
   getDefaultCustomFolderContext,
   getSongsFromCustomFolders,
@@ -22,32 +24,22 @@ import AboutScene from './ui/AboutScene'
 import BrowserSupportWarningScene from './ui/BrowserSupportWarningScene'
 import ModeSelectScene from './ui/ModeSelectScene'
 import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
+import React from 'react'
+import { SceneManager } from 'bemuse/scene-manager'
+import { Store } from 'redux'
 import TitleScene from './ui/TitleScene'
-import configureStore from './redux/configureStore'
 import { isBrowserSupported } from './browser-support'
-import { loadInitialOptions } from './io/OptionsIO'
 import { monetize } from 'monetizer'
 import { musicSearchTextSlice } from './entities/MusicSearchText'
 import now from 'bemuse/utils/now'
-
-const store = configureStore()
-
-export interface SceneManagerController {
-  display(scene: ReactScene | JSX.Element): Promise<void>
-  push(scene: ReactScene | JSX.Element): Promise<void>
-  pop(): Promise<void>
-}
-const sceneManager: SceneManagerController = new SceneManager(store)
-export const SceneManagerContext: Context<SceneManagerController> =
-  createContext(sceneManager)
-export const useSceneManager = () => useContext(SceneManagerContext)
+import { optionsSlice } from './entities/Options'
 
 // Allow hot reloading of some modules.
 if (module.hot) {
   module.hot.accept('./redux/ReduxState', () => {})
 }
 
-function bootUp() {
+function bootUp(store: Store<AppState>) {
   if (module.hot) {
     module.hot.accept('./redux/ReduxState', () => {
       store.replaceReducer(require('./redux/ReduxState').reducer)
@@ -64,7 +56,7 @@ function bootUp() {
       text: getInitialGrepString() ?? '',
     })
   )
-  loadInitialOptions(store.dispatch)
+  store.dispatch(optionsSlice.actions.LOAD_FROM_STORAGE())
 
   getSongsFromCustomFolders(getDefaultCustomFolderContext()).then((songs) => {
     if (songs.length > 0) {
@@ -73,9 +65,15 @@ function bootUp() {
   })
 }
 
-export function main() {
-  bootUp()
-  displayFirstScene()
+export function main({
+  sceneManager,
+  store,
+}: {
+  sceneManager: SceneManager
+  store: Store<AppState>
+}) {
+  bootUp(store)
+  displayFirstScene(sceneManager)
 
   // synchronize time
   const timeSynchroServer =
@@ -88,20 +86,22 @@ export function main() {
   monetize('$twitter.xrptipbot.com/bemusegame')
 }
 
-function displayFirstScene() {
-  sceneManager.display(getFirstScene())
+function displayFirstScene(sceneManager: SceneManager) {
+  sceneManager.display(getFirstScene(sceneManager))
 }
 
-function getFirstScene() {
+function getFirstScene(sceneManager: SceneManager) {
   if (shouldShowAbout()) {
-    return React.createElement(AboutScene)
+    return <AboutScene sceneManager={sceneManager} />
   }
   if (shouldShowModeSelect()) {
-    return React.createElement(ModeSelectScene)
+    return <ModeSelectScene sceneManager={sceneManager} />
   }
-  const scene = <TitleScene />
+  const scene = <TitleScene sceneManager={sceneManager} />
   if (!isBrowserSupported()) {
-    return <BrowserSupportWarningScene next={scene} />
+    return (
+      <BrowserSupportWarningScene sceneManager={sceneManager} next={scene} />
+    )
   }
   return scene
 }

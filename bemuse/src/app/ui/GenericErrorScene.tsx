@@ -1,17 +1,17 @@
 import './GenericErrorScene.scss'
 
-import React from 'react'
-import OptionsButton from './OptionsButton'
 import ModalPopup from 'bemuse/ui/ModalPopup'
 import Panel from 'bemuse/ui/Panel'
+import React from 'react'
 import Scene from 'bemuse/ui/Scene'
 
 import * as Analytics from '../analytics'
+import OptionsButton from './OptionsButton'
 
 export default function GenericErrorScene(props: {
   preamble: string
   error: Error
-  onContinue: () => void
+  onContinue?: () => void
 }) {
   const { preamble, error, onContinue } = props
   const details = React.useMemo(() => {
@@ -43,7 +43,9 @@ export default function GenericErrorScene(props: {
               <OptionsButton
                 onClick={() => {
                   Analytics.send('error', 'continue', String(error))
-                  onContinue()
+                  if (onContinue) {
+                    onContinue()
+                  }
                 }}
               >
                 Continue
