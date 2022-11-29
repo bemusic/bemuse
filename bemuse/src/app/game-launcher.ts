@@ -1,25 +1,27 @@
-import { getSongResources } from 'bemuse/music-collection/getSongResources'
-import { Chart, Song } from 'bemuse/collection-model/types'
-import { isTitleDisplayMode } from 'bemuse/devtools/query-flags'
-import GameScene from 'bemuse/game/game-scene'
-import { MISSED } from 'bemuse/game/judgments'
-import { LoadSpec } from 'bemuse/game/loaders/game-loader'
-import Player from 'bemuse/game/player'
-import PlayerState from 'bemuse/game/state/player-state'
-import LoadingScene from 'bemuse/game/ui/LoadingScene.jsx'
-import { getGrade } from 'bemuse/rules/grade'
-import { unmuteAudio } from 'bemuse/sampling-master'
-import SCENE_MANAGER from 'bemuse/scene-manager'
-import query from 'bemuse/utils/query'
-import invariant from 'invariant'
-import React from 'react'
 import * as Analytics from './analytics'
 import * as Options from './entities/Options'
-import createAutoVelocity from './interactors/createAutoVelocity'
-import { StoredOptions } from './types'
+
+import { Chart, Song } from 'bemuse/collection-model/types'
+
+import GameScene from 'bemuse/game/game-scene'
 import GenericErrorScene from './ui/GenericErrorScene'
+import { LoadSpec } from 'bemuse/game/loaders/game-loader'
+import LoadingScene from 'bemuse/game/ui/LoadingScene'
+import { MISSED } from 'bemuse/game/judgments'
+import Player from 'bemuse/game/player'
+import PlayerState from 'bemuse/game/state/player-state'
+import React from 'react'
 import ResultScene from './ui/ResultScene'
+import { SceneManagerController } from '.'
+import { StoredOptions } from './types'
+import createAutoVelocity from './interactors/createAutoVelocity'
+import { getGrade } from 'bemuse/rules/grade'
+import { getSongResources } from 'bemuse/music-collection/getSongResources'
 import { getSoundVolume } from './query-flags'
+import invariant from 'invariant'
+import { isTitleDisplayMode } from 'bemuse/devtools/query-flags'
+import query from 'bemuse/utils/query'
+import { unmuteAudio } from 'bemuse/sampling-master'
 
 const Log = BemuseLogger.forModule('game-launcher')
 
@@ -27,7 +29,7 @@ if (module.hot) {
   module.hot.accept('bemuse/game/loaders/game-loader')
 }
 
-type LaunchOptions = {
+export type LaunchOptions = {
   server: { url: string }
   song: Song
   chart: Chart
@@ -36,10 +38,13 @@ type LaunchOptions = {
   saveLeadTime: (speed: number) => void
   onRagequitted: () => void
   autoplayEnabled: boolean
+  sceneManager: SceneManagerController
 }
 
 export async function launch(launchOptions: LaunchOptions) {
-  const sceneDisplayContext = new SceneDisplayContext()
+  const sceneDisplayContext = new SceneDisplayContext(
+    launchOptions.sceneManager
+  )
   let currentWork = 'launching the game'
   try {
     await launchGame(
@@ -294,7 +299,7 @@ function showResult(
       lr2Timegate: player.notechart.expertJudgmentWindow,
       onExit: () => resolve({ replay: false }),
       onReplay: () => resolve({ replay: true }),
-    }
+    } as const
     sceneDisplayContext
       .showScene(React.createElement(ResultScene, props))
       .catch(reject)
@@ -352,19 +357,20 @@ function describeChart(chart: Chart) {
 }
 
 class SceneDisplayContext {
+  constructor(private readonly sceneManager: SceneManagerController) {}
   shown = false
   async showScene(scene: any) {
     if (!this.shown) {
-      await SCENE_MANAGER.push(scene)
+      await this.sceneManager.push(scene)
       this.shown = true
     } else {
-      await SCENE_MANAGER.display(scene)
+      await this.sceneManager.display(scene)
     }
   }
 
   async end() {
     if (this.shown) {
-      await SCENE_MANAGER.pop()
+      await this.sceneManager.pop()
       this.shown = false
     }
   }

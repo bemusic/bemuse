@@ -2,14 +2,14 @@ import * as GameLoader from './loaders/game-loader'
 
 import BemusePackageResources from 'bemuse/resources/bemuse-package'
 import GameScene from './game-scene'
-import GameShellScene from './ui/GameShellScene.jsx'
-import LoadingScene from './ui/LoadingScene.jsx'
+import GameShellScene from './ui/GameShellScene'
+import LoadingScene from './ui/LoadingScene'
 import React from 'react'
-import SCENE_MANAGER from 'bemuse/scene-manager'
 import URLResource from 'bemuse/resources/url'
 import audioContext from 'bemuse/audio-context'
 import query from 'bemuse/utils/query'
 import { unmuteAudio } from 'bemuse/sampling-master'
+import { useSceneManager } from 'bemuse/app'
 
 export async function main() {
   // iOS
@@ -17,6 +17,8 @@ export async function main() {
     unmuteAudio(audioContext)
     window.removeEventListener('touchstart', unmute)
   })
+
+  const sceneManager = useSceneManager()
 
   const displayShell = function (options) {
     return new Promise(function (resolve) {
@@ -26,7 +28,7 @@ export async function main() {
           resolve(data)
         },
       })
-      SCENE_MANAGER.display(scene)
+      sceneManager.display(scene)
     })
   }
 
@@ -79,13 +81,13 @@ export async function main() {
 
   const loadSpec = await getSong()
   const { tasks, promise } = GameLoader.load(loadSpec)
-  await SCENE_MANAGER.display(
+  await sceneManager.display(
     React.createElement(LoadingScene, {
       tasks: tasks,
       song: loadSpec.metadata,
     })
   )
   const controller = await promise
-  await SCENE_MANAGER.display(new GameScene(controller.display))
+  await sceneManager.display(new GameScene(controller.display))
   controller.start()
 }

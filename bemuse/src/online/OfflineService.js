@@ -32,7 +32,7 @@ export class OfflineService {
   // Retrieves a record.
   //
   // Returns a record object.
-  retrieveRecord(level, user) {
+  retrieveRecord(level) {
     return Promise.reject(new Error('Online services not enabled.'))
   }
 

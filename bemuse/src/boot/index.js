@@ -9,11 +9,13 @@
 import 'bemuse/ui/fonts.scss'
 import 'bemuse/ui/global.scss'
 
-import query from 'bemuse/utils/query'
-
 import * as Boot from './ui/Boot'
 import * as ErrorDialog from './ui/ErrorDialog'
+
+import { SceneManager } from 'bemuse/scene-manager'
+import configureStore from 'bemuse/app/redux/configureStore'
 import loadModule from './loader'
+import query from 'bemuse/utils/query'
 
 window.onerror = function (message, url, line, col, e) {
   ErrorDialog.show(message, e, url, line, col)
@@ -26,6 +28,9 @@ window.onerror = function (message, url, line, col, e) {
 // from the ``mode`` query parameter.
 
 const mode = query.mode || 'app'
+
+const store = configureStore()
+const sceneManager = new SceneManager(store)
 
 import(/* webpackChunkName: 'environment' */ './environment')
   .then((_) => {
@@ -44,7 +49,11 @@ import(/* webpackChunkName: 'environment' */ './environment')
       loadModule[mode]()
         .then((loadedModule) => {
           Boot.setStatus(`Initializing`)
-          return loadedModule.main({ setStatus: Boot.setStatus })
+          return loadedModule.main({
+            setStatus: Boot.setStatus,
+            store,
+            sceneManager,
+          })
         })
         .then(() => Boot.hide())
         .catch((err) => {

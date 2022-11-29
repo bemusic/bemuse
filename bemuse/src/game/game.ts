@@ -1,11 +1,12 @@
-import Player, { PlayerOptionsInput } from './player'
 import Notechart from 'bemuse-notechart'
+
+import Player, { PlayerOptionsInput } from './player'
 
 export type GamePlayerOptionsInput = {
   players: Omit<PlayerOptionsInput, 'autosound' | 'tutorial'>[]
   audioInputLatency: number
-  tutorial: boolean
-  soundVolume: number
+  tutorial?: boolean
+  soundVolume?: number
 }
 
 /**

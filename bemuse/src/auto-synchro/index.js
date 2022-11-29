@@ -1,15 +1,16 @@
 import * as Music from './music'
+
+import $ from 'jquery'
+import { Bus } from 'baconjs'
+import ExperimentScene from './ui/ExperimentScene'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import ExperimentScene from './ui/ExperimentScene.jsx'
-import $ from 'jquery'
 import _ from 'lodash'
-import Bacon from 'baconjs'
 import { connect } from 'bemuse/flux'
 
 export function main(bootContext) {
   bootContext.setStatus('Loading song')
-  const state口 = new Bacon.Bus()
+  const state口 = new Bus()
 
   const state川 = state口.scan(
     {

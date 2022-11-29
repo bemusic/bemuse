@@ -92,6 +92,9 @@ export interface SongMetadata {
   /** Whether this song is a tutorial. */
   tutorial?: number
 
+  /** Whether this song is unreleased. */
+  unreleased?: number
+
   /** Whether this song is exclusive to Bemuse (not published elsewhere). */
   exclusive?: boolean
 

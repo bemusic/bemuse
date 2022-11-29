@@ -1,7 +1,12 @@
-import _ from 'lodash'
-import assign from 'object-assign'
-import invariant from 'invariant'
-import pMap from 'p-map'
+import {
+  BGAInfo,
+  IndexingInputFile,
+  Keys,
+  OutputChart,
+  OutputFileInfo,
+  OutputSongInfo,
+  OutputSongInfoVideo,
+} from './types'
 import {
   BMSChart,
   BMSNote,
@@ -17,31 +22,26 @@ import {
   musicalScoreForBmson,
   songInfoForBmson,
 } from 'bmson'
+
+import _ from 'lodash'
+import assign from 'object-assign'
 import { createHash } from 'crypto'
 import { extname } from 'path'
-
-import {
-  BGAInfo,
-  IndexingInputFile,
-  Keys,
-  OutputChart,
-  OutputFileInfo,
-  OutputSongInfo,
-  OutputSongInfoVideo,
-} from './types'
 import { getBmsBga } from './bms-bga'
 import { getBmsonBga } from './bmson-bga'
 import { getBpmInfo } from './bpm-info'
 import { getDuration } from './duration'
 import { getKeys } from './keys'
+import invariant from 'invariant'
 import { lcs } from './lcs'
+import pMap from 'p-map'
 
 interface InputMeta {
   name: string
   md5?: string
 }
 
-interface FileIndexBasis {
+export interface FileIndexBasis {
   info: SongInfo
   notes: Notes
   timing: Timing
