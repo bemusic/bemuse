@@ -1,45 +1,45 @@
-import { createIO } from 'impure'
-
-import { loadCustomSong } from '../CustomSongs'
-import DndResources from '../../resources/dnd-resources'
+import { AnyAction, Dispatch } from 'redux'
 import {
-  downloadFileEntryFromURL,
   CustomSongResources,
+  downloadFileEntryFromURL,
 } from '../../resources/custom-song-resources'
-import { getIPFSResources } from '../../resources/ipfs-resources'
-import { URLResources } from 'bemuse/resources/url'
 
-export function handleCustomSongFileSelect(selectedfile) {
-  return createIO(async ({ store, customSongLoader }) => {
+import DndResources from '../../resources/dnd-resources'
+import { URLResources } from 'bemuse/resources/url'
+import { getIPFSResources } from '../../resources/ipfs-resources'
+import { loadCustomSong } from '../CustomSongs'
+
+export const handleCustomSongFileSelect =
+  (dispatch: Dispatch<AnyAction>) => (selectedFile: File) => {
     const resources = new CustomSongResources({
-      getFiles: async () => [{ name: selectedfile.name, file: selectedfile }],
+      getFiles: async () => [{ name: selectedFile.name, file: selectedFile }],
     })
     const initialLog = ['Examining selected items...']
-    return loadCustomSong(resources, initialLog, { store, customSongLoader })
-  })
-}
+    return loadCustomSong(resources, initialLog, dispatch)
+  }
 
-export function handleCustomSongFolderDrop(event) {
-  return createIO(async ({ store, customSongLoader }) => {
+export const handleCustomSongFolderDrop =
+  (dispatch: Dispatch<AnyAction>) => (event: DragEvent) => {
     const resources = new DndResources(event)
     const initialLog = ['Examining dropped items...']
-    return loadCustomSong(resources, initialLog, { store, customSongLoader })
-  })
-}
+    return loadCustomSong(resources, initialLog, dispatch)
+  }
 
-export function handleCustomSongURLLoad(url) {
-  return createIO(async ({ store, customSongLoader }) => {
+export const handleCustomSongURLLoad =
+  (dispatch: Dispatch<AnyAction>) => (url: string) => {
     const resources = new CustomSongResources({
       getFiles: async (log) => [await downloadFileEntryFromURL(url, log)],
     })
     const initialLog = ['Loading from ' + url]
-    return loadCustomSong(resources, initialLog, { store, customSongLoader })
-  })
-}
+    return loadCustomSong(resources, initialLog, dispatch)
+  }
 
-export function handleClipboardPaste(e) {
-  return createIO(async ({ store, customSongLoader }) => {
-    const text = e.clipboardData.getData('text/plain')
+export const handleClipboardPaste =
+  (dispatch: Dispatch<AnyAction>) => (e: ClipboardEvent) => {
+    const text = e.clipboardData?.getData('text/plain')
+    if (!text) {
+      return
+    }
     {
       const match = text.match(
         /https?:\/\/[a-zA-Z0-9:.-]+(?:\/\S+)?\/bemuse-song\.json/
@@ -48,16 +48,13 @@ export function handleClipboardPaste(e) {
         const url = match[0]
         const initialLog = ['Loading prepared song...']
         const resources = new PreparedSongResources(new URL(url))
-        return loadCustomSong(resources, initialLog, {
-          store,
-          customSongLoader,
-        })
+        return loadCustomSong(resources, initialLog, dispatch)
       }
     }
     {
       const match = text.match(/(https?:\/\/[a-zA-Z0-9:.-]+)?(\/ipfs\/\S+)/)
       if (match) {
-        const gateway = match[1] || undefined
+        const gateway = match[1] || ''
         const path = gateway ? decodeURI(match[2]) : match[2]
         const resources = getIPFSResources(path, gateway)
         const initialLog = [
@@ -66,18 +63,13 @@ export function handleClipboardPaste(e) {
         ]
         if (/^http:/.test(gateway) && window.location.protocol === 'https:') {
           initialLog.push(
-            store,
             'WARNING: Loading http URL from https. This will likely fail!'
           )
         }
-        return loadCustomSong(resources, initialLog, {
-          store,
-          customSongLoader,
-        })
+        return loadCustomSong(resources, initialLog, dispatch)
       }
     }
-  })
-}
+  }
 
 class PreparedSongResources extends URLResources {
   fileList = Promise.resolve(['bemuse-song.json'])

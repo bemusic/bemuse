@@ -1,24 +1,19 @@
-import DialogContent from 'bemuse/ui/DialogContent'
-import ModalPopup from 'bemuse/ui/ModalPopup'
-import Panel from 'bemuse/ui/Panel'
-import PropTypes from 'prop-types'
-import React from 'react'
-import { connect } from 'react-redux'
-
 import * as ReduxState from '../redux/ReduxState'
+
+import DialogContent, { Buttons } from 'bemuse/ui/DialogContent'
+import { useDispatch, useSelector } from 'react-redux'
+
+import ModalPopup from 'bemuse/ui/ModalPopup'
 import OptionsButton from './OptionsButton'
+import Panel from 'bemuse/ui/Panel'
+import React from 'react'
 
-const enhance = connect(
-  (state) => ({
-    visible: ReduxState.selectRageQuittedFlag(state),
-  }),
-  (dispatch) => ({
-    onClose: () =>
-      dispatch(ReduxState.rageQuitSlice.actions.RAGEQUIT_DISMISSED()),
-  })
-)
+function RageQuitPopup() {
+  const dispatch = useDispatch()
+  const visible = useSelector(ReduxState.selectRageQuittedFlag)
+  const onClose = () =>
+    dispatch(ReduxState.rageQuitSlice.actions.RAGEQUIT_DISMISSED())
 
-function RageQuitPopup({ onClose, visible }) {
   return (
     <ModalPopup visible={visible} onBackdropClick={onClose}>
       <div style={{ maxWidth: '30em' }}>
@@ -30,9 +25,9 @@ function RageQuitPopup({ onClose, visible }) {
               your way up. And hopefully, someday, you will be able to beat this
               tutorial!
             </p>
-            <DialogContent.Buttons>
+            <Buttons>
               <OptionsButton onClick={onClose}>Continue</OptionsButton>
-            </DialogContent.Buttons>
+            </Buttons>
           </DialogContent>
         </Panel>
       </div>
@@ -40,9 +35,4 @@ function RageQuitPopup({ onClose, visible }) {
   )
 }
 
-RageQuitPopup.propTypes = {
-  visible: PropTypes.bool,
-  onClose: PropTypes.func.isRequired,
-}
-
-export default enhance(RageQuitPopup)
+export default RageQuitPopup
