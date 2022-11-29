@@ -1,8 +1,8 @@
-import Bacon from 'baconjs'
-import assert from 'assert'
-import { EventEmitter } from 'events'
-
 import { OmniInput, _key川ForUpdate川, getName, key川 } from './'
+
+import { EventEmitter } from 'events'
+import { Subject } from 'rxjs'
+import assert from 'power-assert'
 
 function fakeWindow() {
   const events = new EventEmitter()
@@ -43,12 +43,12 @@ function fakeWindow() {
 describe('OmniInput', function () {
   beforeEach(function () {
     this.window = fakeWindow()
-    this.midi口 = new Bacon.Bus()
+    this.midi口 = new Subject()
     this.input = new OmniInput(this.window, {
       getMidi川: () => this.midi口,
     })
     this.midi = (...args) => {
-      this.midi口.push({
+      this.midi口.next({
         data: args,
         target: { id: '1234' },
       })
@@ -148,7 +148,7 @@ describe('OmniInput', function () {
   describe('key川', function () {
     it('should return events', function () {
       let last
-      const dispose = key川(this.input, this.window).onValue(
+      const subscription = key川(this.input, this.window).subscribe(
         (value) => (last = value)
       )
 
@@ -156,27 +156,27 @@ describe('OmniInput', function () {
       this.window.tick()
       assert(last === '32')
 
-      dispose()
+      subscription.unsubscribe()
     })
   })
 
   describe('_key川ForUpdate川', function () {
     it('should emit new keys', function () {
-      const 口 = new Bacon.Bus()
+      const 口 = new Subject()
       const events = []
-      const dispose = _key川ForUpdate川(口).onValue((value) =>
+      const subscription = _key川ForUpdate川(口).subscribe((value) =>
         events.push(value)
       )
-      口.push({ 32: true })
-      口.push({ 32: true })
-      口.push({ 32: false })
-      口.push({ 32: true })
-      口.push({ 33: true })
-      口.push({ 32: true })
-      口.push({ 32: true, 35: true })
-      口.push({ 31: true, 35: true })
+      口.next({ 32: true })
+      口.next({ 32: true })
+      口.next({ 32: false })
+      口.next({ 32: true })
+      口.next({ 33: true })
+      口.next({ 32: true })
+      口.next({ 32: true, 35: true })
+      口.next({ 31: true, 35: true })
       assert.deepEqual(events, ['32', '32', '33', '32', '35', '31'])
-      dispose()
+      subscription.unsubscribe()
     })
   })
 })

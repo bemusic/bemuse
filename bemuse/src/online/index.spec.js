@@ -1,5 +1,8 @@
-import Online from './'
+import { filter, first, firstValueFrom } from 'rxjs'
+
+import Online from '.'
 import OnlineService from './scoreboard-system/OnlineService'
+import assert from 'power-assert'
 
 const uid = (function () {
   const session = Math.floor(Math.random() * 65536).toString(16)
@@ -23,7 +26,18 @@ const uid = (function () {
 tests({ fake: true })
 
 function tests(onlineServiceOptions) {
-  const storage = {}
+  const storage = {
+    map: new Map(),
+    getItem(key) {
+      return this.map.get(key) ?? null
+    },
+    setItem(key, value) {
+      this.map.set(key, value)
+    },
+    removeItem(key) {
+      this.map.delete(key)
+    },
+  }
 
   function createOnline() {
     return new Online(new OnlineService({ ...onlineServiceOptions, storage }))
@@ -69,8 +83,11 @@ function tests(onlineServiceOptions) {
         online = createOnline()
       })
       describe('user川', function () {
-        it('should be null', function () {
-          return expect(online.user川.first().toPromise()).to.eventually.be.null
+        it('should be null', function (done) {
+          online.user川.pipe(first()).subscribe((user) => {
+            assert(user === null)
+            done()
+          })
         })
       })
     })
@@ -83,23 +100,18 @@ function tests(onlineServiceOptions) {
       describe('user川', function () {
         it('should change to signed-up user, and also start with it', async function () {
           const info = createAccountInfo()
-          online.user川.onValue(console.log.bind(console, 'user川'))
-          const assertions = (async () => {
-            const user = await online.user川
-              .filter((u) => !!u)
-              .first()
-              .toPromise()
-            expect(user.username).to.equal(info.username)
-
-            const firstUser = await createOnline()
-              .user川.filter((u) => !!u)
-              .first()
-              .toPromise()
-            expect(firstUser.username).to.equal(info.username)
-          })()
 
           await online.signUp(info)
-          await assertions
+
+          const user = await firstValueFrom(
+            online.user川.pipe(filter((u) => !!u))
+          )
+          expect(user.username).to.equal(info.username)
+
+          const firstUser = await firstValueFrom(
+            createOnline().user川.pipe(filter((u) => !!u))
+          )
+          expect(firstUser.username).to.equal(info.username)
         })
       })
     })
@@ -109,8 +121,6 @@ function tests(onlineServiceOptions) {
       const info = createAccountInfo()
       before(function () {
         online = createOnline()
-      })
-      before(function () {
         return online.signUp(info)
       })
       beforeEach(function () {
@@ -118,15 +128,13 @@ function tests(onlineServiceOptions) {
       })
       describe('when log out', function () {
         it('should change user川 back to null', async function () {
-          const assertions = (async () => {
-            const user = await online.user川
-              .filter((u) => !u)
-              .first()
-              .toPromise()
-            void expect(user).to.be.null
-          })()
-          await Promise.resolve(online.logOut())
-          await assertions
+          online.logOut()
+
+          const user = await firstValueFrom(
+            online.user川.pipe(filter((u) => !u)).pipe(first())
+          )
+
+          assert(user === null)
         })
       })
     })
@@ -289,8 +297,6 @@ function tests(onlineServiceOptions) {
         })
 
         let ranking
-        let ranking川
-        let dispose
         step('subscribe to scoreboard...', function () {
           ranking = online.Ranking({
             md5: prefix + 'song1',
@@ -301,16 +307,10 @@ function tests(onlineServiceOptions) {
             count: [0, 123, 0, 0, 333],
             log: '',
           })
-          ranking川 = ranking.state川
-          dispose = ranking川.onValue((state) => {
-            // console.log('ranking川', state)
-          })
         })
 
         function when(predicate) {
-          return Promise.resolve(
-            ranking川.filter(predicate).first().toPromise()
-          )
+          return firstValueFrom(ranking.state川.pipe(filter(predicate)))
         }
 
         step('should have scoreboard loading status', function () {
@@ -349,13 +349,10 @@ function tests(onlineServiceOptions) {
           })
         })
         step('resubscribe with read only', function () {
-          dispose()
           ranking = online.Ranking({
             md5: prefix + 'song1',
             playMode: 'BM',
           })
-          ranking川 = ranking.state川
-          dispose = ranking川.subscribe(() => {})
         })
         step('should not submit new score', function () {
           return when(
@@ -369,7 +366,6 @@ function tests(onlineServiceOptions) {
         })
         after(function () {
           online.logOut()
-          dispose()
         })
       })
     })

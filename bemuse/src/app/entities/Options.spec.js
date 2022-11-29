@@ -1,7 +1,12 @@
-import assert from 'assert'
+import * as Options from './Options'
+
 import { given, shouldEqual } from 'circumstance'
 
-import * as Options from './Options'
+import assert from 'assert'
+
+const update = (action) => (state) =>
+  Options.optionsSlice.reducer(state, action)
+const actions = Options.optionsSlice.actions
 
 describe('Options', () => {
   describe('Lane cover', () => {
@@ -19,18 +24,22 @@ describe('Options', () => {
   describe('key config', () => {
     it('can be set and get', () => {
       given(Options.initialState)
-        .when(Options.changeKeyMapping('KB', '4', '65'))
+        .when(
+          update(
+            actions.CHANGE_KEY_MAPPING({ mode: 'KB', key: '4', keyCode: '65' })
+          )
+        )
         .then(Options.getKeyMapping('KB', '4'), shouldEqual('65'))
     })
     it('can be retrieved for current mode by column', () => {
       given(Options.initialState)
-        .when(Options.changePlayMode('KB'))
+        .when(update(actions.CHANGE_PLAY_MODE({ mode: 'KB' })))
         .then(Options.keyboardMapping, (mapping) => {
           assert(mapping['4'] === '32') // KB mode, 4th button is space.
         })
 
       given(Options.initialState)
-        .when(Options.changePlayMode('BM'))
+        .when(update(actions.CHANGE_PLAY_MODE({ mode: 'BM' })))
         .then(Options.keyboardMapping, (mapping) => {
           assert(mapping['4'] === '68') // BM mode, 4th button is D.
         })
@@ -64,7 +73,7 @@ describe('Options', () => {
   describe('speed', () => {
     it('can be set and get', () => {
       given(Options.initialState)
-        .when(Options.changeSpeed(4.5))
+        .when(update(actions.CHANGE_SPEED({ speed: 4.5 })))
         .then(Options.speed, shouldEqual(4.5))
     })
   })
@@ -78,7 +87,7 @@ describe('Options', () => {
   describe('scratch position', () => {
     it('switches to keyboard mode if off', () => {
       given(Options.initialState)
-        .when(Options.changeScratchPosition('off'))
+        .when(update(actions.CHANGE_SCRATCH_POSITION({ position: 'off' })))
         .then(Options.scratchPosition, shouldEqual('off'))
         .and((state) => {
           assert(state['player.P1.mode'] === 'KB')
@@ -86,7 +95,7 @@ describe('Options', () => {
     })
     it('switches to BMS mode if on', () => {
       given(Options.initialState)
-        .when(Options.changeScratchPosition('right'))
+        .when(update(actions.CHANGE_SCRATCH_POSITION({ position: 'right' })))
         .then(Options.scratchPosition, shouldEqual('right'))
         .and((state) => {
           assert(state['player.P1.mode'] === 'BM')
@@ -94,8 +103,8 @@ describe('Options', () => {
     })
     it('remembers previous scratch position prior to turning off', () => {
       given(Options.initialState)
-        .when(Options.changeScratchPosition('right'))
-        .and(Options.changeScratchPosition('off'))
+        .when(update(actions.CHANGE_SCRATCH_POSITION({ position: 'right' })))
+        .and(update(actions.CHANGE_SCRATCH_POSITION({ position: 'off' })))
         .then(Options.scratchPosition, shouldEqual('off'))
         .and((state) => {
           assert(state['player.P1.mode'] === 'KB')
@@ -107,7 +116,7 @@ describe('Options', () => {
   describe('background animations', () => {
     itCanBeToggled({
       check: Options.isBackgroundAnimationsEnabled,
-      toggle: Options.toggleBackgroundAnimations,
+      toggle: update(actions.TOGGLE_BACKGROUND_ANIMATIONS()),
       defaultSetting: true,
     })
   })
@@ -115,7 +124,7 @@ describe('Options', () => {
   describe('auto velocity', () => {
     itCanBeToggled({
       check: Options.isAutoVelocityEnabled,
-      toggle: Options.toggleAutoVelocity,
+      toggle: update(actions.TOGGLE_AUTO_VELOCITY()),
       defaultSetting: false,
     })
   })
@@ -123,7 +132,7 @@ describe('Options', () => {
   describe('expert gauge', () => {
     itCanBeToggled({
       check: Options.isGaugeEnabled,
-      toggle: Options.toggleGauge,
+      toggle: update(actions.TOGGLE_GAUGE()),
       defaultSetting: false,
     })
   })
@@ -137,7 +146,7 @@ describe('Options', () => {
     })
     it('can be acknowledged by the user', () => {
       given(Options.initialState)
-        .when(Options.acknowledge('twitter'))
+        .when(update(actions.ACKNOWLEDGE({ featureKey: 'twitter' })))
         .then(Options.hasAcknowledged('twitter'), shouldEqual(true))
     })
   })
@@ -151,7 +160,13 @@ describe('Options', () => {
     })
     it('can be adjusted', () => {
       given(Options.initialState)
-        .when(Options.changeAudioInputLatency(32))
+        .when(
+          update(
+            actions.CHANGE_AUDIO_INPUT_LATENCY({
+              latency: 32,
+            })
+          )
+        )
         .then(Options.audioInputLatency, shouldEqual(32))
     })
   })
@@ -159,7 +174,13 @@ describe('Options', () => {
   describe('last used version', () => {
     it('should be tracked so that it can display “what’s new” dialog', () => {
       given(Options.initialState)
-        .when(Options.updateLastSeenVersion('50.0'))
+        .when(
+          update(
+            actions.UPDATE_LAST_SEEN_VERSION({
+              newVersion: '50.0',
+            })
+          )
+        )
         .then(Options.lastSeenVersion, shouldEqual('50.0'))
     })
   })
