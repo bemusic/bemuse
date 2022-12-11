@@ -19,7 +19,7 @@ const RunningNumber = ({ formatter, value }: RunningNumberProps) => {
 
     const node = nodeRef.current
     const text = document.createTextNode('')
-    node!.appendChild(text)
+    node?.appendChild(text)
     text.nodeValue = getText(0)
     const started = now()
     const interval = setInterval(() => {
