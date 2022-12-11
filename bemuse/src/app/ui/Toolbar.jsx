@@ -7,7 +7,9 @@ import $ from 'jquery'
 import FirstTimeTip from './FirstTimeTip'
 import { WindowSize } from 'react-fns'
 import FloatingMobileButton from 'bemuse/ui/FloatingMobileButton'
-import FloatingMobileMenu, { FloatingMobileMenuSeparator } from 'bemuse/ui/FloatingMobileMenu'
+import FloatingMobileMenu, {
+  FloatingMobileMenuSeparator,
+} from 'bemuse/ui/FloatingMobileMenu'
 import Toggle from 'react-toggled'
 
 function Toolbar({ items }) {
