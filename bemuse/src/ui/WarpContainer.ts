@@ -1,20 +1,20 @@
 import './ModalPopup.scss'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useState } from 'react'
 
 import ReactDOM from 'react-dom'
 import WARP from 'bemuse/utils/warp-element'
 
 const WarpContainer = ({ children }: { children: ReactNode }) => {
-  const el = useRef(document.createElement('div'))
+  const [el] = useState(() => document.createElement('div'))
 
   useEffect(() => {
-    WARP.appendChild(el.current)
+    WARP.appendChild(el)
     return () => {
-      WARP.removeChild(el.current)
+      WARP.removeChild(el)
     }
   }, [])
 
-  return ReactDOM.createPortal(children, el.current)
+  return ReactDOM.createPortal(children, el)
 }
 export default WarpContainer
