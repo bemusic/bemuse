@@ -1,16 +1,17 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Icon } from 'bemuse/fa'
-import SceneToolbar from 'bemuse/ui/SceneToolbar'
-import TipContainer from 'bemuse/ui/TipContainer'
-import $ from 'jquery'
-import FirstTimeTip from './FirstTimeTip'
-import { WindowSize } from 'react-fns'
-import FloatingMobileButton from 'bemuse/ui/FloatingMobileButton'
 import FloatingMobileMenu, {
   FloatingMobileMenuSeparator,
 } from 'bemuse/ui/FloatingMobileMenu'
+import SceneToolbar, {SceneToolbarSpacer} from 'bemuse/ui/SceneToolbar'
+
+import $ from 'jquery'
+import FirstTimeTip from './FirstTimeTip'
+import FloatingMobileButton from 'bemuse/ui/FloatingMobileButton'
+import { Icon } from 'bemuse/fa'
+import PropTypes from 'prop-types'
+import React from 'react'
+import TipContainer from 'bemuse/ui/TipContainer'
 import Toggle from 'react-toggled'
+import { WindowSize } from 'react-fns'
 
 function Toolbar({ items }) {
   return (
@@ -96,7 +97,7 @@ class DesktopToolbar extends React.PureComponent {
   }
 
   renderSpacer() {
-    return <SceneToolbar.Spacer />
+    return <SceneToolbarSpacer />
   }
 }
 
