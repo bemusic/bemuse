@@ -1,7 +1,7 @@
 import FloatingMobileMenu, {
   FloatingMobileMenuSeparator,
 } from 'bemuse/ui/FloatingMobileMenu'
-import SceneToolbar, {SceneToolbarSpacer} from 'bemuse/ui/SceneToolbar'
+import SceneToolbar, { SceneToolbarSpacer } from 'bemuse/ui/SceneToolbar'
 
 import $ from 'jquery'
 import FirstTimeTip from './FirstTimeTip'
