@@ -1,5 +1,6 @@
+import React, { MouseEvent, useMemo } from 'react'
+
 import Markdown from 'markdown-it'
-import React, { useEffect, useRef } from 'react'
 
 const markdown = new Markdown({
   linkify: true,
@@ -19,22 +20,21 @@ export interface MarkdownContentProps {
 }
 
 const MarkdownContent = ({ source, safe }: MarkdownContentProps) => {
-  const articleRef = useRef<HTMLElement>(null)
+  function onClick(e: MouseEvent) {
+    e.preventDefault()
+    if (e.target instanceof HTMLAnchorElement) {
+      window.open(e.target.href, '_blank')
+    }
+  }
 
-  useEffect(() => {
-    articleRef.current?.addEventListener('click', (e: MouseEvent) => {
-      e.preventDefault()
-      if (e.target instanceof HTMLAnchorElement) {
-        window.open(e.target.href, '_blank')
-      }
-    })
-  }, [])
-
-  const html = (safe ? safeMarkdown : markdown).render(source ?? '')
+  const html = useMemo(
+    () => (safe ? safeMarkdown : markdown).render(source ?? ''),
+    [safe, source]
+  )
 
   return (
     <article
-      ref={articleRef}
+      onClick={onClick}
       className='Markdown'
       dangerouslySetInnerHTML={{ __html: html }}
     />
