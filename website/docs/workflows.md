@@ -9,6 +9,25 @@ This page describes the workflow for:
 - Merging PRs
 - Releasing new versions
 
+## Authoring change logs
+
+For changes in the Bemuse project, create a changelog entry in the `changelog` folder.
+
+```yaml
+---
+author:
+category:
+pr:
+---
+
+(Describe the change here)
+```
+
+- `author`: GitHub username of the author.
+- `category`: One of `feature`, `internals`, `bugfix`, `improvement`.
+- `pr`: Pull request number.
+- `type`: One of `major`, `minor`, `patch`. If not specified, it will be a `patch` release.
+
 ## Merging PRs
 
 We use a semi-automated [release-train](https://github.com/bemusic/release-train) script to generate a release candidate.
