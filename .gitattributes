@@ -1,5 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto eol=lf
+*.md text
 *.png binary
 *.jpg binary
 .gitignore binary
