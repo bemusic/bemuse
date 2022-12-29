@@ -1,8 +1,9 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import './ranking-table-playground.scss'
+
 import MAIN from 'bemuse/utils/main-element'
 import Ranking from 'bemuse/app/ui/Ranking'
-import './ranking-table-playground.scss'
+import React from 'react'
+import ReactDOM from 'react-dom'
 
 const RankingTablePlayground = () => (
   <div className='ranking-table-playground'>
@@ -11,14 +12,14 @@ const RankingTablePlayground = () => (
         data: [
           {
             playerName: 'One',
-            score: '543210',
+            score: 543210,
             count: [5, 4, 3, 2, 1],
             total: 15,
             rank: 1,
           },
           {
             playerName: 'Two',
-            score: '123456',
+            score: 123456,
             count: [1, 2, 3, 4, 5],
             total: 15,
             rank: 2,
@@ -27,12 +28,13 @@ const RankingTablePlayground = () => (
         meta: {
           scoreboard: {
             status: 'completed',
+            value: null,
           },
           submission: {
             status: 'completed',
-            record: {
+            value: {
               playerName: 'One',
-              score: '543210',
+              score: 543210,
               count: [5, 4, 3, 2, 1],
               total: 15,
               rank: 1,
@@ -46,14 +48,14 @@ const RankingTablePlayground = () => (
         data: [
           {
             playerName: 'One',
-            score: '543210',
+            score: 543210,
             count: [5, 4, 3, 2, 1],
             total: 15,
             rank: 1,
           },
           {
             playerName: 'Two',
-            score: '123456',
+            score: 123456,
             count: [1, 2, 3, 4, 5],
             total: 15,
             rank: 2,
@@ -62,10 +64,11 @@ const RankingTablePlayground = () => (
         meta: {
           scoreboard: {
             status: 'completed',
+            value: null,
           },
           submission: {
             status: 'completed',
-            record: null,
+            value: null,
           },
         },
       }}
@@ -76,6 +79,7 @@ const RankingTablePlayground = () => (
         meta: {
           scoreboard: {
             status: 'completed',
+            value: null,
           },
           submission: {
             status: 'unauthenticated',
@@ -102,9 +106,11 @@ const RankingTablePlayground = () => (
         meta: {
           scoreboard: {
             status: 'error',
+            error: new Error(),
           },
           submission: {
             status: 'error',
+            error: new Error(),
           },
         },
       }}
