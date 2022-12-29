@@ -5,10 +5,10 @@ on:
       - master
       - cd-revamp
 env:
-  GIT_AUTHOR_NAME: GitHub Actions
-  GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
-  GIT_COMMITTER_NAME: GitHub Actions
-  GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
+  GIT_AUTHOR_NAME: Aki running on GitHub Actions
+  GIT_AUTHOR_EMAIL: aki@spacet.me
+  GIT_COMMITTER_NAME: Aki running on GitHub Actions
+  GIT_COMMITTER_EMAIL: aki@spacet.me
 permissions:
   contents: write
   pull-requests: write
@@ -16,8 +16,16 @@ jobs:
   cd:
     runs-on: ubuntu-latest
     steps:
+      - name: Get token
+        id: get-token
+        run: |
+          export GH_TOKEN="$(npx obtain-github-app-installation-access-token ci $GH_APP_CREDENTIALS_TOKEN)"
+          echo "::add-mask::$GH_TOKEN"
+          echo "token=$GH_TOKEN" > $GITHUB_OUTPUT
       - name: Checkout Repository
         uses: actions/checkout@v3
+        with:
+          token: ${{ steps.get-token.outputs.token }}
       - name: Set up project
         uses: ./.github/actions/setup-project
       - name: Update version
@@ -32,7 +40,8 @@ jobs:
           git push -u origin release-candidate/proposed
           gh pr create --title "$PR_TITLE" --body "$PR_BODY" --base master || gh pr edit --title "$PR_TITLE" --body "$PR_BODY"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_APP_CREDENTIALS_TOKEN: ${{ secrets.GH_APP_CREDENTIALS_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.get-token.outputs.token }}
           PR_TITLE: 'Release candidate - v${{ steps.update.outputs.version }}'
           PR_BODY: |
             This is a release candidate for version ${{ steps.update.outputs.version }}.
