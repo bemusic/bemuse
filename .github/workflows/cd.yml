@@ -22,6 +22,8 @@ jobs:
           export GH_TOKEN="$(npx obtain-github-app-installation-access-token ci $GH_APP_CREDENTIALS_TOKEN)"
           echo "::add-mask::$GH_TOKEN"
           echo "token=$GH_TOKEN" > $GITHUB_OUTPUT
+        env:
+          GH_APP_CREDENTIALS_TOKEN: ${{ secrets.GH_APP_CREDENTIALS_TOKEN }}
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
@@ -40,7 +42,6 @@ jobs:
           git push -u origin release-candidate/proposed
           gh pr create --title "$PR_TITLE" --body "$PR_BODY" --base master || gh pr edit --title "$PR_TITLE" --body "$PR_BODY"
         env:
-          GH_APP_CREDENTIALS_TOKEN: ${{ secrets.GH_APP_CREDENTIALS_TOKEN }}
           GITHUB_TOKEN: ${{ steps.get-token.outputs.token }}
           PR_TITLE: 'Release candidate - v${{ steps.update.outputs.version }}'
           PR_BODY: |
