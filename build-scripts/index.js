@@ -83,8 +83,15 @@ yargs
   .command(
     'update-version',
     'Consumes the unreleased changelogs and update the version',
-    {},
-    async () => {
+    {
+      confirm: {
+        alias: 'f',
+        type: 'boolean',
+        default: false,
+        description: 'Updates the files',
+      },
+    },
+    async (argv) => {
       const currentVersion = JSON.parse(
         fs.readFileSync('bemuse/package.json', 'utf8')
       ).version
@@ -113,6 +120,7 @@ yargs
       }
 
       const entries = []
+      const filesToDelete = []
       console.log()
       for (const file of files) {
         console.log('Processing %s...', file)
@@ -128,6 +136,7 @@ yargs
           content,
           category: categoryMapping[entry.category],
         })
+        filesToDelete.push(file)
       }
       console.log(`Proposed version: ${targetVersion}`)
 
@@ -139,7 +148,20 @@ yargs
         entries,
         targetVersion
       )
-      void newChangelog
+
+      if (argv.confirm) {
+        console.log('Updating files...')
+        fs.writeFileSync('CHANGELOG.md', newChangelog)
+        fs.writeFileSync(
+          'bemuse/package.json',
+          fs
+            .readFileSync('bemuse/package.json', 'utf8')
+            .replace(/"version":\s*"([^"]+)"/, `"version": "${targetVersion}"`)
+        )
+        for (const file of filesToDelete) {
+          fs.unlinkSync(file)
+        }
+      }
     }
   )
   .command('release', 'Release a new version of Bemuse', {}, async () => {
