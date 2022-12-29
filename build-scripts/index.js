@@ -10,6 +10,7 @@ const glob = require('glob')
 const matter = require('gray-matter')
 const semverInc = require('semver/functions/inc')
 const semverGt = require('semver/functions/gt')
+const { updateChangelog } = require('./lib/changelog')
 
 yargs
   .demandCommand()
@@ -96,6 +97,12 @@ yargs
         pr: z.union([z.string(), z.number()]),
         type: z.enum(['patch', 'minor', 'major']).optional(),
       })
+      const categoryMapping = {
+        feature: 'New stuff',
+        internals: 'Internals',
+        bugfix: 'Bug fixes',
+        improvement: 'Improvements',
+      }
       const files = glob.sync('changelog/*.md', {
         ignore: 'changelog/README.md',
       })
@@ -105,21 +112,34 @@ yargs
         console.log('- %s', file)
       }
 
+      const entries = []
+      console.log()
       for (const file of files) {
-        console.log()
-        console.log('Parsing %s...', file)
+        console.log('Processing %s...', file)
         const data = fs.readFileSync(file, 'utf8')
         const { content, data: frontmatter } = matter(data)
         const entry = entrySchema.parse(frontmatter)
-        console.log(entry, content)
         const proposedVersion = semverInc(currentVersion, entry.type || 'patch')
         if (semverGt(proposedVersion, targetVersion)) {
           targetVersion = proposedVersion
         }
+        entries.push({
+          ...entry,
+          content,
+          category: categoryMapping[entry.category],
+        })
       }
-
-      console.log()
       console.log(`Proposed version: ${targetVersion}`)
+
+      const currentChangelog = fs
+        .readFileSync('CHANGELOG.md', 'utf8')
+        .replace(/\r\n|\r/g, '\n')
+      const newChangelog = updateChangelog(
+        currentChangelog,
+        entries,
+        targetVersion
+      )
+      void newChangelog
     }
   )
   .command('release', 'Release a new version of Bemuse', {}, async () => {

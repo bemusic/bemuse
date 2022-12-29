@@ -113,6 +113,7 @@ specifiers:
   immutable: ^3.8.2
   import-sort-style-renke: ^6.0.0
   impure: ^1.0.0
+  indent-string: ^4.0.0
   invariant: ^2.2.4
   jest: ^27.2.4
   jquery: ^3.3.1
@@ -161,6 +162,7 @@ specifiers:
   postcss-flexbugs-fixes: ^5.0.2
   postcss-loader: ^7.0.1
   power-assert: ^1.6.1
+  prettier: ^2.7.1
   process: ^0.11.10
   prop-types: ^15.6.2
   pug: ^2.0.4
@@ -330,6 +332,7 @@ dependencies:
   immutable: 3.8.2
   import-sort-style-renke: 6.0.0
   impure: 1.0.0
+  indent-string: 4.0.0
   invariant: 2.2.4
   jest: 27.5.1_ts-node@10.9.1
   jquery: 3.6.1
@@ -378,6 +381,7 @@ dependencies:
   postcss-flexbugs-fixes: 5.0.2
   postcss-loader: 7.0.1_webpack@5.75.0
   power-assert: 1.6.1
+  prettier: 2.8.1
   process: 0.11.10
   prop-types: 15.8.1
   pug: 2.0.4
@@ -16313,6 +16317,12 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
+  /prettier/2.8.1:
+    resolution: {integrity: sha512-lqGoSJBQNJidqCHE80vqZJHWHRFoNYsSpP9AjFhlhi9ODCJA541svILes/+/1GM3VaL/abZi7cpFzOpdR9UPKg==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
+    dev: false
+
   /pretty-bytes/5.6.0:
     resolution: {integrity: sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==}
     engines: {node: '>=6'}
@@ -21787,7 +21797,7 @@ packages:
     dev: false
 
   file:projects/build-scripts.tgz:
-    resolution: {integrity: sha512-l6bQzGcXsGmxdIp755XPvaWvz6fBACPxyfQ4MQZrj5ZnCthclFDBEr8FFvnyNjydnKKgK8ldjtp5JwKjNj/6hA==, tarball: file:projects/build-scripts.tgz}
+    resolution: {integrity: sha512-xY+tZW4qc2NnlL4W6De/tkHTHymFV9NZ5yZr2Ox6yTJySoZpLzvava+0HAjZh0Lj4rCKnB5VftBIZp0aORHAfA==, tarball: file:projects/build-scripts.tgz}
     name: '@rush-temp/build-scripts'
     version: 0.0.0
     dependencies:
@@ -21797,8 +21807,10 @@ packages:
       glob: 8.0.3
       gray-matter: 4.0.3
       gulp-rename: 2.0.0
+      indent-string: 4.0.0
       lodash: 4.17.21
       merge-stream: 2.0.0
+      prettier: 2.8.1
       semver: 7.3.8
       typescript: 4.9.3
       vinyl-fs: 3.0.3
