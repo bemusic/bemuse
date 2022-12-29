@@ -162,6 +162,14 @@ yargs
           fs.unlinkSync(file)
         }
       }
+
+      const writeOutput = (key, value) => {
+        console.log(`Output: ${key}=${value}`)
+        if (process.env.GITHUB_OUTPUT) {
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `${key}=${value}\n`)
+        }
+      }
+      writeOutput('version', targetVersion)
     }
   )
   .command('release', 'Release a new version of Bemuse', {}, async () => {

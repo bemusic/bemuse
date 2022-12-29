@@ -1,0 +1,38 @@
+name: CD
+on:
+  push:
+    branches:
+      - master
+      - cd-revamp
+env:
+  GIT_AUTHOR_NAME: GitHub Actions
+  GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
+  GIT_COMMITTER_NAME: GitHub Actions
+  GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  cd:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Set up project
+        uses: ./.github/actions/setup-project
+      - name: Update version
+        run: node build-scripts update-version --confirm
+        id: update
+      - name: Create branch and pull request
+        if: steps.update.outputs.version
+        run: |
+          git checkout -b release-candidate/proposed
+          git add -A
+          git commit -m ":bookmark: ${{ steps.update.outputs.version }}"
+          git push -u origin release-candidate/proposed
+          gh pr create --title "$PR_TITLE" --body "$PR_BODY" --base master || gh pr edit --title "$PR_TITLE" --body "$PR_BODY"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_TITLE: 'Release candidate - v${{ steps.update.outputs.version }}'
+          PR_BODY: |
+            This is a release candidate for version ${{ steps.update.outputs.version }}.
