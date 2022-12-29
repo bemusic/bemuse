@@ -99,6 +99,7 @@ specifiers:
   gauge: ^2.7.4
   gh-pages: ^2.2.0
   glob-promise: ^5.0.0
+  gray-matter: ^4.0.3
   gulp: ^4.0.2
   gulp-cucumber: https://github.com/dtinth/gulp-cucumber/archive/687f16096f61729d8b11f65e266b95dcd8b8ef00.tar.gz
   gulp-eslint: ^5.0.0
@@ -181,6 +182,7 @@ specifiers:
   sass-loader: ^13.1.0
   screenfull: ^3.3.3
   script-loader: ^0.7.2
+  semver: ^7.3.8
   service-worker-webpack: ^0.0.11
   sinon: ^6.3.5
   sinon-chai: ^3.2.0
@@ -314,6 +316,7 @@ dependencies:
   gauge: 2.7.4
   gh-pages: 2.2.0
   glob-promise: 5.0.0
+  gray-matter: 4.0.3
   gulp: 4.0.2
   gulp-cucumber: '@github.com/dtinth/gulp-cucumber/archive/687f16096f61729d8b11f65e266b95dcd8b8ef00.tar.gz'
   gulp-eslint: 5.0.0
@@ -396,6 +399,7 @@ dependencies:
   sass-loader: 13.2.0_sass@1.56.1+webpack@5.75.0
   screenfull: 3.3.3
   script-loader: 0.7.2
+  semver: 7.3.8
   service-worker-webpack: 0.0.11_webpack@5.75.0
   sinon: 6.3.5
   sinon-chai: 3.7.0_chai@4.3.7+sinon@6.3.5
@@ -21783,15 +21787,18 @@ packages:
     dev: false
 
   file:projects/build-scripts.tgz:
-    resolution: {integrity: sha512-PJDvIwq2gFsIz1/N3KhlA6NVRrDFBohE6rYoCY2RwYTOlqxRfnNySZFhdUASqi8S/FHxKCb5oDsPQUD41yr+sg==, tarball: file:projects/build-scripts.tgz}
+    resolution: {integrity: sha512-XgZI0Hb0crAA1tU2fOPF9ojS1nE+MawFwh8C0RC5h72A5SX68sKW6kRsiw0j0IltE6rhGRn/ufrguH4TmRO79w==, tarball: file:projects/build-scripts.tgz}
     name: '@rush-temp/build-scripts'
     version: 0.0.0
     dependencies:
       eslint: 8.28.0
       execa: 4.1.0
       gh-pages: 2.2.0
+      glob: 8.0.3
+      gray-matter: 4.0.3
       gulp-rename: 2.0.0
       merge-stream: 2.0.0
+      semver: 7.3.8
       typescript: 4.9.3
       vinyl-fs: 3.0.3
       yargs: 15.4.1

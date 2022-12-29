@@ -5,6 +5,11 @@ const fs = require('fs')
 const merge = require('merge-stream')
 const rename = require('gulp-rename')
 const ghpages = require('gh-pages')
+const { z } = require('zod')
+const glob = require('glob')
+const matter = require('gray-matter')
+const semverInc = require('semver/functions/inc')
+const semverGt = require('semver/functions/gt')
 
 yargs
   .demandCommand()
@@ -74,6 +79,49 @@ yargs
       }
     }
   })
+  .command(
+    'update-version',
+    'Consumes the unreleased changelogs and update the version',
+    {},
+    async () => {
+      const currentVersion = JSON.parse(
+        fs.readFileSync('bemuse/package.json', 'utf8')
+      ).version
+      console.log(`Current version: ${currentVersion}`)
+      let targetVersion = semverInc(currentVersion, 'patch')
+
+      const entrySchema = z.object({
+        author: z.string(),
+        category: z.enum(['feature', 'internals', 'bugfix', 'improvement']),
+        pr: z.union([z.string(), z.number()]),
+        type: z.enum(['patch', 'minor', 'major']).optional(),
+      })
+      const files = glob.sync('changelog/*.md', {
+        ignore: 'changelog/README.md',
+      })
+      console.log()
+      console.log('Found %s changelog files.', files.length)
+      for (const file of files) {
+        console.log('- %s', file)
+      }
+
+      for (const file of files) {
+        console.log()
+        console.log('Parsing %s...', file)
+        const data = fs.readFileSync(file, 'utf8')
+        const { content, data: frontmatter } = matter(data)
+        const entry = entrySchema.parse(frontmatter)
+        console.log(entry, content)
+        const proposedVersion = semverInc(currentVersion, entry.type || 'patch')
+        if (semverGt(proposedVersion, targetVersion)) {
+          targetVersion = proposedVersion
+        }
+      }
+
+      console.log()
+      console.log(`Proposed version: ${targetVersion}`)
+    }
+  )
   .command('release', 'Release a new version of Bemuse', {}, async () => {
     await run('git fetch')
     await run('git checkout origin/master')
