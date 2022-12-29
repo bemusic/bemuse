@@ -5,10 +5,17 @@
   "dependencies": {
     "execa": "^4.0.0",
     "gh-pages": "^2.2.0",
+    "glob": "^8.0.3",
+    "gray-matter": "^4.0.3",
     "gulp-rename": "^2.0.0",
+    "indent-string": "^4.0.0",
+    "lodash": "^4.17.11",
     "merge-stream": "^2.0.0",
+    "prettier": "^2.7.1",
+    "semver": "^7.3.8",
     "vinyl-fs": "^3.0.3",
-    "yargs": "^15.3.1"
+    "yargs": "^15.3.1",
+    "zod": "^3.20.2"
   },
   "devDependencies": {
     "typescript": "^4.8.4",

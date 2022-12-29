@@ -1,0 +1,1 @@
+This directory contains the unreleased changelog entries for the next release.

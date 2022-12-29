@@ -5,6 +5,12 @@ const fs = require('fs')
 const merge = require('merge-stream')
 const rename = require('gulp-rename')
 const ghpages = require('gh-pages')
+const { z } = require('zod')
+const glob = require('glob')
+const matter = require('gray-matter')
+const semverInc = require('semver/functions/inc')
+const semverGt = require('semver/functions/gt')
+const { updateChangelog } = require('./lib/changelog')
 
 yargs
   .demandCommand()
@@ -74,6 +80,98 @@ yargs
       }
     }
   })
+  .command(
+    'update-version',
+    'Consumes the unreleased changelogs and update the version',
+    {
+      confirm: {
+        alias: 'f',
+        type: 'boolean',
+        default: false,
+        description: 'Updates the files',
+      },
+    },
+    async (argv) => {
+      const currentVersion = JSON.parse(
+        fs.readFileSync('bemuse/package.json', 'utf8')
+      ).version
+      console.log(`Current version: ${currentVersion}`)
+      let targetVersion = semverInc(currentVersion, 'patch')
+
+      const entrySchema = z.object({
+        author: z.string(),
+        category: z.enum(['feature', 'internals', 'bugfix', 'improvement']),
+        pr: z.union([z.string(), z.number()]),
+        type: z.enum(['patch', 'minor', 'major']).optional(),
+      })
+      const categoryMapping = {
+        feature: 'New stuff',
+        internals: 'Internals',
+        bugfix: 'Bug fixes',
+        improvement: 'Improvements',
+      }
+      const files = glob.sync('changelog/*.md', {
+        ignore: 'changelog/README.md',
+      })
+      console.log()
+      console.log('Found %s changelog files.', files.length)
+      for (const file of files) {
+        console.log('- %s', file)
+      }
+
+      const entries = []
+      const filesToDelete = []
+      console.log()
+      for (const file of files) {
+        console.log('Processing %s...', file)
+        const data = fs.readFileSync(file, 'utf8')
+        const { content, data: frontmatter } = matter(data)
+        const entry = entrySchema.parse(frontmatter)
+        const proposedVersion = semverInc(currentVersion, entry.type || 'patch')
+        if (semverGt(proposedVersion, targetVersion)) {
+          targetVersion = proposedVersion
+        }
+        entries.push({
+          ...entry,
+          content,
+          category: categoryMapping[entry.category],
+        })
+        filesToDelete.push(file)
+      }
+      console.log(`Proposed version: ${targetVersion}`)
+
+      const currentChangelog = fs
+        .readFileSync('CHANGELOG.md', 'utf8')
+        .replace(/\r\n|\r/g, '\n')
+      const newChangelog = updateChangelog(
+        currentChangelog,
+        entries,
+        targetVersion
+      )
+
+      if (argv.confirm) {
+        console.log('Updating files...')
+        fs.writeFileSync('CHANGELOG.md', newChangelog)
+        fs.writeFileSync(
+          'bemuse/package.json',
+          fs
+            .readFileSync('bemuse/package.json', 'utf8')
+            .replace(/"version":\s*"([^"]+)"/, `"version": "${targetVersion}"`)
+        )
+        for (const file of filesToDelete) {
+          fs.unlinkSync(file)
+        }
+      }
+
+      const writeOutput = (key, value) => {
+        console.log(`Output: ${key}=${value}`)
+        if (process.env.GITHUB_OUTPUT) {
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `${key}=${value}\n`)
+        }
+      }
+      writeOutput('version', targetVersion)
+    }
+  )
   .command('release', 'Release a new version of Bemuse', {}, async () => {
     await run('git fetch')
     await run('git checkout origin/master')

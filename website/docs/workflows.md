@@ -4,43 +4,37 @@ title: Workflows for development, release, and deployment
 sidebar_label: Workflows
 ---
 
-This page describes the workflow for:
+## Authoring change logs
 
-- Merging PRs
-- Releasing new versions
+For changes in the Bemuse game, create a changelog entry in the `changelog` folder.
+
+```yaml
+---
+author:
+category:
+pr:
+---
+
+(Describe the change here)
+```
+
+- `author`: GitHub username of the author.
+- `category`: One of `feature`, `internals`, `bugfix`, `improvement`.
+- `pr`: Pull request number.
+- `type`: One of `major`, `minor`, `patch`. If not specified, it will be a `patch` release.
 
 ## Merging PRs
 
-We use a semi-automated [release-train](https://github.com/bemusic/release-train) script to generate a release candidate.
+When all checks have passed, click the green "Merge pull request" button.
 
-1. For each pull request that is ready to be merged:
+## Release a new version of the game
 
-   - Label the pull requests with "c:ready" label.
+When a PR is merged, GitHub Actions will automatically create a release candidate. This involves:
 
-   - Add this to the description:
+- Consuming the changelog entries and updating the `CHANGELOG.md` file.
+- Bumping the version number.
 
-      ```
-      ### Changelog
-
-      (Put the change log here)
-      ```
-
-
-2. Run the ["Trigger release train"](https://github.com/bemusic/release-train/actions/workflows/trigger.yml) workflow in GitHub Actions.
-
-    - A new pull request for the release candidate will be generated, combining all the PRs with "c:ready" label into a single PR, along with the change log update.
-
-3. If the release candidate is accepted, then merge the pull request and continue with release. Otherwise, close it.
-
-## Release a new version
-
-If any refinement is needed in the CHANGELOG, they can be edited on the `master` branch directly.
-
-Once a release candidate is accepted, we should release it to everyone. To promote the latest release candidate to an actual release, run:
-
-```
-node build-scripts release
-```
+The release candidate will be published to the `release-candidate/proposed` branch and a pull request will be created. You can keep merging more PRs into `master` and the release candidate will be updated (although it’s generally better release as often as possible). When you are ready to release, merge that pull request.
 
 ## Deploying to production
 
@@ -48,7 +42,7 @@ Upon releasing a new version, it will automatically be deployed to production.
 
 ## Publishing npm packages
 
-Right now this is done manually using this command:
+Right now this is currently being done manually using this command:
 
 ```
 rush publish --apply --target-branch master --publish --npm-auth-token $NPM_TOKEN
