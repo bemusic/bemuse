@@ -8,6 +8,7 @@
     "glob": "^8.0.3",
     "gray-matter": "^4.0.3",
     "gulp-rename": "^2.0.0",
+    "lodash": "^4.17.11",
     "merge-stream": "^2.0.0",
     "semver": "^7.3.8",
     "vinyl-fs": "^3.0.3",

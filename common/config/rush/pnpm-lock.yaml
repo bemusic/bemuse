@@ -21787,7 +21787,7 @@ packages:
     dev: false
 
   file:projects/build-scripts.tgz:
-    resolution: {integrity: sha512-XgZI0Hb0crAA1tU2fOPF9ojS1nE+MawFwh8C0RC5h72A5SX68sKW6kRsiw0j0IltE6rhGRn/ufrguH4TmRO79w==, tarball: file:projects/build-scripts.tgz}
+    resolution: {integrity: sha512-l6bQzGcXsGmxdIp755XPvaWvz6fBACPxyfQ4MQZrj5ZnCthclFDBEr8FFvnyNjydnKKgK8ldjtp5JwKjNj/6hA==, tarball: file:projects/build-scripts.tgz}
     name: '@rush-temp/build-scripts'
     version: 0.0.0
     dependencies:
@@ -21797,6 +21797,7 @@ packages:
       glob: 8.0.3
       gray-matter: 4.0.3
       gulp-rename: 2.0.0
+      lodash: 4.17.21
       merge-stream: 2.0.0
       semver: 7.3.8
       typescript: 4.9.3
