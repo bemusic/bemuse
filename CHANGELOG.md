@@ -29,6 +29,15 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## v53.1.0-pre.202212290406
+
+### Internals
+
+- Modernized the codebase by upgrading dependencies, converting React components
+  from JavaScript classes to TypeScript functions. [#791], by [@MikuroXina]
+
+[#791]: https://github.com/bemusic/bemuse/pull/791
+
 ## v53 (2022-11-28)
 
 ### Improvements
@@ -47,7 +56,6 @@
 - The build system has been upgraded from webpack 4 to webpack 5. Huge, huge
   thanks to [MikuroXina](https://github.com/MikuroXina) for making this happen!
   [#780], by [@MikuroXina]
-
 
 [#780]: https://github.com/bemusic/bemuse/pull/780
 [#786]: https://github.com/bemusic/bemuse/pull/786
