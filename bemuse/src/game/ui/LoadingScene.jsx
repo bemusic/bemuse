@@ -3,11 +3,11 @@ import './LoadingScene.scss'
 import PropTypes from 'prop-types'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Scene from 'bemuse/ui/Scene.jsx'
+import Scene from 'bemuse/ui/Scene'
 import delay from 'delay'
 
-import LoadingSceneProgress from './LoadingSceneProgress.jsx'
-import LoadingSceneSongInfo from './LoadingSceneSongInfo.jsx'
+import LoadingSceneProgress from './LoadingSceneProgress'
+import LoadingSceneSongInfo from './LoadingSceneSongInfo'
 
 export default class LoadingScene extends React.Component {
   static propTypes = {

@@ -1,8 +1,16 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import './TipContainer.scss'
 
-const TipContainer = ({ children, tip, tipVisible = true }) => (
+import React from 'react'
+
+const TipContainer = ({
+  children,
+  tip,
+  tipVisible = true,
+}: {
+  children?: ReactNode
+  tip?: ReactNode
+  tipVisible?: boolean
+}) => (
   <div className='TipContainer'>
     <div className='TipContainerのchildren'>{children}</div>
     {tipVisible ? (
@@ -12,11 +20,5 @@ const TipContainer = ({ children, tip, tipVisible = true }) => (
     ) : null}
   </div>
 )
-
-TipContainer.propTypes = {
-  children: PropTypes.node,
-  tip: PropTypes.node,
-  tipVisible: PropTypes.bool,
-}
 
 export default TipContainer

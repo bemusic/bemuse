@@ -3,6 +3,8 @@ import './ResultScene.scss'
 import * as Analytics from '../analytics'
 import * as QueryFlags from '../query-flags'
 
+import SceneToolbar, { SceneToolbarSpacer } from 'bemuse/ui/SceneToolbar'
+
 import FirstTimeTip from './FirstTimeTip'
 import Flex from 'bemuse/ui/Flex'
 import { Icon } from 'bemuse/fa'
@@ -16,7 +18,6 @@ import ResultGrade from './ResultGrade'
 import ResultTable from './ResultTable'
 import Scene from 'bemuse/ui/Scene'
 import SceneHeading from 'bemuse/ui/SceneHeading'
-import SceneToolbar from 'bemuse/ui/SceneToolbar'
 
 export default class ResultScene extends React.Component {
   static propTypes = {
@@ -89,7 +90,7 @@ export default class ResultScene extends React.Component {
           <span>
             <ResultExpertInfo deltas={this.props.result.deltas} />
           </span>
-          <SceneToolbar.Spacer />
+          <SceneToolbarSpacer />
           <a onClick={this.props.onExit} href='javascript://'>
             Continue
           </a>

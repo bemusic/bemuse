@@ -5,37 +5,36 @@
 import sync from 'timesynchro'
 const Log = BemuseLogger.forModule('timesynchro')
 
-let now
 let offset = 0
 
-if (window.performance && typeof window.performance.now === 'function') {
-  now = () => window.performance.now()
-} else {
-  now = () => Date.now()
+function now() {
+  if (window.performance && typeof window.performance.now === 'function') {
+    return window.performance.now()
+  } else {
+    return Date.now()
+  }
 }
 
-now.synchronize = function (server) {
+now.synchronize = function (server: string) {
   sync(server, onFinish, onResult)
-  function onResult(result) {
+  function onResult(result: number) {
     // result + Date.now() = real time = now() + offset
     // result + Date.now() = now() + offset
     // offset = result + Date.now() - now()
     offset = result + Date.now() - now()
   }
-  function onFinish(err, result) {
+  function onFinish(err: Error | null, result?: number) {
     if (err) {
       Log.error('Cannot synchronize time: ' + err)
     } else {
-      onResult(result)
+      onResult(result!)
       Log.info('Synchronized time with global server! Offset = ' + offset)
     }
   }
 }
-
 now.synchronized = function () {
   const o = offset
   return () => now() + o
 }
-
 export { now }
 export default now
