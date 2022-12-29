@@ -29,6 +29,17 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## 53.1.1
+
+### Internals
+
+- Refactored more components into TypeScript. [#793], by [@MikuroXina]
+- Revamped the continuous delivery pipeline to streamline the release process.
+  [#794], by [@dtinth]
+
+[#793]: https://github.com/bemusic/bemuse/pull/793
+[#794]: https://github.com/bemusic/bemuse/pull/794
+
 ## v53.1 (2022-12-29)
 
 ### Internals
