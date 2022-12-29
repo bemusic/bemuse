@@ -5,26 +5,27 @@ import Ranking from 'bemuse/app/ui/Ranking'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+const players = [
+  {
+    playerName: 'One',
+    score: 543210,
+    count: [5, 4, 3, 2, 1],
+    total: 15,
+    rank: 1,
+  },
+  {
+    playerName: 'Two',
+    score: 123456,
+    count: [1, 2, 3, 4, 5],
+    total: 15,
+    rank: 2,
+  },
+] as const
 const RankingTablePlayground = () => (
   <div className='ranking-table-playground'>
     <Ranking
       state={{
-        data: [
-          {
-            playerName: 'One',
-            score: 543210,
-            count: [5, 4, 3, 2, 1],
-            total: 15,
-            rank: 1,
-          },
-          {
-            playerName: 'Two',
-            score: 123456,
-            count: [1, 2, 3, 4, 5],
-            total: 15,
-            rank: 2,
-          },
-        ],
+        data: players,
         meta: {
           scoreboard: {
             status: 'completed',
@@ -45,22 +46,7 @@ const RankingTablePlayground = () => (
     />
     <Ranking
       state={{
-        data: [
-          {
-            playerName: 'One',
-            score: 543210,
-            count: [5, 4, 3, 2, 1],
-            total: 15,
-            rank: 1,
-          },
-          {
-            playerName: 'Two',
-            score: 123456,
-            count: [1, 2, 3, 4, 5],
-            total: 15,
-            rank: 2,
-          },
-        ],
+        data: players,
         meta: {
           scoreboard: {
             status: 'completed',
