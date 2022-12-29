@@ -8,7 +8,8 @@
     "gulp-rename": "^2.0.0",
     "merge-stream": "^2.0.0",
     "vinyl-fs": "^3.0.3",
-    "yargs": "^15.3.1"
+    "yargs": "^15.3.1",
+    "zod": "^3.20.2"
   },
   "devDependencies": {
     "typescript": "^4.8.4",
