@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import './Page.scss'
 
-export const Page = ({ children }) => (
+import React from 'react'
+
+export const Page = ({ children }: { children: ReactNode }) => (
   <div className='Page'>
     <div className='Pageのwrapper'>
       {children}
@@ -14,17 +14,8 @@ export const Page = ({ children }) => (
     </div>
   </div>
 )
-
-Page.propTypes = {
-  children: PropTypes.node,
-}
-
 export default Page
 
-export const Heading = ({ children }) => (
+export const Heading = ({ children }: { children: ReactNode }) => (
   <h1 className='Pageのheading'>{children}</h1>
 )
-
-Heading.propTypes = {
-  children: PropTypes.node,
-}
