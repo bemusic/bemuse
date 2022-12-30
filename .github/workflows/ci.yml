@@ -177,7 +177,6 @@ jobs:
               '(Write your changelog entry here)',
             ].join('\n')
             const url = `${process.env.PR_NEW_FILE_URL}?filename=${encodeURIComponent(path)}&value=${encodeURIComponent(contents)}`
-            require('fs').appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary)
             const summary = `[Click here to create a changelog entry.](${url})`
             require('fs').appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary)
             console.log('To create a changelog entry, create a file at', path)
