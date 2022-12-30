@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - cd-release
   pull_request:
     branches:
       - master
@@ -30,8 +31,17 @@ jobs:
           node build-scripts build
         env:
           SCOREBOARD_SERVER: ${{ secrets.SCOREBOARD_SERVER }}
+      - name: Compress build output
+        if: always()
+        run: tar -cvzf dist.tar.gz dist
       - name: Checks
         run: node build-scripts pre-deploy
+      - name: Release
+        if: github.event_name == 'push'
+        run: |
+          node build-scripts release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy
         if: false
         run: |
@@ -53,9 +63,6 @@ jobs:
           fi
         env:
           GH_APP_CREDENTIALS_TOKEN: ${{ secrets.GH_APP_CREDENTIALS_TOKEN }}
-      - name: Compress build output
-        if: always()
-        run: tar -cvzf dist.tar.gz dist
       - name: Upload artifact
         if: always()
         uses: actions/upload-artifact@v3

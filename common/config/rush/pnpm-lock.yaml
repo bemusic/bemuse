@@ -194,6 +194,7 @@ specifiers:
   strip-json-comments: ~5.0.0
   style-loader: ^3.3.1
   temp: ^0.8.1
+  temp-write: ^4.0.0
   terser-webpack-plugin: ^5.3.6
   throat: ^2.0.2
   through2: ^2.0.3
@@ -413,6 +414,7 @@ dependencies:
   strip-json-comments: 5.0.0
   style-loader: 3.3.1_webpack@5.75.0
   temp: 0.8.4
+  temp-write: 4.0.0
   terser-webpack-plugin: 5.3.6_webpack@5.75.0
   throat: 2.0.2
   through2: 2.0.5
@@ -19274,9 +19276,25 @@ packages:
       yallist: 4.0.0
     dev: false
 
+  /temp-dir/1.0.0:
+    resolution: {integrity: sha512-xZFXEGbG7SNC3itwBzI3RYjq/cEhBkx2hJuKGIUOcEULmkQExXiHat2z/qkISYsuR+IKumhEfKKbV5qXmhICFQ==}
+    engines: {node: '>=4'}
+    dev: false
+
   /temp-dir/2.0.0:
     resolution: {integrity: sha512-aoBAniQmmwtcKp/7BzsH8Cxzv8OL736p7v1ihGb5e9DJ9kTwGWHrQrVB5+lfVDzfGrdRzXch+ig7LHaY1JTOrg==}
     engines: {node: '>=8'}
+    dev: false
+
+  /temp-write/4.0.0:
+    resolution: {integrity: sha512-HIeWmj77uOOHb0QX7siN3OtwV3CTntquin6TNVg6SHOqCP3hYKmox90eeFOGaY1MqJ9WYDDjkyZrW6qS5AWpbw==}
+    engines: {node: '>=8'}
+    dependencies:
+      graceful-fs: 4.2.10
+      is-stream: 2.0.1
+      make-dir: 3.1.0
+      temp-dir: 1.0.0
+      uuid: 3.4.0
     dev: false
 
   /temp/0.8.4:
@@ -20370,6 +20388,12 @@ packages:
   /utils-merge/1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
+    dev: false
+
+  /uuid/3.4.0:
+    resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
+    deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+    hasBin: true
     dev: false
 
   /uuid/8.3.2:
@@ -21797,7 +21821,7 @@ packages:
     dev: false
 
   file:projects/build-scripts.tgz:
-    resolution: {integrity: sha512-xY+tZW4qc2NnlL4W6De/tkHTHymFV9NZ5yZr2Ox6yTJySoZpLzvava+0HAjZh0Lj4rCKnB5VftBIZp0aORHAfA==, tarball: file:projects/build-scripts.tgz}
+    resolution: {integrity: sha512-23dA5HRJbNvbahyzpAMCMSkY6CqKIHToC+k/e3673HnarfPtOHEY5NOm2vtcofat0e/JacpGJEUpcZ9+vZg8Iw==, tarball: file:projects/build-scripts.tgz}
     name: '@rush-temp/build-scripts'
     version: 0.0.0
     dependencies:
@@ -21812,6 +21836,7 @@ packages:
       merge-stream: 2.0.0
       prettier: 2.8.1
       semver: 7.3.8
+      temp-write: 4.0.0
       typescript: 4.9.3
       vinyl-fs: 3.0.3
       yargs: 15.4.1

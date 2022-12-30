@@ -70,3 +70,25 @@ function updateChangelog(existingChangelog, entries, version = 'UNRELEASED') {
   return prettier.format(markdown, { ...prettierConfig, parser: 'markdown' })
 }
 exports.updateChangelog = updateChangelog
+
+/**
+ * Find the changelog for a specific release.
+ * @param {string} changelog
+ * @param {string} version
+ */
+function getReleaseChangelog(changelog, version) {
+  const lines = changelog.split('\n')
+  /** @type {string[] | undefined} */
+  let output
+  for (const line of lines) {
+    if (line.trim().startsWith('## ' + version)) {
+      output = []
+    } else if (output && line.trim().startsWith('## ')) {
+      break
+    } else if (output) {
+      output.push(line)
+    }
+  }
+  return output && output.join('\n')
+}
+exports.getReleaseChangelog = getReleaseChangelog
