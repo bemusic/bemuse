@@ -5,7 +5,7 @@ const _ = require('lodash')
 
 /**
  * @param {string} existingChangelog
- * @param {{ content: string; category: string; pr: number | number[]; author: string }[]} entries
+ * @param {{ content: string; category: string; pr: number | number[]; author: string | string[] }[]} entries
  */
 function updateChangelog(existingChangelog, entries, version = 'UNRELEASED') {
   const userListRegExp = /((?:\[@\w+\]: https.+\n)+)/
@@ -34,11 +34,13 @@ function updateChangelog(existingChangelog, entries, version = 'UNRELEASED') {
         pullMap.set(pr, { html_url: `https://github.com/bemusic/bemuse/pull/${pr}` })
         return `[#${pr}]`
       }).join(', ')
+      const authors = Array.isArray(x.author) ? x.author : [x.author]
+      const authorsText = authors.map(registerUser).join(', ')
       const text = x.content.trim().replace(/\[@([^\]\s]+)\]/, (a, id) => {
         return registerUser(id)
       })
       return {
-        text: `- ${indent(text, 2).substr(2)} [${prsText}], by ${registerUser(x.author)}`,
+        text: `- ${indent(text, 2).substr(2)} [${prsText}], by ${authorsText}`,
         category: x.category,
       }
     })
