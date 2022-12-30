@@ -4,6 +4,11 @@ title: Workflows for development, release, and deployment
 sidebar_label: Workflows
 ---
 
+## Reviewing PRs
+
+- Using [GitHub CLI](https://cli.github.com/): Run `gh pr checkout <PR number>` to checkout the PR locally.
+- Using [GitHub Codespaces](https://github.com/features/codespaces): In the PR, click on the **Code** button and select **Create codespace**.
+
 ## Authoring change logs
 
 For changes in the Bemuse game, create a changelog entry in the `changelog` folder.
