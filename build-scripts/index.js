@@ -99,13 +99,13 @@ yargs
       let targetVersion = semverInc(currentVersion, 'patch')
 
       const entrySchema = z.object({
-        author: z.string(),
         category: z.enum(['feature', 'internals', 'bugfix', 'improvement']),
         pr: z.union([
           z.string(),
           z.number(),
           z.array(z.union([z.string(), z.number()])),
         ]),
+        author: z.union([z.string(), z.array(z.string())]),
         type: z.enum(['patch', 'minor', 'major']).optional(),
       })
       const categoryMapping = {
