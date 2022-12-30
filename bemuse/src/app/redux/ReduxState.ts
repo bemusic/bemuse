@@ -31,6 +31,40 @@ import sortSongs from 'bemuse/music-collection/sortSongs'
 
 enableMapSet()
 
+/** @deprecated Use the action in `collectionsSlice`. */
+export const COLLECTION_LOADING_BEGAN = 'COLLECTION_LOADING_BEGAN'
+/** @deprecated Use the action in `collectionsSlice`. */
+export const COLLECTION_LOADING_ERRORED = 'COLLECTION_LOADING_ERRORED'
+/** @deprecated Use the action in `collectionsSlice`. */
+export const COLLECTION_LOADED = 'COLLECTION_LOADED'
+/** @deprecated Use the action in `customSongLoadStateSlice`. */
+export const CUSTOM_SONG_LOAD_STARTED = 'CUSTOM_SONG_LOAD_STARTED'
+/** @deprecated Use the action in `customSongLoadStateSlice`. */
+export const CUSTOM_SONG_LOADED = 'CUSTOM_SONG_LOADED'
+/** @deprecated Use the action in `customSongLoadStateSlice`. */
+export const CUSTOM_SONGS_LOADED = 'CUSTOM_SONGS_LOADED'
+/** @deprecated Use the action in `musicSearchTextSlice`. */
+export const MUSIC_SEARCH_TEXT_TYPED = 'MUSIC_SEARCH_TEXT_TYPED'
+/** @deprecated Use the action in `musicSearchTextSlice`. */
+export const MUSIC_SEARCH_TEXT_INITIALIZED = 'MUSIC_SEARCH_TEXT_INITIALIZED'
+/** @deprecated Use the action in `musicSearchTextSlice`. */
+export const MUSIC_SEARCH_DEBOUNCED = 'MUSIC_SEARCH_DEBOUNCED'
+/** @deprecated Use the action in `musicSelectionSlice`. */
+export const MUSIC_SONG_SELECTED = 'MUSIC_SONG_SELECTED'
+/** @deprecated Use the action in `musicSelectionSlice`. */
+export const MUSIC_CHART_SELECTED = 'MUSIC_CHART_SELECTED'
+export const OPTIONS_LOADED_FROM_STORAGE = 'OPTIONS_LOADED_FROM_STORAGE'
+/** @deprecated Use the action in `currentSongReadmeSlice`. */
+export const README_LOADING_STARTED = 'README_LOADING_STARTED'
+/** @deprecated Use the action in `currentSongReadmeSlice`. */
+export const README_LOADED = 'README_LOADED'
+/** @deprecated Use the action in `currentSongReadmeSlice`. */
+export const README_LOADING_ERRORED = 'README_LOADING_ERRORED'
+/** @deprecated Use the action in `rageQuitSlice`. */
+export const RAGEQUITTED = 'RAGEQUITTED'
+/** @deprecated Use the action in `rageQuitSlice`. */
+export const RAGEQUIT_DISMISSED = 'RAGEQUIT_DISMISSED'
+
 export interface AppState {
   collections: Map<string, LoadState.LoadState<MusicServerIndex>>
   customSongLoadState: LoadState.LoadState<undefined>
