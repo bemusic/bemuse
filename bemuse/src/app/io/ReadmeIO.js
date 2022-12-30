@@ -1,6 +1,7 @@
-import { getSongResources } from 'bemuse/music-collection/getSongResources'
-import { createIO } from 'impure'
 import * as ReduxState from '../redux/ReduxState'
+
+import { createIO } from 'impure'
+import { getSongResources } from 'bemuse/music-collection/getSongResources'
 
 export function requestReadme(song) {
   return createIO(({ store }, run) => {
@@ -17,7 +18,9 @@ export function requestReadme(song) {
 
 function requestReadmeForUrl(serverUrl, song) {
   return createIO(async ({ store }) => {
-    store.dispatch({ type: ReduxState.README_LOADING_STARTED })
+    store.dispatch(
+      ReduxState.currentSongReadmeSlice.actions.README_LOADING_STARTED()
+    )
     try {
       const resources = getSongResources(song, serverUrl)
       const readme = song.readme
@@ -27,12 +30,15 @@ function requestReadmeForUrl(serverUrl, song) {
             .then((ab) => new Blob([ab], { type: 'text/plain' }).text())
         : ''
       const text = stripFrontMatter(readme)
-      store.dispatch({ type: ReduxState.README_LOADED, text })
+      store.dispatch(
+        ReduxState.currentSongReadmeSlice.actions.README_LOADED({ text })
+      )
     } catch (e) {
-      store.dispatch({
-        type: ReduxState.README_LOADING_ERRORED,
-        url: song.readme,
-      })
+      store.dispatch(
+        ReduxState.currentSongReadmeSlice.actions.README_LOADING_ERRORED({
+          url: song.readme,
+        })
+      )
     }
   })
 }

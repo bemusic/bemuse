@@ -1,7 +1,8 @@
+import { IResources } from 'bemuse/resources/types'
 import { observable } from 'mobx'
 import { useObserver } from 'mobx-react-lite'
+
 import * as ReduxState from './redux/ReduxState'
-import { IResources } from 'bemuse/resources/types'
 
 const state = observable({
   loaderLog: null as string[] | null,
@@ -28,7 +29,9 @@ export async function loadCustomSong(
     })
     if (song && song.charts && song.charts.length) {
       state.loaderLog = null
-      store.dispatch({ type: ReduxState.CUSTOM_SONG_LOADED, song })
+      store.dispatch(
+        ReduxState.customSongsSlice.actions.CUSTOM_SONG_LOADED({ song })
+      )
       return song
     } else {
       state.loaderLog = null

@@ -1,28 +1,30 @@
+import { createIO } from 'impure'
+
 import * as GameLauncher from '../game-launcher'
 import * as Options from '../entities/Options'
 import * as OptionsIO from './OptionsIO'
 import * as ReduxState from '../redux/ReduxState'
-
-import { createIO } from 'impure'
-import { getChartLevel } from '../entities/MusicSelection'
+import { getChartLevel, musicSelectionSlice } from '../entities/MusicSelection'
 
 export function selectSong(song) {
   return createIO(({ store }) => {
-    store.dispatch({
-      type: ReduxState.MUSIC_SONG_SELECTED,
-      songId: song.id,
-    })
+    store.dispatch(
+      musicSelectionSlice.actions.MUSIC_SONG_SELECTED({
+        songId: song.id,
+      })
+    )
   })
 }
 
 export function selectChart(song, chart) {
   return createIO(({ store }) => {
-    store.dispatch({
-      type: ReduxState.MUSIC_CHART_SELECTED,
-      songId: song.id,
-      chartId: chart.file,
-      chartLevel: getChartLevel(chart),
-    })
+    store.dispatch(
+      musicSelectionSlice.actions.MUSIC_CHART_SELECTED({
+        songId: song.id,
+        chartId: chart.file,
+        chartLevel: getChartLevel(chart),
+      })
+    )
   })
 }
 
@@ -40,7 +42,7 @@ export function launchGame(server, song, chart, { autoplayEnabled }) {
         run(OptionsIO.updateOptions(Options.changeLeadTime(leadTime)))
       },
       onRagequitted: () => {
-        store.dispatch({ type: ReduxState.RAGEQUITTED })
+        store.dispatch(ReduxState.rageQuitSlice.actions.RAGEQUITTED())
       },
       autoplayEnabled,
     })

@@ -1,21 +1,23 @@
 import * as options from '../options'
-import * as ReduxState from '../redux/ReduxState'
 
 import { createIO } from 'impure'
+import { optionsSlice } from '../entities/Options'
 
 export function loadInitialOptions() {
   return createIO(({ store }) => {
-    store.dispatch({
-      type: ReduxState.OPTIONS_LOADED_FROM_STORAGE,
-      options: options.getAllCurrentOptions(),
-    })
+    store.dispatch(
+      optionsSlice.actions.LOADED_FROM_STORAGE({
+        options: options.getAllCurrentOptions(),
+      })
+    )
 
     // HACK: Dispatch when options change!
     options.events.on('changed', () => {
-      store.dispatch({
-        type: ReduxState.OPTIONS_LOADED_FROM_STORAGE,
-        options: options.getAllCurrentOptions(),
-      })
+      store.dispatch(
+        optionsSlice.actions.LOADED_FROM_STORAGE({
+          options: options.getAllCurrentOptions(),
+        })
+      )
     })
   })
 }
