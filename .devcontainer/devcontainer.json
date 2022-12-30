@@ -1,10 +1,6 @@
 {
   "image": "mcr.microsoft.com/devcontainers/universal:2",
-  "features": {
-  },
-  "extensions": [
-    "esbenp.prettier-vscode",
-    "dbaeumer.vscode-eslint"
-  ],
-  "postCreateCommand": "npm install --global @microsoft/rush && rush update && rush build --to-except bemuse",
+  "features": {},
+  "extensions": ["esbenp.prettier-vscode", "dbaeumer.vscode-eslint"],
+  "postCreateCommand": "npm install --global @microsoft/rush && rush update && rush build --to-except bemuse"
 }
