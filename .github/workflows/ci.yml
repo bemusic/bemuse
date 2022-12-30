@@ -40,7 +40,7 @@ jobs:
         if: github.event_name == 'push'
         id: release
         run: |
-          node build-scripts release
+          node build-scripts release --confirm
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy
