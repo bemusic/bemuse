@@ -1,36 +1,38 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import SCENE_MANAGER from 'bemuse/scene-manager'
-import now from 'bemuse/utils/now'
-import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
+import * as Analytics from './analytics'
+import * as BemuseTestMode from '../devtools/BemuseTestMode'
+import * as OptionsIO from './io/OptionsIO'
+import * as ReduxState from './redux/ReduxState'
+
 import { createIO, createRun } from 'impure'
 import {
   getDefaultCustomFolderContext,
   getSongsFromCustomFolders,
 } from 'bemuse/custom-folder'
-import { monetize } from 'monetizer'
-import {
-  shouldShowAbout,
-  shouldShowModeSelect,
-} from 'bemuse/devtools/query-flags'
-import { withContext } from 'recompose'
-
-import * as Analytics from './analytics'
-import * as BemuseTestMode from '../devtools/BemuseTestMode'
-import * as OptionsIO from './io/OptionsIO'
-import * as ReduxState from './redux/ReduxState'
-import AboutScene from './ui/AboutScene'
-import BrowserSupportWarningScene from './ui/BrowserSupportWarningScene'
-import ModeSelectScene from './ui/ModeSelectScene'
-import TitleScene from './ui/TitleScene'
-import ioContext from './io/ioContext'
-import store from './redux/instance'
 import {
   getInitialGrepString,
   getMusicServer,
   getTimeSynchroServer,
 } from './query-flags'
+import {
+  shouldShowAbout,
+  shouldShowModeSelect,
+} from 'bemuse/devtools/query-flags'
+
+import AboutScene from './ui/AboutScene'
+import BrowserSupportWarningScene from './ui/BrowserSupportWarningScene'
+import ModeSelectScene from './ui/ModeSelectScene'
+import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
+import PropTypes from 'prop-types'
+import { Provider } from 'react-redux'
+import React from 'react'
+import SCENE_MANAGER from 'bemuse/scene-manager'
+import TitleScene from './ui/TitleScene'
+import ioContext from './io/ioContext'
 import { isBrowserSupported } from './browser-support'
+import { monetize } from 'monetizer'
+import now from 'bemuse/utils/now'
+import store from './redux/instance'
+import { withContext } from 'recompose'
 
 /* eslint import/no-webpack-loader-syntax: off */
 export const runIO = createRun({
@@ -42,7 +44,11 @@ SCENE_MANAGER.ReactSceneContainer = withContext(
   { store: PropTypes.object, runIO: PropTypes.func },
   () => ({ store, runIO })
 )(({ children }) => {
-  return <div className='bemuse-scene'>{React.Children.only(children)}</div>
+  return (
+    <div className='bemuse-scene'>
+      <Provider store={store}>{React.Children.only(children)}</Provider>
+    </div>
+  )
 })
 
 // Allow hot reloading of some modules.
