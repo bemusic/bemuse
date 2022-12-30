@@ -167,7 +167,7 @@ jobs:
           script: |
             const path = `changelog/pr-${process.env.PR}.md`
             const contents = [
-              '---'
+              '---',
               'author: ' + process.env.AUTHOR,
               'category: feature/internals/bugfix/improvement',
               'type: major/minor/patch',
