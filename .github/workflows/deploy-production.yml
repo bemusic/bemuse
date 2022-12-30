@@ -3,19 +3,23 @@ name: Deploy to production
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: 'Version to deploy'
+      tag:
+        description: 'Git tag to deploy'
         required: true
   workflow_call:
     inputs:
-      version:
-        description: 'Version to deploy'
+      tag:
+        description: 'Git tag to deploy'
         required: true
         type: 'string'
+    secrets:
+      GH_APP_CREDENTIALS_TOKEN:
+        description: 'GitHub App credentials token'
+        required: true
 
 env:
   NODE_FLAGS: --max_old_space_size=4096
-  VERSION: ${{ inputs.version }}
+  TAG: ${{ inputs.tag }}
 
 jobs:
   deploy:
@@ -30,7 +34,7 @@ jobs:
         uses: ./.github/actions/setup-project
       - name: Download release
         run: |
-          gh release download $VERSION --pattern dist.tar.gz
+          gh release download $TAG --pattern dist.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Extract build

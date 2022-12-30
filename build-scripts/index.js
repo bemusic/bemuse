@@ -215,7 +215,7 @@ yargs
         console.log('Dry-run: %s', uploadCommand)
       }
 
-      writeOutput('version', currentVersion)
+      writeOutput('tag', gitTag)
     }
   )
   .command(

@@ -1,6 +1,6 @@
 {
   "name": "bemuse",
-  "version": "53.2.0-pre.0",
+  "version": "53.2.0-pre.1",
   "description": "BEAT☆MUSIC☆SEQUENCE, a web-based music game of the future",
   "private": true,
   "browserslist": [
