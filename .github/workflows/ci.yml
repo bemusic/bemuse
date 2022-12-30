@@ -184,3 +184,10 @@ jobs:
               `To add a changelog entry, please [create a new file](${url}) with the following contents:`,
             ]
             require('fs').appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary)
+            console.log('To create a changelog entry, create a file at', path)
+            console.log('')
+            console.log('Example contents:')
+            console.log('')
+            console.log(contents)
+            console.log('')
+            console.log(url)
