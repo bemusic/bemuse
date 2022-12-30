@@ -1,0 +1,54 @@
+name: Deploy to production
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to deploy'
+        required: true
+  workflow_call:
+    inputs:
+      version:
+        description: 'Version to deploy'
+        required: true
+        type: 'string'
+
+env:
+  NODE_FLAGS: --max_old_space_size=4096
+  VERSION: ${{ inputs.version }}
+
+jobs:
+  deploy:
+    environment:
+      name: Production
+      url: https://bemuse.ninja
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Set up project
+        uses: ./.github/actions/setup-project
+      - name: Download release
+        run: |
+          gh release download $VERSION --pattern dist.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract build
+        run: tar -xvzf dist.tar.gz
+      - name: Checks
+        run: node build-scripts pre-deploy
+      - name: Deploy
+        run: |
+          if [ -n "$GH_APP_CREDENTIALS_TOKEN" ]
+          then
+            GH_TOKEN="$(npx obtain-github-app-installation-access-token ci $GH_APP_CREDENTIALS_TOKEN)"
+            echo "::add-mask::$GH_TOKEN"
+            git remote add www https://akibot:$GH_TOKEN@github.com/bemusic/bemusic.github.io.git
+            git config --global user.email "aki@spacet.me"
+            git config --global user.name "Aki running on GitHub Actions"
+            node build-scripts deploy
+          else
+            echo "GH_APP_CREDENTIALS_TOKEN is not set, skipped"
+          fi
+        env:
+          GH_APP_CREDENTIALS_TOKEN: ${{ secrets.GH_APP_CREDENTIALS_TOKEN }}
