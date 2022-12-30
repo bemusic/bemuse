@@ -101,7 +101,11 @@ yargs
       const entrySchema = z.object({
         author: z.string(),
         category: z.enum(['feature', 'internals', 'bugfix', 'improvement']),
-        pr: z.union([z.string(), z.number()]),
+        pr: z.union([
+          z.string(),
+          z.number(),
+          z.array(z.union([z.string(), z.number()])),
+        ]),
         type: z.enum(['patch', 'minor', 'major']).optional(),
       })
       const categoryMapping = {
