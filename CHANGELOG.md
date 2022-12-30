@@ -29,6 +29,16 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## 53.3.0
+
+### Internals
+
+- Revamped the deployment pipeline to streamline
+  [the release process](https://bemuse.ninja/project/docs/workflows/). [[#803]],
+  by [@dtinth]
+
+[#803]: https://github.com/bemusic/bemuse/pull/803
+
 ## 53.2.0
 
 ### Internals
