@@ -60,7 +60,11 @@ export default runIO
 
 function bootUp() {
   return createIO(({ collectionLoader, store }, run) => {
-    collectionLoader.load(getMusicServer() || OFFICIAL_SERVER_URL)
+    store.dispatch(
+      ReduxState.collectionsSlice.actions.COLLECTION_LOADING_BEGAN({
+        url: getMusicServer() || OFFICIAL_SERVER_URL,
+      })
+    )
     store.dispatch({
       type: ReduxState.MUSIC_SEARCH_TEXT_INITIALIZED,
       text: getInitialGrepString(),
