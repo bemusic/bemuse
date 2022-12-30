@@ -214,6 +214,8 @@ yargs
       } else {
         console.log('Dry-run: %s', uploadCommand)
       }
+
+      writeOutput('version', currentVersion)
     }
   )
   .command(

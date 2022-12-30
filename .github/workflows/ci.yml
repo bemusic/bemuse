@@ -38,6 +38,7 @@ jobs:
         run: node build-scripts pre-deploy
       - name: Release
         if: github.event_name == 'push'
+        id: release
         run: |
           node build-scripts release
         env:
