@@ -10,6 +10,9 @@ export interface Song extends SongMetadataInCollection {
 
   /** `true` if this is loaded from a custom song. */
   custom?: boolean
+
+  /** `true` if this is an unreleased song. */
+  unreleased?: boolean
 }
 
 export type { Chart }

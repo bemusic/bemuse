@@ -2,8 +2,8 @@ import './MusicInfo.scss'
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import MusicChartInfo from './MusicChartInfo.jsx'
-import MusicChartSelector from './MusicChartSelector.jsx'
+import MusicChartInfo from './MusicChartInfo'
+import MusicChartSelector from './MusicChartSelector'
 import MusicInfoTabs from './MusicInfoTabs.jsx'
 
 const chartPropType = PropTypes.shape({

@@ -5,7 +5,11 @@ import ReactDOM from 'react-dom'
 
 const ErrorScene = () => (
   <div>
-    <GenericErrorScene error={new Error('yabai')} preamble='Test error.' />
+    <GenericErrorScene
+      error={new Error('yabai')}
+      preamble='Test error.'
+      onContinue={() => {}}
+    />
   </div>
 )
 
