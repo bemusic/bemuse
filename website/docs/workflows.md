@@ -11,21 +11,22 @@ sidebar_label: Workflows
 
 ## Authoring change logs
 
-For changes in the Bemuse game, create a changelog entry in the `changelog` folder.
+For changes in the Bemuse game, create a Markdown in the `changelog` folder containing the changelog entry. Use the following front-matter:
 
-```yaml
+```markdown
 ---
 author:
 category:
 pr:
+type:
 ---
 
 (Describe the change here)
 ```
 
-- `author`: GitHub username of the author.
+- `author`: GitHub username of the author. (Can be an array if there are multiple authors.)
 - `category`: One of `feature`, `internals`, `bugfix`, `improvement`.
-- `pr`: Pull request number.
+- `pr`: Pull request number. (Can be an array if there are multiple PRs.)
 - `type`: One of `major`, `minor`, `patch`. If not specified, it will be a `patch` release.
 
 ## Merging PRs

@@ -16,3 +16,4 @@ yarn.lock
 package-lock.json
 shrinkwrap.json
 **/*.md
+changelog/*.md
