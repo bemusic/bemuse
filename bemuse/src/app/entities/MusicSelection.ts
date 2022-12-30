@@ -2,7 +2,6 @@ import type { Chart, SongMetadataInCollection } from 'bemuse-types'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import produce, { Draft } from 'immer'
 
-import { ChartProps } from '../ui/MusicList'
 import _ from 'lodash'
 
 export interface MusicSelectionState {
@@ -52,8 +51,15 @@ export const selectChart = (
     draft.selectedChartLevel = chartLevel
   })
 
+export interface PartialChart {
+  info: {
+    difficulty: number
+    level: number
+  }
+}
+
 // Utilities
-export function getChartLevel(chart: ChartProps): number {
+export function getChartLevel(chart: PartialChart): number {
   return chart.info.level + (chart.info.difficulty === 5 ? 1000 : 0)
 }
 
