@@ -54,6 +54,7 @@ jobs:
     uses: ./.github/workflows/deploy-production.yml
     needs: build
     secrets: inherit
+    if: needs.build.outputs.released-tag
     with:
       tag: ${{ needs.build.outputs.released-tag }}
   e2e:
