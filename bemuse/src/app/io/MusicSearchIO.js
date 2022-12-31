@@ -1,14 +1,16 @@
 import { createIO } from 'impure'
-import * as ReduxState from '../redux/ReduxState'
+import { musicSearchTextSlice } from '../entities/MusicSearchText'
 
 let _timeout
 
 export function handleSearchTextType(text) {
   return createIO(({ store }) => {
-    store.dispatch({ type: ReduxState.MUSIC_SEARCH_TEXT_TYPED, text })
+    store.dispatch(
+      musicSearchTextSlice.actions.MUSIC_SEARCH_TEXT_TYPED({ text })
+    )
     if (_timeout) clearTimeout(_timeout)
     _timeout = setTimeout(() => {
-      store.dispatch({ type: ReduxState.MUSIC_SEARCH_DEBOUNCED })
+      store.dispatch(musicSearchTextSlice.actions.MUSIC_SEARCH_DEBOUNCED())
     }, 138)
   })
 }

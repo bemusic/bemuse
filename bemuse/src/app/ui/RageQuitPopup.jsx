@@ -13,7 +13,8 @@ const enhance = connect(
     visible: ReduxState.selectRageQuittedFlag(state),
   }),
   (dispatch) => ({
-    onClose: () => dispatch({ type: ReduxState.RAGEQUIT_DISMISSED }),
+    onClose: () =>
+      dispatch(ReduxState.rageQuitSlice.actions.RAGEQUIT_DISMISSED()),
   })
 )
 

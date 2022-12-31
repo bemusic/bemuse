@@ -3,6 +3,7 @@ import React from 'react'
 import SCENE_MANAGER from 'bemuse/scene-manager'
 import now from 'bemuse/utils/now'
 import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
+import { Provider } from 'react-redux'
 import { createIO, createRun } from 'impure'
 import {
   getDefaultCustomFolderContext,
@@ -31,6 +32,7 @@ import {
   getTimeSynchroServer,
 } from './query-flags'
 import { isBrowserSupported } from './browser-support'
+import { musicSearchTextSlice } from './entities/MusicSearchText'
 
 /* eslint import/no-webpack-loader-syntax: off */
 export const runIO = createRun({
@@ -42,7 +44,11 @@ SCENE_MANAGER.ReactSceneContainer = withContext(
   { store: PropTypes.object, runIO: PropTypes.func },
   () => ({ store, runIO })
 )(({ children }) => {
-  return <div className='bemuse-scene'>{React.Children.only(children)}</div>
+  return (
+    <div className='bemuse-scene'>
+      <Provider store={store}>{React.Children.only(children)}</Provider>
+    </div>
+  )
 })
 
 // Allow hot reloading of some modules.
@@ -54,19 +60,25 @@ export default runIO
 
 function bootUp() {
   return createIO(({ collectionLoader, store }, run) => {
-    collectionLoader.load(getMusicServer() || OFFICIAL_SERVER_URL)
-    store.dispatch({
-      type: ReduxState.MUSIC_SEARCH_TEXT_INITIALIZED,
-      text: getInitialGrepString(),
-    })
+    store.dispatch(
+      ReduxState.collectionsSlice.actions.COLLECTION_LOADING_BEGAN({
+        url: getMusicServer() || OFFICIAL_SERVER_URL,
+      })
+    )
+    store.dispatch(
+      musicSearchTextSlice.actions.MUSIC_SEARCH_TEXT_INITIALIZED({
+        text: getInitialGrepString(),
+      })
+    )
     run(OptionsIO.loadInitialOptions())
 
     getSongsFromCustomFolders(getDefaultCustomFolderContext()).then((songs) => {
       if (songs.length > 0) {
-        store.dispatch({
-          type: ReduxState.CUSTOM_SONGS_LOADED,
-          songs,
-        })
+        store.dispatch(
+          ReduxState.customSongsSlice.actions.CUSTOM_SONGS_LOADED({
+            songs,
+          })
+        )
       }
     })
   })
