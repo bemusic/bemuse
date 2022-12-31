@@ -180,7 +180,7 @@
     "recompose": "^0.26.0",
     "redux": "^4.2.0",
     "reselect": "^2.5.1",
-    "rxjs": "^5.5.12",
+    "rxjs": "^7.8.0",
     "screenfull": "^3.3.3",
     "throat": "^2.0.2",
     "timesynchro": "^1.0.1",
