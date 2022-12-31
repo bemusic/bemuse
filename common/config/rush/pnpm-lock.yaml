@@ -178,7 +178,7 @@ specifiers:
   react-toggled: ^1.2.7
   recompose: ^0.26.0
   redux: ^4.2.0
-  reselect: ^2.5.1
+  reselect: ^4.1.7
   rimraf: ^2.6.2
   rx: ^2.5.3
   rxjs: ^7.8.0
@@ -400,7 +400,7 @@ dependencies:
   react-toggled: 1.2.7_prop-types@15.8.1
   recompose: 0.26.0
   redux: 4.2.0
-  reselect: 2.5.4
+  reselect: 4.1.7
   rimraf: 2.7.1
   rx: 2.5.3
   rxjs: 7.8.0
@@ -17844,10 +17844,6 @@ packages:
     resolution: {integrity: sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==}
     dev: false
 
-  /reselect/2.5.4:
-    resolution: {integrity: sha512-KjVKPrNEDQ4nDuIFseuoNP3yp2lz8bipFlCjUkbD8WZTt2zTcJIfCDaSdOkGrChu9nKfWeXsljQQ2j4I5pcwaQ==}
-    dev: false
-
   /reselect/4.1.7:
     resolution: {integrity: sha512-Zu1xbUt3/OPwsXL46hvOOoQrap2azE7ZQbokq61BQfiXvhewsKDwhMeZjTX9sX0nvw1t/U5Audyn1I9P/m9z0A==}
     dev: false
@@ -21722,7 +21718,7 @@ packages:
     dev: false
 
   file:projects/bemuse.tgz:
-    resolution: {integrity: sha512-wDUBp2G0SN0mQeIaLU5GvYUd7fTw1TA3X6Kas4KpAd3oaZYWKJwYzc/lh8JcxyoAhO6NF7HwFNoEnqPv7Pmx0g==, tarball: file:projects/bemuse.tgz}
+    resolution: {integrity: sha512-mw/Alg8eb4Ot3/jw/fMOI7K+B7NVRfDT4zlrLUyhEMIGkV3O5/jKNOhYfl+HCZiIfAWDKyMh4xLxnjaEG9jLJg==, tarball: file:projects/bemuse.tgz}
     name: '@rush-temp/bemuse'
     version: 0.0.0
     dependencies:
@@ -21843,7 +21839,7 @@ packages:
       react-toggled: 1.2.7_prop-types@15.8.1+react@16.14.0
       recompose: 0.26.0_react@16.14.0
       redux: 4.2.0
-      reselect: 2.5.4
+      reselect: 4.1.7
       rimraf: 2.7.1
       rxjs: 7.8.0
       sass: 1.57.1
