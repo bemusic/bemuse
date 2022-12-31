@@ -1,12 +1,10 @@
-import { getGrade } from 'bemuse/rules/grade'
-import withPersonalRecord from './withPersonalRecord'
 import MusicListItemChart from './MusicListItemChart'
-import withPropsOnChange from 'recompose/withPropsOnChange'
-import pure from 'recompose/pure'
 import compose from 'recompose/compose'
+import { getGrade } from 'bemuse/rules/grade'
+import pure from 'recompose/pure'
+import withPropsOnChange from 'recompose/withPropsOnChange'
 
 export default compose(
-  withPersonalRecord,
   withPropsOnChange(['record'], (props) => {
     const record = props.record
     const played = !!record

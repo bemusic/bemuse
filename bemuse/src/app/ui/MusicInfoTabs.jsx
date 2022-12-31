@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import c from 'classnames'
 import { Icon } from 'bemuse/fa'
 
-import MusicInfoTabStats from './MusicInfoTabStats.jsx'
+import MusicInfoTabStats from './MusicInfoTabStats'
 import MusicInfoTabInformation from './MusicInfoTabInformation.jsx'
 import RankingContainer from './RankingContainer'
 
