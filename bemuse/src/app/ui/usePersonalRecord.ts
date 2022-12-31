@@ -10,7 +10,6 @@ import { OnlineContext } from 'bemuse/online/instance'
 import { Operation } from 'bemuse/online/operations'
 import { RecordLevel } from 'bemuse/online/level'
 import type { ScoreboardDataRecord } from 'bemuse/online'
-import _ from 'lodash'
 import id from 'bemuse/online/id'
 import { useSelector } from 'react-redux'
 

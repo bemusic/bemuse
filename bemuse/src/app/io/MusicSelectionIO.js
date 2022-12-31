@@ -1,8 +1,5 @@
-import { createIO } from 'impure'
-
 import * as GameLauncher from '../game-launcher'
 import * as Options from '../entities/Options'
-import * as OptionsIO from './OptionsIO'
 import * as ReduxState from '../redux/ReduxState'
 import { getChartLevel, musicSelectionSlice } from '../entities/MusicSelection'
 

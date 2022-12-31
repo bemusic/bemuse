@@ -1,4 +1,3 @@
-import { createIO } from 'impure'
 import { musicSearchTextSlice } from '../entities/MusicSearchText'
 
 let _timeout
