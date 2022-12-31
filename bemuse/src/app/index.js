@@ -59,7 +59,7 @@ if (module.hot) {
 export default runIO
 
 function bootUp() {
-  return createIO(({ collectionLoader, store }, run) => {
+  return createIO(({ store }, run) => {
     store.dispatch(
       ReduxState.collectionsSlice.actions.COLLECTION_LOADING_BEGAN({
         url: getMusicServer() || OFFICIAL_SERVER_URL,
