@@ -47,7 +47,11 @@ class MusicListItem extends React.PureComponent {
       'js-active-song': this.props.selected,
     })
     return (
-      <li className={className} onClick={this.handleClick}>
+      <li
+        className={className}
+        onClick={this.handleClick}
+        data-testid='music-list-item'
+      >
         {song.tutorial ? (
           <div className='MusicListItemのtutorial'>
             <div className='MusicListItemのcharts'>

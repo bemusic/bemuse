@@ -51,7 +51,11 @@ export default class MusicInfoTabs extends React.Component {
     return (
       <section className='MusicInfoTabs'>
         <ul className='MusicInfoTabsのtabs'>
-          <li className='MusicInfoTabsのoptions' onClick={this.props.onOptions}>
+          <li
+            className='MusicInfoTabsのoptions'
+            onClick={this.props.onOptions}
+            data-testid='options-button'
+          >
             <Icon name='gear' /> Options
           </li>
           {this.renderTab(0, 'Stats')}
