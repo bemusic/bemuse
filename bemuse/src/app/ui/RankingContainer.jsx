@@ -1,7 +1,8 @@
-import React from 'react'
 import PropTypes from 'prop-types'
-import Ranking from './Ranking'
+import React from 'react'
 import online from 'bemuse/online/instance'
+
+import Ranking from './Ranking'
 
 export default class RankingContainer extends React.Component {
   static propTypes = {
@@ -47,7 +48,7 @@ export default class RankingContainer extends React.Component {
 
   componentDidMount() {
     this.model = online.Ranking(this.getParams(this.props))
-    this.unsubscribe = this.model.state川.onValue(this.onStoreTrigger)
+    this.unsubscribe = this.model.state川.subscribe(this.onStoreTrigger)
     this.mounted = true
   }
 
@@ -56,15 +57,15 @@ export default class RankingContainer extends React.Component {
       this.props.chart.md5 !== nextProps.chart.md5 ||
       this.props.playMode !== nextProps.playMode
     ) {
-      if (this.unsubscribe) this.unsubscribe()
+      if (this.unsubscribe) this.unsubscribe.unsubscribe()
       this.model = online.Ranking(this.getParams(nextProps))
-      this.unsubscribe = this.model.state川.onValue(this.onStoreTrigger)
+      this.unsubscribe = this.model.state川.subscribe(this.onStoreTrigger)
     }
   }
 
   componentWillUnmount() {
     this.mounted = false
-    if (this.unsubscribe) this.unsubscribe()
+    if (this.unsubscribe) this.unsubscribe.unsubscribe()
   }
 
   onStoreTrigger = (state) => {
