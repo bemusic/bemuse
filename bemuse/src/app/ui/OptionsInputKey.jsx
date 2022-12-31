@@ -13,7 +13,12 @@ class OptionsInputKey extends React.PureComponent {
 
   render() {
     return (
-      <div className='OptionsInputKey' data-n={this.props.n}>
+      <div
+        className='OptionsInputKey'
+        data-testid='options-input-key'
+        data-n={this.props.n}
+        data-editing={this.props.isEditing ? 'true' : 'false'}
+      >
         <div
           className={c('OptionsInputKeyのcontents', {
             'is-editing': this.props.isEditing,
