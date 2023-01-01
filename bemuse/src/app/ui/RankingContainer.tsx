@@ -28,7 +28,8 @@ export const RankingContainer = ({
   })
   const model = useRef<RankingStream | null>(null)
   useEffect(() => {
-    const onStoreTrigger = () => setState((s) => ({ ...s }))
+    const onStoreTrigger = (newState: RankingState) =>
+      setState(() => ({ ...newState }))
     const params = {
       md5: chart.md5,
       playMode: playMode,
