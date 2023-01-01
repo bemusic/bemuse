@@ -1,11 +1,11 @@
 import './Ranking.scss'
 
-import AuthenticationPopup from 'bemuse/online/ui/AuthenticationPopup'
+import RankingTable, { Message, Row } from './RankingTable'
 import React, { useState } from 'react'
+
+import AuthenticationPopup from 'bemuse/online/ui/AuthenticationPopup'
 import { RankingState } from 'bemuse/online'
 import { isWaiting } from 'bemuse/online/operations'
-
-import RankingTable, { Message, Row } from './RankingTable'
 
 const Error = ({
   text,
@@ -36,28 +36,34 @@ const Leaderboard = ({
 }: {
   state: RankingState
   onReloadScoreboardRequest?: () => void
-}) => (
-  <div className='Rankingのleaderboard'>
-    <div className='Rankingのtitle'>Leaderboard</div>
-    <RankingTable>
-      {state.data ? (
-        state.data.map((record, index) => <Row key={index} record={record} />)
-      ) : isWaiting(state.meta.scoreboard) ? (
-        <Message>Loading...</Message>
-      ) : state.meta.scoreboard.status === 'error' ? (
-        <Message>
-          <Error
-            text='Sorry, we are unable to fetch the scoreboard.'
-            error={state.meta.scoreboard.error}
-            retry={onReloadScoreboardRequest}
-          />
-        </Message>
-      ) : (
-        <Message>No Data</Message>
-      )}
-    </RankingTable>
-  </div>
-)
+}) => {
+  let tableBody: ReactNode
+  if (state.data) {
+    tableBody = state.data.map((record, index) => (
+      <Row key={index} record={record} />
+    ))
+  } else if (isWaiting(state.meta.scoreboard)) {
+    tableBody = <Message>Loading...</Message>
+  } else if (state.meta.scoreboard.status === 'error') {
+    tableBody = (
+      <Message>
+        <Error
+          text='Sorry, we are unable to fetch the scoreboard.'
+          error={state.meta.scoreboard.error}
+          retry={onReloadScoreboardRequest}
+        />
+      </Message>
+    )
+  } else {
+    tableBody = <Message>No Data</Message>
+  }
+  return (
+    <div className='Rankingのleaderboard'>
+      <div className='Rankingのtitle'>Leaderboard</div>
+      <RankingTable>{tableBody}</RankingTable>
+    </div>
+  )
+}
 
 const Yours = ({
   state,
@@ -69,31 +75,35 @@ const Yours = ({
   showPopup: () => void
 }) => {
   const submission = state.meta.submission
+  let tableBody: ReactNode
+  if (submission.status === 'completed' && submission.value) {
+    tableBody = <Row record={submission.value} />
+  } else if (submission.status === 'unauthenticated') {
+    tableBody = (
+      <Message>
+        Please <a onClick={showPopup}>log in or create an account</a> to submit
+        scores.
+      </Message>
+    )
+  } else if (submission.status === 'error') {
+    tableBody = (
+      <Message>
+        <Error
+          text='Unable to submit score'
+          error={submission.error}
+          retry={onResubmitScoreRequest}
+        />
+      </Message>
+    )
+  } else if (isWaiting(submission)) {
+    tableBody = <Message>Please wait...</Message>
+  } else {
+    tableBody = <Message>No record. Let’s play!</Message>
+  }
   return (
     <div className='Rankingのyours'>
       <div className='Rankingのtitle'>Your Ranking</div>
-      <RankingTable>
-        {submission.status === 'completed' && submission.value ? (
-          <Row record={submission.value} />
-        ) : submission.status === 'unauthenticated' ? (
-          <Message>
-            Please <a onClick={showPopup}>log in or create an account</a> to
-            submit scores.
-          </Message>
-        ) : submission.status === 'error' ? (
-          <Message>
-            <Error
-              text='Unable to submit score'
-              error={submission.error}
-              retry={onResubmitScoreRequest}
-            />
-          </Message>
-        ) : isWaiting(submission) ? (
-          <Message>Please wait...</Message>
-        ) : (
-          <Message>No record. Let’s play!</Message>
-        )}
-      </RankingTable>
+      <RankingTable>{tableBody}</RankingTable>
     </div>
   )
 }

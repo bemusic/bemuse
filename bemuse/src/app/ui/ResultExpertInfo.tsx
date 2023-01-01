@@ -20,7 +20,15 @@ const getStats = (() => {
 })()
 
 function formatOffset(n: number) {
-  return (n === 0 ? '' : n < 0 ? '-' : '+') + formatDuration(Math.abs(n))
+  let sign: string
+  if (n === 0) {
+    sign = ''
+  } else if (n < 0) {
+    sign = '-'
+  } else {
+    sign = '+'
+  }
+  return sign + formatDuration(Math.abs(n))
 }
 
 function formatDuration(n: number) {

@@ -28,19 +28,23 @@ const Row = ({
     showEarlyLate?: boolean
   }
 }) => {
+  let earlyLate: ReactNode
+  if (options.showEarlyLate) {
+    if (data > 0) {
+      earlyLate = '(late)'
+    } else if (data < 0) {
+      earlyLate = '(early)'
+    } else {
+      earlyLate = ''
+    }
+  } else {
+    earlyLate = null
+  }
   return (
     <tr>
       <th>{text}</th>
       <td className='is-number'>{ms(data)}</td>
-      <td>
-        {options.showEarlyLate !== false
-          ? data > 0
-            ? '(late)'
-            : data < 0
-            ? '(early)'
-            : ''
-          : null}
-      </td>
+      <td>{earlyLate}</td>
     </tr>
   )
 }
