@@ -79,7 +79,11 @@ const MusicListItem = (props: MusicListItemProps) => {
     'js-active-song': selected,
   })
   return (
-    <li className={className} onClick={handleClick}>
+    <li
+      className={className}
+      onClick={handleClick}
+      data-testid='music-list-item'
+    >
       {song.tutorial ? (
         <div className='MusicListItemのtutorial'>
           <div className='MusicListItemのcharts'>

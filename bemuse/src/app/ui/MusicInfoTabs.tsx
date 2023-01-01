@@ -69,7 +69,11 @@ const MusicInfoTabs = (props: MusicInfoTabsProps) => {
   return (
     <section className='MusicInfoTabs'>
       <ul className='MusicInfoTabsのtabs'>
-        <li className='MusicInfoTabsのoptions' onClick={props.onOptions}>
+        <li
+          className='MusicInfoTabsのoptions'
+          onClick={props.onOptions}
+          data-testid='options-button'
+        >
           <Icon name='gear' /> Options
         </li>
         {TABS.map((title, index) => (
