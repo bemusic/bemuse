@@ -38,7 +38,7 @@ const Leaderboard = ({
   onReloadScoreboardRequest?: () => void
 }) => {
   let tableBody: ReactNode
-  if (state.data) {
+  if (state.data?.length) {
     tableBody = state.data.map((record, index) => (
       <Row key={index} record={record} />
     ))
