@@ -1,4 +1,4 @@
-import { MappingMode, isMappingMode } from 'bemuse/app/entities/Options'
+import { MappingMode, isMappingMode } from 'bemuse/rules/mapping-mode'
 
 import invariant from 'invariant'
 

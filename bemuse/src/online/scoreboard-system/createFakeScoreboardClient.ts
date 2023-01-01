@@ -1,13 +1,13 @@
-import ObjectID from 'bson-objectid'
-import delay from 'delay'
-import type { MappingMode } from 'bemuse/app/entities/Options'
-import type { ScoreCount } from 'bemuse/rules/accuracy'
-
 import {
   ScoreboardClient,
   ScoreboardEntry,
   ScoreboardRow,
 } from './ScoreboardClient'
+
+import { MappingMode } from 'bemuse/rules/mapping-mode'
+import ObjectID from 'bson-objectid'
+import type { ScoreCount } from 'bemuse/rules/accuracy'
+import delay from 'delay'
 
 interface Submission {
   md5: string

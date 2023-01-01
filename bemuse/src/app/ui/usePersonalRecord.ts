@@ -5,7 +5,7 @@ import * as ReduxState from '../redux/ReduxState'
 
 import { useContext, useEffect, useState } from 'react'
 
-import { MappingMode } from '../entities/Options'
+import { MappingMode } from '../../rules/mapping-mode'
 import { OnlineContext } from 'bemuse/online/instance'
 import { Operation } from 'bemuse/online/operations'
 import { RecordLevel } from 'bemuse/online/level'
