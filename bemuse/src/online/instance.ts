@@ -1,12 +1,13 @@
-/* eslint import/no-webpack-loader-syntax: off */
-import config from 'val-loader?cacheable!./config'
-
 import OfflineService from './OfflineService'
 import Online from './index'
 import OnlineService from './scoreboard-system/OnlineService'
+/* eslint import/no-webpack-loader-syntax: off */
+// @ts-ignore
+import config from 'val-loader?cacheable!./config'
+import { createContext } from 'react'
 import { isQueryFlagEnabled } from 'bemuse/flags'
 
-export let instance = null
+let instance: Online
 
 if (isQueryFlagEnabled('fake-scoreboard')) {
   instance = new Online(new OnlineService({ fake: true }))
@@ -21,4 +22,7 @@ if (isQueryFlagEnabled('fake-scoreboard')) {
   instance = new Online(new OnlineService({ fake: true }))
 }
 
+/** @deprecated Use `OnlineContext` via Context API. */
 export default instance
+
+export const OnlineContext = createContext(instance)

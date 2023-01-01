@@ -1,5 +1,6 @@
 import axios from 'axios'
 import invariant from 'invariant'
+
 import { ScoreboardClient, ScoreboardRow } from './ScoreboardClient'
 
 export interface CreateScoreboardClientOptions {
@@ -7,6 +8,8 @@ export interface CreateScoreboardClientOptions {
    * The URL of the scoreboard server.
    */
   server: string
+
+  log: unknown
 }
 
 export function createNextScoreboardClient({

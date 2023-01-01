@@ -1,14 +1,17 @@
-import ObjectID from 'bson-objectid'
 import {
   ScoreboardClient,
   ScoreboardEntry,
   ScoreboardRow,
 } from './ScoreboardClient'
+
+import { MappingMode } from 'bemuse/rules/mapping-mode'
+import ObjectID from 'bson-objectid'
+import type { ScoreCount } from 'bemuse/rules/accuracy'
 import delay from 'delay'
 
 interface Submission {
   md5: string
-  playMode: string
+  playMode: MappingMode
   entry: ScoreboardEntry
 }
 
@@ -146,7 +149,7 @@ function decodeFakePlayerToken(token: string) {
 export interface ScoreData {
   score: number
   combo: number
-  count: [number, number, number, number, number]
+  count: ScoreCount
   total: number
   log: string
 }

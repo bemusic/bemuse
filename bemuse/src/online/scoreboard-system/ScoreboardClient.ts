@@ -1,3 +1,6 @@
+import { MappingMode } from 'bemuse/rules/mapping-mode'
+import type { ScoreCount } from 'bemuse/rules/accuracy'
+
 export interface ScoreboardClient {
   signUp(options: {
     username: string
@@ -19,7 +22,7 @@ export interface ScoreboardClient {
   submitScore(options: {
     playerToken: string
     md5: string
-    playMode: string
+    playMode: MappingMode
     input: SubmitScoreInput
   }): Promise<{
     data: {
@@ -61,7 +64,7 @@ export interface ScoreboardClient {
       me: {
         records: {
           md5: string
-          playMode: string
+          playMode: MappingMode
           entry: ScoreboardEntry
         }[]
       }
@@ -74,13 +77,13 @@ export interface ScoreboardClient {
 export interface SubmitScoreInput {
   score: number
   combo: number
-  count: [number, number, number, number, number]
+  count: ScoreCount
   log: string
   total: number
 }
 
 export interface ScoreboardRow {
-  rank: number
+  rank?: number
   entry: ScoreboardEntry
 }
 
@@ -89,7 +92,7 @@ export interface ScoreboardEntry {
   score: number
   total: number
   combo: number
-  count: [number, number, number, number, number]
+  count: ScoreCount
   playNumber: number
   playCount: number
   recordedAt: string

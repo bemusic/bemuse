@@ -1,6 +1,7 @@
 import { Draft, produce } from 'immer'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
+import { MappingMode } from '../../rules/mapping-mode'
 import { StoredOptions } from '../types'
 import _ from 'lodash'
 
@@ -80,11 +81,6 @@ export const initWithDataFromStorage = (options: Record<string, string>) => {
 const toggleOptionEnabled = (value: string) => value === '1'
 const toggleOption = (value: string) => (toggleOptionEnabled(value) ? '0' : '1')
 
-// Key mapping
-export const MAPPING_MODES = ['KB', 'BM'] as const
-export const isMappingMode = (str: string): str is MappingMode =>
-  (MAPPING_MODES as readonly string[]).includes(str)
-export type MappingMode = typeof MAPPING_MODES[number]
 export const getKeyMapping =
   (mode: MappingMode, key: string) =>
   (state: OptionsState): MappingMode =>
