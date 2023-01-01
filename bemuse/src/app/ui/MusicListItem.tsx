@@ -1,7 +1,7 @@
 import './MusicListItem.scss'
 
 import { Chart, SongMetadataInCollection } from 'bemuse-types'
-import React, { MouseEvent } from 'react'
+import React, { MouseEvent, memo } from 'react'
 
 import { MappingMode } from 'bemuse/rules/mapping-mode'
 import MusicListItemCharts from './MusicListItemCharts'
@@ -115,4 +115,4 @@ const MusicListItem = (props: MusicListItemProps) => {
   )
 }
 
-export default MusicListItem
+export default memo(MusicListItem)
