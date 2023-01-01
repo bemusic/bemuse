@@ -1,9 +1,9 @@
 import './MusicChartInfo.scss'
 
+import { Chart } from 'bemuse-types'
 import React from 'react'
-import PropTypes from 'prop-types'
 
-const MusicChartInfo = ({ info }) => (
+const MusicChartInfo = ({ info }: Pick<Chart, 'info'>) => (
   <section className='MusicChartInfo'>
     <div className='MusicChartInfoのgenre'>{info.genre}</div>
     <div className='MusicChartInfoのtitle'>{info.title}</div>
@@ -20,17 +20,5 @@ const MusicChartInfo = ({ info }) => (
     </div>
   </section>
 )
-
-MusicChartInfo.propTypes = {
-  info: PropTypes.shape({
-    title: PropTypes.string,
-    artist: PropTypes.string,
-    genre: PropTypes.string,
-    subtitles: PropTypes.arrayOf(PropTypes.string),
-    subartists: PropTypes.arrayOf(PropTypes.string),
-    difficulty: PropTypes.number,
-    level: PropTypes.number,
-  }),
-}
 
 export default MusicChartInfo
