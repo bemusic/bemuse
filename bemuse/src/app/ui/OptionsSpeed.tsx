@@ -1,8 +1,9 @@
 import './OptionsSpeed.scss'
 
+import React, { memo } from 'react'
+
 import OptionsButton from './OptionsButton'
 import OptionsInputField from './OptionsInputField'
-import React from 'react'
 
 export interface OptionsSpeedProps {
   value: string
@@ -50,4 +51,4 @@ const OptionsSpeed = ({ value, onChange }: OptionsSpeedProps) => {
   )
 }
 
-export default OptionsSpeed
+export default memo(OptionsSpeed)

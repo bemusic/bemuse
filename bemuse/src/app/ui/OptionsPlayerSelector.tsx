@@ -1,7 +1,8 @@
 import './OptionsPlayerSelector.scss'
 
+import React, { memo } from 'react'
+
 import OptionsPlayerGraphics from './OptionsPlayerGraphics'
-import React from 'react'
 import c from 'classnames'
 
 export interface OptionsPlayerSelectorProps<T extends string> {
@@ -14,7 +15,7 @@ export interface OptionsPlayerSelectorProps<T extends string> {
   value: T
 }
 
-const OptionsPlayerSelector = <T extends string>({
+const OptionsPlayerSelectorInner = <T extends string>({
   onSelect,
   options,
   type,
@@ -22,7 +23,7 @@ const OptionsPlayerSelector = <T extends string>({
 }: OptionsPlayerSelectorProps<T>) => (
   <div className='OptionsPlayerSelector'>
     {options.map((item, index) => (
-      <OptionsPlayerSelector.Item
+      <OptionsPlayerSelectorItem
         key={index}
         type={type}
         value={item.value}
@@ -34,6 +35,10 @@ const OptionsPlayerSelector = <T extends string>({
   </div>
 )
 
+export const OptionsPlayerSelector = memo(
+  OptionsPlayerSelectorInner
+) as typeof OptionsPlayerSelectorInner
+
 export interface OptionsPlayerSelectorItemProps<T extends string> {
   active: boolean
   onSelect: (item: T) => void
@@ -42,7 +47,7 @@ export interface OptionsPlayerSelectorItemProps<T extends string> {
   value: T
 }
 
-const OptionsPlayerSelectorItem = <T extends string>({
+const OptionsPlayerSelectorItemInner = <T extends string>({
   active,
   onSelect,
   label,
@@ -65,6 +70,6 @@ const OptionsPlayerSelectorItem = <T extends string>({
   )
 }
 
-OptionsPlayerSelector.Item = OptionsPlayerSelectorItem
-
-export default OptionsPlayerSelector
+const OptionsPlayerSelectorItem = memo(
+  OptionsPlayerSelectorItemInner
+) as typeof OptionsPlayerSelectorItemInner
