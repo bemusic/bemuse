@@ -15,16 +15,26 @@ const parseSpeed = (speedString: string): number =>
 
 const stringifySpeed = (speed: number): string => speed.toFixed(1)
 
+const tickAmount = (speed: number) => {
+  if (speed > 0.5) {
+    return 0.5
+  }
+  if (speed > 0.2) {
+    return 0.3
+  }
+  return 0
+}
+
 const OptionsSpeed = ({ value, onChange }: OptionsSpeedProps) => {
   const handleMinusButtonClick = () => {
     const speed = parseSpeed(value)
-    const nextSpeed = speed - (speed > 0.5 ? 0.5 : speed > 0.2 ? 0.3 : 0)
+    const nextSpeed = speed - tickAmount(speed)
     onChange(stringifySpeed(nextSpeed))
   }
 
   const handlePlusButtonClick = () => {
     const speed = parseSpeed(value)
-    const nextSpeed = speed + (speed < 0.5 ? 0.3 : 0.5)
+    const nextSpeed = speed + tickAmount(speed)
     onChange(stringifySpeed(nextSpeed))
   }
 

@@ -109,6 +109,15 @@ const OptionsInput = () => {
   const className = c('OptionsInputのbinding', {
     'is-reverse': scratch === 'right',
   })
+  const editIndex = (editing: string | null) => {
+    if (editing === 'SC') {
+      return 0
+    }
+    if (editing === 'SC2') {
+      return 1
+    }
+    return -1
+  }
   return (
     <div className='OptionsInput'>
       <div className={className}>
@@ -118,7 +127,7 @@ const OptionsInput = () => {
               <OptionsInputScratch
                 text={[texts['SC'], texts['SC2']]}
                 isEditing={editing === 'SC' || editing === 'SC2'}
-                editIndex={editing === 'SC' ? 0 : editing === 'SC2' ? 1 : -1}
+                editIndex={editIndex(editing)}
                 onEdit={handleEdit}
               />
             </div>

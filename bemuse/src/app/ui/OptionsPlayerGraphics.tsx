@@ -44,26 +44,68 @@ export const Scratch = ({
   active: boolean
   value: ScratchPosition
 }) => {
-  const p = value
-  const bx = p === 'left' ? 24 : p === 'right' ? 4 : 14
-  const gx = p === 'left' ? 21 : p === 'right' ? 75 : null
-  const sx = p === 'left' ? 11 : p === 'right' ? 85 : null
+  interface Transform {
+    bx: number
+    gx: number | null
+    sx: number | null
+  }
+  const transforms: Record<ScratchPosition, Transform> = {
+    left: {
+      bx: 24,
+      gx: 21,
+      sx: 11,
+    },
+    right: {
+      bx: 4,
+      gx: 75,
+      sx: 85,
+    },
+    off: {
+      bx: 14,
+      gx: null,
+      sx: null,
+    },
+  }
+  const { bx, gx, sx } = transforms[value]
   const off = value === 'off'
+
+  interface Rect {
+    x: number
+    y: number
+    width: number
+    height: number
+  }
+  const linesRect = (i: number): Rect => {
+    if (off) {
+      return {
+        x: i === 3 ? 10 : i * 10,
+        y: i === 3 ? 10 : 0,
+        width: i === 3 ? 48 : 8,
+        height: 8,
+      }
+    }
+    return {
+      x: i * 10,
+      y: (1 - (i % 2)) * 3,
+      width: 8,
+      height: 16,
+    }
+  }
   return (
     <OptionsPlayerGraphicsContainer active={active}>
       <g transform={'translate(' + bx + ' 32)'}>
-        {[0, 1, 2, 3, 4, 5, 6].map((i) => (
-          <rect
-            key={i}
-            className='OptionsPlayerGraphicsのline'
-            x={off && i === 3 ? 10 : i * 10}
-            y={off ? (i === 3 ? 10 : 0) : (1 - (i % 2)) * 3}
-            width={off && i === 3 ? 48 : 8}
-            height={off ? 8 : 16}
-            rx={2}
-            ry={2}
-          />
-        ))}
+        {[0, 1, 2, 3, 4, 5, 6].map((i) => {
+          const rect = linesRect(i)
+          return (
+            <rect
+              key={i}
+              className='OptionsPlayerGraphicsのline'
+              {...rect}
+              rx={2}
+              ry={2}
+            />
+          )
+        })}
       </g>
       {sx && (
         <circle
@@ -101,11 +143,16 @@ export const Panel = ({
   active: boolean
   value: PanelPlacement
 }) => {
-  const p = value
-  const tx = p === 'left' ? -35 : p === 'right' ? 35 : 0
+  const translates: Record<PanelPlacement, number> = {
+    left: -35,
+    right: 35,
+    center: 0,
+    '3d': 0,
+  }
+  const tx = translates[value]
   return (
     <OptionsPlayerGraphicsContainer active={active}>
-      {p === '3d' ? (
+      {value === '3d' ? (
         <path
           className='OptionsPlayerGraphicsのline'
           d={PANEL_3D_PATH}

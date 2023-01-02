@@ -125,11 +125,7 @@ export class OmniInput {
 
   private updateGamepads() {
     const nav = this.win.navigator
-    const gamepads = nav.getGamepads
-      ? nav.getGamepads()
-      : nav.webkitGetGamepads
-      ? nav.webkitGetGamepads()
-      : []
+    const gamepads = this.fetchGamepads(nav)
     if (!gamepads) return
     for (let i = 0; i < gamepads.length; i++) {
       const gamepad = gamepads[i]
@@ -137,6 +133,16 @@ export class OmniInput {
         this.updateGamepad(gamepad)
       }
     }
+  }
+
+  private fetchGamepads(nav: Navigator) {
+    if (nav.getGamepads) {
+      return nav.getGamepads()
+    }
+    if (nav.webkitGetGamepads) {
+      return nav.webkitGetGamepads()
+    }
+    return []
   }
 
   private updateGamepad(gamepad: Gamepad) {
