@@ -2,7 +2,9 @@ import './OptionsPlayerGraphics.scss'
 
 import * as touch3d from 'bemuse/game/display/touch3d'
 
-import React from 'react'
+import { PanelPlacement, ScratchPosition } from '../entities/Options'
+import React, { ReactNode } from 'react'
+
 import c from 'classnames'
 
 const PANEL_PATH = (function () {
@@ -35,14 +37,20 @@ const PANEL_3D_PATH = (function () {
   return [...down, ...up.reverse()].join(' ')
 })()
 
-const Scratch = ({ value }: { value: string }) => {
+export const Scratch = ({
+  active,
+  value,
+}: {
+  active: boolean
+  value: ScratchPosition
+}) => {
   const p = value
   const bx = p === 'left' ? 24 : p === 'right' ? 4 : 14
   const gx = p === 'left' ? 21 : p === 'right' ? 75 : null
   const sx = p === 'left' ? 11 : p === 'right' ? 85 : null
   const off = value === 'off'
   return (
-    <svg width='96' height='54'>
+    <OptionsPlayerGraphicsContainer active={active}>
       <g transform={'translate(' + bx + ' 32)'}>
         {[0, 1, 2, 3, 4, 5, 6].map((i) => (
           <rect
@@ -82,15 +90,21 @@ const Scratch = ({ value }: { value: string }) => {
         y1='29'
         y2='29'
       />
-    </svg>
+    </OptionsPlayerGraphicsContainer>
   )
 }
 
-const Panel = ({ value }: { value: string }) => {
+export const Panel = ({
+  active,
+  value,
+}: {
+  active: boolean
+  value: PanelPlacement
+}) => {
   const p = value
   const tx = p === 'left' ? -35 : p === 'right' ? 35 : 0
   return (
-    <svg width='96' height='54'>
+    <OptionsPlayerGraphicsContainer active={active}>
       {p === '3d' ? (
         <path
           className='OptionsPlayerGraphicsのline'
@@ -106,32 +120,26 @@ const Panel = ({ value }: { value: string }) => {
           />
         </g>
       )}
-    </svg>
+    </OptionsPlayerGraphicsContainer>
   )
 }
 
-export interface OptionsPlayerGraphicsProps<T extends string> {
-  type: string
-  active: boolean
-  value: T
-}
-
-const OptionsPlayerGraphics = <T extends string>({
-  type,
+const OptionsPlayerGraphicsContainer = ({
   active,
-  value,
-}: OptionsPlayerGraphicsProps<T>) => {
-  const svg =
-    type === 'scratch' ? <Scratch value={value} /> : <Panel value={value} />
+  children,
+}: {
+  active: boolean
+  children: ReactNode
+}) => {
   return (
     <div
       className={c('OptionsPlayerGraphics', {
         'is-active': active,
       })}
     >
-      {svg}
+      <svg width='96' height='54'>
+        {children}
+      </svg>
     </div>
   )
 }
-
-export default OptionsPlayerGraphics

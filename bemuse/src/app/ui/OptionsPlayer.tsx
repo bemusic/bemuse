@@ -13,6 +13,7 @@ import {
   scratchPosition,
   speed,
 } from '../entities/Options'
+import { Panel, Scratch } from './OptionsPlayerGraphics'
 import { useDispatch, useSelector } from 'react-redux'
 
 import OptionsButton from './OptionsButton'
@@ -100,18 +101,18 @@ const OptionsPlayer = ({ onClose }: { onClose?: () => void }) => {
         label='Scratch'
         renderControl={(options) => (
           <OptionsPlayerSelector
-            type='scratch'
             options={[
               { value: 'left', label: 'Left' },
               { value: 'right', label: 'Right' },
               { value: 'off', label: 'Disabled' },
             ]}
-            value={scratchPosition(options)}
+            defaultValue={scratchPosition(options)}
             onSelect={(position) =>
               dispatch(
                 optionsSlice.actions.CHANGE_SCRATCH_POSITION({ position })
               )
             }
+            Item={Scratch}
           />
         )}
       />
@@ -120,7 +121,6 @@ const OptionsPlayer = ({ onClose }: { onClose?: () => void }) => {
         label='Panel'
         renderControl={(options) => (
           <OptionsPlayerSelector
-            type='panel'
             options={[
               { value: 'left', label: 'Left' },
               { value: 'center', label: 'Center' },
@@ -132,7 +132,8 @@ const OptionsPlayer = ({ onClose }: { onClose?: () => void }) => {
                 optionsSlice.actions.CHANGE_PANEL_PLACEMENT({ placement })
               )
             }
-            value={panelPlacement(options)}
+            defaultValue={panelPlacement(options)}
+            Item={Panel}
           />
         )}
       />

@@ -2,7 +2,6 @@ import './OptionsPlayerSelector.scss'
 
 import React, { memo } from 'react'
 
-import OptionsPlayerGraphics from './OptionsPlayerGraphics'
 import c from 'classnames'
 
 export interface OptionsPlayerSelectorProps<T extends string> {
@@ -11,27 +10,30 @@ export interface OptionsPlayerSelectorProps<T extends string> {
     label: string
     value: T
   }[]
-  type: string
-  value: T
+  defaultValue: T
+  Item: (props: { active: boolean; value: T }) => JSX.Element
 }
 
 const OptionsPlayerSelectorInner = <T extends string>({
   onSelect,
   options,
-  type,
-  value,
+  defaultValue,
+  Item,
 }: OptionsPlayerSelectorProps<T>) => (
   <div className='OptionsPlayerSelector'>
-    {options.map((item, index) => (
-      <OptionsPlayerSelectorItem
-        key={index}
-        type={type}
-        value={item.value}
-        label={item.label}
-        active={item.value === value}
-        onSelect={onSelect}
-      />
-    ))}
+    {options.map(({ label, value }, index) => {
+      const isActive = value === defaultValue
+      return (
+        <ItemContainer
+          key={index}
+          label={label}
+          active={isActive}
+          onSelect={() => onSelect(value)}
+        >
+          <Item active={isActive} value={value} />
+        </ItemContainer>
+      )
+    })}
   </div>
 )
 
@@ -39,37 +41,23 @@ export const OptionsPlayerSelector = memo(
   OptionsPlayerSelectorInner
 ) as typeof OptionsPlayerSelectorInner
 
-export interface OptionsPlayerSelectorItemProps<T extends string> {
+interface ItemContainerProps {
   active: boolean
-  onSelect: (item: T) => void
+  onSelect: () => void
   label: string
-  type: string
-  value: T
+  children: ReactNode
 }
 
-const OptionsPlayerSelectorItemInner = <T extends string>({
-  active,
-  onSelect,
-  label,
-  type,
-  value,
-}: OptionsPlayerSelectorItemProps<T>) => {
-  const handleClick = () => {
-    onSelect(value)
-  }
-  return (
+const ItemContainer = memo(
+  ({ active, onSelect, label, children }: ItemContainerProps) => (
     <div
       className={c('OptionsPlayerSelectorのitem', {
         'is-active': active,
       })}
-      onClick={handleClick}
+      onClick={onSelect}
     >
-      <OptionsPlayerGraphics type={type} value={value} active={active} />
+      {children}
       <div className='OptionsPlayerSelectorのlabel'>{label}</div>
     </div>
   )
-}
-
-const OptionsPlayerSelectorItem = memo(
-  OptionsPlayerSelectorItemInner
-) as typeof OptionsPlayerSelectorItemInner
+)
