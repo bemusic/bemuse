@@ -4,8 +4,9 @@ import MAIN from 'bemuse/utils/main-element'
 import Ranking from 'bemuse/app/ui/Ranking'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { ScoreboardDataEntry } from 'bemuse/online'
 
-const players = [
+const players: ScoreboardDataEntry[] = [
   {
     playerName: 'One',
     score: 543210,
@@ -20,7 +21,7 @@ const players = [
     total: 15,
     rank: 2,
   },
-] as const
+]
 const RankingTablePlayground = () => (
   <div className='ranking-table-playground'>
     <Ranking
