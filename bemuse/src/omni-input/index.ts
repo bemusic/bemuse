@@ -1,8 +1,33 @@
-import keycode from 'keycode'
-import _ from 'lodash'
-import Bacon from 'baconjs'
-import getMidi川 from './midi'
+import {
+  Observable,
+  Subscription,
+  concat,
+  concatMap,
+  fromEvent,
+  map,
+  of,
+  pairwise,
+} from 'rxjs'
+
 import { AxisLogic } from './axis-logic'
+import _ from 'lodash'
+import getMidi川 from './midi'
+import keycode from 'keycode'
+
+declare global {
+  interface Navigator {
+    webkitGetGamepads?(): (Gamepad | null)[]
+  }
+}
+
+export interface OmniInputOptions {
+  getMidi川?: () => Observable<MIDIMessageEvent>
+  exclusive?: boolean
+  continuous?: boolean
+  sensitivity?: number
+}
+
+export type KeyState = Record<string, boolean>
 
 // Public: OmniInput is a poll-based class that handles the key-pressed state of
 // multiple inputs.
@@ -27,37 +52,47 @@ import { AxisLogic } from './axis-logic'
 // - `midi.[id].[channel].pitch.down` Pitch bend (down).
 //
 export class OmniInput {
-  constructor(win = window, options = {}) {
+  constructor(
+    private readonly win: Window = window,
+    options: OmniInputOptions = {}
+  ) {
     const midi川 = (options.getMidi川 || getMidi川)()
-    this._window = win
-    this._exclusive = !!options.exclusive
-    this._continuousAxis = !!options.continuous
-    this.setGamepadSensitivity(options.sensitivity || 3)
+    this.exclusive = !!options.exclusive
+    this.continuousAxis = !!options.continuous
+    this.setGamepadSensitivity(options.sensitivity ?? 3)
 
-    this._disposables = [
-      listen(win, 'keydown', (e) => this._handleKeyDown(e)),
-      listen(win, 'keyup', (e) => this._handleKeyUp(e)),
-      midi川.onValue((e) => this._handleMIDIMessage(e)),
+    this.subscriptions = [
+      fromEvent<KeyboardEvent>(win, 'keydown').subscribe(this.handleKeyDown),
+      fromEvent<KeyboardEvent>(win, 'keyup').subscribe(this.handleKeyUp),
+      midi川.subscribe(this.handleMIDIMessage),
     ]
-    this._status = {}
-    this._axis = {}
   }
 
-  _handleKeyDown(e) {
-    this._status[`${e.which}`] = true
-    if (this._exclusive) e.preventDefault()
+  private readonly exclusive: boolean
+  private continuousAxis: boolean
+  private sensitivity: number = 0
+  analogThreshold: number = 0
+  private deadzone: number = 0
+  private status: KeyState = {}
+  private axis: Record<string, AxisLogic> = {}
+
+  private readonly subscriptions: readonly Subscription[]
+
+  private handleKeyDown = (e: KeyboardEvent) => {
+    this.status[`${e.which}`] = true
+    if (this.exclusive) e.preventDefault()
   }
 
-  _handleKeyUp(e) {
-    this._status[`${e.which}`] = false
+  private handleKeyUp = (e: KeyboardEvent) => {
+    this.status[`${e.which}`] = false
   }
 
-  _handleMIDIMessage(e) {
+  private handleMIDIMessage = (e: MIDIMessageEvent) => {
     if (!e || !e.data) return
     const data = e.data
-    const prefix = `midi.${e.target.id}.${e.data[0] & 0x0f}`
-    const handleNote = (state) => {
-      this._status[`${prefix}.note.${data[1]}`] = state
+    const prefix = `midi.${e.target?.id}.${e.data[0] & 0x0f}`
+    const handleNote = (state: boolean) => {
+      this.status[`${prefix}.note.${data[1]}`] = state
     }
     if ((data[0] & 0xf0) === 0x80) {
       // NoteOff
@@ -75,21 +110,21 @@ export class OmniInput {
       // CC
       if (data[1] === 0x40) {
         // Sustain
-        this._status[`${prefix}.sustain`] = data[2] >= 64
+        this.status[`${prefix}.sustain`] = data[2] >= 64
       } else if (data[1] === 0x01) {
         // Modulation
-        this._status[`${prefix}.mod`] = data[2] >= 16
+        this.status[`${prefix}.mod`] = data[2] >= 16
       }
     } else if ((data[0] & 0xf0) === 0xe0) {
       // Pitch Bend
       const bend = data[1] | (data[2] << 7)
-      this._status[`${prefix}.pitch.up`] = bend >= 0x2100
-      this._status[`${prefix}.pitch.down`] = bend < 0x1f00
+      this.status[`${prefix}.pitch.up`] = bend >= 0x2100
+      this.status[`${prefix}.pitch.down`] = bend < 0x1f00
     }
   }
 
-  _updateGamepads() {
-    const nav = this._window.navigator
+  private updateGamepads() {
+    const nav = this.win.navigator
     const gamepads = nav.getGamepads
       ? nav.getGamepads()
       : nav.webkitGetGamepads
@@ -99,81 +134,91 @@ export class OmniInput {
     for (let i = 0; i < gamepads.length; i++) {
       const gamepad = gamepads[i]
       if (gamepad) {
-        this._updateGamepad(gamepad)
+        this.updateGamepad(gamepad)
       }
     }
   }
 
-  _updateGamepad(gamepad) {
+  private updateGamepad(gamepad: Gamepad) {
     const prefix = `gamepad.${gamepad.index}`
     for (let i = 0; i < gamepad.buttons.length; i++) {
       const button = gamepad.buttons[i]
-      this._status[`${prefix}.button.${i}`] = button && button.value >= 0.5
+      this.status[`${prefix}.button.${i}`] = button && button.value >= 0.5
     }
     for (let i = 0; i < gamepad.axes.length; i++) {
       const axisName = `${prefix}.axis.${i}`
       let axis = gamepad.axes[i]
 
-      if (this._continuousAxis) {
-        if (this._axis[axisName] == null) {
-          this._axis[axisName] = new AxisLogic()
+      if (this.continuousAxis) {
+        if (this.axis[axisName] == null) {
+          this.axis[axisName] = new AxisLogic()
         }
-        axis = this._axis[axisName].update(axis)
+        axis = this.axis[axisName].update(axis)
       }
 
-      this._status[`${axisName}.positive`] = axis >= this._deadzone
-      this._status[`${axisName}.negative`] = axis <= -this._deadzone
+      this.status[`${axisName}.positive`] = axis >= this.deadzone
+      this.status[`${axisName}.negative`] = axis <= -this.deadzone
     }
   }
 
-  update() {
-    this._updateGamepads()
-    return this._status
+  update(): KeyState {
+    this.updateGamepads()
+    return this.status
   }
 
-  setGamepadSensitivity(sensitivity) {
-    this._sensitivity = sensitivity
-    this._deadzone = (9 - this._sensitivity) * 0.05
-    if (this._deadzone < 0.01) this._deadzone = 0.01
-    this._analogThreshold = 18 - this._sensitivity * 2
+  setGamepadSensitivity(sensitivity: number) {
+    this.sensitivity = sensitivity
+    this.deadzone = (9 - this.sensitivity) * 0.05
+    if (this.deadzone < 0.01) this.deadzone = 0.01
+    this.analogThreshold = 18 - this.sensitivity * 2
   }
 
-  setGamepadContinuousAxisEnabled(enabled) {
-    this._continuousAxis = enabled
+  setGamepadContinuousAxisEnabled(enabled: boolean) {
+    this.continuousAxis = enabled
   }
 
   dispose() {
-    for (const dispose of this._disposables) {
-      dispose()
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe()
     }
   }
 }
 
 // Public: Returns a Bacon EventStream of keys pressed.
 //
-export function key川(input = new OmniInput(), win = window) {
+export function key川(
+  input = new OmniInput(),
+  win: Window = window
+): Observable<string> {
   return _key川ForUpdate川(
-    Bacon.fromBinder((sink) => {
+    new Observable<KeyState>((subscriber) => {
       const handle = win.setInterval(() => {
-        sink(new Bacon.Next(input.update()))
+        subscriber.next(input.update())
       }, 16)
       return () => win.clearInterval(handle)
     })
   )
 }
 
-export function _key川ForUpdate川(update川) {
-  return update川
-    .map((update) => Object.keys(update).filter((key) => update[key]))
-    .diff([], (previous, current) => _.difference(current, previous))
-    .flatMap((array) => Bacon.fromArray(array))
+export function _key川ForUpdate川(
+  update川: Observable<KeyState>
+): Observable<string> {
+  return concat(
+    of<string[]>([]),
+    update川.pipe(
+      map((update) => Object.keys(update).filter((key) => update[key]))
+    )
+  )
+    .pipe(pairwise())
+    .pipe(map(([previous, current]) => _.difference(current, previous)))
+    .pipe(concatMap((array) => of(...array)))
 }
 
 export default OmniInput
 
-const knownMidiIds = {}
+const knownMidiIds = new Map<string, number>()
 
-export function getName(key) {
+export function getName(key: string) {
   if (+key) {
     return _.capitalize(keycode(+key))
   }
@@ -196,9 +241,10 @@ export function getName(key) {
     if (match) {
       const rest = match[3].split('.')
       const id = match[1]
-      const midiDeviceNumber =
-        knownMidiIds[id] ||
-        (knownMidiIds[id] = Object.keys(knownMidiIds).length + 1)
+      if (!knownMidiIds.has(id)) {
+        knownMidiIds.set(id, knownMidiIds.size + 1)
+      }
+      const midiDeviceNumber = knownMidiIds.get(id)!
       const prefix = `MIDI${midiDeviceNumber} Ch${+match[2] + 1}`
       if (rest[0] === 'note') {
         const midiNote = +rest[1]
@@ -228,11 +274,4 @@ export function getName(key) {
     }
   }
   return `${String(key).replace(/\./g, ' ')}?`
-}
-
-function listen(subject, eventName, listener) {
-  subject.addEventListener(eventName, listener)
-  return function dispose() {
-    subject.removeEventListener(eventName, listener)
-  }
 }
