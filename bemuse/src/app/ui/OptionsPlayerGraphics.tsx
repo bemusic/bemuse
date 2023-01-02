@@ -34,7 +34,8 @@ const PANEL_3D_PATH = (function () {
     down.push(`${i === 0 ? 'M' : 'L'}${48 - dx} ${y}`)
     up.push(`L${48 + dx} ${y}`)
   }
-  return [...down, ...up.reverse()].join(' ')
+  up.reverse()
+  return [...down, ...up].join(' ')
 })()
 
 export const Scratch = ({
