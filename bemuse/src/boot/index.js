@@ -59,7 +59,10 @@ import(/* webpackChunkName: 'environment' */ './environment')
   })
   .catch((err) => {
     ErrorDialog.show(
-      'Failed to load environment bundle. Please refresh the page to try again.',
+      'Failed to load environment bundle. Please refresh the page to try again. ' +
+        'If that does not work, try holding down the Shift key while clicking Refresh. ' +
+        'If that still does not work, please report this issue to the developers at ' +
+        'https://github.com/bemusic/bemuse/issues',
       err
     )
     console.error('An error occurred while loading the component', err)
