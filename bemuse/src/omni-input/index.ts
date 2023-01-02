@@ -78,6 +78,7 @@ export class OmniInput {
 
   private readonly subscriptions: readonly Subscription[]
 
+  // TODO: `which` should be replaced with `KeyboardEvent.code`, but this migration will affects the system entirely.
   private handleKeyDown = (e: KeyboardEvent) => {
     this.status[`${e.which}`] = true
     if (this.exclusive) e.preventDefault()
