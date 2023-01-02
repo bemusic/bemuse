@@ -17,7 +17,12 @@ export const OptionsInputKey = ({
   onEdit,
 }: OptionsInputKeyProps) => {
   return (
-    <div className='OptionsInputKey' data-n={n}>
+    <div
+      className='OptionsInputKey'
+      data-testid='options-input-key'
+      data-n={n}
+      data-editing={isEditing ? 'true' : 'false'}
+    >
       <div
         className={c('OptionsInputKeyのcontents', {
           'is-editing': isEditing,
