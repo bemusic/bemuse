@@ -166,7 +166,7 @@ const OptionsInput = () => {
             <OptionsInputField
               parse={(str) => parseInt(str, 10) - 1}
               stringify={(value) => String(value + 1)}
-              validator={/^[0-9]+$/}
+              validator={/^\d+$/}
               value={sensitivity}
               onChange={handleSensitivityChange}
             />
