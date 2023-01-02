@@ -127,8 +127,7 @@ export class OmniInput {
     const nav = this.win.navigator
     const gamepads = this.fetchGamepads(nav)
     if (!gamepads) return
-    for (let i = 0; i < gamepads.length; i++) {
-      const gamepad = gamepads[i]
+    for (const gamepad of gamepads) {
       if (gamepad) {
         this.updateGamepad(gamepad)
       }
