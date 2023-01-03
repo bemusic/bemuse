@@ -16,6 +16,7 @@
     text-decoration: none;
     background: rgba(black, 0);
     transition: 0.1s background, 0.1s color;
+    cursor: pointer;
     &:hover {
       background: rgba(black, 0.5);
       color: white;

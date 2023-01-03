@@ -83,6 +83,7 @@
     animation: 0.8s TitleSceneのenterFadeIn;
     display: flex;
     justify-content: center;
+    cursor: pointer;
     > a {
       color: rgba(black, 0.9);
       font-size: 3rem;
