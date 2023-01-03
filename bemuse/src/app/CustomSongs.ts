@@ -1,8 +1,23 @@
-import { IResources } from 'bemuse/resources/types'
+import type { AnyAction, Dispatch } from 'redux'
+import {
+  LoadSongOptions,
+  loadSongFromResources,
+} from 'bemuse/custom-song-loader'
+
+import type { ICustomSongResources } from 'bemuse/resources/types'
+import { customSongsSlice } from './redux/ReduxState'
 import { observable } from 'mobx'
 import { useObserver } from 'mobx-react-lite'
 
-import * as ReduxState from './redux/ReduxState'
+const loadSongFromResourcesWrapper = async (
+  resources: ICustomSongResources,
+  options?: LoadSongOptions
+) => {
+  const song = await loadSongFromResources(resources, options)
+  song.id = '__custom_' + Date.now()
+  song.custom = true
+  return song
+}
 
 const state = observable({
   loaderLog: null as string[] | null,
@@ -15,23 +30,21 @@ export function useCustomSongLoaderLog() {
 }
 
 export async function loadCustomSong(
-  resources: IResources,
+  resources: ICustomSongResources,
   initialLog: string[],
-  { customSongLoader, store }: { customSongLoader: TODO; store: TODO }
+  dispatch: Dispatch<AnyAction>
 ) {
   state.loaderLog = [...initialLog]
   const log = state.loaderLog
   try {
-    const song = await customSongLoader.loadSongFromResources(resources, {
+    const song = await loadSongFromResourcesWrapper(resources, {
       onMessage(text: string) {
         log.push(text)
       },
     })
     if (song && song.charts && song.charts.length) {
       state.loaderLog = null
-      store.dispatch(
-        ReduxState.customSongsSlice.actions.CUSTOM_SONG_LOADED({ song })
-      )
+      dispatch(customSongsSlice.actions.CUSTOM_SONG_LOADED({ song }))
       return song
     } else {
       state.loaderLog = null
