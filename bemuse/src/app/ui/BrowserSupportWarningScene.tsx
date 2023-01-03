@@ -29,7 +29,7 @@ const BrowserSupportWarningScene = ({
       <p>
         We support
         {SUPPORTED.map((browser, index, array) => [
-          !index ? ' ' : index === array.length - 1 ? ' and ' : ', ',
+          separator(index, array.length),
           <strong key={browser.name}>{browser.name}</strong>,
         ])}
         .
@@ -42,6 +42,16 @@ const BrowserSupportWarningScene = ({
       </p>
     </Scene>
   )
+}
+
+const separator = (index: number, length: number): string => {
+  if (index === 0) {
+    return ' '
+  }
+  if (index === length - 1) {
+    return ' and '
+  }
+  return ', '
 }
 
 export default BrowserSupportWarningScene

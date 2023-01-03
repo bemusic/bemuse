@@ -98,17 +98,7 @@ const CustomBMS = ({ onSongLoaded }: CustomBMSProps) => {
           onDrop={handleDrop}
         >
           {log ? (
-            log.length ? (
-              <div className='CustomBMSのlog'>
-                {log.map((text, i) => (
-                  <p key={i}>{text}</p>
-                ))}
-              </div>
-            ) : (
-              <div className='CustomBMSのlog'>
-                <p>Omachi kudasai...</p>
-              </div>
-            )
+            <LogTextarea log={log} />
           ) : (
             <div className='CustomBMSのdropzoneHint'>
               Drop BMS folder here.
@@ -133,6 +123,20 @@ const CustomBMS = ({ onSongLoaded }: CustomBMSProps) => {
         </div>
       </div>
     </Panel>
+  )
+}
+
+const LogTextarea = ({ log }: { log: string[] }): JSX.Element => {
+  return log.length ? (
+    <div className='CustomBMSのlog'>
+      {log.map((text, i) => (
+        <p key={i}>{text}</p>
+      ))}
+    </div>
+  ) : (
+    <div className='CustomBMSのlog'>
+      <p>Omachi kudasai...</p>
+    </div>
   )
 }
 
