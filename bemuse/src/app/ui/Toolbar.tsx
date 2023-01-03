@@ -13,7 +13,7 @@ import { WindowSize } from 'react-fns'
 export interface ToolbarItem {
   type: 'item'
   onClick: (e: MouseEvent<HTMLAnchorElement>) => void
-  href: string
+  href?: string
   text: ReactNode
   tip?: ReactNode
   tipFeatureKey?: string
@@ -45,7 +45,6 @@ function openLink(e: MouseEvent<HTMLAnchorElement>) {
   window.open(e.currentTarget.href, '_blank')
 }
 const defaultOptions = {
-  href: '',
   onClick: openLink,
 } as const
 
@@ -81,7 +80,11 @@ const DesktopToolbarItem = ({ item }: { item: ToolbarItem }) => {
       )
     }
   }
-  return <a onClick={item.onClick}>{content}</a>
+  return (
+    <a onClick={item.onClick} href={item.href} style={{ cursor: 'pointer' }}>
+      {content}
+    </a>
+  )
 }
 
 const DesktopToolbar = memo(({ items }: { items: ToolbarItems }) => (
@@ -105,7 +108,9 @@ const DesktopToolbar = memo(({ items }: { items: ToolbarItems }) => (
 ))
 
 const MobileToolbarItem = ({ item }: { item: ToolbarItem }) => (
-  <a onClick={item.onClick}>{item.text}</a>
+  <a onClick={item.onClick} href={item.href}>
+    {item.text}
+  </a>
 )
 
 const MobileToolbar = memo(({ items }: { items: ToolbarItems }) => {
