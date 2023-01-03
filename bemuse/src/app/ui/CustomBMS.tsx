@@ -47,7 +47,7 @@ const CustomBMS = ({ onSongLoaded }: CustomBMSProps) => {
     return () => {
       window.removeEventListener('paste', handlePaste)
     }
-  }, [])
+  }, [dispatch])
 
   const handleDragEnter: DragEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault()
