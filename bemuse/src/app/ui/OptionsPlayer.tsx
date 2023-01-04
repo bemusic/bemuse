@@ -39,10 +39,9 @@ const SettingRow = ({
 }: SettingRowProps) => {
   const options = useSelector(selectOptions)
   const visible = isVisible ? isVisible(options) : true
-  const control = renderControl(options)
+  renderControl(options)
   return (
     <OptionsPlayer.Row label={label} hidden={!visible}>
-      {control}
       {!!help && <div className='OptionsPlayerのhelp'>{help}</div>}
     </OptionsPlayer.Row>
   )

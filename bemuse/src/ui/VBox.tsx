@@ -1,11 +1,12 @@
 import React from 'react'
 
-interface VBox {
+interface VBoxProps {
   padding?: string | number
   gap?: string | number
+  children?: ReactNode
 }
 
-const VBox: FC<VBox> = ({ children, padding, gap }) => (
+const VBox = ({ children, padding, gap }: VBoxProps) => (
   <div style={{ display: 'flex', flexDirection: 'column', padding, gap }}>
     {children}
   </div>
