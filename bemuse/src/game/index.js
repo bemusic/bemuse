@@ -1,20 +1,26 @@
 import * as GameLoader from './loaders/game-loader'
 
-import React, { useContext } from 'react'
+import { SceneManager, SceneManagerContext } from 'bemuse/scene-manager'
 
 import BemusePackageResources from 'bemuse/resources/bemuse-package'
 import GameScene from './game-scene'
 import GameShellScene from './ui/GameShellScene'
 import LoadingScene from './ui/LoadingScene'
-import { SceneManagerContext } from 'bemuse/scene-manager'
+import { Provider } from 'react-redux'
+import React from 'react'
 import URLResource from 'bemuse/resources/url'
 import audioContext from 'bemuse/audio-context'
+import configureStore from 'bemuse/app/redux/configureStore'
 import query from 'bemuse/utils/query'
 import { unmuteAudio } from 'bemuse/sampling-master'
 
-export async function main() {
-  const sceneManager = useContext(SceneManagerContext)
+const sceneManager = new SceneManager(({ children }) => (
+  <SceneManagerContext.Provider value={sceneManager}>
+    <Provider store={configureStore()}>{children}</Provider>
+  </SceneManagerContext.Provider>
+))
 
+export async function main() {
   // iOS
   window.addEventListener('touchstart', function unmute() {
     unmuteAudio(audioContext)
