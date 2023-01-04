@@ -1,9 +1,8 @@
-import { Draft, produce } from 'immer'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
+import { Draft } from 'immer'
 import { MappingMode } from '../../rules/mapping-mode'
 import { StoredOptions } from '../types'
-import _ from 'lodash'
 
 export type OptionsState = StoredOptions & Record<string, string>
 
@@ -85,15 +84,6 @@ export const getKeyMapping =
   (mode: MappingMode, key: string) =>
   (state: OptionsState): MappingMode =>
     state['input.P1.keyboard.' + mode + '.' + key] as MappingMode
-/** @deprecated Use the action in `optionsSlice`. */
-export const changeKeyMapping = (
-  mode: MappingMode,
-  key: string,
-  keyCode: string
-) =>
-  produce((draft) => {
-    draft['input.P1.keyboard.' + mode + '.' + key] = keyCode
-  })
 
 // Play mode
 export const playMode = (state: OptionsState): MappingMode =>
@@ -105,23 +95,9 @@ const _changePlayMode = (state: Draft<OptionsState>, mode: MappingMode) => {
       ? 'center'
       : state['player.P1.panel']
 }
-/** @deprecated Use the action in `optionsSlice`. */
-export const changePlayMode = (mode: MappingMode) =>
-  produce((draft) => {
-    draft['player.P1.mode'] = mode
-    draft['player.P1.panel'] =
-      draft['player.P1.panel'] === '3d' && mode !== 'KB'
-        ? 'center'
-        : draft['player.P1.panel']
-  })
 
 // Speed
 export const speed = (state: OptionsState) => state['player.P1.speed']
-/** @deprecated Use the action in `optionsSlice`. */
-export const changeSpeed = (speed: string) =>
-  produce((draft) => {
-    draft['player.P1.speed'] = speed
-  })
 
 // Lead time
 export const leadTime = (state: OptionsState) => {
@@ -130,11 +106,6 @@ export const leadTime = (state: OptionsState) => {
   if (parsed < 138) return 138
   return parsed
 }
-/** @deprecated Use the action in `optionsSlice`. */
-export const changeLeadTime = (leadTime: string) =>
-  produce((draft) => {
-    draft['player.P1.lead-time'] = leadTime
-  })
 
 // Scratch position
 export const SCRATCH_POSITION = ['off', 'left', 'right'] as const
@@ -148,32 +119,10 @@ export const scratchPosition = (state: OptionsState): ScratchPosition => {
     return state['player.P1.scratch'] as ScratchPosition
   }
 }
-/** @deprecated Use the action in `optionsSlice`. */
-export const changeScratchPosition = (position: ScratchPosition) => {
-  if (position === 'off') {
-    return changePlayMode('KB')
-  } else {
-    return _.flow(
-      changePlayMode('BM'),
-      produce((draft) => {
-        draft['player.P1.scratch'] = position
-      })
-    )
-  }
-}
 
 // Panel
 export type PanelPlacement = 'left' | 'center' | 'right' | '3d'
 export const panelPlacement = (state: OptionsState) => state['player.P1.panel']
-/** @deprecated Use the action in `optionsSlice`. */
-export const changePanelPlacement = (placement: PanelPlacement) =>
-  produce((draft) => {
-    draft['player.P1.panel'] = placement
-    draft['player.P1.mode'] =
-      placement === '3d' && draft['player.P1.mode'] !== 'KB'
-        ? 'KB'
-        : draft['player.P1.mode']
-  })
 
 // Lane cover
 export const laneCover = (state: OptionsState) => {
@@ -184,49 +133,24 @@ export const laneCover = (state: OptionsState) => {
     ) / 100 || 0
   )
 }
-/** @deprecated Use the action in `optionsSlice`. */
-export const changeLaneCover = (laneCover: string) =>
-  produce((draft) => {
-    draft['player.P1.lane-cover'] = laneCover
-  })
 
 // BGA
 export const isBackgroundAnimationsEnabled = (state: OptionsState) =>
   toggleOptionEnabled(state['system.bga.enabled'])
-/** @deprecated Use the action in `optionsSlice`. */
-export const toggleBackgroundAnimations = produce((draft) => {
-  draft['system.bga.enabled'] = toggleOption(draft['system.bga.enabled'])
-})
 
 // Auto-velocity
 export const isAutoVelocityEnabled = (state: OptionsState) =>
   toggleOptionEnabled(state['player.P1.auto-velocity'])
-/** @deprecated Use the action in `optionsSlice`. */
-export const toggleAutoVelocity = produce((draft) => {
-  draft['player.P1.auto-velocity'] = toggleOption(
-    draft['player.P1.auto-velocity']
-  )
-})
 
 // Song preview enabled
 export const isPreviewEnabled = (state: OptionsState) =>
   toggleOptionEnabled(state['system.preview.enabled'])
-/** @deprecated Use the action in `optionsSlice`. */
-export const togglePreview = produce((draft) => {
-  draft['system.preview.enabled'] = toggleOption(
-    draft['system.preview.enabled']
-  )
-})
 
 // Gauge
 export type Gauge = 'off' | 'hope'
 export const isGaugeEnabled = (state: OptionsState) => getGauge(state) !== 'off'
 export const getGauge = (state: OptionsState): Gauge =>
   state['player.P1.gauge'] as Gauge
-/** @deprecated Use the action in `optionsSlice`. */
-export const toggleGauge = produce((draft) => {
-  draft['player.P1.gauge'] = draft['player.P1.gauge'] === 'off' ? 'hope' : 'off'
-})
 
 // Queries
 export const keyboardMapping = (state: OptionsState) => {
@@ -241,46 +165,22 @@ export const keyboardMapping = (state: OptionsState) => {
 // Feature acknowledgements
 export const hasAcknowledged = (featureKey: string) => (state: OptionsState) =>
   state[`system.ack.${featureKey}`] === '1'
-/** @deprecated Use the action in `optionsSlice`. */
-export const acknowledge = (featureKey: string) =>
-  produce((draft) => {
-    draft[`system.ack.${featureKey}`] = '1'
-  })
 
 // Audio-input latency
 export const audioInputLatency = (state: OptionsState) =>
   +state['system.offset.audio-input']
-/** @deprecated Use the action in `optionsSlice`. */
-export const changeAudioInputLatency = (latency: number) =>
-  produce((draft) => {
-    draft['system.offset.audio-input'] = `${latency}`
-  })
 
 // Gamepad Continuous Axis
 export const isContinuousAxisEnabled = (state: OptionsState) =>
   toggleOptionEnabled(state['gamepad.continuous'])
-/** @deprecated Use the action in `optionsSlice`. */
-export const toggleContinuousAxis = produce((draft) => {
-  draft['gamepad.continuous'] = toggleOption(draft['gamepad.continuous'])
-})
 
 // Gamepad Sensitivity
 export const sensitivity = (state: OptionsState): number =>
   parseInt(state['gamepad.sensitivity'], 10)
-/** @deprecated Use the action in `optionsSlice`. */
-export const changeSensitivity = (sensitivity: string) =>
-  produce((draft) => {
-    draft['gamepad.sensitivity'] = sensitivity
-  })
 
 // Latest version
 export const lastSeenVersion = (state: OptionsState) =>
   state['system.last-seen-version']
-/** @deprecated Use the action in `optionsSlice`. */
-export const updateLastSeenVersion = (newVersion: string) =>
-  produce((draft) => {
-    draft['system.last-seen-version'] = newVersion
-  })
 
 // Utils
 export const nextKeyToEdit = (editing: string, scratch: ScratchPosition) => {
