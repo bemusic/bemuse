@@ -27,7 +27,7 @@ import { selectOptions } from '../redux/ReduxState'
 interface SettingRowProps {
   label: string
   isVisible?: (options: OptionsState) => boolean
-  renderControl: (options: OptionsState) => void
+  renderControl: (options: OptionsState) => JSX.Element
   help?: ReactNode
 }
 
@@ -39,9 +39,10 @@ const SettingRow = ({
 }: SettingRowProps) => {
   const options = useSelector(selectOptions)
   const visible = isVisible ? isVisible(options) : true
-  renderControl(options)
+  const control = renderControl(options)
   return (
     <OptionsPlayer.Row label={label} hidden={!visible}>
+      {control}
       {!!help && <div className='OptionsPlayerのhelp'>{help}</div>}
     </OptionsPlayer.Row>
   )

@@ -28,3 +28,13 @@ test('Options can be saved', async ({ page }) => {
     await expect(button).toContainText(key)
   }
 })
+
+test('Speed can be increased', async ({ page }) => {
+  await page.goto('/')
+  await page.getByTestId('enter-game').click()
+  await page.getByTestId('keyboard-mode').click()
+  await page.getByTestId('options-button').click()
+  expect(await page.locator('.OptionsSpeed > input').inputValue()).toBe('1.0')
+  await page.locator('.OptionsSpeedのplus > button').click()
+  expect(await page.locator('.OptionsSpeed > input').inputValue()).toBe('1.5')
+})
