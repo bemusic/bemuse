@@ -2,7 +2,7 @@ import './TitleScene.scss'
 
 import * as Analytics from '../analytics'
 
-import React, { MouseEvent, useState } from 'react'
+import React, { MouseEvent, useContext, useState } from 'react'
 import { lastSeenVersion, optionsSlice } from '../entities/Options'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -11,8 +11,8 @@ import ChangelogPanel from './ChangelogPanel'
 import HomePage from 'bemuse/site/HomePage'
 import ModalPopup from 'bemuse/ui/ModalPopup'
 import ModeSelectScene from './ModeSelectScene'
-import SCENE_MANAGER from 'bemuse/scene-manager'
 import Scene from 'bemuse/ui/Scene'
+import { SceneManagerContext } from 'bemuse/scene-manager'
 import Toolbar from './Toolbar'
 import { selectOptions } from '../redux/ReduxState'
 import version from 'bemuse/utils/version'
@@ -71,6 +71,7 @@ const toolbarItems = ({
 ]
 
 const TitleScene = () => {
+  const sceneManager = useContext(SceneManagerContext)
   const dispatch = useDispatch()
   const options = useSelector(selectOptions)
 
@@ -85,12 +86,12 @@ const TitleScene = () => {
   const [changelogModalVisible, setChangelogModalVisible] = useState(false)
 
   const enterGame = () => {
-    SCENE_MANAGER.push(<ModeSelectScene />)
+    sceneManager.push(<ModeSelectScene />)
     Analytics.send('TitleScene', 'enter game')
   }
 
   const showAbout = () => {
-    SCENE_MANAGER.push(<AboutScene />)
+    sceneManager.push(<AboutScene />)
     Analytics.send('TitleScene', 'show about')
   }
 

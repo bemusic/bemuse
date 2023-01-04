@@ -1,6 +1,7 @@
 import * as GameLauncher from '../game-launcher'
 import * as Options from '../entities/Options'
 import * as ReduxState from '../redux/ReduxState'
+
 import { getChartLevel, musicSelectionSlice } from '../entities/MusicSelection'
 
 export function selectSong(song, dispatch) {
@@ -28,6 +29,7 @@ export function launchGame({
   options,
   dispatch,
   autoplayEnabled,
+  sceneManager,
 }) {
   GameLauncher.launch({
     server,
@@ -44,5 +46,6 @@ export function launchGame({
       dispatch(ReduxState.rageQuitSlice.actions.RAGEQUITTED())
     },
     autoplayEnabled,
+    sceneManager,
   })
 }

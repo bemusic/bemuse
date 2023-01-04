@@ -1,55 +1,52 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import SCENE_MANAGER from 'bemuse/scene-manager'
-import now from 'bemuse/utils/now'
-import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
-import { Provider } from 'react-redux'
+import * as Analytics from './analytics'
+import * as BemuseTestMode from '../devtools/BemuseTestMode'
+import * as OptionsIO from './io/OptionsIO'
+import * as ReduxState from './redux/ReduxState'
+
+import { SceneManager, SceneManagerContext } from 'bemuse/scene-manager'
 import { createIO, createRun } from 'impure'
 import {
   getDefaultCustomFolderContext,
   getSongsFromCustomFolders,
 } from 'bemuse/custom-folder'
-import { monetize } from 'monetizer'
-import {
-  shouldShowAbout,
-  shouldShowModeSelect,
-} from 'bemuse/devtools/query-flags'
-import { withContext } from 'recompose'
-
-import * as Analytics from './analytics'
-import * as BemuseTestMode from '../devtools/BemuseTestMode'
-import * as OptionsIO from './io/OptionsIO'
-import * as ReduxState from './redux/ReduxState'
-import AboutScene from './ui/AboutScene'
-import BrowserSupportWarningScene from './ui/BrowserSupportWarningScene'
-import ModeSelectScene from './ui/ModeSelectScene'
-import TitleScene from './ui/TitleScene'
-import ioContext from './io/ioContext'
-import store from './redux/instance'
 import {
   getInitialGrepString,
   getMusicServer,
   getTimeSynchroServer,
 } from './query-flags'
+import {
+  shouldShowAbout,
+  shouldShowModeSelect,
+} from 'bemuse/devtools/query-flags'
+
+import AboutScene from './ui/AboutScene'
+import BrowserSupportWarningScene from './ui/BrowserSupportWarningScene'
+import ModeSelectScene from './ui/ModeSelectScene'
+import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
+import { Provider } from 'react-redux'
+import React from 'react'
+import TitleScene from './ui/TitleScene'
+import ioContext from './io/ioContext'
 import { isBrowserSupported } from './browser-support'
+import { monetize } from 'monetizer'
 import { musicSearchTextSlice } from './entities/MusicSearchText'
+import now from 'bemuse/utils/now'
+import store from './redux/instance'
 
 /* eslint import/no-webpack-loader-syntax: off */
 export const runIO = createRun({
   context: ioContext,
 })
 
-// HACK: Make SCENE_MANAGER provide Redux store and IO context.
-SCENE_MANAGER.ReactSceneContainer = withContext(
-  { store: PropTypes.object, runIO: PropTypes.func },
-  () => ({ store, runIO })
-)(({ children }) => {
-  return (
-    <div className='bemuse-scene'>
-      <Provider store={store}>{React.Children.only(children)}</Provider>
-    </div>
-  )
-})
+const sceneManager = new SceneManager(({ children }) => (
+  <div className='bemuse-scene'>
+    <Provider store={store}>
+      <SceneManagerContext.Provider value={sceneManager}>
+        {children}
+      </SceneManagerContext.Provider>
+    </Provider>
+  </div>
+))
 
 // Allow hot reloading of some modules.
 if (module.hot) {
@@ -100,7 +97,7 @@ export function main() {
 }
 
 function displayFirstScene() {
-  SCENE_MANAGER.display(getFirstScene())
+  sceneManager.display(getFirstScene())
 }
 
 function getFirstScene() {

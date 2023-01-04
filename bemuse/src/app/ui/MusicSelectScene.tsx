@@ -1,35 +1,15 @@
 import './MusicSelectScene.scss'
 
-import * as MusicPreviewer from 'bemuse/music-previewer'
-import AuthenticationPopup from 'bemuse/online/ui/AuthenticationPopup'
-import ModalPopup from 'bemuse/ui/ModalPopup'
-import SCENE_MANAGER from 'bemuse/scene-manager'
-import Scene from 'bemuse/ui/Scene'
-import SceneHeading from 'bemuse/ui/SceneHeading'
-import c from 'classnames'
-import Online, { UserInfo } from 'bemuse/online'
-import React, { ChangeEvent, MouseEvent, useContext, useState } from 'react'
-import { Chart, Song } from 'bemuse/collection-model/types'
-import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
-import { OnlineContext } from 'bemuse/online/instance'
-import { createSelector, createStructuredSelector } from 'reselect'
-import { shouldShowOptions } from 'bemuse/devtools/query-flags'
-import { useDispatch, useSelector } from 'react-redux'
-import { useObservable } from 'react-rx'
-
 import * as Analytics from '../analytics'
+import * as MusicPreviewer from 'bemuse/music-previewer'
 import * as MusicSearchIO from '../io/MusicSearchIO'
 import * as MusicSelectionIO from '../io/MusicSelectionIO'
 import * as Options from '../entities/Options'
-import CustomBMS from './CustomBMS'
-import MusicInfo from './MusicInfo'
-import MusicList from './MusicList'
-import OptionsView from './Options'
-import RageQuitPopup from './RageQuitPopup'
-import SongPreviewer from './SongPreviewer'
-import Toolbar from './Toolbar'
-import UnofficialPanel from './UnofficialPanel'
-import { hasPendingArchiveToLoad } from '../PreloadedCustomBMS'
+
+import { Chart, Song } from 'bemuse/collection-model/types'
+import Online, { UserInfo } from 'bemuse/online'
+import React, { ChangeEvent, MouseEvent, useContext, useState } from 'react'
+import { createSelector, createStructuredSelector } from 'reselect'
 import {
   selectChartsForSelectedSong,
   selectCurrentCollectionUrl,
@@ -43,6 +23,27 @@ import {
   selectSelectedChart,
   selectSelectedSong,
 } from '../redux/ReduxState'
+import { useDispatch, useSelector } from 'react-redux'
+
+import AuthenticationPopup from 'bemuse/online/ui/AuthenticationPopup'
+import CustomBMS from './CustomBMS'
+import ModalPopup from 'bemuse/ui/ModalPopup'
+import MusicInfo from './MusicInfo'
+import MusicList from './MusicList'
+import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
+import { OnlineContext } from 'bemuse/online/instance'
+import OptionsView from './Options'
+import RageQuitPopup from './RageQuitPopup'
+import Scene from 'bemuse/ui/Scene'
+import SceneHeading from 'bemuse/ui/SceneHeading'
+import { SceneManagerContext } from 'bemuse/scene-manager'
+import SongPreviewer from './SongPreviewer'
+import Toolbar from './Toolbar'
+import UnofficialPanel from './UnofficialPanel'
+import c from 'classnames'
+import { hasPendingArchiveToLoad } from '../PreloadedCustomBMS'
+import { shouldShowOptions } from 'bemuse/devtools/query-flags'
+import { useObservable } from 'react-rx'
 
 const selectMusicSelectState = (() => {
   const selectLegacyServerObjectForCurrentCollection = createSelector(
@@ -196,6 +197,7 @@ const getToolbarItems = ({
 }
 
 const MusicSelectScene = () => {
+  const sceneManager = useContext(SceneManagerContext)
   const musicSelect = useSelector(selectMusicSelectState)
   const collectionUrl = useSelector(selectCurrentCollectionUrl)
   const options = useSelector(selectOptions)
@@ -216,7 +218,7 @@ const MusicSelectScene = () => {
   const user = useObservable(online.user川)
 
   const popScene = () => {
-    SCENE_MANAGER.pop()
+    sceneManager.pop()
   }
   const onSelectChart = (song: Song, chart: Chart) =>
     MusicSelectionIO.selectChart(song, chart, dispatch)
@@ -231,6 +233,7 @@ const MusicSelectScene = () => {
       chart: musicSelect.chart,
       dispatch,
       options,
+      sceneManager,
       ...extraOptions,
     })
 
