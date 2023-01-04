@@ -1,10 +1,10 @@
 import './AboutScene.scss'
 
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
-import SCENE_MANAGER from 'bemuse/scene-manager'
 import Scene from 'bemuse/ui/Scene'
 import SceneHeading from 'bemuse/ui/SceneHeading'
+import { SceneManagerContext } from 'bemuse/scene-manager'
 import SceneToolbar from 'bemuse/ui/SceneToolbar'
 
 const Artists = ({ artists }: { artists: { name: string; url: string }[] }) => {
@@ -26,6 +26,8 @@ const Artists = ({ artists }: { artists: { name: string; url: string }[] }) => {
 }
 
 const AboutScene = () => {
+  const sceneManager = useContext(SceneManagerContext)
+
   const [artists, setArtists] = useState<{ name: string; url: string }[]>([])
   useEffect(() => {
     fetch('/music/artists.json')
@@ -35,7 +37,7 @@ const AboutScene = () => {
   }, [])
 
   const handleBack = () => {
-    SCENE_MANAGER.pop()
+    sceneManager.pop()
   }
 
   return (

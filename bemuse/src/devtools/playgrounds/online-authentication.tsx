@@ -1,7 +1,6 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import MAIN from 'bemuse/utils/main-element'
 import AuthenticationPopup from 'bemuse/online/ui/AuthenticationPopup'
+import React from 'react'
+import { sceneRoot } from 'bemuse/utils/main-element'
 
 const OnlineAuthenticationTestScene = () => (
   <div>
@@ -10,5 +9,5 @@ const OnlineAuthenticationTestScene = () => (
 )
 
 export function main() {
-  ReactDOM.render(<OnlineAuthenticationTestScene />, MAIN)
+  sceneRoot.render(<OnlineAuthenticationTestScene />)
 }

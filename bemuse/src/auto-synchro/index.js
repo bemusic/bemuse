@@ -1,6 +1,6 @@
 import * as Music from './music'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import ExperimentScene from './ui/ExperimentScene'
 import $ from 'jquery'
 import _ from 'lodash'
@@ -35,7 +35,7 @@ export function main(bootContext) {
     },
   })
 
-  ReactDOM.render(scene, $('<div></div>').appendTo('body')[0])
+  createRoot($('<div></div>').appendTo('body')[0]).render(scene)
 
   let play
 

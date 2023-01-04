@@ -1,8 +1,10 @@
 import { Provider } from 'react-redux'
 import React from 'react'
 import ResultScene from 'bemuse/app/ui/ResultScene'
-import SCENE_MANAGER from 'bemuse/scene-manager'
+import { SceneManager } from 'bemuse/scene-manager'
 import configureStore from 'bemuse/app/redux/configureStore'
+
+const sceneManager = new SceneManager(React.Fragment)
 
 export function main() {
   const props = {
@@ -35,7 +37,7 @@ export function main() {
     onReplay: () => alert('Replay!'),
     playMode: 'BM',
   }
-  SCENE_MANAGER.display(
+  sceneManager.display(
     <Provider store={configureStore()}>
       <ResultScene {...props} />
     </Provider>

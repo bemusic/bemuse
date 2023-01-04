@@ -2,13 +2,13 @@ import './ModeSelectScene.scss'
 
 import * as Analytics from '../analytics'
 
-import React, { useRef } from 'react'
+import React, { useContext, useRef } from 'react'
 
 import { MappingMode } from 'bemuse/rules/mapping-mode'
 import MusicSelectScene from './MusicSelectScene'
-import SCENE_MANAGER from 'bemuse/scene-manager'
 import Scene from 'bemuse/ui/Scene'
 import SceneHeading from 'bemuse/ui/SceneHeading'
+import { SceneManagerContext } from 'bemuse/scene-manager'
 import SceneToolbar from 'bemuse/ui/SceneToolbar'
 import { optionsSlice } from '../entities/Options'
 import { useDispatch } from 'react-redux'
@@ -85,6 +85,7 @@ function BMGraphics() {
 type PlayDevice = 'touch' | 'keyboard' | null
 
 const ModeSelectScene = () => {
+  const sceneManager = useContext(SceneManagerContext)
   const dispatch = useDispatch()
   const playDevice = useRef<PlayDevice>(null)
 
@@ -108,16 +109,16 @@ const ModeSelectScene = () => {
   }
   const handleKB = () => {
     onSetMode('KB')
-    SCENE_MANAGER.display(<MusicSelectScene />)
+    sceneManager.display(<MusicSelectScene />)
     Analytics.send('ModeSelectScene', 'select mode', 'KB')
   }
   const handleBM = () => {
     onSetMode('BM')
-    SCENE_MANAGER.display(<MusicSelectScene />)
+    sceneManager.display(<MusicSelectScene />)
     Analytics.send('ModeSelectScene', 'select mode', 'BM')
   }
   const handleBack = () => {
-    SCENE_MANAGER.pop()
+    sceneManager.pop()
   }
 
   return (

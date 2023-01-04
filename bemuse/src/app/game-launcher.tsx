@@ -1,25 +1,27 @@
-import { getSongResources } from 'bemuse/music-collection/getSongResources'
-import { Chart, Song } from 'bemuse/collection-model/types'
-import { isTitleDisplayMode } from 'bemuse/devtools/query-flags'
-import GameScene from 'bemuse/game/game-scene'
-import { MISSED } from 'bemuse/game/judgments'
-import { LoadSpec } from 'bemuse/game/loaders/game-loader'
-import Player from 'bemuse/game/player'
-import PlayerState from 'bemuse/game/state/player-state'
-import LoadingScene from 'bemuse/game/ui/LoadingScene'
-import { getGrade } from 'bemuse/rules/grade'
-import { unmuteAudio } from 'bemuse/sampling-master'
-import SCENE_MANAGER from 'bemuse/scene-manager'
-import query from 'bemuse/utils/query'
-import invariant from 'invariant'
-import React from 'react'
 import * as Analytics from './analytics'
 import * as Options from './entities/Options'
-import createAutoVelocity from './interactors/createAutoVelocity'
-import { StoredOptions } from './types'
+
+import { Chart, Song } from 'bemuse/collection-model/types'
+import { ReactScene, SceneManager } from 'bemuse/scene-manager'
+
+import GameScene from 'bemuse/game/game-scene'
 import GenericErrorScene from './ui/GenericErrorScene'
+import { LoadSpec } from 'bemuse/game/loaders/game-loader'
+import LoadingScene from 'bemuse/game/ui/LoadingScene'
+import { MISSED } from 'bemuse/game/judgments'
+import Player from 'bemuse/game/player'
+import PlayerState from 'bemuse/game/state/player-state'
+import React from 'react'
 import ResultScene from './ui/ResultScene'
+import { StoredOptions } from './types'
+import createAutoVelocity from './interactors/createAutoVelocity'
+import { getGrade } from 'bemuse/rules/grade'
+import { getSongResources } from 'bemuse/music-collection/getSongResources'
 import { getSoundVolume } from './query-flags'
+import invariant from 'invariant'
+import { isTitleDisplayMode } from 'bemuse/devtools/query-flags'
+import query from 'bemuse/utils/query'
+import { unmuteAudio } from 'bemuse/sampling-master'
 
 const Log = BemuseLogger.forModule('game-launcher')
 
@@ -36,10 +38,13 @@ type LaunchOptions = {
   saveLeadTime: (speed: number) => void
   onRagequitted: () => void
   autoplayEnabled: boolean
+  sceneManager: SceneManager
 }
 
 export async function launch(launchOptions: LaunchOptions) {
-  const sceneDisplayContext = new SceneDisplayContext()
+  const sceneDisplayContext = new SceneDisplayContext(
+    launchOptions.sceneManager
+  )
   let currentWork = 'launching the game'
   try {
     await launchGame(
@@ -158,11 +163,13 @@ async function launchGame(
     const { tasks, promise } = loader
 
     // display loading scene
-    const loadingScene = React.createElement(LoadingScene, {
-      tasks: tasks,
-      song: chart.info,
-      eyecatchImagePromise: loader.get('EyecatchImage'),
-    })
+    const loadingScene = (
+      <LoadingScene
+        tasks={tasks}
+        song={chart.info}
+        eyecatchImagePromise={loader.get('EyecatchImage')}
+      />
+    )
     await sceneDisplayContext.showScene(loadingScene)
     replay = false
 
@@ -295,9 +302,7 @@ function showResult(
       onExit: () => resolve({ replay: false }),
       onReplay: () => resolve({ replay: true }),
     }
-    sceneDisplayContext
-      .showScene(React.createElement(ResultScene, props))
-      .catch(reject)
+    sceneDisplayContext.showScene(<ResultScene {...props} />).catch(reject)
   })
 }
 
@@ -352,19 +357,21 @@ function describeChart(chart: Chart) {
 }
 
 class SceneDisplayContext {
+  constructor(private readonly sceneManager: SceneManager) {}
+
   shown = false
-  async showScene(scene: any) {
+  async showScene(scene: ReactScene | JSX.Element) {
     if (!this.shown) {
-      await SCENE_MANAGER.push(scene)
+      this.sceneManager.push(scene)
       this.shown = true
     } else {
-      await SCENE_MANAGER.display(scene)
+      this.sceneManager.display(scene)
     }
   }
 
   async end() {
     if (this.shown) {
-      await SCENE_MANAGER.pop()
+      this.sceneManager.pop()
       this.shown = false
     }
   }
