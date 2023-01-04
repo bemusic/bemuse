@@ -1,7 +1,6 @@
 import React from 'react'
 import _ from 'lodash'
-import MAIN from 'bemuse/utils/main-element'
-import ReactDOM from 'react-dom'
+import { sceneRoot } from 'bemuse/utils/main-element'
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import {
   clearCustomFolder,
@@ -128,7 +127,7 @@ const CustomFolderTester = () => {
 }
 
 export function main() {
-  ReactDOM.render(
+  sceneRoot.render(
     <QueryClientProvider client={queryClient}>
       <div style={{ margin: '0 auto', maxWidth: '32em', padding: '0 1em' }}>
         <h1>Bemuse custom songs folder console</h1>
@@ -160,7 +159,6 @@ export function main() {
         <hr />
         <CustomFolderTester />
       </div>
-    </QueryClientProvider>,
-    MAIN
+    </QueryClientProvider>
   )
 }

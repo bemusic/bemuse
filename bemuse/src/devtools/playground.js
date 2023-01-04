@@ -1,7 +1,6 @@
-import MAIN from 'bemuse/utils/main-element'
 import React from 'react'
-import ReactDOM from 'react-dom'
 import query from 'bemuse/utils/query'
+import { sceneRoot } from 'bemuse/utils/main-element'
 
 const availablePlaygrounds = (function (context) {
   const playgrounds = {}
@@ -14,7 +13,7 @@ const availablePlaygrounds = (function (context) {
 
 class DefaultPlayground extends React.Component {
   static main() {
-    ReactDOM.render(<DefaultPlayground />, MAIN)
+    sceneRoot.render(<DefaultPlayground />)
   }
 
   render() {
@@ -25,7 +24,7 @@ class DefaultPlayground extends React.Component {
         <p>Please select a playground</p>
         <ul>
           {Object.keys(availablePlaygrounds).map((key) => (
-            <li>
+            <li key={key}>
               <a style={linkStyle} href={'?mode=playground&playground=' + key}>
                 {key}
               </a>

@@ -1,7 +1,6 @@
-import React from 'react'
-import MAIN from 'bemuse/utils/main-element'
 import GenericErrorScene from 'bemuse/app/ui/GenericErrorScene'
-import ReactDOM from 'react-dom'
+import React from 'react'
+import { sceneRoot } from 'bemuse/utils/main-element'
 
 const ErrorScene = () => (
   <div>
@@ -14,5 +13,5 @@ const ErrorScene = () => (
 )
 
 export function main() {
-  ReactDOM.render(<ErrorScene />, MAIN)
+  sceneRoot.render(<ErrorScene />)
 }

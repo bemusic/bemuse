@@ -1,7 +1,6 @@
-import React from 'react'
-import MAIN from 'bemuse/utils/main-element'
 import CustomBMS from 'bemuse/app/ui/CustomBMS'
-import ReactDOM from 'react-dom'
+import React from 'react'
+import { sceneRoot } from 'bemuse/utils/main-element'
 
 const DropBMSScene = () => (
   <div>
@@ -10,5 +9,5 @@ const DropBMSScene = () => (
 )
 
 export function main() {
-  ReactDOM.render(<DropBMSScene />, MAIN)
+  sceneRoot.render(<DropBMSScene />)
 }
