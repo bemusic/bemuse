@@ -22,7 +22,4 @@ if (isQueryFlagEnabled('fake-scoreboard')) {
   instance = new Online(new OnlineService({ fake: true }))
 }
 
-/** @deprecated Use `OnlineContext` via Context API. */
-export default instance
-
 export const OnlineContext = createContext(instance)
