@@ -3,7 +3,6 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { Draft } from 'immer'
 import { MappingMode } from '../../rules/mapping-mode'
 import { StoredOptions } from '../types'
-import _ from 'lodash'
 
 export type OptionsState = StoredOptions & Record<string, string>
 
