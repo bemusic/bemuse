@@ -83,7 +83,7 @@ function ReactScene(
   ReactSceneContainer: SceneContainer
 ): ReactScene {
   return function instantiate(_element, root) {
-    let teardown: TeardownCallback = async () => {}
+    let teardown: TeardownCallback = () => {}
     const clonedElement = React.cloneElement(scene, {
       registerTeardownCallback: (callback: TeardownCallback) => {
         teardown = callback
