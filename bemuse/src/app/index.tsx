@@ -1,10 +1,8 @@
 import * as Analytics from './analytics'
 import * as BemuseTestMode from '../devtools/BemuseTestMode'
-import * as OptionsIO from './io/OptionsIO'
 import * as ReduxState from './redux/ReduxState'
 
 import { SceneManager, SceneManagerContext } from 'bemuse/scene-manager'
-import { createIO, createRun } from 'impure'
 import {
   getDefaultCustomFolderContext,
   getSongsFromCustomFolders,
@@ -26,17 +24,14 @@ import { OFFICIAL_SERVER_URL } from 'bemuse/music-collection'
 import { Provider } from 'react-redux'
 import React from 'react'
 import TitleScene from './ui/TitleScene'
-import ioContext from './io/ioContext'
+import configureStore from './redux/configureStore'
 import { isBrowserSupported } from './browser-support'
 import { monetize } from 'monetizer'
 import { musicSearchTextSlice } from './entities/MusicSearchText'
 import now from 'bemuse/utils/now'
-import store from './redux/instance'
+import { optionsSlice } from './entities/Options'
 
-/* eslint import/no-webpack-loader-syntax: off */
-export const runIO = createRun({
-  context: ioContext,
-})
+const store = configureStore()
 
 const sceneManager = new SceneManager(({ children }) => (
   <div className='bemuse-scene'>
@@ -53,36 +48,32 @@ if (module.hot) {
   module.hot.accept('./redux/ReduxState', () => {})
 }
 
-export default runIO
-
 function bootUp() {
-  return createIO(({ store }, run) => {
-    store.dispatch(
-      ReduxState.collectionsSlice.actions.COLLECTION_LOADING_BEGAN({
-        url: getMusicServer() || OFFICIAL_SERVER_URL,
-      })
-    )
-    store.dispatch(
-      musicSearchTextSlice.actions.MUSIC_SEARCH_TEXT_INITIALIZED({
-        text: getInitialGrepString(),
-      })
-    )
-    run(OptionsIO.loadInitialOptions())
-
-    getSongsFromCustomFolders(getDefaultCustomFolderContext()).then((songs) => {
-      if (songs.length > 0) {
-        store.dispatch(
-          ReduxState.customSongsSlice.actions.CUSTOM_SONGS_LOADED({
-            songs,
-          })
-        )
-      }
+  store.dispatch(
+    ReduxState.collectionsSlice.actions.COLLECTION_LOADING_BEGAN({
+      url: getMusicServer() || OFFICIAL_SERVER_URL,
     })
+  )
+  store.dispatch(
+    musicSearchTextSlice.actions.MUSIC_SEARCH_TEXT_INITIALIZED({
+      text: getInitialGrepString(),
+    })
+  )
+  store.dispatch(optionsSlice.actions.LOAD_FROM_STORAGE())
+
+  getSongsFromCustomFolders(getDefaultCustomFolderContext()).then((songs) => {
+    if (songs.length > 0) {
+      store.dispatch(
+        ReduxState.customSongsSlice.actions.CUSTOM_SONGS_LOADED({
+          songs,
+        })
+      )
+    }
   })
 }
 
 export function main() {
-  runIO(bootUp())
+  bootUp()
   displayFirstScene()
 
   // synchronize time
@@ -102,16 +93,17 @@ function displayFirstScene() {
 
 function getFirstScene() {
   if (shouldShowAbout()) {
-    return React.createElement(AboutScene)
-  } else if (shouldShowModeSelect()) {
-    return React.createElement(ModeSelectScene)
-  } else {
-    let scene = React.createElement(TitleScene)
-    if (!isBrowserSupported()) {
-      scene = React.createElement(BrowserSupportWarningScene, { next: scene })
-    }
-    return scene
+    return <AboutScene />
   }
+  if (shouldShowModeSelect()) {
+    return <ModeSelectScene />
+  }
+
+  const scene = React.createElement(TitleScene)
+  if (!isBrowserSupported()) {
+    return <BrowserSupportWarningScene next={scene} />
+  }
+  return scene
 }
 
 function trackFullscreenEvents() {
