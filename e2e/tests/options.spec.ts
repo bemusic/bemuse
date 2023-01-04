@@ -28,7 +28,7 @@ test('Options can be saved', async ({ page }) => {
     await expect(button).toContainText(key)
   }
 
-  expect(await page.locator('.OptionsSpeed > input').inputValue()).toBe(1.0)
+  expect(await page.locator('.OptionsSpeed > input').inputValue()).toBe('1.0')
   await page.locator('.OptionsSpeedのplus > button').click()
-  expect(await page.locator('.OptionsSpeed > input').inputValue()).toBe(1.5)
+  expect(await page.locator('.OptionsSpeed > input').inputValue()).toBe('1.5')
 })
