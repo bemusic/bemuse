@@ -27,7 +27,6 @@ test('Options can be saved', async ({ page }) => {
     const button = getButton(index)
     await expect(button).toContainText(key)
   }
-
 })
 
 test('Speed can be increased', async ({ page }) => {
