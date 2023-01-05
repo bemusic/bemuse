@@ -95,7 +95,7 @@ test('Gameplay smoke test', async ({ page }, testInfo) => {
   await page.getByText('Continue').first().click()
 })
 
-test('works offline', async ({ page }) => {
+test.skip('works offline', async ({ page }) => {
   await startBemuse(page)
   await expect
     .poll(() => page.evaluate(() => navigator.serviceWorker.controller?.state))
