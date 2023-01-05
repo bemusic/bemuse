@@ -1,19 +1,20 @@
+import Notechart from 'bemuse-notechart'
 import NotechartLoader from 'bemuse-notechart/lib/loader'
 import Progress from 'bemuse/progress'
-import { atomic } from 'bemuse/progress/utils'
 import SamplingMaster from 'bemuse/sampling-master'
 import keysoundCache from 'bemuse/keysound-cache'
+import { ChartInfo } from 'bemuse-types'
+import { IResource, IResources } from 'bemuse/resources/types'
+import { atomic } from 'bemuse/progress/utils'
+import { resolveRelativeResources } from 'bemuse/resources/resolveRelativeResource'
 
 import * as Multitasker from './multitasker'
-import Game, { GamePlayerOptionsInput } from '../game'
 import GameAudio from '../audio'
 import GameController from '../game-controller'
 import GameDisplay from '../display'
 import SamplesLoader from './samples-loader'
 import loadImage from './loadImage'
-import Notechart from 'bemuse-notechart'
-import { IResources } from 'bemuse/resources/types'
-import { resolveRelativeResources } from 'bemuse/resources/resolveRelativeResource'
+import Game, { GamePlayerOptionsInput } from '../game'
 
 type Tasks = {
   Scintillator: TODO
@@ -31,7 +32,7 @@ type Tasks = {
   GameController: GameController
 }
 
-type Assets = IResources & {
+export type Assets = IResources & {
   progress?: {
     current?: Progress
     all?: Progress
@@ -40,8 +41,9 @@ type Assets = IResources & {
 
 export type LoadSpec = {
   assets: Assets
-  bms: TODO
-  songId: string
+  bms: IResource
+  metadata: ChartInfo
+  songId?: string
   displayMode?: 'touch3d' | 'normal'
   backImageUrl?: string
   eyecatchImageUrl?: string

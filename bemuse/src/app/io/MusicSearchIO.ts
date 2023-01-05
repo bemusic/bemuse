@@ -1,8 +1,13 @@
+import type { AnyAction, Dispatch } from 'redux'
+
 import { musicSearchTextSlice } from '../entities/MusicSearchText'
 
-let _timeout
+let _timeout: NodeJS.Timeout
 
-export function handleSearchTextType(text, dispatch) {
+export function handleSearchTextType(
+  text: string,
+  dispatch: Dispatch<AnyAction>
+) {
   dispatch(musicSearchTextSlice.actions.MUSIC_SEARCH_TEXT_TYPED({ text }))
   if (_timeout) clearTimeout(_timeout)
   _timeout = setTimeout(() => {

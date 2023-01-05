@@ -29,8 +29,8 @@ if (module.hot) {
   module.hot.accept('bemuse/game/loaders/game-loader')
 }
 
-type LaunchOptions = {
-  server: { url: string }
+export type LaunchOptions = {
+  server: { readonly url: string }
   song: Song
   chart: Chart
   options: StoredOptions

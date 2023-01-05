@@ -19,9 +19,9 @@ export type PlayerOptionsScratch = 'left' | 'right' | 'off'
 export type PlayerOptionsGauge = 'off' | 'hope'
 
 type PlayerOptionsInputMapping = {
-  keyboard: { [control in PlayerControlKeys]: string }
-  continuous: boolean
-  sensitivity: number
+  keyboard: { [control in PlayerControlKeys]: number }
+  continuous?: boolean
+  sensitivity?: number
 }
 
 type PlayerOptionsInternal = {
@@ -42,7 +42,7 @@ export type PlayerOptionsInput = PlayerOptions & {
   speed: number
   placement?: PlayerOptionsPlacement
   laneCover?: number
-  gauge: PlayerOptionsGauge
+  gauge?: PlayerOptionsGauge
   input: PlayerOptionsInputMapping
   tutorial?: boolean
 }
@@ -63,7 +63,7 @@ export class Player {
       scratch: options.scratch || 'left',
       input: options.input,
       laneCover: +(options.laneCover || 0),
-      gauge: options.gauge,
+      gauge: options.gauge || 'off',
       tutorial: !!options.tutorial,
     }
   }

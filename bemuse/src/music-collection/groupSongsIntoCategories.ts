@@ -1,15 +1,23 @@
-import _ from 'lodash'
+import { Song } from 'bemuse/collection-model/types'
 import { SongOfTheDay } from './SongOfTheDay'
+import _ from 'lodash'
 
-const grouping = [
-  { title: 'Custom Song', criteria: (song) => song.custom },
-  { title: 'Tutorial', criteria: (song) => song.tutorial },
-  { title: 'Unreleased', criteria: (song) => song.unreleased },
+interface Grouping {
+  title: string
+  criteria: (song: Song, context: { songOfTheDay: SongOfTheDay }) => boolean
+  sort?: (song: Song) => string
+  reverse?: boolean
+}
+
+const grouping: readonly Grouping[] = [
+  { title: 'Custom Song', criteria: (song) => !!song.custom },
+  { title: 'Tutorial', criteria: (song) => !!song.tutorial },
+  { title: 'Unreleased', criteria: (song) => !!song.unreleased },
   {
     title: 'Recently Added Songs',
     criteria: (song) =>
-      song.added && Date.now() - Date.parse(song.added) < 60 * 86400000,
-    sort: (song) => song.added,
+      !!song.added && Date.now() - Date.parse(song.added) < 60 * 86400000,
+    sort: (song) => song.added ?? '',
     reverse: true,
   },
   {
@@ -20,7 +28,7 @@ const grouping = [
 ]
 
 export function groupSongsIntoCategories(
-  songs,
+  songs: readonly Song[],
   { songOfTheDayEnabled = false } = {}
 ) {
   const context = {
@@ -28,7 +36,7 @@ export function groupSongsIntoCategories(
   }
   const groups = grouping.map((group) => ({
     input: group,
-    output: { title: group.title, songs: [] },
+    output: { title: group.title, songs: [] as Song[] },
   }))
   for (const song of songs) {
     for (const { input, output } of groups) {

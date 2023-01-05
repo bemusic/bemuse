@@ -1,6 +1,6 @@
+import { Song } from 'bemuse/collection-model/types'
 import _ from 'lodash'
 import { createHash } from 'crypto'
-import { Song } from 'bemuse/collection-model/types'
 
 const getHashFunction = _.once(() => {
   const today = new Date(Date.now() + 9 * 3600e3).toISOString().split('T')[0]
@@ -14,7 +14,7 @@ const getHashFunction = _.once(() => {
 
 export class SongOfTheDay {
   private ids: Set<string>
-  constructor(songs: Song[], { enabled = true } = {}) {
+  constructor(songs: readonly Song[], { enabled = true } = {}) {
     if (!enabled) {
       this.ids = new Set()
       return

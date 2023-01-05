@@ -1,11 +1,15 @@
 import * as Judgments from '../judgments'
 
-import _ from 'lodash'
 import Notechart from 'bemuse-notechart'
+import _ from 'lodash'
 
 const getAccuracyScore = (accuracy: number) => Math.floor(accuracy * 500000)
 const getComboScore = (sum: number, total: number) =>
   Math.floor((sum * 55555) / total)
+
+export type Counts = {
+  [k in Judgments.JudgedJudgment]: number
+}
 
 export class PlayerStats {
   public totalCombo: number
@@ -15,7 +19,7 @@ export class PlayerStats {
   public rawSumJudgmentWeight: number
   public rawTotalComboScore: number
   public rawSumComboScore: number
-  public counts: { [k in Judgments.JudgedJudgment]: number }
+  public counts: Counts
   public numJudgments: number
   public poor: boolean
   public deltas: number[]

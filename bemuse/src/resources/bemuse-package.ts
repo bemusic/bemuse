@@ -1,8 +1,9 @@
-import Progress from 'bemuse/progress'
 import * as ProgressUtils from 'bemuse/progress/utils'
-import readBlob from 'bemuse/utils/read-blob'
 import _ from 'lodash'
+import Progress from 'bemuse/progress'
+import readBlob from 'bemuse/utils/read-blob'
 import throat from 'throat'
+
 import { IResource, IResources } from './types'
 import { URLResources } from './url'
 
@@ -29,7 +30,7 @@ export class BemusePackageResources implements IResources {
   }
 
   constructor(
-    base: string | IResources,
+    base: string | URL | IResources,
     options: {
       metadataFilename?: string
       fallback?: string | IResources
@@ -37,7 +38,10 @@ export class BemusePackageResources implements IResources {
     } = {}
   ) {
     if (typeof base === 'string') {
-      base = new URLResources(new URL(base, location.href))
+      base = new URL(base, location.href)
+    }
+    if (base instanceof URL) {
+      base = new URLResources(base)
     }
 
     const fallback =

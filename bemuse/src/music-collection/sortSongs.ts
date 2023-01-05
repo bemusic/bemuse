@@ -1,7 +1,8 @@
+import { Song } from 'bemuse/collection-model/types'
 import _ from 'lodash'
 import isChartPlayable from './isChartPlayable'
 
-export function sortSongs(songs) {
+export function sortSongs(songs: readonly Song[]) {
   return _.orderBy(songs, [
     (song) => {
       return _(song.charts)

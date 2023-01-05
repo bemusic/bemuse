@@ -58,7 +58,7 @@ function bootUp() {
   )
   store.dispatch(
     musicSearchTextSlice.actions.MUSIC_SEARCH_TEXT_INITIALIZED({
-      text: getInitialGrepString(),
+      text: getInitialGrepString() ?? '',
     })
   )
   store.dispatch(optionsSlice.actions.LOAD_FROM_STORAGE())
