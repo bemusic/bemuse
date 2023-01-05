@@ -29,6 +29,15 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## 54.0.1
+
+### Bug fixes
+
+- Fixed a [reported bug](https://github.com/bemusic/bemuse/issues/821) where
+  stats are being displayed for the wrong song and chart. [[#822]], by [@dtinth]
+
+[#822]: https://github.com/bemusic/bemuse/pull/822
+
 ## 54.0.0
 
 ### Bug fixes
