@@ -100,7 +100,7 @@ export interface RankingState {
   }
 }
 
-export interface AccountService {
+export interface InternetRankingService {
   getCurrentUser(): UserInfo | null
   signUp(signUpInfo: SignUpInfo): Promise<UserInfo | null>
   logIn(logInInfo: LogInInfo): Promise<UserInfo | null>
@@ -123,7 +123,7 @@ export interface RankingStream {
 }
 
 export class Online {
-  constructor(private readonly service: AccountService) {}
+  constructor(private readonly service: InternetRankingService) {}
 
   private user口 = new Subject<UserInfo | null>()
   private seen口 = new Subject<RecordLevel>()

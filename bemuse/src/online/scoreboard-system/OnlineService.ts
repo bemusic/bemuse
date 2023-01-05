@@ -1,5 +1,5 @@
 import type {
-  AccountService,
+  InternetRankingService,
   ChangePasswordInfo,
   LogInInfo,
   ScoreInfo,
@@ -25,7 +25,7 @@ interface User {
   playerToken: string
 }
 
-export class OnlineService implements AccountService {
+export class OnlineService implements InternetRankingService {
   private _isFake: boolean
   private _scoreboardClient: ScoreboardClient
   private _storage: Storage
