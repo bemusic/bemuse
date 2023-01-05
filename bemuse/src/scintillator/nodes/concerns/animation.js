@@ -23,7 +23,7 @@ export class Animation {
     }
     return (data) => {
       const values = this._getAnimation(data)
-      if (values.hasOwnProperty(name)) {
+      if (Object.hasOwn(values, name)) {
         return values[name]
       } else {
         return fallback(data)

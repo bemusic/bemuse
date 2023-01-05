@@ -1,19 +1,19 @@
 export const SUPPORTED = [
   {
-    name: 'Firefox 69+',
-    test: () => checkUserAgent(/Firefox\/(\d+)/, 69),
+    name: 'Firefox 92+',
+    test: () => checkUserAgent(/Firefox\/(\d+)/, 92),
   },
   {
-    name: 'Chrome 76+',
-    test: () => checkUserAgent(/Chrome\/(\d+)\./, 76),
+    name: 'Chrome 93+',
+    test: () => checkUserAgent(/Chrome\/(\d+)\./, 93),
   },
   {
-    name: 'Safari 14+',
-    test: () => checkUserAgent(/Version\/(\d+)\.\S+ Safari\//, 14),
+    name: 'Safari 15.4+',
+    test: () => checkUserAgent(/Version\/(\d+)\.\S+ Safari\//, 15.4),
   },
   {
-    name: 'iOS 14+ (iPad Pro)',
-    test: () => checkUserAgent(/iPad; CPU OS (\d+)/, 14),
+    name: 'iOS 15.4+ (iPad Pro)',
+    test: () => checkUserAgent(/iPad; CPU OS (\d+)/, 15.4),
   },
 ]
 
