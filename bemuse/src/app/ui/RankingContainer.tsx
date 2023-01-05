@@ -22,6 +22,7 @@ export interface RankingContainerProps {
   result?: Result
 }
 
+/** @deprecated */
 export const OldRankingContainer = ({
   chart,
   playMode,
@@ -118,7 +119,9 @@ export const NewRankingContainer = ({
     data: leaderboardQuery.data?.data || null,
     meta: {
       submission: !!user
-        ? operationFromResult(personalRankingEntryQuery)
+        ? operationFromResult(
+            canSubmit ? submissionMutation : personalRankingEntryQuery
+          )
         : { status: 'unauthenticated' },
       scoreboard: operationFromResult(leaderboardQuery as any),
     },
@@ -140,7 +143,7 @@ export const NewRankingContainer = ({
 }
 
 function operationFromResult<T>(
-  result: UseMutationResult<T> | UseQueryResult<T>
+  result: UseMutationResult<T, any, any, any> | UseQueryResult<T, any>
 ): Operation<T> {
   if (result.isLoading) {
     return loading()

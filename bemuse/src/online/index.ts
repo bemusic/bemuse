@@ -266,6 +266,7 @@ export class Online {
     return store川(action川)
   }
 
+  /** @deprecated */
   records川 = this.user川
     .pipe(switchMap(this.records川ForUser))
     .pipe(startWith(initialState<ScoreboardDataRecord | null>()))
