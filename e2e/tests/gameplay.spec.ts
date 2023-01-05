@@ -91,6 +91,8 @@ test('Gameplay smoke test', async ({ page }, testInfo) => {
   await expect(page.locator('.Rankingのleaderboard')).toHaveText(/Playwright/)
 
   await takeScreenshot(page, testInfo, 'Result')
+
+  await page.getByText('Continue').first().click()
 })
 
 test('works offline', async ({ page }) => {

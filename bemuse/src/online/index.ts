@@ -20,7 +20,7 @@ import {
   bufferTime,
   combineLatest,
   concatMap,
-  distinct,
+  distinctUntilChanged,
   from,
   map,
   merge,
@@ -174,12 +174,13 @@ export class Online {
       .pipe(bufferTime(138))
       .pipe(
         scan(
-          (map, seen) => map.merge(_.zipObject(seen.map(id), seen)),
+          (map, seen) =>
+            map.merge(Immutable.Map(_.zipObject(seen.map(id), seen))),
           Immutable.Map<string, RecordLevel>()
         )
       )
       .pipe(map((map) => map.valueSeq()))
-      .pipe(distinct())
+      .pipe(distinctUntilChanged(Immutable.is))
       .pipe(map((seq) => seq.toArray()))
   }
 
