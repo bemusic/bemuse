@@ -7,7 +7,7 @@ import * as MusicSelectionIO from '../io/MusicSelectionIO'
 import * as Options from '../entities/Options'
 
 import { Chart, Song } from 'bemuse/collection-model/types'
-import Online, { UserInfo, useCurrentUser } from 'bemuse/online'
+import Online, { UserInfo } from 'bemuse/online'
 import React, { ChangeEvent, MouseEvent, useContext, useState } from 'react'
 import { createSelector, createStructuredSelector } from 'reselect'
 import {
@@ -44,6 +44,7 @@ import c from 'classnames'
 import { hasPendingArchiveToLoad } from '../PreloadedCustomBMS'
 import { shouldShowOptions } from 'bemuse/devtools/query-flags'
 import { useObservable } from 'react-rx'
+import { useCurrentUser } from 'bemuse/online/hooks'
 
 const selectMusicSelectState = (() => {
   const selectLegacyServerObjectForCurrentCollection = createSelector(

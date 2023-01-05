@@ -6,6 +6,7 @@ import { Icon } from 'bemuse/fa'
 import formatTime from '../../utils/formatTime'
 import { formattedAccuracyForRecord } from 'bemuse/rules/accuracy'
 import { usePersonalRecord } from './usePersonalRecord'
+import { useCurrentUser } from 'bemuse/online/hooks'
 
 export interface PartialChart {
   md5: string
@@ -16,7 +17,6 @@ export interface PartialChart {
 
 export interface MusicInfoTabStatsProps {
   chart: PartialChart
-  user?: string
 }
 
 const WhenNotLoading = ({
@@ -34,7 +34,8 @@ const Message = ({ show }: { show: boolean }) =>
     </div>
   ) : null
 
-const MusicInfoTabStats = ({ chart, user }: MusicInfoTabStatsProps) => {
+const MusicInfoTabStats = ({ chart }: MusicInfoTabStatsProps) => {
+  const user = useCurrentUser()
   const [loading, record] = usePersonalRecord(chart)
   return (
     <div className='MusicInfoTabStats'>

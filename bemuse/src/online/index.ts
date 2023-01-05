@@ -38,7 +38,7 @@ import { ScoreCount } from 'bemuse/rules/accuracy'
 import _ from 'lodash'
 import id from './id'
 import { queryClient } from 'bemuse/react-query'
-import { currentUserQueryKey } from './queryKeys'
+import { rootQueryKey } from './queryKeys'
 import { BatchedFetcher } from './BatchedFetcher'
 
 export interface SignUpInfo {
@@ -119,9 +119,15 @@ export interface InternetRankingService {
   ): Promise<ScoreboardDataRecord[]>
 }
 
+/** @deprecated */
 export interface RankingStream {
+  /** @deprecated */
   state川: Observable<RankingState>
+
+  /** @deprecated */
   resubmit: () => void
+
+  /** @deprecated */
   reloadScoreboard: () => void
 }
 
@@ -150,14 +156,14 @@ export class Online {
   async signUp(options: SignUpInfo) {
     const user = await this.service.signUp(options)
     this.user口.next(user)
-    queryClient.invalidateQueries({ queryKey: currentUserQueryKey })
+    queryClient.invalidateQueries({ queryKey: rootQueryKey })
     return user
   }
 
   async logIn(options: LogInInfo) {
     const user = await this.service.logIn(options)
     this.user口.next(user)
-    queryClient.invalidateQueries({ queryKey: currentUserQueryKey })
+    queryClient.invalidateQueries({ queryKey: rootQueryKey })
     return user
   }
 
@@ -166,7 +172,9 @@ export class Online {
       this.service.retrieveMultipleRecords(md5s.map((md5) => ({ md5 }))),
     (record) => record.md5
   )
+
   getPersonalRecordsByMd5(md5: string) {
+    if (!this.service.getCurrentUser()) return []
     return this.batchedRecordFetcher.load(md5)
   }
 
@@ -177,10 +185,13 @@ export class Online {
   async logOut(): Promise<void> {
     await this.service.logOut()
     this.user口.next(null)
-    queryClient.invalidateQueries({ queryKey: currentUserQueryKey })
+    queryClient.invalidateQueries({ queryKey: rootQueryKey })
   }
 
   async submitScore(info: ScoreInfo) {
+    if (!this.service.getCurrentUser()) {
+      throw new Error('Unauthenticated.')
+    }
     const record = await this.service.submitScore(info)
     this.submitted口.next(record)
     return record
@@ -188,6 +199,11 @@ export class Online {
 
   scoreboard(level: RecordLevel) {
     return this.service.retrieveScoreboard(level)
+  }
+
+  retrievePersonalRankingEntry(level: RecordLevel) {
+    if (!this.service.getCurrentUser()) return null
+    return this.service.retrieveRecord(level)
   }
 
   private allSeen川 = this.allSeen川ForJustSeen川(this.seen口)
@@ -257,6 +273,7 @@ export class Online {
 
   dispose() {}
 
+  /** @deprecated */
   Ranking(data: RankingInfo): RankingStream {
     const level: RecordLevel = fromObject(data)
     const retrySelf口 = new Subject<void>()
@@ -354,5 +371,3 @@ export class Online {
 }
 
 export default Online
-
-export * from './hooks'
