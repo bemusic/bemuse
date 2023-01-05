@@ -206,7 +206,7 @@ export class OnlineService implements InternetRankingService {
   // Retrieve multiple records!
   //
   // Items is an array of song items. They have a md5 property.
-  async retrieveMultipleRecords(items: readonly RecordLevel[]) {
+  async retrieveMultipleRecords(items: readonly { md5: string }[]) {
     if (!this._currentUser) {
       throw new Error('Not logged in')
     }

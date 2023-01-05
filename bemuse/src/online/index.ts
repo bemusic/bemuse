@@ -39,6 +39,7 @@ import _ from 'lodash'
 import id from './id'
 import { queryClient } from 'bemuse/react-query'
 import { currentUserQueryKey } from './queryKeys'
+import { BatchedFetcher } from './BatchedFetcher'
 
 export interface SignUpInfo {
   username: string
@@ -114,7 +115,7 @@ export interface InternetRankingService {
     level: RecordLevel
   ): Promise<{ data: ScoreboardDataEntry[] }>
   retrieveMultipleRecords(
-    levels: readonly RecordLevel[]
+    levels: readonly { md5: string }[]
   ): Promise<ScoreboardDataRecord[]>
 }
 
@@ -158,6 +159,15 @@ export class Online {
     this.user口.next(user)
     queryClient.invalidateQueries({ queryKey: currentUserQueryKey })
     return user
+  }
+
+  batchedRecordFetcher = new BatchedFetcher<ScoreboardDataRecord>(
+    (md5s) =>
+      this.service.retrieveMultipleRecords(md5s.map((md5) => ({ md5 }))),
+    (record) => record.md5
+  )
+  getPersonalRecordsByMd5(md5: string) {
+    return this.batchedRecordFetcher.load(md5)
   }
 
   changePassword(options: ChangePasswordInfo) {
