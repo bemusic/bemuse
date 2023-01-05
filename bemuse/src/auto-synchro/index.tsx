@@ -4,7 +4,6 @@ import ExperimentScene, { ExperimentState } from './ui/ExperimentScene'
 
 import React from 'react'
 import { Subject } from 'rxjs'
-import _ from 'lodash'
 import { createRoot } from 'react-dom/client'
 
 export async function main(bootContext: {
