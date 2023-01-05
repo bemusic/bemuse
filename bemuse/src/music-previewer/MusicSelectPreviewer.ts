@@ -1,6 +1,6 @@
-import { useEffect } from 'react'
-
 import * as MusicPreviewer from '.'
+
+import { useEffect, useState } from 'react'
 
 MusicPreviewer.preload()
 
@@ -9,12 +9,14 @@ export interface MusicSelectPreviewerProps {
 }
 
 const MusicSelectPreviewer = ({ url }: MusicSelectPreviewerProps) => {
+  const [pausedForCalibration, setPausedForCalibration] = useState(false)
   useEffect(() => {
     const handleMessage = ({ data }: MessageEvent) => {
       if (data.type === 'calibration-started') {
-        MusicPreviewer.disable()
-      } else if (data.type === 'calibration-closed') {
-        MusicPreviewer.enable()
+        setPausedForCalibration(true)
+      }
+      if (data.type === 'calibration-closed') {
+        setPausedForCalibration(false)
       }
     }
     addEventListener('message', handleMessage)
@@ -24,9 +26,13 @@ const MusicSelectPreviewer = ({ url }: MusicSelectPreviewerProps) => {
     }
   }, [])
   useEffect(() => {
-    MusicPreviewer.enable()
+    if (pausedForCalibration) {
+      MusicPreviewer.disable()
+    } else {
+      MusicPreviewer.enable()
+    }
     MusicPreviewer.preview(url)
-  })
+  }, [url, pausedForCalibration])
 
   return null
 }
