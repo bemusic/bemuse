@@ -31,6 +31,14 @@
 
 ## 54.0.0
 
+### Bug fixes
+
+- Fixed a problem where the old version of the game file is incorrectly cached,
+  leading to an error: “Failed to load environment bundle.” Also improved the
+  error message that displays to suggest the user to perform a hard refresh (by
+  holding down the Shift key while clicking the Reload button).
+  [[#809], [#818]], by [@dtinth]
+
 ### Internals
 
 - Made further improvements to the codebase. Upgraded
@@ -44,14 +52,6 @@
 - Added some more automated test cases. [[#806]], by [@dtinth]
 - Refactored online code and replaced remaining code that uses Bacon.js with
   RxJS. [[#807]], by [@MikuroXina]
-
-### Bug fixes
-
-- Fixed a problem where the old version of the game file is incorrectly cached,
-  leading to an error: “Failed to load environment bundle.” Also improved the
-  error message that displays to suggest the user to perform a hard refresh (by
-  holding down the Shift key while clicking the Reload button).
-  [[#809], [#818]], by [@dtinth]
 
 [#805]: https://github.com/bemusic/bemuse/pull/805
 [#808]: https://github.com/bemusic/bemuse/pull/808
