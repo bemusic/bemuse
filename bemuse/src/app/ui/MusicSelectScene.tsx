@@ -7,7 +7,7 @@ import * as MusicSelectionIO from '../io/MusicSelectionIO'
 import * as Options from '../entities/Options'
 
 import { Chart, Song } from 'bemuse/collection-model/types'
-import Online, { UserInfo } from 'bemuse/online'
+import Online, { UserInfo, useCurrentUser } from 'bemuse/online'
 import React, { ChangeEvent, MouseEvent, useContext, useState } from 'react'
 import { createSelector, createStructuredSelector } from 'reselect'
 import {
@@ -213,9 +213,9 @@ const MusicSelectScene = () => {
   const [authenticationPopupVisible, setAuthenticationPopupVisible] =
     useState(false)
 
-  const online = useContext(OnlineContext)
   const dispatch = useDispatch()
-  const user = useObservable(online.user川)
+  const online = useContext(OnlineContext)
+  const user = useCurrentUser()
 
   const popScene = () => {
     sceneManager.pop()

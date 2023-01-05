@@ -37,6 +37,8 @@ import Immutable from 'immutable'
 import { ScoreCount } from 'bemuse/rules/accuracy'
 import _ from 'lodash'
 import id from './id'
+import { queryClient } from 'bemuse/react-query'
+import { currentUserQueryKey } from './queryKeys'
 
 export interface SignUpInfo {
   username: string
@@ -125,24 +127,36 @@ export interface RankingStream {
 export class Online {
   constructor(private readonly service: InternetRankingService) {}
 
+  /** @deprecated */
   private user口 = new Subject<UserInfo | null>()
+
+  /** @deprecated */
   private seen口 = new Subject<RecordLevel>()
+
+  /** @deprecated */
   private submitted口 = new Subject<ScoreboardDataRecord>()
 
+  /** @deprecated - Use getCurrentUser() instead */
   user川 = this.user口
     .pipe(startWith(null))
     .pipe(shareReplay(1))
     .pipe(map((user) => user || this.service.getCurrentUser()))
 
+  getCurrentUser() {
+    return this.service.getCurrentUser()
+  }
+
   async signUp(options: SignUpInfo) {
     const user = await this.service.signUp(options)
     this.user口.next(user)
+    queryClient.invalidateQueries({ queryKey: currentUserQueryKey })
     return user
   }
 
   async logIn(options: LogInInfo) {
     const user = await this.service.logIn(options)
     this.user口.next(user)
+    queryClient.invalidateQueries({ queryKey: currentUserQueryKey })
     return user
   }
 
@@ -153,6 +167,7 @@ export class Online {
   async logOut(): Promise<void> {
     await this.service.logOut()
     this.user口.next(null)
+    queryClient.invalidateQueries({ queryKey: currentUserQueryKey })
   }
 
   async submitScore(info: ScoreInfo) {
@@ -329,3 +344,5 @@ export class Online {
 }
 
 export default Online
+
+export * from './hooks'

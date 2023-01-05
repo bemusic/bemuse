@@ -30,17 +30,21 @@ import { monetize } from 'monetizer'
 import { musicSearchTextSlice } from './entities/MusicSearchText'
 import now from 'bemuse/utils/now'
 import { optionsSlice } from './entities/Options'
+import { QueryClientProvider } from 'react-query'
+import { queryClient } from 'bemuse/react-query'
 
 const store = configureStore()
 
 const sceneManager = new SceneManager(({ children }) => (
-  <div className='bemuse-scene'>
-    <Provider store={store}>
-      <SceneManagerContext.Provider value={sceneManager}>
-        {children}
-      </SceneManagerContext.Provider>
-    </Provider>
-  </div>
+  <QueryClientProvider client={queryClient}>
+    <div className='bemuse-scene'>
+      <Provider store={store}>
+        <SceneManagerContext.Provider value={sceneManager}>
+          {children}
+        </SceneManagerContext.Provider>
+      </Provider>
+    </div>
+  </QueryClientProvider>
 ))
 
 // Allow hot reloading of some modules.
