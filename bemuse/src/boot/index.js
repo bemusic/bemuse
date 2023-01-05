@@ -48,6 +48,7 @@ import(/* webpackChunkName: 'environment' */ './environment')
         })
         .then(() => Boot.hide())
         .catch((err) => {
+          console.error(err)
           ErrorDialog.show(
             `An error occurred while initializing "${mode}"`,
             err

@@ -43,7 +43,7 @@ import UnofficialPanel from './UnofficialPanel'
 import c from 'classnames'
 import { hasPendingArchiveToLoad } from '../PreloadedCustomBMS'
 import { shouldShowOptions } from 'bemuse/devtools/query-flags'
-import { useObservable } from 'react-rx'
+import { useCurrentUser } from 'bemuse/online/hooks'
 
 const selectMusicSelectState = (() => {
   const selectLegacyServerObjectForCurrentCollection = createSelector(
@@ -213,9 +213,9 @@ const MusicSelectScene = () => {
   const [authenticationPopupVisible, setAuthenticationPopupVisible] =
     useState(false)
 
-  const online = useContext(OnlineContext)
   const dispatch = useDispatch()
-  const user = useObservable(online.user川)
+  const online = useContext(OnlineContext)
+  const user = useCurrentUser()
 
   const popScene = () => {
     sceneManager.pop()

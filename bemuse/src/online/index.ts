@@ -37,6 +37,9 @@ import Immutable from 'immutable'
 import { ScoreCount } from 'bemuse/rules/accuracy'
 import _ from 'lodash'
 import id from './id'
+import { queryClient } from 'bemuse/react-query'
+import { rootQueryKey } from './queryKeys'
+import { BatchedFetcher } from './BatchedFetcher'
 
 export interface SignUpInfo {
   username: string
@@ -100,7 +103,7 @@ export interface RankingState {
   }
 }
 
-export interface AccountService {
+export interface InternetRankingService {
   getCurrentUser(): UserInfo | null
   signUp(signUpInfo: SignUpInfo): Promise<UserInfo | null>
   logIn(logInInfo: LogInInfo): Promise<UserInfo | null>
@@ -112,38 +115,67 @@ export interface AccountService {
     level: RecordLevel
   ): Promise<{ data: ScoreboardDataEntry[] }>
   retrieveMultipleRecords(
-    levels: readonly RecordLevel[]
+    levels: readonly { md5: string }[]
   ): Promise<ScoreboardDataRecord[]>
 }
 
+/** @deprecated */
 export interface RankingStream {
+  /** @deprecated */
   state川: Observable<RankingState>
+
+  /** @deprecated */
   resubmit: () => void
+
+  /** @deprecated */
   reloadScoreboard: () => void
 }
 
 export class Online {
-  constructor(private readonly service: AccountService) {}
+  constructor(private readonly service: InternetRankingService) {}
 
+  /** @deprecated */
   private user口 = new Subject<UserInfo | null>()
+
+  /** @deprecated */
   private seen口 = new Subject<RecordLevel>()
+
+  /** @deprecated */
   private submitted口 = new Subject<ScoreboardDataRecord>()
 
+  /** @deprecated - Use getCurrentUser() instead */
   user川 = this.user口
     .pipe(startWith(null))
     .pipe(shareReplay(1))
     .pipe(map((user) => user || this.service.getCurrentUser()))
 
+  getCurrentUser() {
+    return this.service.getCurrentUser()
+  }
+
   async signUp(options: SignUpInfo) {
     const user = await this.service.signUp(options)
     this.user口.next(user)
+    queryClient.invalidateQueries({ queryKey: rootQueryKey })
     return user
   }
 
   async logIn(options: LogInInfo) {
     const user = await this.service.logIn(options)
     this.user口.next(user)
+    queryClient.invalidateQueries({ queryKey: rootQueryKey })
     return user
+  }
+
+  batchedRecordFetcher = new BatchedFetcher<ScoreboardDataRecord>(
+    (md5s) =>
+      this.service.retrieveMultipleRecords(md5s.map((md5) => ({ md5 }))),
+    (record) => record.md5
+  )
+
+  getPersonalRecordsByMd5(md5: string) {
+    if (!this.service.getCurrentUser()) return []
+    return this.batchedRecordFetcher.load(md5)
   }
 
   changePassword(options: ChangePasswordInfo) {
@@ -153,9 +185,13 @@ export class Online {
   async logOut(): Promise<void> {
     await this.service.logOut()
     this.user口.next(null)
+    queryClient.invalidateQueries({ queryKey: rootQueryKey })
   }
 
   async submitScore(info: ScoreInfo) {
+    if (!this.service.getCurrentUser()) {
+      throw new Error('Unauthenticated.')
+    }
     const record = await this.service.submitScore(info)
     this.submitted口.next(record)
     return record
@@ -163,6 +199,11 @@ export class Online {
 
   scoreboard(level: RecordLevel) {
     return this.service.retrieveScoreboard(level)
+  }
+
+  retrievePersonalRankingEntry(level: RecordLevel) {
+    if (!this.service.getCurrentUser()) return null
+    return this.service.retrieveRecord(level)
   }
 
   private allSeen川 = this.allSeen川ForJustSeen川(this.seen口)
@@ -225,6 +266,7 @@ export class Online {
     return store川(action川)
   }
 
+  /** @deprecated */
   records川 = this.user川
     .pipe(switchMap(this.records川ForUser))
     .pipe(startWith(initialState<ScoreboardDataRecord | null>()))
@@ -232,6 +274,7 @@ export class Online {
 
   dispose() {}
 
+  /** @deprecated */
   Ranking(data: RankingInfo): RankingStream {
     const level: RecordLevel = fromObject(data)
     const retrySelf口 = new Subject<void>()
