@@ -1,24 +1,49 @@
 import './ExperimentScene.scss'
 
-import c from 'classnames'
 import React, { MouseEventHandler } from 'react'
 
+import { Observable } from 'rxjs'
+import c from 'classnames'
+import { useObservable } from 'react-rx'
+
+export type ExperimentState =
+  | {
+      type: 'loading'
+    }
+  | { type: 'ready' }
+  | {
+      type: 'started'
+    }
+  | {
+      type: 'listening'
+      numSamples: number
+    }
+  | {
+      type: 'finished'
+      numSamples: number
+      latency: number
+    }
+
+const initialState = {
+  type: 'loading',
+} as const
+
 export interface ExperimentSceneProps {
-  finished: boolean
-  loading: boolean
-  started: boolean
-  listening: boolean
-  numSamples: number
-  latency: number
+  stateStream: Observable<ExperimentState>
   onStart?: MouseEventHandler<HTMLButtonElement>
 }
 
 const ExperimentScene = (props: ExperimentSceneProps) => {
+  const state = useObservable(props.stateStream, initialState)
   return (
-    <div className={c('ExperimentScene', { 'is-finished': props.finished })}>
+    <div
+      className={c('ExperimentScene', {
+        'is-finished': state.type === 'finished',
+      })}
+    >
       <div className='ExperimentSceneのwrapper'>
         <div className='ExperimentSceneのwrapperInner'>
-          <Contents {...props} onStart={props.onStart} />
+          <Contents state={state} onStart={props.onStart} />
         </div>
       </div>
     </div>
@@ -44,38 +69,21 @@ const Message = ({ text }: { text: string }) => (
 )
 
 const Contents = ({
-  loading,
-  started,
-  listening,
+  state,
   onStart,
-  finished,
-  numSamples,
-  latency,
-}: ExperimentSceneProps) => {
-  if (loading) {
+}: Pick<ExperimentSceneProps, 'onStart'> & { state: ExperimentState }) => {
+  if (state.type === 'loading') {
     return null
   }
-  if (!started) {
+  if (state.type === 'ready') {
     return <Ready onStart={onStart} />
   }
-  if (!listening) {
+  if (state.type === 'started') {
     return <Message text='Please listen to the beats…' />
   }
-  return (
-    <Collection finished={finished} numSamples={numSamples} latency={latency} />
-  )
-}
 
-const Collection = ({
-  finished,
-  numSamples,
-  latency,
-}: {
-  finished: boolean
-  numSamples: number
-  latency: number
-}) => {
-  const scale = finished ? 1 : easeOut(Math.min(1, numSamples / 84))
+  const finished = state.type === 'finished'
+  const scale = finished ? 1 : easeOut(Math.min(1, state.numSamples / 84))
   const transform = `scaleX(${scale})`
   const style = {
     transform: transform,
@@ -86,7 +94,7 @@ const Collection = ({
       <Message
         text={
           finished
-            ? `Your latency is ${latency}ms. Please close this window.`
+            ? `Your latency is ${state.latency}ms. Please close this window.`
             : 'Please press the space bar when you hear the kick drum.'
         }
       />
