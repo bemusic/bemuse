@@ -268,12 +268,12 @@ function applyWebConfig(config) {
       workbox: {
         manifestTransforms: [
           (manifest) => {
-            manifest.push({ url: '/', revision: null })
+            // manifest.push({ url: '/', revision: null })
             return { manifest }
           },
         ],
-        navigateFallback: '/',
-        navigateFallbackAllowlist: [/^\/(?:\?.*)?$/],
+        // navigateFallback: '/',
+        // navigateFallbackAllowlist: [/^\/(?:\?.*)?$/],
         runtimeCaching: [
           // Cache all .bemuse files.
           // These files are hashed, so the CacheFirst strategy is safe.

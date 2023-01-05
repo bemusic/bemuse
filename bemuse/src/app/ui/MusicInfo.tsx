@@ -11,7 +11,7 @@ import MusicInfoTabs from './MusicInfoTabs'
 import React from 'react'
 
 export interface MusicInfoProps {
-  chart: Chart
+  chart?: Chart
   charts: readonly Chart[]
   onChartClick: MusicChartSelectorProps['onChartClick']
   onOptions: () => void
@@ -21,14 +21,20 @@ export interface MusicInfoProps {
 
 const MusicInfo = (props: MusicInfoProps) => (
   <section className='MusicInfo'>
-    <MusicChartInfo info={props.chart?.info} />
-    <MusicChartSelector
-      song={props.song}
-      selectedChart={props.chart}
-      charts={props.charts}
-      onChartClick={props.onChartClick}
-    />
-    <MusicInfoTabs {...props} />
+    {props.chart ? (
+      <>
+        <MusicChartInfo info={props.chart.info} />
+        <MusicChartSelector
+          song={props.song}
+          selectedChart={props.chart}
+          charts={props.charts}
+          onChartClick={props.onChartClick}
+        />
+        <MusicInfoTabs {...props} chart={props.chart} />
+      </>
+    ) : (
+      <></>
+    )}
   </section>
 )
 

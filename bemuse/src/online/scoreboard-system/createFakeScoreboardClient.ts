@@ -66,6 +66,10 @@ export function createFakeScoreboardClient(): ScoreboardClient {
       }
     },
     retrieveRankingEntries: async (options) => {
+      if (!options.md5s.every((x) => typeof x === 'string')) {
+        console.error('Invalid md5s...', options.md5s)
+        throw new Error('Invalid md5s (this is a programmer error)')
+      }
       await delay(100)
       const { username } = decodeFakePlayerToken(options.playerToken)
       const set = new Set<string>(options.md5s)

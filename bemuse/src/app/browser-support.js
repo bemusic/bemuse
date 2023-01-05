@@ -1,3 +1,5 @@
+import { isQueryFlagEnabled } from 'bemuse/flags'
+
 export const SUPPORTED = [
   {
     name: 'Firefox 92+',
@@ -8,12 +10,12 @@ export const SUPPORTED = [
     test: () => checkUserAgent(/Chrome\/(\d+)\./, 93),
   },
   {
-    name: 'Safari 15.4+',
-    test: () => checkUserAgent(/Version\/(\d+)\.\S+ Safari\//, 15.4),
+    name: 'Safari 16+',
+    test: () => checkUserAgent(/Version\/(\d+)\.\S+ Safari\//, 16),
   },
   {
-    name: 'iOS 15.4+ (iPad Pro)',
-    test: () => checkUserAgent(/iPad; CPU OS (\d+)/, 15.4),
+    name: 'iOS 16+ (iPad Pro)',
+    test: () => checkUserAgent(/iPad; CPU OS (\d+)/, 16),
   },
 ]
 
@@ -25,6 +27,7 @@ function checkUserAgent(pattern, num) {
 }
 
 export function isBrowserSupported() {
+  if (isQueryFlagEnabled('unsupported-browser')) return false
   for (const browser of SUPPORTED) if (browser.test()) return true
   return false
 }

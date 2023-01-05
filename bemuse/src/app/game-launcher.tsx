@@ -362,16 +362,16 @@ class SceneDisplayContext {
   shown = false
   async showScene(scene: ReactScene | JSX.Element) {
     if (!this.shown) {
-      this.sceneManager.push(scene)
+      await this.sceneManager.push(scene)
       this.shown = true
     } else {
-      this.sceneManager.display(scene)
+      await this.sceneManager.display(scene)
     }
   }
 
   async end() {
     if (this.shown) {
-      this.sceneManager.pop()
+      await this.sceneManager.pop()
       this.shown = false
     }
   }

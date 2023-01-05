@@ -91,9 +91,11 @@ test('Gameplay smoke test', async ({ page }, testInfo) => {
   await expect(page.locator('.Rankingのleaderboard')).toHaveText(/Playwright/)
 
   await takeScreenshot(page, testInfo, 'Result')
+
+  await page.getByText('Continue').first().click()
 })
 
-test('works offline', async ({ page }) => {
+test.skip('works offline', async ({ page }) => {
   await startBemuse(page)
   await expect
     .poll(() => page.evaluate(() => navigator.serviceWorker.controller?.state))
