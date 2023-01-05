@@ -8,12 +8,12 @@ export const SUPPORTED = [
     test: () => checkUserAgent(/Chrome\/(\d+)\./, 93),
   },
   {
-    name: 'Safari 15.4+',
-    test: () => checkUserAgent(/Version\/(\d+)\.\S+ Safari\//, 15),
+    name: 'Safari 16+',
+    test: () => checkUserAgent(/Version\/(\d+)\.\S+ Safari\//, 16),
   },
   {
-    name: 'iOS 15.4+ (iPad Pro)',
-    test: () => checkUserAgent(/iPad; CPU OS (\d+)/, 15),
+    name: 'iOS 16+ (iPad Pro)',
+    test: () => checkUserAgent(/iPad; CPU OS (\d+)/, 16),
   },
 ]
 
