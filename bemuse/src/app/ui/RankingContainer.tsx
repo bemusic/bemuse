@@ -118,7 +118,7 @@ export const NewRankingContainer = ({
   const state: RankingState = {
     data: leaderboardQuery.data?.data || null,
     meta: {
-      submission: !!user
+      submission: user
         ? operationFromResult(
             canSubmit ? submissionMutation : personalRankingEntryQuery
           )
