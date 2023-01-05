@@ -32,7 +32,7 @@ export async function main(bootContext: {
 
   function postMessage(data: object) {
     if (window.opener) {
-      window.opener.postMessage(data, '*')
+      window.opener.postMessage(data, 'https://bemuse.ninja')
     }
   }
 

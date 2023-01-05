@@ -20,6 +20,9 @@ const parseLatency = (latencyText: string): number => {
 const useLatency = (handler: (latency: number) => void) => {
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
+      if (event.origin !== 'https://bemuse.ninja') {
+        throw new Error('invalid origin')
+      }
       if (event.data && typeof event.data.latency === 'number') {
         handler(event.data.latency)
       }
