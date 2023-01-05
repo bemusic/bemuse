@@ -29,6 +29,45 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## 54.0.0
+
+### Bug fixes
+
+- Fixed a problem where the old version of the game file is incorrectly cached,
+  leading to an error: “Failed to load environment bundle.” Also improved the
+  error message that displays to suggest the user to perform a hard refresh (by
+  holding down the Shift key while clicking the Reload button).
+  [[#809], [#818]], by [@dtinth]
+
+### Internals
+
+- Made further improvements to the codebase. Upgraded
+  [React](https://reactjs.org/), [Redux](https://redux.js.org/), and
+  [React Redux](https://react-redux.js.org/) to the latest version, migrated the
+  state management code from a bespoke helper library to
+  [Redux Toolkit](https://redux-toolkit.js.org/), and converted many files into
+  TypeScript along the way.
+  [[#805], [#808], [#810], [#811], [#812], [#813], [#814], [#815], [#816], [#817]],
+  by [@MikuroXina]
+- Added some more automated test cases. [[#806]], by [@dtinth]
+- Refactored online code and replaced remaining code that uses Bacon.js with
+  RxJS. [[#807]], by [@MikuroXina]
+
+[#805]: https://github.com/bemusic/bemuse/pull/805
+[#808]: https://github.com/bemusic/bemuse/pull/808
+[#810]: https://github.com/bemusic/bemuse/pull/810
+[#811]: https://github.com/bemusic/bemuse/pull/811
+[#812]: https://github.com/bemusic/bemuse/pull/812
+[#813]: https://github.com/bemusic/bemuse/pull/813
+[#814]: https://github.com/bemusic/bemuse/pull/814
+[#815]: https://github.com/bemusic/bemuse/pull/815
+[#816]: https://github.com/bemusic/bemuse/pull/816
+[#817]: https://github.com/bemusic/bemuse/pull/817
+[#806]: https://github.com/bemusic/bemuse/pull/806
+[#807]: https://github.com/bemusic/bemuse/pull/807
+[#809]: https://github.com/bemusic/bemuse/pull/809
+[#818]: https://github.com/bemusic/bemuse/pull/818
+
 ## 53.3.0
 
 ### Internals
