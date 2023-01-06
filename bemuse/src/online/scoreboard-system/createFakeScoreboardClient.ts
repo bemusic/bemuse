@@ -16,8 +16,43 @@ interface Submission {
 }
 
 export function createFakeScoreboardClient(): ScoreboardClient {
-  let submissions: Submission[] = []
-  const signedUpUsernames = new Set<string>()
+  let submissions: Submission[] = [
+    {
+      md5: '12345670123456789abcdef89abemuse',
+      playMode: 'TS',
+      entry: {
+        id: 'preexisting1',
+        score: 111111,
+        total: 1,
+        combo: 1,
+        count: [0, 0, 0, 1, 0],
+        playNumber: 1,
+        playCount: 1,
+        recordedAt: '2022-12-31T23:59:59.999Z',
+        player: {
+          name: 'tester',
+        },
+      },
+    },
+    {
+      md5: '12345670123456789abcdef89abemuse',
+      playMode: 'TS',
+      entry: {
+        id: 'preexisting2',
+        score: 222222,
+        total: 1,
+        combo: 1,
+        count: [0, 0, 0, 1, 0],
+        playNumber: 1,
+        playCount: 1,
+        recordedAt: '2022-12-31T23:59:59.999Z',
+        player: {
+          name: 'rival',
+        },
+      },
+    },
+  ]
+  const signedUpUsernames = new Set<string>(['taken'])
 
   const client: ScoreboardClient = {
     signUp: async (options) => {

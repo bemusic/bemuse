@@ -2,6 +2,8 @@ import React, { ReactNode, createContext } from 'react'
 import { Root, createRoot } from 'react-dom/client'
 
 import MAIN from 'bemuse/utils/main-element'
+import { QueryClientProvider } from 'react-query'
+import { queryClient } from 'bemuse/react-query'
 
 export type TeardownCallback = () => PromiseLike<void> | void
 
@@ -89,7 +91,11 @@ function ReactScene(
         teardown = callback
       },
     })
-    root.render(<ReactSceneContainer>{clonedElement}</ReactSceneContainer>)
+    root.render(
+      <QueryClientProvider client={queryClient}>
+        <ReactSceneContainer>{clonedElement}</ReactSceneContainer>
+      </QueryClientProvider>
+    )
     return {
       async teardown() {
         try {

@@ -35,7 +35,7 @@ export function main() {
     lr2Timegate: [20, 40],
     onExit: () => alert('Exit!'),
     onReplay: () => alert('Replay!'),
-    playMode: 'BM',
+    playMode: 'TS',
   }
   sceneManager.display(
     <Provider store={configureStore()}>
