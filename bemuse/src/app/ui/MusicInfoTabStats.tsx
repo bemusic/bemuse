@@ -48,7 +48,7 @@ const MusicInfoTabStats = ({ chart }: MusicInfoTabStatsProps) => {
         <dt>Duration</dt>
         <dd>{formatTime(chart.duration)}</dd>
         <dt>Play Count</dt>
-        <dd>
+        <dd data-testid='stats-play-count'>
           <WhenNotLoading loading={loading}>
             {record ? record.playCount : user ? '0' : '-'}
           </WhenNotLoading>
@@ -56,7 +56,7 @@ const MusicInfoTabStats = ({ chart }: MusicInfoTabStatsProps) => {
       </dl>
       <dl className='MusicInfoTabStatsのcolumn is-right'>
         <dt>Best Score</dt>
-        <dd>
+        <dd data-testid='stats-best-score'>
           <WhenNotLoading loading={loading}>
             {record ? record.score : '-'}
           </WhenNotLoading>
