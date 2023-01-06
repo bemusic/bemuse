@@ -190,7 +190,7 @@ export class OmniInput {
   }
 }
 
-// Public: Returns a Bacon EventStream of keys pressed.
+// Public: Returns an RxJS Observable of keys pressed.
 //
 export function key川(
   input = new OmniInput(),

@@ -55,6 +55,7 @@ function tests(onlineServiceOptions) {
     this.timeout(20000)
 
     describe('signup', function () {
+      /** @type {ReturnType<typeof createOnline>} */
       let online
       let info
       before(function () {
@@ -75,6 +76,7 @@ function tests(onlineServiceOptions) {
     })
 
     describe('initially', function () {
+      /** @type {ReturnType<typeof createOnline>} */
       let online
       before(async () => {
         await createOnline().logOut()
@@ -82,41 +84,34 @@ function tests(onlineServiceOptions) {
       beforeEach(async () => {
         online = createOnline()
       })
-      describe('user川', function () {
-        it('should be null', function (done) {
-          online.user川.pipe(first()).subscribe((user) => {
-            assert(user === null)
-            done()
-          })
+      describe('getCurrentUser', function () {
+        it('should return null', function () {
+          assert.equal(online.getCurrentUser(), null)
         })
       })
     })
 
     describe('when signed up', function () {
+      /** @type {ReturnType<typeof createOnline>} */
       let online
       before(function () {
         online = createOnline()
       })
-      describe('user川', function () {
+      describe('getCurrentUser', function () {
         it('should change to signed-up user, and also start with it', async function () {
           const info = createAccountInfo()
-
           await online.signUp(info)
+          const user = online.getCurrentUser()
+          assert.equal(user.username, info.username)
 
-          const user = await firstValueFrom(
-            online.user川.pipe(filter((u) => !!u))
-          )
-          expect(user.username).to.equal(info.username)
-
-          const firstUser = await firstValueFrom(
-            createOnline().user川.pipe(filter((u) => !!u))
-          )
-          expect(firstUser.username).to.equal(info.username)
+          const anotherUser = createOnline().getCurrentUser()
+          assert.equal(anotherUser.username, info.username)
         })
       })
     })
 
     describe('with an active user', function () {
+      /** @type {ReturnType<typeof createOnline>} */
       let online
       const info = createAccountInfo()
       before(function () {
@@ -127,19 +122,15 @@ function tests(onlineServiceOptions) {
         return online.logIn(info)
       })
       describe('when log out', function () {
-        it('should change user川 back to null', async function () {
-          online.logOut()
-
-          const user = await firstValueFrom(
-            online.user川.pipe(filter((u) => !u)).pipe(first())
-          )
-
-          assert(user === null)
+        it('should change getCurrentUser result back to null', async function () {
+          await online.logOut()
+          assert.equal(online.getCurrentUser(), null)
         })
       })
     })
 
     describe('submitting high scores', function () {
+      /** @type {ReturnType<typeof createOnline>} */
       let online
       before(function () {
         online = createOnline()
@@ -243,6 +234,7 @@ function tests(onlineServiceOptions) {
     })
 
     describe('the scoreboard', function () {
+      /** @type {ReturnType<typeof createOnline>} */
       let online
       before(function () {
         online = createOnline()
@@ -294,78 +286,6 @@ function tests(onlineServiceOptions) {
         })
         step('log out...', function () {
           return online.logOut()
-        })
-
-        let ranking
-        step('subscribe to scoreboard...', function () {
-          ranking = online.Ranking({
-            md5: prefix + 'song1',
-            playMode: 'BM',
-            score: 111111,
-            combo: 123,
-            total: 456,
-            count: [0, 123, 0, 0, 333],
-            log: '',
-          })
-        })
-
-        function when(predicate) {
-          return firstValueFrom(ranking.state川.pipe(filter(predicate)))
-        }
-
-        step('should have scoreboard loading status', function () {
-          return when((state) => state.meta.scoreboard.status === 'loading')
-        })
-        step('no new score should be submitted', function () {
-          return when(
-            (state) =>
-              state.meta.scoreboard.status === 'completed' &&
-              state.meta.submission.status === 'unauthenticated'
-          ).then((state) => {
-            expect(state.data).to.have.length(2)
-          })
-        })
-        step('sign up user3...', function () {
-          return online.signUp(user3)
-        })
-        step('should start sending score', function () {
-          return when((state) => state.meta.submission.status === 'loading')
-        })
-        step('should finish sending score', function () {
-          return when(
-            (state) => state.meta.submission.status === 'completed'
-          ).then((state) => {
-            expect(state.meta.submission.value.rank).to.equal(3)
-          })
-        })
-        step('should start loading scoreboard', function () {
-          return when((state) => state.meta.scoreboard.status === 'loading')
-        })
-        step('should finish reloading scoreboard', function () {
-          return when(
-            (state) => state.meta.scoreboard.status === 'completed'
-          ).then((state) => {
-            expect(state.data).to.have.length(3)
-          })
-        })
-        step('resubscribe with read only', function () {
-          ranking = online.Ranking({
-            md5: prefix + 'song1',
-            playMode: 'BM',
-          })
-        })
-        step('should not submit new score', function () {
-          return when(
-            (state) =>
-              state.meta.scoreboard.status === 'completed' &&
-              state.meta.submission.status === 'completed'
-          ).then(function (state) {
-            expect(state.data).to.have.length(3)
-            expect(state.meta.submission.value.playCount).to.equal(1)
-          })
-        })
-        after(function () {
-          online.logOut()
         })
       })
     })
