@@ -35,7 +35,7 @@ const MusicListItemChart = ({
     'is-grade': !!grade,
   })
   return (
-    <div className={className} onClick={handleClick}>
+    <div className={className} onClick={handleClick} data-md5={chart.md5}>
       <span className='MusicListItemChartのtext'>
         {isLoading ? '…' : grade || chart.info.level}
       </span>

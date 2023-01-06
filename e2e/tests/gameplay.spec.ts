@@ -93,6 +93,11 @@ test('Gameplay smoke test', async ({ page }, testInfo) => {
   await takeScreenshot(page, testInfo, 'Result')
 
   await page.getByText('Continue').first().click()
+  await expect(page.getByTestId('stats-play-count')).toHaveText('1')
+  await expect(page.getByTestId('stats-best-score')).toHaveText('524305')
+
+  await page.getByText('Ranking').click()
+  await expect(page.locator('.Ranking')).toContainText('524305')
 })
 
 test.skip('works offline', async ({ page }) => {
