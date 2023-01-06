@@ -1,5 +1,5 @@
 import type {
-  AccountService,
+  InternetRankingService,
   ChangePasswordInfo,
   LogInInfo,
   ScoreInfo,
@@ -25,7 +25,7 @@ interface User {
   playerToken: string
 }
 
-export class OnlineService implements AccountService {
+export class OnlineService implements InternetRankingService {
   private _isFake: boolean
   private _scoreboardClient: ScoreboardClient
   private _storage: Storage
@@ -206,7 +206,7 @@ export class OnlineService implements AccountService {
   // Retrieve multiple records!
   //
   // Items is an array of song items. They have a md5 property.
-  async retrieveMultipleRecords(items: readonly RecordLevel[]) {
+  async retrieveMultipleRecords(items: readonly { md5: string }[]) {
     if (!this._currentUser) {
       throw new Error('Not logged in')
     }
