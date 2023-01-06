@@ -16,42 +16,43 @@ interface Submission {
 }
 
 export function createFakeScoreboardClient(): ScoreboardClient {
-  let submissions: Submission[] = [
-    {
-      md5: '12345670123456789abcdef89abemuse',
-      playMode: 'TS',
-      entry: {
-        id: 'preexisting1',
-        score: 111111,
-        total: 1,
-        combo: 1,
-        count: [0, 0, 0, 1, 0],
-        playNumber: 1,
-        playCount: 1,
-        recordedAt: '2022-12-31T23:59:59.999Z',
-        player: {
-          name: 'tester',
-        },
+  let submissions: Submission[] = []
+
+  let nextId = 1
+  const chart = (md5: string, playMode: MappingMode) => {
+    const c = {
+      addEntry(
+        name: string,
+        score: ScoreboardEntry['score'],
+        count: ScoreboardEntry['count']
+      ) {
+        submissions.push({
+          md5,
+          playMode,
+          entry: {
+            id: 'preexisting' + nextId++,
+            score,
+            total: count.reduce((a, b) => a + b, 0),
+            combo: 1,
+            count,
+            playNumber: 1,
+            playCount: 1,
+            recordedAt: '2022-12-31T23:59:59.999Z',
+            player: { name },
+          },
+        })
+        return c
       },
-    },
-    {
-      md5: '12345670123456789abcdef89abemuse',
-      playMode: 'TS',
-      entry: {
-        id: 'preexisting2',
-        score: 222222,
-        total: 1,
-        combo: 1,
-        count: [0, 0, 0, 1, 0],
-        playNumber: 1,
-        playCount: 1,
-        recordedAt: '2022-12-31T23:59:59.999Z',
-        player: {
-          name: 'rival',
-        },
-      },
-    },
-  ]
+    }
+    return c
+  }
+  chart('12345670123456789abcdef89abemuse', 'TS')
+    .addEntry('tester', 111111, [0, 0, 0, 1, 0])
+    .addEntry('rival', 222222, [0, 0, 0, 1, 0])
+    .addEntry('unbeatable', 555554, [1, 0, 0, 0, 0])
+  chart('fb3dab834591381a5b8188bc2dc9c4b7', 'KB')
+    .addEntry('tester', 543210, [9, 1, 0, 0, 0])
+    .addEntry('tester2', 123456, [0, 1, 5, 9, 0])
   const signedUpUsernames = new Set<string>(['taken'])
 
   const client: ScoreboardClient = {
