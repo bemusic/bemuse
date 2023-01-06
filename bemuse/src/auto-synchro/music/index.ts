@@ -1,17 +1,21 @@
+import SamplingMaster, { Sample } from 'bemuse/sampling-master'
+
 import _ from 'lodash'
 import context from 'bemuse/audio-context'
 import download from 'bemuse/utils/download'
-import SamplingMaster from 'bemuse/sampling-master'
 
 /**
  * The asset URL of these files...
  */
 const ASSET_URLS = {
-  'bgm.ogg': require('./data/bgm.ogg'),
-  'intro.ogg': require('./data/intro.ogg'),
-  'kick.ogg': require('./data/kick.ogg'),
-  'snare.ogg': require('./data/snare.ogg'),
-}
+  bgm: require('./data/bgm.ogg'),
+  intro: require('./data/intro.ogg'),
+  kick: require('./data/kick.ogg'),
+  snare: require('./data/snare.ogg'),
+} as const
+type AssetKey = keyof typeof ASSET_URLS
+
+type Samples = Record<AssetKey, Sample>
 
 /**
  * Loads the files and create a music instance.
@@ -19,25 +23,28 @@ const ASSET_URLS = {
 export async function load() {
   const master = new SamplingMaster(context)
 
-  const sample = (name) =>
-    download(ASSET_URLS[`${name}.ogg`])
+  const sample = (name: AssetKey) =>
+    download(ASSET_URLS[name])
       .as('arraybuffer')
       .then((buf) => master.sample(buf))
   const samples = _.fromPairs(
     await Promise.all(
-      ['bgm', 'intro', 'kick', 'snare'].map((name) =>
-        sample(name).then((sampleObj) => [name, sampleObj])
-      )
+      (Object.keys(ASSET_URLS) as readonly AssetKey[]).map(async (name) => {
+        const sampleObj = await sample(name)
+        return [name, sampleObj]
+      })
     )
-  )
+  ) as Samples
   return music(master, samples)
 }
+
+export type SampleRecord = [beat: number, deltaTime: number]
 
 /**
  * Takes the sample and sequences a music
  */
-function music(master, samples) {
-  return function play(callbacks) {
+function music(master: SamplingMaster, samples: Samples) {
+  return function play(callbacks: { a: () => void }) {
     master.unmute()
 
     const BPM = 148
@@ -49,7 +56,13 @@ function music(master, samples) {
     filter.Q.value = 10
     filter.connect(context.destination)
 
-    const state = { part2: null }
+    type State = {
+      part2: null | {
+        begin: number
+      }
+      ok?: boolean
+    }
+    const state: State = { part2: null }
 
     const sequence = beatSequencer(BPM, (beat, delay) => {
       if (beat % 8 !== 7) {
@@ -80,10 +93,10 @@ function music(master, samples) {
       ok() {
         state.ok = true
       },
-      progress(p) {
+      progress(p: number) {
         filter.frequency.value = 20000 * p * p * p
       },
-      getSample() {
+      getSample(): SampleRecord {
         const nearestBeat = Math.round((time.t * BPM) / 60)
         const nearestBeatTime = (nearestBeat * 60) / BPM
         return [nearestBeat, time.t - nearestBeatTime]
@@ -92,9 +105,12 @@ function music(master, samples) {
   }
 }
 
-function beatSequencer(bpm, f) {
+function beatSequencer(
+  bpm: number,
+  f: (beat: number, deltaTime: number) => void
+) {
   let beat = -1
-  return (time) => {
+  return (time: number) => {
     const nowBeat = Math.floor(((time + 0.1) * bpm) / 60)
     while (beat < nowBeat) {
       beat += 1
@@ -105,13 +121,14 @@ function beatSequencer(bpm, f) {
 }
 
 class AudioTime {
-  constructor(audioContext, leadTime) {
-    this._context = audioContext
-    this._start = audioContext.currentTime
-    this._startTime = leadTime
-  }
+  constructor(
+    private readonly audioContext: AudioContext,
+    private readonly leadTime: number
+  ) {}
+
+  private start = this.audioContext.currentTime
 
   get t() {
-    return this._context.currentTime - this._start + this._startTime
+    return this.audioContext.currentTime - this.start + this.leadTime
   }
 }
