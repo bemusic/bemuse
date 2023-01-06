@@ -1,8 +1,8 @@
 // This file boots up Mocha
 //
 import 'script-loader!mocha/mocha.js'
-import 'style-loader!mocha/mocha.css'
-import 'style-loader!./support/mocha-overrides.css'
+import 'mocha/mocha.css'
+import './support/mocha-overrides.css'
 
 import loadSpecs from './loadSpecs'
 import prepareTestEnvironment from './prepareTestEnvironment'

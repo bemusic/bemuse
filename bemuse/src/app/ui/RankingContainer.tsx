@@ -1,20 +1,18 @@
-import { RankingState, RankingStream } from 'bemuse/online'
+import { RankingState } from 'bemuse/online'
 import {
   useCurrentUser,
   useLeaderboardQuery,
   usePersonalRankingEntryQuery,
   useRecordSubmissionMutation,
 } from 'bemuse/online/hooks'
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 
+import { Operation, completed, error, loading } from 'bemuse/online/operations'
+import { ScoreCount } from 'bemuse/rules/accuracy'
 import { MappingMode } from 'bemuse/rules/mapping-mode'
-import { OnlineContext } from 'bemuse/online/instance'
+import { UseMutationResult, UseQueryResult } from 'react-query'
 import Ranking from './Ranking'
 import { Result } from './ResultScene'
-import { ScoreCount } from 'bemuse/rules/accuracy'
-import { isQueryFlagEnabled } from 'bemuse/flags'
-import { UseMutationResult, UseQueryResult } from 'react-query'
-import { Operation, completed, error, loading } from 'bemuse/online/operations'
 
 export interface RankingContainerProps {
   chart: { md5: string }
@@ -22,68 +20,7 @@ export interface RankingContainerProps {
   result?: Result
 }
 
-/** @deprecated */
-export const OldRankingContainer = ({
-  chart,
-  playMode,
-  result,
-}: RankingContainerProps) => {
-  const online = useContext(OnlineContext)
-  const [state, setState] = useState<RankingState>({
-    data: null,
-    meta: {
-      scoreboard: { status: 'loading' },
-      submission: { status: 'loading' },
-    },
-  })
-  const model = useRef<RankingStream | null>(null)
-  useEffect(() => {
-    const onStoreTrigger = (newState: RankingState) =>
-      setState(() => ({ ...newState }))
-    const params = {
-      md5: chart.md5,
-      playMode: playMode,
-      ...(result
-        ? {
-            score: result.score,
-            combo: result.maxCombo,
-            total: result.totalCombo,
-            count: [
-              result['1'],
-              result['2'],
-              result['3'],
-              result['4'],
-              result.missed,
-            ] as ScoreCount,
-            log: result.log,
-          }
-        : {}),
-    }
-    model.current = online.Ranking(params)
-    const subscription = model.current.state川.subscribe(onStoreTrigger)
-    return () => {
-      subscription.unsubscribe()
-    }
-  }, [])
-
-  const onReloadScoreboardRequest = () => {
-    model.current?.reloadScoreboard()
-  }
-
-  const onResubmitScoreRequest = () => {
-    model.current?.resubmit()
-  }
-
-  return (
-    <Ranking
-      state={state}
-      onReloadScoreboardRequest={onReloadScoreboardRequest}
-      onResubmitScoreRequest={onResubmitScoreRequest}
-    />
-  )
-}
-
-export const NewRankingContainer = ({
+export const RankingContainer = ({
   chart,
   playMode,
   result,
@@ -154,6 +91,4 @@ function operationFromResult<T>(
   return completed(result.data!)
 }
 
-export default (isQueryFlagEnabled('old-ranking')
-  ? OldRankingContainer
-  : NewRankingContainer) as FC<RankingContainerProps>
+export default RankingContainer as FC<RankingContainerProps>
