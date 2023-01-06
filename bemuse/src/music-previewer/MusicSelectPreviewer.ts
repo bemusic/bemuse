@@ -11,10 +11,7 @@ export interface MusicSelectPreviewerProps {
 const MusicSelectPreviewer = ({ url }: MusicSelectPreviewerProps) => {
   const [pausedForCalibration, setPausedForCalibration] = useState(false)
   useEffect(() => {
-    const handleMessage = ({ data, origin }: MessageEvent) => {
-      if (origin !== 'https://bemuse.ninja') {
-        throw new Error('invalid origin')
-      }
+    const handleMessage = ({ data }: MessageEvent) => {
       if (data.type === 'calibration-started') {
         setPausedForCalibration(true)
       }
