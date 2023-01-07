@@ -29,6 +29,8 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## 54.0.2
+
 ## 54.0.1
 
 ### Bug fixes
