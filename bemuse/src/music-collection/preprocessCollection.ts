@@ -8,8 +8,6 @@ export interface Preprocessed extends MusicServerIndex {
 export const preprocessCollection = produce(
   (draft: Draft<Preprocessed>, songs?: SongMetadataInCollection[]) => {
     if (songs) {
-      console.dir(songs)
-      console.trace()
       draft.songs = songs.map((song) => preprocessSong(song))
     }
   }
