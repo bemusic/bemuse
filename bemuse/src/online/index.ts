@@ -12,6 +12,7 @@ import {
   completed,
   operation川FromPromise,
 } from './operations'
+import Immutable, { Seq } from 'immutable'
 import {
   Observable,
   ObservableInput,
@@ -33,13 +34,12 @@ import {
 } from 'rxjs'
 import { RecordLevel, fromObject } from './level'
 
-import Immutable from 'immutable'
+import { BatchedFetcher } from './BatchedFetcher'
 import { ScoreCount } from 'bemuse/rules/accuracy'
 import _ from 'lodash'
 import id from './id'
 import { queryClient } from 'bemuse/react-query'
 import { rootQueryKey } from './queryKeys'
-import { BatchedFetcher } from './BatchedFetcher'
 
 export interface SignUpInfo {
   username: string
@@ -221,8 +221,8 @@ export class Online {
         )
       )
       .pipe(map((map) => map.valueSeq()))
-      .pipe(distinctUntilChanged(Immutable.is))
-      .pipe(map((seq) => seq.toArray()))
+      .pipe(distinctUntilChanged<Seq.Indexed<RecordLevel>>(Immutable.is))
+      .pipe(map((seq: Seq.Indexed<RecordLevel>) => seq.toArray()))
   }
 
   private fetchRecords = async (
