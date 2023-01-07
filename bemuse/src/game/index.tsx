@@ -1,16 +1,17 @@
 import * as GameLoader from './loaders/game-loader'
 
+import GameShellScene, { OptionsDraft } from './ui/GameShellScene'
 import { SceneManager, SceneManagerContext } from 'bemuse/scene-manager'
 
 import BemusePackageResources from 'bemuse/resources/bemuse-package'
 import GameScene from './game-scene'
-import GameShellScene from './ui/GameShellScene'
 import LoadingScene from './ui/LoadingScene'
 import { Provider } from 'react-redux'
 import React from 'react'
 import URLResource from 'bemuse/resources/url'
 import audioContext from 'bemuse/audio-context'
 import configureStore from 'bemuse/app/redux/configureStore'
+import { isScratchPosition } from 'bemuse/app/entities/Options'
 import query from 'bemuse/utils/query'
 import { unmuteAudio } from 'bemuse/sampling-master'
 
@@ -27,21 +28,23 @@ export async function main() {
     window.removeEventListener('touchstart', unmute)
   })
 
-  const displayShell = function (options) {
+  const displayShell = function (options: OptionsDraft): Promise<OptionsDraft> {
     return new Promise(function (resolve) {
-      const scene = React.createElement(GameShellScene, {
-        options: options,
-        play: function (data) {
-          resolve(data)
-        },
-      })
+      const scene = (
+        <GameShellScene
+          options={options}
+          play={(data) => {
+            resolve(data)
+          }}
+        />
+      )
       sceneManager.display(scene)
     })
   }
 
-  const getSong = async function () {
+  const getSong = async function (): Promise<GameLoader.LoadSpec> {
     const kbm = (query.keyboard || '').split(',').map((x) => +x)
-    let options = {
+    const options: OptionsDraft = {
       url: query.bms || '/music/[snack]dddd/dddd_sph.bme',
       game: {
         audioInputLatency: +query.latency || 0,
@@ -51,7 +54,7 @@ export async function main() {
           speed: +query.speed || 3,
           autoplay: !!query.autoplay,
           placement: 'center',
-          scratch: query.scratch || 'left',
+          scratch: isScratchPosition(query.scratch) ? query.scratch : 'left',
           input: {
             keyboard: {
               1: kbm[0] || 83,
@@ -68,33 +71,34 @@ export async function main() {
         },
       ],
     }
-    options = await displayShell(options)
-    const url = options.url
+    const newOptions = await displayShell(options)
+    const url = newOptions.url
     const assetsUrl = new URL('assets/', url)
     const metadata = {
       title: 'Loading',
-      subtitles: [],
+      subtitles: [] as string[],
       artist: '',
       genre: '',
-      subartists: [],
+      subartists: [] as string[],
+      difficulty: 0,
+      level: 0,
     }
     return {
-      bms: options.resource || new URLResource(url),
-      assets: options.resources || new BemusePackageResources(assetsUrl),
+      bms: newOptions.resource || new URLResource(url),
+      assets: newOptions.resources || new BemusePackageResources(assetsUrl),
       metadata: metadata,
-      options: Object.assign({}, options.game, { players: options.players }),
+      options: Object.assign({}, newOptions.game, {
+        players: newOptions.players,
+      }),
     }
   }
 
   const loadSpec = await getSong()
   const { tasks, promise } = GameLoader.load(loadSpec)
   await sceneManager.display(
-    React.createElement(LoadingScene, {
-      tasks: tasks,
-      song: loadSpec.metadata,
-    })
+    <LoadingScene tasks={tasks} song={loadSpec.metadata} />
   )
   const controller = await promise
-  await sceneManager.display(new GameScene(controller.display))
+  await sceneManager.display(GameScene(controller.display))
   controller.start()
 }
