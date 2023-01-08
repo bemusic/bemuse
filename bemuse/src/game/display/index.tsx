@@ -1,14 +1,37 @@
 import './game-display.scss'
 
 import $ from 'jquery'
-
+import { Context } from 'bemuse/scintillator'
+import Game from '../game'
+import GameState from '../state'
+import { InfoPanelPosition } from 'bemuse/scintillator/skin'
+import { LoadImagePromise } from '../loaders/loadImage'
+import { PanelPlacement } from 'bemuse/app/entities/Options'
+import Player from '../player'
 import PlayerDisplay from './player-display'
+import React from 'react'
+import { createRoot } from 'react-dom/client'
 import formatTime from '../../utils/formatTime'
-import { shouldDisableFullScreen } from 'bemuse/devtools/query-flags'
 import screenfull from 'screenfull'
+import { shouldDisableFullScreen } from 'bemuse/devtools/query-flags'
+
+export interface Video {
+  element: HTMLVideoElement
+  offset: number
+}
 
 export class GameDisplay {
-  constructor({ game, context, backgroundImagePromise, video }) {
+  constructor({
+    game,
+    context,
+    backgroundImagePromise,
+    video,
+  }: {
+    game: Game
+    context: Context
+    backgroundImagePromise: LoadImagePromise
+    video: Video | null
+  }) {
     this._game = game
     this._context = context
     const skinData = context.skinData
@@ -30,11 +53,31 @@ export class GameDisplay {
     this._escapeHintShown = false
   }
 
-  setEscapeHandler(escapeHandler) {
+  private _game: Game
+  private _context: Context
+  private _players: Map<Player, PlayerDisplay>
+  private _stateful: Record<string, string | number>
+
+  private _wrapper: HTMLElement
+
+  private _escapeHintShown: boolean
+  private _escapeHint: HTMLDivElement | undefined
+
+  private _onEscape: () => void = () => {}
+  private _onReplay: () => void = () => {}
+
+  private _started: number = 0
+  private _duration: number = 0
+
+  private _video: HTMLVideoElement | undefined
+  private _videoStarted: boolean | undefined
+  private _videoOffset: number = 0
+
+  setEscapeHandler(escapeHandler: () => void) {
     this._onEscape = escapeHandler
   }
 
-  setReplayHandler(replayHandler) {
+  setReplayHandler(replayHandler: () => void) {
     this._onReplay = replayHandler
   }
 
@@ -52,16 +95,16 @@ export class GameDisplay {
     this._context.destroy()
   }
 
-  update(gameTime, gameState) {
+  update(gameTime: number, gameState: GameState) {
     const time = (new Date().getTime() - this._started) / 1000
     const data = this._getData(time, gameTime, gameState)
-    this._updateStatefulData(time, gameTime, gameState)
+    this._updateStatefulData(time, gameState)
     this._context.render(Object.assign({}, this._stateful, data))
     this._synchronizeVideo(gameTime)
     this._synchronizeTutorialEscapeHint(gameTime)
   }
 
-  _synchronizeVideo(gameTime) {
+  private _synchronizeVideo(gameTime: number) {
     if (this._video && !this._videoStarted && gameTime >= this._videoOffset) {
       this._video.volume = 0
       this._video.play()
@@ -70,7 +113,7 @@ export class GameDisplay {
     }
   }
 
-  _synchronizeTutorialEscapeHint(gameTime) {
+  private _synchronizeTutorialEscapeHint(gameTime: number) {
     if (this._game.options.tutorial) {
       const TUTORIAL_ESCAPE_HINT_SHOW_TIME = 101.123595506
       if (
@@ -78,18 +121,23 @@ export class GameDisplay {
         !this._escapeHintShown
       ) {
         this._escapeHintShown = true
-        this._escapeHint.classList.add('is-shown')
+        this._escapeHint?.classList.add('is-shown')
       }
     }
   }
 
-  _getData(time, gameTime, gameState) {
-    const data = {}
-    data['tutorial'] = this._game.options.tutorial ? 'yes' : 'no'
-    data['t'] = time
-    data['gameTime'] = gameTime
-    data['ready'] = this._getReady(gameState)
-    data['song_time'] = this._getSongTime(gameTime)
+  private _getData(
+    time: number,
+    gameTime: number,
+    gameState: GameState
+  ): Record<string, unknown> {
+    const data: Record<string, unknown> = {
+      tutorial: this._game.options.tutorial ? 'yes' : 'no',
+      t: time,
+      gameTime: gameTime,
+      ready: this._getReady(gameState),
+      song_time: this._getSongTime(gameTime),
+    }
     for (const [player, playerDisplay] of this._players) {
       const playerState = gameState.player(player)
       const playerData = playerDisplay.update(time, gameTime, playerState)
@@ -100,7 +148,7 @@ export class GameDisplay {
     return data
   }
 
-  _updateStatefulData(time, gameTime, gameState) {
+  private _updateStatefulData(time: number, gameState: GameState) {
     const data = this._stateful
     if (data['started'] === undefined && gameState.started) {
       data['started'] = time
@@ -110,7 +158,7 @@ export class GameDisplay {
     }
   }
 
-  _getSongTime(gameTime) {
+  private _getSongTime(gameTime: number) {
     return (
       formatTime(Math.min(this._duration, Math.max(0, gameTime))) +
       ' / ' +
@@ -118,16 +166,21 @@ export class GameDisplay {
     )
   }
 
-  _getReady(gameState) {
+  private _getReady(gameState: GameState) {
     const f = gameState.readyFraction
     return f > 0.5 ? Math.pow(1 - (f - 0.5) / 0.5, 2) : 0
   }
 
-  _createWrapper({
+  private _createWrapper({
     backgroundImagePromise,
     video,
     panelPlacement,
     infoPanelPosition,
+  }: {
+    backgroundImagePromise: LoadImagePromise
+    video: Video | null
+    panelPlacement: PanelPlacement
+    infoPanelPosition: InfoPanelPosition
   }) {
     const $wrapper = $('<div class="game-display"></div>')
       .attr('data-panel-placement', panelPlacement)
@@ -147,40 +200,42 @@ export class GameDisplay {
     return $wrapper[0]
   }
 
-  _createTouchEscapeButton() {
+  private _createTouchEscapeButton() {
     const touchButtons = document.createElement('div')
-    touchButtons.className = 'game-display--touch-buttons is-left'
+    touchButtons.className = 'game-display--touch-buttons is-left is-visible'
     this.wrapper.appendChild(touchButtons)
-    touchButtons.classList.add('is-visible')
-    const addTouchButton = (className, onClick) => {
-      const button = createTouchButton(onClick, className)
-      touchButtons.appendChild(button)
-    }
-    addTouchButton('game-display--touch-escape-button', () => this._onEscape())
-    addTouchButton('game-display--touch-replay-button', () => this._onReplay())
-
-    const escapeHint = document.createElement('div')
-    escapeHint.textContent = 'Click or press Esc to exit the tutorial'
-    escapeHint.className = 'game-display--escape-hint'
-    this._escapeHint = escapeHint
-    touchButtons.appendChild(escapeHint)
+    createRoot(touchButtons).render(
+      <>
+        <TouchButton
+          className='game-display--touch-escape-button'
+          onClick={() => this._onEscape()}
+        />
+        <TouchButton
+          className='game-display--touch-replay-button'
+          onClick={() => this._onReplay()}
+        />
+        <div className='game-display--escape-hint'>
+          Click or press Esc to exit the tutorial
+        </div>
+      </>
+    )
   }
 
-  _createFullScreenButton() {
-    if (shouldDisableFullScreen() || !screenfull.enabled) {
+  private _createFullScreenButton() {
+    if (shouldDisableFullScreen() || !screenfull.isEnabled) {
       return
     }
     const touchButtons = document.createElement('div')
     touchButtons.className = 'game-display--touch-buttons is-visible is-right'
     this.wrapper.appendChild(touchButtons)
-    const onClick = () => {
-      screenfull.request()
-    }
-    const button = createTouchButton(
-      onClick,
-      'game-display--touch-fullscreen-button'
+    createRoot(touchButtons).render(
+      <TouchButton
+        className='game-display--touch-fullscreen-button'
+        onClick={() => {
+          screenfull.request()
+        }}
+      />
     )
-    touchButtons.appendChild(button)
   }
 
   get context() {
@@ -196,21 +251,29 @@ export class GameDisplay {
   }
 }
 
-function createTouchButton(onClick, className) {
-  const button = document.createElement('button')
-  button.addEventListener(
-    'touchstart',
-    (e) => {
-      e.stopPropagation()
-    },
-    true
+function TouchButton({
+  className,
+  onClick,
+  children,
+}: {
+  className: string
+  onClick: () => void
+  children?: ReactNode
+}) {
+  return (
+    <button
+      className={className}
+      onTouchStartCapture={(e) => {
+        e.stopPropagation()
+      }}
+      onClick={(e) => {
+        e.preventDefault()
+        onClick()
+      }}
+    >
+      {children}
+    </button>
   )
-  button.onclick = (e) => {
-    e.preventDefault()
-    onClick()
-  }
-  button.className = className
-  return button
 }
 
 export default GameDisplay
