@@ -24,9 +24,7 @@ export class NoteArea {
 
   getVisibleNotes(lower: number, upper: number, headroom = 0): VisibleNote[] {
     const out = []
-    const notes = this._notes
-    for (let i = 0; i < notes.length; i++) {
-      const note = notes[i]
+    for (const note of this._notes) {
       const visible = note.end
         ? !(note.position > upper || note.end.position < lower - headroom)
         : !(note.position > upper || note.position < lower - headroom)

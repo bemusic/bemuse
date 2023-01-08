@@ -242,8 +242,7 @@ export class PlayerDisplay {
 
   private updateExplode(playerState: PlayerState, time: number) {
     const notifications = playerState.notifications.judgments
-    for (let i = 0; i < notifications.length; i++) {
-      const notification = notifications[i]
+    for (const notification of notifications) {
       if (!breaksCombo(notification.judgment)) {
         this._stateful[`${notification.column}_explode`] = time
       }
