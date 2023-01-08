@@ -1,20 +1,20 @@
-import _ from 'lodash'
-
-import PlayerStats from './player-stats'
 import {
+  IJudge,
+  JudgedJudgment,
+  Judgment,
   MISSED,
   getJudgeForNotechart,
   isBad,
   judgeEndTime,
   judgeTime,
-  IJudge,
-  Judgment,
-  JudgedJudgment,
 } from '../judgments'
-import Player from '../player'
-import { GameNote } from 'bemuse-notechart/lib/types'
-import GameInput from '../input'
+
 import Control from '../input/control'
+import GameInput from '../input'
+import { GameNote } from 'bemuse-notechart/lib/types'
+import Player from '../player'
+import PlayerStats from './player-stats'
+import _ from 'lodash'
 import invariant from 'invariant'
 
 type NoteResult = {
@@ -32,13 +32,31 @@ enum NoteStatus {
   Judged = 'judged',
 }
 
-type Notifications = {
-  sounds: (
-    | { type: 'hit'; note: GameNote; judgment: Judgment }
-    | { type: 'free'; note: GameNote }
-    | { type: 'break'; note: GameNote }
-  )[]
-  judgments: {}[]
+export type SoundNotification =
+  | {
+      type: 'hit'
+      note: GameNote
+      judgment: Judgment
+    }
+  | {
+      type: 'free'
+      note: GameNote
+    }
+  | {
+      type: 'break'
+      note: GameNote
+    }
+
+export interface JudgementNotification {
+  judgment: JudgedJudgment
+  combo: number
+  delta: number
+  column: string
+}
+
+export interface Notifications {
+  sounds: SoundNotification[]
+  judgments: JudgementNotification[]
 }
 
 function initializeNotifications(): Notifications {

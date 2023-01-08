@@ -1,11 +1,23 @@
-export function getGauge(gaugeType) {
+import PlayerState from '../state/player-state'
+
+export interface Gauge {
+  update(playerState: PlayerState): void
+  shouldDisplay(): boolean
+  getPrimary(): number
+  getSecondary(): number
+  getExtra(): number
+}
+
+export type GaugeType = 'hope' | 'off'
+
+export function getGauge(gaugeType: GaugeType): Gauge {
   if (gaugeType === 'hope') {
     return hopeGauge()
   }
   return nullGauge()
 }
 
-function nullGauge() {
+function nullGauge(): Gauge {
   return {
     update() {},
     shouldDisplay() {
@@ -23,15 +35,15 @@ function nullGauge() {
   }
 }
 
-function hopeGauge() {
-  let primary
-  let secondary
-  let extra
+function hopeGauge(): Gauge {
+  let primary: number
+  let secondary: number
+  let extra: number
   return {
     update(playerState) {
       const stats = playerState.stats
       const progress = stats.numJudgments / stats.totalCombo
-      const getHope = (min, max1, max2) => {
+      const getHope = (min: number, max1: number, max2: number) => {
         const max = max1 + (max2 - max1) * progress
         const maxPossibleScore = stats.maxPossibleScore
         return Math.max(0, (maxPossibleScore - min) / (max - min))

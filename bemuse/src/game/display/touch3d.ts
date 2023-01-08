@@ -36,7 +36,7 @@ const config = {
  *   - `projection` The projected scale. If an object is closer to the screen,
  *     it will appear bigger. This value represents that scale.
  */
-export function getRow(position) {
+export function getRow(position: number) {
   const excess = Math.max(0, position - 1)
   if (position < 0) position = 0
   if (position > 1) position = 1
@@ -61,11 +61,11 @@ export const PLAY_AREA_WIDTH = config.w
  * @param {number} y The y onscreen coordinate (0~1280)
  * @return Column name ('1'~'7') or `null` if no column should be triggered.
  */
-export function getTouchedColumn(x, y) {
+export function getTouchedColumn(x: number, y: number) {
   let min = 0.75
   let max = 1
-  let mid
-  let row
+  let mid: number = (min + max) / 2
+  let row = getRow(mid)
   for (let i = 0; i < 8; i++) {
     mid = (min + max) / 2
     row = getRow(mid)
