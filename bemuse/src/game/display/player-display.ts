@@ -3,9 +3,9 @@ import * as touch3d from './touch3d'
 import { Gauge, getGauge } from './Gauge'
 import { JudgedJudgment, MISSED, breaksCombo } from '../judgments'
 import Player, { PlayerOptionsPlacement, PlayerOptionsScratch } from '../player'
+import PlayerState, { JudgementNotification } from '../state/player-state'
 
 import NoteArea from './note-area'
-import PlayerState from '../state/player-state'
 
 interface PlayerData {
   placement: PlayerOptionsPlacement
@@ -208,18 +208,24 @@ export class PlayerDisplay {
       const name =
         notification.judgment === -1 ? 'missed' : `${notification.judgment}`
       this._stateful[`judge_${name}`] = time
-      const deviationMode =
-        notification.judgment === -1 || notification.judgment === 1
-          ? 'none'
-          : notification.delta > 0
-          ? 'late'
-          : notification.delta < 0
-          ? 'early'
-          : 'none'
+      const deviationMode = this.derivationMode(notification)
       this._stateful[`judge_deviation_${deviationMode}`] = time
       this._stateful['combo'] = notification.combo
     }
     data['score'] = playerState.stats.score
+  }
+
+  private derivationMode(notification: JudgementNotification) {
+    if (notification.judgment === -1 || notification.judgment === 1) {
+      return 'none'
+    }
+    if (notification.delta > 0) {
+      return 'late'
+    }
+    if (notification.delta < 0) {
+      return 'early'
+    }
+    return 'none'
   }
 
   private updateGauge(
