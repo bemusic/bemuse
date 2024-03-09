@@ -90,7 +90,7 @@
     "process": "^0.11.10",
     "pug-loader": "^2.4.0",
     "pug": "^2.0.4",
-    "puppeteer": "^13.4.0",
+    "puppeteer": "^22.4.1",
     "react-hot-loader": "^4.13.0",
     "rimraf": "^2.6.2",
     "sass-loader": "^13.1.0",
