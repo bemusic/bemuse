@@ -66,7 +66,7 @@ jobs:
       - name: Set up project
         uses: ./.github/actions/setup-project
       - name: Download build
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: bemuse-build-${{ github.sha }}
           path: '.'
