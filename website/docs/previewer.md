@@ -16,17 +16,15 @@ Bemuse comes with a rudimentary previewer app to preview BMS/bmson notecharts.
 
 You can access the previewer by going to this URL:
 
-<div style={{textAlign: 'center', fontSize: '2em'}}>
+<div style="text-align: center; font-size: 2em;">
 
 **<https://bemuse.ninja/?mode=previewer>**
 
 </div>
 
-:::caution Note
-
-As the developer has limited resources, no support is provided for this app, although you can [report issues](https://github.com/bemusic/bemuse/issues) on the issue tracker. If you are a developer, you can [find the source code on GitHub](https://github.com/bemusic/bemuse/tree/master/bemuse/src/previewer). If you managed to fix some issues, pull requests are welcome.
-
-:::
+> **Note**
+>
+> As the developer has limited resources, no support is provided for this app, although you can [report issues](https://github.com/bemusic/bemuse/issues) on the issue tracker. If you are a developer, you can [find the source code on GitHub](https://github.com/bemusic/bemuse/tree/master/bemuse/src/previewer). If you managed to fix some issues, pull requests are welcome.
 
 
 ## Keyboard shortcuts

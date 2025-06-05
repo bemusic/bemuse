@@ -61,7 +61,7 @@ This guide will cover:
 Using Google Chrome or Microsoft Edge, go to the Bemuse Song Workshop
 application at this URL:
 
-<div style={{textAlign: 'center', fontSize: '2em'}}>
+<div style="text-align: center; font-size: 2em;">
 
 **<https://song-workshop.bemuse.ninja/>**
 
@@ -69,16 +69,14 @@ application at this URL:
 
 We will use this application throughout the rest of this guide.
 
-:::caution Warning
-
-Please note that this application can be **very buggy** and the developer
-currently does not have the resources to provide support, although Bemuse’s
-developers also use this app to manage the official server. However if you are a
-developer, you can
-[find the source code on GitHub](https://github.com/bemusic/song-workshop). If
-you managed to fix some issues, pull requests are welcome.
-
-:::
+> **Warning**
+>
+> Please note that this application can be **very buggy** and the developer
+> currently does not have the resources to provide support, although Bemuse’s
+> developers also use this app to manage the official server. However if you are a
+> developer, you can
+> [find the source code on GitHub](https://github.com/bemusic/song-workshop). If
+> you managed to fix some issues, pull requests are welcome.
 
 ## Preparing a song
 
@@ -86,7 +84,7 @@ you managed to fix some issues, pull requests are welcome.
 
 First, extract the BMS archive into a folder.
 
-![Screenshot](assets/song-workshop/initialstate.png)
+![Screenshot](/docs/assets/song-workshop/initialstate.png)
 
 ### Open the folder in Song Workshop
 
@@ -94,7 +92,7 @@ First, extract the BMS archive into a folder.
 
   <figure>
 
-  ![Screenshot](assets/song-workshop/home.png)
+  ![Screenshot](/docs/assets/song-workshop/home.png)
 
   </figure>
 
@@ -102,7 +100,7 @@ First, extract the BMS archive into a folder.
 
   <figure>
 
-  ![Screenshot](assets/song-workshop/select.png)
+  ![Screenshot](/docs/assets/song-workshop/select.png)
 
   </figure>
 
@@ -110,7 +108,7 @@ First, extract the BMS archive into a folder.
 
   <figure>
 
-  ![Screenshot](assets/song-workshop/dashboard.png)
+  ![Screenshot](/docs/assets/song-workshop/dashboard.png)
 
   </figure>
 
@@ -129,14 +127,14 @@ compressed as `.ogg` files and then bundled up into `.bemuse` files.
 
   <figure>
 
-  ![Screenshot](assets/song-workshop/soundasset.png)
+  ![Screenshot](/docs/assets/song-workshop/soundasset.png)
 
   </figure>
 
 - You will also see the a new subfolder `bemuse-data/sound` with optimized
   files.
 
-  ![Screenshot](assets/song-workshop/aftersound.png)
+  ![Screenshot](/docs/assets/song-workshop/aftersound.png)
 
 ### Generate a metadata file
 
@@ -154,13 +152,13 @@ which contains information about the song and all its available charts.
 
   <figure>
 
-  ![Screenshot](assets/song-workshop/charts.png)
+  ![Screenshot](/docs/assets/song-workshop/charts.png)
 
   </figure>
 
 - You will also see the a new file in the song folder: `bemuse-song.json`.
 
-  ![Screenshot](assets/song-workshop/afterchart.png)
+  ![Screenshot](/docs/assets/song-workshop/afterchart.png)
 
 ### Generate a song preview
 
@@ -185,14 +183,14 @@ the Music Selection screen.
 
   <figure>
 
-  ![Screenshot](assets/song-workshop/preview.png)
+  ![Screenshot](/docs/assets/song-workshop/preview.png)
 
   </figure>
 
 - New files will be created: `bemuse-data/song.ogg` and
   `bemuse-data/preview.mp3`
 
-  ![Screenshot](assets/song-workshop/afterpreview.png)
+  ![Screenshot](/docs/assets/song-workshop/afterpreview.png)
 
 ### Add more song metadata
 
@@ -203,13 +201,13 @@ the Music Selection screen.
 
   <figure>
 
-  ![Screenshot](assets/song-workshop/meta.png)
+  ![Screenshot](/docs/assets/song-workshop/meta.png)
 
   </figure>
 
 - The song description will be saved in `README.md`.
 
-  ![Screenshot](assets/song-workshop/aftermeta.png)
+  ![Screenshot](/docs/assets/song-workshop/aftermeta.png)
 
 ### Add image and video files
 
@@ -219,7 +217,7 @@ the Music Selection screen.
   - `bemuse-data/back_image.{jpg,png}` — Displayed in-game.
   - `bemuse-data/bga.{mp4,webm}` — Background animation.
 
-  ![Screenshot](assets/song-workshop/aftervisual.png)
+  ![Screenshot](/docs/assets/song-workshop/aftervisual.png)
 
 - Go to the **Visuals** tab.
 
@@ -232,7 +230,7 @@ the Music Selection screen.
 
   <figure>
 
-  ![Screenshot](assets/song-workshop/visuals.png)
+  ![Screenshot](/docs/assets/song-workshop/visuals.png)
 
   </figure>
 
@@ -253,7 +251,7 @@ We can now clean up the folder to save up space.
   - `bemuse-song.json` — Metadata file
   - `bemuse-data` — Optimized data folder
 
-  ![Screenshot](assets/song-workshop/aftercleanup.png)
+  ![Screenshot](/docs/assets/song-workshop/aftercleanup.png)
 
 ### Congratulations!
 
@@ -276,7 +274,7 @@ Now that your song is prepared and tested, it’s time to put it online!
 
 - Upload the song folder to a hosting service.
 
-  ![Screenshot](assets/song-workshop/upload-song.png)
+  ![Screenshot](/docs/assets/song-workshop/upload-song.png)
 
 - Obtain the URL to the `bemuse-song.json` file.
 
@@ -316,7 +314,7 @@ place? In this case you would create a **music server file.**
 
   <figure>
 
-  ![Screenshot](assets/song-workshop/server.png)
+  ![Screenshot](/docs/assets/song-workshop/server.png)
 
   </figure>
 
@@ -324,7 +322,7 @@ place? In this case you would create a **music server file.**
 
 - Upload the `index.json` file to a hosting service.
 
-  ![Screenshot](assets/song-workshop/upload-index.png)
+  ![Screenshot](/docs/assets/song-workshop/upload-index.png)
 
 - Obtain the URL to the `index.json` file.
 

@@ -43,7 +43,7 @@ yargs
       const stream = merge(
         vfs.src('public/**'),
         vfs.src('bemuse/dist/**'),
-        vfs.src('website/build/**').pipe(
+        vfs.src('website/out/**').pipe(
           rename(function (path) {
             path.dirname = 'project/' + path.dirname
           })

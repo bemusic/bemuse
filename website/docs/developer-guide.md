@@ -128,7 +128,11 @@ The built files will reside in the `dist` directory.
 
 ## Working on the project website
 
+The project website (this documentation) is built with Next.js. To work on it locally:
+
 ```sh-session
 $ cd website
-$ npm start
+$ pnpm dev
 ```
+
+The website should then be accessible at `http://localhost:3000/`.

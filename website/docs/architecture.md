@@ -37,7 +37,7 @@ The Bemuse project is a **monorepo**. This means every package that shapes the p
   <dd>Gulp tasks to run test server, build, test the application.</dd>
 
   <dt>website</dt>
-  <dd>The code that powers this documentation. We use <a href="https://docusaurus.io/">Docusaurus</a> to build our documentation as a static website.</dd>
+  <dd>The code that powers this documentation, built with Next.js.</dd>
 </dl>
 
 ## Important Modules

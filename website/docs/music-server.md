@@ -4,18 +4,14 @@ title: How to Host a Music Server (Legacy Method)
 sidebar_label: Legacy Music Server
 ---
 
-:::caution Note
+> **Note**
+>
+> A new easier workflow for creating a music server is being developed.
+> Please check out the [new draft documentation](song-workshop.md) for more information.
 
-A new easier workflow for creating a music server is being developed.
-Please check out the [new draft documentation](song-workshop.html) for more information.
-
-:::
-
-:::caution Warning
-
-This section is under construction.
-
-:::
+> **Warning**
+>
+> This section is under construction.
 
 Bemuse comes with a default music server to help new players get started. This
 default music server contains a selection of songs that I think are really nice.
@@ -51,11 +47,9 @@ $ sox --version
 sox:      SoX v14.4.2
 ```
 
-:::note
-
-On some devices, the SoX version number may not be displayed.
-
-:::
+> **Note**
+>
+> On some devices, the SoX version number may not be displayed.
 
 ### Windows
 
@@ -294,11 +288,9 @@ PS> bemuse-tools pack 'Lapis - SHIKI'
 # Written metadata.json
 ```
 
-:::note
-
-If you pack bms files from **linux**, `-> Converting audio to m4a [for iOS and Safari]` will get errors because of codec. Converted pack will not play sounds on Apple platform devices.
-
-:::
+> **Note**
+>
+> If you pack bms files from **linux**, `-> Converting audio to m4a [for iOS and Safari]` will get errors because of codec. Converted pack will not play sounds on Apple platform devices.
 
 ### Note
 
@@ -376,11 +368,9 @@ http://bemuse.ninja/?server=http://flicknote.bemuse.ninja/bemuse/mumei12
 Navigate to your Apache Config folder of XAMPP (e.g. `C:\xampp\apache\conf`) and
 open `httpd.conf`
 
-:::note
-
-Make sure you create a Backup of the file so that you can restore to the default settings if any issues occur.
-
-:::
+> **Note**
+>
+> Make sure you create a Backup of the file so that you can restore to the default settings if any issues occur.
 
 Find the variable name `DocumentRoot` and edit it's value from
 `"C:\xampp\htdocs"` to your server folder. (e.g. `C:\Bemuse\myserver`)
@@ -432,11 +422,9 @@ Then, install nginx:
 $ brew install nginx
 ```
 
-:::note
-
-Homebrew will install nginx on /usr/local.
-
-:::
+> **Note**
+>
+> Homebrew will install nginx on /usr/local.
 
 Check your current location:
 
