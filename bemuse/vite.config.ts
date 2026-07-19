@@ -162,7 +162,8 @@ export default defineConfig(({ command }) => ({
     __SCOREBOARD_SERVER__: JSON.stringify(process.env.SCOREBOARD_SERVER || ''),
     // Provide a webpack-like process.env for the small number of references
     'process.env.NODE_ENV': JSON.stringify(
-      process.env.NODE_ENV || (command === 'build' ? 'production' : 'development')
+      process.env.NODE_ENV ||
+        (command === 'build' ? 'production' : 'development')
     ),
   },
   css: {

@@ -127,7 +127,10 @@ async function main() {
     await page.waitForFunction(
       () => {
         const cl = document.documentElement.classList
-        if (cl.contains('mocha-is-passing') || cl.contains('mocha-is-failing')) {
+        if (
+          cl.contains('mocha-is-passing') ||
+          cl.contains('mocha-is-failing')
+        ) {
           return true
         }
         if (document.querySelector('.ErrorDialog')) {
