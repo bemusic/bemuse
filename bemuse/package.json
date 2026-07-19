@@ -18,7 +18,8 @@
     "prod-build": "cross-env NODE_ENV=production gulp build",
     "prod-start": "cross-env NODE_ENV=production HOT=true gulp server",
     "start": "cross-env HOT=true gulp server",
-    "test": "cross-env NODE_ENV=test BEMUSE_COV=true gulp test",
+    "test": "cross-env NODE_ENV=test node scripts/run-browser-tests.mjs",
+    "test:karma": "cross-env NODE_ENV=test BEMUSE_COV=true gulp test",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ."
   },
   "importSort": {

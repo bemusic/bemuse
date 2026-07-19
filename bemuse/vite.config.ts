@@ -162,7 +162,7 @@ export default defineConfig(({ command }) => ({
     __SCOREBOARD_SERVER__: JSON.stringify(process.env.SCOREBOARD_SERVER || ''),
     // Provide a webpack-like process.env for the small number of references
     'process.env.NODE_ENV': JSON.stringify(
-      command === 'build' ? 'production' : 'development'
+      process.env.NODE_ENV || (command === 'build' ? 'production' : 'development')
     ),
   },
   css: {
@@ -287,14 +287,21 @@ export default defineConfig(({ command }) => ({
     },
   },
   optimizeDeps: {
+    // Force pre-bundling of the linked CJS workspace packages so their named
+    // exports resolve. (bemuse-types is intentionally excluded — it is a
+    // types-only package with no runtime entry.)
     include: [
       'bms',
       'bmson',
       'monetizer',
       'bemuse-indexer',
       'bemuse-notechart',
-      'bemuse-types',
     ],
+    esbuildOptions: {
+      // The dep-scanner esbuild pass (dev server) does not run the
+      // js-as-jsx Vite plugin, so tell it directly that `.js` may contain JSX.
+      loader: { '.js': 'jsx' },
+    },
   },
   server: {
     port: 8080,
