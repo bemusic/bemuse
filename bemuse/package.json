@@ -9,7 +9,9 @@
     "not op_mini all"
   ],
   "scripts": {
-    "build": "gulp build 2>&1",
+    "build": "vite build",
+    "build:webpack": "gulp build 2>&1",
+    "dev": "vite",
     "typecheck": "tsc",
     "build:netlify": "./bin/netlify-build",
     "pre-deploy": "gulp pre-deploy",

@@ -216,6 +216,10 @@ export default defineConfig(({ command }) => ({
         cleanupOutdatedCaches: true,
         skipWaiting: true,
         clientsClaim: true,
+        // The original webpack ServiceWorkerPlugin left navigateFallback
+        // disabled. Keep it disabled so the SW does not hijack navigations to
+        // the separate /project/ Docusaurus site (served statically).
+        navigateFallback: null,
         runtimeCaching: [
           {
             urlPattern: /^.*\.bemuse$/,
