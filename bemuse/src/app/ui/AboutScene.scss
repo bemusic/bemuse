@@ -1,7 +1,7 @@
-@import '~bemuse/ui/common';
+@import 'ui/common';
 
 .AboutScene {
-  @include scene-background(url(~bemuse/ui/images/bg/c.jpg));
+  @include scene-background(url(bemuse/ui/images/bg/c.jpg));
 
   .SceneHeading {
     z-index: 10;

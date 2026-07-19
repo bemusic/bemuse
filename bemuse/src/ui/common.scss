@@ -52,7 +52,7 @@ $link-color: #039;
 }
 
 @mixin main-bg {
-  @include scene-background(url(~bemuse/ui/images/bg/a.jpg));
+  @include scene-background(url(bemuse/ui/images/bg/a.jpg));
 }
 
 @mixin soft-shadow {

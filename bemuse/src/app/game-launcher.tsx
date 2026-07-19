@@ -22,12 +22,9 @@ import invariant from 'invariant'
 import { isTitleDisplayMode } from 'bemuse/devtools/query-flags'
 import query from 'bemuse/utils/query'
 import { unmuteAudio } from 'bemuse/sampling-master'
+import * as BemuseLogger from 'bemuse/logger'
 
 const Log = BemuseLogger.forModule('game-launcher')
-
-if (module.hot) {
-  module.hot.accept('bemuse/game/loaders/game-loader')
-}
 
 export type LaunchOptions = {
   server: { readonly url: string }
@@ -158,7 +155,8 @@ async function launchGame(
     const loadStart = Date.now()
     setCurrentWork('loading the game')
     Log.info(`Loading game: ${describeChart(chart)}`)
-    const GameLoader: typeof import('bemuse/game/loaders/game-loader') = require('bemuse/game/loaders/game-loader')
+    const GameLoader: typeof import('bemuse/game/loaders/game-loader') =
+      await import('bemuse/game/loaders/game-loader')
     const loader = GameLoader.load(loadSpec)
     const { tasks, promise } = loader
 

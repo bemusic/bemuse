@@ -1,7 +1,7 @@
-@import '~bemuse/ui/common';
+@import 'ui/common';
 
 .GenericErrorScene {
-  @include scene-background(url(~bemuse/ui/images/bg/c.jpg));
+  @include scene-background(url(bemuse/ui/images/bg/c.jpg));
 
   &のwrapper {
     padding: 1em;

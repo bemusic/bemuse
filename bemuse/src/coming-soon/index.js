@@ -1,8 +1,6 @@
-import 'style-loader!./style.scss'
+import './style.scss'
 
 import template from './template.jade'
-
-/* eslint import/no-webpack-loader-syntax: off */
 
 export function main() {
   const div = document.createElement('div')

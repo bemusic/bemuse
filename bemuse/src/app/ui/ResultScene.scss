@@ -1,7 +1,7 @@
-@import '~bemuse/ui/common';
+@import 'ui/common';
 
 .ResultScene {
-  @include scene-background(url(~bemuse/ui/images/bg/b.jpg));
+  @include scene-background(url(bemuse/ui/images/bg/b.jpg));
   $bottom-padding: calc(32px + 4vh);
 
   color: black;
