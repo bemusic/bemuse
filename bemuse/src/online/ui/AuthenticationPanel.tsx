@@ -129,10 +129,7 @@ const AuthenticationPanel = ({ onFinish }: AuthenticationPanelProps) => {
       <Panel title='Bemuse Online Ranking'>
         <div className='AuthenticationPanelのlayout'>
           <div className='AuthenticationPanelのtitle'>
-            <img
-              src={djbmImage}
-              alt='DJ Bemuse'
-            />
+            <img src={djbmImage} alt='DJ Bemuse' />
             <div className='AuthenticationPanelのidentification'>
               Bemuse
               <br />
