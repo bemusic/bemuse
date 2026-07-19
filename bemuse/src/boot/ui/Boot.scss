@@ -1,4 +1,4 @@
-@import '~bemuse/ui/common';
+@import 'ui/common';
 
 .Boot {
   position: fixed;
@@ -15,7 +15,7 @@
   &のdj {
     width: 64px;
     height: 64px;
-    background: url(~bemuse/ui/images/loading/dj.png) center no-repeat;
+    background: url(bemuse/ui/images/loading/dj.png) center no-repeat;
     background-size: contain;
     animation: 2s boot--dj--spin linear infinite;
     margin: 0 auto 0.5em;

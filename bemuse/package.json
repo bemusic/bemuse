@@ -28,6 +28,10 @@
   "author": "Thai Pangsakulyanont <dtinth@spacet.me> (http://dt.in.th/)",
   "license": "AGPL-1.0",
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^5.4.11",
+    "vite-plugin-node-polyfills": "^0.22.0",
+    "vite-plugin-pwa": "^0.21.1",
     "@ephesoft/webpack.istanbul.loader": "^2.2.0",
     "@types/chai": "^4.2.0",
     "@types/eslint": "^4.16.4",

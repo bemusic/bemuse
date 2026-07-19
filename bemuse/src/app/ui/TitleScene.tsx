@@ -1,5 +1,6 @@
 import './TitleScene.scss'
 
+import logoWithShadow from './images/logo-with-shadow.svg'
 import * as Analytics from '../analytics'
 
 import React, { MouseEvent, useContext, useState } from 'react'
@@ -115,7 +116,7 @@ const TitleScene = () => {
             <div className='TitleSceneのtagline'>
               online, web-based rhythm game
             </div>
-            <img src={require('./images/logo-with-shadow.svg')} />
+            <img src={logoWithShadow} />
           </div>
           <div className='TitleSceneのenter'>
             <a onClick={enterGame} data-testid='enter-game'>

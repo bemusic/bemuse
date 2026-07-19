@@ -1,5 +1,6 @@
 import './AboutScene.scss'
 
+import djbmImage from './about-scene/DJBM.png'
 import React, { useContext, useEffect, useState } from 'react'
 
 import Scene from 'bemuse/ui/Scene'
@@ -65,7 +66,7 @@ const AboutScene = () => {
             available on <a href='https://github.com/bemusic/bemuse'>GitHub</a>.
           </p>
           <div className='AboutSceneのdjbm'>
-            <img src={require('./about-scene/DJBM.png')} alt='DJ Bemuse' />
+            <img src={djbmImage} alt='DJ Bemuse' />
           </div>
         </article>
         <article>

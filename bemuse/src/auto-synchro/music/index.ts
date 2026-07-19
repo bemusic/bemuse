@@ -4,14 +4,19 @@ import _ from 'lodash'
 import context from 'bemuse/audio-context'
 import download from 'bemuse/utils/download'
 
+import bgmUrl from './data/bgm.ogg'
+import introUrl from './data/intro.ogg'
+import kickUrl from './data/kick.ogg'
+import snareUrl from './data/snare.ogg'
+
 /**
  * The asset URL of these files...
  */
 const ASSET_URLS = {
-  bgm: require('./data/bgm.ogg'),
-  intro: require('./data/intro.ogg'),
-  kick: require('./data/kick.ogg'),
-  snare: require('./data/snare.ogg'),
+  bgm: bgmUrl,
+  intro: introUrl,
+  kick: kickUrl,
+  snare: snareUrl,
 } as const
 type AssetKey = keyof typeof ASSET_URLS
 

@@ -14,8 +14,12 @@ const modules = {
 
   // >>
   // test
-  //   The unit tests.
-  test: () => import(/* webpackChunkName: 'test' */ 'bemuse/test'),
+  //   The unit tests. (Not wired up under the Vite build — the Mocha-based
+  //   in-browser test runner is run via Karma/Node instead.)
+  test: () =>
+    Promise.reject(
+      new Error('In-browser test mode is not available in the Vite build.')
+    ),
 
   // >>
   // comingSoon

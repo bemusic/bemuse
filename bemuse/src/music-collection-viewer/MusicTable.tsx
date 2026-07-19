@@ -132,7 +132,7 @@ const SongRow = ({
       <strong
         onClick={() => {
           console.log(song)
-          alert(require('util').inspect(song))
+          alert(JSON.stringify(song, null, 2))
         }}
       >
         {song.title}
