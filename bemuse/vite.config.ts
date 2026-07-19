@@ -16,10 +16,19 @@ const src = path.resolve(__dirname, 'src')
 // module that references Buffer/process/global — including linked workspace
 // packages (packages/bemuse-notechart etc.) whose own node_modules can't
 // resolve the shim under pnpm. Aliasing to absolute paths fixes resolution.
+//
+// IMPORTANT: alias to the ESM build (`dist/index.js`), not the CJS build
+// (`dist/index.cjs` that `require.resolve` returns). In dev, forcing the CJS
+// variant makes Vite wrap the shim in CJS interop and the node-polyfills
+// global-injection banner then references it before initialization
+// ("Cannot access '__vite__cjsImport0_vitePluginNodePolyfills_shims_buffer'
+// before initialization"), crashing the dev server at boot.
 const require = createRequire(import.meta.url)
 const polyfillShimAlias = ['buffer', 'global', 'process'].map((name) => ({
   find: `vite-plugin-node-polyfills/shims/${name}`,
-  replacement: require.resolve(`vite-plugin-node-polyfills/shims/${name}`),
+  replacement: require
+    .resolve(`vite-plugin-node-polyfills/shims/${name}`)
+    .replace(/\.cjs$/, '.js'),
 }))
 
 // ---------------------------------------------------------------------------
@@ -302,6 +311,14 @@ export default defineConfig(({ command }) => ({
       // The dep-scanner esbuild pass (dev server) does not run the
       // js-as-jsx Vite plugin, so tell it directly that `.js` may contain JSX.
       loader: { '.js': 'jsx' },
+      // Some CJS deps (e.g. readable-stream via stream-browserify) read
+      // `process.browser` / `global` at module-init, before the node-polyfills
+      // banner has set them up in dev. Define them statically for the
+      // optimizer so those init-time branches resolve without a crash.
+      define: {
+        'process.browser': 'true',
+        global: 'globalThis',
+      },
     },
   },
   server: {
