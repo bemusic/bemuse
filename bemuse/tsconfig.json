@@ -8,6 +8,8 @@
     "paths": {
       "bemuse/*": ["./src/*"]
     },
-    "target": "ES2019"
+    "target": "ES2019",
+    "module": "esnext",
+    "moduleResolution": "node"
   }
 }

@@ -46,8 +46,8 @@ const sceneManager = new SceneManager(({ children }) => (
 ))
 
 // Allow hot reloading of some modules.
-if (module.hot) {
-  module.hot.accept('./redux/ReduxState', () => {})
+if (import.meta.hot) {
+  import.meta.hot.accept()
 }
 
 function bootUp() {

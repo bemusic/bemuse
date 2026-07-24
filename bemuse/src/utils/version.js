@@ -1,3 +1,3 @@
-/* eslint import/no-webpack-loader-syntax: off */
-import version from 'val-loader!./version-loader'
-export default version
+/* Version string injected at build time via Vite `define` (see vite.config.ts).
+ * Replaces the former `val-loader!./version-loader` build-time loader. */
+export default __BEMUSE_VERSION__

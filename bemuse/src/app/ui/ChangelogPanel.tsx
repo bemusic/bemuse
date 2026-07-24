@@ -34,7 +34,9 @@ const ChangelogPanel = () => {
   const [status, setStatus] = useState<Status>({ state: 'loading' })
   useEffect(() => {
     // @ts-ignore
-    const promise = import('../../../../CHANGELOG.md').then((m) => m.default)
+    const promise = import('../../../../CHANGELOG.md?raw').then(
+      (m) => m.default
+    )
     promise.then(
       (changelog) => setStatus({ state: 'completed', changelog }),
       () => setStatus({ state: 'error' })
