@@ -8,7 +8,7 @@
 // global `describe`/`it` would not yet be defined when a spec module runs.
 export async function loadSpecs() {
   const modules = import.meta.glob('../**/*.spec.{js,ts,tsx}')
-  for (const key of Object.keys(modules).sort()) {
+  for (const key of Object.keys(modules).sort((a, b) => a.localeCompare(b))) {
     await modules[key]()
   }
 }
