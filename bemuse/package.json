@@ -9,14 +9,17 @@
     "not op_mini all"
   ],
   "scripts": {
-    "build": "gulp build 2>&1",
+    "build": "vite build",
+    "build:webpack": "gulp build 2>&1",
+    "dev": "vite",
     "typecheck": "tsc",
     "build:netlify": "./bin/netlify-build",
     "pre-deploy": "gulp pre-deploy",
     "prod-build": "cross-env NODE_ENV=production gulp build",
     "prod-start": "cross-env NODE_ENV=production HOT=true gulp server",
     "start": "cross-env HOT=true gulp server",
-    "test": "cross-env NODE_ENV=test BEMUSE_COV=true gulp test",
+    "test": "cross-env NODE_ENV=test node scripts/run-browser-tests.mjs",
+    "test:karma": "cross-env NODE_ENV=test BEMUSE_COV=true gulp test",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "build:parser": "node bin/build-parser.js"
   },
@@ -29,6 +32,10 @@
   "author": "Thai Pangsakulyanont <dtinth@spacet.me> (http://dt.in.th/)",
   "license": "AGPL-1.0",
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^5.4.11",
+    "vite-plugin-node-polyfills": "^0.22.0",
+    "vite-plugin-pwa": "^0.21.1",
     "@ephesoft/webpack.istanbul.loader": "^2.2.0",
     "@types/chai": "^4.2.0",
     "@types/eslint": "^4.16.4",

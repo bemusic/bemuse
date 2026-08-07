@@ -19,6 +19,13 @@ const grammar = fs.readFileSync(path.join(dir, 'parser.pegjs'), 'utf8')
 const header =
   '/* eslint-disable */\n' +
   '// GENERATED FILE — do not edit. Regenerate with `rushx build:parser`.\n'
-const source = peg.generate(grammar, { output: 'source', format: 'commonjs' })
+// Emit an ES module (`export default <parser>`) rather than CommonJS so that
+// Vite/Rollup resolve it natively without needing commonjs interop for a file
+// living under src/. The `bare` format produces a self-contained parser object
+// expression that we export directly.
+const source = peg.generate(grammar, { output: 'source', format: 'bare' })
 
-fs.writeFileSync(path.join(dir, 'parser.js'), header + source)
+fs.writeFileSync(
+  path.join(dir, 'parser.js'),
+  `${header}export default ${source}`
+)

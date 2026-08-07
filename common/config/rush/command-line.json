@@ -68,7 +68,7 @@
       "name": "dev",
       "commandKind": "global",
       "summary": "Run development server.",
-      "shellCommand": "cd bemuse && npm start",
+      "shellCommand": "cd bemuse && npm run dev",
       "safeForSimultaneousRushProcesses": true
     }
     // {
