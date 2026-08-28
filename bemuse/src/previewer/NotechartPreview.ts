@@ -364,8 +364,11 @@ class BemuseNotechartPreviewPlayer implements NotechartPreviewPlayer {
         continue
       }
 
+      // Canonical keysound IDs from the `bms` package: the event's keysound
+      // and the keys of `_keysounds` already agree (lowercased in base-36,
+      // case-preserved in base-62), so no re-normalization is needed.
       const keysound = nextEvent.keysound
-      const filename = this._keysounds[keysound.toLowerCase()]
+      const filename = this._keysounds[keysound]
       if (!filename) {
         continue
       }

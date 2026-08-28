@@ -35,6 +35,13 @@ export function compile(text: string, options?: Partial<BMSCompileOptions>) {
 
   const chart = new BMSChart()
 
+  // The `#BASE` header controls whether keysound/event IDs are case-sensitive.
+  // It is detected up-front (before the main pass) so that ID-indexed headers
+  // are stored with the correct case normalization regardless of where `#BASE`
+  // appears in the file.
+  const baseMatch = text.match(/^\s*#BASE\s+(\d+)/im)
+  if (baseMatch) chart.headers.setBase(+baseMatch[1])
+
   const rng =
     options.rng ||
     function (max) {
