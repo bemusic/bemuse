@@ -52,5 +52,38 @@ describe('Timing', function () {
       const t = Timing.fromBMSChart(chart)
       expect(t.bpmAtBeat(5)).to.equal(123.45)
     })
+
+    it('should fold #EXBPM id case in base-36 charts (default)', function () {
+      const chart = Compiler.compile('#BPMAA 123.45\n#00108:aa').chart
+      const t = Timing.fromBMSChart(chart)
+      expect(t.bpmAtBeat(5)).to.equal(123.45)
+    })
+
+    describe('with #BASE 62', function () {
+      it('should resolve #EXBPM ids case-sensitively', function () {
+        const chart = Compiler.compile(
+          '#BASE 62\n#BPMAa 200\n#BPMAA 100\n#00108:Aa'
+        ).chart
+        const t = Timing.fromBMSChart(chart)
+        expect(t.bpmAtBeat(5)).to.equal(200)
+      })
+
+      it('should not resolve an #EXBPM id of the wrong case', function () {
+        const chart = Compiler.compile('#BASE 62\n#BPMAa 200\n#00108:AA').chart
+        const t = Timing.fromBMSChart(chart)
+        // `AA` is undefined in base-62, so no BPM change happens.
+        expect(t.bpmAtBeat(5)).to.equal(60)
+      })
+
+      it('should resolve #STOP ids case-sensitively', function () {
+        const chart = Compiler.compile('#BASE 62\n#STOPAa 48\n#00109:Aa').chart
+        const t = Timing.fromBMSChart(chart)
+        // The stop object lands on measure 1 (beat 4). #STOPAa is 48 ticks =
+        // one beat, and the default BPM is 60, so it delays everything past
+        // beat 4 by one second: beat 5 shifts from 5s to 6s.
+        expect(t.getEventBeats()).to.deep.equal([4])
+        expect(t.beatToSeconds(5)).to.be.closeTo(6, 1e-2)
+      })
+    })
   })
 })
