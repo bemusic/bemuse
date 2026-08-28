@@ -140,7 +140,7 @@ class BMSNoteBuilder {
       const note = {
         beat: beat,
         endBeat: undefined,
-        keysound: object.value,
+        keysound: normalizeIdSuffix(object.value, this._base),
         column: this._getColumn(channel),
       }
       this._lastNote[channel] = note
@@ -159,7 +159,7 @@ class BMSNoteBuilder {
     } else {
       this._activeLN[channel] = {
         beat: beat,
-        keysound: object.value,
+        keysound: normalizeIdSuffix(object.value, this._base),
         column: this._getColumn(channel),
       }
     }
