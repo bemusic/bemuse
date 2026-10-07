@@ -33,6 +33,32 @@ describe('Notes', function () {
     expect(notes.all()).to.have.length(3)
   })
 
+  describe('LNOBJ', function () {
+    it('should fold case in base-36 charts (default)', function () {
+      // The trailing `aa` matches `#LNOBJ AA` case-insensitively, so it
+      // terminates the `0B` note instead of creating a new one.
+      const chart = Compiler.compile('#LNOBJ AA\n#00111:0Baa').chart
+      const notes = Notes.fromBMSChart(chart)
+      expect(notes.all()).to.have.length(1)
+      expect(notes.all()[0].endBeat).to.not.equal(undefined)
+    })
+
+    describe('with #BASE 62', function () {
+      it('should terminate a note only on an exact-case match', function () {
+        const chart = Compiler.compile('#BASE 62\n#LNOBJ AA\n#00111:0BAA').chart
+        const notes = Notes.fromBMSChart(chart)
+        expect(notes.all()).to.have.length(1)
+        expect(notes.all()[0].endBeat).to.not.equal(undefined)
+      })
+
+      it('should not terminate a note on a differently-cased ID', function () {
+        const chart = Compiler.compile('#BASE 62\n#LNOBJ AA\n#00111:0Baa').chart
+        const notes = Notes.fromBMSChart(chart)
+        expect(notes.all()).to.have.length(2)
+      })
+    })
+  })
+
   describe('custom mapping', function () {
     it('allows custom mapping', function () {
       const chart = Compiler.compile('#00112:01').chart

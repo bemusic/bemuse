@@ -1,0 +1,10 @@
+#TITLE base62 sample
+#ARTIST bemuse
+#BASE 62
+#BPM 120
+
+#WAVAa lower.wav
+#WAVAA upper.wav
+#WAVaA mixed.wav
+
+#00111:AaAAaA

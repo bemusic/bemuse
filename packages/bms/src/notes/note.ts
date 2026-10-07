@@ -5,6 +5,11 @@ export interface BMSNote {
   beat: number
   endBeat?: number
   column?: string
+  /**
+   * The keysound ID, normalized to its canonical form for the chart’s base
+   * (lowercased in base-36, case-preserved in base-62). This matches the keys
+   * used by {Keysounds}, so it can be looked up directly.
+   */
   keysound: string
 
   /**

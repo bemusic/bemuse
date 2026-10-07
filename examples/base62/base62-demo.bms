@@ -1,0 +1,24 @@
+This is a minimal base62 demo chart (discussion #860).
+
+Lines that do not begin with "#" are ignored by the BMS parser, so this
+paragraph is just documentation.
+
+Because of "#BASE 62", keysound IDs are CASE-SENSITIVE: "Aa", "AA", and "aA"
+are three different sounds. On a base-36 chart they would all collapse to the
+same sound. Drop this folder into the Bemuse custom-chart / preview area
+(alongside the referenced .wav/.ogg files) to hear three distinct keysounds.
+
+#PLAYER 1
+#GENRE Demo
+#TITLE base62 keysound demo
+#ARTIST bemuse
+#BASE 62
+#BPM 120
+#PLAYLEVEL 1
+#RANK 3
+
+#WAVAa kick.wav
+#WAVAA snare.wav
+#WAVaA hat.wav
+
+#00111:AaAAaA00

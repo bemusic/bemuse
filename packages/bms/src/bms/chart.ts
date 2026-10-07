@@ -34,6 +34,15 @@ export class BMSChart {
   }
 
   /**
+   * The numeric base used for keysound/event IDs in this chart, as declared
+   * by the `#BASE` header. Defaults to `36` (case-insensitive IDs); a value of
+   * `62` makes IDs case-sensitive.
+   */
+  get base(): number {
+    return this.headers.base
+  }
+
+  /**
    * Public: Converts measure number and fraction into beat.
    * A single beat is equivalent to a quarter note in common time signature.
    *

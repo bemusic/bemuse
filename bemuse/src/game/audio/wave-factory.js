@@ -25,9 +25,12 @@ export class WaveFactory {
 
   // Plays a note
   _play({ note, delay, exclusive }) {
+    // `note.keysound` and the keys of `this._map` are both canonical keysound
+    // IDs produced by the `bms` package (lowercased in base-36, case-preserved
+    // in base-62), so they can be matched directly without re-normalizing.
     const keysound = note.keysound
     if (exclusive) this._stopOldExclusiveSound(keysound, delay)
-    const filename = this._map[keysound.toLowerCase()]
+    const filename = this._map[keysound]
     if (!filename) return null
     const sample = this._samples[filename]
     if (!sample) return null

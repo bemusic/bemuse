@@ -3,6 +3,7 @@ import invariant from 'invariant'
 import * as ChannelMapping from './channels'
 import { BMSChart } from '../bms/chart'
 import { BMSObject } from '../bms/objects'
+import { normalizeIdSuffix } from '../util/id'
 
 export { BMSNote }
 
@@ -79,6 +80,7 @@ class BMSNoteBuilder {
   _activeLN: { [channel: string]: BMSNote }
   _lastNote: { [channel: string]: BMSNote }
   _lnObj: string
+  _base: number
   _channelMapping: { [channel: string]: string }
   _objects: BMSObject[]
   constructor(chart: BMSChart, options: { mapping: BMSChannelNoteMapping }) {
@@ -92,7 +94,11 @@ class BMSNoteBuilder {
     this._notes = []
     this._activeLN = {}
     this._lastNote = {}
-    this._lnObj = (this._chart.headers.get('lnobj') || '').toLowerCase()
+    this._base = this._chart.base
+    this._lnObj = normalizeIdSuffix(
+      this._chart.headers.get('lnobj') || '',
+      this._base
+    )
     this._channelMapping = this._mapping
     this._objects = this._chart.objects.allSorted()
   }
@@ -126,7 +132,7 @@ class BMSNoteBuilder {
   _handleNormalNote(object: BMSObject) {
     const channel = this._normalizeChannel(object.channel)
     const beat = this._getBeat(object)
-    if (object.value.toLowerCase() === this._lnObj) {
+    if (normalizeIdSuffix(object.value, this._base) === this._lnObj) {
       if (this._lastNote[channel]) {
         this._lastNote[channel].endBeat = beat
       }
@@ -134,7 +140,7 @@ class BMSNoteBuilder {
       const note = {
         beat: beat,
         endBeat: undefined,
-        keysound: object.value,
+        keysound: normalizeIdSuffix(object.value, this._base),
         column: this._getColumn(channel),
       }
       this._lastNote[channel] = note
@@ -153,7 +159,7 @@ class BMSNoteBuilder {
     } else {
       this._activeLN[channel] = {
         beat: beat,
-        keysound: object.value,
+        keysound: normalizeIdSuffix(object.value, this._base),
         column: this._getColumn(channel),
       }
     }

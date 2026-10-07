@@ -3,6 +3,7 @@
 
 import { uniq, values } from '../util/lodash'
 import { BMSChart } from '../bms/chart'
+import { normalizeIdSuffix } from '../util/id'
 
 /**
  * A simple mapping between keysounds ID and the file name.
@@ -29,8 +30,15 @@ import { BMSChart } from '../bms/chart'
  */
 export class Keysounds {
   _map: { [id: string]: string }
-  constructor(map: { [id: string]: string }) {
+  _base: number
+  /**
+   * @param map a mapping from (normalized) keysound ID to filename
+   * @param base the chart’s numeric base (36 by default, 62 for case-sensitive
+   *   IDs). This governs how IDs passed to {get} are normalized.
+   */
+  constructor(map: { [id: string]: string }, base = 36) {
     this._map = map
+    this._base = base
   }
 
   /**
@@ -39,7 +47,7 @@ export class Keysounds {
    * @returns the sound filename
    */
   get(id: string): string | undefined {
-    return this._map[id.toLowerCase()]
+    return this._map[normalizeIdSuffix(id, this._base)]
   }
 
   /**
@@ -66,12 +74,13 @@ export class Keysounds {
    */
   static fromBMSChart(chart: BMSChart) {
     void BMSChart
+    const base = chart.base
     const map: { [id: string]: string } = {}
     chart.headers.each(function (name, value) {
       const match = name.match(/^wav(\S\S)$/i)
       if (!match) return
-      map[match[1].toLowerCase()] = value
+      map[normalizeIdSuffix(match[1], base)] = value
     })
-    return new Keysounds(map)
+    return new Keysounds(map, base)
   }
 }
