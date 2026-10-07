@@ -4,6 +4,7 @@ import { Chart, SongMetadataInCollection } from 'bemuse-types'
 import React, { MouseEvent, memo } from 'react'
 
 import { MappingMode } from 'bemuse/rules/mapping-mode'
+import { Highlight } from './Highlight'
 import MusicListItemCharts from './MusicListItemCharts'
 import { Song } from 'bemuse/collection-model/types'
 import c from 'classnames'
@@ -37,32 +38,6 @@ const ChartList = ({
     onChartClick={onClick}
   />
 )
-
-const Highlight = ({
-  text,
-  highlight,
-}: {
-  text: string
-  highlight?: string
-}) => {
-  if (!highlight) return <>{text}</>
-  const segments = text.toLowerCase().split(highlight.toLowerCase())
-  if (segments.length === 1) return <>{text}</>
-  const output = []
-  let start = 0
-  for (let i = 0; i < segments.length; i++) {
-    output.push(text.substring(start, segments[i].length))
-    start += segments[i].length
-    if (i !== segments.length - 1) {
-      const highlightedText = text.substring(start, highlight.length)
-      output.push(
-        <span className='MusicListItemのhighlight'>{highlightedText}</span>
-      )
-      start += highlight.length
-    }
-  }
-  return <>{output}</>
-}
 
 const MusicListItem = (props: MusicListItemProps) => {
   const { song, selected, onSelect, highlight } = props
