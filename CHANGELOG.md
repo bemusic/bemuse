@@ -29,6 +29,8 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## 54.1.1
+
 ## 54.1.0
 
 ### New stuff
