@@ -29,6 +29,26 @@
 [@dimitrov-d]: https://github.com/dimitrov-d
 [@s-pace]: https://github.com/s-pace
 
+## 54.1.0
+
+### New stuff
+
+- Added support for base62 keysound IDs in BMS charts (`#BASE 62`). [[#861]], by
+  [@dtinth]
+
+### Bug fixes
+
+- Fixed the search highlight in the song list. Reported by invbanana on
+  [Discord](https://discord.com/channels/427735173606670336/673756900076027924/1519418930093887652).
+  [[#864]], by [@dtinth]
+- Fixed the song page error when the YouTube URL is a `youtu.be` short link.
+  Reported by litmus_star on
+  [Discord](https://discord.com/channels/427735173606670336/673756900076027924/1557294829820575775).
+  [[#864]], by [@dtinth]
+
+[#861]: https://github.com/bemusic/bemuse/pull/861
+[#864]: https://github.com/bemusic/bemuse/pull/864
+
 ## 54.0.2
 
 ### Bug fixes
