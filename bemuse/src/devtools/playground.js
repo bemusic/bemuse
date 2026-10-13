@@ -2,14 +2,17 @@ import React from 'react'
 import query from 'bemuse/utils/query'
 import { sceneRoot } from 'bemuse/utils/main-element'
 
-const availablePlaygrounds = (function (context) {
+const availablePlaygrounds = (function () {
+  const modules = import.meta.glob('./playgrounds/*.{js,jsx,ts,tsx}', {
+    eager: true,
+  })
   const playgrounds = {}
-  for (const key of context.keys()) {
-    const name = key.match(/\w[^.]+/)[0]
-    playgrounds[name] = context(key)
+  for (const key of Object.keys(modules)) {
+    const name = key.replace(/^.*\//, '').replace(/\.[jt]sx?$/, '')
+    playgrounds[name] = modules[key]
   }
   return playgrounds
-})(require.context('./playgrounds', false, /\.[jt]sx?$/))
+})()
 
 class DefaultPlayground extends React.Component {
   static main() {

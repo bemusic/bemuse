@@ -1,18 +1,24 @@
-// This file boots up Mocha
+// This file boots up Mocha in the browser (the `?mode=test` entry point).
 //
-import 'script-loader!mocha/mocha.js'
-import 'style-loader!mocha/mocha.css'
-import 'style-loader!./support/mocha-overrides.css'
+// Under webpack this used `script-loader!mocha/mocha.js` (to execute Mocha's
+// browser bundle in the global scope) and `style-loader!` for the CSS. Under
+// Vite we import the bundle as a raw string and evaluate it in the global
+// scope — the closest equivalent of `script-loader` — which exposes the
+// global `mocha`/`Mocha`. The CSS is imported normally (Vite injects it).
+import mochaSource from 'mocha/mocha.js?raw'
+import 'mocha/mocha.css'
+import './support/mocha-overrides.css'
 
 import loadSpecs from './loadSpecs'
 import prepareTestEnvironment from './prepareTestEnvironment'
 
-/* eslint import/no-webpack-loader-syntax: off */
+// Indirect eval runs in the global scope, so Mocha attaches to `window`.
+;(0, eval)(mochaSource) // eslint-disable-line no-eval
 
-export function main() {
+export async function main() {
   setupMocha()
   prepareTestEnvironment()
-  loadSpecs()
+  await loadSpecs()
   runMocha()
 }
 
@@ -62,7 +68,18 @@ function runMocha() {
     })
     .on('suite end', function (suite) {
       if (suite.root) {
-        if (specs.some((spec) => spec.status === 'failed')) {
+        const passed = specs.filter((s) => s.status === 'passed').length
+        const failed = specs.filter((s) => s.status === 'failed').length
+        const pending = specs.filter((s) => s.status === 'pending').length
+        // Expose a machine-readable summary for headless test drivers.
+        window.MOCHA_RESULTS = {
+          total: specs.length,
+          passed,
+          failed,
+          pending,
+          failures: specs.filter((s) => s.status === 'failed'),
+        }
+        if (failed > 0) {
           document.documentElement.classList.add('mocha-is-failing')
         } else {
           document.documentElement.classList.add('mocha-is-passing')

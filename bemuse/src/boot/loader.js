@@ -14,7 +14,7 @@ const modules = {
 
   // >>
   // test
-  //   The unit tests.
+  //   The unit tests. Runs the Mocha test suite in the browser.
   test: () => import(/* webpackChunkName: 'test' */ 'bemuse/test'),
 
   // >>

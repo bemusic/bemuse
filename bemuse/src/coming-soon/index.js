@@ -1,6 +1,4 @@
-import 'style-loader!./style.scss'
-
-/* eslint import/no-webpack-loader-syntax: off */
+import './style.scss'
 
 export function main() {
   const div = document.createElement('div')
