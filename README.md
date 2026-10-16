@@ -171,3 +171,7 @@ use on npm.
 [AGPLv3](LICENSE). Note that this license only applies to the main Bemuse
 project, not the [sub-projects](#sub-projects), which has its own license terms
 (mostly MIT).
+
+## Play online
+
+Also playable on [WASM Arcade](https://www.wasmarcade.online/arcade/bemuse/) — free, no download.
